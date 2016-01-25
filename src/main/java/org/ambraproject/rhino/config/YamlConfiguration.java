@@ -148,6 +148,11 @@ public class YamlConfiguration implements RuntimeConfiguration {
   }
 
   @Override
+  public URL getNedServer() {
+    return input.ned;
+  }
+
+  @Override
   public LocalDate getCompetingInterestPolicyStart() {
     return (input.competingInterestPolicyStart == null) ? DEFAULT_COMPETING_INTEREST_POLICY_START
         : LocalDate.parse(input.competingInterestPolicyStart);
@@ -176,6 +181,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
     private ContentRepoInput contentRepo;
     private HttpConnectionPoolConfigurationInput httpConnectionPool;
     private TaxonomyConfigurationInput taxonomy;
+    private URL ned;
     private boolean usingVersionedIngestion = false; // default is false
     private String competingInterestPolicyStart;
 
@@ -209,6 +215,14 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setTaxonomy(TaxonomyConfigurationInput taxonomy) {
       this.taxonomy = taxonomy;
+    }
+
+    /**
+     * @deprecated For reflective access by SnakeYAML only
+     */
+    @Deprecated
+    public void setNed(URL ned) {
+      this.ned = ned;
     }
 
     /**

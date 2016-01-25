@@ -92,6 +92,8 @@ public interface RuntimeConfiguration {
 
   TaxonomyConfiguration getTaxonomyConfiguration();
 
+  URL getNedServer();
+
   /**
    * Return the date, for comments persisted on this system, at which commenters were first prompted for competing
    * interests. Comments from before this date will necessarily lack competing interest statements, but the system
