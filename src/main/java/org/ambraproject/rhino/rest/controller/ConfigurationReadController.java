@@ -4,6 +4,7 @@ import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ConfigurationReadService;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.URL;
+import java.util.Calendar;
 
 @Controller
 public class ConfigurationReadController extends RestController {
@@ -60,12 +61,18 @@ public class ConfigurationReadController extends RestController {
   }
 
   @RequestMapping(value = CONFIG_ROOT + "/ned", method = RequestMethod.GET)
-  public ResponseEntity<String> readConfig() {
-    URL nedServer = runtimeConfiguration.getNedServer();
-    if (nedServer == null) {
-      throw new RestClientException("NED server is not configured", HttpStatus.NOT_FOUND);
-    }
-    return new ResponseEntity<>(nedServer.toString(), HttpStatus.OK);
+  public void readNedConfig(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    new Transceiver() {
+      @Override
+      protected Object getData() throws IOException {
+        return runtimeConfiguration.getNedConfiguration();
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    }.respond(request, response, entityGson);
   }
 
 }
