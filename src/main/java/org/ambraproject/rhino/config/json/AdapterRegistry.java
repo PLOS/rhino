@@ -3,8 +3,10 @@ package org.ambraproject.rhino.config.json;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import org.ambraproject.models.UserProfile;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedStringList;
+import org.ambraproject.rhino.view.UserProfileSerializer;
 import org.ambraproject.rhino.view.article.ArticleInputView;
 import org.ambraproject.rhino.view.article.DoiList;
 import org.ambraproject.rhino.view.article.ListInputView;
@@ -86,6 +88,7 @@ public class AdapterRegistry {
       .put(AuthIdList.class, KeyedStringList.ADAPTER)
       .put(ArticleInputView.class, ArticleInputView.DESERIALIZER)
       .put(ListInputView.class, ListInputView.DESERIALIZER)
+      .put(UserProfile.class, UserProfileSerializer.INSTANCE)
       .build();
 
 
