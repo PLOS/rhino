@@ -28,10 +28,10 @@ import org.ambraproject.rhino.config.json.ExclusionSpecialCase;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService;
+import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.AssetCrudService;
-import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.service.IssueCrudService;
@@ -42,9 +42,9 @@ import org.ambraproject.rhino.service.UserCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.service.impl.AnnotationCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
+import org.ambraproject.rhino.service.impl.ArticleListCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
-import org.ambraproject.rhino.service.impl.ArticleListCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
 import org.ambraproject.rhino.service.impl.IngestibleServiceImpl;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
@@ -53,10 +53,8 @@ import org.ambraproject.rhino.service.impl.PingbackReadServiceImpl;
 import org.ambraproject.rhino.service.impl.UserCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
-import org.ambraproject.rhino.service.taxonomy.TaxonomyLookupService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyClassificationServiceImpl;
-import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyLookupServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyServiceImpl;
 import org.ambraproject.rhino.util.GitInfo;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
@@ -288,11 +286,6 @@ public class RhinoConfiguration extends BaseConfiguration {
   @Bean
   public TaxonomyClassificationService taxonomyClassificationService() {
     return new TaxonomyClassificationServiceImpl();
-  }
-
-  @Bean
-  public TaxonomyLookupService taxonomyLookupService(org.ambraproject.service.taxonomy.TaxonomyService legacyTaxonomyService) {
-    return new TaxonomyLookupServiceImpl(legacyTaxonomyService);
   }
 
   @Bean

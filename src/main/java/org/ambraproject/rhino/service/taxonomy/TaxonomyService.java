@@ -5,7 +5,7 @@ import java.io.IOException;
 /**
  * Services related to article taxonomy.
  */
-public interface TaxonomyService extends TaxonomyClassificationService, TaxonomyLookupService {
+public interface TaxonomyService extends TaxonomyClassificationService {
 
   void flagArticleCategory(Long articleId, Long categoryId, String authId) throws IOException;
 
