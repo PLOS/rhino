@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.ambraproject.rhino.shared.XPathExtractor;
 import org.ambraproject.rhino.util.StringReplacer;
@@ -254,12 +255,9 @@ public final class AuthorsXmlExtractor {
         if (correspondAddrNode == null) {
           log.warn("No node found for corrsponding author: author-notes/corresp[@id='\" + rid + \"']");
         } else {
-          try {
-            corresponding = TextUtils.getAsXMLString(correspondAddrNode);
-          } catch (TransformerException e) {
-            throw new RuntimeException(e);
-          }
-          corresponding = transFormCorresponding(corresponding);
+          // Store the entire corresponding author string, even though it's not specific to this author.
+          // It's meant to support the author pop-up. See getCorrespondingAuthorList for the split-up list.
+          corresponding = transFormCorresponding(correspondAddrNode);
         }
       }
     }
@@ -490,11 +488,17 @@ public final class AuthorsXmlExtractor {
    * <p/>
    * Reformat html embedded into the XML into something more easily styled on the front end
    *
-   * @param source html fragment
+   * @param correspondAddrNode html node
    * @return html fragment
    */
-  private static String transFormCorresponding(String source) {
-    return MARKUP_REPLACER.replace(source);
+  private static String transFormCorresponding(Node correspondAddrNode) {
+    String corresponding;
+    try {
+      corresponding = TextUtils.getAsXMLString(correspondAddrNode);
+    } catch (TransformerException e) {
+      throw new RuntimeException(e);
+    }
+    return MARKUP_REPLACER.replace(corresponding);
   }
 
   /**
@@ -522,4 +526,39 @@ public final class AuthorsXmlExtractor {
 
     return text;
   }
+
+  /**
+   * Split the document-level list of corresponding authors into parts and do some string-hacking. Returns
+   * ready-to-display HTML. This is far more display logic than we would like, but it was lifted directly from Ambra.
+   */
+  public static List<String> getCorrespondingAuthorList(Document document, XPathExtractor xpath) throws XPathException {
+    Node corresAuthorNode = xpath.selectNode(document, "//corresp");
+    if (corresAuthorNode == null) return ImmutableList.of();
+    String r = transFormCorresponding(corresAuthorNode);
+
+    //Remove prepending text
+    r = r.replaceAll("<span.*?/span>", "");
+    r = r.replaceFirst(".*?[Ee]-mail:", "");
+
+    //Remove extra carriage return
+    r = r.replaceAll("\\n", "");
+
+    //Split on "<a" as the denotes a new email address
+    String[] emails = r.split("(?=<a)");
+
+    List<String> result = new ArrayList<>();
+    for (int a = 0; a < emails.length; a++) {
+      if (emails[a].trim().length() > 0) {
+        String email = emails[a];
+        //Remove ; and "," from address
+        email = email.replaceAll("[,;]", "");
+        email = email.replaceAll("[Ee]mail:", "");
+        email = email.replaceAll("[Ee]-mail:", "");
+        result.add(email.trim());
+      }
+    }
+
+    return result;
+  }
+
 }
