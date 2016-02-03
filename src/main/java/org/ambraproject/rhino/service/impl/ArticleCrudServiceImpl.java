@@ -321,16 +321,18 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         List<AuthorView> authors;
         List<String> authorContributions;
         List<String> competingInterests;
+        List<String> correspondingAuthorList;
         try {
           authors = AuthorsXmlExtractor.getAuthors(doc, xpathReader);
           authorContributions = AuthorsXmlExtractor.getAuthorContributions(doc, xpathReader);
           competingInterests = AuthorsXmlExtractor.getCompetingInterests(doc, xpathReader);
+          correspondingAuthorList = AuthorsXmlExtractor.getCorrespondingAuthorList(doc, xpathReader);
         } catch (XPathException e) {
           throw new RuntimeException("Invalid XML when parsing authors from: " + id, e);
         }
         List<ArticleAuthorView> authorViews = authors.stream().map(ArticleAuthorView::new)
             .collect(Collectors.toList());
-        return new ArticleAllAuthorsView(authorViews, authorContributions, competingInterests);
+        return new ArticleAllAuthorsView(authorViews, authorContributions, competingInterests, correspondingAuthorList);
       }
     };
   }
