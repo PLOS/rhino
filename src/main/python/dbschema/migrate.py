@@ -68,14 +68,17 @@ class Migration(object):
   def start_progress(self, db_client):
     log('Beginning {0}'.format(self.number))
     name = 'Schema {0}'.format(self.number)
-    stmt = ('INSERT INTO version (name, version, updateInProcess) '
-            'VALUES ({0!r}, {1!r}, 1)').format(name, self.number)
+    stmt = ('INSERT INTO version (name, version, updateInProcess, '
+            'created, lastModified) '
+            'VALUES ({0!r}, {1!r}, 1, now(), now())') \
+      .format(name, self.number)
     db_client.write(stmt)
 
   def record_success(self, db_client):
     log('Completed {0}'.format(self.number))
-    stmt = 'UPDATE version SET updateInProcess = 0 WHERE version = {0}'.format(
-      self.number)
+    stmt = ('UPDATE version SET updateInProcess = 0, lastModified = now() '
+            'WHERE version = {0}') \
+      .format(self.number)
     db_client.write(stmt)
 
   def apply(self, db_client):
