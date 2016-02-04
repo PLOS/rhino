@@ -1,2 +1,142 @@
 [
+  {
+    "number": 1007,
+    "scripts": [
+      "migrate_ambra_1007.sql"
+    ]
+  },
+  {
+    "number": 1006,
+    "scripts": [
+      "migrate_ambra_1006.sql"
+    ]
+  },
+  {
+    "number": 1005,
+    "scripts": [
+      "migrate_ambra_1005.sql"
+    ]
+  },
+  {
+    "number": 1004,
+    "scripts": [
+      "migrate_ambra_1004.sql"
+    ]
+  },
+  {
+    "number": 1003,
+    "scripts": [
+      "migrate_ambra_1003.sql"
+    ]
+  },
+  {
+    "number": 1002,
+    "scripts": [
+      "migrate_ambra_1002.sql"
+    ]
+  },
+  {
+    "number": 1001,
+    "scripts": [
+      "migrate_ambra_1001.sql"
+    ]
+  },
+  {
+    "number": 282,
+    "scripts": [
+      "migrate_ambra_2_8_2_part1.sql"
+    ]
+  },
+  {
+    "number": 280,
+    "scripts": [
+      "migrate_ambra_2_8_0_part1.sql"
+    ]
+  },
+  {
+    "number": 255,
+    "scripts": [
+      "migrate_ambra_2_5_5_part1.sql",
+      "migrate_ambra_2_5_5_part2.sql"
+    ]
+  },
+  {
+    "number": 250,
+    "scripts": [
+      "migrate_ambra_2_5_0.sql"
+    ]
+  },
+  {
+    "number": 249,
+    "scripts": [
+      "migrate_ambra_2_4_9_part1.sql"
+    ]
+  },
+  {
+    "number": 248,
+    "scripts": [
+      "migrate_ambra_2_4_8_part1.sql"
+    ]
+  },
+  {
+    "number": 246,
+    "scripts": [
+      "migrate_ambra_2_4_6_part1.sql"
+    ]
+  },
+  {
+    "number": 243,
+    "scripts": [
+      "migrate_ambra_2_4_3_part1.sql"
+    ]
+  },
+  {
+    "number": 240,
+    "scripts": [
+      "migrate_ambra_2_4_0_part1.sql"
+    ]
+  },
+  {
+    "number": 237,
+    "scripts": [
+      "migrate_ambra_2_3_7_part1.sql",
+      "migrate_ambra_2_3_7_part2.sql"
+    ]
+  },
+  {
+    "number": 234,
+    "scripts": [
+      "migrate_ambra_2_3_4_part1.sql",
+      "migrate_ambra_2_3_4_part2.sql",
+      "migrate_ambra_2_3_4_part3.sql"
+    ]
+  },
+  {
+    "number": 232,
+    "scripts": [
+      "migrate_ambra_2_3_2_part1.sql",
+      "migrate_ambra_2_3_2_part2.sql",
+      "migrate_ambra_2_3_2_part3.sql"
+    ]
+  },
+  {
+    "number": 222,
+    "scripts": [
+      "migrate_ambra_2_2_2_part1.sql",
+      "migrate_ambra_2_2_2_part2.sql",
+      "migrate_ambra_2_2_2_part3.sql",
+      "migrate_ambra_2_2_2_part4.sql"
+    ]
+  },
+  {
+    "number": 220,
+    "scripts": [
+      "migrate_ambra_2_2_0_part1.sql",
+      "migrate_ambra_2_2_0_part2.sql",
+      "migrate_ambra_2_2_0_part3.sql",
+      "migrate_ambra_2_2_0_part4.sql",
+      "migrate_ambra_2_2_0_part5.sql",
+      "migrate_ambra_2_2_0_part6.sql"
+    ]
+  }
 ]
