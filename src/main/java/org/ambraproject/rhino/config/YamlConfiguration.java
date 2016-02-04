@@ -147,6 +147,42 @@ public class YamlConfiguration implements RuntimeConfiguration {
     return taxonomyConfiguration;
   }
 
+  private static class NedConfigurationObject implements NedConfiguration {
+    // Must have real instance variables so that ConfigurationReadController.readNedConfig can serialize it
+    private final URL server;
+    private final String authorizationAppName;
+    private final String authorizationPassword;
+
+    private NedConfigurationObject(Input input) {
+      server = (input.ned == null) ? null : input.ned.server;
+      authorizationAppName = (input.ned == null) ? null : input.ned.authorizationAppName;
+      authorizationPassword = (input.ned == null) ? null : input.ned.authorizationPassword;
+    }
+
+    @Override
+    public URL getServer() {
+      return server;
+    }
+
+    @Override
+    public String getAuthorizationAppName() {
+      return authorizationAppName;
+    }
+
+    @Override
+    public String getAuthorizationPassword() {
+      return authorizationPassword;
+    }
+  }
+
+  private transient NedConfigurationObject nedConfigurationObject;
+
+  @Override
+  public NedConfiguration getNedConfiguration() {
+    return (nedConfigurationObject != null) ? nedConfigurationObject
+        : (nedConfigurationObject = new NedConfigurationObject(input));
+  }
+
   @Override
   public LocalDate getCompetingInterestPolicyStart() {
     return (input.competingInterestPolicyStart == null) ? DEFAULT_COMPETING_INTEREST_POLICY_START
@@ -176,6 +212,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
     private ContentRepoInput contentRepo;
     private HttpConnectionPoolConfigurationInput httpConnectionPool;
     private TaxonomyConfigurationInput taxonomy;
+    private NedConfigurationInput ned;
     private boolean usingVersionedIngestion = false; // default is false
     private String competingInterestPolicyStart;
 
@@ -209,6 +246,14 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setTaxonomy(TaxonomyConfigurationInput taxonomy) {
       this.taxonomy = taxonomy;
+    }
+
+    /**
+     * @deprecated For reflective access by SnakeYAML only
+     */
+    @Deprecated
+    public void setNed(NedConfigurationInput ned) {
+      this.ned = ned;
     }
 
     /**
@@ -318,6 +363,27 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setCategoryBlacklist(List<String> categoryBlacklist) {
       this.categoryBlacklist = categoryBlacklist;
+    }
+  }
+
+  public static class NedConfigurationInput {
+    private URL server;
+    private String authorizationAppName;
+    private String authorizationPassword;
+
+    @Deprecated
+    public void setServer(URL server) {
+      this.server = server;
+    }
+
+    @Deprecated
+    public void setAuthorizationAppName(String authorizationAppName) {
+      this.authorizationAppName = authorizationAppName;
+    }
+
+    @Deprecated
+    public void setAuthorizationPassword(String authorizationPassword) {
+      this.authorizationPassword = authorizationPassword;
     }
   }
 

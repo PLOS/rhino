@@ -1,10 +1,13 @@
 package org.ambraproject.rhino.rest.controller;
 
+import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ConfigurationReadService;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Calendar;
 
 @Controller
 public class ConfigurationReadController extends RestController {
@@ -23,6 +27,8 @@ public class ConfigurationReadController extends RestController {
 
   @Autowired
   private ConfigurationReadService configurationReadService;
+  @Autowired
+  private RuntimeConfiguration runtimeConfiguration;
 
   /**
    * Retrieves configuration metadata according to the given type
@@ -52,6 +58,21 @@ public class ConfigurationReadController extends RestController {
     } else if (configType.contentEquals("repo")) {
       configurationReadService.readRepoConfig().respond(request, response, entityGson);
     }
+  }
+
+  @RequestMapping(value = CONFIG_ROOT + "/ned", method = RequestMethod.GET)
+  public void readNedConfig(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    new Transceiver() {
+      @Override
+      protected Object getData() throws IOException {
+        return runtimeConfiguration.getNedConfiguration();
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    }.respond(request, response, entityGson);
   }
 
 }

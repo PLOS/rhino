@@ -66,29 +66,6 @@ public enum ExclusionSpecialCase implements ExclusionStrategy {
     public boolean shouldSkipClass(Class<?> clazz) {
       return false;
     }
-  },
-
-  USER_PROFILE {
-    private final ImmutableSet<String> SKIPPED_FIELD_NAMES = ImmutableSet.copyOf(new String[]{
-        // Works around bugs with lazily-loaded UserRole objects, specifically when an Annotation object contains a
-        // UserProfile object. The roles could be served in the future if needed, but we'd have to fix the bugs.
-        "roles",
-
-        // Leave out security-sensitive values. It would not necessarily introduce a vulnerability if we served these
-        // ("password" is a salted hash), but, for caution's sake, we await a motivating use case.
-        "authId", "password",
-    });
-
-    @Override
-    public boolean shouldSkipField(FieldAttributes f) {
-      return UserProfile.class.isAssignableFrom(f.getDeclaringClass())
-          && SKIPPED_FIELD_NAMES.contains(f.getName());
-    }
-
-    @Override
-    public boolean shouldSkipClass(Class<?> clazz) {
-      return false;
-    }
   };
 
 }
