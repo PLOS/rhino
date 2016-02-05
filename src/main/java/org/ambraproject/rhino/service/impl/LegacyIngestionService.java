@@ -225,7 +225,7 @@ class LegacyIngestionService {
   /**
    * Set reciprocal {@link org.ambraproject.models.ArticleRelationship} values on an article that has just been
    * ingested.
-   * <p/>
+   * <p>
    * The argument is an article in the middle of being ingested, and should already be persisted. This method is a
    * secondary step in ingestion.
    *
@@ -274,9 +274,9 @@ class LegacyIngestionService {
 
   /**
    * Special cases of article relationship types where the reciprocal relationships are asymmetric.
-   * <p/>
+   * <p>
    * For example, if A is a "retracted-article" of B, then B must be a "retraction" of A.
-   * <p/>
+   * <p>
    * TODO: Reduce code duplication with org.ambraproject.article.service.IngesterImpl.RECIPROCAL_TYPES
    */
   private static final ImmutableBiMap<String, String> RECIPROCAL_TYPES = ImmutableBiMap.<String, String>builder()
@@ -289,7 +289,7 @@ class LegacyIngestionService {
    * Set up a reciprocal relationship from {@code parentArticle} to {@code otherArticle}. That is, assuming {@code
    * relationship} is a pre-existing relationship from {@code otherArticle} to {@code parentArticle}, this method
    * creates a new relationship that reciprocates it.
-   * <p/>
+   * <p>
    * The type of the new, reciprocal relationship is the same as that of the first relationship unless it is one of the
    * asymmetric relations described in {@link #RECIPROCAL_TYPES}.
    */
@@ -658,7 +658,7 @@ class LegacyIngestionService {
    * delete behavior, with would normally let us just remove the old list and replace it with a new one. As a kludge, if
    * a new value has the same "other article DOI" as an old one, modify the old one to match the new one instead of
    * replacing it.
-   * <p/>
+   * <p>
    * TODO: Un-kludge
    *
    * @param persistentList the list to modify
@@ -845,7 +845,7 @@ class LegacyIngestionService {
 
   /**
    * Generate a file name, to be used as a zip archive entry name, for an article or asset.
-   * <p/>
+   * <p>
    * The legacy data model gives us no way to recover the actual file name from the original archive. PLOS gets
    * preferential treatment here -- if a DOI matches PLOS's naming convention, apply PLOS's corresponding convention for
    * file names. Otherwise, return the last slash-delimited token.
@@ -859,8 +859,8 @@ class LegacyIngestionService {
   }
 
   /**
-   * Iterate through an article's assets to determine if the article has a PDF representation
-   * The PDF asset DOI is equal to the article DOI, and the extension is "PDF".
+   * Iterate through an article's assets to determine if the article has a PDF representation The PDF asset DOI is equal
+   * to the article DOI, and the extension is "PDF".
    *
    * @param article the article to analyze
    * @return boolean indicating existence of article PDF representation
