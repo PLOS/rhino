@@ -65,6 +65,10 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     super(xml);
   }
 
+  public Document getDocument() {
+    return (Document) xml;
+  }
+
 
   /**
    * @return

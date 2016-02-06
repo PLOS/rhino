@@ -6,7 +6,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ListMultimap;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimaps;
 import com.google.common.collect.Sets;
@@ -16,6 +15,7 @@ import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleRelationship;
 import org.ambraproject.models.Category;
 import org.ambraproject.rhino.content.xml.ArticleXml;
+import org.ambraproject.rhino.content.xml.AssetBuilder;
 import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
 import org.ambraproject.rhino.content.xml.AssetXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
@@ -28,18 +28,16 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.DoiBasedCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.util.Archive;
+import org.ambraproject.rhino.util.HibernateEntityUtil;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
-import org.springframework.orm.hibernate3.HibernateCallback;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -57,8 +55,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.SQLException;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -66,6 +63,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -96,34 +94,6 @@ class LegacyIngestionService {
         ));
   }
 
-  Article write(InputStream file, Optional<ArticleIdentity> suppliedId, DoiBasedCrudService.WriteMode mode) throws IOException {
-    if (mode == null) {
-      mode = DoiBasedCrudService.WriteMode.WRITE_ANY;
-    }
-
-    byte[] xmlData = parentService.readClientInput(file);
-    Document doc = parentService.parseXml(xmlData);
-    Article article = populateArticleFromXml(doc, suppliedId, mode, xmlData.length);
-    persistArticle(article, xmlData);
-    return article;
-  }
-
-  /**
-   * Creates or updates an Article instance based on the given Document.  Does not persist the Article; that is the
-   * responsibility of the caller.
-   *
-   * @param doc           Document describing the article XML
-   * @param suppliedId    the indentifier supplied for the article by the external caller, if any
-   * @param mode          whether to attempt a create or update
-   * @param xmlDataLength the number of bytes in the uploaded XML file
-   * @return the created Article
-   * @throws IOException
-   */
-  private Article populateArticleFromXml(Document doc, Optional<ArticleIdentity> suppliedId,
-                                         DoiBasedCrudService.WriteMode mode, int xmlDataLength) {
-    return populateArticleFromXml(doc, Optional.<ManifestXml>absent(), suppliedId, mode, xmlDataLength);
-  }
-
   /**
    * Creates or updates an Article instance based on the given Document.  Does not persist the Article; that is the
    * responsibility of the caller.
@@ -137,10 +107,9 @@ class LegacyIngestionService {
    * @throws IOException
    */
 
-  private Article populateArticleFromXml(Document doc, Optional<ManifestXml> manifestXml,
+  private Article populateArticleFromXml(ArticleXml xml,
                                          Optional<ArticleIdentity> suppliedId,
-                                         DoiBasedCrudService.WriteMode mode, int xmlDataLength) {
-    ArticleXml xml = new ArticleXml(doc);
+                                         DoiBasedCrudService.WriteMode mode) {
     ArticleIdentity doi;
     try {
       doi = xml.readDoi();
@@ -174,11 +143,42 @@ class LegacyIngestionService {
 
     // TODO: If an article should have multiple journals, how does it get them?
     article.setJournals(Sets.newHashSet(parentService.getPublicationJournal(article)));
-    populateCategories(article, doc);
-    initializeAssets(article, manifestXml, xml, xmlDataLength);
+    populateCategories(article, xml.getDocument());
     populateRelatedArticles(article, xml);
 
     return article;
+  }
+
+  private List<ArticleAsset> createAssets(List<AssetBuilder> assetBuilders, Archive archive, ManifestXml manifest) {
+    ImmutableMap<AssetIdentity, AssetBuilder> assetMap = Maps.uniqueIndex(assetBuilders,
+        assetBuilder -> AssetIdentity.create(assetBuilder.getDoi()));
+    List<ArticleAsset> assets = new ArrayList<>();
+
+    for (ManifestXml.Asset manifestAsset : manifest.parse()) {
+      AssetIdentity assetIdentity = AssetIdentity.create(manifestAsset.getUri());
+      AssetBuilder assetBuilder = assetMap.get(assetIdentity);
+      if (assetBuilder == null) {
+        // TODO: Handle manuscript, striking images, etc. Convert this to a hard exception when all cases are handled.
+        log.error("Asset in manifest not matched to manuscript: {}", assetIdentity);
+        continue;
+      }
+
+      for (ManifestXml.Representation representation : manifestAsset.getRepresentations()) {
+        ArticleAsset asset = new ArticleAsset();
+        asset.setDoi(assetIdentity.getKey());
+
+        asset.setTitle(assetBuilder.getTitle());
+        asset.setDescription(assetBuilder.getDescription());
+        asset.setContextElement(assetBuilder.getContextElement());
+
+        asset.setExtension(representation.getName());
+        asset.setContentType(AssetFileIdentity.create(assetIdentity.getIdentifier(), representation.getName())
+            .inferContentType().toString());
+
+        assets.add(asset);
+      }
+    }
+    return assets;
   }
 
   /**
@@ -368,41 +368,56 @@ class LegacyIngestionService {
       xmlData = ByteStreams.toByteArray(xmlStream);
     }
     Document doc = parentService.parseXml(xmlData);
-    Article article = populateArticleFromXml(doc, Optional.fromNullable(manifest), suppliedId, mode, xmlData.length);
+    ArticleXml manuscript = new ArticleXml(doc);
+
+    Article article = populateArticleFromXml(manuscript, suppliedId, mode);
+
+    // Replace assets in place if the list is already initialized
+    List<ArticleAsset> assets = article.getAssets();
+    if (assets == null) {
+      assets = new ArrayList<>();
+      article.setAssets(assets);
+    }
+    HibernateEntityUtil.replaceEntities(assets, createAssets(initializeAssets(manuscript), archive, manifest),
+        AssetFileIdentity::create, LegacyIngestionService::copyAsset);
+
     article.setArchiveName(new File(archive.getArchiveName()).getName());
     article.setStrkImgURI(manifest.getStrkImgURI());
 
-    // Save now, before we add asset files, since AssetCrudServiceImpl will expect the
-    // Article to be persisted at this point.
+    uploadAssets(article, archive, manifest);
     persistArticle(article, xmlData);
-    try {
-      addAssetFiles(article, archive, manifest);
-
-      /*
-       * Refresh the article in order to force it contain any new asset file objects that might have been inserted into
-       * the database without being reflected in Hibernate. See the raw-SQL kludge in
-       * org.ambraproject.rhino.service.impl.AssetCrudServiceImpl.saveAssetForcingParentArticle
-       * for one possible cause.
-       *
-       * MUST flush before refreshing. Otherwise, updates in the Hibernate buffer may be dropped unsaved. Observed in
-       * at least one case, with the "parentService.hibernateTemplate.update" statement in
-       * org.ambraproject.rhino.service.impl.AssetCrudServiceImpl.upload
-       * not being persisted. That's bad.
-       */
-      parentService.hibernateTemplate.flush();
-      parentService.hibernateTemplate.refresh(article);
-    } catch (RestClientException rce) {
-      try {
-        // If there is an error processing the assets, delete the article we created
-        // above, since it won't be valid.
-        parentService.delete(ArticleIdentity.create(article));
-      } catch (RuntimeException exceptionOnDeletion) {
-        exceptionOnDeletion.addSuppressed(rce);
-        throw exceptionOnDeletion;
-      }
-      throw rce;
-    }
     return article;
+  }
+
+  private static void copyAsset(ArticleAsset source, ArticleAsset destination) {
+    destination.setDoi(source.getDoi());
+    destination.setContextElement(source.getContextElement());
+    destination.setExtension(source.getExtension());
+    destination.setContentType(source.getContentType());
+    destination.setTitle(source.getTitle());
+    destination.setDescription(source.getDescription());
+    destination.setSize(source.getSize());
+  }
+
+  private void uploadAssets(Article article, Archive archive, ManifestXml manifest) throws IOException {
+    Map<AssetFileIdentity, String> filenames = new HashMap<>();
+    for (ManifestXml.Asset manifestAsset : manifest.parse()) {
+      for (ManifestXml.Representation representation : manifestAsset.getRepresentations()) {
+        AssetFileIdentity fileId = AssetFileIdentity.create(manifestAsset.getUri(), representation.getName());
+        filenames.put(fileId, representation.getEntry());
+      }
+    }
+
+    for (ArticleAsset articleAsset : article.getAssets()) {
+      AssetFileIdentity fileId = AssetFileIdentity.create(articleAsset.getDoi(), articleAsset.getExtension());
+      String archiveEntryName = filenames.get(fileId);
+      byte[] assetData;
+      try (InputStream stream = archive.openFile(archiveEntryName)) {
+        assetData = ByteStreams.toByteArray(stream);
+      }
+      articleAsset.setSize(assetData.length);
+      parentService.write(assetData, fileId);
+    }
   }
 
   /**
@@ -416,31 +431,6 @@ class LegacyIngestionService {
     Preconditions.checkNotNull(filename);
     filename = filename.toLowerCase().trim();
     return !(filename.startsWith("manifest.") || filename.startsWith(articleXmlFilename));
-  }
-
-  private void addAssetFiles(Article article, Archive zipFile, ManifestXml manifest)
-      throws IOException {
-    String articleXmlFilename = manifest.getArticleXml().toLowerCase();
-
-    // TODO: remove existing files if this is a reingest (see IngesterImpl.java line 324)
-
-    for (String filename : zipFile.getEntryNames()) {
-      if (shouldSaveAssetFile(filename, articleXmlFilename)) {
-        String[] fields = filename.split("\\.");
-
-        // Not sure why, but the existing admin code always converts the extension to UPPER.
-        String extension = fields[fields.length - 1].toUpperCase();
-        String doi = manifest.getUriForFile(filename);
-        if (doi == null) {
-          throw new RestClientException("File does not appear in manifest: " + filename,
-              HttpStatus.METHOD_NOT_ALLOWED);
-        }
-
-        try (InputStream is = zipFile.openFile(filename)) {
-          parentService.assetService.upload(is, AssetFileIdentity.create(doi, extension));
-        }
-      }
-    }
   }
 
   /**
@@ -520,24 +510,66 @@ class LegacyIngestionService {
     }
   }
 
-  private void initializeAssets(final Article article, Optional<ManifestXml> manifestXml, ArticleXml xml, int xmlDataLength) {
-    AssetNodesByDoi assetNodes = xml.findAllAssetNodes();
-    List<ArticleAsset> assets = article.getAssets();
-    Collection<String> assetDois = assetNodes.getDois();
-    String strikingImageDOI = null;
+  private static List<AssetBuilder> initializeAssets(ArticleXml xml) {
+    return xml.findAllAssetNodes().getDois().stream()
+        .map(assetDoi -> parseAsset(xml.findAllAssetNodes(), assetDoi))
+        .collect(Collectors.toList());
+  }
 
-    //Get the striking image DOI for the assets, a fix for:
-    //BAU-4.
-    //
-    //It's possible that this method was called for ingesting a new version of the article XML
-    //without the manifest.  In this case we want to be sure to not delete the striking
-    //image from the database
-    //
-    //This should cover 6 use cases:
-    //There is no striking image (for update and create)
-    //Striking image defined in article XML, but not a special asset (for update and create)
-    //Striking image defined in manifest, and as a special asset (for update and create)
+  //Add the striking image to the assets, a fix for:
+  //BAU-4
+  // TODO: Wire
+  private static void addStrikingImage() {
+//    if (strikingImageDOI != null) {
+//      //Check to make sure the asset doesn't exist already
+//      //Sometimes the striking image is a regular image
+//      boolean found = false;
+//      for (ArticleAsset asset : assets) {
+//        if (asset.getDoi().equals(strikingImageDOI)) {
+//          found = true;
+//          break;
+//        }
+//      }
+//
+//      if (!found) {
+//        ArticleAsset strkImageAsset = new ArticleAsset();
+//        strkImageAsset.setDoi(strikingImageDOI);
+//        strkImageAsset.setExtension("");
+//        strkImageAsset.setTitle("");
+//        strkImageAsset.setDescription("");
+//        strkImageAsset.setContextElement("");
+//        assets.add(strkImageAsset);
+//        log.debug("Added striking image, DOI: {}", strikingImageDOI);
+//      } else {
+//        log.debug("Used existing striking image, DOI: {}", strikingImageDOI);
+//      }
+//    }
+  }
 
+  public ArticleAsset getManuscriptAsset(Article article, int xmlDataLength) {
+    ArticleAsset xmlAsset = new ArticleAsset();
+    xmlAsset.setDoi(article.getDoi());
+    xmlAsset.setExtension("XML");
+    xmlAsset.setTitle(article.getTitle());
+    xmlAsset.setDescription(article.getDescription());
+    xmlAsset.setContentType("text/xml");
+    xmlAsset.setSize(xmlDataLength);
+    return xmlAsset;
+  }
+
+  //Get the striking image DOI for the assets, a fix for:
+  //BAU-4.
+  //
+  //It's possible that this method was called for ingesting a new version of the article XML
+  //without the manifest.  In this case we want to be sure to not delete the striking
+  //image from the database
+  //
+  //This should cover 6 use cases:
+  //There is no striking image (for update and create)
+  //Striking image defined in article XML, but not a special asset (for update and create)
+  //Striking image defined in manifest, and as a special asset (for update and create)
+  private static String findStrikingImageDoi(Article article, Optional<ManifestXml> manifestXml, List<ArticleAsset> assets) {
+    String strikingImageDOI;
     if (manifestXml.isPresent()) {
       strikingImageDOI = manifestXml.get().getStrkImgURI();
     } else {
@@ -556,79 +588,7 @@ class LegacyIngestionService {
         }
       }
     }
-
-    if (assets == null) {  // create
-      assets = Lists.newArrayListWithCapacity(assetDois.size());
-      article.setAssets(assets);
-    } else {  // update
-
-      // Ugly hack copied from the old admin code.  The problem is that hibernate, when it
-      // eventually commits this transaction, will insert new articleAsset rows before it
-      // deletes the old ones, leading to a MySQL unique constraint violation.  I've tried
-      // many, many variations of doing this in hibernate only, without falling back to
-      // JDBC, involving flushing and clearing the session in various orders.  However
-      // they all lead to either unique constraint violations or optimistic locking
-      // exceptions.
-      parentService.hibernateTemplate.execute(new HibernateCallback<Integer>() {
-        @Override
-        public Integer doInHibernate(Session session) throws HibernateException, SQLException {
-          return session.createSQLQuery(
-              "update articleAsset " +
-                  "set doi = concat('old-', doi), " +
-                  "extension = concat('old-', extension) " +
-                  "where articleID = :articleID"
-          ).setParameter("articleID", article.getID())
-              .executeUpdate();
-        }
-      });
-      assets.clear();
-    }
-
-    for (String assetDoi : assetDois) {
-      ArticleAsset asset;
-      try {
-        asset = parseAsset(assetNodes, assetDoi);
-      } catch (XmlContentException e) {
-        throw ArticleCrudServiceImpl.complainAboutXml(e);
-      }
-      assets.add(asset);
-    }
-
-    //Add the striking image to the assets, a fix for:
-    //BAU-4
-    if (strikingImageDOI != null) {
-      //Check to make sure the asset doesn't exist already
-      //Sometimes the striking image is a regular image
-      boolean found = false;
-      for (ArticleAsset asset : assets) {
-        if (asset.getDoi().equals(strikingImageDOI)) {
-          found = true;
-          break;
-        }
-      }
-
-      if (!found) {
-        ArticleAsset strkImageAsset = new ArticleAsset();
-        strkImageAsset.setDoi(strikingImageDOI);
-        strkImageAsset.setExtension("");
-        strkImageAsset.setTitle("");
-        strkImageAsset.setDescription("");
-        strkImageAsset.setContextElement("");
-        assets.add(strkImageAsset);
-        log.debug("Added striking image, DOI: {}", strikingImageDOI);
-      } else {
-        log.debug("Used existing striking image, DOI: {}", strikingImageDOI);
-      }
-    }
-
-    ArticleAsset xmlAsset = new ArticleAsset();
-    xmlAsset.setDoi(article.getDoi());
-    xmlAsset.setExtension("XML");
-    xmlAsset.setTitle(article.getTitle());
-    xmlAsset.setDescription(article.getDescription());
-    xmlAsset.setContentType("text/xml");
-    xmlAsset.setSize(xmlDataLength);
-    assets.add(xmlAsset);
+    return strikingImageDOI;
   }
 
   private void populateRelatedArticles(Article article, ArticleXml xml) {
@@ -705,7 +665,7 @@ class LegacyIngestionService {
    * @param assetDoi   the DOI of the asset to find and write
    * @return the new asset
    */
-  private static ArticleAsset parseAsset(AssetNodesByDoi assetNodes, String assetDoi) throws XmlContentException {
+  private static AssetBuilder parseAsset(AssetNodesByDoi assetNodes, String assetDoi) {
     AssetIdentity assetIdentity = AssetIdentity.create(assetDoi);
     List<Node> matchingNodes = assetNodes.getNodes(assetDoi);
 
@@ -716,13 +676,13 @@ class LegacyIngestionService {
      * asset). Legacy behavior in this case is to store metadata for the first one.
      */
     if (matchingNodes.size() > 1) {
-      log.warn("Matched multiple nodes with DOI=\"{}\"; defaulting to first instance", assetDoi);
+      log.debug("Matched multiple nodes with DOI=\"{}\"; defaulting to first instance", assetDoi);
     }
-    return parseAssetNode(matchingNodes.get(0), assetIdentity);
-  }
-
-  private static ArticleAsset parseAssetNode(Node assetNode, AssetIdentity assetIdentity) throws XmlContentException {
-    return new AssetXml(assetNode, assetIdentity).build(new ArticleAsset());
+    try {
+      return new AssetXml(matchingNodes.get(0), assetIdentity).build(new AssetBuilder());
+    } catch (XmlContentException e) {
+      throw ArticleCrudServiceImpl.complainAboutXml(e);
+    }
   }
 
   public Archive repack(ArticleIdentity articleIdentity) {

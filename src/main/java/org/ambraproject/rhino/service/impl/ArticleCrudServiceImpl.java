@@ -416,10 +416,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
 
     for (ArticleAsset asset : article.getAssets()) {
-      if (AssetIdentity.hasFile(asset)) {
-        AssetFileIdentity assetFileIdentity = AssetFileIdentity.from(asset);
-        deleteAssetFile(assetFileIdentity);
-      }
+      AssetFileIdentity assetFileIdentity = AssetFileIdentity.from(asset);
+      deleteAssetFile(assetFileIdentity);
     }
     hibernateTemplate.delete(article);
   }

@@ -63,6 +63,10 @@ public class AssetFileIdentity extends DoiBasedIdentity {
     return new AssetFileIdentity(asIdentifier(identifier), extension);
   }
 
+  public static AssetFileIdentity create(ArticleAsset assetObj) {
+    return create(assetObj.getDoi(), assetObj.getExtension());
+  }
+
   /**
    * Check whether an asset has been initialized with a file representation.
    *

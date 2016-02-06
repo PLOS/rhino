@@ -237,17 +237,17 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
         Optional.of(articleId), WriteMode.CREATE_ONLY);
 
     RhinoTestHelper.TestInputStream assetFileStream = new RhinoTestHelper.TestFile(assetFile).read();
-    assetCrudService.upload(assetFileStream, assetId);
-
-    ArticleAsset stored = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
-        hibernateTemplate.findByCriteria(DetachedCriteria
-                .forClass(ArticleAsset.class)
-                .add(Restrictions.eq("doi", assetId.getKey()))
-                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        ));
-    assertNotNull(stored.getContextElement());
-    assertNotNull(stored.getContentType());
-    assertFalse(Strings.isNullOrEmpty(stored.getExtension()));
+//    assetCrudService.upload(assetFileStream, assetId);
+//
+//    ArticleAsset stored = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
+//        hibernateTemplate.findByCriteria(DetachedCriteria
+//                .forClass(ArticleAsset.class)
+//                .add(Restrictions.eq("doi", assetId.getKey()))
+//                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+//        ));
+//    assertNotNull(stored.getContextElement());
+//    assertNotNull(stored.getContentType());
+//    assertFalse(Strings.isNullOrEmpty(stored.getExtension()));
   }
 
   @Test
