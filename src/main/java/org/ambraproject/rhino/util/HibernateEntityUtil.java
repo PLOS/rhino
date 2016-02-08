@@ -1,10 +1,14 @@
 package org.ambraproject.rhino.util;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Ordering;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
@@ -28,8 +32,9 @@ public class HibernateEntityUtil {
    * not the other. Other persistent entities will have new data copied into them without their identities being
    * changed.
    * <p>
-   * If {@code persistentEntities} has an order, new entities will be inserted at the end in the same order in which
-   * they appear in {@code replacementEntities}.
+   * If {@code persistentEntities} is a {@link List}, its contents will be arranged into the same order as in {@code
+   * replacementEntities}. Else, new entities will be inserted at the end of {@code persistentEntities}, in the order of
+   * {@code replacementEntities}.
    *
    * @param persistentEntities  a collection which may be a persistent Hibernate collection
    * @param replacementEntities the collection of values to replace the previous ones
@@ -43,7 +48,7 @@ public class HibernateEntityUtil {
                                             Collection<E> replacementEntities,
                                             Function<E, K> keyExtractor,
                                             EntityCopy<E> copyFunction) {
-    Map<K, E> replacementMap = Maps.uniqueIndex(replacementEntities, keyExtractor::apply);
+    ImmutableMap<K, E> replacementMap = Maps.uniqueIndex(replacementEntities, keyExtractor::apply);
     Maps.uniqueIndex(persistentEntities, keyExtractor::apply); // validate that the key is unique
     Set<K> replaced = new HashSet<>();
 
@@ -65,6 +70,12 @@ public class HibernateEntityUtil {
       if (!replaced.contains(entry.getKey())) {
         persistentEntities.add(entry.getValue());
       }
+    }
+
+    if (persistentEntities instanceof List) {
+      Comparator<E> order = Comparator.comparing(keyExtractor,
+          Ordering.explicit(replacementMap.keySet().asList()));
+      ((List<E>) persistentEntities).sort(order);
     }
   }
 
