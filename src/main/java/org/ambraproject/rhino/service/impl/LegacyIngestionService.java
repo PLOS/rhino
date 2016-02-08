@@ -390,9 +390,10 @@ class LegacyIngestionService {
   }
 
   private static void copyAsset(ArticleAsset source, ArticleAsset destination) {
-    destination.setDoi(source.getDoi());
+    Preconditions.checkArgument(destination.getDoi().equals(source.getDoi()));
+    Preconditions.checkArgument(destination.getExtension().equals(source.getExtension()));
+
     destination.setContextElement(source.getContextElement());
-    destination.setExtension(source.getExtension());
     destination.setContentType(source.getContentType());
     destination.setTitle(source.getTitle());
     destination.setDescription(source.getDescription());
