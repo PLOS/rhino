@@ -92,7 +92,7 @@ public interface RuntimeConfiguration {
 
   TaxonomyConfiguration getTaxonomyConfiguration();
 
-  interface NedConfiguration {
+  interface UserApiConfiguration {
     URL getServer();
 
     String getAuthorizationAppName();
@@ -100,7 +100,7 @@ public interface RuntimeConfiguration {
     String getAuthorizationPassword();
   }
 
-  NedConfiguration getNedConfiguration();
+  UserApiConfiguration getNedConfiguration();
 
   /**
    * Return the date, for comments persisted on this system, at which commenters were first prompted for competing

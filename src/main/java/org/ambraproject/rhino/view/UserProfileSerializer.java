@@ -22,7 +22,7 @@ public enum UserProfileSerializer implements JsonSerializer<UserProfile> {
     long id = src.getID();
     String idString = Long.toString(id); // prevent loss of precision, in case JSON is deserialized to floating point
     JsonObject view = new JsonObject();
-    view.addProperty("nedId", idString);
+    view.addProperty("userId", idString);
     return view;
   }
 }

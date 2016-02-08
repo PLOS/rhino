@@ -147,16 +147,16 @@ public class YamlConfiguration implements RuntimeConfiguration {
     return taxonomyConfiguration;
   }
 
-  private static class NedConfigurationObject implements NedConfiguration {
+  private static class UserApiConfigurationObject implements UserApiConfiguration {
     // Must have real instance variables so that ConfigurationReadController.readNedConfig can serialize it
     private final URL server;
     private final String authorizationAppName;
     private final String authorizationPassword;
 
-    private NedConfigurationObject(Input input) {
-      server = (input.ned == null) ? null : input.ned.server;
-      authorizationAppName = (input.ned == null) ? null : input.ned.authorizationAppName;
-      authorizationPassword = (input.ned == null) ? null : input.ned.authorizationPassword;
+    private UserApiConfigurationObject(Input input) {
+      server = (input.userApi == null) ? null : input.userApi.server;
+      authorizationAppName = (input.userApi == null) ? null : input.userApi.authorizationAppName;
+      authorizationPassword = (input.userApi == null) ? null : input.userApi.authorizationPassword;
     }
 
     @Override
@@ -175,12 +175,12 @@ public class YamlConfiguration implements RuntimeConfiguration {
     }
   }
 
-  private transient NedConfigurationObject nedConfigurationObject;
+  private transient UserApiConfigurationObject userApiConfigurationObject;
 
   @Override
-  public NedConfiguration getNedConfiguration() {
-    return (nedConfigurationObject != null) ? nedConfigurationObject
-        : (nedConfigurationObject = new NedConfigurationObject(input));
+  public UserApiConfiguration getNedConfiguration() {
+    return (userApiConfigurationObject != null) ? userApiConfigurationObject
+        : (userApiConfigurationObject = new UserApiConfigurationObject(input));
   }
 
   @Override
@@ -212,7 +212,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
     private ContentRepoInput contentRepo;
     private HttpConnectionPoolConfigurationInput httpConnectionPool;
     private TaxonomyConfigurationInput taxonomy;
-    private NedConfigurationInput ned;
+    private UserApiConfigurationInput userApi;
     private boolean usingVersionedIngestion = false; // default is false
     private String competingInterestPolicyStart;
 
@@ -252,8 +252,8 @@ public class YamlConfiguration implements RuntimeConfiguration {
      * @deprecated For reflective access by SnakeYAML only
      */
     @Deprecated
-    public void setNed(NedConfigurationInput ned) {
-      this.ned = ned;
+    public void setUserApi(UserApiConfigurationInput userApi) {
+      this.userApi = userApi;
     }
 
     /**
@@ -366,7 +366,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
     }
   }
 
-  public static class NedConfigurationInput {
+  public static class UserApiConfigurationInput {
     private URL server;
     private String authorizationAppName;
     private String authorizationPassword;

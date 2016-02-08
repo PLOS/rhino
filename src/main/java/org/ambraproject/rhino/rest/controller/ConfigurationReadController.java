@@ -60,8 +60,8 @@ public class ConfigurationReadController extends RestController {
     }
   }
 
-  @RequestMapping(value = CONFIG_ROOT + "/ned", method = RequestMethod.GET)
-  public void readNedConfig(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  @RequestMapping(value = CONFIG_ROOT + "/userApi", method = RequestMethod.GET)
+  public void readUserApiConfig(HttpServletRequest request, HttpServletResponse response) throws IOException {
     new Transceiver() {
       @Override
       protected Object getData() throws IOException {
