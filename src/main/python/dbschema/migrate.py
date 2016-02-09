@@ -178,16 +178,22 @@ def force_clear(db_client):
   """
   db_client.write('UPDATE version SET updateInProcess = 0;')
 
+MIGRATIONS_IN_PROGRESS_MESSAGE = """
+Migrations are marked as in progress for: {versions}
+
+This could be due to a concurrent migration process or a previous migration
+that was interrupted. Please check that no other migration processes are
+running and use the --force_clear option to proceed.
+"""
+
 def run_migrations(db_client):
   """Bring the connected database's schema up to date."""
 
   in_progress = db_client.read(
     'SELECT version FROM version WHERE updateInProcess > 0;')
   if in_progress:
-    msg = 'Migrations are marked in progress for version{0}: {1}'.format(
-      ('' if len(in_progress) == 1 else 's'),
-      [int(r[0]) for r in in_progress])
-    raise Exception(msg)
+    raise Exception(MIGRATIONS_IN_PROGRESS_MESSAGE.format(
+      versions=[int(r[0]) for r in in_progress]))
 
   version = db_client.read('SELECT MAX(version) FROM version;')[0][0]
 
