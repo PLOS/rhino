@@ -68,23 +68,23 @@ class DatabaseClient(object):
                                passwd=self.args.dbPass, db=self.args.dbName,
                                charset='utf8', use_unicode=True)
 
-  def _execute(self, query, is_destructive):
+  def _execute(self, query, params, is_destructive):
     try:
       cursor = self.con.cursor()
-      cursor.execute(query)
+      cursor.execute(query, params)
       if is_destructive:
         self.con.commit()
       return cursor.fetchall()
     finally:
       cursor.close()
 
-  def read(self, query):
+  def read(self, query, *params):
     """Execute a read-only query and return the result rows."""
-    return self._execute(query, False)
+    return self._execute(query, params, False)
 
-  def write(self, query):
+  def write(self, query, *params):
     """Execute a destructive query and return the result rows."""
-    return self._execute(query, True)
+    return self._execute(query, params, True)
 
 
 class Migration(object):
@@ -110,19 +110,18 @@ class Migration(object):
     """Insert a version row recording the start of the migration."""
     log('Beginning {0}'.format(self.number))
     name = 'Schema {0}'.format(self.number)
-    stmt = ('INSERT INTO version (name, version, updateInProcess, '
-            'created, lastModified) '
-            'VALUES ({0!r}, {1!r}, 1, now(), now())') \
-      .format(name, self.number)
-    db_client.write(stmt)
+    db_client.write(('INSERT INTO version (name, version, updateInProcess, '
+                     'created, lastModified) '
+                     'VALUES (%s, %s, 1, now(), now())'),
+                    name, self.number)
 
   def record_success(self, db_client):
     """Update a version row to show that the migration is done."""
     log('Completed {0}'.format(self.number))
-    stmt = ('UPDATE version SET updateInProcess = 0, lastModified = now() '
-            'WHERE version = {0}') \
-      .format(self.number)
-    db_client.write(stmt)
+    db_client.write(('UPDATE version SET updateInProcess = 0, '
+                     'lastModified = now() '
+                     'WHERE version = %s'),
+                    self.number)
 
   def apply(self, db_client):
     """Execute the schema migration using the given database client.
