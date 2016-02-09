@@ -201,5 +201,4 @@ args = parse_database_args()
 db_client = DatabaseClient(args)
 if args.force_clear:
   force_clear(db_client)
-else:
-  run_migrations(db_client)
+run_migrations(db_client)
