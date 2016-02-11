@@ -3,7 +3,8 @@ package org.ambraproject.rhino.view.comment;
 public class CommentInputView {
 
   private String articleDoi;
-  private String creatorAuthId;
+  private String creatorAuthId; // keeping for backward compatibility
+  private String creatorNedId;
   private String parentCommentId;
   private String title;
   private String body;
@@ -39,6 +40,18 @@ public class CommentInputView {
   @Deprecated
   public void setCreatorAuthId(String creatorAuthId) {
     this.creatorAuthId = creatorAuthId;
+  }
+
+  public String getCreatorNedId() {
+    return creatorNedId;
+  }
+
+  /**
+   * @deprecated For deserializer only
+   */
+  @Deprecated
+  public void setCreatorNedId(String creatorNedId) {
+    this.creatorNedId = creatorNedId;
   }
 
   public String getParentCommentId() {
