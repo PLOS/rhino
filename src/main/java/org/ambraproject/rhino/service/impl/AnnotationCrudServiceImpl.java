@@ -185,7 +185,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
       annotationType = AnnotationType.COMMENT;
     }
 
-    UserProfile creator = getUserProfile(Long.valueOf(input.getCreatorNedId()));
+    UserProfile creator = getUserProfile(Long.valueOf(input.getCreatorUserId()));
 
     String doiPrefix = extractDoiPrefix(articleDoi.get()); // comment receives same DOI prefix as article
     UUID uuid = UUID.randomUUID(); // generate a new DOI out of a random UUID
@@ -209,7 +209,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
   @Override
   public Flag createCommentFlag(DoiBasedIdentity commentId, CommentFlagInputView input) {
     Annotation comment = getComment(commentId);
-    UserProfile flagCreator = getUserProfile(Long.valueOf(input.getCreatorNedId()));
+    UserProfile flagCreator = getUserProfile(Long.valueOf(input.getCreatorUserId()));
 
     Flag flag = new Flag();
     flag.setFlaggedAnnotation(comment);

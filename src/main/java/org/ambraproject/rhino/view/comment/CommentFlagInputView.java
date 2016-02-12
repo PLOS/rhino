@@ -2,8 +2,7 @@ package org.ambraproject.rhino.view.comment;
 
 public class CommentFlagInputView {
 
-  private String creatorAuthId; // keeping for backward compatibility
-  private String creatorNedId;
+  private String creatorUserId;
   private String body;
   private String reasonCode;
 
@@ -18,16 +17,8 @@ public class CommentFlagInputView {
    * @deprecated For deserializer only
    */
   @Deprecated
-  public void setCreatorAuthId(String creatorAuthId) {
-    this.creatorAuthId = creatorAuthId;
-  }
-
-  /**
-   * @deprecated For deserializer only
-   */
-  @Deprecated
-  public void setCreatorNedId(String creatorNedId) {
-    this.creatorNedId = creatorNedId;
+  public void setCreatorUserId(String creatorUserId) {
+    this.creatorUserId = creatorUserId;
   }
 
   /**
@@ -46,12 +37,8 @@ public class CommentFlagInputView {
     this.reasonCode = reasonCode;
   }
 
-  public String getCreatorAuthId() {
-    return creatorAuthId;
-  }
-
-  public String getCreatorNedId() {
-    return creatorNedId;
+  public String getCreatorUserId() {
+    return creatorUserId;
   }
 
   public String getBody() {
@@ -70,7 +57,7 @@ public class CommentFlagInputView {
     CommentFlagInputView that = (CommentFlagInputView) o;
 
     if (body != null ? !body.equals(that.body) : that.body != null) return false;
-    if (creatorNedId != null ? !creatorNedId.equals(that.creatorNedId) : that.creatorNedId != null) return false;
+    if (creatorUserId != null ? !creatorUserId.equals(that.creatorUserId) : that.creatorUserId != null) return false;
     if (reasonCode != null ? !reasonCode.equals(that.reasonCode) : that.reasonCode != null) return false;
 
     return true;
@@ -78,7 +65,7 @@ public class CommentFlagInputView {
 
   @Override
   public int hashCode() {
-    int result = creatorNedId != null ? creatorNedId.hashCode() : 0;
+    int result = creatorUserId != null ? creatorUserId.hashCode() : 0;
     result = 31 * result + (body != null ? body.hashCode() : 0);
     result = 31 * result + (reasonCode != null ? reasonCode.hashCode() : 0);
     return result;
