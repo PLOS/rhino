@@ -122,11 +122,10 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
     return annotation;
   }
 
-  private UserProfile getUserProfile(String authId) {
-    UserProfile creator = (UserProfile) DataAccessUtils.uniqueResult(hibernateTemplate.find(
-        "FROM UserProfile WHERE authId = ?", authId));
+  private UserProfile getUserProfile(Long userId) {
+    UserProfile creator = (UserProfile) hibernateTemplate.get(UserProfile.class, userId);
     if (creator == null) {
-      throw new RestClientException("UserProfile not found: " + authId, HttpStatus.BAD_REQUEST);
+      throw new RestClientException("UserProfile not found for user ID: " + userId, HttpStatus.BAD_REQUEST);
     }
     return creator;
   }
@@ -186,7 +185,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
       annotationType = AnnotationType.COMMENT;
     }
 
-    UserProfile creator = getUserProfile(input.getCreatorAuthId());
+    UserProfile creator = getUserProfile(Long.valueOf(input.getCreatorUserId()));
 
     String doiPrefix = extractDoiPrefix(articleDoi.get()); // comment receives same DOI prefix as article
     UUID uuid = UUID.randomUUID(); // generate a new DOI out of a random UUID
@@ -210,7 +209,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
   @Override
   public Flag createCommentFlag(DoiBasedIdentity commentId, CommentFlagInputView input) {
     Annotation comment = getComment(commentId);
-    UserProfile flagCreator = getUserProfile(input.getCreatorAuthId());
+    UserProfile flagCreator = getUserProfile(Long.valueOf(input.getCreatorUserId()));
 
     Flag flag = new Flag();
     flag.setFlaggedAnnotation(comment);
