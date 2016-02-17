@@ -44,21 +44,6 @@ public class UserCrudController extends RestController {
   @Autowired
   private UserCrudService userCrudService;
 
-  /**
-   * @deprecated Older endpoint kept for compatibility. Prefer "?authId=" or "?displayName=".
-   */
-  @Deprecated
-  @Transactional(readOnly = true)
-  @RequestMapping(value = "/users/{authId}", method = RequestMethod.GET)
-  public void legacyRead(HttpServletRequest request, HttpServletResponse response, @PathVariable String authId) throws IOException {
-    readUsingAuthId(request, response, authId);
-  }
-
-  @RequestMapping(value = USER_ROOT, method = RequestMethod.GET, params = "authId")
-  public void readUsingAuthId(HttpServletRequest request, HttpServletResponse response, @RequestParam String authId) throws IOException {
-    userCrudService.readUsingAuthId(authId).respond(request, response, entityGson);
-  }
-
   @Transactional(readOnly = true)
   @RequestMapping(value = USER_ROOT, method = RequestMethod.GET, params = "displayName")
   public void readUsingDisplayName(HttpServletRequest request, HttpServletResponse response,
