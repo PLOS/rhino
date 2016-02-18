@@ -31,16 +31,6 @@ public interface UserCrudService {
 
   public abstract Transceiver readUsingAuthId(String authId) throws IOException;
 
-
-  /**
-   * UserProfile object for a given displayName
-   *
-   * @param displayName displayName
-   * @return UserProfile object
-   * @throws IOException
-   */
-  public abstract Transceiver readUsingDisplayName(String displayName) throws IOException;
-
   /**
    * Record user logging in
    * @param authId authId
