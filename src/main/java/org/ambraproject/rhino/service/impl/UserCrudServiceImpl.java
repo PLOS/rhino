@@ -87,33 +87,6 @@ public class UserCrudServiceImpl extends AmbraService implements UserCrudService
    * {@inheritDoc}
    */
   @Override
-  public Transceiver readUsingDisplayName(final String displayName) throws IOException {
-
-    return new EntityTransceiver<UserProfile>() {
-
-      @Override
-      protected UserProfile fetchEntity() {
-
-        UserProfile userProfile = getUserByDisplayName(displayName);
-
-        if (userProfile == null) {
-          throw new RestClientException("UserProfile not found at displayName=" + displayName, HttpStatus.NOT_FOUND);
-        }
-
-        return userProfile;
-      }
-
-      @Override
-      protected Object getView(UserProfile userProfile) {
-        return userProfile;
-      }
-    };
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public UserProfile createUserLogin(final String authId, final UserLogin userLogin) {
     Preconditions.checkNotNull(userLogin);
 
@@ -147,20 +120,4 @@ public class UserCrudServiceImpl extends AmbraService implements UserCrudService
     return userProfile;
   }
 
-    /**
-     * Find the UserProfile object for a given displayName
-     * @param authId authId
-     * @return UserProfile object
-     */
-  private UserProfile getUserByDisplayName(String displayName) {
-    UserProfile userProfile = (UserProfile) DataAccessUtils.uniqueResult(
-        hibernateTemplate.findByCriteria(
-            DetachedCriteria
-                .forClass(UserProfile.class)
-                .add(Restrictions.eq("displayName", displayName))
-        )
-    );
-
-    return userProfile;
-  }
 }

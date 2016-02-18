@@ -44,13 +44,6 @@ public class UserCrudController extends RestController {
   @Autowired
   private UserCrudService userCrudService;
 
-  @Transactional(readOnly = true)
-  @RequestMapping(value = USER_ROOT, method = RequestMethod.GET, params = "displayName")
-  public void readUsingDisplayName(HttpServletRequest request, HttpServletResponse response,
-                                   @RequestParam String displayName) throws IOException {
-    userCrudService.readUsingDisplayName(displayName).respond(request, response, entityGson);
-  }
-
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = USER_ROOT, method = RequestMethod.POST)
   public void createUserLogin(HttpServletRequest request, HttpServletResponse response, @RequestParam String authId) throws IOException {
