@@ -48,7 +48,9 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
     return new EntityCollectionTransceiver<Journal>() {
       @Override
       protected Collection<? extends Journal> fetchEntities() {
-        return (Collection<? extends Journal>) hibernateTemplate.findByCriteria(journalCriteria());
+        return (Collection<? extends Journal>) hibernateTemplate.findByCriteria(
+            DetachedCriteria.forClass(Journal.class)
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY));
       }
 
       @Override
