@@ -27,6 +27,7 @@ import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.view.comment.AnnotationNodeView;
 import org.ambraproject.rhino.view.comment.AnnotationOutputView;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
@@ -228,7 +229,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
   public Transceiver readRecentComments(String journalKey, OptionalInt limit) {
     return new Transceiver() {
       @Override
-      protected List<?> getData() throws IOException {
+      protected List<AnnotationNodeView> getData() throws IOException {
         List<Object[]> results = hibernateTemplate.execute(session -> {
           Query query = session.createQuery("" +
               "SELECT ann, art.doi, art.title " +
@@ -239,7 +240,15 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
           limit.ifPresent(query::setMaxResults);
           return query.list();
         });
-        return null; // TODO: Prepare results for viewing
+        AnnotationNodeView.Factory viewFactory = new AnnotationNodeView.Factory(runtimeConfiguration);
+        return results.stream()
+            .map((Object[] result) -> {
+              Annotation annotation = (Annotation) result[0];
+              String articleDoi = (String) result[1];
+              String articleTitle = (String) result[2];
+              return viewFactory.create(annotation, journalKey, articleDoi, articleTitle);
+            })
+            .collect(Collectors.toList());
       }
 
       @Override

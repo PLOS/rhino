@@ -8,7 +8,6 @@ import org.ambraproject.rhino.view.KeyedStringList;
 import org.ambraproject.rhino.view.article.ArticleInputView;
 import org.ambraproject.rhino.view.article.DoiList;
 import org.ambraproject.rhino.view.article.ListInputView;
-import org.ambraproject.rhino.view.comment.AnnotationOutputView;
 import org.ambraproject.rhino.view.user.AuthIdList;
 
 import java.lang.reflect.Type;
@@ -62,6 +61,9 @@ public class AdapterRegistry {
       .add(org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView.class)
       .add(org.ambraproject.rhino.view.asset.raw.RawAssetFileView.class)
 
+      .add(org.ambraproject.rhino.view.comment.AnnotationNodeView.class)
+      .add(org.ambraproject.rhino.view.comment.AnnotationOutputView.class)
+
       .add(org.ambraproject.rhino.view.journal.ArticleListView.class)
       .add(org.ambraproject.rhino.view.journal.IssueOutputView.class)
       .add(org.ambraproject.rhino.view.journal.JournalListView.class)
@@ -70,8 +72,6 @@ public class AdapterRegistry {
       .add(org.ambraproject.rhino.view.journal.JournalOutputView.class)
       .add(org.ambraproject.rhino.view.journal.VolumeListView.class)
       .add(org.ambraproject.rhino.view.journal.VolumeOutputView.class)
-
-      .add(AnnotationOutputView.class)
 
       .build();
 

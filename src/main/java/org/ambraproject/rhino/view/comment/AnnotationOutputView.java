@@ -1,7 +1,6 @@
 package org.ambraproject.rhino.view.comment;
 
 import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -13,7 +12,6 @@ import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.article.ArticleVisibility;
 
-import java.time.ZoneId;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
@@ -37,7 +35,8 @@ public class AnnotationOutputView implements JsonOutputView {
 
   private AnnotationOutputView(ArticleVisibility parentArticle,
                                Annotation comment,
-                               CompetingInterestStatement competingInterestStatement, List<AnnotationOutputView> replies,
+                               CompetingInterestStatement competingInterestStatement,
+                               List<AnnotationOutputView> replies,
                                int replyTreeSize, Date mostRecentActivity) {
     this.parentArticle = Objects.requireNonNull(parentArticle);
     this.comment = Objects.requireNonNull(comment);
@@ -49,36 +48,18 @@ public class AnnotationOutputView implements JsonOutputView {
     this.mostRecentActivity = Objects.requireNonNull(mostRecentActivity);
   }
 
-  public static class CompetingInterestStatement {
-    private final boolean creatorWasPrompted;
-    private final boolean hasCompetingInterests;
-    private final String body;
-
-    private CompetingInterestStatement(boolean creatorWasPrompted, boolean hasCompetingInterests, String body) {
-      Preconditions.checkArgument((creatorWasPrompted && hasCompetingInterests) == (body != null));
-      this.creatorWasPrompted = creatorWasPrompted;
-      this.hasCompetingInterests = hasCompetingInterests;
-      this.body = body;
-    }
-  }
-
-  private static final CompetingInterestStatement NOT_PROMPTED = new CompetingInterestStatement(false, false, null);
-  private static final CompetingInterestStatement NO_STATEMENT = new CompetingInterestStatement(true, false, null);
-
 
   public static class Factory {
+    private final CompetingInterestPolicy competingInterestPolicy;
     private final ArticleVisibility parentArticle;
     private final Map<Long, List<Annotation>> commentsByParent;
-
-    private final Date competingInterestPolicyStart;
 
     /**
      * @param parentArticle an article
      * @param comments      all comments belonging to the parent article
      */
     public Factory(RuntimeConfiguration runtimeConfiguration, Article parentArticle, Collection<Annotation> comments) {
-      this.competingInterestPolicyStart = Date.from(runtimeConfiguration.getCompetingInterestPolicyStart()
-          .atStartOfDay(ZoneId.systemDefault()).toInstant());
+      this.competingInterestPolicy = new CompetingInterestPolicy(runtimeConfiguration);
       this.parentArticle = ArticleVisibility.create(parentArticle);
       this.commentsByParent = comments.stream()
           .filter(comment -> comment.getParentID() != null)
@@ -96,20 +77,12 @@ public class AnnotationOutputView implements JsonOutputView {
           .map(this::buildView) // recursion (terminal case is when childObjects is empty)
           .collect(Collectors.toList());
 
-      CompetingInterestStatement competingInterestStatement = createCompetingInterestStatement(comment);
+      CompetingInterestStatement competingInterestStatement = competingInterestPolicy.createStatement(comment);
       int replyTreeSize = calculateReplyTreeSize(childViews);
       Date mostRecentActivity = findMostRecentActivity(comment, childViews);
 
       return new AnnotationOutputView(parentArticle, comment, competingInterestStatement,
           childViews, replyTreeSize, mostRecentActivity);
-    }
-
-    private CompetingInterestStatement createCompetingInterestStatement(Annotation comment) {
-      String competingInterestBody = comment.getCompetingInterestBody();
-      boolean hasCompetingInterests = !Strings.isNullOrEmpty(competingInterestBody);
-      boolean creatorWasPrompted = hasCompetingInterests || comment.getCreated().after(competingInterestPolicyStart);
-      return !creatorWasPrompted ? NOT_PROMPTED : !hasCompetingInterests ? NO_STATEMENT
-          : new CompetingInterestStatement(true, true, competingInterestBody);
     }
 
     private static int calculateReplyTreeSize(Collection<AnnotationOutputView> childViews) {
@@ -139,8 +112,9 @@ public class AnnotationOutputView implements JsonOutputView {
 
   private static final JsonElement EMPTY_STRING = new JsonPrimitive("");
 
-  @Override
-  public JsonElement serialize(JsonSerializationContext context) {
+  static JsonObject serializeBase(JsonSerializationContext context,
+                                  Annotation comment,
+                                  CompetingInterestStatement competingInterestStatement) {
     JsonObject serialized = context.serialize(comment).getAsJsonObject();
     serialized.remove("articleID");
     normalizeField(serialized, "title");
@@ -149,6 +123,12 @@ public class AnnotationOutputView implements JsonOutputView {
 
     serialized.remove("competingInterestBody");
     serialized.add("competingInterestStatement", context.serialize(competingInterestStatement));
+    return serialized;
+  }
+
+  @Override
+  public JsonElement serialize(JsonSerializationContext context) {
+    JsonObject serialized = serializeBase(context, comment, competingInterestStatement);
 
     serialized.add("parentArticle", context.serialize(parentArticle));
     serialized.add("replyTreeSize", context.serialize(replyTreeSize));
