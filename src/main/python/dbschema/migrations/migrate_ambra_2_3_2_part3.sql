@@ -1,0 +1,14 @@
+drop table AnnotationAuthorCitationJoinTable;
+drop table AnnotationEditorCitationJoinTable;
+drop table Annotation;
+drop table AnnotationBlob;
+drop table Trackback;
+drop table TrackbackContent;
+drop table RatingContent;
+drop table RatingSummaryContent;
+drop table ArticleContributor;
+drop table CollaborativeAuthors;
+drop table Citation;
+drop table RepliesJoinTable;
+drop table Reply;
+drop table ReplyBlob;
