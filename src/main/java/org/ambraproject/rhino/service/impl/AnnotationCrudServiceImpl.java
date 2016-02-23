@@ -27,7 +27,7 @@ import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.util.response.Transceiver;
-import org.ambraproject.rhino.view.AnnotationOutputView;
+import org.ambraproject.rhino.view.comment.AnnotationOutputView;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
 import org.hibernate.FetchMode;

@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.view;
+package org.ambraproject.rhino.view.comment;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
@@ -10,6 +10,7 @@ import com.google.gson.JsonSerializationContext;
 import org.ambraproject.models.Annotation;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
+import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.article.ArticleVisibility;
 
 import java.time.ZoneId;

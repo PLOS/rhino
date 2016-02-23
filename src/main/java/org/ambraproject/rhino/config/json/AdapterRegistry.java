@@ -8,6 +8,7 @@ import org.ambraproject.rhino.view.KeyedStringList;
 import org.ambraproject.rhino.view.article.ArticleInputView;
 import org.ambraproject.rhino.view.article.DoiList;
 import org.ambraproject.rhino.view.article.ListInputView;
+import org.ambraproject.rhino.view.comment.AnnotationOutputView;
 import org.ambraproject.rhino.view.user.AuthIdList;
 
 import java.lang.reflect.Type;
@@ -70,7 +71,7 @@ public class AdapterRegistry {
       .add(org.ambraproject.rhino.view.journal.VolumeListView.class)
       .add(org.ambraproject.rhino.view.journal.VolumeOutputView.class)
 
-      .add(org.ambraproject.rhino.view.AnnotationOutputView.class)
+      .add(AnnotationOutputView.class)
 
       .build();
 
