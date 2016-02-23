@@ -22,6 +22,7 @@ import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
 
 import java.io.IOException;
+import java.util.OptionalInt;
 
 /**
  * Service that handles comments and replies associated with articles. For legacy reasons, these are referred to
@@ -51,5 +52,7 @@ public interface AnnotationCrudService {
   public Annotation createComment(CommentInputView input);
 
   public Flag createCommentFlag(DoiBasedIdentity commentId, CommentFlagInputView input);
+
+  public Transceiver readRecentComments(String journalKey, OptionalInt limit);
 
 }
