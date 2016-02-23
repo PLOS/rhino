@@ -234,7 +234,9 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
           Query query = session.createQuery("" +
               "SELECT ann, art.doi, art.title " +
               "FROM Annotation ann, Article art, Journal j " +
-              "WHERE j IN ELEMENTS(art.journals) AND j.journalKey = :journalKey " +
+              "WHERE ann.articleID = art.ID " +
+              "  AND j IN ELEMENTS(art.journals) " +
+              "  AND j.journalKey = :journalKey " +
               "ORDER BY ann.created DESC");
           query.setParameter("journalKey", journalKey);
           limit.ifPresent(query::setMaxResults);
