@@ -27,10 +27,12 @@ import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.util.response.Transceiver;
-import org.ambraproject.rhino.view.AnnotationOutputView;
+import org.ambraproject.rhino.view.comment.AnnotationNodeView;
+import org.ambraproject.rhino.view.comment.AnnotationOutputView;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
 import org.hibernate.FetchMode;
+import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +44,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -220,6 +223,41 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
 
     hibernateTemplate.save(flag);
     return flag;
+  }
+
+  @Override
+  public Transceiver readRecentComments(String journalKey, OptionalInt limit) {
+    return new Transceiver() {
+      @Override
+      protected List<AnnotationNodeView> getData() throws IOException {
+        List<Object[]> results = hibernateTemplate.execute(session -> {
+          Query query = session.createQuery("" +
+              "SELECT ann, art.doi, art.title " +
+              "FROM Annotation ann, Article art, Journal j " +
+              "WHERE ann.articleID = art.ID " +
+              "  AND j IN ELEMENTS(art.journals) " +
+              "  AND j.journalKey = :journalKey " +
+              "ORDER BY ann.created DESC");
+          query.setParameter("journalKey", journalKey);
+          limit.ifPresent(query::setMaxResults);
+          return query.list();
+        });
+        AnnotationNodeView.Factory viewFactory = new AnnotationNodeView.Factory(runtimeConfiguration);
+        return results.stream()
+            .map((Object[] result) -> {
+              Annotation annotation = (Annotation) result[0];
+              String articleDoi = (String) result[1];
+              String articleTitle = (String) result[2];
+              return viewFactory.create(annotation, journalKey, articleDoi, articleTitle);
+            })
+            .collect(Collectors.toList());
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    };
   }
 
 }
