@@ -73,9 +73,9 @@ public class HibernateEntityUtil {
     }
 
     if (persistentEntities instanceof List) {
-      Comparator<E> order = Comparator.comparing(keyExtractor,
-          Ordering.explicit(replacementMap.keySet().asList()));
-      ((List<E>) persistentEntities).sort(order);
+      Comparator<K> keyOrder = Ordering.explicit(replacementMap.keySet().asList());
+      Comparator<E> entityOrder = Comparator.comparing(keyExtractor, keyOrder);
+      ((List<E>) persistentEntities).sort(entityOrder);
     }
   }
 
