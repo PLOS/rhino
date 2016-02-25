@@ -1,11 +1,8 @@
 package org.ambraproject.rhino.view.article;
 
 import com.google.common.collect.ImmutableList;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -118,57 +115,6 @@ public class AuthorView {
     }
 
     return sb.toString();
-  }
-
-  /**
-   * Build a comma-delimited list of author names.
-   *
-   * @param authors a list of non-null authors
-   * @return the list of author names, as text
-   */
-  public static String buildNameList(List<? extends AuthorView> authors) {
-    Iterator<? extends AuthorView> iterator = authors.iterator();
-    if (!iterator.hasNext()) {
-      return "";
-    }
-    StringBuilder textList = new StringBuilder();
-    textList.append(iterator.next().getFullName());
-    while (iterator.hasNext()) {
-      textList.append(", ").append(iterator.next().getFullName());
-    }
-    return textList.toString();
-  }
-
-  /**
-   * Build a comma-delimited list of names of equally contributing authors.
-   *
-   * @param authors a list of non-null authors
-   * @return the list of equally contributing authors' names, as text
-   */
-  public static String buildContributingAuthorsList(List<? extends AuthorView> authors) {
-    List<AuthorView> contributingAuthors = new ArrayList<AuthorView>(authors.size());
-    for (AuthorView author : authors) {
-      if (author.getEqualContrib()) {
-        contributingAuthors.add(author);
-      }
-    }
-    return buildNameList(contributingAuthors);
-  }
-
-  /**
-   * Check whether any author in an iterable has any iterations. This method predicts whether {@link
-   * org.ambraproject.action.article.FetchArticleTabsAction#getAuthorsByAffiliation()} will return an empty result.
-   *
-   * @param authors an iterable of non-null authors
-   * @return {@code true} if any author in the iterable has an affiliation
-   */
-  public static boolean anyHasAffiliation(Iterable<? extends AuthorView> authors) {
-    for (AuthorView author : authors) {
-      if (CollectionUtils.isNotEmpty(author.getAffiliations())) {
-        return true;
-      }
-    }
-    return false;
   }
 
   public static Builder builder() {
