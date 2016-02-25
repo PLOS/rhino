@@ -1,9 +1,12 @@
 package org.ambraproject.rhino.view.article;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
-import org.apache.commons.lang.StringUtils;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * JSON output view class for authors of an article.
@@ -24,10 +27,10 @@ public class AuthorView {
   private final ImmutableList<String> customFootnotes;
 
   private AuthorView(Builder builder) {
-    this.givenNames = builder.givenNames;
-    this.surnames = builder.surnames;
-    this.suffix = builder.suffix;
-    this.onBehalfOf = builder.onBehalfOf;
+    this.givenNames = Strings.emptyToNull(builder.givenNames);
+    this.surnames = Strings.emptyToNull(builder.surnames);
+    this.suffix = Strings.emptyToNull(builder.suffix);
+    this.onBehalfOf = Strings.emptyToNull(builder.onBehalfOf);
     this.equalContrib = builder.equalContrib;
     this.deceased = builder.deceased;
     this.relatedFootnote = builder.relatedFootnote;
@@ -94,27 +97,9 @@ public class AuthorView {
   }
 
   private static String buildFullName(String givenNames, String surnames, String suffix) {
-    StringBuilder sb = new StringBuilder();
-
-    if (!StringUtils.isEmpty(givenNames)) {
-      sb.append(givenNames);
-    }
-
-    if (!StringUtils.isEmpty(surnames)) {
-      if (sb.length() > 0) {
-        sb.append(" ");
-      }
-      sb.append(surnames);
-    }
-
-    if (!StringUtils.isEmpty(suffix)) {
-      if (sb.length() > 0) {
-        sb.append(" ");
-      }
-      sb.append(suffix);
-    }
-
-    return sb.toString();
+    return Stream.of(givenNames, surnames, suffix)
+        .filter(Objects::nonNull)
+        .collect(Collectors.joining(" "));
   }
 
   public static Builder builder() {
