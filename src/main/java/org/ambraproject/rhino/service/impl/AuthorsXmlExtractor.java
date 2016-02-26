@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableMap;
 import org.ambraproject.rhino.shared.XPathExtractor;
 import org.ambraproject.rhino.util.StringReplacer;
 import org.ambraproject.rhino.view.article.AuthorView;
+import org.ambraproject.rhino.view.article.Orcid;
 import org.ambraproject.util.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -106,6 +107,7 @@ public final class AuthorsXmlExtractor {
 
       Node surNameNode = xpath.selectNode(authorDoc, "./contrib/name/surname");
       Node givenNameNode = xpath.selectNode(authorDoc, "./contrib/name/given-names");
+      Node orcidNode = xpath.selectNode(authorDoc, "./contrib/contrib-id[@contrib-id-type='orcid']");
       Node collabNameNode = xpath.selectNode(authorDoc, "//collab");
       Node behalfOfNode = xpath.selectNode(authorDoc, "//on-behalf-of");
       NodeList otherFootnotesNodeList = xpath.selectNodes(authorDoc, "//xref[@ref-type='fn']");
@@ -163,7 +165,7 @@ public final class AuthorsXmlExtractor {
         continue;
       }
 
-      AuthorView author = getAuthorView(authorDoc, surNameNode, givenNameNode, behalfOfNode, otherFootnotesNodeList);
+      AuthorView author = getAuthorView(authorDoc, surNameNode, givenNameNode, behalfOfNode, otherFootnotesNodeList, orcidNode);
       list.add(author);
     }
 
@@ -174,7 +176,8 @@ public final class AuthorsXmlExtractor {
                                    Node surNameNode,
                                    Node givenNameNode,
                                    Node behalfOfNode,
-                                   NodeList otherFootnotesNodeList)
+                                   NodeList otherFootnotesNodeList,
+                                   Node orcidNode)
       throws XPathException {
     Node suffixNode = xpath.selectNode(authorDoc, "//name/suffix");
     Node equalContribNode = xpath.selectNode(authorDoc, "//@equal-contrib");
@@ -280,11 +283,14 @@ public final class AuthorsXmlExtractor {
       }
     }
 
+    Orcid orcid = (orcidNode != null) ? buildOrcid(orcidNode) : null;
+
     return AuthorView.builder()
         .setGivenNames(givenName)
         .setSurnames(surname)
         .setSuffix(suffix)
         .setOnBehalfOf(onBehalfOf)
+        .setOrcid(orcid)
         .setEqualContrib(equalContrib)
         .setDeceased(deceased)
         .setRelatedFootnote(relatedFootnote)
@@ -293,6 +299,14 @@ public final class AuthorsXmlExtractor {
         .setAffiliations(affiliations)
         .setCustomFootnotes(otherFootnotes)
         .build();
+  }
+
+  private Orcid buildOrcid(Node orcidNode) {
+    String value = orcidNode.getTextContent();
+    Node authenticatedNode = orcidNode.getAttributes().getNamedItem("authenticated");
+    boolean authenticated = (authenticatedNode != null) &&
+        Boolean.TRUE.toString().equalsIgnoreCase(authenticatedNode.getNodeValue());
+    return new Orcid(value, authenticated);
   }
 
   /**
@@ -507,7 +521,7 @@ public final class AuthorsXmlExtractor {
    * @return a list of the text content of the nodes found, or {@code null} if none
    */
   private static List<String> findTextFromNodes(Document document, String xpathExpression,
-      XPathExtractor xPath) throws XPathException {
+                                                XPathExtractor xPath) throws XPathException {
 
     NodeList nodes;
     try {
