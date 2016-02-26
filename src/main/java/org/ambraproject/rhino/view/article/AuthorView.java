@@ -18,6 +18,7 @@ public class AuthorView {
   private final String fullName;
   private final String suffix;
   private final String onBehalfOf;
+  private final Orcid orcid;
   private final boolean equalContrib;
   private final boolean deceased;
   private final boolean relatedFootnote;
@@ -31,6 +32,7 @@ public class AuthorView {
     this.surnames = Strings.emptyToNull(builder.surnames);
     this.suffix = Strings.emptyToNull(builder.suffix);
     this.onBehalfOf = Strings.emptyToNull(builder.onBehalfOf);
+    this.orcid = builder.orcid;
     this.equalContrib = builder.equalContrib;
     this.deceased = builder.deceased;
     this.relatedFootnote = builder.relatedFootnote;
@@ -62,6 +64,10 @@ public class AuthorView {
 
   public String getOnBehalfOf() {
     return onBehalfOf;
+  }
+
+  public Orcid getOrcid() {
+    return orcid;
   }
 
   public boolean getEqualContrib() {
@@ -119,6 +125,7 @@ public class AuthorView {
     builder.setSurnames(av.getSurnames());
     builder.setSuffix(av.getSuffix());
     builder.setOnBehalfOf(av.getOnBehalfOf());
+    builder.setOrcid(av.getOrcid());
     builder.setEqualContrib(av.getEqualContrib());
     builder.setDeceased(av.getDeceased());
     builder.setCorresponding(av.getCorresponding());
@@ -137,6 +144,7 @@ public class AuthorView {
     private String surnames;
     private String suffix;
     private String onBehalfOf;
+    private Orcid orcid;
     private boolean equalContrib;
     private boolean deceased;
     private boolean relatedFootnote;
@@ -162,6 +170,11 @@ public class AuthorView {
 
     public Builder setOnBehalfOf(String onBehalfOf) {
       this.onBehalfOf = onBehalfOf;
+      return this;
+    }
+
+    public Builder setOrcid(Orcid orcid) {
+      this.orcid = orcid;
       return this;
     }
 
@@ -209,7 +222,7 @@ public class AuthorView {
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (!(o instanceof AuthorView)) return false;
+    if (o == null || getClass() != o.getClass()) return false;
 
     AuthorView that = (AuthorView) o;
 
@@ -227,6 +240,7 @@ public class AuthorView {
     if (fullName != null ? !fullName.equals(that.fullName) : that.fullName != null) return false;
     if (givenNames != null ? !givenNames.equals(that.givenNames) : that.givenNames != null) return false;
     if (onBehalfOf != null ? !onBehalfOf.equals(that.onBehalfOf) : that.onBehalfOf != null) return false;
+    if (orcid != null ? !orcid.equals(that.orcid) : that.orcid != null) return false;
     if (suffix != null ? !suffix.equals(that.suffix) : that.suffix != null) return false;
     if (surnames != null ? !surnames.equals(that.surnames) : that.surnames != null) return false;
 
@@ -240,6 +254,7 @@ public class AuthorView {
     result = 31 * result + (fullName != null ? fullName.hashCode() : 0);
     result = 31 * result + (suffix != null ? suffix.hashCode() : 0);
     result = 31 * result + (onBehalfOf != null ? onBehalfOf.hashCode() : 0);
+    result = 31 * result + (orcid != null ? orcid.hashCode() : 0);
     result = 31 * result + (equalContrib ? 1 : 0);
     result = 31 * result + (deceased ? 1 : 0);
     result = 31 * result + (relatedFootnote ? 1 : 0);
