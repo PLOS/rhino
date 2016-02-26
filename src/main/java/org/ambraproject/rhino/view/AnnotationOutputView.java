@@ -141,6 +141,9 @@ public class AnnotationOutputView implements JsonOutputView {
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = context.serialize(comment).getAsJsonObject();
+    serialized.remove("userProfileID");
+    Long userProfileID = comment.getUserProfileID();
+    serialized.add("userProfileID", context.serialize(userProfileID != null ? String.valueOf(userProfileID) : null));
     serialized.remove("articleID");
     normalizeField(serialized, "title");
     normalizeField(serialized, "body");

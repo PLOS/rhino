@@ -6,7 +6,6 @@ import com.google.gson.FieldAttributes;
 import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.models.ArticleRelationship;
 import org.ambraproject.models.Journal;
-import org.ambraproject.models.UserProfile;
 
 /**
  * Exclusions for classes and fields when using Gson's default, reflection-based serialization logic.
