@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import edu.emory.mathcs.backport.java.util.Arrays;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.content.xml.XpathReader;
-import org.ambraproject.views.AuthorView;
+import org.ambraproject.rhino.view.article.AuthorView;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.DataProvider;
