@@ -28,6 +28,7 @@ this program has a `--force_clear` option to clear it.
 """
 
 from __future__ import print_function
+from time import sleep
 import MySQLdb  # may require `apt-get install python-mysqldb`
 import argparse
 import itertools
@@ -46,7 +47,7 @@ def parse_database_args():
                       help='MySQL database (default: ambra)')
   parser.add_argument('--dbHost', default='localhost',
                       help='MySQL host (default: localhost)')
-  parser.add_argument('--dbPort', type=int, default='3307',
+  parser.add_argument('--dbPort', type=int, default='3306',
                       help='port to use with MySQL host (default: 3307)')
   parser.add_argument('--force_clear', action='store_true',
                       help='Clear migrations in progress')
@@ -68,23 +69,21 @@ class DatabaseClient(object):
                                passwd=self.args.dbPass, db=self.args.dbName,
                                charset='utf8', use_unicode=True)
 
-  def _execute(self, query, params, is_destructive):
+  def _execute(self, query, params):
     try:
       cursor = self.con.cursor()
       cursor.execute(query, params)
-      if is_destructive:
-        self.con.commit()
       return cursor.fetchall()
     finally:
       cursor.close()
 
   def read(self, query, *params):
     """Execute a read-only query and return the result rows."""
-    return self._execute(query, params, False)
+    return self._execute(query, params)
 
   def write(self, query, *params):
     """Execute a destructive query and return the result rows."""
-    return self._execute(query, params, True)
+    return self._execute(query, params)
 
 
 class Migration(object):
