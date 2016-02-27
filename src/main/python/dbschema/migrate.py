@@ -28,10 +28,8 @@ this program has a `--force_clear` option to clear it.
 """
 
 from __future__ import print_function
-from time import sleep
 import MySQLdb  # may require `apt-get install python-mysqldb`
 import argparse
-import itertools
 import json
 
 log = print
@@ -47,7 +45,7 @@ def parse_database_args():
                       help='MySQL database (default: ambra)')
   parser.add_argument('--dbHost', default='localhost',
                       help='MySQL host (default: localhost)')
-  parser.add_argument('--dbPort', type=int, default='3306',
+  parser.add_argument('--dbPort', type=int, default='3307',
                       help='port to use with MySQL host (default: 3307)')
   parser.add_argument('--force_clear', action='store_true',
                       help='Clear migrations in progress')
