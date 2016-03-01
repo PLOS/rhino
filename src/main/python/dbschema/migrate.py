@@ -66,7 +66,7 @@ class DatabaseClient(object):
     self.con = MySQLdb.connect(host=self.args.dbHost, user=self.args.dbUser,
                                passwd=self.args.dbPass, db=self.args.dbName,
                                charset='utf8', use_unicode=True)
-
+    self.con.autocommit(True)
   def _execute(self, query, params):
     try:
       cursor = self.con.cursor()
@@ -75,14 +75,9 @@ class DatabaseClient(object):
     finally:
       cursor.close()
 
-  def read(self, query, *params):
-    """Execute a read-only query and return the result rows."""
+  def execute(self, query, *params):
+    """Execute a query and return the result rows."""
     return self._execute(query, params)
-
-  def write(self, query, *params):
-    """Execute a destructive query and return the result rows."""
-    return self._execute(query, params)
-
 
 class Migration(object):
   """The migration to update to a schema version number.
@@ -107,7 +102,7 @@ class Migration(object):
     """Insert a version row recording the start of the migration."""
     log('Beginning {0}'.format(self.number))
     name = 'Schema {0}'.format(self.number)
-    db_client.write(('INSERT INTO version (name, version, updateInProcess, '
+    db_client.execute(('INSERT INTO version (name, version, updateInProcess, '
                      'created, lastModified) '
                      'VALUES (%s, %s, 1, now(), now())'),
                     name, self.number)
@@ -115,7 +110,7 @@ class Migration(object):
   def record_success(self, db_client):
     """Update a version row to show that the migration is done."""
     log('Completed {0}'.format(self.number))
-    db_client.write(('UPDATE version SET updateInProcess = 0, '
+    db_client.execute(('UPDATE version SET updateInProcess = 0, '
                      'lastModified = now() '
                      'WHERE version = %s'),
                     self.number)
@@ -131,7 +126,7 @@ class Migration(object):
     self.start_progress(db_client)
     for (script_name, script) in scripts:
       log('  Beginning {0}'.format(script_name))
-      result = db_client.write(script)
+      result = db_client.execute(script)
       log('  Completed {0}'.format(script_name))
     self.record_success(db_client)
 
@@ -173,7 +168,7 @@ def force_clear(db_client):
   halted abnormally, and only when another migration is not running
   concurrently.
   """
-  db_client.write('UPDATE version SET updateInProcess = 0;')
+  db_client.execute('UPDATE version SET updateInProcess = 0;')
 
 MIGRATIONS_IN_PROGRESS_MESSAGE = """
 Migrations are marked as in progress for: {versions}
@@ -186,13 +181,13 @@ running and use the --force_clear option to proceed.
 def run_migrations(db_client):
   """Bring the connected database's schema up to date."""
 
-  in_progress = db_client.read(
+  in_progress = db_client.execute(
     'SELECT version FROM version WHERE updateInProcess > 0;')
   if in_progress:
     raise Exception(MIGRATIONS_IN_PROGRESS_MESSAGE.format(
       versions=[int(r[0]) for r in in_progress]))
 
-  version = db_client.read('SELECT MAX(version) FROM version;')[0][0]
+  version = db_client.execute('SELECT MAX(version) FROM version;')[0][0]
 
   with open('migrations.json') as f:
     mt = MigrationTable(json.load(f))
