@@ -21,7 +21,6 @@ import com.google.gson.reflect.TypeToken;
 import org.ambraproject.models.Annotation;
 import org.ambraproject.models.AnnotationType;
 import org.ambraproject.models.Article;
-import org.ambraproject.models.UserProfile;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.IngestibleUtil;
 import org.ambraproject.rhino.RhinoTestHelper;
@@ -82,10 +81,10 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
         DoiBasedCrudService.WriteMode.CREATE_ONLY);
     article.setJournals(ImmutableSet.of());
 
-    UserProfile creator = new UserProfile("fake@example.org", "displayName", "password");
-    hibernateTemplate.save(creator);
+    Long creator = 5362l;
+
     Annotation comment1 = new Annotation();
-    comment1.setCreator(creator);
+    comment1.setUserProfileID(creator);
     comment1.setArticleID(article.getID());
     comment1.setAnnotationUri("10.1371/annotation/test_comment_1");
     comment1.setType(AnnotationType.COMMENT);
@@ -96,7 +95,7 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
 
     // Reply to the comment.
     Annotation reply = new Annotation();
-    reply.setCreator(creator);
+    reply.setUserProfileID(creator);
     reply.setArticleID(article.getID());
     reply.setAnnotationUri("10.1371/reply/test_reply_level_1");
     reply.setParentID(comment1.getID());
@@ -107,7 +106,7 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
 
     // Another first-level reply to the comment.
     Annotation reply2 = new Annotation();
-    reply2.setCreator(creator);
+    reply2.setUserProfileID(creator);
     reply2.setArticleID(article.getID());
     reply2.setAnnotationUri("10.1371/reply/test_reply_2_level_1");
     reply2.setParentID(comment1.getID());
@@ -118,7 +117,7 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
 
     // Reply to the first reply.
     Annotation reply3 = new Annotation();
-    reply3.setCreator(creator);
+    reply3.setUserProfileID(creator);
     reply3.setArticleID(article.getID());
     reply3.setAnnotationUri("10.1371/reply/test_reply_3_level_2");
     reply3.setParentID(reply.getID());
@@ -128,7 +127,7 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     hibernateTemplate.save(reply3);
 
     Annotation comment2 = new Annotation();
-    comment2.setCreator(creator);
+    comment2.setUserProfileID(creator);
     comment2.setArticleID(article.getID());
     comment2.setAnnotationUri("10.1371/annotation/test_comment_2");
     comment2.setType(AnnotationType.COMMENT);
@@ -137,7 +136,7 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     hibernateTemplate.save(comment2);
 
     Annotation comment3 = new Annotation();
-    comment3.setCreator(creator);
+    comment3.setUserProfileID(creator);
     comment3.setArticleID(article.getID());
     comment3.setAnnotationUri("10.1371/annotation/test_comment_3");
     comment3.setType(AnnotationType.COMMENT);
@@ -180,7 +179,6 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
   private static final ImmutableSet<String> ANNOTATION_FIELDS = ImmutableSet.of(
       "type", "annotationUri", "title", "body", "created", "lastModified", "highlightedText",
       "competingInterestStatement", "replyTreeSize", "mostRecentActivity");
-  private static final ImmutableSet<String> CREATOR_FIELDS = ImmutableSet.of("profileUri", "authId");
   private static final ImmutableSet<String> ARTICLE_FIELDS = ImmutableSet.of("doi", "state");
 
   private static <K> void assertMapsEqual(Map<K, ?> actual, Map<K, ?> expected, Collection<? extends K> keys) {
@@ -196,10 +194,6 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
 
   private static void assertAnnotationsEqual(Map<String, ?> actual, Map<String, ?> expected) {
     assertMapsEqual(actual, expected, ANNOTATION_FIELDS);
-
-    Map<String, ?> actualCreator = (Map<String, ?>) actual.get("creator");
-    Map<String, ?> expectedCreator = (Map<String, ?>) expected.get("creator");
-    assertMapsEqual(actualCreator, expectedCreator, CREATOR_FIELDS);
 
     Map<String, ?> actualArticle = (Map<String, ?>) actual.get("parentArticle");
     Map<String, ?> expectedArticle = (Map<String, ?>) expected.get("parentArticle");
