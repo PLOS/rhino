@@ -153,7 +153,7 @@
     <dependency>
       <groupId>org.ambraproject</groupId>
       <artifactId>ambra-base</artifactId>
-      <version>${ambra.version}</version>
+      <version>2.10.21-NED</version>
       <exclusions>
         <!--These are some easy wins for reducing the size of the war, we don't need these libraries-->
         <exclusion>
