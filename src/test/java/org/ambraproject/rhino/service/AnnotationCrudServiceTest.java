@@ -28,7 +28,7 @@ import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.util.Archive;
-import org.ambraproject.rhino.view.AnnotationOutputView;
+import org.ambraproject.rhino.view.comment.AnnotationOutputView;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeMethod;

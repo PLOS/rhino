@@ -47,12 +47,11 @@ import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleAllAuthorsView;
-import org.ambraproject.rhino.view.article.ArticleAuthorView;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
 import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
+import org.ambraproject.rhino.view.article.AuthorView;
 import org.ambraproject.rhino.view.article.RelatedArticleView;
-import org.ambraproject.views.AuthorView;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -330,9 +329,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         } catch (XPathException e) {
           throw new RuntimeException("Invalid XML when parsing authors from: " + id, e);
         }
-        List<ArticleAuthorView> authorViews = authors.stream().map(ArticleAuthorView::new)
-            .collect(Collectors.toList());
-        return new ArticleAllAuthorsView(authorViews, authorContributions, competingInterests, correspondingAuthorList);
+        return new ArticleAllAuthorsView(authors, authorContributions, competingInterests, correspondingAuthorList);
       }
     };
   }
