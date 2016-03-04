@@ -41,9 +41,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.io.StringWriter;
 import java.util.Calendar;
 import java.util.Date;
@@ -240,6 +240,15 @@ public abstract class RestController {
     return respondWithPlainText(report.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
+  private static Reader readRequestBody(HttpServletRequest request) throws IOException {
+    String characterEncoding = request.getCharacterEncoding();
+    if (characterEncoding == null) {
+      log.warn("Request with text body does not declare character encoding");
+      return new InputStreamReader(request.getInputStream());
+    }
+    return new InputStreamReader(request.getInputStream(), characterEncoding);
+  }
+
   /**
    * De-serializes a JSON object from an HTTP PUT request.  As a side effect of calling this method, the InputStream
    * associated with the request will be closed.
@@ -252,8 +261,8 @@ public abstract class RestController {
    */
   protected <T> T readJsonFromRequest(HttpServletRequest request, Class<T> clazz) throws IOException {
     T result;
-    try (InputStream is = request.getInputStream()) {
-      result = entityGson.fromJson(new BufferedReader(new InputStreamReader(is)), clazz);
+    try (Reader requestBody = readRequestBody(request)) {
+      result = entityGson.fromJson(new BufferedReader(requestBody), clazz);
     } catch (JsonParseException e) {
       throw new RestClientException("Request body contains invalid JSON", HttpStatus.BAD_REQUEST, e);
     }
