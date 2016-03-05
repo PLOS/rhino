@@ -14,7 +14,6 @@ import com.google.common.io.ByteStreams;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleRelationship;
-import org.ambraproject.models.Category;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
 import org.ambraproject.rhino.content.xml.AssetXml;
@@ -105,6 +104,7 @@ class LegacyIngestionService {
     Document doc = parentService.parseXml(xmlData);
     Article article = populateArticleFromXml(doc, suppliedId, mode, xmlData.length);
     persistArticle(article, xmlData);
+    populateCategories(article, doc);
     return article;
   }
 
@@ -174,7 +174,6 @@ class LegacyIngestionService {
 
     // TODO: If an article should have multiple journals, how does it get them?
     article.setJournals(Sets.newHashSet(parentService.getPublicationJournal(article)));
-    populateCategories(article, doc);
     initializeAssets(article, manifestXml, xml, xmlDataLength);
     populateRelatedArticles(article, xml);
 
@@ -375,6 +374,7 @@ class LegacyIngestionService {
     // Save now, before we add asset files, since AssetCrudServiceImpl will expect the
     // Article to be persisted at this point.
     persistArticle(article, xmlData);
+    populateCategories(article, doc);
     try {
       addAssetFiles(article, archive, manifest);
 
@@ -478,45 +478,33 @@ class LegacyIngestionService {
     }
   }
 
-  void repopulateCategories(ArticleIdentity id) throws IOException {
-    Document doc = parentService.parseXml(parentService.readXml(id));
-    Article article = findArticleById(id);
-    populateCategories(article, doc);
-    if (article.getCategories().size() > 0) {
-      saveArticleToHibernate(article);
-    } else {
-      throw new IOException("Taxonomy server returned 0 terms. Cannot repopulate Categories. "
-          + article.getDoi());
-    }
-  }
-
   /**
-   * Populates article category information by making a call to the taxonomy server.
+   * Populates article category information by making a call to the taxonomy server. Will not throw
+   * an exception if we cannot communicate or get results from the taxonomy server. Will not
+   * request categories for amendments.
    *
    * @param article the Article model instance
    * @param xml     Document representing the article XML
    */
-  private void populateCategories(Article article, Document xml) {
-
-    // Attempt to assign categories to the non-amendment article based on the taxonomy server.  However,
-    // we still want to ingest the article even if this process fails.
+  public void populateCategories(Article article, Document xml) {
     Map<String, Integer> terms;
-
+    String doi = article.getDoi();
     try {
       if (!parentService.articleService.isAmendment(article)) {
         terms = parentService.taxonomyService.classifyArticle(xml, article);
         if (terms != null && terms.size() > 0) {
           parentService.articleService.setArticleCategories(article, terms);
         } else {
-          article.setCategories(new HashMap<Category, Integer>());
+          log.error("Taxonomy server returned 0 terms. Cannot populate Categories. " + doi);
+          article.setCategories(new HashMap<>());
         }
       } else {
-        article.setCategories(new HashMap<Category, Integer>());
+        article.setCategories(new HashMap<>());
       }
     } catch (TaxonomyClassificationService.TaxonomyClassificationServiceNotConfiguredException e) {
-      log.error("Taxonomy server not configured. Ingesting article without categories. " + article.getDoi(), e);
+      log.error("Taxonomy server not configured. " + doi, e);
     } catch (Exception e) {
-      log.error("Taxonomy server not responding, but ingesting article anyway." + article.getDoi(), e);
+      log.error("Taxonomy server not responding. " + doi, e);
     }
   }
 
