@@ -10,9 +10,9 @@ import java.util.List;
 
 public class DummyTaxonomyClassificationService implements TaxonomyClassificationService {
 
-  public static final ImmutableMap<String, Integer> DUMMY_DATA = ImmutableMap.<String, Integer>builder()
-      .put("/TopLevel1/term1", 5)
-      .put("/TopLevel2/term2", 10)
+  public static final ImmutableList<WeightedTerm> DUMMY_DATA = ImmutableList.<WeightedTerm>builder()
+      .add(new WeightedTerm("/TopLevel1/term1", 5))
+      .add(new WeightedTerm("/TopLevel2/term2", 10))
       .build();
 
   @Override
