@@ -1,5 +1,8 @@
 package org.ambraproject.rhino.service.taxonomy;
 
+import com.google.common.base.Splitter;
+import com.google.common.collect.Iterables;
+
 import java.util.Comparator;
 import java.util.Objects;
 
@@ -20,8 +23,16 @@ public final class WeightedTerm {
     return weight;
   }
 
+
+  private static final Splitter TERM_SPLITTER = Splitter.on('/');
+
+  public String getLeafTerm() {
+    return Iterables.getLast(TERM_SPLITTER.split(term));
+  }
+
   public static final Comparator<WeightedTerm> BY_DESCENDING_WEIGHT =
       Comparator.comparing(WeightedTerm::getWeight).reversed();
+
 
   @Override
   public boolean equals(Object o) {

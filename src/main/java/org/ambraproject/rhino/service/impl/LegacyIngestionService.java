@@ -34,6 +34,7 @@ import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -72,6 +73,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -515,10 +517,10 @@ class LegacyIngestionService {
     }
   }
 
-  private List<WeightedCategory> setArticleCategories(Article article, List<WeightedTerm> categories) {
+  private void setArticleCategories(Article article, List<WeightedTerm> categories) {
     categories.sort(WeightedTerm.BY_DESCENDING_WEIGHT);
 
-    List<WeightedCategory> results = new ArrayList<>(categories.size());
+    List<WeightedTerm> results = new ArrayList<>(categories.size());
     Set<String> uniqueLeafs = new HashSet<>();
 
     for (WeightedTerm s : categories) {
@@ -526,77 +528,51 @@ class LegacyIngestionService {
         throw new IllegalArgumentException("Bad category: " + s);
       }
 
-      Category category = new Category();
-      category.setPath(s.getTerm());
-
       //We want a count of distinct lead nodes.  When this
       //Reaches eight stop.  Note the second check, we can be at
       //eight uniqueLeafs, but still finding different paths.  Stop
       //Adding when a new unique leaf is found.  Yes, a little confusing
       if (uniqueLeafs.size() == 8 &&
           //getSubCategory returns leaf node of the path
-          !uniqueLeafs.contains(category.getSubCategory())
+          !uniqueLeafs.contains(s.getLeafTerm())
           ) {
         break;
       } else {
         //getSubCategory returns leaf node of the path
-        uniqueLeafs.add(category.getSubCategory());
-        results.add(new WeightedCategory(category, s.getWeight()));
+        uniqueLeafs.add(s.getLeafTerm());
+        results.add(s);
       }
     }
 
-    article.setCategories(WeightedCategory.toMap(results));
-    updateWithExistingCategories(article);
-
-    return results;
+    List<WeightedCategory> categoryEntities = resolveIntoCategoryEntities(results);
+    article.setCategories(WeightedCategory.toMap(categoryEntities));
   }
 
-  /**
-   * Update the article to reference any already existing categories in the database.
-   *
-   * @param article the article to update
-   */
-  private void updateWithExistingCategories(Article article) {
+  private List<WeightedCategory> resolveIntoCategoryEntities(List<WeightedTerm> terms) {
+    Set<String> termStrings = terms.stream()
+        .map(WeightedTerm::getTerm)
+        .collect(Collectors.toSet());
 
-    // I was having an issue where the first call to hibernateTemplate.findByCriteria below
-    // was triggering a "flush"... saving a dirty but uncommitted object to the DB.  The
-    // object being saved was a newly-created category that had a duplicate in the DB, which
-    // triggered a duplicate key exception.  Of course, this is the whole point of this
-    // method... to prevent this from happening.  The following two lines fix this, but it
-    // seems kind of wrong.  This happened from a standalone app not running in a servlet
-    // container, and I suspect that I was somehow misconfiguring my session factory
-    // or transaction manager or something (but this was the only solution I found).
-    int oldFlushMode = parentService.hibernateTemplate.getFlushMode();
-    parentService.hibernateTemplate.setFlushMode(HibernateAccessor.FLUSH_COMMIT);
-    try {
-      Map<Category, Integer> existingCategories = article.getCategories();
-      if (existingCategories != null && !existingCategories.isEmpty()) {
-        Map<Category, Integer> correctCategories = new LinkedHashMap<Category, Integer>(existingCategories.size());
-        for (Map.Entry<Category, Integer> entry : existingCategories.entrySet()) {
-          try {
-            Category existingCategory;
-            if (entry.getKey().getSubCategory() != null) {
-              existingCategory = (Category) parentService.hibernateTemplate.findByCriteria(
-                  DetachedCriteria.forClass(Category.class)
-                      .add(Restrictions.eq("path", entry.getKey().getPath())), 0, 1).get(0);
-            } else {
-              existingCategory = (Category) parentService.hibernateTemplate.findByCriteria(
-                  DetachedCriteria.forClass(Category.class)
-                      .add(Restrictions.eq("path", entry.getKey().getPath())), 0, 1).get(0);
-            }
-            correctCategories.put(existingCategory, entry.getValue());
-          } catch (IndexOutOfBoundsException e) {
-            //category must not have existed, save it now
-            parentService.hibernateTemplate.save(entry.getKey());
-            correctCategories.put(entry.getKey(), entry.getValue());
-          }
-        }
-        article.setCategories(correctCategories);
+    Collection<Category> existingCategories = parentService.hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM Category WHERE path IN (:terms)");
+      query.setParameterList("terms", termStrings);
+      return query.list();
+    });
+    Map<String, Category> existingCategoryMap = Maps.uniqueIndex(existingCategories, Category::getPath);
+
+    List<WeightedCategory> categories = new ArrayList<>(terms.size());
+    for (WeightedTerm term : terms) {
+      Category category = existingCategoryMap.get(term.getTerm());
+      if (category == null) {
+        category = new Category();
+        category.setPath(term.getTerm());
       }
-    } finally {
-      parentService.hibernateTemplate.setFlushMode(oldFlushMode);
+      categories.add(new WeightedCategory(category, term.getWeight()));
     }
+
+    return categories;
   }
+
 
   private void initializeAssets(final Article article, Optional<ManifestXml> manifestXml, ArticleXml xml, int xmlDataLength) {
     AssetNodesByDoi assetNodes = xml.findAllAssetNodes();
