@@ -19,7 +19,7 @@
 package org.ambraproject.rhino.service;
 
 import org.ambraproject.models.UserLogin;
-import org.ambraproject.models.UserProfile;
+//import org.ambraproject.models.UserProfile;
 import org.ambraproject.rhino.util.response.Transceiver;
 
 import java.io.IOException;
@@ -29,7 +29,7 @@ import java.io.IOException;
  */
 public interface UserCrudService {
 
-  public abstract Transceiver readUsingAuthId(String authId) throws IOException;
+  //public abstract Transceiver readUsingAuthId(String authId) throws IOException;
 
   /**
    * Record user logging in
@@ -37,6 +37,6 @@ public interface UserCrudService {
    * @param loginInfo UserLogin object
    * @return UserProfile object
    */
-  public abstract UserProfile createUserLogin(final String authId, final UserLogin loginInfo);
+  //public abstract UserProfile createUserLogin(final String authId, final UserLogin loginInfo);
 
 }

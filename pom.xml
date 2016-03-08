@@ -50,7 +50,7 @@
     <org.springframework-version>4.1.6.RELEASE</org.springframework-version>
     <org.aspectj-version>1.6.9</org.aspectj-version>
     <org.slf4j-version>1.6.1</org.slf4j-version>
-    <ambra.version>2.10.20</ambra.version>
+    <ambra.version>2.10.21</ambra.version>
     <rhombat.version>1.0.2</rhombat.version>
     <conf-helper.version>2.2.1</conf-helper.version>
     <camel.version>2.10.4</camel.version>
@@ -153,7 +153,7 @@
     <dependency>
       <groupId>org.ambraproject</groupId>
       <artifactId>ambra-base</artifactId>
-      <version>${ambra.version}</version>
+      <version>2.10.21-NED</version>
       <exclusions>
         <!--These are some easy wins for reducing the size of the war, we don't need these libraries-->
         <exclusion>
@@ -227,6 +227,12 @@
       <groupId>org.plos</groupId>
       <artifactId>content-repo-library</artifactId>
       <version>1.5.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>ambra-models</artifactId>
+      <version>2.10.21-NED</version>
     </dependency>
 
     <!-- ========================= End Ambra inclusions ========================= -->

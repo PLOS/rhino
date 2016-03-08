@@ -20,7 +20,6 @@ import org.ambraproject.models.AnnotationType;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.Flag;
 import org.ambraproject.models.FlagReasonCode;
-import org.ambraproject.models.UserProfile;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
@@ -125,14 +124,6 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
     return annotation;
   }
 
-  private UserProfile getUserProfile(Long userId) {
-    UserProfile creator = (UserProfile) hibernateTemplate.get(UserProfile.class, userId);
-    if (creator == null) {
-      throw new RestClientException("UserProfile not found for user ID: " + userId, HttpStatus.BAD_REQUEST);
-    }
-    return creator;
-  }
-
   private static final Pattern DOI_PREFIX_PATTERN = Pattern.compile("^\\d+\\.\\d+/");
 
   private static String extractDoiPrefix(DoiBasedIdentity doi) {
@@ -188,7 +179,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
       annotationType = AnnotationType.COMMENT;
     }
 
-    UserProfile creator = getUserProfile(Long.valueOf(input.getCreatorUserId()));
+    Long creator = Long.valueOf(input.getCreatorUserId());
 
     String doiPrefix = extractDoiPrefix(articleDoi.get()); // comment receives same DOI prefix as article
     UUID uuid = UUID.randomUUID(); // generate a new DOI out of a random UUID
@@ -196,7 +187,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
 
     Annotation created = new Annotation();
     created.setType(annotationType);
-    created.setCreator(creator);
+    created.setUserProfileID(creator);
     created.setArticleID(articlePk);
     created.setParentID(parentCommentPk.orElse(null));
     created.setAnnotationUri(createdAnnotationUri.getKey());
@@ -212,11 +203,11 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
   @Override
   public Flag createCommentFlag(DoiBasedIdentity commentId, CommentFlagInputView input) {
     Annotation comment = getComment(commentId);
-    UserProfile flagCreator = getUserProfile(Long.valueOf(input.getCreatorUserId()));
+    Long flagCreator = Long.valueOf(input.getCreatorUserId());
 
     Flag flag = new Flag();
     flag.setFlaggedAnnotation(comment);
-    flag.setCreator(flagCreator);
+    flag.setUserProfileID(flagCreator);
     flag.setComment(input.getBody());
     flag.setReason(FlagReasonCode.fromString(input.getReasonCode()));
 

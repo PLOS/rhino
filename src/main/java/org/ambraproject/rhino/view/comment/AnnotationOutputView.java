@@ -15,6 +15,7 @@ import org.ambraproject.rhino.view.article.ArticleVisibility;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -116,6 +117,17 @@ public class AnnotationOutputView implements JsonOutputView {
                                   Annotation comment,
                                   CompetingInterestStatement competingInterestStatement) {
     JsonObject serialized = context.serialize(comment).getAsJsonObject();
+    serialized.remove("userProfileID");
+    Long userProfileID = comment.getUserProfileID();
+
+    if (userProfileID == null) {
+      throw new NullPointerException();
+    }
+
+    HashMap<String, Object> creator = new HashMap<>();
+    creator.put("userId", String.valueOf(userProfileID));
+    serialized.add("creator", context.serialize(creator));
+
     serialized.remove("articleID");
     normalizeField(serialized, "title");
     normalizeField(serialized, "body");
