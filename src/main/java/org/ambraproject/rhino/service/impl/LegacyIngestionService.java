@@ -27,7 +27,6 @@ import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.DoiBasedCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
-import org.ambraproject.rhino.service.taxonomy.WeightedCategory;
 import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.service.article.NoSuchArticleIdException;
@@ -42,7 +41,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
-import org.springframework.orm.hibernate3.HibernateAccessor;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -67,7 +65,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -544,11 +541,11 @@ class LegacyIngestionService {
       }
     }
 
-    List<WeightedCategory> categoryEntities = resolveIntoCategoryEntities(results);
-    article.setCategories(WeightedCategory.toMap(categoryEntities));
+    Map<Category, Integer> categoryEntities = resolveIntoCategoryEntities(results);
+    article.setCategories(categoryEntities);
   }
 
-  private List<WeightedCategory> resolveIntoCategoryEntities(List<WeightedTerm> terms) {
+  private Map<Category, Integer> resolveIntoCategoryEntities(List<WeightedTerm> terms) {
     Set<String> termStrings = terms.stream()
         .map(WeightedTerm::getTerm)
         .collect(Collectors.toSet());
@@ -560,14 +557,14 @@ class LegacyIngestionService {
     });
     Map<String, Category> existingCategoryMap = Maps.uniqueIndex(existingCategories, Category::getPath);
 
-    List<WeightedCategory> categories = new ArrayList<>(terms.size());
+    Map<Category, Integer> categories = Maps.newLinkedHashMapWithExpectedSize(terms.size());
     for (WeightedTerm term : terms) {
       Category category = existingCategoryMap.get(term.getTerm());
       if (category == null) {
         category = new Category();
         category.setPath(term.getTerm());
       }
-      categories.add(new WeightedCategory(category, term.getWeight()));
+      categories.put(category, term.getWeight());
     }
 
     return categories;
