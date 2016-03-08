@@ -7,7 +7,6 @@ import org.w3c.dom.Document;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 public class DummyTaxonomyClassificationService implements TaxonomyClassificationService {
 
@@ -17,7 +16,7 @@ public class DummyTaxonomyClassificationService implements TaxonomyClassificatio
       .build();
 
   @Override
-  public Map<String, Integer> classifyArticle(Document articleXml, Article article) throws IOException {
+  public List<WeightedTerm> classifyArticle(Document articleXml, Article article) throws IOException {
     return DUMMY_DATA;
   }
 

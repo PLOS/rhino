@@ -14,6 +14,7 @@ import com.google.common.io.ByteStreams;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleRelationship;
+import org.ambraproject.models.Category;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
 import org.ambraproject.rhino.content.xml.AssetXml;
@@ -26,6 +27,8 @@ import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.DoiBasedCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
+import org.ambraproject.rhino.service.taxonomy.WeightedCategory;
+import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.hibernate.Criteria;
@@ -60,8 +63,6 @@ import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -493,7 +494,7 @@ class LegacyIngestionService {
    * @param xml     Document representing the article XML
    */
   public void populateCategories(Article article, Document xml) {
-    Map<String, Integer> terms;
+    List<WeightedTerm> terms;
     String doi = article.getDoi();
     try {
       if (!parentService.articleService.isAmendment(article)) {
@@ -514,40 +515,19 @@ class LegacyIngestionService {
     }
   }
 
-  /**
-   * Create a sorted list sorted by the integer value, largest first, smallest last
-   *
-   * @param values the Map to sort
-   * @return a List of the map entries of the map passed in
-   */
-  private static List<Map.Entry<String, Integer>> sortCategoriesByValue(Map<String, Integer> values) {
-    List<Map.Entry<String, Integer>> categoryStringsSorted = new ArrayList<Map.Entry<String, Integer>>();
+  private List<WeightedCategory> setArticleCategories(Article article, List<WeightedTerm> categories) {
+    categories.sort(WeightedTerm.BY_DESCENDING_WEIGHT);
 
-    categoryStringsSorted.addAll(values.entrySet());
+    List<WeightedCategory> results = new ArrayList<>(categories.size());
+    Set<String> uniqueLeafs = new HashSet<>();
 
-    Collections.sort(categoryStringsSorted, new Comparator<Map.Entry<String, Integer>>() {
-      @Override
-      public int compare(Map.Entry<String, Integer> e1, Map.Entry<String, Integer> e2) {
-        return e2.getValue().compareTo(e1.getValue());
-      }
-    });
-
-    return categoryStringsSorted;
-  }
-
-  private Map<Category, Integer> setArticleCategories(Article article, Map<String, Integer> categoryMap) {
-    List<Map.Entry<String, Integer>> sortedCategories = sortCategoriesByValue(categoryMap);
-    //LinkedHashMap keeps things ordered by insertion order
-    Map<Category, Integer> results = new LinkedHashMap<Category, Integer>(categoryMap.size());
-    Set<String> uniqueLeafs = new HashSet<String>();
-
-    for (Map.Entry<String, Integer> s : sortedCategories) {
-      if (s.getKey().charAt(0) != '/') {
+    for (WeightedTerm s : categories) {
+      if (s.getTerm().charAt(0) != '/') {
         throw new IllegalArgumentException("Bad category: " + s);
       }
 
       Category category = new Category();
-      category.setPath(s.getKey());
+      category.setPath(s.getTerm());
 
       //We want a count of distinct lead nodes.  When this
       //Reaches eight stop.  Note the second check, we can be at
@@ -561,11 +541,11 @@ class LegacyIngestionService {
       } else {
         //getSubCategory returns leaf node of the path
         uniqueLeafs.add(category.getSubCategory());
-        results.put(category, s.getValue());
+        results.add(new WeightedCategory(category, s.getWeight()));
       }
     }
 
-    article.setCategories(results);
+    article.setCategories(WeightedCategory.toMap(results));
     updateWithExistingCategories(article);
 
     return results;

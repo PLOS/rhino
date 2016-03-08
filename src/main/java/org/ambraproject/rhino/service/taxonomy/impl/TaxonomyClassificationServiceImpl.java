@@ -7,6 +7,7 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
+import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
 import org.ambraproject.util.DocumentBuilderFactoryCreator;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -26,11 +27,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -84,25 +82,25 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
    * @inheritDoc
    */
   @Override
-  public Map<String, Integer> classifyArticle(Document articleXml, Article article) throws IOException {
+  public List<WeightedTerm> classifyArticle(Document articleXml, Article article) throws IOException {
     RuntimeConfiguration.TaxonomyConfiguration configuration = getTaxonomyConfiguration();
 
     List<String> rawTerms = getRawTerms(articleXml, article, false);
-    Map<String, Integer> results = new LinkedHashMap<>(rawTerms.size());
+    List<WeightedTerm> results = new ArrayList<>(rawTerms.size());
 
     for (String rawTerm : rawTerms) {
-      Map.Entry<String, Integer> entry = parseVectorElement(rawTerm);
-      String key = entry.getKey();
-      if (key != null) {
+      WeightedTerm entry = parseVectorElement(rawTerm);
+      String term = entry.getTerm();
+      if (term != null) {
         boolean isBlacklisted = false;
         for (String blacklistedCategory : configuration.getCategoryBlacklist()) {
-          if (key.startsWith(blacklistedCategory)) {
+          if (term.startsWith(blacklistedCategory)) {
             isBlacklisted = true;
             break;
           }
         }
         if (!isBlacklisted) {
-          results.put(key, entry.getValue());
+          results.add(entry);
         }
       }
     }
@@ -195,20 +193,20 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
    * Parses a single line of the XML response from the taxonomy server.
    *
    * @param vectorElement The text body of a line of the response
-   * @return the term and weight of the term or null if the line is not valid
+   * @return the term and weight of the term
    */
   @VisibleForTesting
-  static Map.Entry<String, Integer> parseVectorElement(String vectorElement) {
+  static WeightedTerm parseVectorElement(String vectorElement) {
     Matcher match = TERM_PATTERN.matcher(vectorElement);
 
     if (match.find()) {
       String text = match.group(1);
-      Integer value = Integer.valueOf(match.group(2));
+      int value = Integer.parseInt(match.group(2));
 
-      return new AbstractMap.SimpleImmutableEntry<>(text, value);
+      return new WeightedTerm(text, value);
     } else {
-      //Bad term, return null
-      return null;
+      //Bad term
+      throw new RuntimeException();
     }
   }
 

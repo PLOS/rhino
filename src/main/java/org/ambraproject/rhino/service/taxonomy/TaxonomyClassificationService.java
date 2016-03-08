@@ -22,7 +22,7 @@ public interface TaxonomyClassificationService {
    * value
    * @throws TaxonomyClassificationServiceNotConfiguredException if a remote service is required but not configured
    */
-  public Map<String, Integer> classifyArticle(Document articleXml, Article article) throws IOException;
+  public List<WeightedTerm> classifyArticle(Document articleXml, Article article) throws IOException;
 
   /**
    * Queries the MAI server for taxonomic terms for a given article, and returns a list of the raw results.
