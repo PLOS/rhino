@@ -1,6 +1,6 @@
 [
   {
-    "number": 2000,
+    "number": 1008,
     "scripts": [
       "migrate_ambra_2000.sql"
     ]
