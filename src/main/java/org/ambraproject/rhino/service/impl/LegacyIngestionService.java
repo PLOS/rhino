@@ -11,6 +11,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Multimaps;
 import com.google.common.collect.Sets;
 import com.google.common.io.ByteStreams;
+import org.ambraproject.ApplicationException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleRelationship;
@@ -509,8 +510,10 @@ class LegacyIngestionService {
       }
     } catch (TaxonomyClassificationService.TaxonomyClassificationServiceNotConfiguredException e) {
       log.error("Taxonomy server not configured. " + doi, e);
-    } catch (Exception e) {
+    } catch (IOException e) {
       log.error("Taxonomy server not responding. " + doi, e);
+    } catch (ApplicationException | NoSuchArticleIdException e) {
+      throw new RuntimeException(e);
     }
   }
 
