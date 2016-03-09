@@ -7,16 +7,16 @@ import java.util.Comparator;
 import java.util.Objects;
 
 public final class WeightedTerm {
-  private final String term;
+  private final String path;
   private final int weight;
 
-  public WeightedTerm(String term, int weight) {
-    this.term = Objects.requireNonNull(term);
+  public WeightedTerm(String path, int weight) {
+    this.path = Objects.requireNonNull(path);
     this.weight = weight;
   }
 
-  public String getTerm() {
-    return term;
+  public String getPath() {
+    return path;
   }
 
   public int getWeight() {
@@ -27,7 +27,7 @@ public final class WeightedTerm {
   private static final Splitter TERM_SPLITTER = Splitter.on('/');
 
   public String getLeafTerm() {
-    return Iterables.getLast(TERM_SPLITTER.split(term));
+    return Iterables.getLast(TERM_SPLITTER.split(path));
   }
 
   public static final Comparator<WeightedTerm> BY_DESCENDING_WEIGHT =
@@ -42,14 +42,14 @@ public final class WeightedTerm {
     WeightedTerm that = (WeightedTerm) o;
 
     if (weight != that.weight) return false;
-    if (!term.equals(that.term)) return false;
+    if (!path.equals(that.path)) return false;
 
     return true;
   }
 
   @Override
   public int hashCode() {
-    int result = term.hashCode();
+    int result = path.hashCode();
     result = 31 * result + weight;
     return result;
   }

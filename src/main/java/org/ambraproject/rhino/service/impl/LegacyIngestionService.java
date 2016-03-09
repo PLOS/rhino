@@ -528,7 +528,7 @@ class LegacyIngestionService {
     Set<String> uniqueLeafs = new HashSet<>();
 
     for (WeightedTerm s : categories) {
-      if (s.getTerm().charAt(0) != '/') {
+      if (s.getPath().charAt(0) != '/') {
         throw new IllegalArgumentException("Bad category: " + s);
       }
 
@@ -551,7 +551,7 @@ class LegacyIngestionService {
 
   private Map<Category, Integer> resolveIntoCategoryEntities(List<WeightedTerm> terms) {
     Set<String> termStrings = terms.stream()
-        .map(WeightedTerm::getTerm)
+        .map(WeightedTerm::getPath)
         .collect(Collectors.toSet());
 
     Collection<Category> existingCategories = parentService.hibernateTemplate.execute(session -> {
@@ -563,10 +563,10 @@ class LegacyIngestionService {
 
     Map<Category, Integer> categories = Maps.newLinkedHashMapWithExpectedSize(terms.size());
     for (WeightedTerm term : terms) {
-      Category category = existingCategoryMap.get(term.getTerm());
+      Category category = existingCategoryMap.get(term.getPath());
       if (category == null) {
         category = new Category();
-        category.setPath(term.getTerm());
+        category.setPath(term.getPath());
       }
       categories.put(category, term.getWeight());
     }

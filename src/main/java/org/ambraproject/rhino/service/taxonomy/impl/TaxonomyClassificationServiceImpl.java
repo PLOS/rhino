@@ -90,7 +90,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
 
     for (String rawTerm : rawTerms) {
       WeightedTerm entry = parseVectorElement(rawTerm);
-      String term = entry.getTerm();
+      String term = entry.getPath();
       if (term != null) {
         boolean isBlacklisted = false;
         for (String blacklistedCategory : configuration.getCategoryBlacklist()) {

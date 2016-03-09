@@ -197,7 +197,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     Set<Category> expectedCategories = new HashSet<>();
     for (WeightedTerm categoryPath : DummyTaxonomyClassificationService.DUMMY_DATA) {
       Category category = new Category();
-      category.setPath(categoryPath.getTerm());
+      category.setPath(categoryPath.getPath());
       expectedCategories.add(category);
     }
     Set<Category> actualCategories = stored.getCategories().keySet();
