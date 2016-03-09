@@ -89,7 +89,13 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     List<WeightedTerm> results = new ArrayList<>(rawTerms.size());
 
     for (String rawTerm : rawTerms) {
-      WeightedTerm entry = parseVectorElement(rawTerm);
+      WeightedTerm entry;
+      try {
+        entry = parseVectorElement(rawTerm);
+      } catch (InvalidTaxonomyElementException e) {
+        log.warn("Skipping invalid taxonomy element. ({})", e.getMessage());
+        continue;
+      }
       String term = entry.getPath();
       if (term != null) {
         boolean isBlacklisted = false;
@@ -196,7 +202,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
    * @return the term and weight of the term
    */
   @VisibleForTesting
-  static WeightedTerm parseVectorElement(String vectorElement) {
+  static WeightedTerm parseVectorElement(String vectorElement) throws InvalidTaxonomyElementException {
     Matcher match = TERM_PATTERN.matcher(vectorElement);
 
     if (match.find()) {
@@ -206,7 +212,17 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
       return new WeightedTerm(text, value);
     } else {
       //Bad term
-      throw new RuntimeException();
+      throw new InvalidTaxonomyElementException("Invalid syntax: " + vectorElement);
+    }
+  }
+
+  /**
+   * Indicates that the remote taxonomy service returned a vector element with invalid syntax.
+   */
+  @VisibleForTesting
+  static class InvalidTaxonomyElementException extends Exception {
+    public InvalidTaxonomyElementException(String message) {
+      super(message);
     }
   }
 

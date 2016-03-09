@@ -154,7 +154,7 @@ public class TaxonomyClassificationServiceImplTest {
             , 67));
   }
 
-  @Test(expectedExceptions = RuntimeException.class)
+  @Test(expectedExceptions = TaxonomyClassificationServiceImpl.InvalidTaxonomyElementException.class)
   public void testInvalidVectorElement() throws Exception {
     // This appears to be a bug in the AI server--it sometimes does not return an
     // absolute path to a top-level category.  In these cases, the returned value
