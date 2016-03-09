@@ -565,6 +565,12 @@ class LegacyIngestionService {
     for (WeightedTerm term : terms) {
       Category category = existingCategoryMap.get(term.getPath());
       if (category == null) {
+        /*
+         * A new category from the taxonomy server, which is not yet persisted in our system. Create it now.
+         *
+         * This risks a race condition if two articles are being populated concurrently and both have the same new
+         * category, which can cause a "MySQLIntegrityConstraintViolationException: Duplicate entry" error.
+         */
         category = new Category();
         category.setPath(term.getPath());
       }
