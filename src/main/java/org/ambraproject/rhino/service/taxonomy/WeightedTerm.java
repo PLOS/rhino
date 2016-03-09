@@ -1,5 +1,6 @@
 package org.ambraproject.rhino.service.taxonomy;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Ordering;
@@ -52,5 +53,13 @@ public final class WeightedTerm {
     int result = path.hashCode();
     result = 31 * result + weight;
     return result;
+  }
+
+  @Override
+  public String toString() {
+    return "WeightedTerm{" +
+        "path='" + path + '\'' +
+        ", weight=" + weight +
+        '}';
   }
 }

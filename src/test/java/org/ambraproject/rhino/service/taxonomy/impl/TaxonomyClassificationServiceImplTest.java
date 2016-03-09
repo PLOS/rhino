@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.service.taxonomy.impl;
 
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
+import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.Test;
 import org.w3c.dom.Document;
@@ -27,7 +28,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
-import java.util.AbstractMap;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -113,50 +113,53 @@ public class TaxonomyClassificationServiceImplTest {
   public void testParseVectorElement() throws Exception {
     assertEquals(TaxonomyClassificationServiceImpl.parseVectorElement(
             "<TERM>/Biology and life sciences/Computational biology/Computational neuroscience/Single neuron function|(5) neuron*(5)</TERM>"),
-        new AbstractMap.SimpleImmutableEntry<>(
+        new WeightedTerm(
             "/Biology and life sciences/Computational biology/Computational neuroscience/Single neuron function"
             , 5));
 
     assertEquals(TaxonomyClassificationServiceImpl.parseVectorElement(
             "<TERM>/Medicine and health sciences/Anesthesiology/Anesthesia|(5) anesthesia(5)</TERM>"),
-        new AbstractMap.SimpleImmutableEntry<>(
+        new WeightedTerm(
             "/Medicine and health sciences/Anesthesiology/Anesthesia"
             , 5));
 
     assertEquals(TaxonomyClassificationServiceImpl.parseVectorElement(
             "<TERM>/Medicine and health sciences/Geriatrics/Frailty|(19) frailty(18) frail*(1)</TERM>"),
-        new AbstractMap.SimpleImmutableEntry<>(
+        new WeightedTerm(
             "/Medicine and health sciences/Geriatrics/Frailty"
             , 19));
 
     assertEquals(TaxonomyClassificationServiceImpl.parseVectorElement(
             "<TERM>/Biology and life sciences/Anatomy/Head/Face/Nose|(311) nose(311)</TERM>"),
-        new AbstractMap.SimpleImmutableEntry<>(
+        new WeightedTerm(
             "/Biology and life sciences/Anatomy/Head/Face/Nose"
             , 311));
 
     assertEquals(TaxonomyClassificationServiceImpl.parseVectorElement(
             "<TERM>/People and places/Demography|(7) demographics(7)</TERM>"),
-        new AbstractMap.SimpleImmutableEntry<>(
+        new WeightedTerm(
             "/People and places/Demography"
             , 7));
 
     assertEquals(TaxonomyClassificationServiceImpl.parseVectorElement(
             "<TERM>/Medicine and health sciences/Neurology/Cognitive neurology|(2) cognit*(2)</TERM>"),
-        new AbstractMap.SimpleImmutableEntry<>(
+        new WeightedTerm(
             "/Medicine and health sciences/Neurology/Cognitive neurology"
             , 2));
 
     assertEquals(TaxonomyClassificationServiceImpl.parseVectorElement(
             "<TERM> /Medicine and health sciences/Neurology/Cognitive neurology| (67) cognit*(2)</TERM>"),
-        new AbstractMap.SimpleImmutableEntry<>(
+        new WeightedTerm(
             "/Medicine and health sciences/Neurology/Cognitive neurology"
             , 67));
+  }
 
+  @Test(expectedExceptions = RuntimeException.class)
+  public void testInvalidVectorElement() throws Exception {
     // This appears to be a bug in the AI server--it sometimes does not return an
     // absolute path to a top-level category.  In these cases, the returned value
     // should be discarded.
-    assertNull(TaxonomyClassificationServiceImpl.parseVectorElement(
-        "<TERM>Background noise (acoustics)|(1) background noise(1)</TERM>"));
+    TaxonomyClassificationServiceImpl.parseVectorElement(
+        "<TERM>Background noise (acoustics)|(1) background noise(1)</TERM>");
   }
 }
