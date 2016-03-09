@@ -14,6 +14,7 @@
 package org.ambraproject.rhino.service;
 
 import org.ambraproject.models.Annotation;
+import org.ambraproject.models.Article;
 import org.ambraproject.models.Flag;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
@@ -54,5 +55,7 @@ public interface AnnotationCrudService {
   public Flag createCommentFlag(DoiBasedIdentity commentId, CommentFlagInputView input);
 
   public Transceiver readRecentComments(String journalKey, OptionalInt limit);
+
+  public long getCommentCount(Article article);
 
 }

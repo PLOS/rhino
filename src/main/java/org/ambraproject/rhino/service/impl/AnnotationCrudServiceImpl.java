@@ -260,4 +260,10 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
     };
   }
 
+  @Override
+  public long getCommentCount(Article article) {
+    return (Long) DataAccessUtils.requiredSingleResult(hibernateTemplate.find(
+        "SELECT COUNT(*) FROM Annotation WHERE articleID = ?", article.getID()));
+  }
+
 }
