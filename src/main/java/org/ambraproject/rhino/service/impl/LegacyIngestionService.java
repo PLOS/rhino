@@ -517,6 +517,10 @@ class LegacyIngestionService {
     }
   }
 
+  // Number of most-weighted category leaf nodes to associate with each article
+  // TODO: Make configurable?
+  private static final int CATEGORY_COUNT = 8;
+
   private void setArticleCategories(Article article, List<WeightedTerm> categories) {
     categories.sort(WeightedTerm.BY_DESCENDING_WEIGHT);
 
@@ -532,10 +536,7 @@ class LegacyIngestionService {
       //Reaches eight stop.  Note the second check, we can be at
       //eight uniqueLeafs, but still finding different paths.  Stop
       //Adding when a new unique leaf is found.  Yes, a little confusing
-      if (uniqueLeafs.size() == 8 &&
-          //getSubCategory returns leaf node of the path
-          !uniqueLeafs.contains(s.getLeafTerm())
-          ) {
+      if (uniqueLeafs.size() == CATEGORY_COUNT && !uniqueLeafs.contains(s.getLeafTerm())) {
         break;
       } else {
         //getSubCategory returns leaf node of the path
