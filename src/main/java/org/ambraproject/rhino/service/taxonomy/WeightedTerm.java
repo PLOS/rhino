@@ -2,8 +2,8 @@ package org.ambraproject.rhino.service.taxonomy;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Ordering;
 
-import java.util.Comparator;
 import java.util.Objects;
 
 public final class WeightedTerm {
@@ -30,8 +30,8 @@ public final class WeightedTerm {
     return Iterables.getLast(TERM_SPLITTER.split(path));
   }
 
-  public static final Comparator<WeightedTerm> BY_DESCENDING_WEIGHT =
-      Comparator.comparing(WeightedTerm::getWeight).reversed();
+  public static final Ordering<WeightedTerm> BY_DESCENDING_WEIGHT =
+      Ordering.natural().onResultOf(WeightedTerm::getWeight).reverse();
 
 
   @Override

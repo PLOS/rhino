@@ -522,7 +522,7 @@ class LegacyIngestionService {
   private static final int CATEGORY_COUNT = 8;
 
   private void setArticleCategories(Article article, List<WeightedTerm> categories) {
-    categories.sort(WeightedTerm.BY_DESCENDING_WEIGHT);
+    categories = WeightedTerm.BY_DESCENDING_WEIGHT.immutableSortedCopy(categories);
 
     List<WeightedTerm> results = new ArrayList<>(categories.size());
     Set<String> uniqueLeafs = new HashSet<>();
