@@ -573,6 +573,7 @@ class LegacyIngestionService {
          */
         category = new Category();
         category.setPath(term.getPath());
+        parentService.hibernateTemplate.save(category);
       }
       categories.put(category, term.getWeight());
     }
