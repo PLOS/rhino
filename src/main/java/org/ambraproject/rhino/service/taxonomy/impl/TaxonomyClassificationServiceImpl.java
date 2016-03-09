@@ -93,7 +93,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
       try {
         entry = parseVectorElement(rawTerm);
       } catch (InvalidTaxonomyElementException e) {
-        log.warn("Skipping invalid taxonomy element. ({})", e.getMessage());
+        log.warn("Skipping invalid taxonomy element", e);
         continue;
       }
       String term = entry.getPath();
