@@ -19,6 +19,7 @@ import org.ambraproject.models.Flag;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.view.comment.CommentCount;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
 
@@ -56,6 +57,6 @@ public interface AnnotationCrudService {
 
   public Transceiver readRecentComments(String journalKey, OptionalInt limit);
 
-  public long getCommentCount(Article article);
+  public CommentCount getCommentCount(Article article);
 
 }

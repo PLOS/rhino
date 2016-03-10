@@ -40,6 +40,7 @@ import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedListView;
 import org.ambraproject.rhino.view.asset.groomed.GroomedAssetsView;
 import org.ambraproject.rhino.view.asset.raw.RawAssetCollectionView;
+import org.ambraproject.rhino.view.comment.CommentCount;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,7 +86,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     private final ImmutableList<ArticleIssue> articleIssues;
     private final ImmutableMap<String, Syndication> syndications;
     private final ImmutableList<Pingback> pingbacks;
-    private final long commentCount;
+    private final CommentCount commentCount;
 
     // Package-private; should be called only by ArticleOutputViewFactory
     AugmentedView(Article article,
@@ -95,7 +96,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
                   Collection<ArticleIssue> articleIssues,
                   Collection<Syndication> syndications,
                   Collection<Pingback> pingbacks,
-                  long commentCount,
+                  CommentCount commentCount,
                   boolean excludeCitations) {
       super(article, excludeCitations);
       this.nlmArticleType = Optional.fromNullable(nlmArticleType);
@@ -121,7 +122,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
         serialized.add("articleType", context.serialize(articleType.get()));
       }
 
-      serialized.addProperty("commentCount", commentCount);
+      serialized.add("commentCount", context.serialize(commentCount));
 
       JsonElement syndications = serializeSyndications(this.syndications.values(), context);
       if (syndications != null) {
