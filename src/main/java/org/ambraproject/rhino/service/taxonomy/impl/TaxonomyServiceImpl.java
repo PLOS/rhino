@@ -22,7 +22,7 @@ public class TaxonomyServiceImpl extends AmbraService implements TaxonomyService
   private TaxonomyClassificationService taxonomyClassificationService;
 
   @Override
-  public List<WeightedTerm> classifyArticle(Document articleXml, Article article) throws IOException {
+  public List<WeightedTerm> classifyArticle(Document articleXml, Article article) {
     return taxonomyClassificationService.classifyArticle(articleXml, article);
   }
 
