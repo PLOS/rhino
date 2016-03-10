@@ -7,6 +7,9 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyRemoteServiceInvalidBehaviorException;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyRemoteServiceNotAvailableException;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyRemoteServiceNotConfiguredException;
 import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
 import org.ambraproject.util.DocumentBuilderFactoryCreator;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -82,20 +85,14 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
    * @inheritDoc
    */
   @Override
-  public List<WeightedTerm> classifyArticle(Document articleXml, Article article) throws IOException {
+  public List<WeightedTerm> classifyArticle(Document articleXml, Article article)  {
     RuntimeConfiguration.TaxonomyConfiguration configuration = getTaxonomyConfiguration();
 
     List<String> rawTerms = getRawTerms(articleXml, article, false);
     List<WeightedTerm> results = new ArrayList<>(rawTerms.size());
 
     for (String rawTerm : rawTerms) {
-      WeightedTerm entry;
-      try {
-        entry = parseVectorElement(rawTerm);
-      } catch (InvalidTaxonomyElementException e) {
-        log.warn("Skipping invalid taxonomy element", e);
-        continue;
-      }
+      WeightedTerm entry = parseVectorElement(rawTerm);
       String term = entry.getPath();
       if (term != null) {
         boolean isBlacklisted = false;
@@ -116,7 +113,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   private RuntimeConfiguration.TaxonomyConfiguration getTaxonomyConfiguration() {
     RuntimeConfiguration.TaxonomyConfiguration configuration = runtimeConfiguration.getTaxonomyConfiguration();
     if (configuration.getServer() == null || configuration.getThesaurus() == null) {
-      throw new TaxonomyClassificationServiceNotConfiguredException();
+      throw new TaxonomyRemoteServiceNotConfiguredException();
     }
     return configuration;
   }
@@ -126,7 +123,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
    */
   @Override
   public List<String> getRawTerms(Document articleXml, Article article,
-                                  boolean isTextRequired) throws IOException {
+                                  boolean isTextRequired) {
     RuntimeConfiguration.TaxonomyConfiguration configuration = getTaxonomyConfiguration();
 
     String toCategorize = getCategorizationContent(articleXml);
@@ -155,8 +152,10 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     try (CloseableHttpResponse httpResponse = httpClient.execute(post);
          InputStream stream = httpResponse.getEntity().getContent()) {
       response = documentBuilder.parse(stream);
+    } catch (IOException e) {
+      throw new TaxonomyRemoteServiceNotAvailableException(e);
     } catch (SAXException e) {
-      throw new RuntimeException("Invalid XML returned from " + configuration.getServer(), e);
+      throw new TaxonomyRemoteServiceInvalidBehaviorException("Invalid XML returned from " + configuration.getServer(), e);
     }
 
     //parse result
@@ -202,7 +201,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
    * @return the term and weight of the term
    */
   @VisibleForTesting
-  static WeightedTerm parseVectorElement(String vectorElement) throws InvalidTaxonomyElementException {
+  static WeightedTerm parseVectorElement(String vectorElement) {
     Matcher match = TERM_PATTERN.matcher(vectorElement);
 
     if (match.find()) {
@@ -212,17 +211,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
       return new WeightedTerm(text, value);
     } else {
       //Bad term
-      throw new InvalidTaxonomyElementException("Invalid syntax: " + vectorElement);
-    }
-  }
-
-  /**
-   * Indicates that the remote taxonomy service returned a vector element with invalid syntax.
-   */
-  @VisibleForTesting
-  static class InvalidTaxonomyElementException extends Exception {
-    public InvalidTaxonomyElementException(String message) {
-      super(message);
+      throw new TaxonomyRemoteServiceInvalidBehaviorException("Invalid syntax: " + vectorElement);
     }
   }
 

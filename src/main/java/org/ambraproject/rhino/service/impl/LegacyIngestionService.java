@@ -111,7 +111,7 @@ class LegacyIngestionService {
     Document doc = parentService.parseXml(xmlData);
     Article article = populateArticleFromXml(doc, suppliedId, mode, xmlData.length);
     persistArticle(article, xmlData);
-    populateCategories(article, doc);
+    initializeCategories(article, doc);
     return article;
   }
 
@@ -381,7 +381,7 @@ class LegacyIngestionService {
     // Save now, before we add asset files, since AssetCrudServiceImpl will expect the
     // Article to be persisted at this point.
     persistArticle(article, xmlData);
-    populateCategories(article, doc);
+    initializeCategories(article, doc);
     try {
       addAssetFiles(article, archive, manifest);
 
@@ -486,6 +486,17 @@ class LegacyIngestionService {
   }
 
   /**
+   * Populate categories while initially ingesting an article, preventing any exceptions from halting ingestion.
+   */
+  private void initializeCategories(Article article, Document xml) {
+    try {
+      populateCategories(article, xml);
+    } catch (Exception e) {
+      log.error("Category population failed. Continuing ingestion.", e);
+    }
+  }
+
+  /**
    * Populates article category information by making a call to the taxonomy server. Will not throw
    * an exception if we cannot communicate or get results from the taxonomy server. Will not
    * request categories for amendments.
@@ -496,24 +507,25 @@ class LegacyIngestionService {
   public void populateCategories(Article article, Document xml) {
     List<WeightedTerm> terms;
     String doi = article.getDoi();
+
+    boolean isAmendment;
     try {
-      if (!parentService.articleService.isAmendment(article)) {
-        terms = parentService.taxonomyService.classifyArticle(xml, article);
-        if (terms != null && terms.size() > 0) {
-          setArticleCategories(article, terms);
-        } else {
-          log.error("Taxonomy server returned 0 terms. Cannot populate Categories. " + doi);
-          article.setCategories(new HashMap<>());
-        }
-      } else {
-        article.setCategories(new HashMap<>());
-      }
-    } catch (TaxonomyClassificationService.TaxonomyClassificationServiceNotConfiguredException e) {
-      log.error("Taxonomy server not configured. " + doi, e);
-    } catch (IOException e) {
-      log.error("Taxonomy server not responding. " + doi, e);
+      // TODO: Import ArticleService.isAmendment from Ambra Base dependency and clean up checked exceptions
+      isAmendment = parentService.articleService.isAmendment(article);
     } catch (ApplicationException | NoSuchArticleIdException e) {
       throw new RuntimeException(e);
+    }
+
+    if (!isAmendment) {
+      terms = parentService.taxonomyService.classifyArticle(xml, article);
+      if (terms != null && terms.size() > 0) {
+        setArticleCategories(article, terms);
+      } else {
+        log.error("Taxonomy server returned 0 terms. Cannot populate Categories. " + doi);
+        article.setCategories(new HashMap<>());
+      }
+    } else {
+      article.setCategories(new HashMap<>());
     }
   }
 

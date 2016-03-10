@@ -1,7 +1,6 @@
 package org.ambraproject.rhino.service.taxonomy;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import org.ambraproject.models.Article;
 import org.w3c.dom.Document;
 
@@ -16,7 +15,7 @@ public class DummyTaxonomyClassificationService implements TaxonomyClassificatio
       .build();
 
   @Override
-  public List<WeightedTerm> classifyArticle(Document articleXml, Article article) throws IOException {
+  public List<WeightedTerm> classifyArticle(Document articleXml, Article article) {
     return DUMMY_DATA;
   }
 

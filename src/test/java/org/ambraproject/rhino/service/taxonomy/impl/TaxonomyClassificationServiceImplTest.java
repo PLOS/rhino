@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.service.taxonomy.impl;
 
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyRemoteServiceInvalidBehaviorException;
 import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.Test;
@@ -31,7 +32,6 @@ import java.io.File;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
 
 /**
@@ -154,7 +154,7 @@ public class TaxonomyClassificationServiceImplTest {
             , 67));
   }
 
-  @Test(expectedExceptions = TaxonomyClassificationServiceImpl.InvalidTaxonomyElementException.class)
+  @Test(expectedExceptions = TaxonomyRemoteServiceInvalidBehaviorException.class)
   public void testInvalidVectorElement() throws Exception {
     // This appears to be a bug in the AI server--it sometimes does not return an
     // absolute path to a top-level category.  In these cases, the returned value
