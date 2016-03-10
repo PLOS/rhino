@@ -41,6 +41,7 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.DummyTaxonomyClassificationService;
+import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
@@ -194,9 +195,9 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     }
 
     Set<Category> expectedCategories = new HashSet<>();
-    for (String categoryPath : DummyTaxonomyClassificationService.DUMMY_DATA.keySet()) {
+    for (WeightedTerm categoryPath : DummyTaxonomyClassificationService.DUMMY_DATA) {
       Category category = new Category();
-      category.setPath(categoryPath);
+      category.setPath(categoryPath.getPath());
       expectedCategories.add(category);
     }
     Set<Category> actualCategories = stored.getCategories().keySet();
