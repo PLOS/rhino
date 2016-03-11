@@ -1,23 +1,21 @@
 package org.ambraproject.rhino.service.taxonomy;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import org.ambraproject.models.Article;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 public class DummyTaxonomyClassificationService implements TaxonomyClassificationService {
 
-  public static final ImmutableMap<String, Integer> DUMMY_DATA = ImmutableMap.<String, Integer>builder()
-      .put("/TopLevel1/term1", 5)
-      .put("/TopLevel2/term2", 10)
+  public static final ImmutableList<WeightedTerm> DUMMY_DATA = ImmutableList.<WeightedTerm>builder()
+      .add(new WeightedTerm("/TopLevel1/term1", 5))
+      .add(new WeightedTerm("/TopLevel2/term2", 10))
       .build();
 
   @Override
-  public Map<String, Integer> classifyArticle(Document articleXml, Article article) throws IOException {
+  public List<WeightedTerm> classifyArticle(Document articleXml, Article article) {
     return DUMMY_DATA;
   }
 

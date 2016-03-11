@@ -148,7 +148,9 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public void repopulateCategories(ArticleIdentity id) throws IOException {
-    legacyIngestionService.repopulateCategories(id);
+    Article article = findArticleById(id);
+    Document xml = parseXml(readXml(id));
+    legacyIngestionService.populateCategories(article, xml);
   }
 
   static RestClientException complainAboutXml(XmlContentException e) {
