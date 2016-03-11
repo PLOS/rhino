@@ -5,11 +5,13 @@ import org.ambraproject.models.Article;
 import org.ambraproject.models.Pingback;
 import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleType;
 import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
+import org.ambraproject.rhino.view.comment.CommentCount;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.service.syndication.SyndicationService;
 import org.slf4j.Logger;
@@ -33,6 +35,8 @@ public class ArticleOutputViewFactory {
   private ArticleTypeService articleTypeService;
   @Autowired
   private IssueCrudService issueCrudService;
+  @Autowired
+  private AnnotationCrudService annotationCrudService;
 
   /**
    * Creates a new view of the given article and associated data.
@@ -63,6 +67,8 @@ public class ArticleOutputViewFactory {
 
     List<ArticleIssue> articleIssues = issueCrudService.getArticleIssues(articleIdentity);
 
+    CommentCount commentCount = annotationCrudService.getCommentCount(article);
+
     return new ArticleOutputView.AugmentedView(
         article,
         nlmArticleType,
@@ -71,6 +77,7 @@ public class ArticleOutputViewFactory {
         articleIssues,
         syndications,
         pingbacks,
+        commentCount,
         excludeCitations);
   }
 
