@@ -377,12 +377,15 @@ class LegacyIngestionService {
     Article article = populateArticleFromXml(manuscript, suppliedId, mode);
 
     // Replace assets in place if the list is already initialized
-    List<ArticleAsset> assets = article.getAssets();
-    if (assets == null) {
-      assets = new ArrayList<>();
-      article.setAssets(assets);
+    List<ArticleAsset> persistentAssets = article.getAssets();
+    if (persistentAssets == null) {
+      persistentAssets = new ArrayList<>();
+      article.setAssets(persistentAssets);
     }
-    HibernateEntityUtil.replaceEntities(assets, createAssets(initializeAssets(manuscript), archive, manifest),
+
+    List<AssetBuilder> assetBuilders = parseAssets(manuscript);
+    List<ArticleAsset> createdAssets = createAssets(assetBuilders, archive, manifest);
+    HibernateEntityUtil.replaceEntities(persistentAssets, createdAssets,
         AssetFileIdentity::create, LegacyIngestionService::copyAsset);
 
     article.setArchiveName(new File(archive.getArchiveName()).getName());
@@ -581,7 +584,7 @@ class LegacyIngestionService {
     return categories;
   }
 
-  private static List<AssetBuilder> initializeAssets(ArticleXml xml) {
+  private static List<AssetBuilder> parseAssets(ArticleXml xml) {
     return xml.findAllAssetNodes().getDois().stream()
         .map(assetDoi -> parseAsset(xml.findAllAssetNodes(), assetDoi))
         .collect(Collectors.toList());
