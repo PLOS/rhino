@@ -14,7 +14,6 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Splitter;
-import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 import org.ambraproject.models.Article;
@@ -31,9 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.net.URLDecoder;
+
 import java.util.Map;
 
 /**
@@ -44,7 +41,6 @@ public class TaxonomyController extends RestController {
 
   private static final String TAXONOMY_ROOT = "/taxonomy";
   private static final String TAXONOMY_NAMESPACE = TAXONOMY_ROOT + '/';
-  private static final String TAXONOMY_TEMPLATE = TAXONOMY_NAMESPACE + "**";
   private static final Splitter TAXONOMY_PATH_SPLITTER = Splitter.on('/');
 
   @Autowired
@@ -52,18 +48,6 @@ public class TaxonomyController extends RestController {
 
   @Autowired
   protected ArticleCrudService articleCrudService;
-
-  @Transactional(readOnly = true)
-  @RequestMapping(value = TAXONOMY_TEMPLATE, method = RequestMethod.GET)
-  public void readRoot(HttpServletRequest request, HttpServletResponse response,
-                       @RequestParam(value = "journal", required = true) String journal)
-      throws Exception {
-    String parent = getFullPathVariable(request, true, TAXONOMY_NAMESPACE);
-    if (!Strings.isNullOrEmpty(parent)) {
-      parent = URLDecoder.decode(parent, "UTF-8");
-    }
-    taxonomyService.read(journal, parent).respond(request, response, entityGson);
-  }
 
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = TAXONOMY_NAMESPACE + "flag/{action:add|remove}", method = RequestMethod.POST)

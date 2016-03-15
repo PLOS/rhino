@@ -29,7 +29,7 @@ import java.io.IOException;
  */
 public interface UserCrudService {
 
-  public abstract Transceiver read(String authId) throws IOException;
+  public abstract Transceiver readUsingAuthId(String authId) throws IOException;
 
 
   /**

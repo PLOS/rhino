@@ -1,11 +1,13 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.ambraproject.rhino.shared.XPathExtractor;
 import org.ambraproject.rhino.util.StringReplacer;
+import org.ambraproject.rhino.view.article.AuthorView;
+import org.ambraproject.rhino.view.article.Orcid;
 import org.ambraproject.util.TextUtils;
-import org.ambraproject.views.AuthorView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -105,6 +107,7 @@ public final class AuthorsXmlExtractor {
 
       Node surNameNode = xpath.selectNode(authorDoc, "./contrib/name/surname");
       Node givenNameNode = xpath.selectNode(authorDoc, "./contrib/name/given-names");
+      Node orcidNode = xpath.selectNode(authorDoc, "./contrib/contrib-id[@contrib-id-type='orcid']");
       Node collabNameNode = xpath.selectNode(authorDoc, "//collab");
       Node behalfOfNode = xpath.selectNode(authorDoc, "//on-behalf-of");
       NodeList otherFootnotesNodeList = xpath.selectNodes(authorDoc, "//xref[@ref-type='fn']");
@@ -162,7 +165,7 @@ public final class AuthorsXmlExtractor {
         continue;
       }
 
-      AuthorView author = getAuthorView(authorDoc, surNameNode, givenNameNode, behalfOfNode, otherFootnotesNodeList);
+      AuthorView author = getAuthorView(authorDoc, surNameNode, givenNameNode, behalfOfNode, otherFootnotesNodeList, orcidNode);
       list.add(author);
     }
 
@@ -173,7 +176,8 @@ public final class AuthorsXmlExtractor {
                                    Node surNameNode,
                                    Node givenNameNode,
                                    Node behalfOfNode,
-                                   NodeList otherFootnotesNodeList)
+                                   NodeList otherFootnotesNodeList,
+                                   Node orcidNode)
       throws XPathException {
     Node suffixNode = xpath.selectNode(authorDoc, "//name/suffix");
     Node equalContribNode = xpath.selectNode(authorDoc, "//@equal-contrib");
@@ -254,12 +258,9 @@ public final class AuthorsXmlExtractor {
         if (correspondAddrNode == null) {
           log.warn("No node found for corrsponding author: author-notes/corresp[@id='\" + rid + \"']");
         } else {
-          try {
-            corresponding = TextUtils.getAsXMLString(correspondAddrNode);
-          } catch (TransformerException e) {
-            throw new RuntimeException(e);
-          }
-          corresponding = transFormCorresponding(corresponding);
+          // Store the entire corresponding author string, even though it's not specific to this author.
+          // It's meant to support the author pop-up. See getCorrespondingAuthorList for the split-up list.
+          corresponding = transFormCorresponding(correspondAddrNode);
         }
       }
     }
@@ -282,11 +283,14 @@ public final class AuthorsXmlExtractor {
       }
     }
 
+    Orcid orcid = (orcidNode != null) ? buildOrcid(orcidNode) : null;
+
     return AuthorView.builder()
         .setGivenNames(givenName)
         .setSurnames(surname)
         .setSuffix(suffix)
         .setOnBehalfOf(onBehalfOf)
+        .setOrcid(orcid)
         .setEqualContrib(equalContrib)
         .setDeceased(deceased)
         .setRelatedFootnote(relatedFootnote)
@@ -295,6 +299,14 @@ public final class AuthorsXmlExtractor {
         .setAffiliations(affiliations)
         .setCustomFootnotes(otherFootnotes)
         .build();
+  }
+
+  private Orcid buildOrcid(Node orcidNode) {
+    String value = orcidNode.getTextContent();
+    Node authenticatedNode = orcidNode.getAttributes().getNamedItem("authenticated");
+    boolean authenticated = (authenticatedNode != null) &&
+        Boolean.TRUE.toString().equalsIgnoreCase(authenticatedNode.getNodeValue());
+    return new Orcid(value, authenticated);
   }
 
   /**
@@ -490,11 +502,17 @@ public final class AuthorsXmlExtractor {
    * <p/>
    * Reformat html embedded into the XML into something more easily styled on the front end
    *
-   * @param source html fragment
+   * @param correspondAddrNode html node
    * @return html fragment
    */
-  private static String transFormCorresponding(String source) {
-    return MARKUP_REPLACER.replace(source);
+  private static String transFormCorresponding(Node correspondAddrNode) {
+    String corresponding;
+    try {
+      corresponding = TextUtils.getAsXMLString(correspondAddrNode);
+    } catch (TransformerException e) {
+      throw new RuntimeException(e);
+    }
+    return MARKUP_REPLACER.replace(corresponding);
   }
 
   /**
@@ -503,7 +521,7 @@ public final class AuthorsXmlExtractor {
    * @return a list of the text content of the nodes found, or {@code null} if none
    */
   private static List<String> findTextFromNodes(Document document, String xpathExpression,
-      XPathExtractor xPath) throws XPathException {
+                                                XPathExtractor xPath) throws XPathException {
 
     NodeList nodes;
     try {
@@ -522,4 +540,39 @@ public final class AuthorsXmlExtractor {
 
     return text;
   }
+
+  /**
+   * Split the document-level list of corresponding authors into parts and do some string-hacking. Returns
+   * ready-to-display HTML. This is far more display logic than we would like, but it was lifted directly from Ambra.
+   */
+  public static List<String> getCorrespondingAuthorList(Document document, XPathExtractor xpath) throws XPathException {
+    Node corresAuthorNode = xpath.selectNode(document, "//corresp");
+    if (corresAuthorNode == null) return ImmutableList.of();
+    String r = transFormCorresponding(corresAuthorNode);
+
+    //Remove prepending text
+    r = r.replaceAll("<span.*?/span>", "");
+    r = r.replaceFirst(".*?[Ee]-mail:", "");
+
+    //Remove extra carriage return
+    r = r.replaceAll("\\n", "");
+
+    //Split on "<a" as the denotes a new email address
+    String[] emails = r.split("(?=<a)");
+
+    List<String> result = new ArrayList<>();
+    for (int a = 0; a < emails.length; a++) {
+      if (emails[a].trim().length() > 0) {
+        String email = emails[a];
+        //Remove ; and "," from address
+        email = email.replaceAll("[,;]", "");
+        email = email.replaceAll("[Ee]mail:", "");
+        email = email.replaceAll("[Ee]-mail:", "");
+        result.add(email.trim());
+      }
+    }
+
+    return result;
+  }
+
 }

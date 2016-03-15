@@ -3,9 +3,8 @@ package org.ambraproject.rhino.service.taxonomy.impl;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.service.impl.AmbraService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
-import org.ambraproject.rhino.service.taxonomy.TaxonomyLookupService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
-import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,28 +15,20 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 
 public class TaxonomyServiceImpl extends AmbraService implements TaxonomyService {
 
   @Autowired
   private TaxonomyClassificationService taxonomyClassificationService;
-  @Autowired
-  private TaxonomyLookupService taxonomyLookupService;
 
   @Override
-  public Map<String, Integer> classifyArticle(Document articleXml, Article article) throws IOException {
+  public List<WeightedTerm> classifyArticle(Document articleXml, Article article) {
     return taxonomyClassificationService.classifyArticle(articleXml, article);
   }
 
   @Override
   public List<String> getRawTerms(Document articleXml, Article article, boolean isTextRequired) throws IOException {
     return taxonomyClassificationService.getRawTerms(articleXml, article, isTextRequired);
-  }
-
-  @Override
-  public Transceiver read(String journal, String parent) throws IOException {
-    return taxonomyLookupService.read(journal, parent);
   }
 
   // These methods are a direct copy of the Ambra code found in the TaxonomyServiceImpl

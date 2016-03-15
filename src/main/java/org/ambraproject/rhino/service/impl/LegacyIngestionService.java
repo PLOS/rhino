@@ -10,6 +10,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Multimaps;
 import com.google.common.collect.Sets;
 import com.google.common.io.ByteStreams;
+import org.ambraproject.ApplicationException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleRelationship;
@@ -26,12 +27,13 @@ import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.DoiBasedCrudService;
-import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
+import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.HibernateEntityUtil;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
+import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -56,8 +58,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -143,7 +147,7 @@ class LegacyIngestionService {
 
     // TODO: If an article should have multiple journals, how does it get them?
     article.setJournals(Sets.newHashSet(parentService.getPublicationJournal(article)));
-    populateCategories(article, xml.getDocument());
+    initializeCategories(article, xml.getDocument());
     populateRelatedArticles(article, xml);
 
     return article;
@@ -469,46 +473,112 @@ class LegacyIngestionService {
     }
   }
 
-  void repopulateCategories(ArticleIdentity id) throws IOException {
-    Document doc = parentService.parseXml(parentService.readXml(id));
-    Article article = findArticleById(id);
-    populateCategories(article, doc);
-    if (article.getCategories().size() > 0) {
-      saveArticleToHibernate(article);
-    } else {
-      throw new IOException("Taxonomy server returned 0 terms. Cannot repopulate Categories. "
-          + article.getDoi());
+  /**
+   * Populate categories while initially ingesting an article, preventing any exceptions from halting ingestion.
+   */
+  private void initializeCategories(Article article, Document xml) {
+    try {
+      populateCategories(article, xml);
+    } catch (Exception e) {
+      log.error("Category population failed. Continuing ingestion.", e);
     }
   }
 
   /**
-   * Populates article category information by making a call to the taxonomy server.
+   * Populates article category information by making a call to the taxonomy server. Will not throw
+   * an exception if we cannot communicate or get results from the taxonomy server. Will not
+   * request categories for amendments.
    *
    * @param article the Article model instance
    * @param xml     Document representing the article XML
    */
-  private void populateCategories(Article article, Document xml) {
+  public void populateCategories(Article article, Document xml) {
+    List<WeightedTerm> terms;
+    String doi = article.getDoi();
 
-    // Attempt to assign categories to the non-amendment article based on the taxonomy server.  However,
-    // we still want to ingest the article even if this process fails.
-    Map<String, Integer> terms;
-
+    boolean isAmendment;
     try {
-      if (!parentService.articleService.isAmendment(article)) {
-        terms = parentService.taxonomyService.classifyArticle(xml, article);
-        if (terms != null && terms.size() > 0) {
-          parentService.articleService.setArticleCategories(article, terms);
-        } else {
-          article.setCategories(new HashMap<Category, Integer>());
-        }
-      } else {
-        article.setCategories(new HashMap<Category, Integer>());
-      }
-    } catch (TaxonomyClassificationService.TaxonomyClassificationServiceNotConfiguredException e) {
-      log.error("Taxonomy server not configured. Ingesting article without categories. " + article.getDoi(), e);
-    } catch (Exception e) {
-      log.error("Taxonomy server not responding, but ingesting article anyway." + article.getDoi(), e);
+      // TODO: Import ArticleService.isAmendment from Ambra Base dependency and clean up checked exceptions
+      isAmendment = parentService.articleService.isAmendment(article);
+    } catch (ApplicationException | NoSuchArticleIdException e) {
+      throw new RuntimeException(e);
     }
+
+    if (!isAmendment) {
+      terms = parentService.taxonomyService.classifyArticle(xml, article);
+      if (terms != null && terms.size() > 0) {
+        setArticleCategories(article, terms);
+      } else {
+        log.error("Taxonomy server returned 0 terms. Cannot populate Categories. " + doi);
+        article.setCategories(new HashMap<>());
+      }
+    } else {
+      article.setCategories(new HashMap<>());
+    }
+  }
+
+  // Number of most-weighted category leaf nodes to associate with each article
+  // TODO: Make configurable?
+  private static final int CATEGORY_COUNT = 8;
+
+  private void setArticleCategories(Article article, List<WeightedTerm> categories) {
+    categories = WeightedTerm.BY_DESCENDING_WEIGHT.immutableSortedCopy(categories);
+
+    List<WeightedTerm> results = new ArrayList<>(categories.size());
+    Set<String> uniqueLeafs = new HashSet<>();
+
+    for (WeightedTerm s : categories) {
+      if (s.getPath().charAt(0) != '/') {
+        throw new IllegalArgumentException("Bad category: " + s);
+      }
+
+      //We want a count of distinct lead nodes.  When this
+      //Reaches eight stop.  Note the second check, we can be at
+      //eight uniqueLeafs, but still finding different paths.  Stop
+      //Adding when a new unique leaf is found.  Yes, a little confusing
+      if (uniqueLeafs.size() == CATEGORY_COUNT && !uniqueLeafs.contains(s.getLeafTerm())) {
+        break;
+      } else {
+        //getSubCategory returns leaf node of the path
+        uniqueLeafs.add(s.getLeafTerm());
+        results.add(s);
+      }
+    }
+
+    Map<Category, Integer> categoryEntities = resolveIntoCategoryEntities(results);
+    article.setCategories(categoryEntities);
+  }
+
+  private Map<Category, Integer> resolveIntoCategoryEntities(List<WeightedTerm> terms) {
+    Set<String> termStrings = terms.stream()
+        .map(WeightedTerm::getPath)
+        .collect(Collectors.toSet());
+
+    Collection<Category> existingCategories = parentService.hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM Category WHERE path IN (:terms)");
+      query.setParameterList("terms", termStrings);
+      return query.list();
+    });
+    Map<String, Category> existingCategoryMap = Maps.uniqueIndex(existingCategories, Category::getPath);
+
+    Map<Category, Integer> categories = Maps.newLinkedHashMapWithExpectedSize(terms.size());
+    for (WeightedTerm term : terms) {
+      Category category = existingCategoryMap.get(term.getPath());
+      if (category == null) {
+        /*
+         * A new category from the taxonomy server, which is not yet persisted in our system. Create it now.
+         *
+         * This risks a race condition if two articles are being populated concurrently and both have the same new
+         * category, which can cause a "MySQLIntegrityConstraintViolationException: Duplicate entry" error.
+         */
+        category = new Category();
+        category.setPath(term.getPath());
+        parentService.hibernateTemplate.save(category);
+      }
+      categories.put(category, term.getWeight());
+    }
+
+    return categories;
   }
 
   private static List<AssetBuilder> initializeAssets(ArticleXml xml) {
