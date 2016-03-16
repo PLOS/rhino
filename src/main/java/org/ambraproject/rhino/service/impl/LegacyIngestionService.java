@@ -4,6 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableBiMap;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Maps;
@@ -181,7 +182,7 @@ class LegacyIngestionService {
         assets.add(asset);
       }
     }
-    // TODO: Handle manuscript, striking images, etc.
+    // TODO: Handle striking images
     return assets;
   }
 
@@ -383,7 +384,7 @@ class LegacyIngestionService {
       article.setAssets(persistentAssets);
     }
 
-    List<AssetBuilder> assetBuilders = parseAssets(manuscript);
+    List<AssetBuilder> assetBuilders = parseAssets(article, manuscript);
     List<ArticleAsset> createdAssets = createAssets(assetBuilders, archive, manifest);
     HibernateEntityUtil.replaceEntities(persistentAssets, createdAssets,
         AssetFileIdentity::create, LegacyIngestionService::copyAsset);
@@ -584,10 +585,19 @@ class LegacyIngestionService {
     return categories;
   }
 
-  private static List<AssetBuilder> parseAssets(ArticleXml xml) {
-    return xml.findAllAssetNodes().getDois().stream()
-        .map(assetDoi -> parseAsset(xml.findAllAssetNodes(), assetDoi))
+  private static List<AssetBuilder> parseAssets(Article article, ArticleXml xml) {
+    AssetBuilder rootAsset = new AssetBuilder();
+    rootAsset.setDoi(article.getDoi());
+    rootAsset.setTitle(article.getTitle());
+    rootAsset.setDescription(article.getDescription());
+
+    AssetNodesByDoi assetNodes = xml.findAllAssetNodes();
+    List<AssetBuilder> inlineAssets = assetNodes.getDois().stream()
+        .map(assetDoi -> parseAsset(assetNodes, assetDoi))
         .collect(Collectors.toList());
+
+    return ImmutableList.<AssetBuilder>builder()
+        .add(rootAsset).addAll(inlineAssets).build();
   }
 
   //Add the striking image to the assets, a fix for:
@@ -618,17 +628,6 @@ class LegacyIngestionService {
 //        log.debug("Used existing striking image, DOI: {}", strikingImageDOI);
 //      }
 //    }
-  }
-
-  public ArticleAsset getManuscriptAsset(Article article, int xmlDataLength) {
-    ArticleAsset xmlAsset = new ArticleAsset();
-    xmlAsset.setDoi(article.getDoi());
-    xmlAsset.setExtension("XML");
-    xmlAsset.setTitle(article.getTitle());
-    xmlAsset.setDescription(article.getDescription());
-    xmlAsset.setContentType("text/xml");
-    xmlAsset.setSize(xmlDataLength);
-    return xmlAsset;
   }
 
   //Get the striking image DOI for the assets, a fix for:
