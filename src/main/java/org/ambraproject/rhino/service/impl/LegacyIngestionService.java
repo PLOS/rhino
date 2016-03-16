@@ -154,17 +154,16 @@ class LegacyIngestionService {
   }
 
   private List<ArticleAsset> createAssets(List<AssetBuilder> assetBuilders, Archive archive, ManifestXml manifest) {
-    ImmutableMap<AssetIdentity, AssetBuilder> assetMap = Maps.uniqueIndex(assetBuilders,
-        assetBuilder -> AssetIdentity.create(assetBuilder.getDoi()));
-    List<ArticleAsset> assets = new ArrayList<>();
+    ImmutableMap<AssetIdentity, ManifestXml.Asset> manifestAssets = Maps.uniqueIndex(manifest.parse(),
+        manifestAsset -> AssetIdentity.create(manifestAsset.getUri()));
 
-    for (ManifestXml.Asset manifestAsset : manifest.parse()) {
-      AssetIdentity assetIdentity = AssetIdentity.create(manifestAsset.getUri());
-      AssetBuilder assetBuilder = assetMap.get(assetIdentity);
-      if (assetBuilder == null) {
-        // TODO: Handle manuscript, striking images, etc. Convert this to a hard exception when all cases are handled.
-        log.error("Asset in manifest not matched to manuscript: {}", assetIdentity);
-        continue;
+    List<ArticleAsset> assets = new ArrayList<>();
+    for (AssetBuilder assetBuilder : assetBuilders) {
+      AssetIdentity assetIdentity = AssetIdentity.create(assetBuilder.getDoi());
+      ManifestXml.Asset manifestAsset = manifestAssets.get(assetIdentity);
+      if (manifestAsset == null) {
+        throw new RestClientException("Asset in manuscript not matched to manifest: " + assetIdentity,
+            HttpStatus.BAD_REQUEST);
       }
 
       for (ManifestXml.Representation representation : manifestAsset.getRepresentations()) {
@@ -182,6 +181,7 @@ class LegacyIngestionService {
         assets.add(asset);
       }
     }
+    // TODO: Handle manuscript, striking images, etc.
     return assets;
   }
 
