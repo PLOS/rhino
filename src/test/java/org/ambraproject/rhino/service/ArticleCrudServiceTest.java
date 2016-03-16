@@ -19,8 +19,6 @@
 package org.ambraproject.rhino.service;
 
 import com.google.common.base.Function;
-import com.google.common.base.Optional;
-import com.google.common.base.Strings;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -28,7 +26,6 @@ import com.google.common.collect.Sets;
 import com.google.common.primitives.Bytes;
 import com.google.gson.Gson;
 import org.ambraproject.models.Article;
-import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleAuthor;
 import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
@@ -65,6 +62,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.testng.Assert.assertEquals;

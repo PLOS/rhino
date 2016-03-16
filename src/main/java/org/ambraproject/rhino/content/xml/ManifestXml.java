@@ -13,7 +13,6 @@
 
 package org.ambraproject.rhino.content.xml;
 
-import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -21,6 +20,7 @@ import org.w3c.dom.Node;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Represents the manifest of an article .zip archive.
@@ -130,7 +130,7 @@ public class ManifestXml extends AbstractXpathReader {
       this.isStrikingImage = isStrikingImage;
       this.assetType = Preconditions.checkNotNull(assetType);
       this.uri = Preconditions.checkNotNull(uri);
-      this.mainEntry = Optional.fromNullable(mainEntry);
+      this.mainEntry = Optional.ofNullable(mainEntry);
       this.representations = ImmutableList.copyOf(representations);
     }
 
