@@ -34,6 +34,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.File;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -77,7 +78,8 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     String doi = articleId.getIdentifier();
     byte[] sampleData = IOUtils.toByteArray(RhinoTestHelper.alterStream(sampleFile.read(), doi, doi));
     RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
-    Archive archive = Archive.readZipFileIntoMemory(doiStub + ".zip", IngestibleUtil.buildMockIngestible(input));
+    InputStream mockIngestible = IngestibleUtil.buildMockIngestible(input, ImmutableList.of());
+    Archive archive = Archive.readZipFileIntoMemory(doiStub + ".zip", mockIngestible);
     Article article = articleCrudService.writeArchive(archive, Optional.of(articleId),
         DoiBasedCrudService.WriteMode.CREATE_ONLY);
     article.setJournals(ImmutableSet.of());

@@ -72,6 +72,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -252,8 +253,8 @@ public class IngestionTest extends BaseRhinoTest {
     final String caseDoi = expected.getDoi();
 
     RhinoTestHelper.TestInputStream testInputStream = new RhinoTestHelper.TestFile(xmlFile).read();
-    Archive ingestible = Archive.readZipFileIntoMemory(xmlFile.getName() + ".zip",
-        IngestibleUtil.buildMockIngestible(testInputStream));
+    InputStream mockIngestible = IngestibleUtil.buildMockIngestible(testInputStream, expected.getAssets());
+    Archive ingestible = Archive.readZipFileIntoMemory(xmlFile.getName() + ".zip", mockIngestible);
     Article actual = articleCrudService.writeArchive(ingestible,
         Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
     assertTrue(actual.getID() > 0, "Article doesn't have a database ID");
@@ -269,7 +270,7 @@ public class IngestionTest extends BaseRhinoTest {
             .add(Restrictions.eq("doi", caseDoi))));
     assertNotNull(actual, "Failed to create article with expected DOI");
 
-    AssertionCollector results = compareArticle(actual, expected, false);
+    AssertionCollector results = compareArticle(actual, expected);
     log.info("{} successes", results.getSuccessCount());
     Collection<AssertionCollector.Failure> failures = results.getFailures();
     for (AssertionCollector.Failure failure : failures) {
@@ -301,7 +302,7 @@ public class IngestionTest extends BaseRhinoTest {
             .setFetchMode("journals", FetchMode.JOIN)
             .add(Restrictions.eq("doi", expected.getDoi()))));
     assertNotNull(actual, "Failed to create article with expected DOI");
-    AssertionCollector results = compareArticle(actual, expected, true);
+    AssertionCollector results = compareArticle(actual, expected);
     log.info("{} successes", results.getSuccessCount());
 
     // Do some additional comparisons that only make sense for an article ingested from an archive.
@@ -383,8 +384,7 @@ public class IngestionTest extends BaseRhinoTest {
     return results.compare(objectName, fieldName, actual, expected);
   }
 
-  private AssertionCollector compareArticle(Article actual, Article expected,
-                                            boolean assetFilesExpected) {
+  private AssertionCollector compareArticle(Article actual, Article expected) {
     AssertionCollector results = new AssertionCollector();
     compareArticleFields(results, actual, expected);
     comparePersonLists(results, Article.class, "authors", actual.getAuthors(), expected.getAuthors());
@@ -392,11 +392,7 @@ public class IngestionTest extends BaseRhinoTest {
     compareCategorySets(results, actual.getCategories(), expected.getCategories());
     compareJournalSets(results, actual.getJournals(), expected.getJournals());
     compareRelationshipLists(results, actual.getRelatedArticles(), expected.getRelatedArticles());
-    if (assetFilesExpected) {
-      compareAssetsWithExpectedFiles(results, actual.getAssets(), expected.getAssets());
-    } else {
-      compareAssetsWithoutExpectedFiles(results, actual.getAssets(), expected.getAssets());
-    }
+    compareAssetsWithExpectedFiles(results, actual.getAssets(), expected.getAssets());
 
     // Since citedArticles are lazily loaded, and this test doesn't currently execute transactionally,
     // we have to reload the actual citations separately.
@@ -590,39 +586,6 @@ public class IngestionTest extends BaseRhinoTest {
     for (String doi : Sets.intersection(actualDois, expectedDois)) {
       compare(results, ArticleRelationship.class, "otherArticleDoi", doi, doi);
       compare(results, ArticleRelationship.class, "type", actualMap.get(doi).getType(), expectedMap.get(doi).getType());
-    }
-  }
-
-  private void compareAssetsWithoutExpectedFiles(AssertionCollector results,
-                                                 Collection<ArticleAsset> actualList, Collection<ArticleAsset> expectedList) {
-    // Compare assets by their DOI, ignoring order
-    Map<AssetIdentity, ArticleAsset> actualAssetMap = Maps.uniqueIndex(actualList, AssetIdentity::from);
-    Set<AssetIdentity> actualAssetIds = actualAssetMap.keySet();
-    Multimap<AssetIdentity, ArticleAsset> expectedAssetMap = Multimaps.index(expectedList, AssetIdentity::from);
-    Set<AssetIdentity> expectedAssetIds = expectedAssetMap.keySet();
-
-    for (AssetIdentity missingDoi : Sets.difference(expectedAssetIds, actualAssetIds)) {
-      compare(results, ArticleAsset.class, "doi", null, missingDoi);
-    }
-    for (AssetIdentity extraDoi : Sets.difference(actualAssetIds, expectedAssetIds)) {
-      compare(results, ArticleAsset.class, "doi", extraDoi, null);
-    }
-
-    for (AssetIdentity assetDoi : Sets.intersection(actualAssetIds, expectedAssetIds)) {
-      // One created asset with a null extension and material from article XML
-      ArticleAsset actualAsset = actualAssetMap.get(assetDoi);
-
-      // Multiple assets corresponding to various uploaded files
-      Collection<ArticleAsset> expectedFileAssets = expectedAssetMap.get(assetDoi);
-
-      /*
-       * The relevant fields of the expected assets should all match each other. (If a counterexample is found,
-       * will have to change this test.) We want to test that the actual asset matches all of them.
-       */
-      verifyExpectedAssets(expectedFileAssets);
-      for (ArticleAsset expectedAsset : expectedFileAssets) {
-        compareAssetFields(results, actualAsset, expectedAsset, false);
-      }
     }
   }
 

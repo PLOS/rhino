@@ -20,6 +20,7 @@ package org.ambraproject.rhino.service;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
@@ -129,7 +130,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
   private static Archive createMockIngestible(ArticleIdentity articleId, InputStream xmlData) throws IOException {
     try {
       String archiveName = articleId.getLastToken() + ".zip";
-      InputStream mockIngestible = IngestibleUtil.buildMockIngestible(xmlData);
+      InputStream mockIngestible = IngestibleUtil.buildMockIngestible(xmlData, ImmutableList.of());
       return Archive.readZipFileIntoMemory(archiveName, mockIngestible);
     } finally {
       xmlData.close();
