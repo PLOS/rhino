@@ -154,13 +154,16 @@ class LegacyIngestionService {
     return article;
   }
 
-  private List<ArticleAsset> createAssets(List<AssetBuilder> assetBuilders, Archive archive, ManifestXml manifest) {
+  private List<ArticleAsset> createAssets(List<AssetBuilder> assetBuilders, ManifestXml manifest) {
     ImmutableMap<AssetIdentity, ManifestXml.Asset> manifestAssets = Maps.uniqueIndex(manifest.parse(),
         manifestAsset -> AssetIdentity.create(manifestAsset.getUri()));
 
     List<ArticleAsset> assets = new ArrayList<>();
+    Set<AssetIdentity> created = new HashSet<>();
     for (AssetBuilder assetBuilder : assetBuilders) {
       AssetIdentity assetIdentity = AssetIdentity.create(assetBuilder.getDoi());
+      created.add(assetIdentity);
+
       ManifestXml.Asset manifestAsset = manifestAssets.get(assetIdentity);
       if (manifestAsset == null) {
         throw new RestClientException("Asset in manuscript not matched to manifest: " + assetIdentity,
@@ -182,8 +185,29 @@ class LegacyIngestionService {
         assets.add(asset);
       }
     }
-    // TODO: Handle striking images
+
+    // Create asset objects for the striking image, only if it wasn't created from the manuscript
+    Optional.ofNullable(manifest.getStrkImgURI()).map(AssetIdentity::create)
+        .ifPresent((AssetIdentity strikingImageId) -> {
+          if (!created.contains(strikingImageId)) {
+            ManifestXml.Asset strikingImageAsset = manifestAssets.get(strikingImageId);
+            for (ManifestXml.Representation representation : strikingImageAsset.getRepresentations()) {
+              assets.add(createStrikingImageAsset(strikingImageId, representation));
+            }
+          }
+        });
+
     return assets;
+  }
+
+  private static ArticleAsset createStrikingImageAsset(AssetIdentity id, ManifestXml.Representation representation) {
+    ArticleAsset asset = new ArticleAsset();
+    asset.setDoi(id.getKey());
+    asset.setExtension(representation.getEntry());
+    asset.setTitle("");
+    asset.setDescription("");
+    asset.setContextElement("");
+    return asset;
   }
 
   /**
@@ -385,7 +409,7 @@ class LegacyIngestionService {
     }
 
     List<AssetBuilder> assetBuilders = parseAssets(article, manuscript);
-    List<ArticleAsset> createdAssets = createAssets(assetBuilders, archive, manifest);
+    List<ArticleAsset> createdAssets = createAssets(assetBuilders, manifest);
     HibernateEntityUtil.replaceEntities(persistentAssets, createdAssets,
         AssetFileIdentity::create, LegacyIngestionService::copyAsset);
 
@@ -600,69 +624,6 @@ class LegacyIngestionService {
         .add(rootAsset).addAll(inlineAssets).build();
   }
 
-  //Add the striking image to the assets, a fix for:
-  //BAU-4
-  // TODO: Wire
-  private static void addStrikingImage() {
-//    if (strikingImageDOI != null) {
-//      //Check to make sure the asset doesn't exist already
-//      //Sometimes the striking image is a regular image
-//      boolean found = false;
-//      for (ArticleAsset asset : assets) {
-//        if (asset.getDoi().equals(strikingImageDOI)) {
-//          found = true;
-//          break;
-//        }
-//      }
-//
-//      if (!found) {
-//        ArticleAsset strkImageAsset = new ArticleAsset();
-//        strkImageAsset.setDoi(strikingImageDOI);
-//        strkImageAsset.setExtension("");
-//        strkImageAsset.setTitle("");
-//        strkImageAsset.setDescription("");
-//        strkImageAsset.setContextElement("");
-//        assets.add(strkImageAsset);
-//        log.debug("Added striking image, DOI: {}", strikingImageDOI);
-//      } else {
-//        log.debug("Used existing striking image, DOI: {}", strikingImageDOI);
-//      }
-//    }
-  }
-
-  //Get the striking image DOI for the assets, a fix for:
-  //BAU-4.
-  //
-  //It's possible that this method was called for ingesting a new version of the article XML
-  //without the manifest.  In this case we want to be sure to not delete the striking
-  //image from the database
-  //
-  //This should cover 6 use cases:
-  //There is no striking image (for update and create)
-  //Striking image defined in article XML, but not a special asset (for update and create)
-  //Striking image defined in manifest, and as a special asset (for update and create)
-  private static String findStrikingImageDoi(Article article, Optional<ManifestXml> manifestXml, List<ArticleAsset> assets) {
-    String strikingImageDOI;
-    if (manifestXml.isPresent()) {
-      strikingImageDOI = manifestXml.get().getStrkImgURI();
-    } else {
-      strikingImageDOI = article.getStrkImgURI();
-
-      if (strikingImageDOI == null) {
-        if (assets != null) {
-          //One last check of the existing database rows.
-          for (ArticleAsset asset : assets) {
-            //TODO: There should be some way to specify an asset in the asset table as the striking image
-            if (asset.getDoi().contains(".strk.")) {
-              strikingImageDOI = asset.getDoi();
-              break;
-            }
-          }
-        }
-      }
-    }
-    return strikingImageDOI;
-  }
 
   private void populateRelatedArticles(Article article, ArticleXml xml) {
     List<ArticleRelationship> xmlRelationships = xml.parseRelatedArticles();
