@@ -42,7 +42,6 @@ import java.io.Reader;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -140,32 +139,19 @@ public final class RhinoTestHelper {
     }
   }
 
+  private static File getXmlPath(String doiStub) {
+    return new File("src/test/resources/articles/" + doiStub + ".xml");
+  }
+
+  private static File getJsonPath(String doiStub) {
+    return new File("src/test/resources/articles/" + doiStub + ".json");
+  }
+
   public static Object[][] sampleArticles() {
     List<Object[]> cases = Lists.newArrayListWithCapacity(SAMPLE_ARTICLES.size());
     for (String doiStub : SAMPLE_ARTICLES) {
-      Object[] sampleArticle = {
-          prefixed(doiStub),
-          new File("src/test/resources/articles/" + doiStub + ".xml"),
-      };
+      Object[] sampleArticle = {prefixed(doiStub), getXmlPath(doiStub), getJsonPath(doiStub)};
       cases.add(sampleArticle);
-    }
-    return cases.toArray(new Object[cases.size()][]);
-  }
-
-  public static Object[][] sampleAssets() {
-    List<Object[]> cases = Lists.newArrayListWithCapacity(SAMPLE_ASSETS.size());
-    for (String assetFileName : SAMPLE_ASSETS) {
-      Matcher matcher = ASSET_PATTERN.matcher(assetFileName);
-      if (!matcher.matches()) {
-        throw new RuntimeException("Asset DOI does not match expected format");
-      }
-      String assetDoi = matcher.group(1);
-      String articleDoi = matcher.group(2);
-      String fileExtension = matcher.group(3);
-      File articleFile = new File(String.format("src/test/resources/articles/%s.xml", articleDoi));
-      File assetFile = new File(String.format("src/test/resources/articles/%s.%s",
-          assetDoi, fileExtension));
-      cases.add(new Object[]{prefixed(articleDoi), articleFile, prefixed(assetDoi), assetFile});
     }
     return cases.toArray(new Object[cases.size()][]);
   }
@@ -237,8 +223,7 @@ public final class RhinoTestHelper {
 
   public static Article createTestArticle(ArticleCrudService articleCrudService, String doiStub) {
     ArticleIdentity articleId = ArticleIdentity.create(RhinoTestHelper.prefixed(doiStub));
-    RhinoTestHelper.TestFile sampleFile = new RhinoTestHelper.TestFile(new File(
-        "src/test/resources/articles/" + doiStub + ".xml"));
+    RhinoTestHelper.TestFile sampleFile = new RhinoTestHelper.TestFile(getXmlPath(doiStub));
     String doi = articleId.getIdentifier();
 
     byte[] sampleData;
@@ -248,7 +233,7 @@ public final class RhinoTestHelper {
       throw new RuntimeException(e);
     }
 
-    Article reference = readReferenceCase(new File("src/test/resources/articles/" + doiStub + ".json"));
+    Article reference = readReferenceCase(getJsonPath(doiStub));
 
     RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
     Archive mockIngestible = createMockIngestible(articleId, input, reference.getAssets());

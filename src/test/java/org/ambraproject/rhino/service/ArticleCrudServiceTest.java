@@ -27,6 +27,7 @@ import com.google.common.collect.Sets;
 import com.google.common.primitives.Bytes;
 import com.google.gson.Gson;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleAuthor;
 import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
@@ -126,7 +127,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
   }
 
   @Test(dataProvider = "sampleArticles")
-  public void testCrud(String doi, File fileLocation) throws IOException {
+  public void testCrud(String doi, File fileLocation, File referenceLocation) throws IOException {
     final ArticleIdentity articleId = ArticleIdentity.create(doi);
     final String key = articleId.getKey();
 
@@ -136,7 +137,8 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     assertArticleExistence(articleId, false);
 
     RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
-    Archive mockIngestible = RhinoTestHelper.createMockIngestible(articleId, input, ImmutableList.of());
+    List<ArticleAsset> referenceAssets = RhinoTestHelper.readReferenceCase(referenceLocation).getAssets();
+    Archive mockIngestible = RhinoTestHelper.createMockIngestible(articleId, input, referenceAssets);
     Article article = articleCrudService.writeArchive(mockIngestible, Optional.of(articleId), WriteMode.CREATE_ONLY);
     assertArticleExistence(articleId, true);
     assertTrue(input.isClosed(), "Service didn't close stream");
@@ -183,7 +185,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
     final byte[] updated = Bytes.concat(sampleData, "\n<!-- Appended -->".getBytes());
     input = RhinoTestHelper.TestInputStream.of(updated);
-    mockIngestible = RhinoTestHelper.createMockIngestible(articleId, input, ImmutableList.of());
+    mockIngestible = RhinoTestHelper.createMockIngestible(articleId, input, referenceAssets);
     article = articleCrudService.writeArchive(mockIngestible, Optional.of(articleId), WriteMode.UPDATE_ONLY);
     byte[] updatedData = IOUtils.toByteArray(articleCrudService.readXml(articleId));
     assertEquals(updatedData, updated);
@@ -192,34 +194,6 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
     //articleCrudService.delete(articleId);
     //assertArticleExistence(articleId, false);
-  }
-
-  @Test(dataProvider = "sampleAssets")
-  public void testCreateAsset(String articleDoi, File articleFile, String assetDoi, File assetFile)
-      throws IOException {
-    String testAssetDoi = assetDoi.replace(articleDoi, articleDoi);
-
-    String assetFilePath = assetFile.getPath();
-    String extension = assetFilePath.substring(assetFilePath.lastIndexOf('.') + 1);
-    final AssetFileIdentity assetId = AssetFileIdentity.create(testAssetDoi, extension);
-    final ArticleIdentity articleId = ArticleIdentity.create(articleDoi);
-    RhinoTestHelper.TestInputStream input = new RhinoTestHelper.TestFile(articleFile).read();
-    input = RhinoTestHelper.alterStream(input, articleDoi, articleDoi);
-    Archive mockIngestible = RhinoTestHelper.createMockIngestible(articleId, input, ImmutableList.of());
-    Article article = articleCrudService.writeArchive(mockIngestible, Optional.of(articleId), WriteMode.CREATE_ONLY);
-
-    RhinoTestHelper.TestInputStream assetFileStream = new RhinoTestHelper.TestFile(assetFile).read();
-//    assetCrudService.upload(assetFileStream, assetId);
-//
-//    ArticleAsset stored = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
-//        hibernateTemplate.findByCriteria(DetachedCriteria
-//                .forClass(ArticleAsset.class)
-//                .add(Restrictions.eq("doi", assetId.getKey()))
-//                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-//        ));
-//    assertNotNull(stored.getContextElement());
-//    assertNotNull(stored.getContentType());
-//    assertFalse(Strings.isNullOrEmpty(stored.getExtension()));
   }
 
   @Test
