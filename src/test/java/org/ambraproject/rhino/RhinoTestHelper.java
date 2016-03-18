@@ -17,10 +17,13 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
-import com.google.common.io.Closeables;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Syndication;
+import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.service.ArticleCrudService;
+import org.ambraproject.rhino.service.DoiBasedCrudService;
+import org.ambraproject.rhino.util.Archive;
 import org.apache.commons.io.IOUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -33,8 +36,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 /**
  * Miscellaneous fields and methods used in Rhino tests.
@@ -46,7 +51,7 @@ public final class RhinoTestHelper {
 
   /**
    * Mock input stream that yields a constant string and keeps track of whether it has been closed.
-   * <p/>
+   * <p>
    * Closing the stream is not significant in this implementation, but one might want to test for it.
    */
   public static class TestInputStream extends ByteArrayInputStream {
@@ -84,16 +89,13 @@ public final class RhinoTestHelper {
     private final File fileLocation;
     private final byte[] fileData;
 
-    public TestFile(File fileLocation) throws IOException {
+    public TestFile(File fileLocation) {
       this.fileLocation = fileLocation;
-      InputStream stream = null;
       boolean threw = true;
-      try {
-        stream = new FileInputStream(this.fileLocation);
+      try (InputStream stream = new FileInputStream(this.fileLocation)) {
         fileData = IOUtils.toByteArray(stream);
-        threw = false;
-      } finally {
-        Closeables.close(stream, threw);
+      } catch (IOException e) {
+        throw new RuntimeException(e);
       }
     }
 
@@ -197,10 +199,57 @@ public final class RhinoTestHelper {
       List<?> existing = hibernateTemplate.findByCriteria(DetachedCriteria
           .forClass(Journal.class)
           .add(Restrictions.eq("eIssn", eissn)));
-      if (!existing.isEmpty())
+      if (!existing.isEmpty()) {
         continue;
+      }
       Journal journal = createDummyJournal(eissn);
       hibernateTemplate.save(journal);
     }
   }
+
+  public static Archive createMockIngestible(ArticleIdentity articleId, InputStream xmlData) {
+    try {
+      try {
+        String archiveName = articleId.getLastToken() + ".zip";
+        InputStream mockIngestible = IngestibleUtil.buildMockIngestible(xmlData, ImmutableList.of());
+        return Archive.readZipFileIntoMemory(archiveName, mockIngestible);
+      } finally {
+        xmlData.close();
+      }
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public static Stream<Article> createTestArticles(ArticleCrudService articleCrudService) {
+    return SAMPLE_ARTICLES.stream().map(doiStub -> createTestArticle(articleCrudService, doiStub));
+  }
+
+  public static Article createTestArticle(ArticleCrudService articleCrudService) {
+    return createTestArticle(articleCrudService, SAMPLE_ARTICLES.get(0));
+  }
+
+  public static Article createTestArticle(ArticleCrudService articleCrudService, String doiStub) {
+    ArticleIdentity articleId = ArticleIdentity.create(RhinoTestHelper.prefixed(doiStub));
+    RhinoTestHelper.TestFile sampleFile = new RhinoTestHelper.TestFile(new File(
+        "src/test/resources/articles/" + doiStub + ".xml"));
+    String doi = articleId.getIdentifier();
+
+    byte[] sampleData;
+    try {
+      sampleData = IOUtils.toByteArray(RhinoTestHelper.alterStream(sampleFile.read(), doi, doi));
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+
+    RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
+    Archive mockIngestible = createMockIngestible(articleId, input);
+    try {
+      return articleCrudService.writeArchive(mockIngestible,
+          Optional.of(articleId), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
 }
