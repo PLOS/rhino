@@ -17,7 +17,9 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
+import com.google.gson.Gson;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -29,11 +31,14 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -207,11 +212,12 @@ public final class RhinoTestHelper {
     }
   }
 
-  public static Archive createMockIngestible(ArticleIdentity articleId, InputStream xmlData) {
+  public static Archive createMockIngestible(ArticleIdentity articleId, InputStream xmlData,
+                                             List<ArticleAsset> referenceAssets) {
     try {
       try {
         String archiveName = articleId.getLastToken() + ".zip";
-        InputStream mockIngestible = IngestibleUtil.buildMockIngestible(xmlData, ImmutableList.of());
+        InputStream mockIngestible = IngestibleUtil.buildMockIngestible(xmlData, referenceAssets);
         return Archive.readZipFileIntoMemory(archiveName, mockIngestible);
       } finally {
         xmlData.close();
@@ -242,14 +248,28 @@ public final class RhinoTestHelper {
       throw new RuntimeException(e);
     }
 
+    Article reference = readReferenceCase(new File("src/test/resources/articles/" + doiStub + ".json"));
+
     RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
-    Archive mockIngestible = createMockIngestible(articleId, input);
+    Archive mockIngestible = createMockIngestible(articleId, input, reference.getAssets());
     try {
       return articleCrudService.writeArchive(mockIngestible,
           Optional.of(articleId), DoiBasedCrudService.WriteMode.CREATE_ONLY);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  public static Article readReferenceCase(File jsonFile) {
+    Preconditions.checkNotNull(jsonFile);
+    Article article;
+    try (Reader input = new BufferedReader(new FileReader(jsonFile))) {
+      article = new Gson().fromJson(input, Article.class);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+
+    return article;
   }
 
 }

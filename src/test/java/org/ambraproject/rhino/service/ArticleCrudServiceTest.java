@@ -20,6 +20,7 @@ package org.ambraproject.rhino.service;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
@@ -38,6 +39,7 @@ import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.DummyTaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
+import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.apache.commons.io.IOUtils;
@@ -134,8 +136,8 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     assertArticleExistence(articleId, false);
 
     RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
-    Article article = articleCrudService.writeArchive(RhinoTestHelper.createMockIngestible(articleId, input),
-        Optional.of(articleId), WriteMode.CREATE_ONLY);
+    Archive mockIngestible = RhinoTestHelper.createMockIngestible(articleId, input, ImmutableList.of());
+    Article article = articleCrudService.writeArchive(mockIngestible, Optional.of(articleId), WriteMode.CREATE_ONLY);
     assertArticleExistence(articleId, true);
     assertTrue(input.isClosed(), "Service didn't close stream");
 
@@ -181,8 +183,8 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
     final byte[] updated = Bytes.concat(sampleData, "\n<!-- Appended -->".getBytes());
     input = RhinoTestHelper.TestInputStream.of(updated);
-    article = articleCrudService.writeArchive(RhinoTestHelper.createMockIngestible(articleId, input),
-        Optional.of(articleId), WriteMode.UPDATE_ONLY);
+    mockIngestible = RhinoTestHelper.createMockIngestible(articleId, input, ImmutableList.of());
+    article = articleCrudService.writeArchive(mockIngestible, Optional.of(articleId), WriteMode.UPDATE_ONLY);
     byte[] updatedData = IOUtils.toByteArray(articleCrudService.readXml(articleId));
     assertEquals(updatedData, updated);
     assertArticleExistence(articleId, true);
@@ -203,8 +205,8 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     final ArticleIdentity articleId = ArticleIdentity.create(articleDoi);
     RhinoTestHelper.TestInputStream input = new RhinoTestHelper.TestFile(articleFile).read();
     input = RhinoTestHelper.alterStream(input, articleDoi, articleDoi);
-    Article article = articleCrudService.writeArchive(RhinoTestHelper.createMockIngestible(articleId, input),
-        Optional.of(articleId), WriteMode.CREATE_ONLY);
+    Archive mockIngestible = RhinoTestHelper.createMockIngestible(articleId, input, ImmutableList.of());
+    Article article = articleCrudService.writeArchive(mockIngestible, Optional.of(articleId), WriteMode.CREATE_ONLY);
 
     RhinoTestHelper.TestInputStream assetFileStream = new RhinoTestHelper.TestFile(assetFile).read();
 //    assetCrudService.upload(assetFileStream, assetId);

@@ -219,17 +219,6 @@ public class IngestionTest extends BaseRhinoTest {
     return provideIngestionCases(JSON_SUFFIX, ZIP_SUFFIX, ZIP_DATA_PATH).toArray(new Object[0][]);
   }
 
-  private Article readReferenceCase(File jsonFile) throws IOException {
-    Preconditions.checkNotNull(jsonFile);
-    Article article;
-    try (Reader input = new BufferedReader(new FileReader(jsonFile))) {
-      article = entityGson.fromJson(input, Article.class);
-    }
-    createTestJournal(article.geteIssn());
-
-    return article;
-  }
-
   /**
    * Persist a dummy Journal object with a particular eIssn into the test environment, if it doesn't already exist.
    *
@@ -249,7 +238,8 @@ public class IngestionTest extends BaseRhinoTest {
 
   @Test(dataProvider = "generatedIngestionData")
   public void testIngestion(File jsonFile, File xmlFile) throws Exception {
-    final Article expected = readReferenceCase(jsonFile);
+    final Article expected = RhinoTestHelper.readReferenceCase(jsonFile);
+    createTestJournal(expected.geteIssn());
     final String caseDoi = expected.getDoi();
 
     RhinoTestHelper.TestInputStream testInputStream = new RhinoTestHelper.TestFile(xmlFile).read();
@@ -289,7 +279,8 @@ public class IngestionTest extends BaseRhinoTest {
 
   @Test(dataProvider = "generatedZipIngestionData")
   public void testZipIngestion(File jsonFile, File zipFile) throws Exception {
-    final Article expected = readReferenceCase(jsonFile);
+    final Article expected = RhinoTestHelper.readReferenceCase(jsonFile);
+    createTestJournal(expected.geteIssn());
     Article actual = articleCrudService.writeArchive(Archive.readZipFileIntoMemory(zipFile),
         Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
     assertTrue(actual.getID() > 0, "Article doesn't have a database ID");
