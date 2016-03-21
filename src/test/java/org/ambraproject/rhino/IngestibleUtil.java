@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -61,11 +62,13 @@ public class IngestibleUtil {
     mainEntryRepresentation.setAttribute("entry", xmlFileName);
 
     Map<String, List<ArticleAsset>> assetGroups = expectedAssets.stream().collect(Collectors.groupingBy(ArticleAsset::getDoi));
+    assetGroups = new TreeMap<>(assetGroups); // DEBUG!
     for (Map.Entry<String, List<ArticleAsset>> entry : assetGroups.entrySet()) {
       AssetIdentity assetId = AssetIdentity.create(entry.getKey());
 
       final Element parentElement;
-      if (identity.getIdentifier().equals(assetId.getIdentifier())) {
+      boolean isRootAsset = identity.getIdentifier().equals(assetId.getIdentifier());
+      if (isRootAsset) {
         parentElement = articleElement;
       } else {
         parentElement = (Element) articleBundle.appendChild(manifest.createElement("object"));
@@ -74,7 +77,7 @@ public class IngestibleUtil {
 
       for (ArticleAsset asset : entry.getValue()) {
         AssetFileIdentity fileId = AssetFileIdentity.create(asset);
-        if (fileId.getFileExtension().equals("XML")) {
+        if (isRootAsset && fileId.getFileExtension().equals("XML")) {
           continue; // already created above
         }
         Element assetRepresentation = (Element) parentElement.appendChild(manifest.createElement("representation"));
