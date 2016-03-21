@@ -69,8 +69,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 class LegacyIngestionService {
 
@@ -228,10 +226,9 @@ class LegacyIngestionService {
    * Saves both the hibernate entity and the bytes representing an article.
    *
    * @param article the new or updated Article instance to save
-   * @param xmlData bytes of the article XML file to save
    * @throws IOException
    */
-  private void persistArticle(Article article, byte[] xmlData) throws IOException {
+  private void persistArticle(Article article) {
     saveArticleToHibernate(article);
     String doi = article.getDoi();
 
@@ -413,7 +410,7 @@ class LegacyIngestionService {
     article.setStrkImgURI(manifest.getStrkImgURI());
 
     uploadAssets(article, archive, manifest);
-    persistArticle(article, xmlData);
+    persistArticle(article);
     return article;
   }
 
@@ -464,24 +461,6 @@ class LegacyIngestionService {
     }
     throw new RestClientException("No manifest found in archive " + archive.getArchiveName(),
         HttpStatus.METHOD_NOT_ALLOWED);
-  }
-
-  /**
-   * Reads and returns the contents of a file in a .zip archive.
-   *
-   * @param zipFile  zip file
-   * @param filename name of the file within the archive to read
-   * @return contents of the file, or null if the file does not exist in zipFile
-   * @throws IOException
-   */
-  private byte[] readZipFile(ZipFile zipFile, String filename) throws IOException {
-    ZipEntry entry = zipFile.getEntry(filename);
-    if (entry == null) {
-      return null;
-    }
-    try (InputStream is = zipFile.getInputStream(entry)) {
-      return parentService.readClientInput(is);
-    }
   }
 
   /**

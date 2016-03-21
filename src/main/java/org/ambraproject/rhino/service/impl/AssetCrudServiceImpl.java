@@ -20,7 +20,6 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -30,7 +29,6 @@ import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.DoiAssociation;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AssetCrudService;
-import org.ambraproject.rhino.service.WriteResult;
 import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
@@ -40,9 +38,6 @@ import org.ambraproject.rhino.view.asset.groomed.UncategorizedAssetException;
 import org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView;
 import org.ambraproject.rhino.view.asset.raw.RawAssetFileView;
 import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -56,12 +51,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
-import org.springframework.orm.hibernate3.HibernateCallback;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigInteger;
-import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -70,22 +62,6 @@ import java.util.List;
 public class AssetCrudServiceImpl extends AmbraService implements AssetCrudService {
 
   private static final Logger log = LoggerFactory.getLogger(AssetCrudServiceImpl.class);
-
-  /**
-   * Copy all fields defined by article XML into a new asset and return it.
-   *
-   * @param oldAsset the asset to copy from
-   * @return the new asset
-   */
-  private static ArticleAsset copyArticleFields(ArticleAsset oldAsset) {
-    Preconditions.checkNotNull(oldAsset);
-    ArticleAsset newAsset = new ArticleAsset();
-    newAsset.setDoi(oldAsset.getDoi());
-    newAsset.setTitle(oldAsset.getTitle());
-    newAsset.setDescription(oldAsset.getDescription());
-    newAsset.setContextElement(oldAsset.getContextElement());
-    return newAsset;
-  }
 
   /**
    * {@inheritDoc}

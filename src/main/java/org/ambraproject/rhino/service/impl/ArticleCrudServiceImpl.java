@@ -99,12 +99,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private final LegacyIngestionService legacyIngestionService = new LegacyIngestionService(this);
   private final VersionedIngestionService versionedIngestionService = new VersionedIngestionService(this);
 
-  private boolean articleExistsAt(DoiBasedIdentity id) {
-    DetachedCriteria criteria = DetachedCriteria.forClass(Article.class)
-        .add(Restrictions.eq("doi", id.getKey()));
-    return exists(criteria);
-  }
-
   @Override
   public Article findArticleById(DoiBasedIdentity id) {
     return legacyIngestionService.findArticleById(id);
