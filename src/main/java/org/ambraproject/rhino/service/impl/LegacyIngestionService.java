@@ -245,11 +245,6 @@ class LegacyIngestionService {
       // Should never happen, since we have already loaded this article.
       throw new RuntimeException(nsaide);
     }
-
-    // ArticleIdentity doesn't like this part of the DOI.
-    doi = doi.substring("info:doi/".length());
-    AssetFileIdentity xmlIdentity = ArticleIdentity.create(doi).forXmlAsset();
-    parentService.write(xmlData, xmlIdentity);
   }
 
   /**
