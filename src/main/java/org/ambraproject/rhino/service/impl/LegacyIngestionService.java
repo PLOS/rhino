@@ -203,7 +203,8 @@ class LegacyIngestionService {
   private static ArticleAsset createStrikingImageAsset(AssetIdentity id, ManifestXml.Representation representation) {
     ArticleAsset asset = new ArticleAsset();
     asset.setDoi(id.getKey());
-    asset.setExtension(representation.getEntry());
+    asset.setExtension(representation.getName());
+    asset.setContentType(AssetFileIdentity.create(asset).inferContentType().toString());
     asset.setTitle("");
     asset.setDescription("");
     asset.setContextElement("");
