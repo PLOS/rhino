@@ -454,19 +454,6 @@ class LegacyIngestionService {
   }
 
   /**
-   * Determines if we should save a file contained within an article archive as an asset.
-   *
-   * @param filename           the name of a file within a .zip archive
-   * @param articleXmlFilename the file name for the article XML, as given by the manifest (must be lowercase)
-   * @return true if this file should be persisted as an asset
-   */
-  static boolean shouldSaveAssetFile(String filename, String articleXmlFilename) {
-    Preconditions.checkNotNull(filename);
-    filename = filename.toLowerCase().trim();
-    return !(filename.startsWith("manifest.") || filename.startsWith(articleXmlFilename));
-  }
-
-  /**
    * Returns the manifest from the archive as an XML Document.
    *
    * @param archive zip archive

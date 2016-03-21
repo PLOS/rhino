@@ -18,7 +18,6 @@
  */
 package org.ambraproject.rhino.service.impl;
 
-import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -137,11 +136,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     } else {
       throw new RestClientException("Versioned ingestion is not enabled on this system", HttpStatus.BAD_REQUEST);
     }
-  }
-
-  @VisibleForTesting
-  public static boolean shouldSaveAssetFile(String filename, String articleXmlFilename) {
-    return LegacyIngestionService.shouldSaveAssetFile(filename, articleXmlFilename);
   }
 
   @Override

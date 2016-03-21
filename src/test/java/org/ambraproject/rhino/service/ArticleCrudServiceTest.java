@@ -20,7 +20,6 @@ package org.ambraproject.rhino.service;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
@@ -34,10 +33,8 @@ import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.BaseRhinoTransactionalTest;
 import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
-import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.DummyTaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
 import org.ambraproject.rhino.util.Archive;
@@ -194,20 +191,6 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
     //articleCrudService.delete(articleId);
     //assertArticleExistence(articleId, false);
-  }
-
-  @Test
-  public void testShouldSaveAssetFile() {
-    assertTrue(ArticleCrudServiceImpl.shouldSaveAssetFile("pone.0058631.g001.tif", "pone.0058631.xml"));
-    assertTrue(ArticleCrudServiceImpl.shouldSaveAssetFile("ppat.1003193.g002.PNG_M", "ppat.1003193.xml"));
-    assertTrue(ArticleCrudServiceImpl.shouldSaveAssetFile("pcbi.1002867.pdf", "pcbi.1002867.xml"));
-    assertTrue(ArticleCrudServiceImpl.shouldSaveAssetFile("pone.0055746.s005.doc", "pone.0055746.xml"));
-
-    assertFalse(ArticleCrudServiceImpl.shouldSaveAssetFile("manifest.dtd", "p.0.xml"));
-    assertFalse(ArticleCrudServiceImpl.shouldSaveAssetFile("MANIFEST.xml", "p.0.xml"));
-    assertFalse(ArticleCrudServiceImpl.shouldSaveAssetFile("pone.0058631.xml", "pone.0058631.xml"));
-    assertFalse(ArticleCrudServiceImpl.shouldSaveAssetFile("ppat.1003188.xml.meta", "ppat.1003188.xml"));
-    assertFalse(ArticleCrudServiceImpl.shouldSaveAssetFile("pone.0058631.xml.orig", "pone.0058631.xml"));
   }
 
   @Test
