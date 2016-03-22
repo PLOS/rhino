@@ -26,8 +26,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import org.ambraproject.models.AmbraEntity;
@@ -44,9 +42,7 @@ import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.IngestibleUtil;
 import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.content.PersonName;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
-import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.test.AssertionCollector;
 import org.ambraproject.rhino.util.Archive;
@@ -67,13 +63,10 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import javax.annotation.Nullable;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -330,33 +323,6 @@ public class IngestionTest extends BaseRhinoTest {
     // TODO: figure out how to detect that second was re-ingested.  Don't want to
     // use modification time since the test might run in less than one clock tick.
     assertTrue(first.getID() > 0, "Article doesn't have a database ID");
-  }
-
-  /**
-   * Tests ingestion of an intentionally bad .zip file to confirm that all article entities are deleted after the
-   * error.
-   */
-  @Test
-  public void testArchiveError() throws Exception {
-    createTestJournal("1932-6203");
-
-    // An intentionally-constructed bad zip file that contains asset files not referenced
-    // in the XML.  (This seems like the easiest way to make ingestion blow up when
-    // processing an asset.)
-    String zipPath = ZIP_DATA_PATH.getCanonicalPath() + File.separator + "bad_zips"
-        + File.separator + "pone.0060593.zip";
-    try {
-      Article article = articleCrudService.writeArchive(Archive.readZipFileIntoMemory(new File(zipPath)),
-          Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
-      fail("Ingesting bad zip did not throw exception");
-    } catch (RestClientException expected) {
-      assertEquals(expected.getResponseStatus(), HttpStatus.METHOD_NOT_ALLOWED);
-    }
-
-    List<Article> articles = (List<Article>) hibernateTemplate.findByCriteria(DetachedCriteria
-        .forClass(Article.class)
-        .add(Restrictions.eq("doi", "info:doi/10.1371/journal.pone.0060593")));
-    assertEquals(articles.size(), 0, "Bad zip archive left a row in article!");
   }
 
   private static boolean compare(AssertionCollector results, Class<?> objectType, String fieldName,
