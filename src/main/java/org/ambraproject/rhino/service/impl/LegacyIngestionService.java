@@ -152,63 +152,6 @@ class LegacyIngestionService {
     return article;
   }
 
-  private List<ArticleAsset> createAssets(List<AssetBuilder> assetBuilders, ManifestXml manifest) {
-    ImmutableMap<AssetIdentity, ManifestXml.Asset> manifestAssets = Maps.uniqueIndex(manifest.parse(),
-        manifestAsset -> AssetIdentity.create(manifestAsset.getUri()));
-
-    List<ArticleAsset> assets = new ArrayList<>();
-    Set<AssetIdentity> created = new HashSet<>();
-    for (AssetBuilder assetBuilder : assetBuilders) {
-      AssetIdentity assetIdentity = AssetIdentity.create(assetBuilder.getDoi());
-      created.add(assetIdentity);
-
-      ManifestXml.Asset manifestAsset = manifestAssets.get(assetIdentity);
-      if (manifestAsset == null) {
-        throw new RestClientException("Asset in manuscript not matched to manifest: " + assetIdentity,
-            HttpStatus.BAD_REQUEST);
-      }
-
-      for (ManifestXml.Representation representation : manifestAsset.getRepresentations()) {
-        ArticleAsset asset = new ArticleAsset();
-        asset.setDoi(assetIdentity.getKey());
-
-        asset.setTitle(assetBuilder.getTitle());
-        asset.setDescription(assetBuilder.getDescription());
-        asset.setContextElement(assetBuilder.getContextElement());
-
-        asset.setExtension(representation.getName());
-        asset.setContentType(AssetFileIdentity.create(assetIdentity.getIdentifier(), representation.getName())
-            .inferContentType().toString());
-
-        assets.add(asset);
-      }
-    }
-
-    // Create asset objects for the striking image, only if it wasn't created from the manuscript
-    Optional.ofNullable(manifest.getStrkImgURI()).map(AssetIdentity::create)
-        .ifPresent((AssetIdentity strikingImageId) -> {
-          if (!created.contains(strikingImageId)) {
-            ManifestXml.Asset strikingImageAsset = manifestAssets.get(strikingImageId);
-            for (ManifestXml.Representation representation : strikingImageAsset.getRepresentations()) {
-              assets.add(createStrikingImageAsset(strikingImageId, representation));
-            }
-          }
-        });
-
-    return assets;
-  }
-
-  private static ArticleAsset createStrikingImageAsset(AssetIdentity id, ManifestXml.Representation representation) {
-    ArticleAsset asset = new ArticleAsset();
-    asset.setDoi(id.getKey());
-    asset.setExtension(representation.getName());
-    asset.setContentType(AssetFileIdentity.create(asset).inferContentType().toString());
-    asset.setTitle("");
-    asset.setDescription("");
-    asset.setContextElement("");
-    return asset;
-  }
-
   /**
    * Saves the hibernate entity representing an article.
    *
@@ -425,6 +368,78 @@ class LegacyIngestionService {
     destination.setSize(source.getSize());
   }
 
+  private static List<AssetBuilder> parseAssets(Article article, ArticleXml xml) {
+    AssetBuilder rootAsset = new AssetBuilder();
+    rootAsset.setDoi(article.getDoi());
+    rootAsset.setTitle(article.getTitle());
+    rootAsset.setDescription(article.getDescription());
+
+    AssetNodesByDoi assetNodes = xml.findAllAssetNodes();
+    List<AssetBuilder> inlineAssets = assetNodes.getDois().stream()
+        .map(assetDoi -> parseAsset(assetNodes, assetDoi))
+        .collect(Collectors.toList());
+
+    return ImmutableList.<AssetBuilder>builder()
+        .add(rootAsset).addAll(inlineAssets).build();
+  }
+
+  private List<ArticleAsset> createAssets(List<AssetBuilder> assetBuilders, ManifestXml manifest) {
+    ImmutableMap<AssetIdentity, ManifestXml.Asset> manifestAssets = Maps.uniqueIndex(manifest.parse(),
+        manifestAsset -> AssetIdentity.create(manifestAsset.getUri()));
+
+    List<ArticleAsset> assets = new ArrayList<>();
+    Set<AssetIdentity> created = new HashSet<>();
+    for (AssetBuilder assetBuilder : assetBuilders) {
+      AssetIdentity assetIdentity = AssetIdentity.create(assetBuilder.getDoi());
+      created.add(assetIdentity);
+
+      ManifestXml.Asset manifestAsset = manifestAssets.get(assetIdentity);
+      if (manifestAsset == null) {
+        throw new RestClientException("Asset in manuscript not matched to manifest: " + assetIdentity,
+            HttpStatus.BAD_REQUEST);
+      }
+
+      for (ManifestXml.Representation representation : manifestAsset.getRepresentations()) {
+        ArticleAsset asset = new ArticleAsset();
+        asset.setDoi(assetIdentity.getKey());
+
+        asset.setTitle(assetBuilder.getTitle());
+        asset.setDescription(assetBuilder.getDescription());
+        asset.setContextElement(assetBuilder.getContextElement());
+
+        asset.setExtension(representation.getName());
+        asset.setContentType(AssetFileIdentity.create(assetIdentity.getIdentifier(), representation.getName())
+            .inferContentType().toString());
+
+        assets.add(asset);
+      }
+    }
+
+    // Create asset objects for the striking image, only if it wasn't created from the manuscript
+    Optional.ofNullable(manifest.getStrkImgURI()).map(AssetIdentity::create)
+        .ifPresent((AssetIdentity strikingImageId) -> {
+          if (!created.contains(strikingImageId)) {
+            ManifestXml.Asset strikingImageAsset = manifestAssets.get(strikingImageId);
+            for (ManifestXml.Representation representation : strikingImageAsset.getRepresentations()) {
+              assets.add(createStrikingImageAsset(strikingImageId, representation));
+            }
+          }
+        });
+
+    return assets;
+  }
+
+  private static ArticleAsset createStrikingImageAsset(AssetIdentity id, ManifestXml.Representation representation) {
+    ArticleAsset asset = new ArticleAsset();
+    asset.setDoi(id.getKey());
+    asset.setExtension(representation.getName());
+    asset.setContentType(AssetFileIdentity.create(asset).inferContentType().toString());
+    asset.setTitle("");
+    asset.setDescription("");
+    asset.setContextElement("");
+    return asset;
+  }
+
   private void uploadAssets(Article article, Archive archive, ManifestXml manifest) throws IOException {
     Map<AssetFileIdentity, String> filenames = new HashMap<>();
     for (ManifestXml.Asset manifestAsset : manifest.parse()) {
@@ -569,21 +584,6 @@ class LegacyIngestionService {
     }
 
     return categories;
-  }
-
-  private static List<AssetBuilder> parseAssets(Article article, ArticleXml xml) {
-    AssetBuilder rootAsset = new AssetBuilder();
-    rootAsset.setDoi(article.getDoi());
-    rootAsset.setTitle(article.getTitle());
-    rootAsset.setDescription(article.getDescription());
-
-    AssetNodesByDoi assetNodes = xml.findAllAssetNodes();
-    List<AssetBuilder> inlineAssets = assetNodes.getDois().stream()
-        .map(assetDoi -> parseAsset(assetNodes, assetDoi))
-        .collect(Collectors.toList());
-
-    return ImmutableList.<AssetBuilder>builder()
-        .add(rootAsset).addAll(inlineAssets).build();
   }
 
 
