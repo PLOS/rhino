@@ -62,7 +62,6 @@ public class IngestibleUtil {
     mainEntryRepresentation.setAttribute("entry", xmlFileName);
 
     Map<String, List<ArticleAsset>> assetGroups = expectedAssets.stream().collect(Collectors.groupingBy(ArticleAsset::getDoi));
-    assetGroups = new TreeMap<>(assetGroups); // DEBUG!
     for (Map.Entry<String, List<ArticleAsset>> entry : assetGroups.entrySet()) {
       AssetIdentity assetId = AssetIdentity.create(entry.getKey());
 
