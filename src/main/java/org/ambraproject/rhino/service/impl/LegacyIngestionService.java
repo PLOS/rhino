@@ -347,7 +347,7 @@ class LegacyIngestionService {
     List<AssetBuilder> assetBuilders = parseAssets(article, manuscript);
     List<ArticleAsset> createdAssets = createAssets(assetBuilders, manifest);
     HibernateEntityUtil.replaceEntities(persistentAssets, createdAssets,
-        AssetFileIdentity::create, LegacyIngestionService::copyAsset);
+        AssetFileIdentity::from, LegacyIngestionService::copyAsset);
 
     article.setArchiveName(new File(archive.getArchiveName()).getName());
     article.setStrkImgURI(manifest.getStrkImgURI());
@@ -433,7 +433,7 @@ class LegacyIngestionService {
     ArticleAsset asset = new ArticleAsset();
     asset.setDoi(id.getKey());
     asset.setExtension(representation.getName());
-    asset.setContentType(AssetFileIdentity.create(asset).inferContentType().toString());
+    asset.setContentType(AssetFileIdentity.from(asset).inferContentType().toString());
     asset.setTitle("");
     asset.setDescription("");
     asset.setContextElement("");

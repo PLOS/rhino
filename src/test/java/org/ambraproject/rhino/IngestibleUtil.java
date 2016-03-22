@@ -75,7 +75,7 @@ public class IngestibleUtil {
       }
 
       for (ArticleAsset asset : entry.getValue()) {
-        AssetFileIdentity fileId = AssetFileIdentity.create(asset);
+        AssetFileIdentity fileId = AssetFileIdentity.from(asset);
         if (isRootAsset && fileId.getFileExtension().equals("XML")) {
           continue; // already created above
         }
@@ -128,7 +128,7 @@ public class IngestibleUtil {
       }
 
       for (ArticleAsset expectedAsset : expectedAssets) {
-        AssetFileIdentity fileId = AssetFileIdentity.create(expectedAsset);
+        AssetFileIdentity fileId = AssetFileIdentity.from(expectedAsset);
         if (identity.getIdentifier().equals(fileId.getIdentifier()) && fileId.getFileExtension().equals("XML")) {
           continue; // we already created this one above
         }
