@@ -16,12 +16,11 @@ public class AssetIdentity extends DoiBasedIdentity {
   }
 
   /**
-   * Create an identifier that refers to an asset. The argument is an Ambra entity that <em>may</em> be associated with
-   * a particular file (i.e., it may have a non-empty extension), but the returned object will not specify a file
-   * regardless.
+   * Create an identifier that refers to an asset. The returned object identifies the group of asset files belonging to
+   * the {@link ArticleAsset} entity's DOI, independent of which individual file is represented by that entity.
    *
    * @param asset an Ambra asset entity
-   * @return an identifier for the asset that ignored its associated file, if any
+   * @return an identifier for the asset
    */
   public static AssetIdentity from(ArticleAsset asset) {
     return AssetIdentity.create(asIdentifier(asset.getDoi()));
