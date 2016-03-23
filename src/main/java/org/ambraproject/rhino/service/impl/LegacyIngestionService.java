@@ -383,7 +383,22 @@ class LegacyIngestionService {
         .add(rootAsset).addAll(inlineAssets).build();
   }
 
-  private List<ArticleAsset> createAssets(List<AssetBuilder> assetBuilders, ManifestXml manifest) {
+  /**
+   * Create the {@link ArticleAsset} model objects to persist.
+   * <p>
+   * Joins two sources of data. The first source of data is the asset references from the manuscript, which supply the
+   * textual metadata (title, description). The second source of data is the ingestible archive manifest, which supplies
+   * the names of the file representations. The Ambra data model requires an individual {@link ArticleAsset} object for
+   * each file representation, although ones with the same asset DOI will share the same textual metadata.
+   * <p>
+   * The returned {@link ArticleAsset} objects will not be ready to persist until the file sizes are set. This
+   * information is not supplied in the manifest, and must be captured when reading the zip file.
+   *
+   * @param manuscriptAssets assets represented by the manuscript, as containers of related text
+   * @param manifest         the list of files in the ingestible and the asset IDs associated with them
+   * @return a list of new {@link ArticleAsset} model objects
+   */
+  private List<ArticleAsset> createAssets(List<AssetBuilder> manuscriptAssets, ManifestXml manifest) {
     ImmutableMap<AssetIdentity, ManifestXml.Asset> manifestAssets = Maps.uniqueIndex(manifest.parse(),
         manifestAsset -> AssetIdentity.create(manifestAsset.getUri()));
 
@@ -391,8 +406,8 @@ class LegacyIngestionService {
     boolean needStrikingImageAsset = strikingImageId.isPresent();
 
     List<ArticleAsset> assets = new ArrayList<>();
-    for (AssetBuilder assetBuilder : assetBuilders) {
-      AssetIdentity assetIdentity = AssetIdentity.create(assetBuilder.getDoi());
+    for (AssetBuilder manuscriptAsset : manuscriptAssets) {
+      AssetIdentity assetIdentity = AssetIdentity.create(manuscriptAsset.getDoi());
       if (needStrikingImageAsset && strikingImageId.get().equals(assetIdentity)) {
         needStrikingImageAsset = false; // We have encountered the striking image asset, so don't create one later
       }
@@ -407,9 +422,9 @@ class LegacyIngestionService {
         ArticleAsset asset = new ArticleAsset();
         asset.setDoi(assetIdentity.getKey());
 
-        asset.setTitle(assetBuilder.getTitle());
-        asset.setDescription(assetBuilder.getDescription());
-        asset.setContextElement(assetBuilder.getContextElement());
+        asset.setTitle(manuscriptAsset.getTitle());
+        asset.setDescription(manuscriptAsset.getDescription());
+        asset.setContextElement(manuscriptAsset.getContextElement());
 
         asset.setExtension(representation.getName());
         asset.setContentType(AssetFileIdentity.create(assetIdentity.getIdentifier(), representation.getName())
