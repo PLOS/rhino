@@ -387,11 +387,15 @@ class LegacyIngestionService {
     ImmutableMap<AssetIdentity, ManifestXml.Asset> manifestAssets = Maps.uniqueIndex(manifest.parse(),
         manifestAsset -> AssetIdentity.create(manifestAsset.getUri()));
 
+    Optional<AssetIdentity> strikingImageId = Optional.ofNullable(manifest.getStrkImgURI()).map(AssetIdentity::create);
+    boolean needStrikingImageAsset = strikingImageId.isPresent();
+
     List<ArticleAsset> assets = new ArrayList<>();
-    Set<AssetIdentity> created = new HashSet<>();
     for (AssetBuilder assetBuilder : assetBuilders) {
       AssetIdentity assetIdentity = AssetIdentity.create(assetBuilder.getDoi());
-      created.add(assetIdentity);
+      if (needStrikingImageAsset && strikingImageId.get().equals(assetIdentity)) {
+        needStrikingImageAsset = false; // We have encountered the striking image asset, so don't create one later
+      }
 
       ManifestXml.Asset manifestAsset = manifestAssets.get(assetIdentity);
       if (manifestAsset == null) {
@@ -416,15 +420,12 @@ class LegacyIngestionService {
     }
 
     // Create asset objects for the striking image, only if it wasn't created from the manuscript
-    Optional.ofNullable(manifest.getStrkImgURI()).map(AssetIdentity::create)
-        .ifPresent((AssetIdentity strikingImageId) -> {
-          if (!created.contains(strikingImageId)) {
-            ManifestXml.Asset strikingImageAsset = manifestAssets.get(strikingImageId);
-            for (ManifestXml.Representation representation : strikingImageAsset.getRepresentations()) {
-              assets.add(createStrikingImageAsset(strikingImageId, representation));
-            }
-          }
-        });
+    if (needStrikingImageAsset) {
+      ManifestXml.Asset strikingImageAsset = manifestAssets.get(strikingImageId.get());
+      for (ManifestXml.Representation representation : strikingImageAsset.getRepresentations()) {
+        assets.add(createStrikingImageAsset(strikingImageId.get(), representation));
+      }
+    }
 
     return assets;
   }
