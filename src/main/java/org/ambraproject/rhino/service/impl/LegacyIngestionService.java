@@ -442,6 +442,12 @@ class LegacyIngestionService {
       }
     }
 
+    Set<AssetIdentity> createdAssets = assets.stream().map(AssetIdentity::from).collect(Collectors.toSet());
+    if (!createdAssets.containsAll(manifestAssets.keySet())) {
+      throw new RestClientException("Assets in manifest not matched to manuscript: "
+          + Sets.difference(manifestAssets.keySet(), createdAssets), HttpStatus.BAD_REQUEST);
+    }
+
     return assets;
   }
 
