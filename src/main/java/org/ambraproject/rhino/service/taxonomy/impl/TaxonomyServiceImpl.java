@@ -4,6 +4,7 @@ import org.ambraproject.models.Article;
 import org.ambraproject.rhino.service.impl.AmbraService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
+import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 
 public class TaxonomyServiceImpl extends AmbraService implements TaxonomyService {
 
@@ -22,7 +22,7 @@ public class TaxonomyServiceImpl extends AmbraService implements TaxonomyService
   private TaxonomyClassificationService taxonomyClassificationService;
 
   @Override
-  public Map<String, Integer> classifyArticle(Document articleXml, Article article) throws IOException {
+  public List<WeightedTerm> classifyArticle(Document articleXml, Article article) {
     return taxonomyClassificationService.classifyArticle(articleXml, article);
   }
 

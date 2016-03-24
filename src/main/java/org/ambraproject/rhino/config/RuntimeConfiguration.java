@@ -92,6 +92,16 @@ public interface RuntimeConfiguration {
 
   TaxonomyConfiguration getTaxonomyConfiguration();
 
+  interface UserApiConfiguration {
+    URL getServer();
+
+    String getAuthorizationAppName();
+
+    String getAuthorizationPassword();
+  }
+
+  UserApiConfiguration getNedConfiguration();
+
   /**
    * Return the date, for comments persisted on this system, at which commenters were first prompted for competing
    * interests. Comments from before this date will necessarily lack competing interest statements, but the system
