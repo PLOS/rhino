@@ -13,7 +13,6 @@
 
 package org.ambraproject.rhino.service;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
@@ -23,18 +22,14 @@ import org.ambraproject.models.AnnotationType;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.UserProfile;
 import org.ambraproject.rhino.BaseRhinoTest;
-import org.ambraproject.rhino.IngestibleUtil;
 import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.view.comment.AnnotationOutputView;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -70,16 +65,7 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
 
   @Test
   public void testComments() throws Exception {
-    String doiStub = RhinoTestHelper.SAMPLE_ARTICLES.get(0);
-    ArticleIdentity articleId = ArticleIdentity.create(RhinoTestHelper.prefixed(doiStub));
-    RhinoTestHelper.TestFile sampleFile = new RhinoTestHelper.TestFile(new File(
-        "src/test/resources/articles/" + doiStub + ".xml"));
-    String doi = articleId.getIdentifier();
-    byte[] sampleData = IOUtils.toByteArray(RhinoTestHelper.alterStream(sampleFile.read(), doi, doi));
-    RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
-    Archive archive = Archive.readZipFileIntoMemory(doiStub + ".zip", IngestibleUtil.buildMockIngestible(input));
-    Article article = articleCrudService.writeArchive(archive, Optional.of(articleId),
-        DoiBasedCrudService.WriteMode.CREATE_ONLY);
+    Article article = RhinoTestHelper.createTestArticle(articleCrudService);
     article.setJournals(ImmutableSet.of());
 
     UserProfile creator = new UserProfile("fake@example.org", "displayName", "password");
@@ -145,7 +131,7 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     comment3.setBody("Test Comment Body");
     hibernateTemplate.save(comment3);
 
-    String json = annotationCrudService.readComments(articleId).readJson(entityGson);
+    String json = annotationCrudService.readComments(ArticleIdentity.create(article)).readJson(entityGson);
     assertTrue(json.length() > 0);
 
     // Confirm that date strings in the JSON are formatted as ISO8601 ("2012-04-23T18:25:43.511Z").

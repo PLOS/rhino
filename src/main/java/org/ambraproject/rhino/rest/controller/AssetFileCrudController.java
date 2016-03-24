@@ -79,47 +79,7 @@ public class AssetFileCrudController extends DoiBasedCrudController {
   }
 
 
-  private static final String DOI_PARAM = "doi";
-  private static final String EXTENSION_PARAM = "ext";
-  private static final String FILE_PARAM = "file";
   private static final String METADATA_PARAM = "metadata";
-
-  /**
-   * Dispatch an action to upload a file for an asset. When the client does this action, the asset ought to already
-   * exist as a database entity as a result of ingesting its parent article. The action uploads a data blob to put in
-   * the file store, and doesn't change any database data defined by article XML.
-   *
-   * @param assetDoi  the DOI of the asset to receive the file, which should already exist
-   * @param assetFile the blob of data to associate with the asset
-   * @return
-   * @throws IOException
-   */
-  @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = ASSET_ROOT, method = RequestMethod.POST)
-  public void upload(HttpServletRequest request, HttpServletResponse response,
-                     @RequestParam(value = DOI_PARAM) String assetDoi,
-                     @RequestParam(value = EXTENSION_PARAM) String extension,
-                     @RequestParam(value = FILE_PARAM) MultipartFile assetFile)
-      throws IOException {
-    AssetFileIdentity fileIdentity = AssetFileIdentity.create(assetDoi, extension);
-    WriteResult<ArticleAsset> result;
-    try (InputStream fileContent = assetFile.getInputStream()) {
-      result = assetCrudService.upload(fileContent, fileIdentity);
-    }
-
-    response.setStatus(result.getStatus().value());
-    assetCrudService.readMetadata(fileIdentity.forAsset()).respond(request, response, entityGson);
-  }
-
-  @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.PUT)
-  public ResponseEntity<?> overwrite(HttpServletRequest request) throws IOException {
-    AssetFileIdentity id = parse(request);
-    try (InputStream fileContent = request.getInputStream()) {
-      assetCrudService.overwrite(fileContent, id);
-    }
-    return reportOk();
-  }
 
   private static final Joiner REPROXY_URL_JOINER = Joiner.on(' ');
   private static final int REPROXY_CACHE_FOR_VALUE = 6 * 60 * 60; // TODO: Make configurable
@@ -205,13 +165,6 @@ public class AssetFileCrudController extends DoiBasedCrudController {
       throws IOException {
     AssetFileIdentity id = parse(request);
     assetCrudService.readFileMetadata(id).respond(request, response, entityGson);
-  }
-
-  @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.DELETE)
-  public ResponseEntity<?> delete(HttpServletRequest request) {
-    AssetFileIdentity id = parse(request);
-    assetCrudService.delete(id);
-    return reportOk();
   }
 
   /**

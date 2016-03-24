@@ -18,7 +18,6 @@
 
 package org.ambraproject.rhino.rest.controller;
 
-import com.google.common.base.Optional;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.AnnotationCrudService;
@@ -45,6 +44,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -173,7 +173,7 @@ public class ArticleCrudController extends ArticleSpaceController {
     ArticleMetadataSource sourceObj = parseFullManuscript ? ArticleMetadataSource.FULL_MANUSCRIPT
         : excludeCitations ? ArticleMetadataSource.FRONT_MATTER
         : ArticleMetadataSource.FRONT_AND_BACK_MATTER;
-    articleCrudService.readVersionedMetadata(id, Optional.fromNullable(versionNumber), sourceObj)
+    articleCrudService.readVersionedMetadata(id, Optional.ofNullable(versionNumber), sourceObj)
         .respond(request, response, entityGson);
   }
 

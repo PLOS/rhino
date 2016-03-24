@@ -33,30 +33,12 @@ import java.io.InputStream;
 public interface AssetCrudService extends DoiBasedCrudService {
 
   /**
-   * Upload a file to be associated with a created asset.
-   *
-   * @param file    the file data to associate with the new asset
-   * @param assetId the identifier for the existing asset with the new file's extension
-   * @return an indication of the result
-   * @throws IOException
-   */
-  public abstract WriteResult<ArticleAsset> upload(InputStream file, AssetFileIdentity assetId)
-      throws IOException;
-
-  /**
    * Read the file associated with an asset.
    *
    * @param id the identifier of the asset whose file is to be read
    * @return a stream containing the file data
    */
   public abstract InputStream read(AssetFileIdentity id);
-
-  /**
-   * Delete an asset and its associated file.
-   *
-   * @param id the identifier of the asset to delete
-   */
-  public abstract void delete(AssetFileIdentity id);
 
   /**
    * Read the metadata of an asset. The output may contain multiple asset objects, one for each file associated with the
@@ -82,15 +64,6 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * @param id the identity of the asset file to read
    */
   public Transceiver readFileMetadata(AssetFileIdentity id)
-      throws IOException;
-
-  /**
-   * Overwrite an existing asset's file with a new file.
-   *
-   * @param fileContent the file to write
-   * @param id          the identity of the asset
-   */
-  public abstract void overwrite(InputStream fileContent, AssetFileIdentity id)
       throws IOException;
 
   /**

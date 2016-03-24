@@ -43,7 +43,7 @@ import java.util.List;
  *
  * @param <T> the type of entity that can be build from this XML element
  */
-public abstract class AbstractArticleXml<T extends AmbraEntity> extends AbstractXpathReader {
+public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
 
   private static final Logger log = LoggerFactory.getLogger(AbstractArticleXml.class);
 

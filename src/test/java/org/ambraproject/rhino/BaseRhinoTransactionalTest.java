@@ -53,11 +53,6 @@ public class BaseRhinoTransactionalTest extends AbstractTransactionalTestNGSprin
     return RhinoTestHelper.sampleArticles();
   }
 
-  @DataProvider
-  public Object[][] sampleAssets() {
-    return RhinoTestHelper.sampleAssets();
-  }
-
   /**
    * Adds journal entities for the test article set.
    */

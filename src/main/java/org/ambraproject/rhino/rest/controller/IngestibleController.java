@@ -13,7 +13,6 @@
 
 package org.ambraproject.rhino.rest.controller;
 
-import com.google.common.base.Optional;
 import com.google.common.net.HttpHeaders;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -38,6 +37,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Optional;
 
 /**
  * Controller enabling access to the ambra ingest directory (whose location is defined by the
@@ -105,7 +105,7 @@ public class IngestibleController extends DoiBasedCrudController {
     WriteMode reingestMode = booleanParameter(forceReingest) ? WriteMode.WRITE_ANY : WriteMode.CREATE_ONLY;
 
     // TODO: Add user-specific (i.e., PLOS-vs-non-PLOS) way to infer expected ID from zip file naming convention.
-    Optional<ArticleIdentity> expectedId = Optional.absent();
+    Optional<ArticleIdentity> expectedId = Optional.empty();
 
     Article result;
     try (Archive archive = Archive.readZipFile(archiveFile)) {
