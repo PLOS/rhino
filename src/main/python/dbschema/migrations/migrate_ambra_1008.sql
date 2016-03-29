@@ -6,7 +6,6 @@ alter table articleCategoryFlagged drop foreign key articleCategoryFlagged_ibfk_
 
 drop table userOrcid;
 drop table userProfileMetaData;
-drop table userProfileRoleJoinTable;
 drop table savedSearch;
 drop table savedSearchQuery;
 drop table userSearch;
