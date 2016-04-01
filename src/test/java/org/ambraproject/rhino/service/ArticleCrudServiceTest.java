@@ -19,8 +19,6 @@
 package org.ambraproject.rhino.service;
 
 import com.google.common.base.Function;
-import com.google.common.base.Optional;
-import com.google.common.base.Strings;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -33,13 +31,10 @@ import org.ambraproject.models.ArticleAuthor;
 import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.BaseRhinoTransactionalTest;
-import org.ambraproject.rhino.IngestibleUtil;
 import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
-import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.DummyTaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
 import org.ambraproject.rhino.util.Archive;
@@ -60,11 +55,11 @@ import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
@@ -128,34 +123,8 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
         "Text field was set with trailing whitespace");
   }
 
-  private static Archive createMockIngestible(ArticleIdentity articleId, InputStream xmlData) throws IOException {
-    try {
-      String archiveName = articleId.getLastToken() + ".zip";
-      InputStream mockIngestible = IngestibleUtil.buildMockIngestible(xmlData);
-      return Archive.readZipFileIntoMemory(archiveName, mockIngestible);
-    } finally {
-      xmlData.close();
-    }
-  }
-
-  private Map<ArticleIdentity, Article> createTestArticle() throws IOException {
-    String doiStub = RhinoTestHelper.SAMPLE_ARTICLES.get(0);
-    ArticleIdentity articleId = ArticleIdentity.create(RhinoTestHelper.prefixed(doiStub));
-    RhinoTestHelper.TestFile sampleFile = new RhinoTestHelper.TestFile(new File(
-        "src/test/resources/articles/" + doiStub + ".xml"));
-    String doi = articleId.getIdentifier();
-    byte[] sampleData = IOUtils.toByteArray(RhinoTestHelper.alterStream(sampleFile.read(), doi, doi));
-    RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
-    Article article = articleCrudService.writeArchive(createMockIngestible(articleId, input),
-        Optional.of(articleId), WriteMode.CREATE_ONLY);
-
-    HashMap<ArticleIdentity, Article> articleHashMap = new HashMap<>();
-    articleHashMap.put(articleId, article);
-    return articleHashMap;
-  }
-
   @Test(dataProvider = "sampleArticles")
-  public void testCrud(String doi, File fileLocation) throws IOException {
+  public void testCrud(String doi, File fileLocation, File referenceLocation) throws IOException {
     final ArticleIdentity articleId = ArticleIdentity.create(doi);
     final String key = articleId.getKey();
 
@@ -165,8 +134,9 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     assertArticleExistence(articleId, false);
 
     RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
-    Article article = articleCrudService.writeArchive(createMockIngestible(articleId, input),
-        Optional.of(articleId), WriteMode.CREATE_ONLY);
+    List<ArticleAsset> referenceAssets = RhinoTestHelper.readReferenceCase(referenceLocation).getAssets();
+    Archive mockIngestible = RhinoTestHelper.createMockIngestible(articleId, input, referenceAssets);
+    Article article = articleCrudService.writeArchive(mockIngestible, Optional.of(articleId), WriteMode.CREATE_ONLY);
     assertArticleExistence(articleId, true);
     assertTrue(input.isClosed(), "Service didn't close stream");
 
@@ -212,8 +182,8 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
     final byte[] updated = Bytes.concat(sampleData, "\n<!-- Appended -->".getBytes());
     input = RhinoTestHelper.TestInputStream.of(updated);
-    article = articleCrudService.writeArchive(createMockIngestible(articleId, input),
-        Optional.of(articleId), WriteMode.UPDATE_ONLY);
+    mockIngestible = RhinoTestHelper.createMockIngestible(articleId, input, referenceAssets);
+    article = articleCrudService.writeArchive(mockIngestible, Optional.of(articleId), WriteMode.UPDATE_ONLY);
     byte[] updatedData = IOUtils.toByteArray(articleCrudService.readXml(articleId));
     assertEquals(updatedData, updated);
     assertArticleExistence(articleId, true);
@@ -221,48 +191,6 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
     //articleCrudService.delete(articleId);
     //assertArticleExistence(articleId, false);
-  }
-
-  @Test(dataProvider = "sampleAssets")
-  public void testCreateAsset(String articleDoi, File articleFile, String assetDoi, File assetFile)
-      throws IOException {
-    String testAssetDoi = assetDoi.replace(articleDoi, articleDoi);
-
-    String assetFilePath = assetFile.getPath();
-    String extension = assetFilePath.substring(assetFilePath.lastIndexOf('.') + 1);
-    final AssetFileIdentity assetId = AssetFileIdentity.create(testAssetDoi, extension);
-    final ArticleIdentity articleId = ArticleIdentity.create(articleDoi);
-    RhinoTestHelper.TestInputStream input = new RhinoTestHelper.TestFile(articleFile).read();
-    input = RhinoTestHelper.alterStream(input, articleDoi, articleDoi);
-    Article article = articleCrudService.writeArchive(createMockIngestible(articleId, input),
-        Optional.of(articleId), WriteMode.CREATE_ONLY);
-
-    RhinoTestHelper.TestInputStream assetFileStream = new RhinoTestHelper.TestFile(assetFile).read();
-    assetCrudService.upload(assetFileStream, assetId);
-
-    ArticleAsset stored = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
-        hibernateTemplate.findByCriteria(DetachedCriteria
-                .forClass(ArticleAsset.class)
-                .add(Restrictions.eq("doi", assetId.getKey()))
-                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        ));
-    assertNotNull(stored.getContextElement());
-    assertNotNull(stored.getContentType());
-    assertFalse(Strings.isNullOrEmpty(stored.getExtension()));
-  }
-
-  @Test
-  public void testShouldSaveAssetFile() {
-    assertTrue(ArticleCrudServiceImpl.shouldSaveAssetFile("pone.0058631.g001.tif", "pone.0058631.xml"));
-    assertTrue(ArticleCrudServiceImpl.shouldSaveAssetFile("ppat.1003193.g002.PNG_M", "ppat.1003193.xml"));
-    assertTrue(ArticleCrudServiceImpl.shouldSaveAssetFile("pcbi.1002867.pdf", "pcbi.1002867.xml"));
-    assertTrue(ArticleCrudServiceImpl.shouldSaveAssetFile("pone.0055746.s005.doc", "pone.0055746.xml"));
-
-    assertFalse(ArticleCrudServiceImpl.shouldSaveAssetFile("manifest.dtd", "p.0.xml"));
-    assertFalse(ArticleCrudServiceImpl.shouldSaveAssetFile("MANIFEST.xml", "p.0.xml"));
-    assertFalse(ArticleCrudServiceImpl.shouldSaveAssetFile("pone.0058631.xml", "pone.0058631.xml"));
-    assertFalse(ArticleCrudServiceImpl.shouldSaveAssetFile("ppat.1003188.xml.meta", "ppat.1003188.xml"));
-    assertFalse(ArticleCrudServiceImpl.shouldSaveAssetFile("pone.0058631.xml.orig", "pone.0058631.xml"));
   }
 
   @Test
@@ -293,15 +221,8 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
   @Test
   public void testArticleType() throws Exception {
-    String doiStub = RhinoTestHelper.SAMPLE_ARTICLES.get(0);
-    ArticleIdentity articleId = ArticleIdentity.create(RhinoTestHelper.prefixed(doiStub));
-    RhinoTestHelper.TestFile sampleFile = new RhinoTestHelper.TestFile(new File(
-        "src/test/resources/articles/" + doiStub + ".xml"));
-    String doi = articleId.getIdentifier();
-    byte[] sampleData = IOUtils.toByteArray(RhinoTestHelper.alterStream(sampleFile.read(), doi, doi));
-    RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
-    Article article = articleCrudService.writeArchive(createMockIngestible(articleId, input),
-        Optional.of(articleId), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+    Article article = RhinoTestHelper.createTestArticle(articleCrudService);
+    ArticleIdentity articleId = ArticleIdentity.create(article);
 
     String json = articleCrudService.readMetadata(articleId, true).readJson(entityGson);
     assertTrue(json.length() > 0);
@@ -320,8 +241,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
   @Test
   public void testArticleAuthors() throws Exception {
-    Map<ArticleIdentity, Article> testArticle = createTestArticle();
-    ArticleIdentity articleId = testArticle.keySet().iterator().next();
+    ArticleIdentity articleId = ArticleIdentity.create(RhinoTestHelper.createTestArticle(articleCrudService));
 
     String json = articleCrudService.readAuthors(articleId).readJson(entityGson);
     assertTrue(json.length() > 0);
@@ -352,8 +272,8 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
   @Test
   public void testArticleCategories() throws Exception {
-    Map<ArticleIdentity, Article> testArticle = createTestArticle();
-    ArticleIdentity articleId = testArticle.keySet().iterator().next();
+    Article testArticle = RhinoTestHelper.createTestArticle(articleCrudService);
+    ArticleIdentity articleId = ArticleIdentity.create(testArticle);
 
     String json = articleCrudService.readCategories(articleId).readJson(entityGson);
     assertTrue(json.length() > 0);
@@ -368,11 +288,10 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
   @Test
   public void testRepopulateArticleCategories() throws Exception {
-    Map<ArticleIdentity, Article> testArticle = createTestArticle();
-    ArticleIdentity articleId = testArticle.keySet().iterator().next();
-    Article article = testArticle.get(articleId);
+    Article article = RhinoTestHelper.createTestArticle(articleCrudService);
+    ArticleIdentity articleId = ArticleIdentity.create(article);
 
-    article.setCategories(new HashMap<Category, Integer>());
+    article.setCategories(new HashMap<>());
     assertEquals(article.getCategories().size(), 0);
 
     articleCrudService.repopulateCategories(articleId);
@@ -382,8 +301,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
   @Test
   public void testGetRawCategories() throws Exception {
-    Map<ArticleIdentity, Article> testArticle = createTestArticle();
-    ArticleIdentity articleId = testArticle.keySet().iterator().next();
+    ArticleIdentity articleId = ArticleIdentity.create(RhinoTestHelper.createTestArticle(articleCrudService));
 
     String json = articleCrudService.getRawCategories(articleId).readJson(entityGson);
     assertTrue(json.length() > 0);
@@ -396,8 +314,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
   @Test
   public void testGetRawCategoriesAndText() throws Exception {
-    Map<ArticleIdentity, Article> testArticle = createTestArticle();
-    ArticleIdentity articleId = testArticle.keySet().iterator().next();
+    ArticleIdentity articleId = ArticleIdentity.create(RhinoTestHelper.createTestArticle(articleCrudService));
 
     String response = articleCrudService.getRawCategoriesAndText(articleId);
     assertTrue(response.length() > 0);
@@ -406,9 +323,9 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
   @Test
   public void testGetPublicationJournal() throws Exception {
-    Map<ArticleIdentity, Article> testArticle = createTestArticle();
-    ArticleIdentity articleId = testArticle.keySet().iterator().next();
-    Article article = testArticle.get(articleId);
+    Article article = RhinoTestHelper.createTestArticle(articleCrudService);
+    ArticleIdentity articleId = ArticleIdentity.create(article);
+
     Journal journal = articleCrudService.getPublicationJournal(article);
     assertEquals(journal.getTitle(), "Test Journal 1932-6203");
   }
