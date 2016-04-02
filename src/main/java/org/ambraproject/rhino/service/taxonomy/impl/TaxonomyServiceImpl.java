@@ -11,6 +11,7 @@ import org.w3c.dom.Document;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
+import java.util.OptionalLong;
 
 public class TaxonomyServiceImpl extends AmbraService implements TaxonomyService {
 
@@ -31,17 +32,16 @@ public class TaxonomyServiceImpl extends AmbraService implements TaxonomyService
   // We may want to revisit this since it exposes us to unlimited record insertion events by anonymous users
 
   @Override
-  public void flagArticleCategory(final Long articleId, final Long categoryId, final String authId) throws IOException {
-
-    if (authId != null && authId.length() > 0) {
+  public void flagArticleCategory(long articleId, long categoryId, OptionalLong userId) throws IOException {
+    if (userId.isPresent()) {
       //This query will update on a duplicate
       hibernateTemplate.execute(session -> session.createSQLQuery(
-          "insert into articleCategoryFlagged(articleId, categoryId, userProfileID, created, lastModified) select " +
-              ":articleId, :categoryId, up.userProfileID, :created, :lastModified " +
-              "from userProfile up where up.authId = :authId on duplicate key update lastModified = :lastModified")
-          .setString("authId", authId)
+          "insert into articleCategoryFlagged(articleId, categoryId, userProfileID, created, lastModified) " +
+              "values(:articleId, :categoryId, :userProfileID, :created, :lastModified) " +
+              "on duplicate key update lastModified = :lastModified")
           .setLong("articleId", articleId)
           .setLong("categoryId", categoryId)
+          .setLong("userProfileID", userId.getAsLong())
           .setCalendar("created", Calendar.getInstance())
           .setCalendar("lastModified", Calendar.getInstance())
           .executeUpdate());
@@ -59,16 +59,15 @@ public class TaxonomyServiceImpl extends AmbraService implements TaxonomyService
   }
 
   @Override
-  public void deflagArticleCategory(final Long articleId, final Long categoryId, final String authId) throws IOException {
-    if (authId != null && authId.length() > 0) {
+  public void deflagArticleCategory(long articleId, long categoryId, OptionalLong userId) throws IOException {
+    if (userId.isPresent()) {
       hibernateTemplate.execute(session -> session.createSQLQuery(
           "delete acf.* from articleCategoryFlagged acf " +
-              "join userProfile up on up.userProfileID = acf.userProfileID " +
               "where acf.articleId = :articleId and acf.categoryId = :categoryId and " +
-              "up.authId = :authId")
-          .setString("authId", authId)
+              "acf.userProfileID = :userProfileID")
           .setLong("articleId", articleId)
           .setLong("categoryId", categoryId)
+          .setLong("userProfileID", userId.getAsLong())
           .executeUpdate());
     } else {
       //Remove one record from the database at random
