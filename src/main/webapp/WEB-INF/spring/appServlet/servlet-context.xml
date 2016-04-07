@@ -69,14 +69,8 @@
     <beans:constructor-arg index="0" ref="rolesEhCache"/>
   </beans:bean>
 
-  <beans:bean id="permissionsService" class="org.ambraproject.service.permission.PermissionsServiceImpl">
-    <beans:property name="sessionFactory" ref="sessionFactory"/>
-    <beans:property name="rolesCache" ref="rolesCache"/>
-  </beans:bean>
-
   <beans:bean id="articleService" class="org.ambraproject.service.article.ArticleServiceImpl">
     <beans:property name="sessionFactory" ref="sessionFactory"/>
-    <beans:property name="permissionsService" ref="permissionsService"/>
   </beans:bean>
 
   <beans:bean id="configurationStore" class="org.ambraproject.configuration.ConfigurationStore"
@@ -146,7 +140,6 @@
     <beans:property name="cache" ref="rhinoCache" />
     <beans:property name="searchService" ref="searchService" />
     <beans:property name="sessionFactory" ref="sessionFactory" />
-    <beans:property name="permissionsService" ref="permissionsService"/>
   </beans:bean>
 
   <mvc:interceptors>
