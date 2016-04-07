@@ -24,8 +24,7 @@
   <artifactId>rhino</artifactId>
   <name>rhino</name>
   <packaging>war</packaging>
-  <version>1.2.6</version>
-
+  <version>1.4.1</version>
   <description>Service-oriented back end for Ambra.</description>
 
   <licenses>
@@ -127,7 +126,7 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>15.0</version>
+      <version>19.0</version>
     </dependency>
     <dependency>
       <groupId>com.google.code.gson</groupId>

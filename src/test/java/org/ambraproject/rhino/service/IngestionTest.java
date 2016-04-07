@@ -20,15 +20,12 @@ package org.ambraproject.rhino.service;
 
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Objects;
-import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import org.ambraproject.models.AmbraEntity;
@@ -45,9 +42,7 @@ import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.IngestibleUtil;
 import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.content.PersonName;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
-import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.test.AssertionCollector;
 import org.ambraproject.rhino.util.Archive;
@@ -68,12 +63,10 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import javax.annotation.Nullable;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.Reader;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -81,6 +74,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -218,17 +212,6 @@ public class IngestionTest extends BaseRhinoTest {
     return provideIngestionCases(JSON_SUFFIX, ZIP_SUFFIX, ZIP_DATA_PATH).toArray(new Object[0][]);
   }
 
-  private Article readReferenceCase(File jsonFile) throws IOException {
-    Preconditions.checkNotNull(jsonFile);
-    Article article;
-    try (Reader input = new BufferedReader(new FileReader(jsonFile))) {
-      article = entityGson.fromJson(input, Article.class);
-    }
-    createTestJournal(article.geteIssn());
-
-    return article;
-  }
-
   /**
    * Persist a dummy Journal object with a particular eIssn into the test environment, if it doesn't already exist.
    *
@@ -248,14 +231,15 @@ public class IngestionTest extends BaseRhinoTest {
 
   @Test(dataProvider = "generatedIngestionData")
   public void testIngestion(File jsonFile, File xmlFile) throws Exception {
-    final Article expected = readReferenceCase(jsonFile);
+    final Article expected = RhinoTestHelper.readReferenceCase(jsonFile);
+    createTestJournal(expected.geteIssn());
     final String caseDoi = expected.getDoi();
 
     RhinoTestHelper.TestInputStream testInputStream = new RhinoTestHelper.TestFile(xmlFile).read();
-    Archive ingestible = Archive.readZipFileIntoMemory(xmlFile.getName() + ".zip",
-        IngestibleUtil.buildMockIngestible(testInputStream));
+    InputStream mockIngestible = IngestibleUtil.buildMockIngestible(testInputStream, expected.getAssets());
+    Archive ingestible = Archive.readZipFileIntoMemory(xmlFile.getName() + ".zip", mockIngestible);
     Article actual = articleCrudService.writeArchive(ingestible,
-        Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+        Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
     assertTrue(actual.getID() > 0, "Article doesn't have a database ID");
     assertTrue(actual.getCreated() != null, "Article doesn't have a creation date");
 
@@ -269,7 +253,7 @@ public class IngestionTest extends BaseRhinoTest {
             .add(Restrictions.eq("doi", caseDoi))));
     assertNotNull(actual, "Failed to create article with expected DOI");
 
-    AssertionCollector results = compareArticle(actual, expected, false);
+    AssertionCollector results = compareArticle(actual, expected);
     log.info("{} successes", results.getSuccessCount());
     Collection<AssertionCollector.Failure> failures = results.getFailures();
     for (AssertionCollector.Failure failure : failures) {
@@ -288,9 +272,10 @@ public class IngestionTest extends BaseRhinoTest {
 
   @Test(dataProvider = "generatedZipIngestionData")
   public void testZipIngestion(File jsonFile, File zipFile) throws Exception {
-    final Article expected = readReferenceCase(jsonFile);
+    final Article expected = RhinoTestHelper.readReferenceCase(jsonFile);
+    createTestJournal(expected.geteIssn());
     Article actual = articleCrudService.writeArchive(Archive.readZipFileIntoMemory(zipFile),
-        Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+        Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
     assertTrue(actual.getID() > 0, "Article doesn't have a database ID");
     assertTrue(actual.getCreated() != null, "Article doesn't have a creation date");
 
@@ -301,7 +286,7 @@ public class IngestionTest extends BaseRhinoTest {
             .setFetchMode("journals", FetchMode.JOIN)
             .add(Restrictions.eq("doi", expected.getDoi()))));
     assertNotNull(actual, "Failed to create article with expected DOI");
-    AssertionCollector results = compareArticle(actual, expected, true);
+    AssertionCollector results = compareArticle(actual, expected);
     log.info("{} successes", results.getSuccessCount());
 
     // Do some additional comparisons that only make sense for an article ingested from an archive.
@@ -320,51 +305,24 @@ public class IngestionTest extends BaseRhinoTest {
     Archive zipPath = Archive.readZipFileIntoMemory(new File(
         ZIP_DATA_PATH.getCanonicalPath() + File.separator + "pone.0056489.zip"));
     Article first = articleCrudService.writeArchive(zipPath,
-        Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+        Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
     assertTrue(first.getID() > 0, "Article doesn't have a database ID");
     assertTrue(first.getCreated().getTime() >= start);
 
     try {
       Article second = articleCrudService.writeArchive(zipPath,
-          Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+          Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
       fail("Article creation succeeded for second ingestion in CREATE_ONLY mode");
     } catch (RestClientException expected) {
       assertEquals(expected.getResponseStatus(), HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     Article second = articleCrudService.writeArchive(zipPath,
-        Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.WRITE_ANY);
+        Optional.empty(), DoiBasedCrudService.WriteMode.WRITE_ANY);
 
     // TODO: figure out how to detect that second was re-ingested.  Don't want to
     // use modification time since the test might run in less than one clock tick.
     assertTrue(first.getID() > 0, "Article doesn't have a database ID");
-  }
-
-  /**
-   * Tests ingestion of an intentionally bad .zip file to confirm that all article entities are deleted after the
-   * error.
-   */
-  @Test
-  public void testArchiveError() throws Exception {
-    createTestJournal("1932-6203");
-
-    // An intentionally-constructed bad zip file that contains asset files not referenced
-    // in the XML.  (This seems like the easiest way to make ingestion blow up when
-    // processing an asset.)
-    String zipPath = ZIP_DATA_PATH.getCanonicalPath() + File.separator + "bad_zips"
-        + File.separator + "pone.0060593.zip";
-    try {
-      Article article = articleCrudService.writeArchive(Archive.readZipFileIntoMemory(new File(zipPath)),
-          Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
-      fail("Ingesting bad zip did not throw exception");
-    } catch (RestClientException expected) {
-      assertEquals(expected.getResponseStatus(), HttpStatus.METHOD_NOT_ALLOWED);
-    }
-
-    List<Article> articles = (List<Article>) hibernateTemplate.findByCriteria(DetachedCriteria
-        .forClass(Article.class)
-        .add(Restrictions.eq("doi", "info:doi/10.1371/journal.pone.0060593")));
-    assertEquals(articles.size(), 0, "Bad zip archive left a row in article!");
   }
 
   private static boolean compare(AssertionCollector results, Class<?> objectType, String fieldName,
@@ -383,8 +341,7 @@ public class IngestionTest extends BaseRhinoTest {
     return results.compare(objectName, fieldName, actual, expected);
   }
 
-  private AssertionCollector compareArticle(Article actual, Article expected,
-                                            boolean assetFilesExpected) {
+  private AssertionCollector compareArticle(Article actual, Article expected) {
     AssertionCollector results = new AssertionCollector();
     compareArticleFields(results, actual, expected);
     comparePersonLists(results, Article.class, "authors", actual.getAuthors(), expected.getAuthors());
@@ -392,11 +349,7 @@ public class IngestionTest extends BaseRhinoTest {
     compareCategorySets(results, actual.getCategories(), expected.getCategories());
     compareJournalSets(results, actual.getJournals(), expected.getJournals());
     compareRelationshipLists(results, actual.getRelatedArticles(), expected.getRelatedArticles());
-    if (assetFilesExpected) {
-      compareAssetsWithExpectedFiles(results, actual.getAssets(), expected.getAssets());
-    } else {
-      compareAssetsWithoutExpectedFiles(results, actual.getAssets(), expected.getAssets());
-    }
+    compareAssetsWithExpectedFiles(results, actual.getAssets(), expected.getAssets());
 
     // Since citedArticles are lazily loaded, and this test doesn't currently execute transactionally,
     // we have to reload the actual citations separately.
@@ -590,39 +543,6 @@ public class IngestionTest extends BaseRhinoTest {
     for (String doi : Sets.intersection(actualDois, expectedDois)) {
       compare(results, ArticleRelationship.class, "otherArticleDoi", doi, doi);
       compare(results, ArticleRelationship.class, "type", actualMap.get(doi).getType(), expectedMap.get(doi).getType());
-    }
-  }
-
-  private void compareAssetsWithoutExpectedFiles(AssertionCollector results,
-                                                 Collection<ArticleAsset> actualList, Collection<ArticleAsset> expectedList) {
-    // Compare assets by their DOI, ignoring order
-    Map<AssetIdentity, ArticleAsset> actualAssetMap = Maps.uniqueIndex(actualList, AssetIdentity::from);
-    Set<AssetIdentity> actualAssetIds = actualAssetMap.keySet();
-    Multimap<AssetIdentity, ArticleAsset> expectedAssetMap = Multimaps.index(expectedList, AssetIdentity::from);
-    Set<AssetIdentity> expectedAssetIds = expectedAssetMap.keySet();
-
-    for (AssetIdentity missingDoi : Sets.difference(expectedAssetIds, actualAssetIds)) {
-      compare(results, ArticleAsset.class, "doi", null, missingDoi);
-    }
-    for (AssetIdentity extraDoi : Sets.difference(actualAssetIds, expectedAssetIds)) {
-      compare(results, ArticleAsset.class, "doi", extraDoi, null);
-    }
-
-    for (AssetIdentity assetDoi : Sets.intersection(actualAssetIds, expectedAssetIds)) {
-      // One created asset with a null extension and material from article XML
-      ArticleAsset actualAsset = actualAssetMap.get(assetDoi);
-
-      // Multiple assets corresponding to various uploaded files
-      Collection<ArticleAsset> expectedFileAssets = expectedAssetMap.get(assetDoi);
-
-      /*
-       * The relevant fields of the expected assets should all match each other. (If a counterexample is found,
-       * will have to change this test.) We want to test that the actual asset matches all of them.
-       */
-      verifyExpectedAssets(expectedFileAssets);
-      for (ArticleAsset expectedAsset : expectedFileAssets) {
-        compareAssetFields(results, actualAsset, expectedAsset, false);
-      }
     }
   }
 

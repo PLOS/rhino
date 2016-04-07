@@ -1,0 +1,11 @@
+drop table CriteriaList;
+drop table Criteria;
+drop table AggregationDetachedCriteria;
+drop table DetachedCriteria;
+drop table AggregationSimpleCollection;
+drop table Issue;
+drop table IssueArticleList;
+drop table Journal;
+drop table JournalVolumeList;
+drop table Volume;
+drop table VolumeIssueList;

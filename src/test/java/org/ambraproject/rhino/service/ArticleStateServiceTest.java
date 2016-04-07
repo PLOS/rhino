@@ -13,7 +13,6 @@
 
 package org.ambraproject.rhino.service;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import org.ambraproject.models.Article;
@@ -50,6 +49,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -119,7 +119,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
 
     Archive archive = Archive.readZipFileIntoMemory(new File(TEST_DATA_DIR + "pone.0056489.zip"));
     Article article = articleCrudService.writeArchive(archive,
-        Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+        Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
     ArticleIdentity articleId = ArticleIdentity.create(article);
     assertEquals(article.getState(), Article.STATE_UNPUBLISHED);
     for (ArticleAsset asset : article.getAssets()) {

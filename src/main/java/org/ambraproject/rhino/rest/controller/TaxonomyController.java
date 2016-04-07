@@ -32,6 +32,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Map;
+import java.util.Optional;
+import java.util.OptionalLong;
 
 /**
  * Controller class for the taxonomy namespace.
@@ -54,20 +56,23 @@ public class TaxonomyController extends RestController {
   public @ResponseBody Map<String,String> flagArticleCategory(
                        @RequestParam(value = "categoryTerm", required = true) String categoryTerm,
                        @RequestParam(value = "articleDoi", required = true) String articleDoi,
-                       @RequestParam(value = "authId", required = true) String authId,
+                       @RequestParam(value = "userId", required = false) String userId,
                        @PathVariable("action") String action)
           throws Exception {
     // TODO: we might want to optimize this by directly retrieving an article category collection in place of article instantiation
     Article article = articleCrudService.findArticleById(ArticleIdentity.create(articleDoi));
+
+    OptionalLong userIdObj = (userId == null) ? OptionalLong.empty() : OptionalLong.of(Long.parseLong(userId));
+
     for (Category category : article.getCategories().keySet()) {
       // if category matches the provided term, insert or delete an article category flag according to action provided in url
       // NOTE: a given category term (i.e. the final term in a full category path) may be present for more than one article category
       String articleCategoryTerm = Iterables.getLast(TAXONOMY_PATH_SPLITTER.split(category.getPath()));
       if (categoryTerm.contentEquals(articleCategoryTerm)) {
         if (action.contentEquals("remove")) {
-          taxonomyService.deflagArticleCategory(article.getID(), category.getID(), authId);
+          taxonomyService.deflagArticleCategory(article.getID(), category.getID(), userIdObj);
         } else if (action.contentEquals("add")) {
-          taxonomyService.flagArticleCategory(article.getID(), category.getID(), authId);
+          taxonomyService.flagArticleCategory(article.getID(), category.getID(), userIdObj);
         }
       }
     }

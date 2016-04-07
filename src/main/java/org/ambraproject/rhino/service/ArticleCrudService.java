@@ -18,7 +18,6 @@
 
 package org.ambraproject.rhino.service;
 
-import com.google.common.base.Optional;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -33,6 +32,7 @@ import org.ambraproject.rhino.view.article.RelatedArticleView;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.Optional;
 
 public interface ArticleCrudService extends DoiBasedCrudService {
 

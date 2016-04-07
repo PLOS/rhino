@@ -23,7 +23,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.util.ContentTypeInference;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
 
 import java.util.regex.Pattern;
@@ -37,7 +36,7 @@ public class AssetFileIdentity extends DoiBasedIdentity {
 
   private AssetFileIdentity(String identifier, String extension) {
     super(identifier);
-    Preconditions.checkArgument(StringUtils.isNotBlank(extension));
+    Preconditions.checkArgument(!extension.isEmpty());
     this.extension = extension;
   }
 
@@ -78,11 +77,9 @@ public class AssetFileIdentity extends DoiBasedIdentity {
    *
    * @param asset the asset
    * @return the identity
-   * @throws IllegalArgumentException if the asset does not have a file (i.e., if {@code !hasFile(asset)})
    */
   public static AssetFileIdentity from(ArticleAsset asset) {
-    Preconditions.checkArgument(hasFile(asset), "Asset is not associated with a file. (DOI:" + asset.getDoi() + ", Extension:" + asset.getExtension() + ")");
-    return AssetFileIdentity.create(asset.getDoi(), asset.getExtension());
+    return create(asset.getDoi(), asset.getExtension());
   }
 
   /**
