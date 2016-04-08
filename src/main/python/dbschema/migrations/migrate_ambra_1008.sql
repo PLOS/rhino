@@ -12,4 +12,5 @@ drop table userSearch;
 drop table userLogin;
 drop table userView;
 drop table userArticleView;
+drop table userProfileRoleJoinTable;
 drop table userProfile;
