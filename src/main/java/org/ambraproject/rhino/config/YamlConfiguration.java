@@ -213,7 +213,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
     private HttpConnectionPoolConfigurationInput httpConnectionPool;
     private TaxonomyConfigurationInput taxonomy;
     private UserApiConfigurationInput userApi;
-    private boolean usingVersionedIngestion = false; // default is false
+    private boolean usingVersionedIngestion = true; // default is true
     private String competingInterestPolicyStart;
 
     /**
