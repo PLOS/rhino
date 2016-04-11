@@ -126,7 +126,7 @@ class VersionedIngestionService {
     }
     final Article articleMetadata = parsedArticle.build(new Article());
 
-    ArticlePackage articlePackage = ArticlePackage.create(archive, parsedArticle, manifestXml, manifestEntry, manuscriptEntry);
+    ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry, manuscriptEntry).build();
     ScholarlyWork articleWork = articlePackage.getArticleWork();
     Collection<ScholarlyWork> assetWorks = articlePackage.getAssetWorks();
 
