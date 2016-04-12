@@ -12,6 +12,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 class ArticlePackage {
 
@@ -32,7 +33,25 @@ class ArticlePackage {
   }
 
 
-  private static class PersistedWork {
+  public static class PersistenceResult {
+    private final PersistedWork article;
+    private final ImmutableList<PersistedWork> assets;
+
+    private PersistenceResult(PersistedWork article, List<PersistedWork> assets) {
+      this.article = Objects.requireNonNull(article);
+      this.assets = ImmutableList.copyOf(assets);
+    }
+
+    public PersistedWork getArticle() {
+      return article;
+    }
+
+    public Stream<PersistedWork> getWorks() {
+      return Stream.concat(Stream.of(article), assets.stream());
+    }
+  }
+
+  public static class PersistedWork {
     private final ScholarlyWork scholarlyWork;
     private final RepoCollectionList result;
 
@@ -40,10 +59,18 @@ class ArticlePackage {
       this.scholarlyWork = Objects.requireNonNull(scholarlyWork);
       this.result = Objects.requireNonNull(result);
     }
+
+    public DoiBasedIdentity getDoi() {
+      return scholarlyWork.getDoi();
+    }
+
+    public RepoVersion getVersion() {
+      return result.getVersion();
+    }
   }
 
-  public RepoCollectionList persist(HibernateTemplate hibernateTemplate, ContentRepoService contentRepoService) {
-    RepoCollectionList persistedArticle = articleWork.persistToCrepo(contentRepoService);
+  public PersistenceResult persist(HibernateTemplate hibernateTemplate, ContentRepoService contentRepoService) {
+    PersistedWork persistedArticle = new PersistedWork(articleWork, articleWork.persistToCrepo(contentRepoService));
 
     List<PersistedWork> persistedAssets = new ArrayList<>();
     for (ScholarlyWork assetWork : assetWorks) {
@@ -51,13 +78,13 @@ class ArticlePackage {
       persistedAssets.add(new PersistedWork(assetWork, persistedAsset));
     }
 
-    persistToSql(hibernateTemplate, new PersistedWork(articleWork, persistedArticle));
+    persistToSql(hibernateTemplate, persistedArticle);
     for (PersistedWork persistedAsset : persistedAssets) {
       persistToSql(hibernateTemplate, persistedAsset);
-      persistRelation(hibernateTemplate, persistedArticle, persistedAsset);
+      persistRelation(hibernateTemplate, persistedArticle.result, persistedAsset);
     }
 
-    return persistedArticle;
+    return new PersistenceResult(persistedArticle, persistedAssets);
   }
 
   private int persistToSql(HibernateTemplate hibernateTemplate, PersistedWork persistedWork) {

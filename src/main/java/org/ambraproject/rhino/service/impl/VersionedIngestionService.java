@@ -14,9 +14,7 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.view.internal.RepoVersionRepr;
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
-import org.hibernate.Session;
 import org.plos.crepo.model.RepoCollectionList;
 import org.plos.crepo.model.RepoCollectionMetadata;
 import org.plos.crepo.model.RepoVersion;
@@ -24,7 +22,6 @@ import org.plos.crepo.model.RepoVersionNumber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.orm.hibernate3.HibernateCallback;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -32,8 +29,6 @@ import javax.xml.parsers.DocumentBuilder;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.SQLException;
-import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
@@ -134,27 +129,58 @@ class VersionedIngestionService {
     articleMetadata.setDoi(articleIdentity.getKey());
 
     ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry, manuscriptEntry).build();
-    articlePackage.persist(parentService.hibernateTemplate, parentService.contentRepoService);
+    ArticlePackage.PersistenceResult result = articlePackage.persist(parentService.hibernateTemplate, parentService.contentRepoService);
 
-    persistRevision(articlePackage, parsedArticle.getRevisionNumber());
+    persistRevision(result, parsedArticle.getRevisionNumber());
 
     stubAssociativeFields(articleMetadata);
     return articleMetadata;
   }
 
-  private void persistRevision(ArticlePackage articlePackage, int revisionNumber) {
+  private void persistRevision(ArticlePackage.PersistenceResult article, int revisionNumber) {
+    DoiBasedIdentity articleDoi = article.getArticle().getDoi();
+
+    // Delete assets
     parentService.hibernateTemplate.execute(session -> {
-      Query query = session.createQuery("" +
-          "DELETE revision " +
-          "FROM revision INNER JOIN scholarlyWork " +
-          "ON revision.scholarlyWorkId = scholarlyWork.scholarlyWorkId " +
-          "WHERE revision.revisionNumber = :revisionNumber AND scholarlyWork.doi = :doi");
+      Query query = session.createSQLQuery("" +
+          "DELETE rev " +
+          "FROM revision rev " +
+          "INNER JOIN scholarlyWork asset ON rev.scholarlyWorkId = asset.scholarlyWorkId " +
+          "INNER JOIN scholarlyWorkRelation rel ON asset.scholarlyWorkId = rel.targetWorkId " +
+          "INNER JOIN scholarlyWork article ON article.scholarlyWorkId = rel.originWorkId " +
+          "WHERE rev.revisionNumber = :revisionNumber AND article.doi = :doi");
       query.setParameter("revisionNumber", revisionNumber);
-      query.setParameter("doi", articlePackage.getDoi().getIdentifier());
+      query.setParameter("doi", articleDoi.getIdentifier());
       return query.executeUpdate();
     });
 
+    // Delete root article
+    parentService.hibernateTemplate.execute(session -> {
+      Query query = session.createSQLQuery("" +
+          "DELETE rev " +
+          "FROM revision rev INNER JOIN scholarlyWork s " +
+          "ON rev.scholarlyWorkId = s.scholarlyWorkId " +
+          "WHERE rev.revisionNumber = :revisionNumber AND s.doi = :doi");
+      query.setParameter("revisionNumber", revisionNumber);
+      query.setParameter("doi", articleDoi.getIdentifier());
+      return query.executeUpdate();
+    });
 
+    article.getWorks().forEachOrdered(work -> {
+      parentService.hibernateTemplate.execute(session -> {
+        Query query = session.createSQLQuery("" +
+            "INSERT INTO revision (scholarlyWorkId, revisionNumber, publicationState) VALUES (" +
+            "  (SELECT scholarlyWorkId FROM scholarlyWork WHERE crepoKey=:crepoKey AND crepoUuid=:crepoUuid), " +
+            ":revisionNumber, :publicationState)");
+        RepoVersion version = work.getVersion();
+        query.setParameter("crepoKey", version.getKey());
+        query.setParameter("crepoUuid", version.getUuid().toString());
+
+        query.setParameter("revisionNumber", revisionNumber);
+        query.setParameter("publicationState", 0);
+        return query.executeUpdate();
+      });
+    });
   }
 
   private void stubAssociativeFields(Article article) {
