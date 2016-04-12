@@ -125,11 +125,18 @@ class VersionedIngestionService {
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
     final Article articleMetadata = parsedArticle.build(new Article());
+    articleMetadata.setDoi(articleIdentity.getKey());
 
     ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry, manuscriptEntry).build();
     articlePackage.persist(parentService.hibernateTemplate, parentService.contentRepoService);
 
+    stubAssociativeFields(articleMetadata);
+
     return articleMetadata;
+  }
+
+  private void stubAssociativeFields(Article article) {
+    article.setRelatedArticles(ImmutableList.of());
   }
 
   private ManifestXml.Asset findManuscriptAsset(List<ManifestXml.Asset> assets) {

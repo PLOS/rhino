@@ -1,7 +1,6 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.collect.ImmutableList;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.hibernate.SQLQuery;
 import org.plos.crepo.model.RepoCollectionList;
 import org.plos.crepo.model.RepoCollectionMetadata;
@@ -9,9 +8,8 @@ import org.plos.crepo.model.RepoVersion;
 import org.plos.crepo.service.ContentRepoService;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 class ArticlePackage {
@@ -25,33 +23,43 @@ class ArticlePackage {
   }
 
 
-  public void persist(HibernateTemplate hibernateTemplate, ContentRepoService contentRepoService) {
-    RepoCollectionList persistedArticle = articleWork.persistToCrepo(contentRepoService);
+  private static class PersistedWork {
+    private final ScholarlyWork scholarlyWork;
+    private final RepoCollectionList result;
 
-    Map<DoiBasedIdentity, RepoCollectionList> persistedAssets = new LinkedHashMap<>();
-    for (ScholarlyWork assetWork : assetWorks) {
-      RepoCollectionList persistedAsset = assetWork.persistToCrepo(contentRepoService);
-      persistedAssets.put(assetWork.getDoi(), persistedAsset);
-    }
-
-    persistToSql(hibernateTemplate, articleWork.getDoi(), persistedArticle);
-    for (Map.Entry<DoiBasedIdentity, RepoCollectionList> entry : persistedAssets.entrySet()) {
-      persistToSql(hibernateTemplate, entry.getKey(), entry.getValue());
+    private PersistedWork(ScholarlyWork scholarlyWork, RepoCollectionList result) {
+      this.scholarlyWork = Objects.requireNonNull(scholarlyWork);
+      this.result = Objects.requireNonNull(result);
     }
   }
 
-  private int persistToSql(HibernateTemplate hibernateTemplate, DoiBasedIdentity doi, RepoCollectionMetadata persistedArticle) {
+  public void persist(HibernateTemplate hibernateTemplate, ContentRepoService contentRepoService) {
+    RepoCollectionList persistedArticle = articleWork.persistToCrepo(contentRepoService);
+
+    List<PersistedWork> persistedAssets = new ArrayList<>();
+    for (ScholarlyWork assetWork : assetWorks) {
+      RepoCollectionList persistedAsset = assetWork.persistToCrepo(contentRepoService);
+      persistedAssets.add(new PersistedWork(assetWork, persistedAsset));
+    }
+
+    persistToSql(hibernateTemplate, articleWork, persistedArticle);
+    for (PersistedWork persistedAsset : persistedAssets) {
+      persistToSql(hibernateTemplate, persistedAsset.scholarlyWork, persistedAsset.result);
+    }
+  }
+
+  private int persistToSql(HibernateTemplate hibernateTemplate, ScholarlyWork work, RepoCollectionMetadata persistedArticle) {
     return hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
           "INSERT INTO scholarlyWork " +
           "(doi, crepoKey, crepoUuid, scholarlyWorkType) VALUES " +
           "(:doi, :crepoKey, :crepoUuid, :scholarlyWorkType)");
-      query.setParameter("doi", doi.getIdentifier());
-      query.setParameter("scholarlyWorkType", "TODO"); // TODO
+      query.setParameter("doi", work.getDoi().getIdentifier());
+      query.setParameter("scholarlyWorkType", work.getType());
 
       RepoVersion repoVersion = persistedArticle.getVersion();
       query.setParameter("crepoKey", repoVersion.getKey());
-      query.setParameter("crepoUuid", repoVersion.getUuid());
+      query.setParameter("crepoUuid", repoVersion.getUuid().toString());
 
       return query.executeUpdate();
     });

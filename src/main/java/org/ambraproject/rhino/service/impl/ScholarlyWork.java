@@ -24,11 +24,15 @@ class ScholarlyWork {
   ScholarlyWork(DoiBasedIdentity doi, Map<String, RepoObject> objects) {
     this.doi = Objects.requireNonNull(doi);
     this.objects = ImmutableMap.copyOf(objects);
-    this.type = ""; // TODO!
+    this.type = "TODO"; // TODO!
   }
 
   public DoiBasedIdentity getDoi() {
     return doi;
+  }
+
+  public String getType() {
+    return type;
   }
 
   public RepoCollectionList persistToCrepo(ContentRepoService contentRepoService) {
