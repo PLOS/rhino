@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 public interface ArticleCrudService extends DoiBasedCrudService {
 
@@ -213,7 +214,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    */
   @Deprecated
   public abstract Transceiver readVersionedMetadata(ArticleIdentity id,
-                                                    Optional<Integer> versionNumber,
+                                                    OptionalInt revisionNumber,
                                                     ArticleMetadataSource source);
 
   /**
