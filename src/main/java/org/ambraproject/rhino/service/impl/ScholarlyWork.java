@@ -32,17 +32,16 @@ class ScholarlyWork {
   }
 
   public RepoCollectionList persistToCrepo(ContentRepoService contentRepoService) {
-    Map<String, RepoObjectMetadata> createdObjects = new LinkedHashMap<>();
+    Map<String, RepoVersion> createdObjects = new LinkedHashMap<>();
     for (Map.Entry<String, RepoObject> entry : objects.entrySet()) {
       RepoObjectMetadata createdObject = contentRepoService.autoCreateRepoObject(entry.getValue());
-      createdObjects.put(entry.getKey(), createdObject);
+      createdObjects.put(entry.getKey(), createdObject.getVersion());
     }
 
-    Map<String, RepoVersion> versionMap = Maps.transformValues(createdObjects, RepoObjectMetadata::getVersion);
-    String collectionMetadata = new Gson().toJson(versionMap); // TODO: Use Gson bean
+    String collectionMetadata = new Gson().toJson(createdObjects); // TODO: Use Gson bean
 
     RepoCollection repoCollection = RepoCollection.builder()
-        .setObjects(versionMap.values())
+        .setObjects(createdObjects.values())
         .setUserMetadata(collectionMetadata)
         .setKey(getCrepoKey())
         .build();
