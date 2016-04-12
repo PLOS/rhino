@@ -1,5 +1,5 @@
 CREATE TABLE `ambra`.`scholarlyWork` (
-  `scholarlyWorkId` BIGINT(20) NOT NULL,
+  `scholarlyWorkId` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `doi` VARCHAR(150) NOT NULL,
   `crepoKey` VARCHAR(255) NOT NULL,
   `crepoUuid` CHAR(36) NOT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE `ambra`.`scholarlyWorkRelation` (
     ON UPDATE NO ACTION);
 
 CREATE TABLE `ambra`.`revision` (
-  `revisionId` BIGINT(20) NOT NULL,
+  `revisionId` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `scholarlyWorkId` BIGINT(20) NOT NULL,
   `revisionNumber` INT NOT NULL,
   `publicationState` INT NOT NULL,
