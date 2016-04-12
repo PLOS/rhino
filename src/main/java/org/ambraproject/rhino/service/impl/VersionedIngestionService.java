@@ -127,13 +127,7 @@ class VersionedIngestionService {
     final Article articleMetadata = parsedArticle.build(new Article());
 
     ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry, manuscriptEntry).build();
-    ScholarlyWork articleWork = articlePackage.getArticleWork();
-    Collection<ScholarlyWork> assetWorks = articlePackage.getAssetWorks();
-
-    for (ScholarlyWork assetWork : assetWorks) {
-      assetWork.persistToCrepo();
-      articleWork.relate(assetWork);
-    }
+    articlePackage.persist(parentService.hibernateTemplate, parentService.contentRepoService);
 
     return articleMetadata;
   }

@@ -40,6 +40,7 @@ class ArticlePackageBuilder {
   private final ManifestXml manifest;
   private final String manifestEntry;
   private final String manuscriptEntry;
+  private final ArticleIdentity articleIdentity;
 
   ArticlePackageBuilder(Archive archive, ArticleXml article, ManifestXml manifest,
                         String manifestEntry, String manuscriptEntry) {
@@ -48,23 +49,22 @@ class ArticlePackageBuilder {
     this.manifest = Objects.requireNonNull(manifest);
     this.manifestEntry = Objects.requireNonNull(manifestEntry);
     this.manuscriptEntry = Objects.requireNonNull(manuscriptEntry);
+
+    try {
+      this.articleIdentity = article.readDoi();
+    } catch (XmlContentException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   public ArticlePackage build() {
     Map<String, RepoObject> articleObjects = buildArticleObjects();
     List<ScholarlyWork> assetWorks = buildAssetWorks(article.findAllAssetNodes());
 
-    return new ArticlePackage(new ScholarlyWork(articleObjects), assetWorks);
+    return new ArticlePackage(new ScholarlyWork(articleIdentity, articleObjects), assetWorks);
   }
 
   private Map<String, RepoObject> buildArticleObjects() {
-    ArticleIdentity articleIdentity;
-    try {
-      articleIdentity = article.readDoi();
-    } catch (XmlContentException e) {
-      throw new RuntimeException(e);
-    }
-
     ImmutableMap.Builder<String, RepoObject> articleObjects = ImmutableMap.builder();
     articleObjects.put("manifest",
         new RepoObject.RepoObjectBuilder("manifest/" + articleIdentity.getIdentifier())
@@ -115,10 +115,10 @@ class ArticlePackageBuilder {
       AssetType assetType = findAssetType(assetNodeMap, asset);
       if (assetType == AssetType.ARTICLE) continue;
       ImmutableMap.Builder<String, RepoObject> assetObjects = ImmutableMap.builder();
+      AssetIdentity assetIdentity = AssetIdentity.create(asset.getUri());
       for (ManifestXml.Representation representation : asset.getRepresentations()) {
         String entryName = representation.getEntry();
         FileType fileType = assetType.getFileType(representation.getName());
-        AssetIdentity assetIdentity = AssetIdentity.create(asset.getUri());
 
         assetObjects.put(fileType.identifier,
             new RepoObject.RepoObjectBuilder(fileType.identifier + "/" + assetIdentity.getIdentifier())
@@ -127,7 +127,7 @@ class ArticlePackageBuilder {
                 .contentType(AssetFileIdentity.create(asset.getUri(), representation.getName()).inferContentType().toString())
                 .build());
       }
-      works.add(new ScholarlyWork(assetObjects.build()));
+      works.add(new ScholarlyWork(assetIdentity, assetObjects.build()));
     }
     return works;
   }
