@@ -1,3 +1,7 @@
+DROP TABLE `articleRevision`;
+
+DROP TABLE `doiAssociation`;
+
 CREATE TABLE `ambra`.`scholarlyWork` (
   `scholarlyWorkId` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `doi` VARCHAR(150) NOT NULL,
