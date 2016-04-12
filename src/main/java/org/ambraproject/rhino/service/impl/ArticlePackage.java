@@ -1,9 +1,10 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.hibernate.SQLQuery;
 import org.plos.crepo.model.RepoCollectionList;
-import org.plos.crepo.model.RepoCollectionMetadata;
 import org.plos.crepo.model.RepoVersion;
 import org.plos.crepo.service.ContentRepoService;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -22,6 +23,14 @@ class ArticlePackage {
     this.assetWorks = ImmutableList.copyOf(assetWorks);
   }
 
+  public DoiBasedIdentity getDoi() {
+    return articleWork.getDoi();
+  }
+
+  public List<DoiBasedIdentity> getAssetDois() {
+    return Lists.transform(assetWorks, ScholarlyWork::getDoi);
+  }
+
 
   private static class PersistedWork {
     private final ScholarlyWork scholarlyWork;
@@ -33,7 +42,7 @@ class ArticlePackage {
     }
   }
 
-  public void persist(HibernateTemplate hibernateTemplate, ContentRepoService contentRepoService) {
+  public RepoCollectionList persist(HibernateTemplate hibernateTemplate, ContentRepoService contentRepoService) {
     RepoCollectionList persistedArticle = articleWork.persistToCrepo(contentRepoService);
 
     List<PersistedWork> persistedAssets = new ArrayList<>();
@@ -42,24 +51,49 @@ class ArticlePackage {
       persistedAssets.add(new PersistedWork(assetWork, persistedAsset));
     }
 
-    persistToSql(hibernateTemplate, articleWork, persistedArticle);
+    persistToSql(hibernateTemplate, new PersistedWork(articleWork, persistedArticle));
     for (PersistedWork persistedAsset : persistedAssets) {
-      persistToSql(hibernateTemplate, persistedAsset.scholarlyWork, persistedAsset.result);
+      persistToSql(hibernateTemplate, persistedAsset);
+      persistRelation(hibernateTemplate, persistedArticle, persistedAsset);
     }
+
+    return persistedArticle;
   }
 
-  private int persistToSql(HibernateTemplate hibernateTemplate, ScholarlyWork work, RepoCollectionMetadata persistedArticle) {
+  private int persistToSql(HibernateTemplate hibernateTemplate, PersistedWork persistedWork) {
     return hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
           "INSERT INTO scholarlyWork " +
           "(doi, crepoKey, crepoUuid, scholarlyWorkType) VALUES " +
           "(:doi, :crepoKey, :crepoUuid, :scholarlyWorkType)");
-      query.setParameter("doi", work.getDoi().getIdentifier());
-      query.setParameter("scholarlyWorkType", work.getType());
+      query.setParameter("doi", persistedWork.scholarlyWork.getDoi().getIdentifier());
+      query.setParameter("scholarlyWorkType", persistedWork.scholarlyWork.getType());
 
-      RepoVersion repoVersion = persistedArticle.getVersion();
+      RepoVersion repoVersion = persistedWork.result.getVersion();
       query.setParameter("crepoKey", repoVersion.getKey());
       query.setParameter("crepoUuid", repoVersion.getUuid().toString());
+
+      return query.executeUpdate();
+    });
+  }
+
+  private void persistRelation(HibernateTemplate hibernateTemplate, RepoCollectionList article, PersistedWork asset) {
+    hibernateTemplate.execute(session -> {
+      SQLQuery query = session.createSQLQuery("" +
+          "INSERT INTO scholarlyWorkRelation (originWorkId, targetWorkId, relationType) " +
+          "VALUES (" +
+          "  (SELECT scholarlyWorkId FROM scholarlyWork WHERE crepoKey=:originKey AND crepoUuid=:originUuid), " +
+          "  (SELECT scholarlyWorkId FROM scholarlyWork WHERE crepoKey=:targetKey AND crepoUuid=:targetUuid), " +
+          "  :relationType)");
+      query.setParameter("relationType", "assetOf");
+
+      RepoVersion articleVersion = article.getVersion();
+      query.setParameter("originKey", articleVersion.getKey());
+      query.setParameter("originUuid", articleVersion.getUuid().toString());
+
+      RepoVersion assetVersion = asset.result.getVersion();
+      query.setParameter("targetKey", assetVersion.getKey());
+      query.setParameter("targetUuid", assetVersion.getUuid().toString());
 
       return query.executeUpdate();
     });

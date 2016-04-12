@@ -9,10 +9,14 @@ import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.view.internal.RepoVersionRepr;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.plos.crepo.model.RepoCollectionList;
 import org.plos.crepo.model.RepoCollectionMetadata;
 import org.plos.crepo.model.RepoVersion;
@@ -20,6 +24,7 @@ import org.plos.crepo.model.RepoVersionNumber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.orm.hibernate3.HibernateCallback;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -27,6 +32,7 @@ import javax.xml.parsers.DocumentBuilder;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
@@ -130,9 +136,25 @@ class VersionedIngestionService {
     ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry, manuscriptEntry).build();
     articlePackage.persist(parentService.hibernateTemplate, parentService.contentRepoService);
 
-    stubAssociativeFields(articleMetadata);
+    persistRevision(articlePackage, parsedArticle.getRevisionNumber());
 
+    stubAssociativeFields(articleMetadata);
     return articleMetadata;
+  }
+
+  private void persistRevision(ArticlePackage articlePackage, int revisionNumber) {
+    parentService.hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "DELETE revision " +
+          "FROM revision INNER JOIN scholarlyWork " +
+          "ON revision.scholarlyWorkId = scholarlyWork.scholarlyWorkId " +
+          "WHERE revision.revisionNumber = :revisionNumber AND scholarlyWork.doi = :doi");
+      query.setParameter("revisionNumber", revisionNumber);
+      query.setParameter("doi", articlePackage.getDoi().getIdentifier());
+      return query.executeUpdate();
+    });
+
+
   }
 
   private void stubAssociativeFields(Article article) {
