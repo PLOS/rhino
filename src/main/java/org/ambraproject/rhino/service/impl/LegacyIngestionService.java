@@ -419,6 +419,14 @@ class LegacyIngestionService {
       }
 
       for (ManifestXml.Representation representation : manifestAsset.getRepresentations()) {
+        // Special case: Due to legacy reasons, the article asset may contain other versions of the XML file that we
+        // don't want to save. Ignore them unless they are designated as the main entry.
+        if (manifestAsset.getAssetType() == ManifestXml.AssetType.ARTICLE
+            && representation.getName().equals("XML")
+            && !manifestAsset.getMainEntry().get().equals(representation.getEntry())) {
+          continue;
+        }
+
         ArticleAsset asset = new ArticleAsset();
         asset.setDoi(assetIdentity.getKey());
 
