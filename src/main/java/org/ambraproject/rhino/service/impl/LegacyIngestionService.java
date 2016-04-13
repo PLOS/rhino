@@ -419,14 +419,6 @@ class LegacyIngestionService {
       }
 
       for (ManifestXml.Representation representation : manifestAsset.getRepresentations()) {
-        // Special case: Due to legacy reasons, the article asset may contain other versions of the XML file that we
-        // don't want to save. Ignore them unless they are designated as the main entry.
-        if (manifestAsset.getAssetType() == ManifestXml.AssetType.ARTICLE
-            && representation.getName().equals("XML")
-            && !manifestAsset.getMainEntry().get().equals(representation.getEntry())) {
-          continue;
-        }
-
         ArticleAsset asset = new ArticleAsset();
         asset.setDoi(assetIdentity.getKey());
 
@@ -471,13 +463,14 @@ class LegacyIngestionService {
   }
 
   private void uploadAssets(Article article, Archive archive, ManifestXml manifest) throws IOException {
-    Map<AssetFileIdentity, String> filenames = new HashMap<>();
+    ImmutableMap.Builder<AssetFileIdentity, String> filenameBuilder = ImmutableMap.builder();
     for (ManifestXml.Asset manifestAsset : manifest.parse()) {
       for (ManifestXml.Representation representation : manifestAsset.getRepresentations()) {
         AssetFileIdentity fileId = AssetFileIdentity.create(manifestAsset.getUri(), representation.getName());
-        filenames.put(fileId, representation.getEntry());
+        filenameBuilder.put(fileId, representation.getEntry());
       }
     }
+    ImmutableMap<AssetFileIdentity, String> filenames = filenameBuilder.build();
 
     for (ArticleAsset articleAsset : article.getAssets()) {
       AssetFileIdentity fileId = AssetFileIdentity.create(articleAsset.getDoi(), articleAsset.getExtension());
