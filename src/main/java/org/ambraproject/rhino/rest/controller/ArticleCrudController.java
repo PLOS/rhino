@@ -19,6 +19,8 @@
 package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.AssetFileIdentity;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
@@ -26,6 +28,7 @@ import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhombat.HttpDateUtil;
+import org.plos.crepo.model.RepoObjectMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -221,10 +224,10 @@ public class ArticleCrudController extends ArticleSpaceController {
    */
   @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "xml")
-  public void readXml(HttpServletRequest request, HttpServletResponse response)
+  public void readXml(HttpServletRequest request, HttpServletResponse response,
+                      @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
-    ArticleIdentity id = parse(request);
-    assetFileCrudController.read(request, response, id.forXmlAsset());
+    assetFileCrudController.previewFileFromVersionedModel(request, response, "manuscript", revisionNumber);
   }
 
   /**

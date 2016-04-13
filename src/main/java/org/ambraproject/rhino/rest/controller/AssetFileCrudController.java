@@ -167,10 +167,9 @@ public class AssetFileCrudController extends DoiBasedCrudController {
   @Deprecated
   @Transactional(readOnly = true)
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET, params = "versionedPreview")
-  public void previewFileFromVersionedModel(
-      HttpServletRequest request, HttpServletResponse response,
-      @RequestParam(value = "type", required = true) String fileType,
-      @RequestParam(value = "revision", required = false) Integer revisionNumber)
+  public void previewFileFromVersionedModel(HttpServletRequest request, HttpServletResponse response,
+                                            @RequestParam(value = "type", required = true) String fileType,
+                                            @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
     DoiBasedIdentity assetId = DoiBasedIdentity.create(getIdentifier(request));
 
