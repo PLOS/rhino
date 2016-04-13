@@ -26,7 +26,6 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.model.DoiAssociation;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
@@ -37,12 +36,14 @@ import org.ambraproject.rhino.view.asset.groomed.GroomedImageView;
 import org.ambraproject.rhino.view.asset.groomed.UncategorizedAssetException;
 import org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView;
 import org.ambraproject.rhino.view.asset.raw.RawAssetFileView;
+import org.ambraproject.rhino.view.internal.RepoVersionRepr;
 import org.hibernate.Criteria;
+import org.hibernate.SQLQuery;
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.NotFoundException;
+import org.plos.crepo.model.RepoCollectionList;
 import org.plos.crepo.model.RepoCollectionMetadata;
 import org.plos.crepo.model.RepoObjectMetadata;
 import org.plos.crepo.model.RepoVersion;
@@ -58,6 +59,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class AssetCrudServiceImpl extends AmbraService implements AssetCrudService {
 
@@ -192,15 +194,6 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   }
 
   @Override
-  public ArticleIdentity getParentArticle(DoiBasedIdentity identity) {
-    String parentArticleDoi = (String) DataAccessUtils.uniqueResult(
-        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(DoiAssociation.class)
-            .setProjection(Projections.property("parentArticleDoi"))
-            .add(Restrictions.eq("doi", identity.getIdentifier()))));
-    return (parentArticleDoi == null) ? null : ArticleIdentity.create(parentArticleDoi);
-  }
-
-  @Override
   public RepoObjectMetadata getAssetObject(ArticleIdentity parentArticleId,
                                            AssetIdentity assetId,
                                            Optional<Integer> versionNumber,
@@ -216,6 +209,30 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     AssetTable<RepoVersion> assetTable = AssetTable.buildFromAssetMetadata(articleCollection);
     RepoVersion fileVersion = assetTable.lookup(assetId, fileType);
     return contentRepoService.getRepoObjectMetadata(fileVersion);
+  }
+
+  @Override
+  public RepoObjectMetadata getScholarlyWorkFile(String fileType, Integer revisionNumber, DoiBasedIdentity assetId) {
+    RepoVersion scholarlyWorkVersion = hibernateTemplate.execute(session -> {
+      SQLQuery query = session.createSQLQuery("" +
+          "SELECT sw.crepoKey, sw.crepoUuid " +
+          "FROM scholarlyWork sw " +
+          "  INNER JOIN revision r ON r.scholarlyWorkId=sw.scholarlyWorkId " +
+          "WHERE sw.doi=:doi AND r.revisionNumber=:revisionNumber");
+      query.setParameter("doi", assetId.getIdentifier());
+      query.setParameter("revisionNumber", revisionNumber);
+      Object[] result = (Object[]) DataAccessUtils.uniqueResult(query.list());
+      if (result == null) {
+        throw new RuntimeException("DOI+revision not found"); // TODO: Handle 404 case
+      }
+      return RepoVersion.create((String) result[0], (String) result[1]);
+    });
+
+    RepoCollectionList scholarlyWork = contentRepoService.getCollection(scholarlyWorkVersion);
+    Map<String, Object> scholarlyWorkMetadata = (Map<String, Object>) scholarlyWork.getJsonUserMetadata().get();
+    RepoVersion objectVersion = java.util.Optional.ofNullable((Map<?, ?>) scholarlyWorkMetadata.get(fileType)).map(RepoVersionRepr::read)
+        .orElseThrow(() -> new RuntimeException("Unrecognized type: " + fileType) /* TODO: 404 */);
+    return contentRepoService.getRepoObjectMetadata(objectVersion);
   }
 
 }
