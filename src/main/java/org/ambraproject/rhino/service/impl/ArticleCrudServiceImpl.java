@@ -73,6 +73,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -228,12 +229,12 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Deprecated
   @Override
   public Transceiver readVersionedMetadata(final ArticleIdentity id,
-                                           final Optional<Integer> versionNumber,
+                                           final OptionalInt revisionNumber,
                                            final ArticleMetadataSource source) {
     return new EntityTransceiver<Article>() {
       @Override
       protected Article fetchEntity() {
-        return versionedIngestionService.getArticleMetadata(id, versionNumber, source);
+        return versionedIngestionService.getArticleMetadata(id, revisionNumber, source);
       }
 
       /**

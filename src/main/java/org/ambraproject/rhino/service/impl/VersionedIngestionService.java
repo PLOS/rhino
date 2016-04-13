@@ -9,16 +9,18 @@ import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.view.internal.RepoVersionRepr;
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.plos.crepo.model.RepoCollectionList;
-import org.plos.crepo.model.RepoCollectionMetadata;
 import org.plos.crepo.model.RepoVersion;
-import org.plos.crepo.model.RepoVersionNumber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -27,11 +29,11 @@ import javax.xml.parsers.DocumentBuilder;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 class VersionedIngestionService {
 
@@ -125,17 +127,65 @@ class VersionedIngestionService {
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
     final Article articleMetadata = parsedArticle.build(new Article());
+    articleMetadata.setDoi(articleIdentity.getKey());
 
     ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry, manuscriptEntry).build();
-    ScholarlyWork articleWork = articlePackage.getArticleWork();
-    Collection<ScholarlyWork> assetWorks = articlePackage.getAssetWorks();
+    ArticlePackage.PersistenceResult result = articlePackage.persist(parentService.hibernateTemplate, parentService.contentRepoService);
 
-    for (ScholarlyWork assetWork : assetWorks) {
-      assetWork.persistToCrepo();
-      articleWork.relate(assetWork);
-    }
+    persistRevision(result, parsedArticle.getRevisionNumber());
 
+    stubAssociativeFields(articleMetadata);
     return articleMetadata;
+  }
+
+  private void persistRevision(ArticlePackage.PersistenceResult article, int revisionNumber) {
+    DoiBasedIdentity articleDoi = article.getArticle().getDoi();
+
+    // Delete assets
+    parentService.hibernateTemplate.execute(session -> {
+      Query query = session.createSQLQuery("" +
+          "DELETE rev " +
+          "FROM revision rev " +
+          "INNER JOIN scholarlyWork asset ON rev.scholarlyWorkId = asset.scholarlyWorkId " +
+          "INNER JOIN scholarlyWorkRelation rel ON asset.scholarlyWorkId = rel.targetWorkId " +
+          "INNER JOIN scholarlyWork article ON article.scholarlyWorkId = rel.originWorkId " +
+          "WHERE rev.revisionNumber = :revisionNumber AND article.doi = :doi");
+      query.setParameter("revisionNumber", revisionNumber);
+      query.setParameter("doi", articleDoi.getIdentifier());
+      return query.executeUpdate();
+    });
+
+    // Delete root article
+    parentService.hibernateTemplate.execute(session -> {
+      Query query = session.createSQLQuery("" +
+          "DELETE rev " +
+          "FROM revision rev INNER JOIN scholarlyWork s " +
+          "ON rev.scholarlyWorkId = s.scholarlyWorkId " +
+          "WHERE rev.revisionNumber = :revisionNumber AND s.doi = :doi");
+      query.setParameter("revisionNumber", revisionNumber);
+      query.setParameter("doi", articleDoi.getIdentifier());
+      return query.executeUpdate();
+    });
+
+    article.getWorks().forEachOrdered(work -> {
+      parentService.hibernateTemplate.execute(session -> {
+        Query query = session.createSQLQuery("" +
+            "INSERT INTO revision (scholarlyWorkId, revisionNumber, publicationState) VALUES (" +
+            "  (SELECT scholarlyWorkId FROM scholarlyWork WHERE crepoKey=:crepoKey AND crepoUuid=:crepoUuid), " +
+            ":revisionNumber, :publicationState)");
+        RepoVersion version = work.getVersion();
+        query.setParameter("crepoKey", version.getKey());
+        query.setParameter("crepoUuid", version.getUuid().toString());
+
+        query.setParameter("revisionNumber", revisionNumber);
+        query.setParameter("publicationState", 0);
+        return query.executeUpdate();
+      });
+    });
+  }
+
+  private void stubAssociativeFields(Article article) {
+    article.setRelatedArticles(ImmutableList.of());
   }
 
   private ManifestXml.Asset findManuscriptAsset(List<ManifestXml.Asset> assets) {
@@ -178,14 +228,13 @@ class VersionedIngestionService {
    * The legacy Hibernate model object {@link Article} is used as a data-holder for convenience and compatibility. This
    * method constructs it anew, not by accessing Hibnerate, and populates only a subset of its normal fields.
    *
-   * @param id            the ID of the article to serve
-   * @param versionNumber the number of the ingested version to read, or absent for the latest version
-   * @param source        whether to parse the extracted front matter or the full, original manuscript
+   * @param id     the ID of the article to serve
+   * @param source whether to parse the extracted front matter or the full, original manuscript
    * @return an object containing metadata that could be extracted from the manuscript, with other fields unfilled
    * @deprecated method signature accommodates testing and will be changed
    */
   @Deprecated
-  Article getArticleMetadata(ArticleIdentity id, Optional<Integer> versionNumber, ArticleMetadataSource source) {
+  Article getArticleMetadata(ArticleIdentity id, OptionalInt revisionNumber, ArticleMetadataSource source) {
     /*
      * *** Implementation notes ***
      *
@@ -201,43 +250,53 @@ class VersionedIngestionService {
      * which file to read. In a future API version, we may wish to simplify further by splitting citations into a
      * separate service.
      *
-     * Also, the means of specifying a collection version (the `id` and `versionNumber` parameters) might be replaced
-     * with a better way of specifying an article version.
-     *
      * TODO: Improve as described above and delete this comment block
      */
 
-    String identifier = id.getIdentifier();
-    RepoCollectionMetadata collection;
-    if (versionNumber.isPresent()) {
-      collection = parentService.contentRepoService.getCollection(new RepoVersionNumber(identifier, versionNumber.get()));
+    RepoVersion collection;
+    if (revisionNumber.isPresent()) {
+      collection = parentService.hibernateTemplate.execute(session -> {
+        SQLQuery query = session.createSQLQuery("" +
+            "SELECT crepoKey, crepoUuid " +
+            "FROM scholarlyWork s " +
+            "INNER JOIN revision r ON s.scholarlyWorkId = r.scholarlyWorkId " +
+            "WHERE s.doi = :doi AND r.revisionNumber = :revisionNumber");
+        query.setParameter("doi", id.getIdentifier());
+        query.setParameter("revisionNumber", revisionNumber.getAsInt());
+        Object[] result = (Object[]) DataAccessUtils.uniqueResult(query.list());
+        if (result == null) {
+          throw new RuntimeException("DOI+revision not found"); // TODO: Handle 404 case
+        }
+        return RepoVersion.create((String) result[0], (String) result[1]);
+      });
     } else {
-      collection = parentService.contentRepoService.getLatestCollection(identifier);
+      throw new RuntimeException("TODO");
     }
+    return null;
 
-    Map<String, Object> userMetadata = (Map<String, Object>) collection.getJsonUserMetadata().get();
-    Map<String, Object> manuscriptsMap = (Map<String, Object>) userMetadata.get(MANUSCRIPTS_KEY);
-    Map<String, String> manuscriptId = (Map<String, String>) manuscriptsMap.get(SOURCE_KEYS.get(source));
-    RepoVersion manuscript = RepoVersionRepr.read(manuscriptId);
-
-    Document document;
-    try (InputStream manuscriptStream = parentService.contentRepoService.getRepoObject(manuscript)) {
-      DocumentBuilder documentBuilder = AmbraService.newDocumentBuilder();
-      log.debug("In getArticleMetadata source={} documentBuilder.parse() called", source);
-      document = documentBuilder.parse(manuscriptStream);
-      log.debug("finish");
-    } catch (IOException | SAXException e) {
-      throw new RuntimeException(e);
-    }
-
-    Article article;
-    try {
-      article = new ArticleXml(document).build(new Article());
-    } catch (XmlContentException e) {
-      throw new RuntimeException(e);
-    }
-    article.setLastModified(collection.getTimestamp());
-    return article;
+//    Map<String, Object> userMetadata = (Map<String, Object>) collection.getJsonUserMetadata().get();
+//    Map<String, Object> manuscriptsMap = (Map<String, Object>) userMetadata.get(MANUSCRIPTS_KEY);
+//    Map<String, String> manuscriptId = (Map<String, String>) manuscriptsMap.get(SOURCE_KEYS.get(source));
+//    RepoVersion manuscript = RepoVersionRepr.read(manuscriptId);
+//
+//    Document document;
+//    try (InputStream manuscriptStream = parentService.contentRepoService.getRepoObject(manuscript)) {
+//      DocumentBuilder documentBuilder = AmbraService.newDocumentBuilder();
+//      log.debug("In getArticleMetadata source={} documentBuilder.parse() called", source);
+//      document = documentBuilder.parse(manuscriptStream);
+//      log.debug("finish");
+//    } catch (IOException | SAXException e) {
+//      throw new RuntimeException(e);
+//    }
+//
+//    Article article;
+//    try {
+//      article = new ArticleXml(document).build(new Article());
+//    } catch (XmlContentException e) {
+//      throw new RuntimeException(e);
+//    }
+//    article.setLastModified(collection.getTimestamp());
+//    return article;
   }
 
 }

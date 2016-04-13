@@ -45,6 +45,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 /**
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -165,7 +166,7 @@ public class ArticleCrudController extends ArticleSpaceController {
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "versionedPreview")
   public void previewMetadataFromVersionedModel(
       HttpServletRequest request, HttpServletResponse response,
-      @RequestParam(value = "version", required = false) Integer versionNumber,
+      @RequestParam(value = "revision", required = false) Integer revisionNumber,
       @RequestParam(value = "excludeCitations", required = false) boolean excludeCitations,
       @RequestParam(value = "parseFullManuscript", required = false) boolean parseFullManuscript)
       throws IOException {
@@ -173,7 +174,8 @@ public class ArticleCrudController extends ArticleSpaceController {
     ArticleMetadataSource sourceObj = parseFullManuscript ? ArticleMetadataSource.FULL_MANUSCRIPT
         : excludeCitations ? ArticleMetadataSource.FRONT_MATTER
         : ArticleMetadataSource.FRONT_AND_BACK_MATTER;
-    articleCrudService.readVersionedMetadata(id, Optional.ofNullable(versionNumber), sourceObj)
+    OptionalInt revisionNumberObj = (revisionNumber == null) ? OptionalInt.empty() : OptionalInt.of(revisionNumber);
+    articleCrudService.readVersionedMetadata(id, revisionNumberObj, sourceObj)
         .respond(request, response, entityGson);
   }
 
