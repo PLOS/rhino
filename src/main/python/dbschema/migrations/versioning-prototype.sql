@@ -6,14 +6,16 @@ CREATE TABLE `ambra`.`scholarlyWork` (
   `scholarlyWorkId` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `doi` VARCHAR(150) NOT NULL,
   `crepoKey` VARCHAR(255) NOT NULL,
-  `crepoUuid` CHAR(36) NOT NULL,
+  `crepoUuid` VARCHAR(36) NOT NULL,
   `scholarlyWorkType` VARCHAR(128) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
-  PRIMARY KEY (`scholarlyWorkId`));
+  PRIMARY KEY (`scholarlyWorkId`),
+  UNIQUE KEY `crepoUuid_UNIQUE` (`crepoUuid`));
 
 CREATE TABLE `ambra`.`scholarlyWorkRelation` (
   `originWorkId` BIGINT(20) NOT NULL,
   `targetWorkId` BIGINT(20) NOT NULL,
   `relationType` VARCHAR(45) NOT NULL,
+  UNIQUE KEY `ids_type_UNIQUE` (`originWorkId`, `targetWorkId`, `relationType`),
   INDEX `fk_scholarlyWorkRelation_1_idx` (`originWorkId` ASC),
   INDEX `fk_scholarlyWorkRelation_2_idx` (`targetWorkId` ASC),
   CONSTRAINT `fk_scholarlyWorkRelation_1`
@@ -33,6 +35,7 @@ CREATE TABLE `ambra`.`revision` (
   `revisionNumber` INT NOT NULL,
   `publicationState` INT NOT NULL,
   PRIMARY KEY (`revisionId`),
+  UNIQUE KEY `scholarlyWorkId_UNIQUE` (`scholarlyWorkId`),
   INDEX `fk_revision_1_idx` (`scholarlyWorkId` ASC),
   CONSTRAINT `fk_revision_1`
     FOREIGN KEY (`scholarlyWorkId`)
