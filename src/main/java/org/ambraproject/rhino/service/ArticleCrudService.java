@@ -44,11 +44,13 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    *
    * @param archive    the local .zip file
    * @param suppliedId the identifier supplied for the article, if any
+   * @param revision   the forced revision number if present (else, will be taken from manuscript)
    * @return the created or update Article
    * @throws org.ambraproject.rhino.rest.RestClientException if the DOI is already used
    * @throws IOException
    */
-  public abstract Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode)
+  public abstract Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode,
+                                       OptionalInt revision)
       throws IOException;
 
   /**

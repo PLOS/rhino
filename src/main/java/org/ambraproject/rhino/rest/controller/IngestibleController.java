@@ -38,6 +38,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 /**
  * Controller enabling access to the ambra ingest directory (whose location is defined by the
@@ -109,7 +110,7 @@ public class IngestibleController extends DoiBasedCrudController {
 
     Article result;
     try (Archive archive = Archive.readZipFile(archiveFile)) {
-      result = articleCrudService.writeArchive(archive, expectedId, reingestMode);
+      result = articleCrudService.writeArchive(archive, expectedId, reingestMode, OptionalInt.empty());
     }
     ingestibleService.archiveIngested(name);
     response.setStatus(HttpStatus.CREATED.value());

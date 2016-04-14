@@ -106,13 +106,13 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException {
+  public Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode, OptionalInt revision) throws IOException {
     Article article;
     if (!runtimeConfiguration.isUsingVersionedIngestion()) {
       article = legacyIngestionService.writeArchive(archive, suppliedId, mode);
     } else {
       try {
-        article = versionedIngestionService.ingest(archive);
+        article = versionedIngestionService.ingest(archive, revision);
       } catch (XmlContentException e) {
         throw new RuntimeException(e);
       }
@@ -125,7 +125,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public Article writeArchiveAsVersionedOnly(Archive archive) throws IOException {
     if (runtimeConfiguration.isUsingVersionedIngestion()) {
       try {
-        return versionedIngestionService.ingest(archive);
+        return versionedIngestionService.ingest(archive, OptionalInt.empty());
       } catch (XmlContentException e) {
         throw new RuntimeException(e);
       }
@@ -276,7 +276,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
       @Override
       protected Object getView(Article entity) {
-        return createArticleView(entity, excludeCitations);
+        return ImmutableMap.of();//createArticleView(entity, excludeCitations);
       }
     };
   }

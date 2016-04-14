@@ -42,6 +42,7 @@ import java.io.Reader;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -239,7 +240,7 @@ public final class RhinoTestHelper {
     Archive mockIngestible = createMockIngestible(articleId, input, reference.getAssets());
     try {
       return articleCrudService.writeArchive(mockIngestible,
-          Optional.of(articleId), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+          Optional.of(articleId), DoiBasedCrudService.WriteMode.CREATE_ONLY, OptionalInt.empty());
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

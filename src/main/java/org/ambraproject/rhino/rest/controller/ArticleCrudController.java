@@ -227,7 +227,8 @@ public class ArticleCrudController extends ArticleSpaceController {
   public void readXml(HttpServletRequest request, HttpServletResponse response,
                       @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
-    assetFileCrudController.previewFileFromVersionedModel(request, response, "manuscript", revisionNumber);
+    DoiBasedIdentity assetId = DoiBasedIdentity.create(getIdentifier(request));
+    assetFileCrudController.previewFileFromVersionedModel(request, response, "manuscript", revisionNumber, assetId);
   }
 
   /**
