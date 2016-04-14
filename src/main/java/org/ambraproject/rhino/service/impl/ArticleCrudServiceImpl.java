@@ -52,6 +52,7 @@ import org.ambraproject.rhino.view.article.RelatedArticleView;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
+import org.hibernate.SQLQuery;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
@@ -262,6 +263,30 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         kludgeArticleFields(article);
         boolean excludeCitations = (source == ArticleMetadataSource.FRONT_MATTER);
         return articleOutputViewFactory.create(article, excludeCitations);
+      }
+    };
+  }
+
+  @Override
+  public Transceiver readRevisions(ArticleIdentity id) {
+    return new Transceiver() {
+      @Override
+      protected List<Integer> getData() throws IOException {
+        return hibernateTemplate.execute(session->{
+          SQLQuery query = session.createSQLQuery("" +
+              "SELECT r.revisionNumber " +
+              "FROM scholarlyWork sw INNER JOIN revision r " +
+              "ON sw.scholarlyWorkId=r.scholarlyWorkId " +
+              "WHERE sw.doi=:doi " +
+              "ORDER BY r.revisionNumber ASC");
+          query.setParameter("doi", id.getIdentifier());
+          return query.list();
+        });
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
       }
     };
   }

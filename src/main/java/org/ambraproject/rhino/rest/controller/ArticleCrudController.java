@@ -182,6 +182,13 @@ public class ArticleCrudController extends ArticleSpaceController {
         .respond(request, response, entityGson);
   }
 
+  @Transactional(readOnly = true)
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = {"revisions", "versionedPreview"})
+  public void getRevisions(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    ArticleIdentity id = parse(request);
+    articleCrudService.readRevisions(id).respond(request, response, entityGson);
+  }
+
   /**
    * Retrieves a list of objects representing comments associated with the article. Each comment has a "replies" list
    * that contains any replies (recursively).

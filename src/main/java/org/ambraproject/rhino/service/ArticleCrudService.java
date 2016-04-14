@@ -231,4 +231,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
     FULL_MANUSCRIPT, FRONT_MATTER, FRONT_AND_BACK_MATTER
   }
 
+  public abstract Transceiver readRevisions(ArticleIdentity id);
+
+
 }
