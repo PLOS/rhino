@@ -1,7 +1,6 @@
 package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.models.Article;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService;
@@ -20,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 @Controller
 public class IngestibleZipController extends RestController {
@@ -45,7 +45,8 @@ public class IngestibleZipController extends RestController {
   @RequestMapping(value = ZIP_ROOT, method = RequestMethod.POST)
   public void zipUpload(HttpServletRequest request, HttpServletResponse response,
                         @RequestParam("archive") MultipartFile requestFile,
-                        @RequestParam(value = "force_reingest", required = false) String forceReingest)
+                        @RequestParam(value = "force_reingest", required = false) String forceReingest,
+                        @RequestParam(value = "revision", required = false) Integer revision)
       throws IOException {
 
     String archiveName = requestFile.getOriginalFilename();
@@ -57,7 +58,9 @@ public class IngestibleZipController extends RestController {
 
           // If forceReingest is the empty string, the parameter was present.  Only
           // treat null as false.
-          forceReingest == null ? DoiBasedCrudService.WriteMode.CREATE_ONLY : DoiBasedCrudService.WriteMode.WRITE_ANY);
+          forceReingest == null ? DoiBasedCrudService.WriteMode.CREATE_ONLY : DoiBasedCrudService.WriteMode.WRITE_ANY,
+
+          (revision != null) ? OptionalInt.of(revision) : OptionalInt.empty());
     }
     response.setStatus(HttpStatus.CREATED.value());
 

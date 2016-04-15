@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
@@ -91,7 +92,7 @@ class VersionedIngestionService {
       .put("version", 1)
       .build();
 
-  Article ingest(Archive archive) throws IOException, XmlContentException {
+  Article ingest(Archive archive, OptionalInt revision) throws IOException, XmlContentException {
     String manifestEntry = null;
     for (String entryName : archive.getEntryNames()) {
       if (entryName.equalsIgnoreCase("manifest.xml")) {
@@ -132,7 +133,7 @@ class VersionedIngestionService {
     ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry, manuscriptEntry).build();
     ArticlePackage.PersistenceResult result = articlePackage.persist(parentService.hibernateTemplate, parentService.contentRepoService);
 
-    persistRevision(result, parsedArticle.getRevisionNumber());
+    persistRevision(result, revision.orElseGet(parsedArticle::getRevisionNumber));
 
     stubAssociativeFields(articleMetadata);
     return articleMetadata;
@@ -185,7 +186,11 @@ class VersionedIngestionService {
   }
 
   private void stubAssociativeFields(Article article) {
+    article.setID(-1L);
+    article.setAssets(ImmutableList.of());
     article.setRelatedArticles(ImmutableList.of());
+    article.setJournals(ImmutableSet.of());
+    article.setCategories(ImmutableMap.of());
   }
 
   private ManifestXml.Asset findManuscriptAsset(List<ManifestXml.Asset> assets) {

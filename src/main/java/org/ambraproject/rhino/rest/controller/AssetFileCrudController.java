@@ -172,7 +172,12 @@ public class AssetFileCrudController extends DoiBasedCrudController {
                                             @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
     DoiBasedIdentity assetId = DoiBasedIdentity.create(getIdentifier(request));
+    previewFileFromVersionedModel(request, response, fileType, revisionNumber, assetId);
+  }
 
+  void previewFileFromVersionedModel(HttpServletRequest request, HttpServletResponse response,
+                                     String fileType, Integer revisionNumber, DoiBasedIdentity assetId)
+      throws IOException {
     RepoObjectMetadata objectMetadata = assetCrudService.getScholarlyWorkFile(fileType, revisionNumber, assetId);
 
     // Used only for defaults when objectMetadata does not supply values.

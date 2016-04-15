@@ -52,6 +52,7 @@ import org.ambraproject.rhino.view.article.RelatedArticleView;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
+import org.hibernate.SQLQuery;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
@@ -106,13 +107,13 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException {
+  public Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode, OptionalInt revision) throws IOException {
     Article article;
     if (!runtimeConfiguration.isUsingVersionedIngestion()) {
       article = legacyIngestionService.writeArchive(archive, suppliedId, mode);
     } else {
       try {
-        article = versionedIngestionService.ingest(archive);
+        article = versionedIngestionService.ingest(archive, revision);
       } catch (XmlContentException e) {
         throw new RuntimeException(e);
       }
@@ -125,7 +126,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public Article writeArchiveAsVersionedOnly(Archive archive) throws IOException {
     if (runtimeConfiguration.isUsingVersionedIngestion()) {
       try {
-        return versionedIngestionService.ingest(archive);
+        return versionedIngestionService.ingest(archive, OptionalInt.empty());
       } catch (XmlContentException e) {
         throw new RuntimeException(e);
       }
@@ -267,6 +268,30 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
+  public Transceiver readRevisions(ArticleIdentity id) {
+    return new Transceiver() {
+      @Override
+      protected List<Integer> getData() throws IOException {
+        return hibernateTemplate.execute(session->{
+          SQLQuery query = session.createSQLQuery("" +
+              "SELECT r.revisionNumber " +
+              "FROM scholarlyWork sw INNER JOIN revision r " +
+              "ON sw.scholarlyWorkId=r.scholarlyWorkId " +
+              "WHERE sw.doi=:doi " +
+              "ORDER BY r.revisionNumber ASC");
+          query.setParameter("doi", id.getIdentifier());
+          return query.list();
+        });
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    };
+  }
+
+  @Override
   public Transceiver readMetadata(final Article article, final boolean excludeCitations) throws IOException {
     return new EntityTransceiver<Article>() {
       @Override
@@ -276,7 +301,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
       @Override
       protected Object getView(Article entity) {
-        return createArticleView(entity, excludeCitations);
+        return ImmutableMap.of();//createArticleView(entity, excludeCitations);
       }
     };
   }

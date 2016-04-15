@@ -75,6 +75,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -239,7 +240,7 @@ public class IngestionTest extends BaseRhinoTest {
     InputStream mockIngestible = IngestibleUtil.buildMockIngestible(testInputStream, expected.getAssets());
     Archive ingestible = Archive.readZipFileIntoMemory(xmlFile.getName() + ".zip", mockIngestible);
     Article actual = articleCrudService.writeArchive(ingestible,
-        Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+        Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY, OptionalInt.empty());
     assertTrue(actual.getID() > 0, "Article doesn't have a database ID");
     assertTrue(actual.getCreated() != null, "Article doesn't have a creation date");
 
@@ -275,7 +276,7 @@ public class IngestionTest extends BaseRhinoTest {
     final Article expected = RhinoTestHelper.readReferenceCase(jsonFile);
     createTestJournal(expected.geteIssn());
     Article actual = articleCrudService.writeArchive(Archive.readZipFileIntoMemory(zipFile),
-        Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+        Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY, OptionalInt.empty());
     assertTrue(actual.getID() > 0, "Article doesn't have a database ID");
     assertTrue(actual.getCreated() != null, "Article doesn't have a creation date");
 
@@ -305,20 +306,20 @@ public class IngestionTest extends BaseRhinoTest {
     Archive zipPath = Archive.readZipFileIntoMemory(new File(
         ZIP_DATA_PATH.getCanonicalPath() + File.separator + "pone.0056489.zip"));
     Article first = articleCrudService.writeArchive(zipPath,
-        Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+        Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY, OptionalInt.empty());
     assertTrue(first.getID() > 0, "Article doesn't have a database ID");
     assertTrue(first.getCreated().getTime() >= start);
 
     try {
       Article second = articleCrudService.writeArchive(zipPath,
-          Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+          Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY, OptionalInt.empty());
       fail("Article creation succeeded for second ingestion in CREATE_ONLY mode");
     } catch (RestClientException expected) {
       assertEquals(expected.getResponseStatus(), HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     Article second = articleCrudService.writeArchive(zipPath,
-        Optional.empty(), DoiBasedCrudService.WriteMode.WRITE_ANY);
+        Optional.empty(), DoiBasedCrudService.WriteMode.WRITE_ANY, OptionalInt.empty());
 
     // TODO: figure out how to detect that second was re-ingested.  Don't want to
     // use modification time since the test might run in less than one clock tick.
