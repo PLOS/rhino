@@ -27,6 +27,7 @@ import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
@@ -50,6 +51,7 @@ import org.plos.crepo.model.RepoVersion;
 import org.plos.crepo.model.RepoVersionNumber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 
@@ -64,6 +66,9 @@ import java.util.Map;
 public class AssetCrudServiceImpl extends AmbraService implements AssetCrudService {
 
   private static final Logger log = LoggerFactory.getLogger(AssetCrudServiceImpl.class);
+
+  @Autowired
+  private ArticleCrudService articleCrudService;
 
   /**
    * {@inheritDoc}
@@ -214,8 +219,13 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   @Override
   public RepoObjectMetadata getScholarlyWorkFile(String fileType, Integer revisionNumber, DoiBasedIdentity assetId) {
 
+    int revision;
     if (revisionNumber == null) {
-
+      revision = articleCrudService.getLatestRevision(assetId).orElseThrow(() ->
+          new NotFoundException("No revisions found for doi " + assetId.getIdentifier()));
+    }
+    else {
+      revision = revisionNumber;
     }
 
     RepoVersion scholarlyWorkVersion = hibernateTemplate.execute(session -> {
@@ -225,7 +235,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
           "  INNER JOIN revision r ON r.scholarlyWorkId=sw.scholarlyWorkId " +
           "WHERE sw.doi=:doi AND r.revisionNumber=:revisionNumber");
       query.setParameter("doi", assetId.getIdentifier());
-      query.setParameter("revisionNumber", revisionNumber);
+      query.setParameter("revisionNumber", revision);
       Object[] result = (Object[]) DataAccessUtils.uniqueResult(query.list());
       if (result == null) {
         throw new RuntimeException("DOI+revision not found"); // TODO: Handle 404 case

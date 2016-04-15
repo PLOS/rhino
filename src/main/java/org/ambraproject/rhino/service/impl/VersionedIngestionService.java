@@ -17,6 +17,7 @@ import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.view.internal.RepoVersionRepr;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
+import org.plos.crepo.exceptions.NotFoundException;
 import org.plos.crepo.model.RepoCollectionList;
 import org.plos.crepo.model.RepoVersion;
 import org.slf4j.Logger;
@@ -259,12 +260,9 @@ class VersionedIngestionService {
      */
 
     RepoVersion collectionVersion;
-    Integer revision;
-    if (revisionNumber.isPresent()) {
-      revision = revisionNumber.getAsInt();
-    } else {
-      revision = getLatestRevision(id);
-    }
+    int revision = revisionNumber.orElseGet(() ->
+        parentService.getLatestRevision(id)
+            .orElseThrow(() -> new NotFoundException("No revisions found for doi " + id.getIdentifier())));
 
     collectionVersion = parentService.hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
@@ -306,22 +304,4 @@ class VersionedIngestionService {
     article.setLastModified(collection.getTimestamp());
     return article;
   }
-
-  private Integer getLatestRevision(ArticleIdentity id) {
-    return parentService.hibernateTemplate.execute(session -> {
-      SQLQuery query = session.createSQLQuery("" +
-          "SELECT MAX(revisionNumber) " +
-          "FROM revision r " +
-          "INNER JOIN scholarlyWork s ON r.scholarlyWorkId = s.scholarlyWorkId " +
-          "WHERE s.doi = :doi");
-      String doi = id.getIdentifier();
-      query.setParameter("doi", doi);
-      Integer maxRevision = (Integer) query.uniqueResult();
-      if (maxRevision == null) {
-        throw new RuntimeException("No revisions found for doi: " + doi);
-      }
-      return maxRevision;
-    });
-  }
-
 }

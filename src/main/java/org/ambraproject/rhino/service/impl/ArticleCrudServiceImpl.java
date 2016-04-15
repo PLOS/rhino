@@ -83,7 +83,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudServiceImpl.class);
 
-  AssetCrudService assetService;
+  @Autowired
+  AssetCrudService assetCrudService;
 
   @Autowired
   RuntimeConfiguration runtimeConfiguration;
@@ -504,8 +505,21 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return legacyIngestionService.repack(articleIdentity);
   }
 
-  @Required
-  public void setAssetService(AssetCrudService assetService) {
-    this.assetService = assetService;
+  @Override
+  public OptionalInt getLatestRevision(DoiBasedIdentity id) {
+    return hibernateTemplate.execute(session -> {
+      SQLQuery query = session.createSQLQuery("" +
+          "SELECT MAX(revisionNumber) " +
+          "FROM revision r " +
+          "INNER JOIN scholarlyWork s ON r.scholarlyWorkId = s.scholarlyWorkId " +
+          "WHERE s.doi = :doi");
+      String doi = id.getIdentifier();
+      query.setParameter("doi", doi);
+      Integer maxRevision = (Integer) query.uniqueResult();
+      if (maxRevision == null) {
+        return OptionalInt.empty();
+      }
+      return OptionalInt.of(maxRevision);
+    });
   }
 }
