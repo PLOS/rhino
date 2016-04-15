@@ -259,24 +259,28 @@ class VersionedIngestionService {
      */
 
     RepoVersion collectionVersion;
+    Integer revision;
     if (revisionNumber.isPresent()) {
-      collectionVersion = parentService.hibernateTemplate.execute(session -> {
-        SQLQuery query = session.createSQLQuery("" +
-            "SELECT crepoKey, crepoUuid " +
-            "FROM scholarlyWork s " +
-            "INNER JOIN revision r ON s.scholarlyWorkId = r.scholarlyWorkId " +
-            "WHERE s.doi = :doi AND r.revisionNumber = :revisionNumber");
-        query.setParameter("doi", id.getIdentifier());
-        query.setParameter("revisionNumber", revisionNumber.getAsInt());
-        Object[] result = (Object[]) DataAccessUtils.uniqueResult(query.list());
-        if (result == null) {
-          throw new RuntimeException("DOI+revision not found"); // TODO: Handle 404 case
-        }
-        return RepoVersion.create((String) result[0], (String) result[1]);
-      });
+      revision = revisionNumber.getAsInt();
     } else {
-      throw new RuntimeException("TODO");
+      revision = getLatestRevision(id);
     }
+
+    collectionVersion = parentService.hibernateTemplate.execute(session -> {
+      SQLQuery query = session.createSQLQuery("" +
+          "SELECT crepoKey, crepoUuid " +
+          "FROM scholarlyWork s " +
+          "INNER JOIN revision r ON s.scholarlyWorkId = r.scholarlyWorkId " +
+          "WHERE s.doi = :doi AND r.revisionNumber = :revisionNumber");
+      query.setParameter("doi", id.getIdentifier());
+      query.setParameter("revisionNumber", revision);
+      Object[] result = (Object[]) DataAccessUtils.uniqueResult(query.list());
+      if (result == null) {
+        throw new RuntimeException("DOI+revision not found"); // TODO: Handle 404 case
+      }
+      return RepoVersion.create((String) result[0], (String) result[1]);
+    });
+
 
     RepoCollectionList collection = parentService.contentRepoService.getCollection(collectionVersion);
 
@@ -301,6 +305,23 @@ class VersionedIngestionService {
     }
     article.setLastModified(collection.getTimestamp());
     return article;
+  }
+
+  private Integer getLatestRevision(ArticleIdentity id) {
+    return parentService.hibernateTemplate.execute(session -> {
+      SQLQuery query = session.createSQLQuery("" +
+          "SELECT MAX(revisionNumber) " +
+          "FROM revision r " +
+          "INNER JOIN scholarlyWork s ON r.scholarlyWorkId = s.scholarlyWorkId " +
+          "WHERE s.doi = :doi");
+      String doi = id.getIdentifier();
+      query.setParameter("doi", doi);
+      Integer maxRevision = (Integer) query.uniqueResult();
+      if (maxRevision == null) {
+        throw new RuntimeException("No revisions found for doi: " + doi);
+      }
+      return maxRevision;
+    });
   }
 
 }

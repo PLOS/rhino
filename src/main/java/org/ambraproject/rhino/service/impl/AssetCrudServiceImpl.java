@@ -213,6 +213,11 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
 
   @Override
   public RepoObjectMetadata getScholarlyWorkFile(String fileType, Integer revisionNumber, DoiBasedIdentity assetId) {
+
+    if (revisionNumber == null) {
+
+    }
+
     RepoVersion scholarlyWorkVersion = hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
           "SELECT sw.crepoKey, sw.crepoUuid " +

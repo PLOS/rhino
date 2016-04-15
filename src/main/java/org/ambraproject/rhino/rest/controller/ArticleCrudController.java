@@ -19,7 +19,6 @@
 package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.AnnotationCrudService;
@@ -28,7 +27,6 @@ import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhombat.HttpDateUtil;
-import org.plos.crepo.model.RepoObjectMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +45,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.OptionalInt;
 
 /**
