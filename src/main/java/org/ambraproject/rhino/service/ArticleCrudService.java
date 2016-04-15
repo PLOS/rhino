@@ -165,8 +165,6 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    */
   public abstract String getRawCategoriesAndText(ArticleIdentity id) throws IOException;
 
-  public abstract void setAssetService(AssetCrudService assetService);
-
   /**
    * List the DOIs of all ingested articles, or a described subset.
    *
@@ -233,5 +231,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
 
   public abstract Transceiver readRevisions(ArticleIdentity id);
 
+
+  public abstract OptionalInt getLatestRevision(DoiBasedIdentity id);
 
 }

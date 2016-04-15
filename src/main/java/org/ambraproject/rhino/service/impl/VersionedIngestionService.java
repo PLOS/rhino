@@ -17,6 +17,7 @@ import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.view.internal.RepoVersionRepr;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
+import org.plos.crepo.exceptions.NotFoundException;
 import org.plos.crepo.model.RepoCollectionList;
 import org.plos.crepo.model.RepoVersion;
 import org.slf4j.Logger;
@@ -259,24 +260,25 @@ class VersionedIngestionService {
      */
 
     RepoVersion collectionVersion;
-    if (revisionNumber.isPresent()) {
-      collectionVersion = parentService.hibernateTemplate.execute(session -> {
-        SQLQuery query = session.createSQLQuery("" +
-            "SELECT crepoKey, crepoUuid " +
-            "FROM scholarlyWork s " +
-            "INNER JOIN revision r ON s.scholarlyWorkId = r.scholarlyWorkId " +
-            "WHERE s.doi = :doi AND r.revisionNumber = :revisionNumber");
-        query.setParameter("doi", id.getIdentifier());
-        query.setParameter("revisionNumber", revisionNumber.getAsInt());
-        Object[] result = (Object[]) DataAccessUtils.uniqueResult(query.list());
-        if (result == null) {
-          throw new RuntimeException("DOI+revision not found"); // TODO: Handle 404 case
-        }
-        return RepoVersion.create((String) result[0], (String) result[1]);
-      });
-    } else {
-      throw new RuntimeException("TODO");
-    }
+    int revision = revisionNumber.orElseGet(() ->
+        parentService.getLatestRevision(id)
+            .orElseThrow(() -> new NotFoundException("No revisions found for doi " + id.getIdentifier())));
+
+    collectionVersion = parentService.hibernateTemplate.execute(session -> {
+      SQLQuery query = session.createSQLQuery("" +
+          "SELECT crepoKey, crepoUuid " +
+          "FROM scholarlyWork s " +
+          "INNER JOIN revision r ON s.scholarlyWorkId = r.scholarlyWorkId " +
+          "WHERE s.doi = :doi AND r.revisionNumber = :revisionNumber");
+      query.setParameter("doi", id.getIdentifier());
+      query.setParameter("revisionNumber", revision);
+      Object[] result = (Object[]) DataAccessUtils.uniqueResult(query.list());
+      if (result == null) {
+        throw new RuntimeException("DOI+revision not found"); // TODO: Handle 404 case
+      }
+      return RepoVersion.create((String) result[0], (String) result[1]);
+    });
+
 
     RepoCollectionList collection = parentService.contentRepoService.getCollection(collectionVersion);
 
@@ -302,5 +304,4 @@ class VersionedIngestionService {
     article.setLastModified(collection.getTimestamp());
     return article;
   }
-
 }

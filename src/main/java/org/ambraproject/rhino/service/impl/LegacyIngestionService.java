@@ -720,7 +720,7 @@ class LegacyIngestionService {
       map.put(entryName, new Archive.InputStreamSource() {
         @Override
         public InputStream open() throws IOException {
-          return parentService.assetService.read(assetFileIdentity);
+          return parentService.assetCrudService.read(assetFileIdentity);
         }
       });
     }
