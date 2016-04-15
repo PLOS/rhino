@@ -253,9 +253,9 @@ class VersionedIngestionService {
      * TODO: Improve as described above and delete this comment block
      */
 
-    RepoVersion collection;
+    RepoVersion collectionVersion;
     if (revisionNumber.isPresent()) {
-      collection = parentService.hibernateTemplate.execute(session -> {
+      collectionVersion = parentService.hibernateTemplate.execute(session -> {
         SQLQuery query = session.createSQLQuery("" +
             "SELECT crepoKey, crepoUuid " +
             "FROM scholarlyWork s " +
@@ -272,31 +272,30 @@ class VersionedIngestionService {
     } else {
       throw new RuntimeException("TODO");
     }
-    return null;
 
-//    Map<String, Object> userMetadata = (Map<String, Object>) collection.getJsonUserMetadata().get();
-//    Map<String, Object> manuscriptsMap = (Map<String, Object>) userMetadata.get(MANUSCRIPTS_KEY);
-//    Map<String, String> manuscriptId = (Map<String, String>) manuscriptsMap.get(SOURCE_KEYS.get(source));
-//    RepoVersion manuscript = RepoVersionRepr.read(manuscriptId);
-//
-//    Document document;
-//    try (InputStream manuscriptStream = parentService.contentRepoService.getRepoObject(manuscript)) {
-//      DocumentBuilder documentBuilder = AmbraService.newDocumentBuilder();
-//      log.debug("In getArticleMetadata source={} documentBuilder.parse() called", source);
-//      document = documentBuilder.parse(manuscriptStream);
-//      log.debug("finish");
-//    } catch (IOException | SAXException e) {
-//      throw new RuntimeException(e);
-//    }
-//
-//    Article article;
-//    try {
-//      article = new ArticleXml(document).build(new Article());
-//    } catch (XmlContentException e) {
-//      throw new RuntimeException(e);
-//    }
-//    article.setLastModified(collection.getTimestamp());
-//    return article;
+    RepoCollectionList collection = parentService.contentRepoService.getCollection(collectionVersion);
+
+    Map<String, Object> userMetadata = (Map<String, Object>) collection.getJsonUserMetadata().get();
+    RepoVersion manuscriptVersion = RepoVersionRepr.read((Map<?, ?>) userMetadata.get("manuscript"));
+
+    Document document;
+    try (InputStream manuscriptStream = parentService.contentRepoService.getRepoObject(manuscriptVersion)) {
+      DocumentBuilder documentBuilder = AmbraService.newDocumentBuilder();
+      log.debug("In getArticleMetadata source={} documentBuilder.parse() called", source);
+      document = documentBuilder.parse(manuscriptStream);
+      log.debug("finish");
+    } catch (IOException | SAXException e) {
+      throw new RuntimeException(e);
+    }
+
+    Article article;
+    try {
+      article = new ArticleXml(document).build(new Article());
+    } catch (XmlContentException e) {
+      throw new RuntimeException(e);
+    }
+    article.setLastModified(collection.getTimestamp());
+    return article;
   }
 
 }
