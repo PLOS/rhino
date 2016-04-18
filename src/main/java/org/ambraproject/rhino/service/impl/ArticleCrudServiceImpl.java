@@ -530,7 +530,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     RepoVersion repoVersion;
     int revision = revisionNumber.orElseGet(() ->
         getLatestRevision(id).orElseThrow(
-            () -> new NotFoundException("No revisions found for doi " + id.getIdentifier())));
+            () -> new RestClientException("No revisions found for doi " + id.getIdentifier(), HttpStatus.NOT_FOUND)));
 
     repoVersion = hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
@@ -542,7 +542,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       query.setParameter("revisionNumber", revision);
       Object[] result = (Object[]) DataAccessUtils.uniqueResult(query.list());
       if (result == null) {
-        throw new NotFoundException("DOI+revision not found: " + id + "/" + revisionNumber);
+        throw new RestClientException("DOI+revision not found: " + id + "/" + revisionNumber, HttpStatus.NOT_FOUND);
       }
       return RepoVersion.create((String) result[0], (String) result[1]);
     });

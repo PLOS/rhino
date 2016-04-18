@@ -1,7 +1,6 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.plos.crepo.model.RepoCollection;
@@ -10,12 +9,16 @@ import org.plos.crepo.model.RepoObject;
 import org.plos.crepo.model.RepoObjectMetadata;
 import org.plos.crepo.model.RepoVersion;
 import org.plos.crepo.service.ContentRepoService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
 class ScholarlyWork {
+
+  @Autowired
+  Gson crepoGson;
 
   private final DoiBasedIdentity doi;
   private final ImmutableMap<String, RepoObject> objects;
@@ -55,9 +58,5 @@ class ScholarlyWork {
 
   private String getCrepoKey() {
     return type + "/" + doi.getIdentifier();
-  }
-
-  public void relate(ScholarlyWork work) {
-    // TODO: Implement
   }
 }

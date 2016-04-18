@@ -109,6 +109,7 @@ class VersionedIngestionService {
 
     ManifestXml.Asset manuscriptAsset = findManuscriptAsset(assets);
     ManifestXml.Representation manuscriptRepr = findManuscriptRepr(manuscriptAsset);
+    ManifestXml.Representation printableRepr = findPrintableRepr(manuscriptAsset);
 
     String manuscriptEntry = manuscriptRepr.getEntry();
     if (!archive.getEntryNames().contains(manifestEntry)) {
@@ -128,7 +129,7 @@ class VersionedIngestionService {
     final Article articleMetadata = parsedArticle.build(new Article());
     articleMetadata.setDoi(articleIdentity.getKey());
 
-    ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry, manuscriptEntry).build();
+    ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry, manuscriptEntry, printableRepr.getEntry()).build();
     ArticlePackage.PersistenceResult result = articlePackage.persist(parentService.hibernateTemplate, parentService.contentRepoService);
 
     persistRevision(result, revision.orElseGet(parsedArticle::getRevisionNumber));
@@ -198,6 +199,17 @@ class VersionedIngestionService {
       }
     }
     throw new RestClientException("main-entry not found", HttpStatus.BAD_REQUEST);
+  }
+
+  private ManifestXml.Representation findPrintableRepr(ManifestXml.Asset manuscriptAsset) {
+    Optional<String> mainEntry = manuscriptAsset.getMainEntry();
+    Preconditions.checkArgument(mainEntry.isPresent(), "manuscriptAsset must have main-entry");
+    for (ManifestXml.Representation representation : manuscriptAsset.getRepresentations()) {
+      if (representation.getName().equals("PDF")) {
+        return representation;
+      }
+    }
+    throw new RestClientException("main-entry not matched to asset", HttpStatus.BAD_REQUEST);
   }
 
   private ManifestXml.Representation findManuscriptRepr(ManifestXml.Asset manuscriptAsset) {

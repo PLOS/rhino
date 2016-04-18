@@ -40,15 +40,17 @@ class ArticlePackageBuilder {
   private final ManifestXml manifest;
   private final String manifestEntry;
   private final String manuscriptEntry;
+  private final String printableEntry;
   private final ArticleIdentity articleIdentity;
 
   ArticlePackageBuilder(Archive archive, ArticleXml article, ManifestXml manifest,
-                        String manifestEntry, String manuscriptEntry) {
+                        String manifestEntry, String manuscriptEntry, String printableEntry) {
     this.archive = Objects.requireNonNull(archive);
     this.article = Objects.requireNonNull(article);
     this.manifest = Objects.requireNonNull(manifest);
     this.manifestEntry = Objects.requireNonNull(manifestEntry);
     this.manuscriptEntry = Objects.requireNonNull(manuscriptEntry);
+    this.printableEntry = Objects.requireNonNull(printableEntry);
 
     try {
       this.articleIdentity = article.readDoi();
@@ -87,6 +89,12 @@ class ArticlePackageBuilder {
         new RepoObject.RepoObjectBuilder("frontAndBack/" + articleIdentity.getIdentifier())
             .byteContent(serializeXml(article.extractFrontAndBackMatter()))
             .contentType(MediaType.APPLICATION_XML)
+            .build());
+    articleObjects.put("printable",
+        new RepoObject.RepoObjectBuilder("printable/" + articleIdentity.getIdentifier())
+            .contentAccessor(archive.getContentAccessorFor(printableEntry))
+            .downloadName(printableEntry)
+            .contentType("application/pdf")
             .build());
     return articleObjects.build();
   }

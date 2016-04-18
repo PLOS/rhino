@@ -225,7 +225,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     RepoCollectionList scholarlyWork = contentRepoService.getCollection(scholarlyWorkVersion);
     Map<String, Object> scholarlyWorkMetadata = (Map<String, Object>) scholarlyWork.getJsonUserMetadata().get();
     RepoVersion objectVersion = java.util.Optional.ofNullable((Map<?, ?>) scholarlyWorkMetadata.get(fileType)).map(RepoVersionRepr::read)
-        .orElseThrow(() -> new NotFoundException("Unrecognized type: " + fileType));
+        .orElseThrow(() -> new RestClientException("Unrecognized type: " + fileType, HttpStatus.NOT_FOUND));
     return contentRepoService.getRepoObjectMetadata(objectVersion);
   }
 
