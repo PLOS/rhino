@@ -57,6 +57,8 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.ErrorType;
+import org.plos.crepo.exceptions.NotFoundException;
+import org.plos.crepo.model.RepoVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -521,5 +523,29 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       }
       return OptionalInt.of(maxRevision);
     });
+  }
+
+  @Override
+  public RepoVersion getRepoVersion(DoiBasedIdentity id, OptionalInt revisionNumber) {
+    RepoVersion repoVersion;
+    int revision = revisionNumber.orElseGet(() ->
+        getLatestRevision(id).orElseThrow(
+            () -> new NotFoundException("No revisions found for doi " + id.getIdentifier())));
+
+    repoVersion = hibernateTemplate.execute(session -> {
+      SQLQuery query = session.createSQLQuery("" +
+          "SELECT crepoKey, crepoUuid " +
+          "FROM scholarlyWork s " +
+          "INNER JOIN revision r ON s.scholarlyWorkId = r.scholarlyWorkId " +
+          "WHERE s.doi = :doi AND r.revisionNumber = :revisionNumber");
+      query.setParameter("doi", id.getIdentifier());
+      query.setParameter("revisionNumber", revision);
+      Object[] result = (Object[]) DataAccessUtils.uniqueResult(query.list());
+      if (result == null) {
+        throw new NotFoundException("DOI+revision not found: " + id + "/" + revisionNumber);
+      }
+      return RepoVersion.create((String) result[0], (String) result[1]);
+    });
+    return repoVersion;
   }
 }

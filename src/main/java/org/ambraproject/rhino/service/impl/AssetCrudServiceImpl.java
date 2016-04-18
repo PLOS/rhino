@@ -62,6 +62,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.OptionalInt;
 
 public class AssetCrudServiceImpl extends AmbraService implements AssetCrudService {
 
@@ -219,34 +220,12 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   @Override
   public RepoObjectMetadata getScholarlyWorkFile(String fileType, Integer revisionNumber, DoiBasedIdentity assetId) {
 
-    int revision;
-    if (revisionNumber == null) {
-      revision = articleCrudService.getLatestRevision(assetId).orElseThrow(() ->
-          new NotFoundException("No revisions found for doi " + assetId.getIdentifier()));
-    }
-    else {
-      revision = revisionNumber;
-    }
-
-    RepoVersion scholarlyWorkVersion = hibernateTemplate.execute(session -> {
-      SQLQuery query = session.createSQLQuery("" +
-          "SELECT sw.crepoKey, sw.crepoUuid " +
-          "FROM scholarlyWork sw " +
-          "  INNER JOIN revision r ON r.scholarlyWorkId=sw.scholarlyWorkId " +
-          "WHERE sw.doi=:doi AND r.revisionNumber=:revisionNumber");
-      query.setParameter("doi", assetId.getIdentifier());
-      query.setParameter("revisionNumber", revision);
-      Object[] result = (Object[]) DataAccessUtils.uniqueResult(query.list());
-      if (result == null) {
-        throw new RuntimeException("DOI+revision not found"); // TODO: Handle 404 case
-      }
-      return RepoVersion.create((String) result[0], (String) result[1]);
-    });
+    RepoVersion scholarlyWorkVersion = articleCrudService.getRepoVersion(assetId, OptionalInt.of(revisionNumber));
 
     RepoCollectionList scholarlyWork = contentRepoService.getCollection(scholarlyWorkVersion);
     Map<String, Object> scholarlyWorkMetadata = (Map<String, Object>) scholarlyWork.getJsonUserMetadata().get();
     RepoVersion objectVersion = java.util.Optional.ofNullable((Map<?, ?>) scholarlyWorkMetadata.get(fileType)).map(RepoVersionRepr::read)
-        .orElseThrow(() -> new RuntimeException("Unrecognized type: " + fileType) /* TODO: 404 */);
+        .orElseThrow(() -> new NotFoundException("Unrecognized type: " + fileType));
     return contentRepoService.getRepoObjectMetadata(objectVersion);
   }
 

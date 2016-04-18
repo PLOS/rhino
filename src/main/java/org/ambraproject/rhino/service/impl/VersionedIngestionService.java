@@ -16,13 +16,10 @@ import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.view.internal.RepoVersionRepr;
 import org.hibernate.Query;
-import org.hibernate.SQLQuery;
-import org.plos.crepo.exceptions.NotFoundException;
 import org.plos.crepo.model.RepoCollectionList;
 import org.plos.crepo.model.RepoVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -259,26 +256,7 @@ class VersionedIngestionService {
      * TODO: Improve as described above and delete this comment block
      */
 
-    RepoVersion collectionVersion;
-    int revision = revisionNumber.orElseGet(() ->
-        parentService.getLatestRevision(id)
-            .orElseThrow(() -> new NotFoundException("No revisions found for doi " + id.getIdentifier())));
-
-    collectionVersion = parentService.hibernateTemplate.execute(session -> {
-      SQLQuery query = session.createSQLQuery("" +
-          "SELECT crepoKey, crepoUuid " +
-          "FROM scholarlyWork s " +
-          "INNER JOIN revision r ON s.scholarlyWorkId = r.scholarlyWorkId " +
-          "WHERE s.doi = :doi AND r.revisionNumber = :revisionNumber");
-      query.setParameter("doi", id.getIdentifier());
-      query.setParameter("revisionNumber", revision);
-      Object[] result = (Object[]) DataAccessUtils.uniqueResult(query.list());
-      if (result == null) {
-        throw new RuntimeException("DOI+revision not found"); // TODO: Handle 404 case
-      }
-      return RepoVersion.create((String) result[0], (String) result[1]);
-    });
-
+    RepoVersion collectionVersion = parentService.getRepoVersion(id, revisionNumber);
 
     RepoCollectionList collection = parentService.contentRepoService.getCollection(collectionVersion);
 
