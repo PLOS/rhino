@@ -63,7 +63,7 @@ class ArticlePackageBuilder {
     Map<String, RepoObject> articleObjects = buildArticleObjects();
     List<ScholarlyWork> assetWorks = buildAssetWorks(article.findAllAssetNodes());
 
-    return new ArticlePackage(new ScholarlyWork(articleIdentity, articleObjects), assetWorks);
+    return new ArticlePackage(new ScholarlyWork(articleIdentity, articleObjects, AssetType.ARTICLE.identifier), assetWorks);
   }
 
   private Map<String, RepoObject> buildArticleObjects() {
@@ -135,7 +135,7 @@ class ArticlePackageBuilder {
                 .contentType(AssetFileIdentity.create(asset.getUri(), representation.getName()).inferContentType().toString())
                 .build());
       }
-      works.add(new ScholarlyWork(assetIdentity, assetObjects.build()));
+      works.add(new ScholarlyWork(assetIdentity, assetObjects.build(), assetType.identifier));
     }
     return works;
   }

@@ -13,10 +13,10 @@ class ScholarlyWork {
   private final ImmutableMap<String, RepoObject> objects;
   private final String type;
 
-  ScholarlyWork(DoiBasedIdentity doi, Map<String, RepoObject> objects) {
+  ScholarlyWork(DoiBasedIdentity doi, Map<String, RepoObject> objects, String type) {
     this.doi = Objects.requireNonNull(doi);
     this.objects = ImmutableMap.copyOf(objects);
-    this.type = "TODO"; // TODO!
+    this.type = type;
   }
 
   public DoiBasedIdentity getDoi() {
