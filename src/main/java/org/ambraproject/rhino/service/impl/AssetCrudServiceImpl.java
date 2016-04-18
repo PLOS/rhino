@@ -200,24 +200,6 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   }
 
   @Override
-  public RepoObjectMetadata getAssetObject(ArticleIdentity parentArticleId,
-                                           AssetIdentity assetId,
-                                           Optional<Integer> versionNumber,
-                                           String fileType) {
-    RepoCollectionMetadata articleCollection;
-    if (versionNumber.isPresent()) {
-      articleCollection = contentRepoService.getCollection(new RepoVersionNumber(
-          parentArticleId.getIdentifier(), versionNumber.get()));
-    } else {
-      articleCollection = contentRepoService.getLatestCollection(parentArticleId.getIdentifier());
-    }
-
-    AssetTable<RepoVersion> assetTable = AssetTable.buildFromAssetMetadata(articleCollection);
-    RepoVersion fileVersion = assetTable.lookup(assetId, fileType);
-    return contentRepoService.getRepoObjectMetadata(fileVersion);
-  }
-
-  @Override
   public RepoObjectMetadata getScholarlyWorkFile(String fileType, Integer revisionNumber, DoiBasedIdentity assetId) {
 
     RepoVersion scholarlyWorkVersion = articleCrudService.getRepoVersion(assetId, OptionalInt.of(revisionNumber));
