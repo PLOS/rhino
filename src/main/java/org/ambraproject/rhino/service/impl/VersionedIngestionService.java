@@ -248,7 +248,7 @@ class VersionedIngestionService {
       createdObjects.put(entry.getKey(), createdObject.getVersion());
     }
 
-    String collectionMetadata = new Gson().toJson(createdObjects); // TODO: Use Gson bean
+    String collectionMetadata = parentService.crepoGson.toJson(createdObjects);
 
     RepoCollection repoCollection = RepoCollection.builder()
         .setObjects(createdObjects.values())
