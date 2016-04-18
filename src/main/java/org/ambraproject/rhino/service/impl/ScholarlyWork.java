@@ -1,24 +1,13 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.collect.ImmutableMap;
-import com.google.gson.Gson;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.plos.crepo.model.RepoCollection;
-import org.plos.crepo.model.RepoCollectionList;
 import org.plos.crepo.model.RepoObject;
-import org.plos.crepo.model.RepoObjectMetadata;
-import org.plos.crepo.model.RepoVersion;
-import org.plos.crepo.service.ContentRepoService;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
 class ScholarlyWork {
-
-  @Autowired
-  Gson crepoGson;
 
   private final DoiBasedIdentity doi;
   private final ImmutableMap<String, RepoObject> objects;
@@ -38,25 +27,11 @@ class ScholarlyWork {
     return type;
   }
 
-  public RepoCollectionList persistToCrepo(ContentRepoService contentRepoService) {
-    Map<String, RepoVersion> createdObjects = new LinkedHashMap<>();
-    for (Map.Entry<String, RepoObject> entry : objects.entrySet()) {
-      RepoObjectMetadata createdObject = contentRepoService.autoCreateRepoObject(entry.getValue());
-      createdObjects.put(entry.getKey(), createdObject.getVersion());
-    }
-
-    String collectionMetadata = new Gson().toJson(createdObjects); // TODO: Use Gson bean
-
-    RepoCollection repoCollection = RepoCollection.builder()
-        .setObjects(createdObjects.values())
-        .setUserMetadata(collectionMetadata)
-        .setKey(getCrepoKey())
-        .build();
-
-    return contentRepoService.autoCreateCollection(repoCollection);
+  public ImmutableMap<String, RepoObject> getObjects() {
+    return objects;
   }
 
-  private String getCrepoKey() {
+  public String getCrepoKey() {
     return type + "/" + doi.getIdentifier();
   }
 }

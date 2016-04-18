@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.google.gson.Gson;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
@@ -16,7 +17,11 @@ import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.view.internal.RepoVersionRepr;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
+import org.plos.crepo.model.RepoCollection;
 import org.plos.crepo.model.RepoCollectionList;
+import org.plos.crepo.model.RepoObject;
+import org.plos.crepo.model.RepoObjectMetadata;
 import org.plos.crepo.model.RepoVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,11 +33,15 @@ import javax.xml.parsers.DocumentBuilder;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
+import java.util.stream.Stream;
 
 class VersionedIngestionService {
 
@@ -130,7 +139,7 @@ class VersionedIngestionService {
     articleMetadata.setDoi(articleIdentity.getKey());
 
     ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry, manuscriptEntry, printableRepr.getEntry()).build();
-    ArticlePackage.PersistenceResult result = articlePackage.persist(parentService.hibernateTemplate, parentService.contentRepoService);
+    PersistenceResult result = persist(articlePackage);
 
     persistRevision(result, revision.orElseGet(parsedArticle::getRevisionNumber));
 
@@ -138,7 +147,119 @@ class VersionedIngestionService {
     return articleMetadata;
   }
 
-  private void persistRevision(ArticlePackage.PersistenceResult article, int revisionNumber) {
+  private static class PersistenceResult {
+    private final PersistedWork article;
+    private final ImmutableList<PersistedWork> assets;
+
+    private PersistenceResult(PersistedWork article, List<PersistedWork> assets) {
+      this.article = Objects.requireNonNull(article);
+      this.assets = ImmutableList.copyOf(assets);
+    }
+
+    public PersistedWork getArticle() {
+      return article;
+    }
+
+    public Stream<PersistedWork> getWorks() {
+      return Stream.concat(Stream.of(article), assets.stream());
+    }
+  }
+
+  private static class PersistedWork {
+    private final ScholarlyWork scholarlyWork;
+    private final RepoCollectionList result;
+
+    private PersistedWork(ScholarlyWork scholarlyWork, RepoCollectionList result) {
+      this.scholarlyWork = Objects.requireNonNull(scholarlyWork);
+      this.result = Objects.requireNonNull(result);
+    }
+
+    public DoiBasedIdentity getDoi() {
+      return scholarlyWork.getDoi();
+    }
+
+    public RepoVersion getVersion() {
+      return result.getVersion();
+    }
+  }
+
+  private PersistenceResult persist(ArticlePackage articlePackage) {
+    ScholarlyWork articleWork = articlePackage.getArticleWork();
+    PersistedWork persistedArticle = new PersistedWork(articleWork, persistToCrepo(articleWork));
+
+    List<PersistedWork> persistedAssets = new ArrayList<>();
+    for (ScholarlyWork assetWork : articlePackage.getAssetWorks()) {
+      RepoCollectionList persistedAsset = persistToCrepo(assetWork);
+      persistedAssets.add(new PersistedWork(assetWork, persistedAsset));
+    }
+
+    persistToSql(persistedArticle);
+    for (PersistedWork persistedAsset : persistedAssets) {
+      persistToSql(persistedAsset);
+      persistRelation(persistedArticle.result, persistedAsset);
+    }
+
+    return new PersistenceResult(persistedArticle, persistedAssets);
+  }
+
+  private int persistToSql(PersistedWork persistedWork) {
+    return parentService.hibernateTemplate.execute(session -> {
+      SQLQuery query = session.createSQLQuery("" +
+          "INSERT INTO scholarlyWork " +
+          "(doi, crepoKey, crepoUuid, scholarlyWorkType) VALUES " +
+          "(:doi, :crepoKey, :crepoUuid, :scholarlyWorkType)");
+      query.setParameter("doi", persistedWork.scholarlyWork.getDoi().getIdentifier());
+      query.setParameter("scholarlyWorkType", persistedWork.scholarlyWork.getType());
+
+      RepoVersion repoVersion = persistedWork.result.getVersion();
+      query.setParameter("crepoKey", repoVersion.getKey());
+      query.setParameter("crepoUuid", repoVersion.getUuid().toString());
+
+      return query.executeUpdate();
+    });
+  }
+
+  private void persistRelation(RepoCollectionList article, PersistedWork asset) {
+    parentService.hibernateTemplate.execute(session -> {
+      SQLQuery query = session.createSQLQuery("" +
+          "INSERT INTO scholarlyWorkRelation (originWorkId, targetWorkId, relationType) " +
+          "VALUES (" +
+          "  (SELECT scholarlyWorkId FROM scholarlyWork WHERE crepoKey=:originKey AND crepoUuid=:originUuid), " +
+          "  (SELECT scholarlyWorkId FROM scholarlyWork WHERE crepoKey=:targetKey AND crepoUuid=:targetUuid), " +
+          "  :relationType)");
+      query.setParameter("relationType", "assetOf");
+
+      RepoVersion articleVersion = article.getVersion();
+      query.setParameter("originKey", articleVersion.getKey());
+      query.setParameter("originUuid", articleVersion.getUuid().toString());
+
+      RepoVersion assetVersion = asset.result.getVersion();
+      query.setParameter("targetKey", assetVersion.getKey());
+      query.setParameter("targetUuid", assetVersion.getUuid().toString());
+
+      return query.executeUpdate();
+    });
+  }
+
+  private RepoCollectionList persistToCrepo(ScholarlyWork work) {
+    Map<String, RepoVersion> createdObjects = new LinkedHashMap<>();
+    for (Map.Entry<String, RepoObject> entry : work.getObjects().entrySet()) {
+      RepoObjectMetadata createdObject = parentService.contentRepoService.autoCreateRepoObject(entry.getValue());
+      createdObjects.put(entry.getKey(), createdObject.getVersion());
+    }
+
+    String collectionMetadata = new Gson().toJson(createdObjects); // TODO: Use Gson bean
+
+    RepoCollection repoCollection = RepoCollection.builder()
+        .setObjects(createdObjects.values())
+        .setUserMetadata(collectionMetadata)
+        .setKey(work.getCrepoKey())
+        .build();
+
+    return parentService.contentRepoService.autoCreateCollection(repoCollection);
+  }
+
+  private void persistRevision(PersistenceResult article, int revisionNumber) {
     DoiBasedIdentity articleDoi = article.getArticle().getDoi();
 
     // Delete assets
