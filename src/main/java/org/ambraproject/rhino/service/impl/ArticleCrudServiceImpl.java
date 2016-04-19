@@ -534,7 +534,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     repoVersion = hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
-          "SELECT crepoKey, crepoUuid " +
+          "SELECT s.crepoKey, s.crepoUuid " +
           "FROM scholarlyWork s " +
           "INNER JOIN revision r ON s.scholarlyWorkId = r.scholarlyWorkId " +
           "WHERE s.doi = :doi AND r.revisionNumber = :revisionNumber");
