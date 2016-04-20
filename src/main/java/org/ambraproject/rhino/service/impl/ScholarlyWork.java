@@ -16,7 +16,7 @@ class ScholarlyWork {
   ScholarlyWork(DoiBasedIdentity doi, Map<String, RepoObject> objects, String type) {
     this.doi = Objects.requireNonNull(doi);
     this.objects = ImmutableMap.copyOf(objects);
-    this.type = type;
+    this.type = Objects.requireNonNull(type);
   }
 
   public DoiBasedIdentity getDoi() {
