@@ -185,7 +185,8 @@ class VersionedIngestionService {
 
   private PersistenceResult persist(ArticlePackage articlePackage) {
     ScholarlyWork articleWork = articlePackage.getArticleWork();
-    PersistedWork persistedArticle = new PersistedWork(articleWork, persistToCrepo(articleWork));
+    RepoCollectionList articleInCrepo = persistToCrepo(articleWork);
+    PersistedWork persistedArticle = new PersistedWork(articleWork, articleInCrepo);
 
     List<PersistedWork> persistedAssets = new ArrayList<>();
     for (ScholarlyWork assetWork : articlePackage.getAssetWorks()) {
