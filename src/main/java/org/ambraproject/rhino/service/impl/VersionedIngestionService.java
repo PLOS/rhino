@@ -288,8 +288,11 @@ class VersionedIngestionService {
 
     ScholarlyWork work = parentService.getScholarlyWork(id, revisionNumber);
 
-    RepoVersion manuscriptVersion = work.getFile("manuscript")
-        .orElseThrow(RuntimeException::new /*TODO*/);
+    RepoVersion manuscriptVersion = work.getFile("manuscript").orElseThrow(() -> {
+      String message = String.format("Work exists but does not have a manuscript. DOI: %s. Revision: %s",
+          work.getDoi(), work.getRevisionNumber().map(Object::toString).orElse("(none)"));
+      return new RestClientException(message, HttpStatus.BAD_REQUEST);
+    });
 
     Document document;
     try (InputStream manuscriptStream = parentService.contentRepoService.getRepoObject(manuscriptVersion)) {

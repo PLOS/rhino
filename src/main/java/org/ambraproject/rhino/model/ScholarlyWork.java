@@ -13,11 +13,13 @@ public class ScholarlyWork {
   private final DoiBasedIdentity doi;
   private final String type;
   private final ImmutableMap<String, RepoVersion> files;
+  private final Optional<Integer> revisionNumber;
 
-  public ScholarlyWork(DoiBasedIdentity doi, String type, Map<String, RepoVersion> files) {
+  public ScholarlyWork(DoiBasedIdentity doi, String type, Map<String, RepoVersion> files, Integer revisionNumber) {
     this.doi = Objects.requireNonNull(doi);
     this.type = Objects.requireNonNull(type);
     this.files = ImmutableMap.copyOf(files);
+    this.revisionNumber = Optional.ofNullable(revisionNumber);
   }
 
   public DoiBasedIdentity getDoi() {
@@ -32,6 +34,10 @@ public class ScholarlyWork {
     return Optional.ofNullable(files.get(fileType));
   }
 
+  public Optional<Integer> getRevisionNumber() {
+    return revisionNumber;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -41,6 +47,7 @@ public class ScholarlyWork {
 
     if (!doi.equals(that.doi)) return false;
     if (!files.equals(that.files)) return false;
+    if (!revisionNumber.equals(that.revisionNumber)) return false;
     if (!type.equals(that.type)) return false;
 
     return true;
@@ -51,6 +58,7 @@ public class ScholarlyWork {
     int result = doi.hashCode();
     result = 31 * result + type.hashCode();
     result = 31 * result + files.hashCode();
+    result = 31 * result + revisionNumber.hashCode();
     return result;
   }
 }

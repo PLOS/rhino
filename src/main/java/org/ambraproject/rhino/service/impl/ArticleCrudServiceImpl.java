@@ -533,7 +533,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         getLatestRevision(id).orElseThrow(
             () -> new RestClientException("No revisions found for doi " + id.getIdentifier(), HttpStatus.NOT_FOUND)));
 
-
     Object[] workResult = hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
           "SELECT s.scholarlyWorkId, s.doi, s.scholarlyWorkType " +
@@ -565,6 +564,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         (Object[] fileResult) -> RepoVersion.create((String) fileResult[1], (String) fileResult[2])
     ));
 
-    return new ScholarlyWork(DoiBasedIdentity.create(workDoi), workType, fileMap);
+    return new ScholarlyWork(DoiBasedIdentity.create(workDoi), workType, fileMap, revision);
   }
 }
