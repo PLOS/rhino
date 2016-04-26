@@ -65,11 +65,6 @@ public interface AssetCrudService extends DoiBasedCrudService {
   public Transceiver readFileMetadata(AssetFileIdentity id)
       throws IOException;
 
-  public abstract RepoObjectMetadata getAssetObject(ArticleIdentity parentArticleId,
-                                                    AssetIdentity assetId,
-                                                    Optional<Integer> versionNumber,
-                                                    String fileType);
-
   public abstract RepoObjectMetadata getScholarlyWorkFile(String fileType, Integer revisionNumber, DoiBasedIdentity assetId);
 
 }

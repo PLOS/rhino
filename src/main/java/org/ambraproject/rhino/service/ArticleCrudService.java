@@ -28,6 +28,7 @@ import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.RelatedArticleView;
+import org.plos.crepo.model.RepoVersion;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -234,4 +235,6 @@ public interface ArticleCrudService extends DoiBasedCrudService {
 
   public abstract OptionalInt getLatestRevision(DoiBasedIdentity id);
 
+
+  public abstract RepoVersion getRepoVersion(DoiBasedIdentity id, OptionalInt revisionNumber);
 }

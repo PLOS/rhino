@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.google.gson.Gson;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
@@ -17,12 +18,13 @@ import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.view.internal.RepoVersionRepr;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
-import org.plos.crepo.exceptions.NotFoundException;
+import org.plos.crepo.model.RepoCollection;
 import org.plos.crepo.model.RepoCollectionList;
+import org.plos.crepo.model.RepoObject;
+import org.plos.crepo.model.RepoObjectMetadata;
 import org.plos.crepo.model.RepoVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -31,11 +33,15 @@ import javax.xml.parsers.DocumentBuilder;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
+import java.util.stream.Stream;
 
 class VersionedIngestionService {
 
@@ -112,6 +118,7 @@ class VersionedIngestionService {
 
     ManifestXml.Asset manuscriptAsset = findManuscriptAsset(assets);
     ManifestXml.Representation manuscriptRepr = findManuscriptRepr(manuscriptAsset);
+    ManifestXml.Representation printableRepr = findPrintableRepr(manuscriptAsset);
 
     String manuscriptEntry = manuscriptRepr.getEntry();
     if (!archive.getEntryNames().contains(manifestEntry)) {
@@ -131,8 +138,8 @@ class VersionedIngestionService {
     final Article articleMetadata = parsedArticle.build(new Article());
     articleMetadata.setDoi(articleIdentity.getKey());
 
-    ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry, manuscriptEntry).build();
-    ArticlePackage.PersistenceResult result = articlePackage.persist(parentService.hibernateTemplate, parentService.contentRepoService);
+    ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry, manuscriptEntry, printableRepr.getEntry()).build();
+    PersistenceResult result = persist(articlePackage);
 
     persistRevision(result, revision.orElseGet(parsedArticle::getRevisionNumber));
 
@@ -140,7 +147,120 @@ class VersionedIngestionService {
     return articleMetadata;
   }
 
-  private void persistRevision(ArticlePackage.PersistenceResult article, int revisionNumber) {
+  private static class PersistenceResult {
+    private final PersistedWork article;
+    private final ImmutableList<PersistedWork> assets;
+
+    private PersistenceResult(PersistedWork article, List<PersistedWork> assets) {
+      this.article = Objects.requireNonNull(article);
+      this.assets = ImmutableList.copyOf(assets);
+    }
+
+    public PersistedWork getArticle() {
+      return article;
+    }
+
+    public Stream<PersistedWork> getWorks() {
+      return Stream.concat(Stream.of(article), assets.stream());
+    }
+  }
+
+  private static class PersistedWork {
+    private final ScholarlyWork scholarlyWork;
+    private final RepoCollectionList result;
+
+    private PersistedWork(ScholarlyWork scholarlyWork, RepoCollectionList result) {
+      this.scholarlyWork = Objects.requireNonNull(scholarlyWork);
+      this.result = Objects.requireNonNull(result);
+    }
+
+    public DoiBasedIdentity getDoi() {
+      return scholarlyWork.getDoi();
+    }
+
+    public RepoVersion getVersion() {
+      return result.getVersion();
+    }
+  }
+
+  private PersistenceResult persist(ArticlePackage articlePackage) {
+    ScholarlyWork articleWork = articlePackage.getArticleWork();
+    RepoCollectionList articleInCrepo = persistToCrepo(articleWork);
+    PersistedWork persistedArticle = new PersistedWork(articleWork, articleInCrepo);
+
+    List<PersistedWork> persistedAssets = new ArrayList<>();
+    for (ScholarlyWork assetWork : articlePackage.getAssetWorks()) {
+      RepoCollectionList persistedAsset = persistToCrepo(assetWork);
+      persistedAssets.add(new PersistedWork(assetWork, persistedAsset));
+    }
+
+    persistToSql(persistedArticle);
+    for (PersistedWork persistedAsset : persistedAssets) {
+      persistToSql(persistedAsset);
+      persistRelation(persistedArticle.result, persistedAsset);
+    }
+
+    return new PersistenceResult(persistedArticle, persistedAssets);
+  }
+
+  private int persistToSql(PersistedWork persistedWork) {
+    return parentService.hibernateTemplate.execute(session -> {
+      SQLQuery query = session.createSQLQuery("" +
+          "INSERT INTO scholarlyWork " +
+          "(doi, crepoKey, crepoUuid, scholarlyWorkType) VALUES " +
+          "(:doi, :crepoKey, :crepoUuid, :scholarlyWorkType)");
+      query.setParameter("doi", persistedWork.scholarlyWork.getDoi().getIdentifier());
+      query.setParameter("scholarlyWorkType", persistedWork.scholarlyWork.getType());
+
+      RepoVersion repoVersion = persistedWork.result.getVersion();
+      query.setParameter("crepoKey", repoVersion.getKey());
+      query.setParameter("crepoUuid", repoVersion.getUuid().toString());
+
+      return query.executeUpdate();
+    });
+  }
+
+  private void persistRelation(RepoCollectionList article, PersistedWork asset) {
+    parentService.hibernateTemplate.execute(session -> {
+      SQLQuery query = session.createSQLQuery("" +
+          "INSERT INTO scholarlyWorkRelation (originWorkId, targetWorkId, relationType) " +
+          "VALUES (" +
+          "  (SELECT scholarlyWorkId FROM scholarlyWork WHERE crepoKey=:originKey AND crepoUuid=:originUuid), " +
+          "  (SELECT scholarlyWorkId FROM scholarlyWork WHERE crepoKey=:targetKey AND crepoUuid=:targetUuid), " +
+          "  :relationType)");
+      query.setParameter("relationType", "assetOf");
+
+      RepoVersion articleVersion = article.getVersion();
+      query.setParameter("originKey", articleVersion.getKey());
+      query.setParameter("originUuid", articleVersion.getUuid().toString());
+
+      RepoVersion assetVersion = asset.result.getVersion();
+      query.setParameter("targetKey", assetVersion.getKey());
+      query.setParameter("targetUuid", assetVersion.getUuid().toString());
+
+      return query.executeUpdate();
+    });
+  }
+
+  private RepoCollectionList persistToCrepo(ScholarlyWork work) {
+    Map<String, RepoVersion> createdObjects = new LinkedHashMap<>();
+    for (Map.Entry<String, RepoObject> entry : work.getObjects().entrySet()) {
+      RepoObjectMetadata createdObject = parentService.contentRepoService.autoCreateRepoObject(entry.getValue());
+      createdObjects.put(entry.getKey(), createdObject.getVersion());
+    }
+
+    String collectionMetadata = parentService.crepoGson.toJson(createdObjects);
+
+    RepoCollection repoCollection = RepoCollection.builder()
+        .setObjects(createdObjects.values())
+        .setUserMetadata(collectionMetadata)
+        .setKey(work.getCrepoKey())
+        .build();
+
+    return parentService.contentRepoService.autoCreateCollection(repoCollection);
+  }
+
+  private void persistRevision(PersistenceResult article, int revisionNumber) {
     DoiBasedIdentity articleDoi = article.getArticle().getDoi();
 
     // Delete assets
@@ -203,6 +323,17 @@ class VersionedIngestionService {
     throw new RestClientException("main-entry not found", HttpStatus.BAD_REQUEST);
   }
 
+  private ManifestXml.Representation findPrintableRepr(ManifestXml.Asset manuscriptAsset) {
+    Optional<String> mainEntry = manuscriptAsset.getMainEntry();
+    Preconditions.checkArgument(mainEntry.isPresent(), "manuscriptAsset must have main-entry");
+    for (ManifestXml.Representation representation : manuscriptAsset.getRepresentations()) {
+      if (representation.getName().equals("PDF")) {
+        return representation;
+      }
+    }
+    throw new RestClientException("main-entry not matched to asset", HttpStatus.BAD_REQUEST);
+  }
+
   private ManifestXml.Representation findManuscriptRepr(ManifestXml.Asset manuscriptAsset) {
     Optional<String> mainEntry = manuscriptAsset.getMainEntry();
     Preconditions.checkArgument(mainEntry.isPresent(), "manuscriptAsset must have main-entry");
@@ -259,26 +390,7 @@ class VersionedIngestionService {
      * TODO: Improve as described above and delete this comment block
      */
 
-    RepoVersion collectionVersion;
-    int revision = revisionNumber.orElseGet(() ->
-        parentService.getLatestRevision(id)
-            .orElseThrow(() -> new NotFoundException("No revisions found for doi " + id.getIdentifier())));
-
-    collectionVersion = parentService.hibernateTemplate.execute(session -> {
-      SQLQuery query = session.createSQLQuery("" +
-          "SELECT crepoKey, crepoUuid " +
-          "FROM scholarlyWork s " +
-          "INNER JOIN revision r ON s.scholarlyWorkId = r.scholarlyWorkId " +
-          "WHERE s.doi = :doi AND r.revisionNumber = :revisionNumber");
-      query.setParameter("doi", id.getIdentifier());
-      query.setParameter("revisionNumber", revision);
-      Object[] result = (Object[]) DataAccessUtils.uniqueResult(query.list());
-      if (result == null) {
-        throw new RuntimeException("DOI+revision not found"); // TODO: Handle 404 case
-      }
-      return RepoVersion.create((String) result[0], (String) result[1]);
-    });
-
+    RepoVersion collectionVersion = parentService.getRepoVersion(id, revisionNumber);
 
     RepoCollectionList collection = parentService.contentRepoService.getCollection(collectionVersion);
 
