@@ -9,6 +9,7 @@ import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.model.ScholarlyWork;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.util.Archive;
@@ -100,12 +101,12 @@ class VersionedIngestionService {
   private Collection<Long> persist(ArticlePackage articlePackage) {
     Collection<Long> createdWorkPks = new ArrayList<>();
 
-    ScholarlyWork articleWork = articlePackage.getArticleWork();
+    ScholarlyWorkInput articleWork = articlePackage.getArticleWork();
     long articlePk = persistToSql(articleWork);
     createdWorkPks.add(articlePk);
     persistToCrepo(articleWork, articlePk);
 
-    for (ScholarlyWork assetWork : articlePackage.getAssetWorks()) { // TODO: Parallelize?
+    for (ScholarlyWorkInput assetWork : articlePackage.getAssetWorks()) { // TODO: Parallelize?
       long assetPk = persistToSql(assetWork);
       persistToCrepo(assetWork, assetPk);
       createdWorkPks.add(assetPk);
@@ -120,7 +121,7 @@ class VersionedIngestionService {
    * @param scholarlyWork the object to persist
    * @return the primary key of the inserted row
    */
-  private long persistToSql(ScholarlyWork scholarlyWork) {
+  private long persistToSql(ScholarlyWorkInput scholarlyWork) {
     return parentService.hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
           "INSERT INTO scholarlyWork (doi, scholarlyWorkType)" +
@@ -148,7 +149,7 @@ class VersionedIngestionService {
     });
   }
 
-  private void persistToCrepo(ScholarlyWork work, long workPk) {
+  private void persistToCrepo(ScholarlyWorkInput work, long workPk) {
     Map<String, RepoVersion> createdObjects = new LinkedHashMap<>();
     for (Map.Entry<String, RepoObject> entry : work.getObjects().entrySet()) {
       RepoObjectMetadata createdObject = parentService.contentRepoService.autoCreateRepoObject(entry.getValue());
@@ -284,12 +285,10 @@ class VersionedIngestionService {
      * TODO: Improve as described above and delete this comment block
      */
 
-    RepoVersion collectionVersion = parentService.getRepoVersion(id, revisionNumber);
+    ScholarlyWork work = parentService.getScholarlyWork(id, revisionNumber);
 
-    RepoCollectionList collection = parentService.contentRepoService.getCollection(collectionVersion);
-
-    Map<String, Object> userMetadata = (Map<String, Object>) collection.getJsonUserMetadata().get();
-    RepoVersion manuscriptVersion = RepoVersionRepr.read((Map<?, ?>) userMetadata.get("manuscript"));
+    RepoVersion manuscriptVersion = work.getFile("manuscript")
+        .orElseThrow(RuntimeException::new /*TODO*/);
 
     Document document;
     try (InputStream manuscriptStream = parentService.contentRepoService.getRepoObject(manuscriptVersion)) {
@@ -307,7 +306,6 @@ class VersionedIngestionService {
     } catch (XmlContentException e) {
       throw new RuntimeException(e);
     }
-    article.setLastModified(collection.getTimestamp());
     return article;
   }
 }
