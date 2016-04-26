@@ -16,6 +16,7 @@ package org.ambraproject.rhino.content.xml;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import org.w3c.dom.Node;
 
 import java.util.ArrayList;
@@ -74,14 +75,15 @@ public class ManifestXml extends AbstractXpathReader {
   }
 
 
-  private transient ImmutableList<Asset> parsedAssets;
+  private transient ImmutableMap<String, Asset> parsedAssets;
 
   public ImmutableList<Asset> parse() {
-    if (parsedAssets != null) return parsedAssets;
+    if (parsedAssets != null) return parsedAssets.values().asList();
+
+    // Build into ImmutableMap to force all Assets to have unique identities
+    ImmutableMap.Builder<String, Asset> assets = ImmutableMap.builder();
 
     List<Node> assetNodes = readNodeList("//article|//object");
-    List<Asset> assets = new ArrayList<>(assetNodes.size());
-
     for (Node assetNode : assetNodes) {
       String nodeName = assetNode.getNodeName();
       String uri = readString("@uri", assetNode);
@@ -102,10 +104,10 @@ public class ManifestXml extends AbstractXpathReader {
         }
       }
 
-      assets.add(new Asset(assetType, uri, mainEntry, isStrikingImage, representations));
+      assets.put(uri, new Asset(assetType, uri, mainEntry, isStrikingImage, representations));
     }
 
-    return parsedAssets = ImmutableList.copyOf(assets);
+    return (parsedAssets = assets.build()).values().asList();
   }
 
   /**
@@ -139,14 +141,14 @@ public class ManifestXml extends AbstractXpathReader {
     private final String uri;
     private final Optional<String> mainEntry;
     private final boolean isStrikingImage;
-    private final ImmutableList<Representation> representations;
+    private final ImmutableMap<String, Representation> representations;
 
-    private Asset(AssetType assetType, String uri, String mainEntry, boolean isStrikingImage, Iterable<Representation> representations) {
+    private Asset(AssetType assetType, String uri, String mainEntry, boolean isStrikingImage, List<Representation> representations) {
       this.isStrikingImage = isStrikingImage;
       this.assetType = Preconditions.checkNotNull(assetType);
       this.uri = Preconditions.checkNotNull(uri);
       this.mainEntry = Optional.ofNullable(mainEntry);
-      this.representations = ImmutableList.copyOf(representations);
+      this.representations = Maps.uniqueIndex(representations, Representation::getName);
     }
 
     public AssetType getAssetType() {
@@ -166,7 +168,7 @@ public class ManifestXml extends AbstractXpathReader {
     }
 
     public ImmutableList<Representation> getRepresentations() {
-      return representations;
+      return representations.values().asList();
     }
 
     @Override
