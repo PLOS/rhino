@@ -1,7 +1,6 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -10,7 +9,6 @@ import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.util.Archive;
@@ -35,11 +33,9 @@ import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.EnumSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
 
@@ -52,52 +48,6 @@ class VersionedIngestionService {
   VersionedIngestionService(ArticleCrudServiceImpl parentService) {
     this.parentService = Preconditions.checkNotNull(parentService);
   }
-
-  static class IngestionResult {
-    private final Article article;
-    private final RepoCollectionList collection;
-
-    public IngestionResult(Article article, RepoCollectionList collection) {
-      this.article = Preconditions.checkNotNull(article);
-      this.collection = Preconditions.checkNotNull(collection);
-    }
-
-    public Article getArticle() {
-      return article;
-    }
-
-    public RepoCollectionList getCollection() {
-      return collection;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
-      IngestionResult that = (IngestionResult) o;
-      return article.equals(that.article) && collection.equals(that.collection);
-    }
-
-    @Override
-    public int hashCode() {
-      return 31 * article.hashCode() + collection.hashCode();
-    }
-  }
-
-  /**
-   * Identifies the model that we are using for representing articles as CRepo collections. To be stored in the
-   * collection's {@code userMetadata} field under the "schema" key.
-   * <p>
-   * Currently, this is not consumed anywhere. The "schema" field is future-proofing against changes to the model that
-   * would require backfilling or special handling. The "format" value can be used to disambiguate different models or
-   * different inputs. ("ambra-nlm" means that the article is an XML file under the NLM DTD, packaged as a zip file with
-   * manifest as input for Ambra.) The "version" value can be incremented to reflect changes in ingestion logic that
-   * break backwards compatibility.
-   */
-  private static final ImmutableMap<String, Object> SCHEMA_REPR = ImmutableMap.<String, Object>builder()
-      .put("format", "ambra-nlm")
-      .put("version", 1)
-      .build();
 
   Article ingest(Archive archive, OptionalInt revision) throws IOException, XmlContentException {
     String manifestEntry = null;
@@ -145,24 +95,6 @@ class VersionedIngestionService {
 
     stubAssociativeFields(articleMetadata);
     return articleMetadata;
-  }
-
-  private static class PersistedWork {
-    private final ScholarlyWork scholarlyWork;
-    private final RepoCollectionList result;
-
-    private PersistedWork(ScholarlyWork scholarlyWork, RepoCollectionList result) {
-      this.scholarlyWork = Objects.requireNonNull(scholarlyWork);
-      this.result = Objects.requireNonNull(result);
-    }
-
-    public DoiBasedIdentity getDoi() {
-      return scholarlyWork.getDoi();
-    }
-
-    public RepoVersion getVersion() {
-      return result.getVersion();
-    }
   }
 
   private Collection<Long> persist(ArticlePackage articlePackage) {
@@ -320,19 +252,6 @@ class VersionedIngestionService {
     throw new RestClientException("main-entry not matched to asset", HttpStatus.BAD_REQUEST);
   }
 
-
-  private static final String MANUSCRIPTS_KEY = "manuscripts";
-  private static final ImmutableBiMap<ArticleMetadataSource, String> SOURCE_KEYS = ImmutableBiMap.<ArticleMetadataSource, String>builder()
-      .put(ArticleMetadataSource.FULL_MANUSCRIPT, "full")
-      .put(ArticleMetadataSource.FRONT_MATTER, "front")
-      .put(ArticleMetadataSource.FRONT_AND_BACK_MATTER, "frontAndBack")
-      .build();
-
-  static {
-    if (!SOURCE_KEYS.keySet().equals(EnumSet.allOf(ArticleMetadataSource.class))) {
-      throw new AssertionError("ArticleMetadataSource values don't match key map");
-    }
-  }
 
   /**
    * Build a representation of an article's metadata from a persisted collection.
