@@ -189,8 +189,8 @@ class VersionedIngestionService {
   private long persistToSql(ScholarlyWork scholarlyWork) {
     return parentService.hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
-          "INSERT INTO scholarlyWork (doi, scholarlyWorkType, crepoKey, crepoUuid)" +
-          "  VALUES (:doi, :scholarlyWorkType, '', '')");
+          "INSERT INTO scholarlyWork (doi, scholarlyWorkType)" +
+          "  VALUES (:doi, :scholarlyWorkType)");
       query.setParameter("doi", scholarlyWork.getDoi().getIdentifier());
       query.setParameter("scholarlyWorkType", scholarlyWork.getType());
       query.executeUpdate();
