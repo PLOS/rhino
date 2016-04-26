@@ -202,6 +202,17 @@ public class ManifestXml extends AbstractXpathReader {
       return entry;
     }
 
+    // TODO: When the manifest supports explicitly declaring a CRepo key, return it.
+    // If the manifest attribute is optional, the real implementation should remain Optional<String>.
+    // This method should probably be inlined into getCrepoKey when this explanatory comment is no longer needed.
+    private Optional<String> getDeclaredCrepoKey() {
+      return Optional.empty(); // TODO
+    }
+
+    public String getCrepoKey() {
+      return getDeclaredCrepoKey().orElse(entry);
+    }
+
     @Override
     public boolean equals(Object o) {
       if (this == o) return true;
