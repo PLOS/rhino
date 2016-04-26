@@ -177,6 +177,8 @@ class VersionedIngestionService {
       long assetPk = persistToSql(assetWork);
       persistToCrepo(assetWork, assetPk);
       createdWorkPks.add(assetPk);
+
+      persistRelation(articlePk, assetPk);
     }
 
     return createdWorkPks;
@@ -201,23 +203,14 @@ class VersionedIngestionService {
     });
   }
 
-  private void persistRelation(RepoCollectionList article, PersistedWork asset) {
+  private void persistRelation(long articlePk, long assetPk) {
     parentService.hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
           "INSERT INTO scholarlyWorkRelation (originWorkId, targetWorkId, relationType) " +
-          "VALUES (" +
-          "  (SELECT scholarlyWorkId FROM scholarlyWork WHERE crepoKey=:originKey AND crepoUuid=:originUuid), " +
-          "  (SELECT scholarlyWorkId FROM scholarlyWork WHERE crepoKey=:targetKey AND crepoUuid=:targetUuid), " +
-          "  :relationType)");
+          "VALUES (:originWorkId, :targetWorkId, :relationType)");
+      query.setParameter("originWorkId", articlePk);
+      query.setParameter("targetWorkId", assetPk);
       query.setParameter("relationType", "assetOf");
-
-      RepoVersion articleVersion = article.getVersion();
-      query.setParameter("originKey", articleVersion.getKey());
-      query.setParameter("originUuid", articleVersion.getUuid().toString());
-
-      RepoVersion assetVersion = asset.result.getVersion();
-      query.setParameter("targetKey", assetVersion.getKey());
-      query.setParameter("targetUuid", assetVersion.getUuid().toString());
 
       return query.executeUpdate();
     });
