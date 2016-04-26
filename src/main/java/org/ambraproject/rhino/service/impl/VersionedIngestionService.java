@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Maps;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
@@ -13,10 +14,8 @@ import org.ambraproject.rhino.model.ScholarlyWork;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.util.Archive;
-import org.ambraproject.rhino.view.internal.RepoVersionRepr;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
-import org.plos.crepo.model.RepoCollectionList;
 import org.plos.crepo.model.RepoObject;
 import org.plos.crepo.model.RepoObjectMetadata;
 import org.plos.crepo.model.RepoVersion;
@@ -34,11 +33,11 @@ import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
+import java.util.stream.Collectors;
 
 class VersionedIngestionService {
 
@@ -106,7 +105,7 @@ class VersionedIngestionService {
     createdWorkPks.add(articlePk);
     persistToCrepo(articleWork, articlePk);
 
-    for (ScholarlyWorkInput assetWork : articlePackage.getAssetWorks()) { // TODO: Parallelize?
+    for (ScholarlyWorkInput assetWork : articlePackage.getAssetWorks()) {
       long assetPk = persistToSql(assetWork);
       persistToCrepo(assetWork, assetPk);
       createdWorkPks.add(assetPk);
@@ -150,11 +149,13 @@ class VersionedIngestionService {
   }
 
   private void persistToCrepo(ScholarlyWorkInput work, long workPk) {
-    Map<String, RepoVersion> createdObjects = new LinkedHashMap<>();
-    for (Map.Entry<String, RepoObject> entry : work.getObjects().entrySet()) {
-      RepoObjectMetadata createdObject = parentService.contentRepoService.autoCreateRepoObject(entry.getValue());
-      createdObjects.put(entry.getKey(), createdObject.getVersion());
-    }
+    Map<String, RepoVersion> createdObjects = work.getObjects().entrySet()
+        .parallelStream() // Parallelize writes to CRepo. Relies on side effects and must be thread-safe.
+        .map((Map.Entry<String, RepoObject> entry) -> {
+          RepoObjectMetadata createdObject = parentService.contentRepoService.autoCreateRepoObject(entry.getValue());
+          return Maps.immutableEntry(entry.getKey(), createdObject.getVersion());
+        })
+        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     parentService.hibernateTemplate.execute(session -> {
       for (Map.Entry<String, RepoVersion> entry : createdObjects.entrySet()) {
