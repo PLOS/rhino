@@ -20,14 +20,38 @@ import com.google.common.collect.Maps;
 import org.w3c.dom.Node;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * Represents the manifest of an article .zip archive.
  */
 public class ManifestXml extends AbstractXpathReader {
+
+  /**
+   * Indicates that the manifest contains invalid data.
+   */
+  public static class ManifestDataException extends RuntimeException {
+    private ManifestDataException(String message) {
+      super(message);
+    }
+  }
+
+  private static <T, K> void validateUniqueness(Collection<? extends T> values, Function<T, K> keyFunction) {
+    Map<K, T> keys = Maps.newHashMapWithExpectedSize(values.size());
+    for (T value : values) {
+      K key = Objects.requireNonNull(keyFunction.apply(Objects.requireNonNull(value)));
+      T previous = keys.put(key, value);
+      if (previous != null) {
+        throw new ManifestDataException("Collision on key: " + key);
+      }
+    }
+  }
+
 
   /**
    * Constructor.
@@ -80,10 +104,9 @@ public class ManifestXml extends AbstractXpathReader {
   public ImmutableList<Asset> parse() {
     if (parsedAssets != null) return parsedAssets;
 
-    // Build into ImmutableMap to force all Assets to have unique identities
-    ImmutableMap.Builder<String, Asset> assets = ImmutableMap.builder();
-
     List<Node> assetNodes = readNodeList("//article|//object");
+    List<Asset> assets = new ArrayList<>(assetNodes.size());
+
     for (Node assetNode : assetNodes) {
       String nodeName = assetNode.getNodeName();
       String uri = readString("@uri", assetNode);
@@ -104,10 +127,11 @@ public class ManifestXml extends AbstractXpathReader {
         }
       }
 
-      assets.put(uri, new Asset(assetType, uri, mainEntry, isStrikingImage, representations));
+      assets.add(new Asset(assetType, uri, mainEntry, isStrikingImage, representations));
     }
 
-    return parsedAssets = assets.build().values().asList();
+    validateUniqueness(assets, Asset::getUri);
+    return parsedAssets = ImmutableList.copyOf(assets);
   }
 
   /**
@@ -148,10 +172,8 @@ public class ManifestXml extends AbstractXpathReader {
       this.assetType = Preconditions.checkNotNull(assetType);
       this.uri = Preconditions.checkNotNull(uri);
       this.mainEntry = Optional.ofNullable(mainEntry);
-
-      // Assert that all representations have unique names
-      ImmutableMap<String, Representation> representationMap = Maps.uniqueIndex(representations, Representation::getName);
-      this.representations = representationMap.values().asList();
+      this.representations = ImmutableList.copyOf(representations);
+      validateUniqueness(this.representations, Representation::getName);
     }
 
     public AssetType getAssetType() {
