@@ -75,10 +75,10 @@ public class ManifestXml extends AbstractXpathReader {
   }
 
 
-  private transient ImmutableMap<String, Asset> parsedAssets;
+  private transient ImmutableList<Asset> parsedAssets;
 
   public ImmutableList<Asset> parse() {
-    if (parsedAssets != null) return parsedAssets.values().asList();
+    if (parsedAssets != null) return parsedAssets;
 
     // Build into ImmutableMap to force all Assets to have unique identities
     ImmutableMap.Builder<String, Asset> assets = ImmutableMap.builder();
@@ -107,7 +107,7 @@ public class ManifestXml extends AbstractXpathReader {
       assets.put(uri, new Asset(assetType, uri, mainEntry, isStrikingImage, representations));
     }
 
-    return (parsedAssets = assets.build()).values().asList();
+    return parsedAssets = assets.build().values().asList();
   }
 
   /**
@@ -141,14 +141,17 @@ public class ManifestXml extends AbstractXpathReader {
     private final String uri;
     private final Optional<String> mainEntry;
     private final boolean isStrikingImage;
-    private final ImmutableMap<String, Representation> representations;
+    private final ImmutableList<Representation> representations;
 
     private Asset(AssetType assetType, String uri, String mainEntry, boolean isStrikingImage, List<Representation> representations) {
       this.isStrikingImage = isStrikingImage;
       this.assetType = Preconditions.checkNotNull(assetType);
       this.uri = Preconditions.checkNotNull(uri);
       this.mainEntry = Optional.ofNullable(mainEntry);
-      this.representations = Maps.uniqueIndex(representations, Representation::getName);
+
+      // Assert that all representations have unique names
+      ImmutableMap<String, Representation> representationMap = Maps.uniqueIndex(representations, Representation::getName);
+      this.representations = representationMap.values().asList();
     }
 
     public AssetType getAssetType() {
@@ -168,7 +171,7 @@ public class ManifestXml extends AbstractXpathReader {
     }
 
     public ImmutableList<Representation> getRepresentations() {
-      return representations.values().asList();
+      return representations;
     }
 
     @Override
