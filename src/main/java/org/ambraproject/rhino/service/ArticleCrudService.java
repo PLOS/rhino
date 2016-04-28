@@ -22,6 +22,7 @@ import org.ambraproject.models.Article;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.model.ScholarlyWork;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.util.Archive;
@@ -236,5 +237,5 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   public abstract OptionalInt getLatestRevision(DoiBasedIdentity id);
 
 
-  public abstract RepoVersion getRepoVersion(DoiBasedIdentity id, OptionalInt revisionNumber);
+  public abstract ScholarlyWork getScholarlyWork(DoiBasedIdentity id, OptionalInt revisionNumber);
 }

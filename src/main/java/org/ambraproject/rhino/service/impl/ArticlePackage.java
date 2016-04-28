@@ -8,10 +8,10 @@ import java.util.Objects;
 
 class ArticlePackage {
 
-  private final ScholarlyWork articleWork;
-  private final ImmutableList<ScholarlyWork> assetWorks;
+  private final ScholarlyWorkInput articleWork;
+  private final ImmutableList<ScholarlyWorkInput> assetWorks;
 
-  ArticlePackage(ScholarlyWork articleWork, List<ScholarlyWork> assetWorks) {
+  ArticlePackage(ScholarlyWorkInput articleWork, List<ScholarlyWorkInput> assetWorks) {
     this.articleWork = Objects.requireNonNull(articleWork);
     this.assetWorks = ImmutableList.copyOf(assetWorks);
   }
@@ -20,11 +20,11 @@ class ArticlePackage {
     return articleWork.getDoi();
   }
 
-  public ScholarlyWork getArticleWork() {
+  public ScholarlyWorkInput getArticleWork() {
     return articleWork;
   }
 
-  public ImmutableList<ScholarlyWork> getAssetWorks() {
+  public ImmutableList<ScholarlyWorkInput> getAssetWorks() {
     return assetWorks;
   }
 

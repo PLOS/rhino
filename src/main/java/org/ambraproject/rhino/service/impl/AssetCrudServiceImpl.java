@@ -26,6 +26,7 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.model.ScholarlyWork;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
@@ -201,12 +202,8 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
 
   @Override
   public RepoObjectMetadata getScholarlyWorkFile(String fileType, Integer revisionNumber, DoiBasedIdentity assetId) {
-
-    RepoVersion scholarlyWorkVersion = articleCrudService.getRepoVersion(assetId, OptionalInt.of(revisionNumber));
-
-    RepoCollectionList scholarlyWork = contentRepoService.getCollection(scholarlyWorkVersion);
-    Map<String, Object> scholarlyWorkMetadata = (Map<String, Object>) scholarlyWork.getJsonUserMetadata().get();
-    RepoVersion objectVersion = java.util.Optional.ofNullable((Map<?, ?>) scholarlyWorkMetadata.get(fileType)).map(RepoVersionRepr::read)
+    ScholarlyWork work = articleCrudService.getScholarlyWork(assetId, OptionalInt.of(revisionNumber));
+    RepoVersion objectVersion = work.getFile(fileType)
         .orElseThrow(() -> new RestClientException("Unrecognized type: " + fileType, HttpStatus.NOT_FOUND));
     return contentRepoService.getRepoObjectMetadata(objectVersion);
   }

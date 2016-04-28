@@ -5,11 +5,8 @@ DROP TABLE `doiAssociation`;
 CREATE TABLE `ambra`.`scholarlyWork` (
   `scholarlyWorkId` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `doi` VARCHAR(150) NOT NULL,
-  `crepoKey` VARCHAR(255) NOT NULL,
-  `crepoUuid` VARCHAR(36) NOT NULL,
   `scholarlyWorkType` VARCHAR(128) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
-  PRIMARY KEY (`scholarlyWorkId`),
-  UNIQUE KEY `crepoUuid_UNIQUE` (`crepoUuid`));
+  PRIMARY KEY (`scholarlyWorkId`));
 
 CREATE TABLE `ambra`.`scholarlyWorkRelation` (
   `originWorkId` BIGINT(20) NOT NULL,
@@ -42,3 +39,17 @@ CREATE TABLE `ambra`.`revision` (
     REFERENCES `ambra`.`scholarlyWork` (`scholarlyWorkId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
+CREATE TABLE `ambra`.`scholarlyWorkFile` (
+  `fileId` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `scholarlyWorkId` BIGINT(20) NOT NULL,
+  `crepoKey` VARCHAR(255) NOT NULL,
+  `crepoUuid` VARCHAR(36) NOT NULL,
+  `fileType` VARCHAR(128) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
+  PRIMARY KEY (`fileId`),
+  CONSTRAINT `fk_scholarlyWorkFile_1`
+    FOREIGN KEY (`scholarlyWorkId`)
+    REFERENCES `ambra`.`scholarlyWork` (`scholarlyWorkId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+    UNIQUE KEY `crepoUuid_UNIQUE` (`crepoUuid`));

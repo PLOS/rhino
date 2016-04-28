@@ -39,18 +39,18 @@ class ArticlePackageBuilder {
   private final ArticleXml article;
   private final ManifestXml manifest;
   private final String manifestEntry;
-  private final String manuscriptEntry;
-  private final String printableEntry;
+  private final ManifestXml.Representation manuscriptRepr;
+  private final ManifestXml.Representation printableRepr;
   private final ArticleIdentity articleIdentity;
 
-  ArticlePackageBuilder(Archive archive, ArticleXml article, ManifestXml manifest,
-                        String manifestEntry, String manuscriptEntry, String printableEntry) {
+  ArticlePackageBuilder(Archive archive, ArticleXml article, ManifestXml manifest, String manifestEntry,
+                        ManifestXml.Representation manuscriptRepr, ManifestXml.Representation printableRepr) {
     this.archive = Objects.requireNonNull(archive);
     this.article = Objects.requireNonNull(article);
     this.manifest = Objects.requireNonNull(manifest);
     this.manifestEntry = Objects.requireNonNull(manifestEntry);
-    this.manuscriptEntry = Objects.requireNonNull(manuscriptEntry);
-    this.printableEntry = Objects.requireNonNull(printableEntry);
+    this.manuscriptRepr = Objects.requireNonNull(manuscriptRepr);
+    this.printableRepr = Objects.requireNonNull(printableRepr);
 
     try {
       this.articleIdentity = article.readDoi();
@@ -61,9 +61,17 @@ class ArticlePackageBuilder {
 
   public ArticlePackage build() {
     Map<String, RepoObject> articleObjects = buildArticleObjects();
-    List<ScholarlyWork> assetWorks = buildAssetWorks(article.findAllAssetNodes());
+    List<ScholarlyWorkInput> assetWorks = buildAssetWorks(article.findAllAssetNodes());
 
-    return new ArticlePackage(new ScholarlyWork(articleIdentity, articleObjects, AssetType.ARTICLE.identifier), assetWorks);
+    return new ArticlePackage(new ScholarlyWorkInput(articleIdentity, articleObjects, AssetType.ARTICLE.identifier), assetWorks);
+  }
+
+  private RepoObject buildObjectFor(ManifestXml.Representation repr, String contentType) {
+    return new RepoObject.RepoObjectBuilder(repr.getCrepoKey())
+        .contentAccessor(archive.getContentAccessorFor(repr.getEntry()))
+        .contentType(contentType)
+        .downloadName(repr.getEntry())
+        .build();
   }
 
   private Map<String, RepoObject> buildArticleObjects() {
@@ -74,12 +82,9 @@ class ArticlePackageBuilder {
             .downloadName(manifestEntry)
             .contentType(MediaType.APPLICATION_XML)
             .build());
-    articleObjects.put("manuscript",
-        new RepoObject.RepoObjectBuilder("manuscript/" + articleIdentity.getIdentifier())
-            .contentAccessor(archive.getContentAccessorFor(manuscriptEntry))
-            .contentType(MediaType.APPLICATION_XML)
-            .downloadName(articleIdentity.forXmlAsset().getFileName())
-            .build());
+    articleObjects.put("manuscript", buildObjectFor(manuscriptRepr, MediaType.APPLICATION_XML));
+    articleObjects.put("printable", buildObjectFor(printableRepr, "application/pdf"));
+
     articleObjects.put("front",
         new RepoObject.RepoObjectBuilder("front/" + articleIdentity.getIdentifier())
             .byteContent(serializeXml(article.extractFrontMatter()))
@@ -89,12 +94,6 @@ class ArticlePackageBuilder {
         new RepoObject.RepoObjectBuilder("frontAndBack/" + articleIdentity.getIdentifier())
             .byteContent(serializeXml(article.extractFrontAndBackMatter()))
             .contentType(MediaType.APPLICATION_XML)
-            .build());
-    articleObjects.put("printable",
-        new RepoObject.RepoObjectBuilder("printable/" + articleIdentity.getIdentifier())
-            .contentAccessor(archive.getContentAccessorFor(printableEntry))
-            .downloadName(printableEntry)
-            .contentType("application/pdf")
             .build());
     return articleObjects.build();
   }
@@ -117,8 +116,8 @@ class ArticlePackageBuilder {
    * @param assetNodeMap encapsulated descriptions of references to asset DOIs in the manuscript
    * @return the built asset table
    */
-  private List<ScholarlyWork> buildAssetWorks(AssetNodesByDoi assetNodeMap) {
-    List<ScholarlyWork> works = new ArrayList<>();
+  private List<ScholarlyWorkInput> buildAssetWorks(AssetNodesByDoi assetNodeMap) {
+    List<ScholarlyWorkInput> works = new ArrayList<>();
     for (ManifestXml.Asset asset : manifest.parse()) {
       AssetType assetType = findAssetType(assetNodeMap, asset);
       if (assetType == AssetType.ARTICLE) continue;
@@ -129,13 +128,13 @@ class ArticlePackageBuilder {
         FileType fileType = assetType.getFileType(representation.getName());
 
         assetObjects.put(fileType.identifier,
-            new RepoObject.RepoObjectBuilder(fileType.identifier + "/" + assetIdentity.getIdentifier())
+            new RepoObject.RepoObjectBuilder(representation.getCrepoKey())
                 .contentAccessor(archive.getContentAccessorFor(entryName))
                 .downloadName(entryName)
                 .contentType(AssetFileIdentity.create(asset.getUri(), representation.getName()).inferContentType().toString())
                 .build());
       }
-      works.add(new ScholarlyWork(assetIdentity, assetObjects.build(), assetType.identifier));
+      works.add(new ScholarlyWorkInput(assetIdentity, assetObjects.build(), assetType.identifier));
     }
     return works;
   }

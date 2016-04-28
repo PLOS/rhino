@@ -16,6 +16,7 @@ package org.ambraproject.rhino.content.xml;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import org.w3c.dom.Node;
 
 import java.util.ArrayList;
@@ -79,9 +80,10 @@ public class ManifestXml extends AbstractXpathReader {
   public ImmutableList<Asset> parse() {
     if (parsedAssets != null) return parsedAssets;
 
-    List<Node> assetNodes = readNodeList("//article|//object");
-    List<Asset> assets = new ArrayList<>(assetNodes.size());
+    // Build into ImmutableMap to force all Assets to have unique identities
+    ImmutableMap.Builder<String, Asset> assets = ImmutableMap.builder();
 
+    List<Node> assetNodes = readNodeList("//article|//object");
     for (Node assetNode : assetNodes) {
       String nodeName = assetNode.getNodeName();
       String uri = readString("@uri", assetNode);
@@ -102,10 +104,10 @@ public class ManifestXml extends AbstractXpathReader {
         }
       }
 
-      assets.add(new Asset(assetType, uri, mainEntry, isStrikingImage, representations));
+      assets.put(uri, new Asset(assetType, uri, mainEntry, isStrikingImage, representations));
     }
 
-    return parsedAssets = ImmutableList.copyOf(assets);
+    return parsedAssets = assets.build().values().asList();
   }
 
   /**
@@ -141,12 +143,15 @@ public class ManifestXml extends AbstractXpathReader {
     private final boolean isStrikingImage;
     private final ImmutableList<Representation> representations;
 
-    private Asset(AssetType assetType, String uri, String mainEntry, boolean isStrikingImage, Iterable<Representation> representations) {
+    private Asset(AssetType assetType, String uri, String mainEntry, boolean isStrikingImage, List<Representation> representations) {
       this.isStrikingImage = isStrikingImage;
       this.assetType = Preconditions.checkNotNull(assetType);
       this.uri = Preconditions.checkNotNull(uri);
       this.mainEntry = Optional.ofNullable(mainEntry);
-      this.representations = ImmutableList.copyOf(representations);
+
+      // Assert that all representations have unique names
+      ImmutableMap<String, Representation> representationMap = Maps.uniqueIndex(representations, Representation::getName);
+      this.representations = representationMap.values().asList();
     }
 
     public AssetType getAssetType() {
@@ -200,6 +205,17 @@ public class ManifestXml extends AbstractXpathReader {
 
     public String getEntry() {
       return entry;
+    }
+
+    // TODO: When the manifest supports explicitly declaring a CRepo key, return it.
+    // If the manifest attribute is optional, the real implementation should remain Optional<String>.
+    // This method should probably be inlined into getCrepoKey when this explanatory comment is no longer needed.
+    private Optional<String> getDeclaredCrepoKey() {
+      return Optional.empty(); // TODO
+    }
+
+    public String getCrepoKey() {
+      return getDeclaredCrepoKey().orElse(entry);
     }
 
     @Override

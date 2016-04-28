@@ -1,30 +1,27 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.google.gson.Gson;
+import com.google.common.collect.Maps;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.model.ScholarlyWork;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.util.Archive;
-import org.ambraproject.rhino.view.internal.RepoVersionRepr;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
-import org.plos.crepo.model.RepoCollection;
-import org.plos.crepo.model.RepoCollectionList;
 import org.plos.crepo.model.RepoObject;
 import org.plos.crepo.model.RepoObjectMetadata;
 import org.plos.crepo.model.RepoVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -33,15 +30,14 @@ import javax.xml.parsers.DocumentBuilder;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.LinkedHashMap;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 class VersionedIngestionService {
 
@@ -52,52 +48,6 @@ class VersionedIngestionService {
   VersionedIngestionService(ArticleCrudServiceImpl parentService) {
     this.parentService = Preconditions.checkNotNull(parentService);
   }
-
-  static class IngestionResult {
-    private final Article article;
-    private final RepoCollectionList collection;
-
-    public IngestionResult(Article article, RepoCollectionList collection) {
-      this.article = Preconditions.checkNotNull(article);
-      this.collection = Preconditions.checkNotNull(collection);
-    }
-
-    public Article getArticle() {
-      return article;
-    }
-
-    public RepoCollectionList getCollection() {
-      return collection;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
-      IngestionResult that = (IngestionResult) o;
-      return article.equals(that.article) && collection.equals(that.collection);
-    }
-
-    @Override
-    public int hashCode() {
-      return 31 * article.hashCode() + collection.hashCode();
-    }
-  }
-
-  /**
-   * Identifies the model that we are using for representing articles as CRepo collections. To be stored in the
-   * collection's {@code userMetadata} field under the "schema" key.
-   * <p>
-   * Currently, this is not consumed anywhere. The "schema" field is future-proofing against changes to the model that
-   * would require backfilling or special handling. The "format" value can be used to disambiguate different models or
-   * different inputs. ("ambra-nlm" means that the article is an XML file under the NLM DTD, packaged as a zip file with
-   * manifest as input for Ambra.) The "version" value can be incremented to reflect changes in ingestion logic that
-   * break backwards compatibility.
-   */
-  private static final ImmutableMap<String, Object> SCHEMA_REPR = ImmutableMap.<String, Object>builder()
-      .put("format", "ambra-nlm")
-      .put("version", 1)
-      .build();
 
   Article ingest(Archive archive, OptionalInt revision) throws IOException, XmlContentException {
     String manifestEntry = null;
@@ -138,131 +88,94 @@ class VersionedIngestionService {
     final Article articleMetadata = parsedArticle.build(new Article());
     articleMetadata.setDoi(articleIdentity.getKey());
 
-    ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry, manuscriptEntry, printableRepr.getEntry()).build();
-    PersistenceResult result = persist(articlePackage);
+    ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry, manuscriptRepr, printableRepr).build();
+    Collection<Long> createdWorkPks = persist(articlePackage);
 
-    persistRevision(result, revision.orElseGet(parsedArticle::getRevisionNumber));
+    persistRevision(articleIdentity, createdWorkPks, revision.orElseGet(parsedArticle::getRevisionNumber));
 
     stubAssociativeFields(articleMetadata);
     return articleMetadata;
   }
 
-  private static class PersistenceResult {
-    private final PersistedWork article;
-    private final ImmutableList<PersistedWork> assets;
+  private Collection<Long> persist(ArticlePackage articlePackage) {
+    Collection<Long> createdWorkPks = new ArrayList<>();
 
-    private PersistenceResult(PersistedWork article, List<PersistedWork> assets) {
-      this.article = Objects.requireNonNull(article);
-      this.assets = ImmutableList.copyOf(assets);
+    ScholarlyWorkInput articleWork = articlePackage.getArticleWork();
+    long articlePk = persistToSql(articleWork);
+    createdWorkPks.add(articlePk);
+    persistToCrepo(articleWork, articlePk);
+
+    for (ScholarlyWorkInput assetWork : articlePackage.getAssetWorks()) {
+      long assetPk = persistToSql(assetWork);
+      persistToCrepo(assetWork, assetPk);
+      createdWorkPks.add(assetPk);
+
+      persistRelation(articlePk, assetPk);
     }
 
-    public PersistedWork getArticle() {
-      return article;
-    }
-
-    public Stream<PersistedWork> getWorks() {
-      return Stream.concat(Stream.of(article), assets.stream());
-    }
+    return createdWorkPks;
   }
 
-  private static class PersistedWork {
-    private final ScholarlyWork scholarlyWork;
-    private final RepoCollectionList result;
-
-    private PersistedWork(ScholarlyWork scholarlyWork, RepoCollectionList result) {
-      this.scholarlyWork = Objects.requireNonNull(scholarlyWork);
-      this.result = Objects.requireNonNull(result);
-    }
-
-    public DoiBasedIdentity getDoi() {
-      return scholarlyWork.getDoi();
-    }
-
-    public RepoVersion getVersion() {
-      return result.getVersion();
-    }
-  }
-
-  private PersistenceResult persist(ArticlePackage articlePackage) {
-    ScholarlyWork articleWork = articlePackage.getArticleWork();
-    RepoCollectionList articleInCrepo = persistToCrepo(articleWork);
-    PersistedWork persistedArticle = new PersistedWork(articleWork, articleInCrepo);
-
-    List<PersistedWork> persistedAssets = new ArrayList<>();
-    for (ScholarlyWork assetWork : articlePackage.getAssetWorks()) {
-      RepoCollectionList persistedAsset = persistToCrepo(assetWork);
-      persistedAssets.add(new PersistedWork(assetWork, persistedAsset));
-    }
-
-    persistToSql(persistedArticle);
-    for (PersistedWork persistedAsset : persistedAssets) {
-      persistToSql(persistedAsset);
-      persistRelation(persistedArticle.result, persistedAsset);
-    }
-
-    return new PersistenceResult(persistedArticle, persistedAssets);
-  }
-
-  private int persistToSql(PersistedWork persistedWork) {
+  /**
+   * @param scholarlyWork the object to persist
+   * @return the primary key of the inserted row
+   */
+  private long persistToSql(ScholarlyWorkInput scholarlyWork) {
     return parentService.hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
-          "INSERT INTO scholarlyWork " +
-          "(doi, crepoKey, crepoUuid, scholarlyWorkType) VALUES " +
-          "(:doi, :crepoKey, :crepoUuid, :scholarlyWorkType)");
-      query.setParameter("doi", persistedWork.scholarlyWork.getDoi().getIdentifier());
-      query.setParameter("scholarlyWorkType", persistedWork.scholarlyWork.getType());
+          "INSERT INTO scholarlyWork (doi, scholarlyWorkType)" +
+          "  VALUES (:doi, :scholarlyWorkType)");
+      query.setParameter("doi", scholarlyWork.getDoi().getIdentifier());
+      query.setParameter("scholarlyWorkType", scholarlyWork.getType());
+      query.executeUpdate();
 
-      RepoVersion repoVersion = persistedWork.result.getVersion();
-      query.setParameter("crepoKey", repoVersion.getKey());
-      query.setParameter("crepoUuid", repoVersion.getUuid().toString());
-
-      return query.executeUpdate();
+      BigInteger scholarlyWorkId = (BigInteger) DataAccessUtils.requiredUniqueResult(session.createSQLQuery(
+          "SELECT LAST_INSERT_ID()").list());
+      return scholarlyWorkId.longValue();
     });
   }
 
-  private void persistRelation(RepoCollectionList article, PersistedWork asset) {
+  private void persistRelation(long articlePk, long assetPk) {
     parentService.hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
           "INSERT INTO scholarlyWorkRelation (originWorkId, targetWorkId, relationType) " +
-          "VALUES (" +
-          "  (SELECT scholarlyWorkId FROM scholarlyWork WHERE crepoKey=:originKey AND crepoUuid=:originUuid), " +
-          "  (SELECT scholarlyWorkId FROM scholarlyWork WHERE crepoKey=:targetKey AND crepoUuid=:targetUuid), " +
-          "  :relationType)");
+          "VALUES (:originWorkId, :targetWorkId, :relationType)");
+      query.setParameter("originWorkId", articlePk);
+      query.setParameter("targetWorkId", assetPk);
       query.setParameter("relationType", "assetOf");
-
-      RepoVersion articleVersion = article.getVersion();
-      query.setParameter("originKey", articleVersion.getKey());
-      query.setParameter("originUuid", articleVersion.getUuid().toString());
-
-      RepoVersion assetVersion = asset.result.getVersion();
-      query.setParameter("targetKey", assetVersion.getKey());
-      query.setParameter("targetUuid", assetVersion.getUuid().toString());
 
       return query.executeUpdate();
     });
   }
 
-  private RepoCollectionList persistToCrepo(ScholarlyWork work) {
-    Map<String, RepoVersion> createdObjects = new LinkedHashMap<>();
-    for (Map.Entry<String, RepoObject> entry : work.getObjects().entrySet()) {
-      RepoObjectMetadata createdObject = parentService.contentRepoService.autoCreateRepoObject(entry.getValue());
-      createdObjects.put(entry.getKey(), createdObject.getVersion());
-    }
+  private void persistToCrepo(ScholarlyWorkInput work, long workPk) {
+    Map<String, RepoVersion> createdObjects = work.getObjects().entrySet()
+        .parallelStream() // Parallelize writes to CRepo. Relies on side effects and must be thread-safe.
+        .map((Map.Entry<String, RepoObject> entry) -> {
+          RepoObjectMetadata createdObject = parentService.contentRepoService.autoCreateRepoObject(entry.getValue());
+          return Maps.immutableEntry(entry.getKey(), createdObject.getVersion());
+        })
+        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-    String collectionMetadata = parentService.crepoGson.toJson(createdObjects);
+    parentService.hibernateTemplate.execute(session -> {
+      for (Map.Entry<String, RepoVersion> entry : createdObjects.entrySet()) {
+        String fileType = entry.getKey();
+        RepoVersion repoObjectPtr = entry.getValue();
 
-    RepoCollection repoCollection = RepoCollection.builder()
-        .setObjects(createdObjects.values())
-        .setUserMetadata(collectionMetadata)
-        .setKey(work.getCrepoKey())
-        .build();
-
-    return parentService.contentRepoService.autoCreateCollection(repoCollection);
+        SQLQuery query = session.createSQLQuery("" +
+            "INSERT INTO scholarlyWorkFile (scholarlyWorkId, fileType, crepoKey, crepoUuid) " +
+            "  VALUES (:scholarlyWorkId, :fileType, :crepoKey, :crepoUuid)");
+        query.setParameter("scholarlyWorkId", workPk);
+        query.setParameter("fileType", fileType);
+        query.setParameter("crepoKey", repoObjectPtr.getKey());
+        query.setParameter("crepoUuid", repoObjectPtr.getUuid().toString());
+        query.executeUpdate();
+      }
+      return null;
+    });
   }
 
-  private void persistRevision(PersistenceResult article, int revisionNumber) {
-    DoiBasedIdentity articleDoi = article.getArticle().getDoi();
-
+  private void persistRevision(ArticleIdentity articleDoi, Collection<Long> createdWorkPks, int revisionNumber) {
     // Delete assets
     parentService.hibernateTemplate.execute(session -> {
       Query query = session.createSQLQuery("" +
@@ -289,21 +202,17 @@ class VersionedIngestionService {
       return query.executeUpdate();
     });
 
-    article.getWorks().forEachOrdered(work -> {
+    for (Long createdWorkPk : createdWorkPks) {
       parentService.hibernateTemplate.execute(session -> {
         Query query = session.createSQLQuery("" +
-            "INSERT INTO revision (scholarlyWorkId, revisionNumber, publicationState) VALUES (" +
-            "  (SELECT scholarlyWorkId FROM scholarlyWork WHERE crepoKey=:crepoKey AND crepoUuid=:crepoUuid), " +
-            ":revisionNumber, :publicationState)");
-        RepoVersion version = work.getVersion();
-        query.setParameter("crepoKey", version.getKey());
-        query.setParameter("crepoUuid", version.getUuid().toString());
-
+            "INSERT INTO revision (scholarlyWorkId, revisionNumber, publicationState) " +
+            "  VALUES (:scholarlyWorkId, :revisionNumber, :publicationState)");
+        query.setParameter("scholarlyWorkId", createdWorkPk);
         query.setParameter("revisionNumber", revisionNumber);
         query.setParameter("publicationState", 0);
         return query.executeUpdate();
       });
-    });
+    }
   }
 
   private void stubAssociativeFields(Article article) {
@@ -346,19 +255,6 @@ class VersionedIngestionService {
   }
 
 
-  private static final String MANUSCRIPTS_KEY = "manuscripts";
-  private static final ImmutableBiMap<ArticleMetadataSource, String> SOURCE_KEYS = ImmutableBiMap.<ArticleMetadataSource, String>builder()
-      .put(ArticleMetadataSource.FULL_MANUSCRIPT, "full")
-      .put(ArticleMetadataSource.FRONT_MATTER, "front")
-      .put(ArticleMetadataSource.FRONT_AND_BACK_MATTER, "frontAndBack")
-      .build();
-
-  static {
-    if (!SOURCE_KEYS.keySet().equals(EnumSet.allOf(ArticleMetadataSource.class))) {
-      throw new AssertionError("ArticleMetadataSource values don't match key map");
-    }
-  }
-
   /**
    * Build a representation of an article's metadata from a persisted collection.
    * <p>
@@ -390,12 +286,13 @@ class VersionedIngestionService {
      * TODO: Improve as described above and delete this comment block
      */
 
-    RepoVersion collectionVersion = parentService.getRepoVersion(id, revisionNumber);
+    ScholarlyWork work = parentService.getScholarlyWork(id, revisionNumber);
 
-    RepoCollectionList collection = parentService.contentRepoService.getCollection(collectionVersion);
-
-    Map<String, Object> userMetadata = (Map<String, Object>) collection.getJsonUserMetadata().get();
-    RepoVersion manuscriptVersion = RepoVersionRepr.read((Map<?, ?>) userMetadata.get("manuscript"));
+    RepoVersion manuscriptVersion = work.getFile("manuscript").orElseThrow(() -> {
+      String message = String.format("Work exists but does not have a manuscript. DOI: %s. Revision: %s",
+          work.getDoi(), work.getRevisionNumber().map(Object::toString).orElse("(none)"));
+      return new RestClientException(message, HttpStatus.BAD_REQUEST);
+    });
 
     Document document;
     try (InputStream manuscriptStream = parentService.contentRepoService.getRepoObject(manuscriptVersion)) {
@@ -413,7 +310,6 @@ class VersionedIngestionService {
     } catch (XmlContentException e) {
       throw new RuntimeException(e);
     }
-    article.setLastModified(collection.getTimestamp());
     return article;
   }
 }

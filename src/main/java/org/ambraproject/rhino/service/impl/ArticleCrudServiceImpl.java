@@ -35,6 +35,7 @@ import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.model.ScholarlyWork;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
@@ -57,12 +58,10 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.ErrorType;
-import org.plos.crepo.exceptions.NotFoundException;
 import org.plos.crepo.model.RepoVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
@@ -70,13 +69,16 @@ import org.w3c.dom.Document;
 import javax.xml.xpath.XPathException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
+import java.util.stream.Collectors;
 
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -275,7 +277,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return new Transceiver() {
       @Override
       protected List<Integer> getData() throws IOException {
-        return hibernateTemplate.execute(session->{
+        return hibernateTemplate.execute(session -> {
           SQLQuery query = session.createSQLQuery("" +
               "SELECT r.revisionNumber " +
               "FROM scholarlyWork sw INNER JOIN revision r " +
@@ -526,26 +528,42 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public RepoVersion getRepoVersion(DoiBasedIdentity id, OptionalInt revisionNumber) {
-    RepoVersion repoVersion;
+  public ScholarlyWork getScholarlyWork(DoiBasedIdentity id, OptionalInt revisionNumber) {
     int revision = revisionNumber.orElseGet(() ->
         getLatestRevision(id).orElseThrow(
             () -> new RestClientException("No revisions found for doi " + id.getIdentifier(), HttpStatus.NOT_FOUND)));
 
-    repoVersion = hibernateTemplate.execute(session -> {
+    Object[] workResult = hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
-          "SELECT s.crepoKey, s.crepoUuid " +
+          "SELECT s.scholarlyWorkId, s.doi, s.scholarlyWorkType " +
           "FROM scholarlyWork s " +
           "INNER JOIN revision r ON s.scholarlyWorkId = r.scholarlyWorkId " +
           "WHERE s.doi = :doi AND r.revisionNumber = :revisionNumber");
       query.setParameter("doi", id.getIdentifier());
       query.setParameter("revisionNumber", revision);
-      Object[] result = (Object[]) DataAccessUtils.uniqueResult(query.list());
-      if (result == null) {
-        throw new RestClientException("DOI+revision not found: " + id + "/" + revisionNumber, HttpStatus.NOT_FOUND);
-      }
-      return RepoVersion.create((String) result[0], (String) result[1]);
+      List list = query.list();
+      return (Object[]) DataAccessUtils.uniqueResult(list);
     });
-    return repoVersion;
+    if (workResult == null) {
+      throw new RestClientException("DOI+revision not found: " + id + "/" + revisionNumber, HttpStatus.NOT_FOUND);
+    }
+    long workId = ((BigInteger) workResult[0]).longValue();
+    String workDoi = (String) workResult[1];
+    String workType = (String) workResult[2];
+
+    List<Object[]> fileResults = hibernateTemplate.execute(session -> {
+      SQLQuery query = session.createSQLQuery("" +
+          "SELECT fileType, crepoKey, crepoUuid " +
+          "FROM scholarlyWorkFile " +
+          "WHERE scholarlyWorkId = :scholarlyWorkId");
+      query.setParameter("scholarlyWorkId", workId);
+      return query.list();
+    });
+    Map<String, RepoVersion> fileMap = fileResults.stream().collect(Collectors.toMap(
+        (Object[] fileResult) -> (String) fileResult[0],
+        (Object[] fileResult) -> RepoVersion.create((String) fileResult[1], (String) fileResult[2])
+    ));
+
+    return new ScholarlyWork(DoiBasedIdentity.create(workDoi), workType, fileMap, revision);
   }
 }
