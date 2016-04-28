@@ -41,7 +41,7 @@ public class ManifestXml extends AbstractXpathReader {
     }
   }
 
-  private static <T, K> void validateUniqueness(Collection<? extends T> values, Function<T, K> keyFunction) {
+  private static <T, K> void validateUniqueKeys(Collection<? extends T> values, Function<T, K> keyFunction) {
     Map<K, T> keys = Maps.newHashMapWithExpectedSize(values.size());
     for (T value : values) {
       K key = Objects.requireNonNull(keyFunction.apply(Objects.requireNonNull(value)));
@@ -130,7 +130,7 @@ public class ManifestXml extends AbstractXpathReader {
       assets.add(new Asset(assetType, uri, mainEntry, isStrikingImage, representations));
     }
 
-    validateUniqueness(assets, Asset::getUri);
+    validateUniqueKeys(assets, Asset::getUri);
     return parsedAssets = ImmutableList.copyOf(assets);
   }
 
@@ -173,7 +173,7 @@ public class ManifestXml extends AbstractXpathReader {
       this.uri = Preconditions.checkNotNull(uri);
       this.mainEntry = Optional.ofNullable(mainEntry);
       this.representations = ImmutableList.copyOf(representations);
-      validateUniqueness(this.representations, Representation::getName);
+      validateUniqueKeys(this.representations, Representation::getName);
     }
 
     public AssetType getAssetType() {
