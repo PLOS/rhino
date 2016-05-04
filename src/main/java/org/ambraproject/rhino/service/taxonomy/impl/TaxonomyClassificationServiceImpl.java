@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.service.taxonomy.impl;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Charsets;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -118,6 +119,8 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     return configuration;
   }
 
+  private static final ContentType APPLICATION_XML_UTF_8 = ContentType.create("application/xml", Charsets.UTF_8);
+
   /**
    * @inheritDoc
    */
@@ -139,7 +142,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
         + MESSAGE_END;
 
     HttpPost post = new HttpPost(configuration.getServer().toString());
-    post.setEntity(new StringEntity(aiMessage, ContentType.APPLICATION_XML));
+    post.setEntity(new StringEntity(aiMessage, APPLICATION_XML_UTF_8));
 
     DocumentBuilder documentBuilder;
     try {
