@@ -104,25 +104,26 @@ public class ManifestXml extends AbstractXpathReader {
     private final ImmutableList<Representation> archivalFiles;
 
     private Parsed() {
-      List<Node> assetNodes = readNodeList("//article|//object");
-      List<Asset> assets = new ArrayList<>(assetNodes.size());
+      List<Asset> assets = new ArrayList<>();
 
-      for (Node assetNode : assetNodes) {
-        String nodeName = assetNode.getNodeName();
-        String uri = readString("@uri", assetNode);
-        String mainEntry = readString("@main-entry", assetNode);
-        String strkImage = readString("@strkImage", assetNode);
-
-        AssetType assetType = AssetType.fromNodeName(nodeName);
-        boolean isStrikingImage = Boolean.toString(true).equalsIgnoreCase(strkImage);
-
-        List<Representation> representations = parseRepresentations(assetNode);
-        assets.add(new Asset(assetType, uri, mainEntry, isStrikingImage, representations));
+      assets.add(parseAssetNode(AssetType.ARTICLE, readNode("//article")));
+      for (Node objectNode : readNodeList("//object")) {
+        assets.add(parseAssetNode(AssetType.OBJECT, objectNode));
       }
       validateUniqueKeys(assets, Asset::getUri);
       this.assets = ImmutableList.copyOf(assets);
 
       this.archivalFiles = parseRepresentations(readNode("//archival"));
+    }
+
+    private Asset parseAssetNode(AssetType assetType, Node assetNode) {
+      String uri = readString("@uri", assetNode);
+      String mainEntry = readString("@main-entry", assetNode);
+      String strkImage = readString("@strkImage", assetNode);
+      boolean isStrikingImage = Boolean.toString(true).equalsIgnoreCase(strkImage);
+
+      List<Representation> representations = parseRepresentations(assetNode);
+      return new Asset(assetType, uri, mainEntry, isStrikingImage, representations);
     }
 
     private ImmutableList<Representation> parseRepresentations(Node assetNode) {
@@ -151,19 +152,6 @@ public class ManifestXml extends AbstractXpathReader {
 
   public static enum AssetType {
     ARTICLE, OBJECT, ARCHIVAL;
-
-    private static AssetType fromNodeName(String nodeName) {
-      switch (nodeName) {
-        case "article":
-          return ARTICLE;
-        case "object":
-          return OBJECT;
-        case "archival":
-          return ARCHIVAL;
-        default:
-          throw new IllegalArgumentException();
-      }
-    }
   }
 
   public static class Asset {
