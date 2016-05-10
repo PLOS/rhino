@@ -40,6 +40,7 @@ import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 class VersionedIngestionService {
 
@@ -66,9 +67,9 @@ class VersionedIngestionService {
     try (InputStream manifestStream = new BufferedInputStream(archive.openFile(manifestEntry))) {
       manifestXml = new ManifestXml(AmbraService.parseXml(manifestStream));
     }
-    ImmutableList<ManifestXml.Asset> assets = manifestXml.getAssets();
-    validateManifestCompleteness(assets, archive);
+    validateManifestCompleteness(manifestXml, archive);
 
+    ImmutableList<ManifestXml.Asset> assets = manifestXml.getAssets();
     ManifestXml.Asset manuscriptAsset = findManuscriptAsset(assets);
     ManifestXml.Representation manuscriptRepr = findManuscriptRepr(manuscriptAsset);
     ManifestXml.Representation printableRepr = findPrintableRepr(manuscriptAsset);
@@ -100,10 +101,13 @@ class VersionedIngestionService {
     return articleMetadata;
   }
 
-  private void validateManifestCompleteness(ImmutableList<ManifestXml.Asset> assets, Archive archive) {
+  private void validateManifestCompleteness(ManifestXml manifest, Archive archive) {
     Set<String> archiveEntryNames = archive.getEntryNames();
-    Set<String> manifestEntryNames = assets.stream()
-        .flatMap(asset -> asset.getRepresentations().stream())
+
+    Stream<ManifestXml.Representation> manifestEntries = Stream.concat(
+        manifest.getAssets().stream().flatMap(asset -> asset.getRepresentations().stream()),
+        manifest.getArchivalFiles().stream());
+    Set<String> manifestEntryNames = manifestEntries
         .map(ManifestXml.Representation::getEntry)
         .collect(Collectors.toSet());
 
