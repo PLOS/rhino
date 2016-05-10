@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
@@ -89,7 +90,7 @@ class VersionedIngestionService {
     articleMetadata.setDoi(articleIdentity.getKey());
 
     ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry, manuscriptRepr, printableRepr).build();
-    Collection<Long> createdWorkPks = persist(articlePackage);
+    Collection<Long> createdWorkPks = persist(articlePackage, articleMetadata);
 
     persistRevision(articleIdentity, createdWorkPks, revision.orElseGet(parsedArticle::getRevisionNumber));
 
@@ -97,13 +98,15 @@ class VersionedIngestionService {
     return articleMetadata;
   }
 
-  private Collection<Long> persist(ArticlePackage articlePackage) {
+  private Collection<Long> persist(ArticlePackage articlePackage, Article articleMetadata) {
     Collection<Long> createdWorkPks = new ArrayList<>();
 
     ScholarlyWorkInput articleWork = articlePackage.getArticleWork();
     long articlePk = persistToSql(articleWork);
     createdWorkPks.add(articlePk);
     persistToCrepo(articleWork, articlePk);
+
+    persistJournal(articleMetadata, articlePk);
 
     for (ScholarlyWorkInput assetWork : articlePackage.getAssetWorks()) {
       long assetPk = persistToSql(assetWork);
@@ -132,6 +135,19 @@ class VersionedIngestionService {
       BigInteger scholarlyWorkId = (BigInteger) DataAccessUtils.requiredUniqueResult(session.createSQLQuery(
           "SELECT LAST_INSERT_ID()").list());
       return scholarlyWorkId.longValue();
+    });
+  }
+
+  private void persistJournal(Article article, long articlePk) {
+    Journal publicationJournal = parentService.getPublicationJournal(article);
+    parentService.hibernateTemplate.execute(session -> {
+      SQLQuery query = session.createSQLQuery("" +
+          "INSERT INTO scholarlyWorkJournalJoinTable (scholarlyWorkID, journalID) " +
+          "VALUES (:scholarlyWorkId, :journalID)");
+      query.setParameter("scholarlyWorkId", articlePk);
+      query.setParameter("journalID", publicationJournal.getID());
+
+      return query.executeUpdate();
     });
   }
 
