@@ -99,23 +99,34 @@ public class ManifestXml extends AbstractXpathReader {
   }
 
 
-  private transient ImmutableList<Asset> parsedAssets;
+  private class Parsed {
+    private final ImmutableList<Asset> assets;
+    private final ImmutableList<Representation> archivalFiles;
 
-  public ImmutableList<Asset> getAssets() {
-    if (parsedAssets != null) return parsedAssets;
+    private Parsed() {
+      List<Node> assetNodes = readNodeList("//article|//object");
+      List<Asset> assets = new ArrayList<>(assetNodes.size());
 
-    List<Node> assetNodes = readNodeList("//article|//object");
-    List<Asset> assets = new ArrayList<>(assetNodes.size());
+      for (Node assetNode : assetNodes) {
+        String nodeName = assetNode.getNodeName();
+        String uri = readString("@uri", assetNode);
+        String mainEntry = readString("@main-entry", assetNode);
+        String strkImage = readString("@strkImage", assetNode);
 
-    for (Node assetNode : assetNodes) {
-      String nodeName = assetNode.getNodeName();
-      String uri = readString("@uri", assetNode);
-      String mainEntry = readString("@main-entry", assetNode);
-      String strkImage = readString("@strkImage", assetNode);
+        AssetType assetType = AssetType.fromNodeName(nodeName);
+        boolean isStrikingImage = Boolean.toString(true).equalsIgnoreCase(strkImage);
 
-      AssetType assetType = AssetType.fromNodeName(nodeName);
-      boolean isStrikingImage = Boolean.toString(true).equalsIgnoreCase(strkImage);
+        List<Representation> representations = parseRepresentations(assetNode);
+        assets.add(new Asset(assetType, uri, mainEntry, isStrikingImage, representations));
+      }
+      validateUniqueKeys(assets, Asset::getUri);
+      this.assets = ImmutableList.copyOf(assets);
 
+      this.archivalFiles = parseRepresentations(readNode("//archival"));
+    }
+
+    private ImmutableList<Representation> parseRepresentations(Node assetNode) {
+      if (assetNode == null) return ImmutableList.of();
       List<Node> representationNodes = readNodeList("child::representation", assetNode);
       List<Representation> representations = new ArrayList<>(representationNodes.size());
       for (Node representationNode : representationNodes) {
@@ -123,16 +134,23 @@ public class ManifestXml extends AbstractXpathReader {
         String entry = readString("@entry", representationNode);
         representations.add(new Representation(name, entry));
       }
-
-      assets.add(new Asset(assetType, uri, mainEntry, isStrikingImage, representations));
+      return ImmutableList.copyOf(representations);
     }
-
-    validateUniqueKeys(assets, Asset::getUri);
-    return parsedAssets = ImmutableList.copyOf(assets);
   }
 
+  private transient Parsed parsed;
+
+  public ImmutableList<Asset> getAssets() {
+    return (parsed != null) ? parsed.assets : (parsed = new Parsed()).assets;
+  }
+
+  public ImmutableList<Representation> getArchivalFiles() {
+    return (parsed != null) ? parsed.archivalFiles : (parsed = new Parsed()).archivalFiles;
+  }
+
+
   public static enum AssetType {
-    ARTICLE, OBJECT;
+    ARTICLE, OBJECT, ARCHIVAL;
 
     private static AssetType fromNodeName(String nodeName) {
       switch (nodeName) {
@@ -140,6 +158,8 @@ public class ManifestXml extends AbstractXpathReader {
           return ARTICLE;
         case "object":
           return OBJECT;
+        case "archival":
+          return ARCHIVAL;
         default:
           throw new IllegalArgumentException();
       }
