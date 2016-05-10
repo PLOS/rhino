@@ -118,7 +118,7 @@ class ArticlePackageBuilder {
    */
   private List<ScholarlyWorkInput> buildAssetWorks(AssetNodesByDoi assetNodeMap) {
     List<ScholarlyWorkInput> works = new ArrayList<>();
-    for (ManifestXml.Asset asset : manifest.parse()) {
+    for (ManifestXml.Asset asset : manifest.getAssets()) {
       AssetType assetType = findAssetType(assetNodeMap, asset);
       if (assetType == AssetType.ARTICLE) continue;
       ImmutableMap.Builder<String, RepoObject> assetObjects = ImmutableMap.builder();

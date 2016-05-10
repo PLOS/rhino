@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
@@ -37,6 +38,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 class VersionedIngestionService {
@@ -64,7 +66,8 @@ class VersionedIngestionService {
     try (InputStream manifestStream = new BufferedInputStream(archive.openFile(manifestEntry))) {
       manifestXml = new ManifestXml(AmbraService.parseXml(manifestStream));
     }
-    ImmutableList<ManifestXml.Asset> assets = manifestXml.parse();
+    ImmutableList<ManifestXml.Asset> assets = manifestXml.getAssets();
+    validateManifestCompleteness(assets, archive);
 
     ManifestXml.Asset manuscriptAsset = findManuscriptAsset(assets);
     ManifestXml.Representation manuscriptRepr = findManuscriptRepr(manuscriptAsset);
@@ -95,6 +98,23 @@ class VersionedIngestionService {
 
     stubAssociativeFields(articleMetadata);
     return articleMetadata;
+  }
+
+  private void validateManifestCompleteness(ImmutableList<ManifestXml.Asset> assets, Archive archive) {
+    Set<String> archiveEntryNames = archive.getEntryNames();
+    Set<String> manifestEntryNames = assets.stream()
+        .flatMap(asset -> asset.getRepresentations().stream())
+        .map(ManifestXml.Representation::getEntry)
+        .collect(Collectors.toSet());
+
+    Set<String> missingFromArchive = Sets.difference(manifestEntryNames, archiveEntryNames).immutableCopy();
+    Set<String> missingFromManifest = Sets.difference(archiveEntryNames, manifestEntryNames).immutableCopy();
+    if (!missingFromArchive.isEmpty() || !missingFromManifest.isEmpty()) {
+      String message = "Manifest is not consistent with files in archive."
+          + (missingFromArchive.isEmpty() ? "" : (" Files in manifest not included in archive: " + missingFromArchive))
+          + (missingFromManifest.isEmpty() ? "" : (" Files in archive not described in manifest: " + missingFromManifest));
+      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+    }
   }
 
   private Collection<Long> persist(ArticlePackage articlePackage) {

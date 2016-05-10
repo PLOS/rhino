@@ -101,7 +101,7 @@ public class ManifestXml extends AbstractXpathReader {
 
   private transient ImmutableList<Asset> parsedAssets;
 
-  public ImmutableList<Asset> parse() {
+  public ImmutableList<Asset> getAssets() {
     if (parsedAssets != null) return parsedAssets;
 
     List<Node> assetNodes = readNodeList("//article|//object");
@@ -121,10 +121,7 @@ public class ManifestXml extends AbstractXpathReader {
       for (Node representationNode : representationNodes) {
         String name = readString("@name", representationNode);
         String entry = readString("@entry", representationNode);
-        Representation representation = new Representation(name, entry);
-        if (!isJunkXml(assetType, mainEntry, representation)) {
-          representations.add(representation);
-        }
+        representations.add(new Representation(name, entry));
       }
 
       assets.add(new Asset(assetType, uri, mainEntry, isStrikingImage, representations));
@@ -132,17 +129,6 @@ public class ManifestXml extends AbstractXpathReader {
 
     validateUniqueKeys(assets, Asset::getUri);
     return parsedAssets = ImmutableList.copyOf(assets);
-  }
-
-  /**
-   * As a special case, due to legacy reasons, the article asset may contain other versions of the XML file that we
-   * don't want to save. (In PLOS ingestibles, these show up as {@code *.xml.orig} files.)
-   * <p>
-   * Suppress all XML files in the article asset except for the one that is designated as the main entry.
-   */
-  private static boolean isJunkXml(AssetType assetType, String mainEntry, Representation representation) {
-    return (assetType == AssetType.ARTICLE) && representation.getName().equals("XML")
-        && !Objects.equals(mainEntry, representation.getEntry());
   }
 
   public static enum AssetType {
