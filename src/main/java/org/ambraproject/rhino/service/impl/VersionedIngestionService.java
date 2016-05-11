@@ -90,7 +90,9 @@ class VersionedIngestionService {
     articleMetadata.setDoi(articleIdentity.getKey());
 
     ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry, manuscriptRepr, printableRepr).build();
-    Collection<Long> createdWorkPks = persist(articlePackage, articleMetadata);
+    Collection<Long> createdWorkPks = persist(articlePackage);
+
+    persistJournal(articleMetadata, createdWorkPks);
 
     persistRevision(articleIdentity, createdWorkPks, revision.orElseGet(parsedArticle::getRevisionNumber));
 
@@ -98,15 +100,13 @@ class VersionedIngestionService {
     return articleMetadata;
   }
 
-  private Collection<Long> persist(ArticlePackage articlePackage, Article articleMetadata) {
+  private Collection<Long> persist(ArticlePackage articlePackage) {
     Collection<Long> createdWorkPks = new ArrayList<>();
 
     ScholarlyWorkInput articleWork = articlePackage.getArticleWork();
     long articlePk = persistToSql(articleWork);
     createdWorkPks.add(articlePk);
     persistToCrepo(articleWork, articlePk);
-
-    persistJournal(articleMetadata, articlePk);
 
     for (ScholarlyWorkInput assetWork : articlePackage.getAssetWorks()) {
       long assetPk = persistToSql(assetWork);
@@ -138,17 +138,19 @@ class VersionedIngestionService {
     });
   }
 
-  private void persistJournal(Article article, long articlePk) {
+  private void persistJournal(Article article, Collection<Long> articlePks) {
     Journal publicationJournal = parentService.getPublicationJournal(article);
-    parentService.hibernateTemplate.execute(session -> {
-      SQLQuery query = session.createSQLQuery("" +
-          "INSERT INTO scholarlyWorkJournalJoinTable (scholarlyWorkID, journalID) " +
-          "VALUES (:scholarlyWorkId, :journalID)");
-      query.setParameter("scholarlyWorkId", articlePk);
-      query.setParameter("journalID", publicationJournal.getID());
+    for (Long articlePk : articlePks) {
+      parentService.hibernateTemplate.execute(session -> {
+        SQLQuery query = session.createSQLQuery("" +
+            "INSERT INTO scholarlyWorkJournalJoinTable (scholarlyWorkID, journalID) " +
+            "VALUES (:scholarlyWorkId, :journalID)");
+        query.setParameter("scholarlyWorkId", articlePk);
+        query.setParameter("journalID", publicationJournal.getID());
 
-      return query.executeUpdate();
-    });
+        return query.executeUpdate();
+      });
+    }
   }
 
   private void persistRelation(long articlePk, long assetPk) {
