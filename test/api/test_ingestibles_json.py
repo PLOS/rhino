@@ -1,6 +1,6 @@
 #!/usr/bin/env python2
 
-__author__ = 'msingh@plos.org'
+__author__ = 'fcabrales@plos.org'
 
 """
 This test case validates Rhino's ingestibles API.
@@ -8,17 +8,12 @@ This test requires sshpass to be installed %apt-get install sshpass
 """
 
 import os, random
-from ..api.RequestObject.ingestibles_json import IngestiblesJson, OK, CREATED, BAD_REQUEST, UNAUTHORIZED, FORBIDDEN, NOT_FOUND, NOT_ALLOWED
-from ..Base.Config import INGESTION_HOST
+from ..api.RequestObject.ingestibles_json import IngestiblesJson, OK, CREATED, NOT_ALLOWED
+from ..Base.Config import INGESTION_HOST, INGEST_USER, RHINO_INGEST_PATH
 
-USER = 'rinotest'
-RHINO_INGEST_PATH = '/var/spool/ambra/ingestion-queue'
 TEST_DATA_PATH = 'test/data'
-HOST_HOME = USER +'@'+ INGESTION_HOST
-USER_HOME = '/home/' + USER + '/'
-ARTICLE_ID = 'pone.0122963'
-ARTICLE_ID_EXTENDED = '10.1371/journal.'+ ARTICLE_ID
-ARTICLE_ID_ZIP = 'pone.0122963.zip'
+HOST_HOME = INGEST_USER +'@'+ INGESTION_HOST
+USER_HOME = '/home/' + INGEST_USER + '/'
 
 class IngestiblesTest(IngestiblesJson):
 
@@ -43,7 +38,7 @@ class IngestiblesTest(IngestiblesJson):
     Ingest with force_reingest should succeed.
     """
     files = self.copy_files_to_ingest(count=1)
-    self.assertEquals(len(files), 1, 'cannot find any ingestible file');
+    self.assertEquals(len(files), 1, 'cannot find any ingestible file')
     try:
       self.post_ingestibles(name=files[0], force_reingest='')
       self.verify_http_code_is(CREATED)
@@ -59,7 +54,7 @@ class IngestiblesTest(IngestiblesJson):
     Second ingest without force_reingest should fail.
     """
     files = self.copy_files_to_ingest(count=1)
-    self.assertEquals(len(files), 1, 'cannot find any ingestible file');
+    self.assertEquals(len(files), 1, 'cannot find any ingestible file')
     try:
       self.post_ingestibles(name=files[0], force_reingest='')
       self.verify_http_code_is(CREATED)
@@ -91,7 +86,7 @@ class IngestiblesTest(IngestiblesJson):
       files = files[:count]
     for filename in files:
       print(filename)
-      COMMAND_MOVE= 'scp -r ' + TEST_DATA_PATH + '/' + filename + ' ' + HOST_HOME + ':' + USER_HOME
+      COMMAND_MOVE= 'scp -r -o StrictHostKeyChecking=no ' + TEST_DATA_PATH + '/' + filename + ' ' + HOST_HOME + ':' + USER_HOME
       COMMAND= 'sshpass -pShoh1yar ' +  COMMAND_MOVE
       print('sshpass -pPassword ' +  COMMAND_MOVE)
       os.system(COMMAND)

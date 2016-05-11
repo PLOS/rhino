@@ -5,8 +5,12 @@ from os import getenv
 from selenium.webdriver import DesiredCapabilities
 
 # Set API_BASE_URL environment variable to desired URL in order to run suite against it
-API_BASE_URL = os.getenv('API_BASE_URL', 'http://one-dpro.plosjournals.org/v1')
-INGESTION_HOST = os.getenv('SERVER_HOST', 'sfo-dpro-devstack01.int.plos.org')
+API_BASE_URL = os.getenv('API_BASE_URL', 'http://devstack04.sfo.plos.org:8006/v1')
+INGESTION_HOST = os.getenv('INGESTION_HOST', 'devstack04.sfo.plos.org')
+INGEST_USER = os.getenv('INGEST_USER', 'rinotest')
+RHINO_INGEST_PATH = os.getenv('RHINO_INGEST_PATH', '/var/spool/ambra/ingestion-queue')
+
+
 PRINT_DEBUG = False
 TIMEOUT = 30         # API call timeout, in seconds
 
