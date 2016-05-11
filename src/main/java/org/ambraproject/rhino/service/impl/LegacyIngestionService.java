@@ -467,7 +467,7 @@ class LegacyIngestionService {
     for (ManifestXml.Asset manifestAsset : manifest.getAssets()) {
       for (ManifestXml.Representation representation : manifestAsset.getRepresentations()) {
         AssetFileIdentity fileId = AssetFileIdentity.create(manifestAsset.getUri(), representation.getName());
-        filenameBuilder.put(fileId, representation.getEntry());
+        filenameBuilder.put(fileId, representation.getFile().getEntry());
       }
     }
     ImmutableMap<AssetFileIdentity, String> filenames = filenameBuilder.build();

@@ -67,10 +67,11 @@ class ArticlePackageBuilder {
   }
 
   private RepoObject buildObjectFor(ManifestXml.Representation repr, String contentType) {
-    return new RepoObject.RepoObjectBuilder(repr.getCrepoKey())
-        .contentAccessor(archive.getContentAccessorFor(repr.getEntry()))
+    ManifestXml.ManifestFile file = repr.getFile();
+    return new RepoObject.RepoObjectBuilder(file.getCrepoKey())
+        .contentAccessor(archive.getContentAccessorFor(file.getEntry()))
         .contentType(contentType)
-        .downloadName(repr.getEntry())
+        .downloadName(file.getEntry())
         .build();
   }
 
@@ -124,11 +125,12 @@ class ArticlePackageBuilder {
       ImmutableMap.Builder<String, RepoObject> assetObjects = ImmutableMap.builder();
       AssetIdentity assetIdentity = AssetIdentity.create(asset.getUri());
       for (ManifestXml.Representation representation : asset.getRepresentations()) {
-        String entryName = representation.getEntry();
+        ManifestXml.ManifestFile file = representation.getFile();
+        String entryName = file.getEntry();
         FileType fileType = assetType.getFileType(representation.getName());
 
         assetObjects.put(fileType.identifier,
-            new RepoObject.RepoObjectBuilder(representation.getCrepoKey())
+            new RepoObject.RepoObjectBuilder(file.getCrepoKey())
                 .contentAccessor(archive.getContentAccessorFor(entryName))
                 .downloadName(entryName)
                 .contentType(AssetFileIdentity.create(asset.getUri(), representation.getName()).inferContentType().toString())

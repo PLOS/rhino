@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Represents the manifest of an article .zip archive.
@@ -101,7 +102,7 @@ public class ManifestXml extends AbstractXpathReader {
 
   private class Parsed {
     private final ImmutableList<Asset> assets;
-    private final ImmutableList<Representation> archivalFiles;
+    private final ImmutableList<ManifestFile> archivalFiles;
 
     private Parsed() {
       List<Asset> assets = new ArrayList<>();
@@ -113,7 +114,7 @@ public class ManifestXml extends AbstractXpathReader {
       validateUniqueKeys(assets, Asset::getUri);
       this.assets = ImmutableList.copyOf(assets);
 
-      this.archivalFiles = parseRepresentations(readNode("//archival"));
+      this.archivalFiles = parseArchivalFiles(readNode("//archival"));
     }
 
     private Asset parseAssetNode(AssetType assetType, Node assetNode) {
@@ -131,11 +132,26 @@ public class ManifestXml extends AbstractXpathReader {
       List<Node> representationNodes = readNodeList("child::representation", assetNode);
       List<Representation> representations = new ArrayList<>(representationNodes.size());
       for (Node representationNode : representationNodes) {
+        ManifestFile file = parseFile(representationNode);
         String name = readString("@name", representationNode);
-        String entry = readString("@entry", representationNode);
-        representations.add(new Representation(name, entry));
+        String type = readString("@type", representationNode);
+        representations.add(new Representation(file, name, type));
       }
       return ImmutableList.copyOf(representations);
+    }
+
+    private ImmutableList<ManifestFile> parseArchivalFiles(Node archivalNode) {
+      return ImmutableList.copyOf(
+          readNodeList("child::file").stream()
+              .map(this::parseFile)
+              .collect(Collectors.toList()));
+    }
+
+    private ManifestFile parseFile(Node node) {
+      String entry = readString("@entry", node);
+      String key = readString("@key", node);
+      String mimetype = readString("@mimetype", node);
+      return new ManifestFile(entry, key, mimetype);
     }
   }
 
@@ -145,7 +161,7 @@ public class ManifestXml extends AbstractXpathReader {
     return (parsed != null) ? parsed.assets : (parsed = new Parsed()).assets;
   }
 
-  public ImmutableList<Representation> getArchivalFiles() {
+  public ImmutableList<ManifestFile> getArchivalFiles() {
     return (parsed != null) ? parsed.archivalFiles : (parsed = new Parsed()).archivalFiles;
   }
 
@@ -206,45 +222,77 @@ public class ManifestXml extends AbstractXpathReader {
     }
   }
 
-  public static class Representation {
-    private final String name;
+  public static class ManifestFile {
     private final String entry;
+    private final Optional<String> key;
+    private final String mimetype;
 
-    private Representation(String name, String entry) {
-      this.name = Preconditions.checkNotNull(name);
-      this.entry = Preconditions.checkNotNull(entry);
-    }
-
-    public String getName() {
-      return name;
+    private ManifestFile(String entry, String key, String mimetype) {
+      this.entry = Objects.requireNonNull(entry);
+      this.key = Optional.ofNullable(key);
+      this.mimetype = Objects.requireNonNull(mimetype);
     }
 
     public String getEntry() {
       return entry;
     }
 
-    // TODO: When the manifest supports explicitly declaring a CRepo key, return it.
-    // If the manifest attribute is optional, the real implementation should remain Optional<String>.
-    // This method should probably be inlined into getCrepoKey when this explanatory comment is no longer needed.
-    private Optional<String> getDeclaredCrepoKey() {
-      return Optional.empty(); // TODO
+    public String getCrepoKey() {
+      return key.orElse(entry);
     }
 
-    public String getCrepoKey() {
-      return getDeclaredCrepoKey().orElse(entry);
+    public String getMimetype() {
+      return mimetype;
     }
 
     @Override
     public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
-      Representation that = (Representation) o;
-      return name.equals(that.name) && entry.equals(that.entry);
+      return this == o || o != null && getClass() == o.getClass()
+          && entry.equals(((ManifestFile) o).entry)
+          && key.equals(((ManifestFile) o).key)
+          && mimetype.equals(((ManifestFile) o).mimetype);
     }
 
     @Override
     public int hashCode() {
-      return 31 * name.hashCode() + entry.hashCode();
+      return 31 * (31 * entry.hashCode() + key.hashCode()) + mimetype.hashCode();
+    }
+  }
+
+  public static class Representation {
+    private final ManifestFile file;
+    private final String name;
+    private final String type;
+
+    private Representation(ManifestFile file, String name, String type) {
+      this.file = Objects.requireNonNull(file);
+      this.name = Objects.requireNonNull(name);
+      this.type = Objects.requireNonNull(type);
+    }
+
+    public ManifestFile getFile() {
+      return file;
+    }
+
+    public String getName() {
+      return name;
+    }
+
+    public String getType() {
+      return type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      return this == o || o != null && getClass() == o.getClass()
+          && file.equals(((Representation) o).file)
+          && name.equals(((Representation) o).name)
+          && type.equals(((Representation) o).type);
+    }
+
+    @Override
+    public int hashCode() {
+      return 31 * (31 * file.hashCode() + name.hashCode()) + type.hashCode();
     }
   }
 

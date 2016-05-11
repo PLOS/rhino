@@ -74,7 +74,7 @@ class VersionedIngestionService {
     ManifestXml.Representation manuscriptRepr = findManuscriptRepr(manuscriptAsset);
     ManifestXml.Representation printableRepr = findPrintableRepr(manuscriptAsset);
 
-    String manuscriptEntry = manuscriptRepr.getEntry();
+    String manuscriptEntry = manuscriptRepr.getFile().getEntry();
     if (!archive.getEntryNames().contains(manifestEntry)) {
       throw new RestClientException("Manifest refers to missing file as main-entry: " + manuscriptEntry, HttpStatus.BAD_REQUEST);
     }
@@ -104,11 +104,13 @@ class VersionedIngestionService {
   private void validateManifestCompleteness(ManifestXml manifest, Archive archive) {
     Set<String> archiveEntryNames = archive.getEntryNames();
 
-    Stream<ManifestXml.Representation> manifestEntries = Stream.concat(
-        manifest.getAssets().stream().flatMap(asset -> asset.getRepresentations().stream()),
+    Stream<ManifestXml.ManifestFile> manifestFiles = Stream.concat(
+        manifest.getAssets().stream()
+            .flatMap(asset -> asset.getRepresentations().stream())
+            .map(ManifestXml.Representation::getFile),
         manifest.getArchivalFiles().stream());
-    Set<String> manifestEntryNames = manifestEntries
-        .map(ManifestXml.Representation::getEntry)
+    Set<String> manifestEntryNames = manifestFiles
+        .map(ManifestXml.ManifestFile::getEntry)
         .collect(Collectors.toSet());
 
     Set<String> missingFromArchive = Sets.difference(manifestEntryNames, archiveEntryNames).immutableCopy();
@@ -271,7 +273,7 @@ class VersionedIngestionService {
     Optional<String> mainEntry = manuscriptAsset.getMainEntry();
     Preconditions.checkArgument(mainEntry.isPresent(), "manuscriptAsset must have main-entry");
     for (ManifestXml.Representation representation : manuscriptAsset.getRepresentations()) {
-      if (representation.getEntry().equals(mainEntry.get())) {
+      if (representation.getFile().getEntry().equals(mainEntry.get())) {
         return representation;
       }
     }
