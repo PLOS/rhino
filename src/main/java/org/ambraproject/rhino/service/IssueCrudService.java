@@ -18,10 +18,13 @@
 
 package org.ambraproject.rhino.service;
 
+import org.ambraproject.models.Issue;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleIssue;
 import org.ambraproject.rhino.view.journal.IssueInputView;
+import org.ambraproject.rhino.view.journal.VolumeNonAssocView;
 
 import java.io.IOException;
 import java.util.List;
@@ -34,5 +37,8 @@ public interface IssueCrudService {
 
   public abstract void update(DoiBasedIdentity issueId, IssueInputView input);
 
-  public abstract List<ArticleIssue> getArticleIssues(final String articleDoi);
+  public abstract List<ArticleIssue> getArticleIssues(ArticleIdentity articleIdentity);
+
+  public abstract VolumeNonAssocView getParentVolume(Issue issue);
+
 }

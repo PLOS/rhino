@@ -1,9 +1,11 @@
 package org.ambraproject.rhino.config.json;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.models.ArticleRelationship;
+import org.ambraproject.models.Journal;
 
 /**
  * Exclusions for classes and fields when using Gson's default, reflection-based serialization logic.
@@ -40,6 +42,23 @@ public enum ExclusionSpecialCase implements ExclusionStrategy {
       return ArticleRelationship.class.isAssignableFrom(f.getDeclaringClass()) &&
           (AmbraEntity.class.isAssignableFrom(f.getDeclaredClass())
               || f.getName().equals("otherArticleID"));
+    }
+
+    @Override
+    public boolean shouldSkipClass(Class<?> clazz) {
+      return false;
+    }
+  },
+
+  /**
+   * Prevent an infinite recursion from {@link Journal} to {@link org.ambraproject.models.ArticleList}.
+   */
+  JOURNAL_ARTICLE_LIST {
+    @Override
+    public boolean shouldSkipField(FieldAttributes f) {
+      // Can't look for ArticleList.class because of type erasure. Rely on the name instead.
+      return Journal.class.isAssignableFrom(f.getDeclaringClass())
+          && f.getName().equals("articleLists");
     }
 
     @Override

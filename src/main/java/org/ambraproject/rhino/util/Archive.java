@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -79,7 +80,7 @@ public abstract class Archive implements Closeable {
    * @throws IllegalArgumentException if no entry with that name is in the archive
    */
   public final InputStream openFile(String entryName) {
-    Object fileObj = files.get(entryName);
+    Object fileObj = files.get(Objects.requireNonNull(entryName));
     if (fileObj == null) throw new IllegalArgumentException();
     return openFileFrom(fileObj);
   }

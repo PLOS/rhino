@@ -24,8 +24,7 @@
   <artifactId>rhino</artifactId>
   <name>rhino</name>
   <packaging>war</packaging>
-  <version>1.2.3</version>
-
+  <version>1.4.3</version>
   <description>Service-oriented back end for Ambra.</description>
 
   <licenses>
@@ -46,11 +45,11 @@
   <properties>
     <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
     <buildDate>${maven.build.timestamp}</buildDate>
-    <java-version>1.7</java-version>
+    <java-version>1.8</java-version>
     <org.springframework-version>4.1.6.RELEASE</org.springframework-version>
     <org.aspectj-version>1.6.9</org.aspectj-version>
     <org.slf4j-version>1.6.1</org.slf4j-version>
-    <ambra.version>2.10.3</ambra.version>
+    <ambra.version>2.10.21</ambra.version>
     <rhombat.version>1.0.2</rhombat.version>
     <conf-helper.version>2.2.1</conf-helper.version>
     <camel.version>2.10.4</camel.version>
@@ -127,7 +126,7 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>15.0</version>
+      <version>19.0</version>
     </dependency>
     <dependency>
       <groupId>com.google.code.gson</groupId>
@@ -153,7 +152,7 @@
     <dependency>
       <groupId>org.ambraproject</groupId>
       <artifactId>ambra-base</artifactId>
-      <version>${ambra.version}</version>
+      <version>NED-RHINO</version>
       <exclusions>
         <!--These are some easy wins for reducing the size of the war, we don't need these libraries-->
         <exclusion>
@@ -227,6 +226,12 @@
       <groupId>org.plos</groupId>
       <artifactId>content-repo-library</artifactId>
       <version>1.5.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>ambra-models</artifactId>
+      <version>NED-RHINO</version>
     </dependency>
 
     <!-- ========================= End Ambra inclusions ========================= -->
@@ -460,8 +465,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>2.3.2</version>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
+          <source>${java-version}</source>
+          <target>${java-version}</target>
           <compilerArgument>-Xlint:all</compilerArgument>
           <showWarnings>true</showWarnings>
           <showDeprecation>true</showDeprecation>

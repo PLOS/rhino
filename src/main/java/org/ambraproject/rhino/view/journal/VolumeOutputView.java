@@ -1,16 +1,14 @@
 package org.ambraproject.rhino.view.journal;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import org.ambraproject.models.Issue;
 import org.ambraproject.models.Volume;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.view.JsonOutputView;
-import org.ambraproject.rhino.view.KeyedListView;
 
-import java.util.Collection;
+import java.util.List;
 
 public class VolumeOutputView implements JsonOutputView {
 
@@ -23,29 +21,9 @@ public class VolumeOutputView implements JsonOutputView {
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = context.serialize(volume).getAsJsonObject();
-    KeyedListView<Issue> issueView = IssueOutputView.wrapList(volume.getIssues());
-    serialized.add("issues", context.serialize(issueView));
+    List<IssueOutputView> issueViews = Lists.transform(volume.getIssues(), IssueOutputView::new);
+    serialized.add("issues", context.serialize(issueViews));
     return serialized;
-  }
-
-  public static class ListView extends KeyedListView<Volume> {
-    private ListView(Collection<? extends Volume> values) {
-      super(values);
-    }
-
-    @Override
-    protected String getKey(Volume value) {
-      return DoiBasedIdentity.asIdentifier(value.getVolumeUri());
-    }
-
-    @Override
-    protected Object wrap(Volume value) {
-      return new VolumeOutputView(value);
-    }
-  }
-
-  public static KeyedListView<Volume> wrapList(Collection<Volume> volumes) {
-    return new ListView(volumes);
   }
 
 }

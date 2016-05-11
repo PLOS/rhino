@@ -23,6 +23,8 @@ import com.google.common.collect.ImmutableSet;
 
 import java.net.URI;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import java.util.Set;
 
@@ -145,6 +147,55 @@ public class YamlConfiguration implements RuntimeConfiguration {
     return taxonomyConfiguration;
   }
 
+  private static class UserApiConfigurationObject implements UserApiConfiguration {
+    // Must have real instance variables so that ConfigurationReadController.readNedConfig can serialize it
+    private final URL server;
+    private final String authorizationAppName;
+    private final String authorizationPassword;
+
+    private UserApiConfigurationObject(Input input) {
+      server = (input.userApi == null) ? null : input.userApi.server;
+      authorizationAppName = (input.userApi == null) ? null : input.userApi.authorizationAppName;
+      authorizationPassword = (input.userApi == null) ? null : input.userApi.authorizationPassword;
+    }
+
+    @Override
+    public URL getServer() {
+      return server;
+    }
+
+    @Override
+    public String getAuthorizationAppName() {
+      return authorizationAppName;
+    }
+
+    @Override
+    public String getAuthorizationPassword() {
+      return authorizationPassword;
+    }
+  }
+
+  private transient UserApiConfigurationObject userApiConfigurationObject;
+
+  @Override
+  public UserApiConfiguration getNedConfiguration() {
+    return (userApiConfigurationObject != null) ? userApiConfigurationObject
+        : (userApiConfigurationObject = new UserApiConfigurationObject(input));
+  }
+
+  @Override
+  public LocalDate getCompetingInterestPolicyStart() {
+    return (input.competingInterestPolicyStart == null) ? DEFAULT_COMPETING_INTEREST_POLICY_START
+        : LocalDate.parse(input.competingInterestPolicyStart);
+  }
+
+  /**
+   * The date at which the relevant software upgrade was deployed on PLOS's Ambra system, which was the only extant
+   * Ambra system at the time. Because no other systems will have older comments, it should never be necessary to
+   * override this default except in test environments.
+   */
+  private static final LocalDate DEFAULT_COMPETING_INTEREST_POLICY_START = LocalDate.of(2009, Month.MARCH, 20);
+
   /**
    * @deprecated Temporary; to be removed when versioned ingestion data model is stable.
    */
@@ -161,7 +212,9 @@ public class YamlConfiguration implements RuntimeConfiguration {
     private ContentRepoInput contentRepo;
     private HttpConnectionPoolConfigurationInput httpConnectionPool;
     private TaxonomyConfigurationInput taxonomy;
+    private UserApiConfigurationInput userApi;
     private boolean usingVersionedIngestion = false; // default is false
+    private String competingInterestPolicyStart;
 
     /**
      * @deprecated For reflective access by SnakeYAML only
@@ -193,6 +246,22 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setTaxonomy(TaxonomyConfigurationInput taxonomy) {
       this.taxonomy = taxonomy;
+    }
+
+    /**
+     * @deprecated For reflective access by SnakeYAML only
+     */
+    @Deprecated
+    public void setUserApi(UserApiConfigurationInput userApi) {
+      this.userApi = userApi;
+    }
+
+    /**
+     * @deprecated For reflective access by SnakeYAML only
+     */
+    @Deprecated
+    public void setCompetingInterestPolicyStart(String competingInterestPolicyStart) {
+      this.competingInterestPolicyStart = competingInterestPolicyStart;
     }
 
     /**
@@ -294,6 +363,27 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setCategoryBlacklist(List<String> categoryBlacklist) {
       this.categoryBlacklist = categoryBlacklist;
+    }
+  }
+
+  public static class UserApiConfigurationInput {
+    private URL server;
+    private String authorizationAppName;
+    private String authorizationPassword;
+
+    @Deprecated
+    public void setServer(URL server) {
+      this.server = server;
+    }
+
+    @Deprecated
+    public void setAuthorizationAppName(String authorizationAppName) {
+      this.authorizationAppName = authorizationAppName;
+    }
+
+    @Deprecated
+    public void setAuthorizationPassword(String authorizationPassword) {
+      this.authorizationPassword = authorizationPassword;
     }
   }
 

@@ -13,7 +13,6 @@
 
 package org.ambraproject.rhino.content.xml;
 
-import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -21,6 +20,8 @@ import org.w3c.dom.Node;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Represents the manifest of an article .zip archive.
@@ -95,13 +96,27 @@ public class ManifestXml extends AbstractXpathReader {
       for (Node representationNode : representationNodes) {
         String name = readString("@name", representationNode);
         String entry = readString("@entry", representationNode);
-        representations.add(new Representation(name, entry));
+        Representation representation = new Representation(name, entry);
+        if (!isJunkXml(assetType, mainEntry, representation)) {
+          representations.add(representation);
+        }
       }
 
       assets.add(new Asset(assetType, uri, mainEntry, isStrikingImage, representations));
     }
 
     return parsedAssets = ImmutableList.copyOf(assets);
+  }
+
+  /**
+   * As a special case, due to legacy reasons, the article asset may contain other versions of the XML file that we
+   * don't want to save. (In PLOS ingestibles, these show up as {@code *.xml.orig} files.)
+   * <p>
+   * Suppress all XML files in the article asset except for the one that is designated as the main entry.
+   */
+  private static boolean isJunkXml(AssetType assetType, String mainEntry, Representation representation) {
+    return (assetType == AssetType.ARTICLE) && representation.getName().equals("XML")
+        && !Objects.equals(mainEntry, representation.getEntry());
   }
 
   public static enum AssetType {
@@ -130,7 +145,7 @@ public class ManifestXml extends AbstractXpathReader {
       this.isStrikingImage = isStrikingImage;
       this.assetType = Preconditions.checkNotNull(assetType);
       this.uri = Preconditions.checkNotNull(uri);
-      this.mainEntry = Optional.fromNullable(mainEntry);
+      this.mainEntry = Optional.ofNullable(mainEntry);
       this.representations = ImmutableList.copyOf(representations);
     }
 

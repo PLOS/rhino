@@ -13,88 +13,47 @@
 
 package org.ambraproject.rhino.service.impl;
 
-import org.ambraproject.models.AmbraEntity;
+import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import org.ambraproject.models.Annotation;
 import org.ambraproject.models.AnnotationType;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.Flag;
+import org.ambraproject.models.FlagReasonCode;
+import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.util.response.Transceiver;
-import org.ambraproject.rhino.view.AnnotationOutputView;
-import org.ambraproject.views.AnnotationView;
+import org.ambraproject.rhino.view.comment.AnnotationNodeView;
+import org.ambraproject.rhino.view.comment.AnnotationOutputView;
+import org.ambraproject.rhino.view.comment.CommentCount;
+import org.ambraproject.rhino.view.comment.CommentFlagInputView;
+import org.ambraproject.rhino.view.comment.CommentInputView;
 import org.hibernate.FetchMode;
+import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.Collection;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
+import java.util.OptionalInt;
+import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
-/**
- * {@inheritDoc}
- */
 public class AnnotationCrudServiceImpl extends AmbraService implements AnnotationCrudService {
 
-  /**
-   * {@inheritDoc}
-   */
-  public Transceiver readComments(ArticleIdentity id)
-      throws IOException {
-    return readAnnotations(id);
-  }
-
-  private static Date getLatestLastModified(Iterable<? extends AmbraEntity> values) {
-    Date lastOfAll = null;
-    for (AmbraEntity entity : values) {
-      Date lastModified = entity.getLastModified();
-      if (lastOfAll == null || (lastModified != null && lastModified.after(lastOfAll))) {
-        lastOfAll = lastModified;
-      }
-    }
-    return lastOfAll;
-  }
-
-  /**
-   * Forwards annotations matching the given types to the receiver.
-   *
-   * @param id identifies the article
-   * @throws IOException
-   */
-  private Transceiver readAnnotations(final ArticleIdentity id)
-      throws IOException {
-    return new Transceiver() {
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        // Requires searching of nested replies. Unsupported for now.
-        return null;
-      }
-
-      @Override
-      protected Object getData() throws IOException {
-        Article article = findSingleEntity("FROM Article WHERE doi = ?", id.getKey());
-        List<Annotation> annotations = fetchAllAnnotations(article);
-
-        // AnnotationView is an ambra component that is convenient here since it encapsulates everything
-        // we want to return about a given annotation.  It also handles nested replies.
-        List<AnnotationView> results = new ArrayList<>(annotations.size());
-        for (Annotation annotation : annotations) {
-          if (AnnotationType.COMMENT.equals(annotation.getType())) {
-            Map<Long, List<Annotation>> replies = findAnnotationReplies(annotation.getID(), annotations,
-                new HashMap<Long, List<Annotation>>());
-            results.add(new AnnotationView(annotation, article.getDoi(), article.getTitle(), replies));
-          }
-        }
-        return results;
-      }
-    };
-  }
+  @Autowired
+  private RuntimeConfiguration runtimeConfiguration;
 
   /**
    * Fetch all annotations that belong to an article.
@@ -102,72 +61,203 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
    * @param article the article
    * @return the collection of annotations
    */
-  private List<Annotation> fetchAllAnnotations(Article article) {
+  private Collection<Annotation> fetchAllAnnotations(Article article) {
     return (List<Annotation>) hibernateTemplate.find("FROM Annotation WHERE articleID = ?", article.getID());
   }
 
-  /**
-   * Recursively loads all child replies for a given annotation.  That is, loads the full reply tree given an annotation
-   * that is the root.
-   *
-   * @param annotationId specifies the root annotation
-   * @param results      the partial results during the recursion.  The initial caller should pass in an empty map.
-   * @return a map from annotationID to list of child replies
-   */
-  private Map<Long, List<Annotation>> findAnnotationReplies(Long annotationId, List<Annotation> allArticleAnnotations,
-                                                            Map<Long, List<Annotation>> results) {
-    List<Annotation> children = new ArrayList<>();
-    for (Annotation annotation : allArticleAnnotations) {
-      if (annotationId.equals(annotation.getParentID())) {
-        children.add(annotation);
+  @Override
+  public Transceiver readComments(ArticleIdentity articleIdentity) throws IOException {
+    return new Transceiver() {
+      @Override
+      protected Collection<AnnotationOutputView> getData() throws IOException {
+        Article article = (Article) DataAccessUtils.uniqueResult(
+            hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
+                    .setFetchMode("journals", FetchMode.JOIN)
+                    .add(Restrictions.eq("doi", articleIdentity.getKey()))
+            ));
+        Collection<Annotation> comments = fetchAllAnnotations(article);
+        AnnotationOutputView.Factory factory = new AnnotationOutputView.Factory(runtimeConfiguration, article, comments);
+        return comments.stream()
+            .filter(comment -> comment.getParentID() == null)
+            .sorted(AnnotationOutputView.BY_DATE)
+            .map(factory::buildView)
+            .collect(Collectors.toList());
       }
-    }
 
-    if (children != null && !children.isEmpty()) {
-      results.put(annotationId, children);
-      for (Annotation child : children) {
-        results = findAnnotationReplies(child.getID(), allArticleAnnotations, results);
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
       }
-    }
-    return results;
+    };
   }
 
   @Override
-  public Transceiver readComment(DoiBasedIdentity commentId)
-      throws IOException {
-    return readAnnotation(commentId);
-  }
-
-  private Transceiver readAnnotation(final DoiBasedIdentity annotationId)
-      throws IOException {
+  public Transceiver readComment(DoiBasedIdentity commentId) throws IOException {
     return new Transceiver() {
       @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        // Requires searching of nested replies. Unsupported for now.
-        return null;
-      }
-
-      @Override
-      protected Object getData() throws IOException {
-        Annotation annotation = (Annotation) DataAccessUtils.uniqueResult((List<?>)
-            hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Annotation.class)
-                    .add(Restrictions.eq("annotationUri", annotationId.getKey()))
-            ));
-        if (annotation == null) {
-          throw reportNotFound(annotationId);
-        }
+      protected AnnotationOutputView getData() throws IOException {
+        Annotation annotation = getComment(commentId);
 
         // TODO: Make this more efficient. Three queries is too many.
-        Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
+        Article article = (Article) DataAccessUtils.uniqueResult(
             hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
                     .setFetchMode("journals", FetchMode.JOIN)
                     .add(Restrictions.eq("ID", annotation.getArticleID()))
             ));
-        Map<Long, List<Annotation>> replies = findAnnotationReplies(annotation.getID(), fetchAllAnnotations(article),
-            new LinkedHashMap<Long, List<Annotation>>());
 
-        return new AnnotationOutputView(annotation, article, replies);
+        return new AnnotationOutputView.Factory(runtimeConfiguration, article, fetchAllAnnotations(article)).buildView(annotation);
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
       }
     };
   }
+
+  private Annotation getComment(DoiBasedIdentity commentId) {
+    Annotation annotation = (Annotation) DataAccessUtils.uniqueResult(
+        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Annotation.class)
+            .add(Restrictions.eq("annotationUri", commentId.getKey()))));
+    if (annotation == null) {
+      throw reportNotFound(commentId);
+    }
+    return annotation;
+  }
+
+  private static final Pattern DOI_PREFIX_PATTERN = Pattern.compile("^\\d+\\.\\d+/");
+
+  private static String extractDoiPrefix(DoiBasedIdentity doi) {
+    Matcher matcher = DOI_PREFIX_PATTERN.matcher(doi.getIdentifier());
+    Preconditions.checkArgument(matcher.find());
+    return matcher.group();
+  }
+
+  @Override
+  public Annotation createComment(CommentInputView input) {
+    final Optional<DoiBasedIdentity> parentCommentUri = Optional.ofNullable(input.getParentCommentId()).map(DoiBasedIdentity::create);
+    Optional<ArticleIdentity> articleDoi = Optional.ofNullable(input.getArticleDoi()).map(ArticleIdentity::create);
+
+    final Long articlePk;
+    final Optional<Long> parentCommentPk;
+    final AnnotationType annotationType;
+    if (parentCommentUri.isPresent()) {
+      // The comment is a reply to a parent comment.
+      // The client might not have declared the parent article, so look it up from the parent comment.
+      Object[] parentAnnotationData = (Object[]) DataAccessUtils.uniqueResult(hibernateTemplate.find("" +
+              "SELECT ann.ID, ann.articleID, art.doi " +
+              "FROM Annotation ann, Article art " +
+              "WHERE ann.annotationUri = ? AND ann.articleID = art.ID",
+          parentCommentUri.get().getKey()));
+      if (parentAnnotationData == null) {
+        throw new RestClientException("Parent comment not found: " + parentCommentUri, HttpStatus.BAD_REQUEST);
+      }
+
+      parentCommentPk = Optional.of((Long) parentAnnotationData[0]);
+      articlePk = (Long) parentAnnotationData[1];
+      annotationType = AnnotationType.REPLY;
+
+      ArticleIdentity articleDoiFromDb = ArticleIdentity.create((String) parentAnnotationData[2]);
+      if (!articleDoi.isPresent()) {
+        articleDoi = Optional.of(articleDoiFromDb);
+      } else if (!articleDoi.get().equals(articleDoiFromDb)) {
+        String message = String.format("Parent comment (%s) not from declared article (%s).",
+            parentCommentUri.get().getKey(), articleDoi.get().getKey());
+        throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+      }
+    } else {
+      // The comment is a root-level reply to an article (no parent comment).
+      if (!articleDoi.isPresent()) {
+        throw new RestClientException("Must provide articleDoi or parentCommentId", HttpStatus.BAD_REQUEST);
+      }
+
+      articlePk = (Long) DataAccessUtils.uniqueResult(hibernateTemplate.find(
+          "SELECT ID FROM Article WHERE doi = ?", articleDoi.get().getKey()));
+      if (articlePk == null) {
+        throw new RestClientException("Parent article not found: " + articleDoi.get(), HttpStatus.BAD_REQUEST);
+      }
+      parentCommentPk = Optional.empty();
+      annotationType = AnnotationType.COMMENT;
+    }
+
+    Long creator = Long.valueOf(input.getCreatorUserId());
+
+    String doiPrefix = extractDoiPrefix(articleDoi.get()); // comment receives same DOI prefix as article
+    UUID uuid = UUID.randomUUID(); // generate a new DOI out of a random UUID
+    DoiBasedIdentity createdAnnotationUri = DoiBasedIdentity.create(doiPrefix + "annotation/" + uuid);
+
+    Annotation created = new Annotation();
+    created.setType(annotationType);
+    created.setUserProfileID(creator);
+    created.setArticleID(articlePk);
+    created.setParentID(parentCommentPk.orElse(null));
+    created.setAnnotationUri(createdAnnotationUri.getKey());
+    created.setTitle(Strings.nullToEmpty(input.getTitle()));
+    created.setBody(Strings.nullToEmpty(input.getBody()));
+    created.setHighlightedText(Strings.nullToEmpty(input.getHighlightedText()));
+    created.setCompetingInterestBody(Strings.nullToEmpty(input.getCompetingInterestStatement()));
+
+    hibernateTemplate.save(created);
+    return created;
+  }
+
+  @Override
+  public Flag createCommentFlag(DoiBasedIdentity commentId, CommentFlagInputView input) {
+    Annotation comment = getComment(commentId);
+    Long flagCreator = Long.valueOf(input.getCreatorUserId());
+
+    Flag flag = new Flag();
+    flag.setFlaggedAnnotation(comment);
+    flag.setUserProfileID(flagCreator);
+    flag.setComment(input.getBody());
+    flag.setReason(FlagReasonCode.fromString(input.getReasonCode()));
+
+    hibernateTemplate.save(flag);
+    return flag;
+  }
+
+  @Override
+  public Transceiver readRecentComments(String journalKey, OptionalInt limit) {
+    return new Transceiver() {
+      @Override
+      protected List<AnnotationNodeView> getData() throws IOException {
+        List<Object[]> results = hibernateTemplate.execute(session -> {
+          Query query = session.createQuery("" +
+              "SELECT ann, art.doi, art.title " +
+              "FROM Annotation ann, Article art, Journal j " +
+              "WHERE ann.articleID = art.ID " +
+              "  AND j IN ELEMENTS(art.journals) " +
+              "  AND j.journalKey = :journalKey " +
+              "ORDER BY ann.created DESC");
+          query.setParameter("journalKey", journalKey);
+          limit.ifPresent(query::setMaxResults);
+          return query.list();
+        });
+        AnnotationNodeView.Factory viewFactory = new AnnotationNodeView.Factory(runtimeConfiguration);
+        return results.stream()
+            .map((Object[] result) -> {
+              Annotation annotation = (Annotation) result[0];
+              String articleDoi = (String) result[1];
+              String articleTitle = (String) result[2];
+              return viewFactory.create(annotation, journalKey, articleDoi, articleTitle);
+            })
+            .collect(Collectors.toList());
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    };
+  }
+
+  @Override
+  public CommentCount getCommentCount(Article article) {
+    long root = (Long) DataAccessUtils.requiredSingleResult(hibernateTemplate.find(
+        "SELECT COUNT(*) FROM Annotation WHERE articleID = ? AND parentID IS NULL", article.getID()));
+    long all = (Long) DataAccessUtils.requiredSingleResult(hibernateTemplate.find(
+        "SELECT COUNT(*) FROM Annotation WHERE articleID = ?", article.getID()));
+    return new CommentCount(root, all);
+  }
+
 }

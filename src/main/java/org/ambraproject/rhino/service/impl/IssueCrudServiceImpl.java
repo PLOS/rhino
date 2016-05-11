@@ -32,9 +32,11 @@ import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleIssue;
 import org.ambraproject.rhino.view.journal.IssueInputView;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
+import org.ambraproject.rhino.view.journal.VolumeNonAssocView;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
@@ -69,7 +71,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
 
       @Override
       protected Object getView(Issue issue) {
-        return new IssueOutputView(issue);
+        return new IssueOutputView(issue, getParentVolume(issue));
       }
     };
   }
@@ -156,12 +158,12 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
   /**
    * Get a list of issues for a given article with associated journal and volume objects
    *
-   * @param articleDoi Article DOI that is contained in the Journal/Volume/Issue combinations which will be returned
+   * @param articleIdentity Article DOI that is contained in the Journal/Volume/Issue combinations which will be returned
    * @return a list of ArticleIssue objects that wrap each issue with its associated journal and volume objects
    */
   @Transactional(readOnly = true)
   @Override
-  public List<ArticleIssue> getArticleIssues(final String articleDoi) {
+  public List<ArticleIssue> getArticleIssues(final ArticleIdentity articleIdentity) {
     return (List<ArticleIssue>) hibernateTemplate.execute(new HibernateCallback() {
       public Object doInHibernate(Session session) throws HibernateException, SQLException {
         List<Object[]> queryResults = session.createSQLQuery(
@@ -175,7 +177,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
                 .addEntity("j", Journal.class)
                 .addEntity("v", Volume.class)
                 .addEntity("i", Issue.class)
-                .setString("articleURI", articleDoi)
+                .setString("articleURI", articleIdentity.getKey())
                 .list();
 
         List<ArticleIssue> articleIssues = new ArrayList<>(queryResults.size());
@@ -227,6 +229,21 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
     }
     issue = applyInput(issue, input);
     hibernateTemplate.update(issue);
+  }
+
+  @Override
+  public VolumeNonAssocView getParentVolume(Issue issue) {
+    Object[] parentVolumeResults = hibernateTemplate.execute((Session session) -> {
+      String hql = "select volumeUri, displayName, imageUri, title, description " +
+          "from Volume where :issue in elements(issues)";
+      Query query = session.createQuery(hql);
+      query.setParameter("issue", issue);
+      return (Object[]) query.uniqueResult();
+    });
+
+    return (parentVolumeResults == null) ? null : new VolumeNonAssocView(
+        (String) parentVolumeResults[0], (String) parentVolumeResults[1], (String) parentVolumeResults[2],
+        (String) parentVolumeResults[3], (String) parentVolumeResults[4]);
   }
 
 }

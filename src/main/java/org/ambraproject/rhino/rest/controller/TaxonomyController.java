@@ -14,7 +14,6 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Splitter;
-import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 import org.ambraproject.models.Article;
@@ -31,10 +30,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.net.URLDecoder;
+
 import java.util.Map;
+import java.util.Optional;
+import java.util.OptionalLong;
 
 /**
  * Controller class for the taxonomy namespace.
@@ -44,7 +43,6 @@ public class TaxonomyController extends RestController {
 
   private static final String TAXONOMY_ROOT = "/taxonomy";
   private static final String TAXONOMY_NAMESPACE = TAXONOMY_ROOT + '/';
-  private static final String TAXONOMY_TEMPLATE = TAXONOMY_NAMESPACE + "**";
   private static final Splitter TAXONOMY_PATH_SPLITTER = Splitter.on('/');
 
   @Autowired
@@ -53,37 +51,28 @@ public class TaxonomyController extends RestController {
   @Autowired
   protected ArticleCrudService articleCrudService;
 
-  @Transactional(readOnly = true)
-  @RequestMapping(value = TAXONOMY_TEMPLATE, method = RequestMethod.GET)
-  public void readRoot(HttpServletRequest request, HttpServletResponse response,
-                       @RequestParam(value = "journal", required = true) String journal)
-      throws Exception {
-    String parent = getFullPathVariable(request, true, TAXONOMY_NAMESPACE);
-    if (!Strings.isNullOrEmpty(parent)) {
-      parent = URLDecoder.decode(parent, "UTF-8");
-    }
-    taxonomyService.read(journal, parent).respond(request, response, entityGson);
-  }
-
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = TAXONOMY_NAMESPACE + "flag/{action:add|remove}", method = RequestMethod.POST)
   public @ResponseBody Map<String,String> flagArticleCategory(
                        @RequestParam(value = "categoryTerm", required = true) String categoryTerm,
                        @RequestParam(value = "articleDoi", required = true) String articleDoi,
-                       @RequestParam(value = "authId", required = true) String authId,
+                       @RequestParam(value = "userId", required = false) String userId,
                        @PathVariable("action") String action)
           throws Exception {
     // TODO: we might want to optimize this by directly retrieving an article category collection in place of article instantiation
     Article article = articleCrudService.findArticleById(ArticleIdentity.create(articleDoi));
+
+    OptionalLong userIdObj = (userId == null) ? OptionalLong.empty() : OptionalLong.of(Long.parseLong(userId));
+
     for (Category category : article.getCategories().keySet()) {
       // if category matches the provided term, insert or delete an article category flag according to action provided in url
       // NOTE: a given category term (i.e. the final term in a full category path) may be present for more than one article category
       String articleCategoryTerm = Iterables.getLast(TAXONOMY_PATH_SPLITTER.split(category.getPath()));
       if (categoryTerm.contentEquals(articleCategoryTerm)) {
         if (action.contentEquals("remove")) {
-          taxonomyService.deflagArticleCategory(article.getID(), category.getID(), authId);
+          taxonomyService.deflagArticleCategory(article.getID(), category.getID(), userIdObj);
         } else if (action.contentEquals("add")) {
-          taxonomyService.flagArticleCategory(article.getID(), category.getID(), authId);
+          taxonomyService.flagArticleCategory(article.getID(), category.getID(), userIdObj);
         }
       }
     }

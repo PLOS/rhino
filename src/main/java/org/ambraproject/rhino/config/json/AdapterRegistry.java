@@ -6,7 +6,9 @@ import com.google.common.collect.ImmutableMap;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedStringList;
 import org.ambraproject.rhino.view.article.ArticleInputView;
+import org.ambraproject.rhino.view.article.AuthorView;
 import org.ambraproject.rhino.view.article.DoiList;
+import org.ambraproject.rhino.view.article.ListInputView;
 import org.ambraproject.rhino.view.user.AuthIdList;
 
 import java.lang.reflect.Type;
@@ -44,14 +46,14 @@ public class AdapterRegistry {
 
       .add(org.ambraproject.rhino.view.JsonWrapper.class)
 
-      .add(org.ambraproject.rhino.view.article.ArticleAuthorView.class)
+      .add(org.ambraproject.rhino.view.article.ArticleIssueOutputView.ListView.class)
+      .add(org.ambraproject.rhino.view.article.ArticleIssueOutputView.class)
+      .add(org.ambraproject.rhino.view.article.ArticleOutputView.AugmentedView.class)
       .add(org.ambraproject.rhino.view.article.ArticleOutputView.class)
       .add(org.ambraproject.rhino.view.article.ArticleStateView.class)
       .add(org.ambraproject.rhino.view.article.ArticleViewList.class)
       .add(org.ambraproject.rhino.view.article.CategoryView.class)
       .add(org.ambraproject.rhino.view.article.RelatedArticleView.class)
-      .add(org.ambraproject.rhino.view.article.ArticleIssueOutputView.class)
-      .add(org.ambraproject.rhino.view.article.ArticleIssueOutputView.ListView.class)
 
       .add(org.ambraproject.rhino.view.asset.groomed.GroomedAssetFileView.class)
       .add(org.ambraproject.rhino.view.asset.groomed.GroomedImageView.class)
@@ -59,17 +61,17 @@ public class AdapterRegistry {
       .add(org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView.class)
       .add(org.ambraproject.rhino.view.asset.raw.RawAssetFileView.class)
 
+      .add(org.ambraproject.rhino.view.comment.AnnotationNodeView.class)
+      .add(org.ambraproject.rhino.view.comment.AnnotationOutputView.class)
+
+      .add(org.ambraproject.rhino.view.journal.ArticleListView.class)
       .add(org.ambraproject.rhino.view.journal.IssueOutputView.class)
-      .add(org.ambraproject.rhino.view.journal.IssueOutputView.ListView.class)
       .add(org.ambraproject.rhino.view.journal.JournalListView.class)
       .add(org.ambraproject.rhino.view.journal.JournalNonAssocView.class)
       .add(org.ambraproject.rhino.view.journal.JournalNonAssocView.ListView.class)
       .add(org.ambraproject.rhino.view.journal.JournalOutputView.class)
       .add(org.ambraproject.rhino.view.journal.VolumeListView.class)
       .add(org.ambraproject.rhino.view.journal.VolumeOutputView.class)
-      .add(org.ambraproject.rhino.view.journal.VolumeOutputView.ListView.class)
-
-      .add(org.ambraproject.rhino.view.AnnotationOutputView.class)
 
       .build();
 
@@ -84,6 +86,7 @@ public class AdapterRegistry {
       .put(DoiList.class, KeyedStringList.ADAPTER)
       .put(AuthIdList.class, KeyedStringList.ADAPTER)
       .put(ArticleInputView.class, ArticleInputView.DESERIALIZER)
+      .put(ListInputView.class, ListInputView.DESERIALIZER)
       .build();
 
 

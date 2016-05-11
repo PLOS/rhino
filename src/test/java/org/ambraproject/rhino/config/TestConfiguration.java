@@ -31,11 +31,8 @@ import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.DummyTaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
-import org.ambraproject.rhino.service.taxonomy.TaxonomyLookupService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
-import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyLookupServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyServiceImpl;
-import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.service.article.ArticleService;
 import org.ambraproject.service.article.ArticleServiceImpl;
 import org.ambraproject.service.syndication.SyndicationService;
@@ -164,16 +161,6 @@ public class TestConfiguration extends BaseConfiguration {
   @Bean
   public TaxonomyService taxonomyService() {
     return new TaxonomyServiceImpl();
-  }
-
-  @Bean
-  public TaxonomyLookupService taxonomyLookupService() {
-    return new TaxonomyLookupService() {
-      @Override
-      public Transceiver read(String journal, String parent) throws IOException {
-        throw new UnsupportedOperationException("Dummy service");
-      }
-    };
   }
 
   @Bean

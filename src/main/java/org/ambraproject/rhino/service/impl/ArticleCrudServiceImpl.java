@@ -18,8 +18,6 @@
  */
 package org.ambraproject.rhino.service.impl;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -36,7 +34,6 @@ import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
-import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -46,12 +43,12 @@ import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
-import org.ambraproject.rhino.view.article.ArticleAuthorView;
+import org.ambraproject.rhino.view.article.ArticleAllAuthorsView;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
 import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
+import org.ambraproject.rhino.view.article.AuthorView;
 import org.ambraproject.rhino.view.article.RelatedArticleView;
-import org.ambraproject.views.AuthorView;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -75,6 +72,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -100,12 +98,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   private final LegacyIngestionService legacyIngestionService = new LegacyIngestionService(this);
   private final VersionedIngestionService versionedIngestionService = new VersionedIngestionService(this);
-
-  private boolean articleExistsAt(DoiBasedIdentity id) {
-    DetachedCriteria criteria = DetachedCriteria.forClass(Article.class)
-        .add(Restrictions.eq("doi", id.getKey()));
-    return exists(criteria);
-  }
 
   @Override
   public Article findArticleById(DoiBasedIdentity id) {
@@ -140,14 +132,11 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
   }
 
-  @VisibleForTesting
-  public static boolean shouldSaveAssetFile(String filename, String articleXmlFilename) {
-    return LegacyIngestionService.shouldSaveAssetFile(filename, articleXmlFilename);
-  }
-
   @Override
   public void repopulateCategories(ArticleIdentity id) throws IOException {
-    legacyIngestionService.repopulateCategories(id);
+    Article article = findArticleById(id);
+    Document xml = parseXml(readXml(id));
+    legacyIngestionService.populateCategories(article, xml);
   }
 
   static RestClientException complainAboutXml(XmlContentException e) {
@@ -317,12 +306,18 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       protected Object getData() throws IOException {
         Document doc = parseXml(readXml(id));
         List<AuthorView> authors;
+        List<String> authorContributions;
+        List<String> competingInterests;
+        List<String> correspondingAuthorList;
         try {
           authors = AuthorsXmlExtractor.getAuthors(doc, xpathReader);
+          authorContributions = AuthorsXmlExtractor.getAuthorContributions(doc, xpathReader);
+          competingInterests = AuthorsXmlExtractor.getCompetingInterests(doc, xpathReader);
+          correspondingAuthorList = AuthorsXmlExtractor.getCorrespondingAuthorList(doc, xpathReader);
         } catch (XPathException e) {
           throw new RuntimeException("Invalid XML when parsing authors from: " + id, e);
         }
-        return ArticleAuthorView.createList(authors);
+        return new ArticleAllAuthorsView(authors, authorContributions, competingInterests, correspondingAuthorList);
       }
     };
   }
@@ -408,10 +403,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
 
     for (ArticleAsset asset : article.getAssets()) {
-      if (AssetIdentity.hasFile(asset)) {
-        AssetFileIdentity assetFileIdentity = AssetFileIdentity.from(asset);
-        deleteAssetFile(assetFileIdentity);
-      }
+      AssetFileIdentity assetFileIdentity = AssetFileIdentity.from(asset);
+      deleteAssetFile(assetFileIdentity);
     }
     hibernateTemplate.delete(article);
   }

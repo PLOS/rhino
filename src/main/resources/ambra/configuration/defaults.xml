@@ -168,9 +168,9 @@
             https://${ambra.network.hosts.cas}:${ambra.network.ports.cas-ssl}${ambra.services.registration.appContext}
           </base>
           <!-- properties below are used by pub app to determine where to send the user for certain actions -->
-          <registration>${ambra.services.registration.url.base}/register.action</registration>
-          <change-password>${ambra.services.registration.url.base}/changePassword.action</change-password>
-          <change-email>${ambra.services.registration.url.base}/changeEmail.action</change-email>
+          <registration>${ambra.services.registration.url.base}/registration/new</registration>
+          <change-password>${ambra.services.registration.url.base}/account/update-password</change-password>
+          <change-email>${ambra.services.registration.url.base}/account/update-email</change-email>
         </url>
       </registration>
 

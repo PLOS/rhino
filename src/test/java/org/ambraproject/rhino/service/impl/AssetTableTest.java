@@ -41,12 +41,7 @@ public class AssetTableTest {
 
   @DataProvider
   public Object[][] ingestibles() {
-    File[] ingestibles = new File("src/test/resources/articles/").listFiles(new FilenameFilter() {
-      @Override
-      public boolean accept(File dir, String name) {
-        return name.endsWith(".zip");
-      }
-    });
+    File[] ingestibles = new File("src/test/resources/articles/").listFiles((dir, name) -> name.endsWith(".zip"));
     return Lists.transform(Arrays.asList(ingestibles), new Function<File, Object[]>() {
       @Override
       public Object[] apply(File file) {

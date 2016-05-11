@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.service;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
@@ -16,8 +17,10 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class RecentArticleQueryTest extends BaseRhinoTransactionalTest {
 
@@ -28,14 +31,21 @@ public class RecentArticleQueryTest extends BaseRhinoTransactionalTest {
                                       Journal dummyJournal,
                                       Calendar pubDate,
                                       String... types) {
+    String doi = DoiBasedIdentity.create(id).getKey();
+
     Article article = new Article();
-    article.setDoi(DoiBasedIdentity.create(id).getKey());
+    article.setDoi(doi);
     article.setJournals(ImmutableSet.of(dummyJournal));
     article.setDate(pubDate.getTime());
 
     article.setTitle(id);
-    article.setAssets(ImmutableList.<ArticleAsset>of());
     article.setTypes(ImmutableSet.copyOf(types));
+    article.setCategories(ImmutableMap.of());
+
+    ArticleAsset xml = new ArticleAsset();
+    xml.setDoi(doi);
+    xml.setExtension("XML");
+    article.setAssets(ImmutableList.of(xml));
 
     hibernateTemplate.save(article);
     return article;
@@ -61,7 +71,26 @@ public class RecentArticleQueryTest extends BaseRhinoTransactionalTest {
     assertEquals(jsonObjects.size(), expectedDois.length);
     for (int i = 0; i < expectedDois.length; i++) {
       Map<?, ?> jsonObject = (Map<?, ?>) jsonObjects.get(i);
-      assertEquals(jsonObject.get("doi"), expectedDois[i]);
+      String expectedDoi = expectedDois[i];
+      assertEquals(jsonObject.get("doi"), DoiBasedIdentity.create(expectedDoi).getKey());
+    }
+  }
+
+  /**
+   * Assert that the given DOIs appear in the given order, allowing other ones to appear in between.
+   */
+  private static void assertDoiOrder(List<?> jsonObjects, String... expectedDois) {
+    assertTrue(jsonObjects.size() >= expectedDois.length);
+    List<String> actualDois = jsonObjects.stream()
+        .map(obj -> (String) ((Map<?, ?>) obj).get("doi"))
+        .collect(Collectors.toList());
+    int lastIndex = -1;
+    for (int i = 0; i < expectedDois.length; i++) {
+      String expectedDoi = DoiBasedIdentity.create(expectedDois[i]).getKey();
+      int index = actualDois.indexOf(expectedDoi);
+      assertTrue(index >= 0, "Expected DOI is absent");
+      assertTrue(index > lastIndex, "DOI is not in expected order");
+      lastIndex = index;
     }
   }
 
@@ -74,7 +103,7 @@ public class RecentArticleQueryTest extends BaseRhinoTransactionalTest {
     createRecentArticle("stale", dummyJournal, timestamp(-1), "t1", "t3");
     createRecentArticle("otherType", dummyJournal, timestamp(2), "t2", "t3");
     createRecentArticle("issueImageType", dummyJournal, timestamp(2),
-            "http://rdf.plos.org/RDF/articleType/Issue%20Image"); // should always be filtered out
+        "http://rdf.plos.org/RDF/articleType/Issue%20Image"); // should always be filtered out
 
     List<?> results;
 
@@ -97,14 +126,14 @@ public class RecentArticleQueryTest extends BaseRhinoTransactionalTest {
     results = executeTest(RecentArticleQuery.builder()
         .setArticleTypes(ImmutableList.of("*")));
     // With no type preference order, "otherType" should come before "recent" because it is more recent.
-    assertDois(results, "otherType", "veryRecent", "recent");
+    assertDoiOrder(results, "otherType", "recent");
 
     results = executeTest(RecentArticleQuery.builder()
         .setMinimum(4)
         .setArticleTypes(ImmutableList.of("t1", "*")));
     // Because it had to exceed the timestamp to get up to the minimum of 4,
     // it ignores article type order and sorts in chronological order.
-    assertDois(results, "otherType", "veryRecent", "recent", "stale");
+    assertDoiOrder(results, "otherType", "recent", "stale");
 
     results = executeTest(RecentArticleQuery.builder()
         .setArticleTypes(ImmutableList.of("t1"))

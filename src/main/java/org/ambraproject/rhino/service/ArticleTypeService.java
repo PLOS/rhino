@@ -1,6 +1,10 @@
 package org.ambraproject.rhino.service;
 
 import org.ambraproject.models.Article;
+import org.ambraproject.rhino.util.response.Transceiver;
+
+import java.io.IOException;
+import java.util.Collection;
 
 /**
  * Access data about article types.
@@ -24,5 +28,10 @@ public interface ArticleTypeService {
    * @return the article's type, or {@code null} if the article has none
    */
   public abstract ArticleType getArticleType(Article article);
+
+  /**
+   * All article types as defined by our system, in display order.
+   */
+  public abstract Transceiver listArticleTypes() throws IOException;
 
 }
