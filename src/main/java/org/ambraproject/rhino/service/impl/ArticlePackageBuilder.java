@@ -3,20 +3,16 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.CaseFormat;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Maps;
+import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Sets;
 import org.ambraproject.rhino.content.xml.ArticleXml;
-import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
-import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.Archive;
 import org.plos.crepo.model.RepoObject;
-import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 
 import javax.ws.rs.core.MediaType;
 import javax.xml.transform.OutputKeys;
@@ -28,9 +24,14 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 class ArticlePackageBuilder {
 
@@ -60,7 +61,7 @@ class ArticlePackageBuilder {
 
   public ArticlePackage build() {
     Map<String, RepoObject> articleObjects = buildArticleObjects();
-    List<ScholarlyWorkInput> assetWorks = buildAssetWorks(article.findAllAssetNodes());
+    List<ScholarlyWorkInput> assetWorks = buildAssetWorks();
 
     return new ArticlePackage(new ScholarlyWorkInput(articleIdentity, articleObjects, AssetType.ARTICLE.identifier), assetWorks);
   }
@@ -112,79 +113,44 @@ class ArticlePackageBuilder {
   /**
    * Build an asset table from input being ingested.
    *
-   * @param assetNodeMap encapsulated descriptions of references to asset DOIs in the manuscript
    * @return the built asset table
    */
-  private List<ScholarlyWorkInput> buildAssetWorks(AssetNodesByDoi assetNodeMap) {
+  private List<ScholarlyWorkInput> buildAssetWorks() {
     List<ScholarlyWorkInput> works = new ArrayList<>();
     for (ManifestXml.Asset asset : manifest.getAssets()) {
-      AssetType assetType = findAssetType(assetNodeMap, asset);
+      AssetType assetType = ASSET_TYPE_DICTIONARY.get(asset.getType());
       if (assetType == AssetType.ARTICLE) continue;
-      ImmutableMap.Builder<String, RepoObject> assetObjects = ImmutableMap.builder();
       AssetIdentity assetIdentity = AssetIdentity.create(asset.getUri());
+
+      Set<FileType> fileTypes = new HashSet<>();
+      Map<String, RepoObject> assetObjects = new LinkedHashMap<>();
       for (ManifestXml.Representation representation : asset.getRepresentations()) {
-        FileType fileType = assetType.getFileType(representation.getName()); // TODO: Use representation.getType instead
-        assetObjects.put(fileType.identifier, buildObjectFor(representation.getFile()));
+        FileType fileType = FILE_TYPE_DICTIONARY.get(representation.getType());
+        fileTypes.add(fileType);
+        RepoObject previous = assetObjects.put(getKey(fileType), buildObjectFor(representation.getFile()));
+        if (previous != null) {
+          throw new ArticlePackageException(String.format("Multiple files of type %s on asset %s", fileType, assetType));
+        }
       }
-      works.add(new ScholarlyWorkInput(assetIdentity, assetObjects.build(), assetType.identifier));
+      validate(assetType, fileTypes);
+      works.add(new ScholarlyWorkInput(assetIdentity, assetObjects, assetType.identifier));
     }
     return works;
   }
 
-  private static AssetType findAssetType(AssetNodesByDoi assetNodeMap, ManifestXml.Asset asset) {
-    if (asset.getAssetTagName().equals(ManifestXml.AssetTagName.ARTICLE)) {
-      return AssetType.ARTICLE;
+  private static void validate(AssetType assetType, Set<FileType> fileTypes) {
+    if (!fileTypes.containsAll(assetType.getRequiredFileTypes())) {
+      throw new ArticlePackageException(
+          String.format("Not all required files for %s are present. Missing: %s",
+              assetType, Sets.difference(assetType.getRequiredFileTypes(), fileTypes)));
     }
-    AssetIdentity assetIdentity = AssetIdentity.create(asset.getUri());
-    if (!assetNodeMap.getDois().contains(assetIdentity.getIdentifier())) {
-      if (asset.isStrikingImage()) {
-        return AssetType.STANDALONE_STRIKING_IMAGE;
-      } else {
-        throw new RestClientException("Asset not mentioned in manuscript", HttpStatus.BAD_REQUEST);
-      }
-    }
-
-    List<Node> nodes = assetNodeMap.getNodes(assetIdentity.getIdentifier());
-    AssetType identifiedType = null;
-    for (Node node : nodes) {
-      String nodeName = node.getNodeName();
-      AssetType assetType = getByXmlNodeName(nodeName);
-      if (assetType != null) {
-        if (identifiedType == null) {
-          identifiedType = assetType;
-        } else if (!identifiedType.equals(assetType)) {
-          String message = String.format("Ambiguous nodes: %s, %s", identifiedType, assetType);
-          throw new RestClientException(message, HttpStatus.BAD_REQUEST);
-        }
-      }
-    }
-    if (identifiedType == null) {
-      throw new RestClientException("Type not recognized", HttpStatus.BAD_REQUEST);
-    }
-    return identifiedType;
-  }
-
-  private static AssetType getByXmlNodeName(String nodeName) {
-    switch (nodeName) {
-      case "fig":
-        return AssetType.FIGURE;
-      case "table-wrap":
-        return AssetType.TABLE;
-      case "graphic":
-      case "disp-formula":
-      case "inline-formula":
-        return AssetType.GRAPHIC;
-      case "supplementary-material":
-        return AssetType.SUPPLEMENTARY_MATERIAL;
-      default:
-        throw new RestClientException("XML node name could not be matched to asset type: " + nodeName, HttpStatus.BAD_REQUEST);
+    if (!assetType.getSupportedFileTypes().containsAll(fileTypes)) {
+      throw new ArticlePackageException(
+          String.format("Unsupported file types for %s: %s",
+              assetType, Sets.difference(fileTypes, assetType.getSupportedFileTypes())));
     }
   }
 
-  private static RuntimeException unmatchedReprException(String reprName) {
-    String message = "Manifest contains unmatched \"repr\" value: " + reprName;
-    return new RestClientException(message, HttpStatus.BAD_REQUEST);
-  }
 
   /**
    * The type of an asset (with a unique asset DOI, represented by one or more files) as determined by where the asset
@@ -205,18 +171,6 @@ class ArticlePackageBuilder {
       protected ImmutableSet<FileType> getRequiredFileTypes() {
         return REQUIRED;
       }
-
-      @Override
-      protected FileType getFileType(String reprName) {
-        switch (reprName) {
-          case "XML":
-            return FileType.MANUSCRIPT;
-          case "PDF":
-            return FileType.PRINTABLE;
-          default:
-            throw unmatchedReprException(reprName);
-        }
-      }
     },
 
     FIGURE {
@@ -224,22 +178,12 @@ class ArticlePackageBuilder {
       protected ImmutableSet<FileType> getSupportedFileTypes() {
         return STANDARD_THUMBNAIL_FILE_TYPES;
       }
-
-      @Override
-      protected FileType getFileType(String reprName) {
-        return getFileTypeForStandardThumbnails(reprName);
-      }
     },
 
     TABLE {
       @Override
       protected ImmutableSet<FileType> getSupportedFileTypes() {
         return STANDARD_THUMBNAIL_FILE_TYPES;
-      }
-
-      @Override
-      protected FileType getFileType(String reprName) {
-        return getFileTypeForStandardThumbnails(reprName);
       }
     },
 
@@ -250,19 +194,6 @@ class ArticlePackageBuilder {
       protected ImmutableSet<FileType> getSupportedFileTypes() {
         return TYPES;
       }
-
-      @Override
-      protected FileType getFileType(String reprName) {
-        switch (reprName) {
-          case "TIF":
-          case "GIF":
-            return FileType.ORIGINAL;
-          case "PNG":
-            return FileType.THUMBNAIL;
-          default:
-            throw unmatchedReprException(reprName);
-        }
-      }
     },
 
     SUPPLEMENTARY_MATERIAL {
@@ -271,12 +202,6 @@ class ArticlePackageBuilder {
       @Override
       protected ImmutableSet<FileType> getSupportedFileTypes() {
         return TYPES;
-      }
-
-      @Override
-      protected FileType getFileType(String reprName) {
-        // Accept all file types
-        return FileType.SUPPLEMENTARY;
       }
     },
 
@@ -287,65 +212,26 @@ class ArticlePackageBuilder {
       protected ImmutableSet<FileType> getSupportedFileTypes() {
         return TYPES;
       }
-
-      @Override
-      protected FileType getFileType(String reprName) {
-        // Accept all file types
-        // TODO: Validate on expected image file types?
-        return FileType.STRIKING_IMAGE;
-      }
     };
 
     // Shared by FIGURE and TABLE
     private static final ImmutableSet<FileType> STANDARD_THUMBNAIL_FILE_TYPES = Sets.immutableEnumSet(
         FileType.ORIGINAL, FileType.SMALL, FileType.INLINE, FileType.MEDIUM, FileType.LARGE);
 
-    private static FileType getFileTypeForStandardThumbnails(String reprName) {
-      switch (reprName) {
-        case "TIF":
-        case "TIFF":
-          return FileType.ORIGINAL;
-        case "PNG_S":
-          return FileType.SMALL;
-        case "PNG_I":
-          return FileType.INLINE;
-        case "PNG_M":
-          return FileType.MEDIUM;
-        case "PNG_L":
-          return FileType.LARGE;
-        default:
-          throw unmatchedReprException(reprName);
-      }
-    }
-
     private final String identifier = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name());
 
     /**
-     * Match a repr name (as used in {@link org.ambraproject.rhino.content.xml.ManifestXml}) to a file type as defined
-     * for this asset type. Must be one of the values contained in the set that this asset type returns for {@link
-     * #getSupportedFileTypes}.
-     *
-     * @param reprName an uppercase repr name from a manifest file
-     * @return the file type that will represent the file in JSON article metadata
-     * @throws RestClientException if {@code reprName} is not matched to a file type for this asset type
-     */
-    protected abstract FileType getFileType(String reprName);
-
-    /**
-     * Return the set of file types that this asset type may return from {@link #getFileType}.
+     * Return the set of file types that an ingestible may supply for each asset of this type.
      */
     protected abstract ImmutableSet<FileType> getSupportedFileTypes();
 
     /**
-     * Return the set of file types that an ingestible must supply for each asset of this type. Must be a subset of
-     * {@link #getSupportedFileTypes}.
+     * Return the set of file types that an ingestible must supply for each asset of this type. Must be a subset of what
+     * is returned from {@link #getSupportedFileTypes}.
      */
     protected ImmutableSet<FileType> getRequiredFileTypes() {
       return getSupportedFileTypes();
     }
-
-    private static final ImmutableMap<String, AssetType> BY_IDENTIFIER = Maps.uniqueIndex(EnumSet.allOf(AssetType.class),
-        input -> input.identifier);
   }
 
   /**
@@ -371,16 +257,45 @@ class ArticlePackageBuilder {
 
     // An image that is used only as a striking image and is not otherwise part of the article
     STRIKING_IMAGE;
+  }
 
-    private final String identifier = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name());
 
-    private static final ImmutableMap<String, FileType> BY_IDENTIFIER = Maps.uniqueIndex(EnumSet.allOf(FileType.class),
-        input -> input.identifier);
+  public static class ArticlePackageException extends RuntimeException {
+    private ArticlePackageException(String message) {
+      super(message);
+    }
 
-    private static String unrecognizedFileType(String fileTypeIdentifier) {
-      return String.format("File type not recognized: \"%s\". Must be one of: %s",
-          fileTypeIdentifier, FileType.BY_IDENTIFIER.keySet());
+    private ArticlePackageException(String message, Throwable cause) {
+      super(message, cause);
     }
   }
+
+  private static String getKey(Enum<?> value) {
+    return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, value.name());
+  }
+
+  private static class EnumNameDictionary<E extends Enum<E>> {
+    private final ImmutableSortedMap<String, E> map;
+
+    private EnumNameDictionary(Class<E> enumType) {
+      this.map = ImmutableSortedMap.copyOf(
+          EnumSet.allOf(enumType).stream()
+              .collect(Collectors.toMap(ArticlePackageBuilder::getKey, Function.identity())),
+          String.CASE_INSENSITIVE_ORDER);
+    }
+
+    public E get(String name) {
+      E value = map.get(name);
+      if (value == null) {
+        String message = String.format("Type not recognized: \"%s\". Must be one of: %s",
+            name, map.keySet());
+        throw new ArticlePackageException(message);
+      }
+      return value;
+    }
+  }
+
+  private static final EnumNameDictionary<AssetType> ASSET_TYPE_DICTIONARY = new EnumNameDictionary<>(AssetType.class);
+  private static final EnumNameDictionary<FileType> FILE_TYPE_DICTIONARY = new EnumNameDictionary<>(FileType.class);
 
 }

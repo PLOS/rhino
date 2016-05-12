@@ -186,6 +186,7 @@ public class ManifestXml extends AbstractXpathReader {
       this.isStrikingImage = isStrikingImage;
       this.representations = ImmutableList.copyOf(representations);
       validateUniqueKeys(this.representations, Representation::getName);
+      validateUniqueKeys(this.representations, Representation::getType);
     }
 
     public AssetTagName getAssetTagName() {

@@ -92,7 +92,12 @@ class VersionedIngestionService {
     final Article articleMetadata = parsedArticle.build(new Article());
     articleMetadata.setDoi(articleIdentity.getKey());
 
-    ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry, manuscriptRepr, printableRepr).build();
+    ArticlePackage articlePackage;
+    try {
+      articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry, manuscriptRepr, printableRepr).build();
+    } catch (ArticlePackageBuilder.ArticlePackageException e) {
+      throw new RestClientException("Invalid article package: "+e.getMessage(), HttpStatus.BAD_REQUEST, e);
+    }
     Collection<Long> createdWorkPks = persist(articlePackage);
 
     persistRevision(articleIdentity, createdWorkPks, revision.orElseGet(parsedArticle::getRevisionNumber));
