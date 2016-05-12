@@ -13,7 +13,6 @@
 
 package org.ambraproject.rhino.content.xml;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
@@ -107,9 +106,9 @@ public class ManifestXml extends AbstractXpathReader {
     private Parsed() {
       List<Asset> assets = new ArrayList<>();
 
-      assets.add(parseAssetNode(AssetType.ARTICLE, readNode("//article")));
+      assets.add(parseAssetNode(AssetTagName.ARTICLE, readNode("//article")));
       for (Node objectNode : readNodeList("//object")) {
-        assets.add(parseAssetNode(AssetType.OBJECT, objectNode));
+        assets.add(parseAssetNode(AssetTagName.OBJECT, objectNode));
       }
       validateUniqueKeys(assets, Asset::getUri);
       this.assets = ImmutableList.copyOf(assets);
@@ -117,14 +116,15 @@ public class ManifestXml extends AbstractXpathReader {
       this.archivalFiles = parseArchivalFiles(readNode("//archival"));
     }
 
-    private Asset parseAssetNode(AssetType assetType, Node assetNode) {
+    private Asset parseAssetNode(AssetTagName assetTagName, Node assetNode) {
+      String type = readString("@type", assetNode);
       String uri = readString("@uri", assetNode);
       String mainEntry = readString("@main-entry", assetNode);
       String strkImage = readString("@strkImage", assetNode);
       boolean isStrikingImage = Boolean.toString(true).equalsIgnoreCase(strkImage);
 
       List<Representation> representations = parseRepresentations(assetNode);
-      return new Asset(assetType, uri, mainEntry, isStrikingImage, representations);
+      return new Asset(assetTagName, type, uri, mainEntry, isStrikingImage, representations);
     }
 
     private ImmutableList<Representation> parseRepresentations(Node assetNode) {
@@ -166,28 +166,34 @@ public class ManifestXml extends AbstractXpathReader {
   }
 
 
-  public static enum AssetType {
+  public static enum AssetTagName {
     ARTICLE, OBJECT, ARCHIVAL;
   }
 
   public static class Asset {
-    private final AssetType assetType;
+    private final AssetTagName assetTagName;
+    private final String type;
     private final String uri;
     private final Optional<String> mainEntry;
     private final boolean isStrikingImage;
     private final ImmutableList<Representation> representations;
 
-    private Asset(AssetType assetType, String uri, String mainEntry, boolean isStrikingImage, List<Representation> representations) {
-      this.isStrikingImage = isStrikingImage;
-      this.assetType = Preconditions.checkNotNull(assetType);
-      this.uri = Preconditions.checkNotNull(uri);
+    private Asset(AssetTagName assetTagName, String type, String uri, String mainEntry, boolean isStrikingImage, List<Representation> representations) {
+      this.assetTagName = Objects.requireNonNull(assetTagName);
+      this.type = Objects.requireNonNull(type);
+      this.uri = Objects.requireNonNull(uri);
       this.mainEntry = Optional.ofNullable(mainEntry);
+      this.isStrikingImage = isStrikingImage;
       this.representations = ImmutableList.copyOf(representations);
       validateUniqueKeys(this.representations, Representation::getName);
     }
 
-    public AssetType getAssetType() {
-      return assetType;
+    public AssetTagName getAssetTagName() {
+      return assetTagName;
+    }
+
+    public String getType() {
+      return type;
     }
 
     public String getUri() {
@@ -211,13 +217,13 @@ public class ManifestXml extends AbstractXpathReader {
       if (this == o) return true;
       if (o == null || getClass() != o.getClass()) return false;
       Asset asset = (Asset) o;
-      return isStrikingImage == asset.isStrikingImage && assetType == asset.assetType && uri.equals(asset.uri)
+      return isStrikingImage == asset.isStrikingImage && assetTagName == asset.assetTagName && uri.equals(asset.uri)
           && mainEntry.equals(asset.mainEntry) && representations.equals(asset.representations);
     }
 
     @Override
     public int hashCode() {
-      return 31 * (31 * (31 * (31 * assetType.hashCode() + uri.hashCode()) + mainEntry.hashCode())
+      return 31 * (31 * (31 * (31 * assetTagName.hashCode() + uri.hashCode()) + mainEntry.hashCode())
           + (isStrikingImage ? 1 : 0)) + representations.hashCode();
     }
   }

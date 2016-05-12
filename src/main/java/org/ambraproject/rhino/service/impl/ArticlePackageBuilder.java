@@ -132,7 +132,7 @@ class ArticlePackageBuilder {
   }
 
   private static AssetType findAssetType(AssetNodesByDoi assetNodeMap, ManifestXml.Asset asset) {
-    if (asset.getAssetType().equals(ManifestXml.AssetType.ARTICLE)) {
+    if (asset.getAssetTagName().equals(ManifestXml.AssetTagName.ARTICLE)) {
       return AssetType.ARTICLE;
     }
     AssetIdentity assetIdentity = AssetIdentity.create(asset.getUri());
