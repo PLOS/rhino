@@ -10,7 +10,6 @@ import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.Archive;
@@ -66,12 +65,11 @@ class ArticlePackageBuilder {
     return new ArticlePackage(new ScholarlyWorkInput(articleIdentity, articleObjects, AssetType.ARTICLE.identifier), assetWorks);
   }
 
-  private RepoObject buildObjectFor(ManifestXml.Representation repr, String contentType) {
-    ManifestXml.ManifestFile file = repr.getFile();
-    return new RepoObject.RepoObjectBuilder(file.getCrepoKey())
-        .contentAccessor(archive.getContentAccessorFor(file.getEntry()))
-        .contentType(contentType)
-        .downloadName(file.getEntry())
+  private RepoObject buildObjectFor(ManifestXml.ManifestFile manifestFile) {
+    return new RepoObject.RepoObjectBuilder(manifestFile.getCrepoKey())
+        .contentAccessor(archive.getContentAccessorFor(manifestFile.getEntry()))
+        .contentType(manifestFile.getMimetype())
+        .downloadName(manifestFile.getEntry())
         .build();
   }
 
@@ -83,8 +81,8 @@ class ArticlePackageBuilder {
             .downloadName(manifestEntry)
             .contentType(MediaType.APPLICATION_XML)
             .build());
-    articleObjects.put("manuscript", buildObjectFor(manuscriptRepr, MediaType.APPLICATION_XML));
-    articleObjects.put("printable", buildObjectFor(printableRepr, "application/pdf"));
+    articleObjects.put("manuscript", buildObjectFor(manuscriptRepr.getFile()));
+    articleObjects.put("printable", buildObjectFor(printableRepr.getFile()));
 
     articleObjects.put("front",
         new RepoObject.RepoObjectBuilder("front/" + articleIdentity.getIdentifier())
@@ -125,16 +123,8 @@ class ArticlePackageBuilder {
       ImmutableMap.Builder<String, RepoObject> assetObjects = ImmutableMap.builder();
       AssetIdentity assetIdentity = AssetIdentity.create(asset.getUri());
       for (ManifestXml.Representation representation : asset.getRepresentations()) {
-        ManifestXml.ManifestFile file = representation.getFile();
-        String entryName = file.getEntry();
-        FileType fileType = assetType.getFileType(representation.getName());
-
-        assetObjects.put(fileType.identifier,
-            new RepoObject.RepoObjectBuilder(file.getCrepoKey())
-                .contentAccessor(archive.getContentAccessorFor(entryName))
-                .downloadName(entryName)
-                .contentType(AssetFileIdentity.create(asset.getUri(), representation.getName()).inferContentType().toString())
-                .build());
+        FileType fileType = assetType.getFileType(representation.getName()); // TODO: Use representation.getType instead
+        assetObjects.put(fileType.identifier, buildObjectFor(representation.getFile()));
       }
       works.add(new ScholarlyWorkInput(assetIdentity, assetObjects.build(), assetType.identifier));
     }
