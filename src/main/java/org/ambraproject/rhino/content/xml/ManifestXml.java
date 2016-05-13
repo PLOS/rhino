@@ -142,7 +142,7 @@ public class ManifestXml extends AbstractXpathReader {
 
     private ImmutableList<ManifestFile> parseArchivalFiles(Node archivalNode) {
       return ImmutableList.copyOf(
-          readNodeList("child::file").stream()
+          readNodeList("child::representation", archivalNode).stream()
               .map(this::parseFile)
               .collect(Collectors.toList()));
     }
@@ -180,7 +180,7 @@ public class ManifestXml extends AbstractXpathReader {
 
     private Asset(AssetTagName assetTagName, String type, String uri, String mainEntry, boolean isStrikingImage, List<Representation> representations) {
       this.assetTagName = Objects.requireNonNull(assetTagName);
-      this.type = Objects.requireNonNull(type);
+      this.type = type; // TODO: Apply Objects.requireNonNull when the input contract requires this
       this.uri = Objects.requireNonNull(uri);
       this.mainEntry = Optional.ofNullable(mainEntry);
       this.isStrikingImage = isStrikingImage;
