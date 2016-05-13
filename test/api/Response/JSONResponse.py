@@ -25,8 +25,9 @@ class JSONResponse(AbstractResponse):
       print 'Actual response was: "%s"' % response
       raise e
 
-  def get_json(self):
-    print(self._json)
+  def get_json(self, printvalue=True):
+    if printvalue:
+      print(self._json)
     return self._json
 
   def jpath(self, path):
