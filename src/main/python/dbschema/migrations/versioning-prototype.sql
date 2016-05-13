@@ -48,7 +48,7 @@ CREATE TABLE `ambra`.`scholarlyWorkFile` (
   `scholarlyWorkId` BIGINT(20) NOT NULL,
   `crepoKey` VARCHAR(255) NOT NULL,
   `crepoUuid` VARCHAR(36) NOT NULL,
-  `fileType` VARCHAR(128) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
+  `fileType` VARCHAR(128) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci',
   PRIMARY KEY (`fileId`),
   CONSTRAINT `fk_scholarlyWorkFile_1`
     FOREIGN KEY (`scholarlyWorkId`)

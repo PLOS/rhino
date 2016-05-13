@@ -31,6 +31,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 class ArticlePackageBuilder {
 
@@ -61,8 +62,11 @@ class ArticlePackageBuilder {
   public ArticlePackage build() {
     Map<String, RepoObject> articleObjects = buildArticleObjects();
     List<ScholarlyWorkInput> assetWorks = buildAssetWorks(article.findAllAssetNodes());
+    List<RepoObject> archivalFiles = manifest.getArchivalFiles().stream()
+        .map(this::buildObjectFor).collect(Collectors.toList());
 
-    return new ArticlePackage(new ScholarlyWorkInput(articleIdentity, articleObjects, AssetType.ARTICLE.identifier), assetWorks);
+    return new ArticlePackage(new ScholarlyWorkInput(articleIdentity, articleObjects, AssetType.ARTICLE.identifier),
+        assetWorks, archivalFiles);
   }
 
   private RepoObject buildObjectFor(ManifestXml.ManifestFile manifestFile) {
