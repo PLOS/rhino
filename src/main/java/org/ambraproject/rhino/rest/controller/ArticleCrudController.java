@@ -232,7 +232,8 @@ public class ArticleCrudController extends ArticleSpaceController {
                       @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
     DoiBasedIdentity assetId = DoiBasedIdentity.create(getIdentifier(request));
-    assetFileCrudController.previewFileFromVersionedModel(request, response, "manuscript", revisionNumber, assetId);
+    OptionalInt revisionNumberObj = (revisionNumber == null) ? OptionalInt.empty() : OptionalInt.of(revisionNumber);
+    assetFileCrudController.previewFileFromVersionedModel(request, response, "manuscript", revisionNumberObj, assetId);
   }
 
   /**

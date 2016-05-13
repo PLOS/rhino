@@ -201,8 +201,8 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   }
 
   @Override
-  public RepoObjectMetadata getScholarlyWorkFile(String fileType, Integer revisionNumber, DoiBasedIdentity assetId) {
-    ScholarlyWork work = articleCrudService.getScholarlyWork(assetId, OptionalInt.of(revisionNumber));
+  public RepoObjectMetadata getScholarlyWorkFile(String fileType, OptionalInt revisionNumber, DoiBasedIdentity assetId) {
+    ScholarlyWork work = articleCrudService.getScholarlyWork(assetId, revisionNumber);
     RepoVersion objectVersion = work.getFile(fileType)
         .orElseThrow(() -> new RestClientException("Unrecognized type: " + fileType, HttpStatus.NOT_FOUND));
     return contentRepoService.getRepoObjectMetadata(objectVersion);
