@@ -29,6 +29,6 @@ class IngestiblesJson(BaseServiceTest):
   def verify_get_ingestibles(self, names=None):
     ingestibles = self.parsed.get_json(printvalue=False)
     if names:
-      self.assertTrue(not not ingestibles, "result is not a valid array: %r"%(ingestibles,))
+      self.assertTrue( bool(ingestibles), "result is not a valid array: %r"%(ingestibles,))
       for name in names:
         self.assertIn(name, ingestibles, "%r not found in result %r"%(name, ingestibles))
