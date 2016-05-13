@@ -237,10 +237,15 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public Transceiver readVersionedMetadata(final ArticleIdentity id,
                                            final OptionalInt revisionNumber,
                                            final ArticleMetadataSource source) {
-    return new EntityTransceiver<Article>() {
+    return new Transceiver() {
       @Override
-      protected Article fetchEntity() {
-        return versionedIngestionService.getArticleMetadata(id, revisionNumber, source);
+      protected Calendar getLastModifiedDate() throws IOException {
+        return copyToCalendar(getScholarlyWork(id, revisionNumber).getTimestamp());
+      }
+
+      @Override
+      protected Object getData() throws IOException {
+        return getView(versionedIngestionService.getArticleMetadata(id, revisionNumber, source));
       }
 
       /**
@@ -263,8 +268,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         article.setCategories(ImmutableMap.<Category, Integer>of());
       }
 
-      @Override
-      protected ArticleOutputView getView(Article article) {
+      private ArticleOutputView getView(Article article) {
         kludgeArticleFields(article);
         boolean excludeCitations = (source == ArticleMetadataSource.FRONT_MATTER);
         return articleOutputViewFactory.create(article, excludeCitations);
@@ -277,7 +281,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return new Transceiver() {
       @Override
       protected List<Integer> getData() throws IOException {
-        return hibernateTemplate.execute(session -> {
+        return (List<Integer>) hibernateTemplate.execute(session -> {
           SQLQuery query = session.createSQLQuery("" +
               "SELECT r.revisionNumber " +
               "FROM scholarlyWork sw INNER JOIN revision r " +
@@ -535,7 +539,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     Object[] workResult = hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
-          "SELECT s.scholarlyWorkId, s.doi, s.scholarlyWorkType " +
+          "SELECT s.scholarlyWorkId, s.doi, s.scholarlyWorkType, s.created " +
           "FROM scholarlyWork s " +
           "INNER JOIN revision r ON s.scholarlyWorkId = r.scholarlyWorkId " +
           "WHERE s.doi = :doi AND r.revisionNumber = :revisionNumber");
@@ -550,8 +554,9 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     long workId = ((BigInteger) workResult[0]).longValue();
     String workDoi = (String) workResult[1];
     String workType = (String) workResult[2];
+    Date workTimestamp = (Date) workResult[3];
 
-    List<Object[]> fileResults = hibernateTemplate.execute(session -> {
+    List<Object[]> fileResults = (List<Object[]>) hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
           "SELECT fileType, crepoKey, crepoUuid " +
           "FROM scholarlyWorkFile " +
@@ -564,6 +569,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         (Object[] fileResult) -> RepoVersion.create((String) fileResult[1], (String) fileResult[2])
     ));
 
-    return new ScholarlyWork(DoiBasedIdentity.create(workDoi), workType, fileMap, revision);
+    return new ScholarlyWork(DoiBasedIdentity.create(workDoi), workType, fileMap, revision, workTimestamp.toInstant());
   }
 }

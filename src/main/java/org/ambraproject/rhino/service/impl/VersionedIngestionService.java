@@ -7,6 +7,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
@@ -100,6 +101,8 @@ class VersionedIngestionService {
     }
     Collection<Long> createdWorkPks = persist(articlePackage);
 
+    persistJournal(articleMetadata, createdWorkPks);
+
     persistRevision(articleIdentity, createdWorkPks, revision.orElseGet(parsedArticle::getRevisionNumber));
 
     stubAssociativeFields(articleMetadata);
@@ -164,6 +167,21 @@ class VersionedIngestionService {
           "SELECT LAST_INSERT_ID()").list());
       return scholarlyWorkId.longValue();
     });
+  }
+
+  private void persistJournal(Article article, Collection<Long> articlePks) {
+    Journal publicationJournal = parentService.getPublicationJournal(article);
+    for (Long articlePk : articlePks) {
+      parentService.hibernateTemplate.execute(session -> {
+        SQLQuery query = session.createSQLQuery("" +
+            "INSERT INTO scholarlyWorkJournalJoinTable (scholarlyWorkID, journalID) " +
+            "VALUES (:scholarlyWorkId, :journalID)");
+        query.setParameter("scholarlyWorkId", articlePk);
+        query.setParameter("journalID", publicationJournal.getID());
+
+        return query.executeUpdate();
+      });
+    }
   }
 
   private void persistRelation(long articlePk, long assetPk) {

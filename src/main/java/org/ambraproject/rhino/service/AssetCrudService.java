@@ -28,6 +28,7 @@ import org.plos.crepo.model.RepoObjectMetadata;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.OptionalInt;
 
 public interface AssetCrudService extends DoiBasedCrudService {
 
@@ -65,6 +66,6 @@ public interface AssetCrudService extends DoiBasedCrudService {
   public Transceiver readFileMetadata(AssetFileIdentity id)
       throws IOException;
 
-  public abstract RepoObjectMetadata getScholarlyWorkFile(String fileType, Integer revisionNumber, DoiBasedIdentity assetId);
+  public abstract RepoObjectMetadata getScholarlyWorkFile(String fileType, OptionalInt revisionNumber, DoiBasedIdentity assetId);
 
 }

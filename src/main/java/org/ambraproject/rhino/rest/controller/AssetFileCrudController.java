@@ -47,6 +47,7 @@ import java.sql.Timestamp;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 import static org.ambraproject.rhino.service.impl.AmbraService.reportNotFound;
 
@@ -172,11 +173,12 @@ public class AssetFileCrudController extends DoiBasedCrudController {
                                             @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
     DoiBasedIdentity assetId = DoiBasedIdentity.create(getIdentifier(request));
-    previewFileFromVersionedModel(request, response, fileType, revisionNumber, assetId);
+    OptionalInt revisionNumberObj = (revisionNumber == null) ? OptionalInt.empty() : OptionalInt.of(revisionNumber);
+    previewFileFromVersionedModel(request, response, fileType, revisionNumberObj, assetId);
   }
 
   void previewFileFromVersionedModel(HttpServletRequest request, HttpServletResponse response,
-                                     String fileType, Integer revisionNumber, DoiBasedIdentity assetId)
+                                     String fileType, OptionalInt revisionNumber, DoiBasedIdentity assetId)
       throws IOException {
     RepoObjectMetadata objectMetadata = assetCrudService.getScholarlyWorkFile(fileType, revisionNumber, assetId);
 
