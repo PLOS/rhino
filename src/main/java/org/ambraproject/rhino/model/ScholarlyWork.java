@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.plos.crepo.model.RepoVersion;
 
+import java.time.Instant;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -14,12 +15,14 @@ public class ScholarlyWork {
   private final String type;
   private final ImmutableMap<String, RepoVersion> files;
   private final Optional<Integer> revisionNumber;
+  private final Instant timestamp;
 
-  public ScholarlyWork(DoiBasedIdentity doi, String type, Map<String, RepoVersion> files, Integer revisionNumber) {
+  public ScholarlyWork(DoiBasedIdentity doi, String type, Map<String, RepoVersion> files, Integer revisionNumber, Instant timestamp) {
     this.doi = Objects.requireNonNull(doi);
     this.type = Objects.requireNonNull(type);
     this.files = ImmutableMap.copyOf(files);
     this.revisionNumber = Optional.ofNullable(revisionNumber);
+    this.timestamp = Objects.requireNonNull(timestamp);
   }
 
   public DoiBasedIdentity getDoi() {
@@ -38,6 +41,10 @@ public class ScholarlyWork {
     return revisionNumber;
   }
 
+  public Instant getTimestamp() {
+    return timestamp;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -46,11 +53,11 @@ public class ScholarlyWork {
     ScholarlyWork that = (ScholarlyWork) o;
 
     if (!doi.equals(that.doi)) return false;
+    if (!type.equals(that.type)) return false;
     if (!files.equals(that.files)) return false;
     if (!revisionNumber.equals(that.revisionNumber)) return false;
-    if (!type.equals(that.type)) return false;
+    return timestamp.equals(that.timestamp);
 
-    return true;
   }
 
   @Override
@@ -59,6 +66,7 @@ public class ScholarlyWork {
     result = 31 * result + type.hashCode();
     result = 31 * result + files.hashCode();
     result = 31 * result + revisionNumber.hashCode();
+    result = 31 * result + timestamp.hashCode();
     return result;
   }
 }

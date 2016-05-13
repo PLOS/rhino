@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -69,6 +70,10 @@ public abstract class Transceiver {
     calendar.setTimeZone(GMT);
     calendar.setTime(date);
     return calendar;
+  }
+
+  protected static Calendar copyToCalendar(Instant instant) {
+    return copyToCalendar(Date.from(instant));
   }
 
   /**
