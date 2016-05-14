@@ -93,7 +93,8 @@ class VersionedIngestionService {
     final Article articleMetadata = parsedArticle.build(new Article());
     articleMetadata.setDoi(articleIdentity.getKey());
 
-    ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry, manuscriptRepr, printableRepr).build();
+    ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry,
+        manuscriptAsset, manuscriptRepr, printableRepr).build();
     Collection<Long> createdWorkPks = persist(articlePackage);
 
     persistJournal(articleMetadata, createdWorkPks);

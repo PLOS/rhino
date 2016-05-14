@@ -10,9 +10,11 @@ import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.Archive;
+import org.ambraproject.rhino.util.ContentTypeInference;
 import org.plos.crepo.model.RepoObject;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
@@ -39,16 +41,19 @@ class ArticlePackageBuilder {
   private final ArticleXml article;
   private final ManifestXml manifest;
   private final String manifestEntry;
+  private final ManifestXml.Asset manuscriptAsset;
   private final ManifestXml.Representation manuscriptRepr;
   private final ManifestXml.Representation printableRepr;
   private final ArticleIdentity articleIdentity;
 
   ArticlePackageBuilder(Archive archive, ArticleXml article, ManifestXml manifest, String manifestEntry,
-                        ManifestXml.Representation manuscriptRepr, ManifestXml.Representation printableRepr) {
+                        ManifestXml.Asset manuscriptAsset, ManifestXml.Representation manuscriptRepr, ManifestXml.Representation printableRepr) {
     this.archive = Objects.requireNonNull(archive);
     this.article = Objects.requireNonNull(article);
     this.manifest = Objects.requireNonNull(manifest);
     this.manifestEntry = Objects.requireNonNull(manifestEntry);
+
+    this.manuscriptAsset = Objects.requireNonNull(manuscriptAsset);
     this.manuscriptRepr = Objects.requireNonNull(manuscriptRepr);
     this.printableRepr = Objects.requireNonNull(printableRepr);
 
@@ -69,10 +74,27 @@ class ArticlePackageBuilder {
         assetWorks, archivalFiles);
   }
 
+  private RepoObject buildObjectFor(ManifestXml.Asset asset, ManifestXml.Representation representation) {
+    ManifestXml.ManifestFile manifestFile = representation.getFile();
+    String mimetype = manifestFile.getMimetype();
+    if (mimetype == null) {
+      mimetype = AssetFileIdentity.create(asset.getUri(), representation.getName()).inferContentType().toString();
+    }
+    return buildObject(manifestFile, mimetype);
+  }
+
   private RepoObject buildObjectFor(ManifestXml.ManifestFile manifestFile) {
+    String mimetype = manifestFile.getMimetype();
+    if (mimetype == null) {
+      mimetype = ContentTypeInference.inferContentType(manifestFile.getEntry());
+    }
+    return buildObject(manifestFile, mimetype);
+  }
+
+  private RepoObject buildObject(ManifestXml.ManifestFile manifestFile, String contentType) {
     return new RepoObject.RepoObjectBuilder(manifestFile.getCrepoKey())
         .contentAccessor(archive.getContentAccessorFor(manifestFile.getEntry()))
-        .contentType(manifestFile.getMimetype())
+        .contentType(contentType)
         .downloadName(manifestFile.getEntry())
         .build();
   }
@@ -85,8 +107,8 @@ class ArticlePackageBuilder {
             .downloadName(manifestEntry)
             .contentType(MediaType.APPLICATION_XML)
             .build());
-    articleObjects.put("manuscript", buildObjectFor(manuscriptRepr.getFile()));
-    articleObjects.put("printable", buildObjectFor(printableRepr.getFile()));
+    articleObjects.put("manuscript", buildObjectFor(manuscriptAsset, manuscriptRepr));
+    articleObjects.put("printable", buildObjectFor(manuscriptAsset, printableRepr));
 
     articleObjects.put("front",
         new RepoObject.RepoObjectBuilder("front/" + articleIdentity.getIdentifier())
