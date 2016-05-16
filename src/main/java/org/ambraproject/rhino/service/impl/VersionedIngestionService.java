@@ -207,13 +207,11 @@ class VersionedIngestionService {
   private void persistToCrepo(long workPk,
                               Map<String, RepoObject> typedObjects,
                               Collection<RepoObject> untypedObjects) {
-    Stream<RepoObjectToPersist> objectsToCreate = Stream.concat(
-        typedObjects.entrySet().stream()
-            .map((Map.Entry<String, RepoObject> entry) -> new RepoObjectToPersist(entry.getValue(), entry.getKey())),
-        untypedObjects.stream()
-            .map((RepoObject obj) -> new RepoObjectToPersist(obj, null))
-    );
-    List<RepoObjectToPersist> createdObjects = objectsToCreate
+    Stream<RepoObjectToPersist> typedObjectStream = typedObjects.entrySet().stream()
+        .map((Map.Entry<String, RepoObject> entry) -> new RepoObjectToPersist(entry.getValue(), entry.getKey()));
+    Stream<RepoObjectToPersist> untypedObjectStream = untypedObjects.stream()
+        .map((RepoObject obj) -> new RepoObjectToPersist(obj, null));
+    List<RepoObjectToPersist> createdObjects = Stream.concat(typedObjectStream, untypedObjectStream)
         .parallel() // Parallelize writes to CRepo. Relies on side effects and must be thread-safe.
         .map((RepoObjectToPersist obj) -> {
           obj.metadata = parentService.contentRepoService.autoCreateRepoObject(obj.object);
