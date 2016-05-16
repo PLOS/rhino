@@ -12,7 +12,7 @@ import java.util.Objects;
 /**
  * A view of an comment with no relationships to its parent or child comments.
  */
-public class AnnotationNodeView implements JsonOutputView {
+public class CommentNodeView implements JsonOutputView {
 
   // Slightly different from org.ambraproject.rhino.view.article.ArticleVisibility, which might be a bad thing
   public static class ArticleReference {
@@ -31,12 +31,17 @@ public class AnnotationNodeView implements JsonOutputView {
   private final CompetingInterestStatement competingInterestStatement;
   private final ArticleReference parentArticle;
 
-  private AnnotationNodeView(Annotation comment,
-                             CompetingInterestStatement competingInterestStatement,
-                             ArticleReference parentArticle) {
+  private CommentNodeView(Annotation comment, CompetingInterestStatement competingInterestStatement,
+      ArticleReference parentArticle) {
     this.comment = Objects.requireNonNull(comment);
     this.competingInterestStatement = Objects.requireNonNull(competingInterestStatement);
     this.parentArticle = Objects.requireNonNull(parentArticle);
+  }
+
+  private CommentNodeView(Annotation comment, CompetingInterestStatement competingInterestStatement) {
+    this.comment = Objects.requireNonNull(comment);
+    this.competingInterestStatement = Objects.requireNonNull(competingInterestStatement);
+    this.parentArticle = null;
   }
 
   public static class Factory {
@@ -46,17 +51,21 @@ public class AnnotationNodeView implements JsonOutputView {
       this.competingInterestPolicy = new CompetingInterestPolicy(runtimeConfiguration);
     }
 
-    public AnnotationNodeView create(Annotation comment, String journalKey,
-                                     String articleDoi, String articleTitle) {
-      return new AnnotationNodeView(comment,
+    public CommentNodeView create(Annotation comment, String journalKey, String articleDoi,
+        String articleTitle) {
+      return new CommentNodeView(comment,
           competingInterestPolicy.createStatement(comment),
           new ArticleReference(articleDoi, articleTitle, journalKey));
+    }
+
+    public CommentNodeView create(Annotation comment) {
+      return new CommentNodeView(comment, competingInterestPolicy.createStatement(comment));
     }
   }
 
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
-    JsonObject serialized = AnnotationOutputView.serializeBase(context, comment, competingInterestStatement);
+    JsonObject serialized = CommentOutputView.serializeBase(context, comment, competingInterestStatement);
     serialized.add("parentArticle", context.serialize(parentArticle));
     return serialized;
   }
