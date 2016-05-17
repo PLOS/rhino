@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ $HeadURL:
+  ~ $Id:
+  ~
+  ~ Copyright (c) 2006-2011 by Public Library of Science
+  ~
+  ~ http://plos.org
+  ~ http://ambraproject.org
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="org.ambraproject.rhino.model" default-lazy="false">
+
+  <class name="CitedArticle" table="citedArticle">
+    <id name="ID" column="citedArticleID" type="long">
+      <generator class="native"/>
+    </id>
+    <timestamp name="lastModified" column="lastModified"/>
+    <property name="created" column="created" type="timestamp" not-null="true" update="false"/>
+
+    <property name="key" column="keyColumn" type="string"/>
+    <property name="year" column="year" type="integer"/>
+    <property name="displayYear" column="displayYear" type="string"/>
+    <property name="month" column="month" type="string"/>
+    <property name="day" column="day" type="string"/>
+    <property name="volumeNumber" column="volumeNumber" type="integer"/>
+    <property name="volume" column="volume" type="string"/>
+    <property name="issue" column="issue" type="string"/>
+    <property name="title" column="title" type="text"/>
+    <property name="publisherLocation" column="publisherLocation" type="string"/>
+    <property name="publisherName" column="publisherName" type="string"/>
+    <property name="pages" column="pages" type="string"/>
+    <property name="eLocationID" column="eLocationID" type="string"/>
+    <property name="journal" column="journal" type="string"/>
+    <property name="note" column="note" type="text"/>
+    <property name="url" column="url" type="string"/>
+    <property name="doi" column="doi" type="string"/>
+    <property name="citationType" column="citationType" type="string"/>
+    <property name="summary" column="summary" type="text"/>
+
+    <list name="collaborativeAuthors" table="citedArticleCollaborativeAuthors" cascade="all-delete-orphan">
+      <key column="citedArticleID"/>
+      <list-index column="sortOrder"/>
+      <element column="name" type="string"/>
+    </list>
+
+    <list name="authors"
+          cascade="all-delete-orphan"
+          where="type = 'author'">
+      <key column="citedArticleID"/>
+      <list-index column="sortOrder"/>
+      <one-to-many class="CitedArticleAuthor"/>
+    </list>
+
+    <list name="editors"
+          cascade="all-delete-orphan"
+          where="type = 'editor'">
+      <key column="citedArticleID"/>
+      <list-index column="sortOrder"/>
+      <one-to-many class="CitedArticleEditor"/>
+    </list>
+
+  </class>
+
+</hibernate-mapping>

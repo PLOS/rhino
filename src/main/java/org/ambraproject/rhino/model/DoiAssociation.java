@@ -1,7 +1,5 @@
 package org.ambraproject.rhino.model;
 
-import org.ambraproject.models.AmbraEntity;
-
 public class DoiAssociation extends AmbraEntity {
 
   private String doi;

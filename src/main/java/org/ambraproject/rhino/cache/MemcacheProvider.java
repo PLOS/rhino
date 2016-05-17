@@ -14,7 +14,7 @@
 package org.ambraproject.rhino.cache;
 
 import org.ambraproject.rhombat.cache.MemcacheClient;
-import org.ambraproject.service.cache.Cache;
+import org.ambraproject.rhino.util.Cache;
 
 import java.io.IOException;
 import java.io.Serializable;

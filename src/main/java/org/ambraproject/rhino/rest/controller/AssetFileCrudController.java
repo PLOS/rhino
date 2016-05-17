@@ -22,7 +22,7 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
 import com.google.common.io.ByteStreams;
 import com.google.common.net.HttpHeaders;
-import org.ambraproject.models.ArticleAsset;
+import org.ambraproject.rhino.model.ArticleAsset;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;

@@ -28,7 +28,7 @@
     things there).
   -->
 
-<hibernate-mapping package="org.ambraproject.models" default-lazy="false">
+<hibernate-mapping package="org.ambraproject.rhino.model" default-lazy="false">
 
   <class name="Article" table="article">
     <id name="ID" column="articleID" type="long">
@@ -81,8 +81,8 @@
     <!--Don't want to delete orphan on these-->
     <map name="categories" cascade="save-update" table="articleCategoryJoinTable" order-by="weight" lazy="false">
       <key column="articleID"/>
-      <map-key-many-to-many class="org.ambraproject.models.Category" column="categoryID" />
-      <element column="weight" type="integer" not-null="true" />
+      <map-key-many-to-many class="org.ambraproject.rhino.model.Category" column="categoryID"/>
+      <element column="weight" type="integer" not-null="true"/>
     </map>
 
     <list name="citedArticles" cascade="all-delete-orphan" lazy="true">

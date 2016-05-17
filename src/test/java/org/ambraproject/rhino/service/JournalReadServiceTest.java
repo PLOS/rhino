@@ -14,8 +14,8 @@
 package org.ambraproject.rhino.service;
 
 import com.google.common.collect.ImmutableSet;
-import org.ambraproject.models.Issue;
-import org.ambraproject.models.Journal;
+import org.ambraproject.rhino.model.Issue;
+import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.hibernate.criterion.DetachedCriteria;

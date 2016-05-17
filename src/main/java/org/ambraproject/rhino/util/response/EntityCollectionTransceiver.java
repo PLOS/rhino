@@ -1,7 +1,7 @@
 package org.ambraproject.rhino.util.response;
 
 import com.google.common.base.Preconditions;
-import org.ambraproject.models.AmbraEntity;
+import org.ambraproject.rhino.model.AmbraEntity;
 
 import java.io.IOException;
 import java.util.Calendar;

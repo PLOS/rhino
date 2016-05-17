@@ -35,7 +35,7 @@ abstract class BaseConfiguration {
   @Inject
   private ApplicationContext context;
 
-  private Map<String, Resource> getHibernateMappings(String locationPattern) throws IOException {
+  private Map<String, Resource> readHibernateMappings(String locationPattern) throws IOException {
     Resource[] resources = context.getResources(locationPattern);
     if (resources.length == 0) {
       throw new RuntimeException("Config error: No Hibernate mappings found at " + locationPattern);
@@ -47,13 +47,10 @@ abstract class BaseConfiguration {
     return mappings;
   }
 
-  protected void setAmbraMappings(LocalSessionFactoryBean sessionFactoryBean) throws IOException {
-    final String legacyMappingLocation = "classpath:org/ambraproject/models/*.hbm.xml";
-    Map<String, Resource> mappings = getHibernateMappings(legacyMappingLocation);
-
+  protected void setHibernateMappings(LocalSessionFactoryBean sessionFactoryBean) throws IOException {
     // Local mappings override legacy mappings that have the same filename
-    final String localMappingLocation = "classpath:ambra/configuration/*.hbm.xml";
-    mappings.putAll(getHibernateMappings(localMappingLocation));
+    final String localMappingLocation = "classpath:ambra/configuration/models/*.hbm.xml";
+    Map<String, Resource> mappings = readHibernateMappings(localMappingLocation);
 
     sessionFactoryBean.setMappingLocations(mappings.values().toArray(new Resource[0]));
   }

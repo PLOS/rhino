@@ -1,6 +1,6 @@
 package org.ambraproject.rhino.view.asset.groomed;
 
-import org.ambraproject.models.ArticleAsset;
+import org.ambraproject.rhino.model.ArticleAsset;
 
 /**
  * Fields that should be shown as a property of the entire figure and suppressed from the thumbnail metadata.

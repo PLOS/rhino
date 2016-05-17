@@ -13,9 +13,9 @@
 
 package org.ambraproject.rhino.service;
 
-import org.ambraproject.models.Annotation;
-import org.ambraproject.models.Article;
-import org.ambraproject.models.Flag;
+import org.ambraproject.rhino.model.Annotation;
+import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.util.response.Transceiver;

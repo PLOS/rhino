@@ -45,11 +45,17 @@ public class TaxonomyClassificationServiceImplTest {
 
   private DocumentBuilder getDocumentBuilder() throws ParserConfigurationException {
     if (documentBuilder != null) return documentBuilder;
-    DocumentBuilderFactory documentBuilderfactory = new org.apache.xerces.jaxp.DocumentBuilderFactoryImpl();
-    documentBuilderfactory.setNamespaceAware(true);
-    documentBuilderfactory.setValidating(false);
-    documentBuilderfactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-    return documentBuilder = documentBuilderfactory.newDocumentBuilder();
+    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    factory.setNamespaceAware(true);
+    factory.setValidating(false);
+    try {
+      factory.setFeature("http://xml.org/sax/features/validation", false);
+      factory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+      factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+      return documentBuilder = factory.newDocumentBuilder();
+    } catch (ParserConfigurationException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   private Document getSampleArticle(String filename) {

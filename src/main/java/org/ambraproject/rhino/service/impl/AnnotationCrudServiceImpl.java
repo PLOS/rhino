@@ -15,11 +15,11 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import org.ambraproject.models.Annotation;
-import org.ambraproject.models.AnnotationType;
-import org.ambraproject.models.Article;
-import org.ambraproject.models.Flag;
-import org.ambraproject.models.FlagReasonCode;
+import org.ambraproject.rhino.model.Annotation;
+import org.ambraproject.rhino.model.AnnotationType;
+import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.Flag;
+import org.ambraproject.rhino.model.FlagReasonCode;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;

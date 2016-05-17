@@ -18,7 +18,7 @@
 
 package org.ambraproject.rhino.identity;
 
-import org.ambraproject.models.Article;
+import org.ambraproject.rhino.model.Article;
 
 public final class ArticleIdentity extends DoiBasedIdentity {
 

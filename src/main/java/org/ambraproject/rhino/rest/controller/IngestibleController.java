@@ -14,7 +14,7 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.net.HttpHeaders;
-import org.ambraproject.models.Article;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;

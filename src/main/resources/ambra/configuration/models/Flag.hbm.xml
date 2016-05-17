@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ $HeadURL$
+  ~ $Id$
+  ~ Copyright (c) 2006-2012 by Public Library of Science http://plos.org http://ambraproject.org
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="org.ambraproject.rhino.model">
+
+  <class name="Flag" table="annotationFlag">
+    <id name="ID" column="annotationFlagID" type="long">
+      <generator class="native"/>
+    </id>
+
+    <timestamp name="lastModified" column="lastModified"/>
+    <property name="created" column="created" type="timestamp" not-null="true" update="false"/>
+
+    <property name="reason" column="reason" not-null="true">
+      <type name="org.ambraproject.rhino.config.HibernateAdaptingType">
+        <param name="class">org.ambraproject.rhino.model.FlagReasonCode</param>
+        <param name="adapter">ADAPTER</param>
+      </type>
+    </property>
+
+    <property name="userProfileID" type="long" column="userProfileID" not-null="true"/>
+
+    <many-to-one name="flaggedAnnotation" class="Annotation" column="annotationID" cascade="none" not-null="true"/>
+
+    <property name="comment" type="text" column="comment"/>
+
+  </class>
+
+</hibernate-mapping>

@@ -5,16 +5,12 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimaps;
 import com.google.common.collect.Sets;
 import com.google.common.io.ByteStreams;
-import org.ambraproject.ApplicationException;
-import org.ambraproject.models.Article;
-import org.ambraproject.models.ArticleAsset;
-import org.ambraproject.models.ArticleRelationship;
-import org.ambraproject.models.Category;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.AssetBuilder;
 import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
@@ -25,12 +21,16 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleAsset;
+import org.ambraproject.rhino.model.ArticleRelationship;
+import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.service.ArticleType;
 import org.ambraproject.rhino.service.DoiBasedCrudService;
 import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.HibernateEntityUtil;
-import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Query;
@@ -176,15 +176,9 @@ class LegacyIngestionService {
     String doi = article.getDoi();
 
     createReciprocalRelationships(article);
-    try {
 
-      // This method needs the article to have already been persisted to the DB.
-      parentService.syndicationService.createSyndications(doi);
-    } catch (NoSuchArticleIdException nsaide) {
-
-      // Should never happen, since we have already loaded this article.
-      throw new RuntimeException(nsaide);
-    }
+    // This method needs the article to have already been persisted to the DB.
+    parentService.syndicationService.createSyndications(doi);
   }
 
   /**
@@ -524,13 +518,7 @@ class LegacyIngestionService {
     List<WeightedTerm> terms;
     String doi = article.getDoi();
 
-    boolean isAmendment;
-    try {
-      // TODO: Import ArticleService.isAmendment from Ambra Base dependency and clean up checked exceptions
-      isAmendment = parentService.articleService.isAmendment(article);
-    } catch (ApplicationException | NoSuchArticleIdException e) {
-      throw new RuntimeException(e);
-    }
+    boolean isAmendment = isAmendment(article);
 
     if (!isAmendment) {
       terms = parentService.taxonomyService.classifyArticle(xml, article);
@@ -543,6 +531,14 @@ class LegacyIngestionService {
     } else {
       article.setCategories(new HashMap<>());
     }
+  }
+
+  private static final ImmutableSet<String> AMENDMENT_TYPE_HEADINGS = ImmutableSet.of(
+      "Expression of Concern", "Correction", "Retraction");
+
+  private boolean isAmendment(Article article) {
+    ArticleType articleType = parentService.articleTypeService.getArticleType(article);
+    return (articleType != null) && AMENDMENT_TYPE_HEADINGS.contains(articleType.getHeading());
   }
 
   // Number of most-weighted category leaf nodes to associate with each article
