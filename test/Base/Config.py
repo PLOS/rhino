@@ -12,7 +12,7 @@ RHINO_INGEST_PATH = os.getenv('RHINO_INGEST_PATH', '/var/spool/ambra/ingestion-q
 
 
 PRINT_DEBUG = False
-TIMEOUT = 30         # API call timeout, in seconds
+TIMEOUT = 60         # API call timeout, in seconds
 
 # === WebDriver specific section ===
 
@@ -53,14 +53,14 @@ Create a DB Configuration for use in MySQL.py
 
 dbconfig = {'user': 'root',
             'password': '',
-            'host': 'sfo-dpro-devstack01.int.plos.org',
+            'host': 'devstack04.sfo.plos.org',
             'port': 3306,
             'database': 'ambra',
             'connection_timeout': 10,
             }
 
 repo_config = {'transport': 'http',
-               'host': 'sfo-dpro-devstack01.int.plos.org',
+               'host': 'devstack04.sfo.plos.org',
                'port': 8016,
                'path': '/v1',
                }
