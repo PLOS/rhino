@@ -1,6 +1,6 @@
 package org.ambraproject.rhino.view.journal;
 
-import org.ambraproject.models.Journal;
+import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.view.KeyedListView;
 
 import java.util.Collection;

@@ -19,10 +19,10 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
-import org.ambraproject.models.Article;
-import org.ambraproject.models.Issue;
-import org.ambraproject.models.Journal;
-import org.ambraproject.models.Volume;
+import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.Issue;
+import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;

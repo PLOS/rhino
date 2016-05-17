@@ -1,16 +1,22 @@
 package org.ambraproject.rhino.service;
 
-import org.ambraproject.models.Article;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.util.NlmArticleTypes;
 import org.ambraproject.rhino.util.response.Transceiver;
+import org.apache.commons.configuration.Configuration;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Retrieve article types using the imported org.ambraproject.views.article.ArticleType code.
@@ -20,6 +26,43 @@ import java.util.stream.Collectors;
  * interface.
  */
 public class LegacyArticleTypeService implements ArticleTypeService {
+  private final ImmutableMap<URI, ArticleType> knownArticleTypes;
+  private final ImmutableList<ArticleType> articleTypeOrder;
+
+  public LegacyArticleTypeService(Configuration ambraConfiguration) {
+    Map<URI, ArticleType> knownArticleTypes = new LinkedHashMap<>();
+    List<ArticleType> articleTypeOrder = new ArrayList<>();
+
+    int count = 0;
+    String basePath = "ambra.articleTypeList.articleType";
+    String uriStr;
+
+    /*
+     * Iterate through the defined article types. This is ugly since the index needs
+     * to be given in xpath format to access the element, so we calculate a base string
+     * like: ambra.articleTypeList.articleType(x) and check if it's non-null for typeUri
+     */
+    do {
+      String baseString = basePath + "(" + count + ").";
+      uriStr = ambraConfiguration.getString(baseString + "typeUri");
+      String headingStr = ambraConfiguration.getString(baseString + "typeHeading");
+      String pluralHeadingStr = ambraConfiguration.getString(baseString + "typeHeadingPlural");
+      String codeStr = ambraConfiguration.getString(baseString + "typeCode");
+      if ((uriStr != null) && (headingStr != null)) {
+        URI uri = URI.create(uriStr);
+        final ArticleType at;
+        if (!knownArticleTypes.containsKey(uri)) {
+          at = new ArticleType(uri, headingStr, pluralHeadingStr, codeStr);
+          knownArticleTypes.put(uri, at);
+          articleTypeOrder.add(at);
+        }
+      }
+      count++;
+    } while (uriStr != null);
+
+    this.knownArticleTypes = ImmutableMap.copyOf(knownArticleTypes);
+    this.articleTypeOrder = ImmutableList.copyOf(articleTypeOrder);
+  }
 
   @Override
   public String getNlmArticleType(Article article) {
@@ -42,16 +85,8 @@ public class LegacyArticleTypeService implements ArticleTypeService {
     return matchedType;
   }
 
-  private static ArticleType getMetadataForUri(URI uri) {
-    return convertFromLegacy(org.ambraproject.views.article.ArticleType.getKnownArticleTypeForURI(uri));
-  }
-
-  private static ArticleType convertFromLegacy(org.ambraproject.views.article.ArticleType legacyArticleType) {
-    if (legacyArticleType == null) return null;
-    return new ArticleType(legacyArticleType.getUri(),
-        legacyArticleType.getHeading(),
-        legacyArticleType.getPluralHeading(),
-        legacyArticleType.getCode());
+  private ArticleType getMetadataForUri(URI uri) {
+    return knownArticleTypes.get(uri);
   }
 
   /**
@@ -101,9 +136,7 @@ public class LegacyArticleTypeService implements ArticleTypeService {
     return new Transceiver() {
       @Override
       protected Collection<? extends ArticleType> getData() {
-        return org.ambraproject.views.article.ArticleType.getOrderedListForDisplay().stream()
-                .map(LegacyArticleTypeService::convertFromLegacy)
-                .collect(Collectors.toList());
+        return articleTypeOrder;
       }
 
       @Override

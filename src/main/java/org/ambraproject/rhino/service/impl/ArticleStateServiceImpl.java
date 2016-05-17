@@ -16,22 +16,21 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
-import org.ambraproject.models.Article;
-import org.ambraproject.models.ArticleAsset;
-import org.ambraproject.models.Journal;
-import org.ambraproject.models.Syndication;
-import org.ambraproject.queue.MessageSender;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
+import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleAsset;
+import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.IngestibleService;
+import org.ambraproject.rhino.service.MessageSender;
+import org.ambraproject.rhino.service.SyndicationService;
 import org.ambraproject.rhino.view.article.ArticleInputView;
-import org.ambraproject.routes.CrossRefLookupRoutes;
-import org.ambraproject.service.article.NoSuchArticleIdException;
-import org.ambraproject.util.DocumentBuilderFactoryCreator;
 import org.apache.camel.CamelExecutionException;
+import org.apache.camel.ProducerTemplate;
 import org.apache.commons.configuration.Configuration;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -49,8 +48,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -66,6 +63,12 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
 
   private static final String XML_NAMESPACE = "http://www.ambraproject.org/article/additionalInfo";
 
+  /**
+   * The key to fetch the value for the authorization ID for the given request in the header
+   */
+  @VisibleForTesting
+  public static final String HEADER_AUTH_ID = "authId";
+
   @Autowired
   private ArticleCrudService articleCrudService;
 
@@ -78,6 +81,9 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
 
   @Autowired
   private IngestibleService ingestibleService;
+
+  @Autowired
+  private SyndicationService syndicationService;
 
   /**
    * Attaches additional XML info to an article document specifying the journals it is published in.
@@ -156,14 +162,7 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
         // TODO: is it necessary and/or performant to create a new one of these each
         // time?  The old admin codebase a DocumentBuilderFactory as an instance field
         // and synchronizes access to it.
-        DocumentBuilderFactory documentBuilderFactory
-            = DocumentBuilderFactoryCreator.createFactory();
-        DocumentBuilder documentBuilder;
-        try {
-          documentBuilder = documentBuilderFactory.newDocumentBuilder();
-        } catch (ParserConfigurationException pce) {
-          throw new RuntimeException(pce);
-        }
+        DocumentBuilder documentBuilder = newDocumentBuilder();
         try {
           doc = documentBuilder.parse(xml);
         } catch (SAXException se) {
@@ -172,10 +171,10 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
       }
       doc = appendJournals(doc, articleId);
       doc = appendStrikingImage(doc, article);
-      messageSender.sendMessage(ambraConfiguration.getString(
+      messageSender.sendBody(ambraConfiguration.getString(
           "ambra.services.search.articleIndexingQueue", null), doc);
     } else {
-      messageSender.sendMessage(ambraConfiguration.getString("ambra.services.search.articleDeleteQueue", null),
+      messageSender.sendBody(ambraConfiguration.getString("ambra.services.search.articleDeleteQueue", null),
           articleId.getKey());
     }
   }
@@ -219,13 +218,7 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
       // IN_PROGRESS?  Or base it on the Syndication.status of the appropriate target?
       // Not sure yet.
       if (update.getStatus().equals(Syndication.STATUS_IN_PROGRESS)) {
-        try {
-          syndicationService.syndicate(article.getDoi(), update.getTarget());
-        } catch (NoSuchArticleIdException nsaide) {
-
-          // Should never happen since we just loaded the article.
-          throw new RuntimeException(nsaide);
-        }
+        syndicationService.syndicate(article.getDoi(), update.getTarget());
       }
 
       // TODO: un-syndicate, if necessary.
@@ -242,10 +235,10 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
     String refreshCitedArticlesQueue = ambraConfiguration.getString("ambra.services.queue.refreshCitedArticles", null);
     if (refreshCitedArticlesQueue != null) {
       try {
-        messageSender.sendMessage(refreshCitedArticlesQueue, doi, new HashMap() {{
+        messageSender.sendBodyAndHeaders(refreshCitedArticlesQueue, doi, new HashMap() {{
           //Appending null for the header auth ID.  It's OK because the article must be in a published
           //state and the authID should not be checked
-          put(CrossRefLookupRoutes.HEADER_AUTH_ID, null);
+          put(HEADER_AUTH_ID, null);
         }});
       } catch (CamelExecutionException ex) {
         log.error(ex.getMessage(), ex);
@@ -259,9 +252,9 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
   private Article loadArticle(ArticleIdentity articleId) {
     Article result = (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
-                .forClass(Article.class)
-                .add(Restrictions.eq("doi", articleId.getKey()))
-                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+            .forClass(Article.class)
+            .add(Restrictions.eq("doi", articleId.getKey()))
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     if (result == null) {
       throw new RestClientException("Article not found: " + articleId.getIdentifier(),

@@ -1,6 +1,6 @@
 package org.ambraproject.rhino.view.journal;
 
-import org.ambraproject.models.Volume;
+import org.ambraproject.rhino.model.Volume;
 
 /**
  * Simple view for {@link org.ambraproject.models.Volume}'s non-associative fields.

@@ -18,8 +18,8 @@
 
 package org.ambraproject.rhino.service;
 
-import org.ambraproject.models.Journal;
-import org.ambraproject.models.Volume;
+import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.view.journal.VolumeInputView;
@@ -41,6 +41,13 @@ public class VolumeCrudServiceTest extends BaseRhinoTest {
 
   private static final String TEST_JOURNAL_KEY = "journal";
 
+  private Journal createTestJournal() {
+    Journal testJournal = new Journal();
+    testJournal.setJournalKey(TEST_JOURNAL_KEY);
+    hibernateTemplate.save(testJournal);
+    return testJournal;
+  }
+
   private Journal getTestJournal() {
     return (Journal) DataAccessUtils.requiredUniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
@@ -50,7 +57,6 @@ public class VolumeCrudServiceTest extends BaseRhinoTest {
                 .setFetchMode("articleLists", FetchMode.JOIN)
         ));
   }
-
 
   @Test
   public void testCreate() {
@@ -62,10 +68,11 @@ public class VolumeCrudServiceTest extends BaseRhinoTest {
         volumeId.getKey(), displayName);
     VolumeInputView input = entityGson.fromJson(json, VolumeInputView.class);
 
-    Journal testJournal = getTestJournal();
-    volumeCrudService.create(testJournal.getJournalKey(), input);
+    Journal testJournal = createTestJournal();
 
+    volumeCrudService.create(testJournal.getJournalKey(), input);
     testJournal = getTestJournal();
+
     List<Volume> testJournalVolumes = testJournal.getVolumes();
     assertFalse(testJournalVolumes.isEmpty());
   }

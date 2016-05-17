@@ -18,8 +18,8 @@
 
 package org.ambraproject.rhino.service;
 
-import org.ambraproject.models.Article;
-import org.ambraproject.models.Pingback;
+import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.Pingback;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.util.response.Transceiver;
 

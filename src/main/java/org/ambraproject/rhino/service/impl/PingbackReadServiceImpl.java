@@ -20,8 +20,8 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import org.ambraproject.models.Article;
-import org.ambraproject.models.Pingback;
+import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.Pingback;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.PingbackReadService;

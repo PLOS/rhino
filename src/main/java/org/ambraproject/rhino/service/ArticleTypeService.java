@@ -1,6 +1,6 @@
 package org.ambraproject.rhino.service;
 
-import org.ambraproject.models.Article;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.util.response.Transceiver;
 
 import java.io.IOException;

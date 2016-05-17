@@ -14,9 +14,9 @@
 package org.ambraproject.rhino.cache;
 
 import com.google.common.base.Strings;
+import org.ambraproject.rhino.util.Cache;
+import org.ambraproject.rhino.util.NullCache;
 import org.ambraproject.rhombat.cache.MemcacheClient;
-import org.ambraproject.service.cache.Cache;
-import org.ambraproject.service.cache.NullCache;
 import org.apache.commons.configuration.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 

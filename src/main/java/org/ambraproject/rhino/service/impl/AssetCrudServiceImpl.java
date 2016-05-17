@@ -20,8 +20,8 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
-import org.ambraproject.models.ArticleAsset;
-import org.ambraproject.models.Journal;
+import org.ambraproject.rhino.model.ArticleAsset;
+import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;

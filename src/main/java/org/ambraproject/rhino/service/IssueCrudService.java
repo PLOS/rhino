@@ -18,7 +18,7 @@
 
 package org.ambraproject.rhino.service;
 
-import org.ambraproject.models.Issue;
+import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.util.response.Transceiver;

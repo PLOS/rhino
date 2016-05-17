@@ -11,7 +11,7 @@ from ..resources import *
 import json
 from ...Base.MySQL import MySQL
 
-ARTICLE_LIST_API = API_BASE_URL + '/v1/lists/'
+ARTICLE_LIST_API = API_BASE_URL + '/lists/'
 ARTICLE_LIST_PATCH_API = ARTICLE_LIST_API + 'collection/PLoSCollections/'
 
 class ArticlesListJSON(BaseServiceTest):

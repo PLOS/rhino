@@ -1,7 +1,7 @@
 package org.ambraproject.rhino.view.comment;
 
 import com.google.common.base.Strings;
-import org.ambraproject.models.Annotation;
+import org.ambraproject.rhino.model.Annotation;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 
 import java.time.ZoneId;

@@ -2,7 +2,7 @@ package org.ambraproject.rhino;
 
 import com.google.common.hash.Hashing;
 import com.google.common.io.ByteStreams;
-import org.ambraproject.models.ArticleAsset;
+import org.ambraproject.rhino.model.ArticleAsset;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
