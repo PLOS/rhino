@@ -10,7 +10,7 @@ from ...Base.base_service_test import BaseServiceTest
 from ...Base.Config import API_BASE_URL
 from ...Base.api import needs
 
-JOURNALS_API = API_BASE_URL + '/v1/journals'
+JOURNALS_API = API_BASE_URL + '/journals'
 DEFAULT_HEADERS = {'Accept': 'application/json'}
 HEADER = '-H'
 EXPECTED_KEYS = [u'PLoSBiology', u'PLoSPathogens', u'PLoSDefault', u'PLoSMedicine', u'PLoSNTD', u'PLoSCompBiol', u'PLoSCollections', u'PLoSClinicalTrials', u'PLoSGenetics', u'PLoSONE']
