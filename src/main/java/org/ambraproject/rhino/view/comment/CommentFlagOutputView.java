@@ -22,7 +22,7 @@ package org.ambraproject.rhino.view.comment;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSerializationContext;
-import org.ambraproject.models.Flag;
+import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.view.JsonOutputView;
 
 /**

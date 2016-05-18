@@ -42,6 +42,7 @@
     <property name="body" column="body" type="text"/>
     <property name="highlightedText" column="highlightedText" type="text"/>
     <property name="competingInterestBody" type="text" column="competingInterestBody"/>
+    <property name="isRemoved" type="boolean" column="isRemoved"/>
 
   </class>
 

@@ -135,6 +135,7 @@ public class CommentOutputView implements JsonOutputView {
 
     serialized.remove("competingInterestBody");
     serialized.add("competingInterestStatement", context.serialize(competingInterestStatement));
+    serialized.add("isRemoved", context.serialize(comment.getIsRemoved()));
     return serialized;
   }
 

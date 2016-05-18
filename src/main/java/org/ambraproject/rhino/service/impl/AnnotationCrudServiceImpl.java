@@ -214,13 +214,11 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
     return created;
   }
 
-  //todo: instead of overwriting the body, add an 'isRemoved' column to the annotation table
-  //and display "This comment has been removed." based on that metadata in Wombat
   @Override
   public String removeComment(DoiBasedIdentity commentId) {
     Annotation comment = getComment(commentId);
     String annotationUri = comment.getAnnotationUri();
-    comment.setBody("This comment has been removed.");
+    comment.setIsRemoved(true);
     hibernateTemplate.update(comment);
     return annotationUri;
   }
