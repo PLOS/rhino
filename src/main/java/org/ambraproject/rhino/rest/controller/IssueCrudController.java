@@ -23,6 +23,8 @@ import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.view.journal.IssueInputView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,6 +65,15 @@ public class IssueCrudController extends DoiBasedCrudController {
     issueCrudService.update(issueId, input);
 
     issueCrudService.read(issueId).respond(request, response, entityGson);
+  }
+
+  @Transactional(rollbackFor = {Throwable.class})
+  @RequestMapping(value = ISSUE_TEMPLATE, method = RequestMethod.DELETE)
+  public ResponseEntity<Object> delete(HttpServletRequest request)
+      throws IOException {
+    DoiBasedIdentity issueId = parse(request);
+    issueCrudService.delete(issueId);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
 }
