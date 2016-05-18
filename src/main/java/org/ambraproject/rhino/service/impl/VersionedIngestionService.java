@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.content.xml.ArticleXml;
@@ -36,9 +36,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
+import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 class VersionedIngestionService {
 
@@ -65,13 +68,14 @@ class VersionedIngestionService {
     try (InputStream manifestStream = new BufferedInputStream(archive.openFile(manifestEntry))) {
       manifestXml = new ManifestXml(AmbraService.parseXml(manifestStream));
     }
-    ImmutableList<ManifestXml.Asset> assets = manifestXml.parse();
+    validateManifestCompleteness(manifestXml, archive);
 
+    ImmutableList<ManifestXml.Asset> assets = manifestXml.getAssets();
     ManifestXml.Asset manuscriptAsset = findManuscriptAsset(assets);
     ManifestXml.Representation manuscriptRepr = findManuscriptRepr(manuscriptAsset);
     ManifestXml.Representation printableRepr = findPrintableRepr(manuscriptAsset);
 
-    String manuscriptEntry = manuscriptRepr.getEntry();
+    String manuscriptEntry = manuscriptRepr.getFile().getEntry();
     if (!archive.getEntryNames().contains(manifestEntry)) {
       throw new RestClientException("Manifest refers to missing file as main-entry: " + manuscriptEntry, HttpStatus.BAD_REQUEST);
     }
@@ -89,7 +93,8 @@ class VersionedIngestionService {
     final Article articleMetadata = parsedArticle.build(new Article());
     articleMetadata.setDoi(articleIdentity.getKey());
 
-    ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry, manuscriptRepr, printableRepr).build();
+    ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry,
+        manuscriptAsset, manuscriptRepr, printableRepr).build();
     Collection<Long> createdWorkPks = persist(articlePackage);
 
     persistJournal(articleMetadata, createdWorkPks);
@@ -100,17 +105,39 @@ class VersionedIngestionService {
     return articleMetadata;
   }
 
+  private void validateManifestCompleteness(ManifestXml manifest, Archive archive) {
+    Set<String> archiveEntryNames = archive.getEntryNames();
+
+    Stream<ManifestXml.ManifestFile> manifestFiles = Stream.concat(
+        manifest.getAssets().stream()
+            .flatMap(asset -> asset.getRepresentations().stream())
+            .map(ManifestXml.Representation::getFile),
+        manifest.getArchivalFiles().stream());
+    Set<String> manifestEntryNames = manifestFiles
+        .map(ManifestXml.ManifestFile::getEntry)
+        .collect(Collectors.toSet());
+
+    Set<String> missingFromArchive = Sets.difference(manifestEntryNames, archiveEntryNames).immutableCopy();
+    Set<String> missingFromManifest = Sets.difference(archiveEntryNames, manifestEntryNames).immutableCopy();
+    if (!missingFromArchive.isEmpty() || !missingFromManifest.isEmpty()) {
+      String message = "Manifest is not consistent with files in archive."
+          + (missingFromArchive.isEmpty() ? "" : (" Files in manifest not included in archive: " + missingFromArchive))
+          + (missingFromManifest.isEmpty() ? "" : (" Files in archive not described in manifest: " + missingFromManifest));
+      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
   private Collection<Long> persist(ArticlePackage articlePackage) {
     Collection<Long> createdWorkPks = new ArrayList<>();
 
     ScholarlyWorkInput articleWork = articlePackage.getArticleWork();
     long articlePk = persistToSql(articleWork);
     createdWorkPks.add(articlePk);
-    persistToCrepo(articleWork, articlePk);
+    persistToCrepo(articlePk, articleWork.getObjects(), articlePackage.getArchivalFiles());
 
     for (ScholarlyWorkInput assetWork : articlePackage.getAssetWorks()) {
       long assetPk = persistToSql(assetWork);
-      persistToCrepo(assetWork, assetPk);
+      persistToCrepo(assetPk, assetWork.getObjects(), ImmutableList.of());
       createdWorkPks.add(assetPk);
 
       persistRelation(articlePk, assetPk);
@@ -166,25 +193,41 @@ class VersionedIngestionService {
     });
   }
 
-  private void persistToCrepo(ScholarlyWorkInput work, long workPk) {
-    Map<String, RepoVersion> createdObjects = work.getObjects().entrySet()
-        .parallelStream() // Parallelize writes to CRepo. Relies on side effects and must be thread-safe.
-        .map((Map.Entry<String, RepoObject> entry) -> {
-          RepoObjectMetadata createdObject = parentService.contentRepoService.autoCreateRepoObject(entry.getValue());
-          return Maps.immutableEntry(entry.getKey(), createdObject.getVersion());
+  private static class RepoObjectToPersist {
+    private final RepoObject object;
+    private final String fileType;
+    private RepoObjectMetadata metadata; // null until created
+
+    private RepoObjectToPersist(RepoObject object, String fileType) {
+      this.object = Objects.requireNonNull(object);
+      this.fileType = fileType; // nullable
+    }
+  }
+
+  private void persistToCrepo(long workPk,
+                              Map<String, RepoObject> typedObjects,
+                              Collection<RepoObject> untypedObjects) {
+    Stream<RepoObjectToPersist> typedObjectStream = typedObjects.entrySet().stream()
+        .map((Map.Entry<String, RepoObject> entry) -> new RepoObjectToPersist(entry.getValue(), entry.getKey()));
+    Stream<RepoObjectToPersist> untypedObjectStream = untypedObjects.stream()
+        .map((RepoObject obj) -> new RepoObjectToPersist(obj, null));
+    List<RepoObjectToPersist> createdObjects = Stream.concat(typedObjectStream, untypedObjectStream)
+        .parallel() // Parallelize writes to CRepo. Relies on side effects and must be thread-safe.
+        .map((RepoObjectToPersist obj) -> {
+          obj.metadata = parentService.contentRepoService.autoCreateRepoObject(obj.object);
+          return obj;
         })
-        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        .collect(Collectors.toList());
 
     parentService.hibernateTemplate.execute(session -> {
-      for (Map.Entry<String, RepoVersion> entry : createdObjects.entrySet()) {
-        String fileType = entry.getKey();
-        RepoVersion repoObjectPtr = entry.getValue();
+      for (RepoObjectToPersist createdObject : createdObjects) {
+        RepoVersion repoObjectPtr = createdObject.metadata.getVersion();
 
         SQLQuery query = session.createSQLQuery("" +
             "INSERT INTO scholarlyWorkFile (scholarlyWorkId, fileType, crepoKey, crepoUuid) " +
             "  VALUES (:scholarlyWorkId, :fileType, :crepoKey, :crepoUuid)");
         query.setParameter("scholarlyWorkId", workPk);
-        query.setParameter("fileType", fileType);
+        query.setParameter("fileType", createdObject.fileType);
         query.setParameter("crepoKey", repoObjectPtr.getKey());
         query.setParameter("crepoUuid", repoObjectPtr.getUuid().toString());
         query.executeUpdate();
@@ -265,7 +308,7 @@ class VersionedIngestionService {
     Optional<String> mainEntry = manuscriptAsset.getMainEntry();
     Preconditions.checkArgument(mainEntry.isPresent(), "manuscriptAsset must have main-entry");
     for (ManifestXml.Representation representation : manuscriptAsset.getRepresentations()) {
-      if (representation.getEntry().equals(mainEntry.get())) {
+      if (representation.getFile().getEntry().equals(mainEntry.get())) {
         return representation;
       }
     }

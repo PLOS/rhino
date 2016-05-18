@@ -1,10 +1,12 @@
 package org.ambraproject.rhino.model;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.plos.crepo.model.RepoVersion;
 
 import java.time.Instant;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -14,13 +16,17 @@ public class ScholarlyWork {
   private final DoiBasedIdentity doi;
   private final String type;
   private final ImmutableMap<String, RepoVersion> files;
+  private final ImmutableList<RepoVersion> archivalFiles;
   private final Optional<Integer> revisionNumber;
   private final Instant timestamp;
 
-  public ScholarlyWork(DoiBasedIdentity doi, String type, Map<String, RepoVersion> files, Integer revisionNumber, Instant timestamp) {
+  public ScholarlyWork(DoiBasedIdentity doi, String type,
+                       Map<String, RepoVersion> files, Collection<RepoVersion> archivalFiles,
+                       Integer revisionNumber, Instant timestamp) {
     this.doi = Objects.requireNonNull(doi);
     this.type = Objects.requireNonNull(type);
     this.files = ImmutableMap.copyOf(files);
+    this.archivalFiles = ImmutableList.copyOf(archivalFiles);
     this.revisionNumber = Optional.ofNullable(revisionNumber);
     this.timestamp = Objects.requireNonNull(timestamp);
   }

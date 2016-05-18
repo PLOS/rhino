@@ -399,7 +399,7 @@ class LegacyIngestionService {
    * @return a list of new {@link ArticleAsset} model objects
    */
   private List<ArticleAsset> createAssets(List<AssetBuilder> manuscriptAssets, ManifestXml manifest) {
-    ImmutableMap<AssetIdentity, ManifestXml.Asset> manifestAssets = Maps.uniqueIndex(manifest.parse(),
+    ImmutableMap<AssetIdentity, ManifestXml.Asset> manifestAssets = Maps.uniqueIndex(manifest.getAssets(),
         manifestAsset -> AssetIdentity.create(manifestAsset.getUri()));
 
     Optional<AssetIdentity> strikingImageId = Optional.ofNullable(manifest.getStrkImgURI()).map(AssetIdentity::create);
@@ -464,10 +464,10 @@ class LegacyIngestionService {
 
   private void uploadAssets(Article article, Archive archive, ManifestXml manifest) throws IOException {
     ImmutableMap.Builder<AssetFileIdentity, String> filenameBuilder = ImmutableMap.builder();
-    for (ManifestXml.Asset manifestAsset : manifest.parse()) {
+    for (ManifestXml.Asset manifestAsset : manifest.getAssets()) {
       for (ManifestXml.Representation representation : manifestAsset.getRepresentations()) {
         AssetFileIdentity fileId = AssetFileIdentity.create(manifestAsset.getUri(), representation.getName());
-        filenameBuilder.put(fileId, representation.getEntry());
+        filenameBuilder.put(fileId, representation.getFile().getEntry());
       }
     }
     ImmutableMap<AssetFileIdentity, String> filenames = filenameBuilder.build();

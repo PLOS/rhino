@@ -564,11 +564,20 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       query.setParameter("scholarlyWorkId", workId);
       return query.list();
     });
-    Map<String, RepoVersion> fileMap = fileResults.stream().collect(Collectors.toMap(
-        (Object[] fileResult) -> (String) fileResult[0],
-        (Object[] fileResult) -> RepoVersion.create((String) fileResult[1], (String) fileResult[2])
-    ));
+    Map<String, RepoVersion> fileMap = fileResults.stream()
+        .filter((Object[] fileResult) -> fileResult[0] != null)
+        .collect(Collectors.toMap(
+            (Object[] fileResult) -> (String) fileResult[0],
+            ArticleCrudServiceImpl::buildRepoVersionFromSqlQuery));
+    Collection<RepoVersion> archivalFiles = fileResults.stream()
+        .filter((Object[] fileResult) -> fileResult[0] == null)
+        .map(ArticleCrudServiceImpl::buildRepoVersionFromSqlQuery)
+        .collect(Collectors.toList());
 
-    return new ScholarlyWork(DoiBasedIdentity.create(workDoi), workType, fileMap, revision, workTimestamp.toInstant());
+    return new ScholarlyWork(DoiBasedIdentity.create(workDoi), workType, fileMap, archivalFiles, revision, workTimestamp.toInstant());
+  }
+
+  private static RepoVersion buildRepoVersionFromSqlQuery(Object[] fileResult) {
+    return RepoVersion.create((String) fileResult[1], (String) fileResult[2]);
   }
 }

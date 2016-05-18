@@ -14,6 +14,7 @@ import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.Archive;
+import org.ambraproject.rhino.util.ContentTypeInference;
 import org.plos.crepo.model.RepoObject;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
@@ -32,6 +33,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 class ArticlePackageBuilder {
 
@@ -39,16 +41,19 @@ class ArticlePackageBuilder {
   private final ArticleXml article;
   private final ManifestXml manifest;
   private final String manifestEntry;
+  private final ManifestXml.Asset manuscriptAsset;
   private final ManifestXml.Representation manuscriptRepr;
   private final ManifestXml.Representation printableRepr;
   private final ArticleIdentity articleIdentity;
 
   ArticlePackageBuilder(Archive archive, ArticleXml article, ManifestXml manifest, String manifestEntry,
-                        ManifestXml.Representation manuscriptRepr, ManifestXml.Representation printableRepr) {
+                        ManifestXml.Asset manuscriptAsset, ManifestXml.Representation manuscriptRepr, ManifestXml.Representation printableRepr) {
     this.archive = Objects.requireNonNull(archive);
     this.article = Objects.requireNonNull(article);
     this.manifest = Objects.requireNonNull(manifest);
     this.manifestEntry = Objects.requireNonNull(manifestEntry);
+
+    this.manuscriptAsset = Objects.requireNonNull(manuscriptAsset);
     this.manuscriptRepr = Objects.requireNonNull(manuscriptRepr);
     this.printableRepr = Objects.requireNonNull(printableRepr);
 
@@ -62,15 +67,35 @@ class ArticlePackageBuilder {
   public ArticlePackage build() {
     Map<String, RepoObject> articleObjects = buildArticleObjects();
     List<ScholarlyWorkInput> assetWorks = buildAssetWorks(article.findAllAssetNodes());
+    List<RepoObject> archivalFiles = manifest.getArchivalFiles().stream()
+        .map(this::buildObjectFor).collect(Collectors.toList());
 
-    return new ArticlePackage(new ScholarlyWorkInput(articleIdentity, articleObjects, AssetType.ARTICLE.identifier), assetWorks);
+    return new ArticlePackage(new ScholarlyWorkInput(articleIdentity, articleObjects, AssetType.ARTICLE.identifier),
+        assetWorks, archivalFiles);
   }
 
-  private RepoObject buildObjectFor(ManifestXml.Representation repr, String contentType) {
-    return new RepoObject.RepoObjectBuilder(repr.getCrepoKey())
-        .contentAccessor(archive.getContentAccessorFor(repr.getEntry()))
+  private RepoObject buildObjectFor(ManifestXml.Asset asset, ManifestXml.Representation representation) {
+    ManifestXml.ManifestFile manifestFile = representation.getFile();
+    String mimetype = manifestFile.getMimetype();
+    if (mimetype == null) {
+      mimetype = AssetFileIdentity.create(asset.getUri(), representation.getName()).inferContentType().toString();
+    }
+    return buildObject(manifestFile, mimetype);
+  }
+
+  private RepoObject buildObjectFor(ManifestXml.ManifestFile manifestFile) {
+    String mimetype = manifestFile.getMimetype();
+    if (mimetype == null) {
+      mimetype = ContentTypeInference.inferContentType(manifestFile.getEntry());
+    }
+    return buildObject(manifestFile, mimetype);
+  }
+
+  private RepoObject buildObject(ManifestXml.ManifestFile manifestFile, String contentType) {
+    return new RepoObject.RepoObjectBuilder(manifestFile.getCrepoKey())
+        .contentAccessor(archive.getContentAccessorFor(manifestFile.getEntry()))
         .contentType(contentType)
-        .downloadName(repr.getEntry())
+        .downloadName(manifestFile.getEntry())
         .build();
   }
 
@@ -82,8 +107,8 @@ class ArticlePackageBuilder {
             .downloadName(manifestEntry)
             .contentType(MediaType.APPLICATION_XML)
             .build());
-    articleObjects.put("manuscript", buildObjectFor(manuscriptRepr, MediaType.APPLICATION_XML));
-    articleObjects.put("printable", buildObjectFor(printableRepr, "application/pdf"));
+    articleObjects.put("manuscript", buildObjectFor(manuscriptAsset, manuscriptRepr));
+    articleObjects.put("printable", buildObjectFor(manuscriptAsset, printableRepr));
 
     articleObjects.put("front",
         new RepoObject.RepoObjectBuilder("front/" + articleIdentity.getIdentifier())
@@ -118,21 +143,14 @@ class ArticlePackageBuilder {
    */
   private List<ScholarlyWorkInput> buildAssetWorks(AssetNodesByDoi assetNodeMap) {
     List<ScholarlyWorkInput> works = new ArrayList<>();
-    for (ManifestXml.Asset asset : manifest.parse()) {
+    for (ManifestXml.Asset asset : manifest.getAssets()) {
       AssetType assetType = findAssetType(assetNodeMap, asset);
       if (assetType == AssetType.ARTICLE) continue;
       ImmutableMap.Builder<String, RepoObject> assetObjects = ImmutableMap.builder();
       AssetIdentity assetIdentity = AssetIdentity.create(asset.getUri());
       for (ManifestXml.Representation representation : asset.getRepresentations()) {
-        String entryName = representation.getEntry();
-        FileType fileType = assetType.getFileType(representation.getName());
-
-        assetObjects.put(fileType.identifier,
-            new RepoObject.RepoObjectBuilder(representation.getCrepoKey())
-                .contentAccessor(archive.getContentAccessorFor(entryName))
-                .downloadName(entryName)
-                .contentType(AssetFileIdentity.create(asset.getUri(), representation.getName()).inferContentType().toString())
-                .build());
+        FileType fileType = assetType.getFileType(representation.getName()); // TODO: Use representation.getType instead
+        assetObjects.put(fileType.identifier, buildObjectFor(representation.getFile()));
       }
       works.add(new ScholarlyWorkInput(assetIdentity, assetObjects.build(), assetType.identifier));
     }
@@ -140,7 +158,7 @@ class ArticlePackageBuilder {
   }
 
   private static AssetType findAssetType(AssetNodesByDoi assetNodeMap, ManifestXml.Asset asset) {
-    if (asset.getAssetType().equals(ManifestXml.AssetType.ARTICLE)) {
+    if (asset.getAssetTagName().equals(ManifestXml.AssetTagName.ARTICLE)) {
       return AssetType.ARTICLE;
     }
     AssetIdentity assetIdentity = AssetIdentity.create(asset.getUri());
