@@ -193,33 +193,43 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
       annotationType = AnnotationType.COMMENT;
     }
 
-    Long creator = Long.valueOf(input.getCreatorUserId());
-
     String doiPrefix = extractDoiPrefix(articleDoi.get()); // comment receives same DOI prefix as article
     UUID uuid = UUID.randomUUID(); // generate a new DOI out of a random UUID
     DoiBasedIdentity createdAnnotationUri = DoiBasedIdentity.create(doiPrefix + "annotation/" + uuid);
 
     Annotation created = new Annotation();
     created.setType(annotationType);
-    created.setUserProfileID(creator);
     created.setArticleID(articlePk);
     created.setParentID(parentCommentPk.orElse(null));
     created.setAnnotationUri(createdAnnotationUri.getKey());
-    created.setTitle(Strings.nullToEmpty(input.getTitle()));
-    created.setBody(Strings.nullToEmpty(input.getBody()));
-    created.setHighlightedText(Strings.nullToEmpty(input.getHighlightedText()));
-    created.setCompetingInterestBody(Strings.nullToEmpty(input.getCompetingInterestStatement()));
+    copyInputToComment(input, created);
 
     hibernateTemplate.save(created);
     return created;
   }
 
+  private void copyInputToComment(CommentInputView input, Annotation comment) {
+    comment.setUserProfileID(Long.valueOf(Strings.nullToEmpty(input.getCreatorUserId())));
+    comment.setTitle(Strings.nullToEmpty(input.getTitle()));
+    comment.setBody(Strings.nullToEmpty(input.getBody()));
+    comment.setHighlightedText(Strings.nullToEmpty(input.getHighlightedText()));
+    comment.setCompetingInterestBody(Strings.nullToEmpty(input.getCompetingInterestStatement()));
+    comment.setIsRemoved(Boolean.valueOf(Strings.nullToEmpty(input.getIsRemoved())));
+  }
+
   @Override
-  public String removeComment(DoiBasedIdentity commentId) {
+  public Annotation patchComment(CommentInputView input) {
+    Annotation comment = getComment(DoiBasedIdentity.create(input.getAnnotationUri()));
+    copyInputToComment(input, comment);
+    hibernateTemplate.update(comment);
+    return comment;
+  }
+
+  @Override
+  public String deleteComment(DoiBasedIdentity commentId) {
     Annotation comment = getComment(commentId);
     String annotationUri = comment.getAnnotationUri();
-    comment.setIsRemoved(true);
-    hibernateTemplate.update(comment);
+    hibernateTemplate.delete(comment);
     return annotationUri;
   }
 

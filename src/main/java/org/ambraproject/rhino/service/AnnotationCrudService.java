@@ -61,7 +61,9 @@ public interface AnnotationCrudService {
 
   public Annotation createComment(CommentInputView input);
 
-  public String removeComment(DoiBasedIdentity input);
+  public Annotation patchComment(CommentInputView input);
+
+  public String deleteComment(DoiBasedIdentity input);
 
   public String removeFlagsFromComment(DoiBasedIdentity input);
 

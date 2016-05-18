@@ -1,8 +1,9 @@
 package org.ambraproject.rhino.rest.controller.abstr;
 
+import com.wordnik.swagger.annotations.ApiOperation;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.Annotation;
 import org.ambraproject.rhino.model.Flag;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
@@ -22,7 +23,7 @@ public class CommentCrudController extends DoiBasedCrudController {
 
   private static final String COMMENT_META_ROOT = "/comments";
   private static final String FLAGS_META_ROOT = COMMENT_META_ROOT + "/flags";
-  private static final String FLAGS_META_TEMPLATE = FLAGS_META_ROOT+ "/**";
+  private static final String FLAGS_META_TEMPLATE = FLAGS_META_ROOT + "/**";
   private static final String COMMENT_META_FLAGGED_ROOT = "/flagged";
   private static final String COMMENT_META_NAMESPACE = COMMENT_META_ROOT + "/";
   private static final String COMMENT_META_TEMPLATE = COMMENT_META_NAMESPACE + "/**";
@@ -72,11 +73,22 @@ public class CommentCrudController extends DoiBasedCrudController {
     return reportOk(commentUri);
   }
 
+  @RequestMapping(value = COMMENT_META_TEMPLATE, method = RequestMethod.PATCH)
+  public ResponseEntity<?> patch(HttpServletRequest request)
+      throws IOException {
+    CommentInputView input = readJsonFromRequest(request, CommentInputView.class);
+    Annotation patched = annotationCrudService.patchComment(input);
+    return reportOk(patched.getAnnotationUri());
+  }
+
   @RequestMapping(value = COMMENT_META_TEMPLATE, method = RequestMethod.DELETE)
-  public ResponseEntity<?> remove(HttpServletRequest request)
+  @ApiOperation(value = "delete", notes = "Performs a hard delete operation in the database. " +
+      "NOTE: fails loudly if attempting to delete a comment that has any replies. All replies must " +
+      "be deleted first.")
+  public ResponseEntity<?> delete(HttpServletRequest request)
       throws IOException {
     DoiBasedIdentity commentId = parse(request);
-    String deletedCommentUri = annotationCrudService.removeComment(commentId);
+    String deletedCommentUri = annotationCrudService.deleteComment(commentId);
     return reportOk(deletedCommentUri);
   }
 
@@ -95,7 +107,7 @@ public class CommentCrudController extends DoiBasedCrudController {
   }
 
   @RequestMapping(value = FLAGS_META_TEMPLATE, method = RequestMethod.DELETE)
-  public ResponseEntity<String> removeFlag(HttpServletRequest request, @RequestParam String flagId)
+  public ResponseEntity<String> removeFlag(@RequestParam String flagId)
       throws IOException {
     String commentUri = annotationCrudService.deleteCommentFlag(flagId);
     return reportCreated(commentUri);
