@@ -256,4 +256,23 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
         (String) parentVolumeResults[3], (String) parentVolumeResults[4]);
   }
 
+  @Override
+  public void delete(DoiBasedIdentity issueId) {
+    Issue issue = findIssue(issueId);
+    if (issue == null) {
+      throw new RestClientException("Issue does not exist: " + issueId, HttpStatus.NOT_FOUND);
+    }
+    List<String> currentIssueJournalKeys = hibernateTemplate.execute((Session session) -> {
+      Query query = session.createQuery("select journalKey from Journal where currentIssue = :issue");
+      query.setParameter("issue", issue);
+      return query.list();
+    });
+    if (!currentIssueJournalKeys.isEmpty()) {
+      String message = String.format("Cannot delete issue: %s. It is the current issue for: %s",
+          issueId, currentIssueJournalKeys);
+      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+    }
+    hibernateTemplate.delete(issue);
+  }
+
 }

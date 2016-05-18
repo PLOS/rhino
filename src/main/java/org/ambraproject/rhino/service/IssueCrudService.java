@@ -41,4 +41,6 @@ public interface IssueCrudService {
 
   public abstract VolumeNonAssocView getParentVolume(Issue issue);
 
+  public abstract void delete(DoiBasedIdentity issueId);
+
 }
