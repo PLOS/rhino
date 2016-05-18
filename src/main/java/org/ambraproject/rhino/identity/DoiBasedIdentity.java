@@ -107,21 +107,6 @@ public class DoiBasedIdentity {
   }
 
   /**
-   * Represent a collection of identifier strings as database key values (with {@code "info:doi/"}). The order of the
-   * argument collection is preserved.
-   *
-   * @param dois
-   * @return
-   */
-  public static List<String> asKeys(Collection<String> dois) {
-    List<String> keys = Lists.newArrayListWithCapacity(dois.size());
-    for (String doi : dois) {
-      keys.add(asKey(doi));
-    }
-    return keys;
-  }
-
-  /**
    * Return the DOI or DOI-like identifier for the article or asset that this object identifies. The return value will
    * not be prefixed with {@code "info:doi/"} and, under Ambra's current data model, must not be stored in a DOI column
    * of any database table.
