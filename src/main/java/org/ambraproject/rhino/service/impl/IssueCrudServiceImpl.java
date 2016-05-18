@@ -50,6 +50,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class IssueCrudServiceImpl extends AmbraService implements IssueCrudService {
 
@@ -107,9 +108,18 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
 
     List<String> inputArticleDois = input.getArticleOrder();
     if (inputArticleDois != null) {
-      issue.setArticleDois(DoiBasedIdentity.asKeys(inputArticleDois));
+      // Sanitize input
+      inputArticleDois = inputArticleDois.stream().map(DoiBasedIdentity::asKey).collect(Collectors.toList());
+
+      List<String> persistentArticleDois = issue.getArticleDois();
+      if (persistentArticleDois == null) {
+        issue.setArticleDois(inputArticleDois);
+      } else {
+        persistentArticleDois.clear();
+        persistentArticleDois.addAll(inputArticleDois);
+      }
     } else if (issue.getArticleDois() == null) {
-      issue.setArticleDois(new ArrayList<String>(0));
+      issue.setArticleDois(new ArrayList<>(0));
     }
 
     return issue;
