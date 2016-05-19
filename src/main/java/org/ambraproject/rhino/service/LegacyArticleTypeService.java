@@ -85,10 +85,6 @@ public class LegacyArticleTypeService implements ArticleTypeService {
     return matchedType;
   }
 
-  private ArticleType getMetadataForUri(URI uri) {
-    return knownArticleTypes.get(uri);
-  }
-
   /**
    * {@inheritDoc}
    * <p/>
@@ -113,7 +109,7 @@ public class LegacyArticleTypeService implements ArticleTypeService {
         throw new ArticleTypeException(message, e);
       }
 
-      ArticleType typeForUri = getMetadataForUri(typeUri);
+      ArticleType typeForUri = knownArticleTypes.get(typeUri);
       if (typeForUri != null) { // it is known
         if (matchedType == null) {
           matchedType = typeForUri; // first hit
