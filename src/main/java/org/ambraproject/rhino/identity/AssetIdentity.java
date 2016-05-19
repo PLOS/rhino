@@ -1,6 +1,6 @@
 package org.ambraproject.rhino.identity;
 
-import org.ambraproject.models.ArticleAsset;
+import org.ambraproject.rhino.model.ArticleAsset;
 
 /**
  * An identity for an asset, independent of its associated files.

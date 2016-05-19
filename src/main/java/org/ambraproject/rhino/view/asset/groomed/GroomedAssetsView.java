@@ -5,8 +5,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
-import org.ambraproject.models.Article;
-import org.ambraproject.models.ArticleAsset;
+import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleAsset;
 
 import java.util.Collection;
 import java.util.List;

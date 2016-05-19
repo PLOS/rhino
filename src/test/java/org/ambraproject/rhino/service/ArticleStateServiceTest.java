@@ -15,27 +15,25 @@ package org.ambraproject.rhino.service;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
-import org.ambraproject.models.Article;
-import org.ambraproject.models.ArticleAsset;
-import org.ambraproject.models.Journal;
-import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
+import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleAsset;
+import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.view.article.ArticleInputView;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
 import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
-import org.ambraproject.routes.CrossRefLookupRoutes;
 import org.apache.commons.io.IOUtils;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
-import org.plos.crepo.exceptions.ErrorType;
 import org.plos.crepo.exceptions.NotFoundException;
 import org.plos.crepo.service.ContentRepoService;
 import org.plos.crepo.service.InMemoryContentRepoService;
@@ -209,7 +207,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     assertEquals(citedArticlesQueue.get(0), article.getDoi());
     assertEquals(dummySender.headersSent.size(), 1);
     String[] headerKeys = dummySender.headersSent.keySet().toArray(new String[1]);
-    assertEquals(headerKeys[0], CrossRefLookupRoutes.HEADER_AUTH_ID);
+    assertEquals(headerKeys[0], ArticleStateServiceImpl.HEADER_AUTH_ID);
     assertNull(dummySender.headersSent.get(0));
   }
 }

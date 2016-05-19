@@ -18,12 +18,12 @@
  */
 package org.ambraproject.rhino.view.article;
 
-import org.ambraproject.models.Article;
-import org.ambraproject.models.ArticleAsset;
-import org.ambraproject.models.ArticleAuthor;
-import org.ambraproject.models.ArticleEditor;
-import org.ambraproject.models.ArticleRelationship;
-import org.ambraproject.models.Journal;
+import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleAsset;
+import org.ambraproject.rhino.model.ArticleAuthor;
+import org.ambraproject.rhino.model.ArticleEditor;
+import org.ambraproject.rhino.model.ArticleRelationship;
+import org.ambraproject.rhino.model.Journal;
 
 import java.util.Date;
 import java.util.List;

@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import org.ambraproject.models.ArticleList;
+import org.ambraproject.rhino.model.ArticleList;
 import org.ambraproject.rhino.identity.ArticleListIdentity;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.article.ArticleOutputView;

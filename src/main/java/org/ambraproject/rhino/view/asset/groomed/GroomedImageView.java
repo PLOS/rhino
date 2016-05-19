@@ -9,7 +9,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import org.ambraproject.models.ArticleAsset;
+import org.ambraproject.rhino.model.ArticleAsset;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.article.ArticleVisibility;

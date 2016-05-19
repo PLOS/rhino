@@ -1,6 +1,6 @@
 package org.ambraproject.rhino.rest.controller;
 
-import org.ambraproject.models.Article;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleCrudService;

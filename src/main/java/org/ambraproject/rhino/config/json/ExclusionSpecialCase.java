@@ -3,9 +3,9 @@ package org.ambraproject.rhino.config.json;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
-import org.ambraproject.models.AmbraEntity;
-import org.ambraproject.models.ArticleRelationship;
-import org.ambraproject.models.Journal;
+import org.ambraproject.rhino.model.AmbraEntity;
+import org.ambraproject.rhino.model.ArticleRelationship;
+import org.ambraproject.rhino.model.Journal;
 
 /**
  * Exclusions for classes and fields when using Gson's default, reflection-based serialization logic.

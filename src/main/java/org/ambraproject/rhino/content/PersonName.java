@@ -18,8 +18,8 @@
 
 package org.ambraproject.rhino.content;
 
-import org.ambraproject.models.ArticlePerson;
-import org.ambraproject.models.CitedArticlePerson;
+import org.ambraproject.rhino.model.ArticlePerson;
+import org.ambraproject.rhino.model.CitedArticlePerson;
 
 /**
  * Immutable holder for a name that can be put into {@link ArticlePerson} or {@link CitedArticlePerson}.

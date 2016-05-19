@@ -3,7 +3,7 @@ package org.ambraproject.rhino.view.comment;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import org.ambraproject.models.Annotation;
+import org.ambraproject.rhino.model.Annotation;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.view.JsonOutputView;
 

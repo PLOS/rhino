@@ -1,7 +1,7 @@
 package org.ambraproject.rhino.rest.controller.abstr;
 
-import org.ambraproject.models.Annotation;
-import org.ambraproject.models.Flag;
+import org.ambraproject.rhino.model.Annotation;
+import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;

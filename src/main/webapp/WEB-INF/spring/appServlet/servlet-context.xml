@@ -37,7 +37,7 @@
   <resources mapping="/resources/**" location="/resources/"/>
 
   <!-- Allow us to use "${foo}" notation to pull values from ambra configuration in this file.  -->
-  <beans:bean id="propertyConfigurer" class="org.ambraproject.configuration.SpringPlaceholderConfigurer" />
+  <beans:bean id="propertyConfigurer" class="org.ambraproject.rhino.config.SpringPlaceholderConfigurer" />
 
   <!-- Resolves views selected for rendering by @Controllers to resources in the /WEB-INF/views directory -->
   <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -60,23 +60,6 @@
   <beans:bean id="hibernateDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
     <beans:property name="jndiName" value="java:comp/env/jdbc/AmbraDS"/>
   </beans:bean>
-
-  <beans:bean id="rolesEhCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
-    <beans:property name="cacheName" value="RolesCache"/>
-  </beans:bean>
-
-  <beans:bean id="rolesCache" class="org.ambraproject.service.cache.EhcacheProvider">
-    <beans:constructor-arg index="0" ref="rolesEhCache"/>
-  </beans:bean>
-
-  <beans:bean id="articleService" class="org.ambraproject.service.article.ArticleServiceImpl">
-    <beans:property name="sessionFactory" ref="sessionFactory"/>
-  </beans:bean>
-
-  <beans:bean id="configurationStore" class="org.ambraproject.configuration.ConfigurationStore"
-        factory-method="getInstance" />
-
-  <beans:bean id="ambraConfiguration" factory-bean="configurationStore" factory-method="getConfiguration" />
 
   <beans:bean id="jmsConnectionFactory" class="org.apache.activemq.spring.ActiveMQConnectionFactory">
     <beans:property name="brokerURL" value="${ambra.services.activemq}"/>
@@ -104,43 +87,6 @@
     <camel:jmxAgent id="plos-queue" createConnector="false"/>
     <camel:template id="messageProducerTemplate"/>
   </camel:camelContext>
-
-  <beans:bean id="messageSender" class="org.ambraproject.queue.CamelSender" depends-on="activemq">
-    <beans:property name="producerTemplate" ref="messageProducerTemplate"/>
-  </beans:bean>
-
-  <beans:bean id="messageService" class="org.ambraproject.queue.MessageServiceImpl">
-    <beans:property name="sender" ref="messageSender"/>
-    <beans:property name="ambraConfiguration" ref="ambraConfiguration"/>
-  </beans:bean>
-
-  <beans:bean id="syndicationService" class="org.ambraproject.service.syndication.impl.SyndicationServiceImpl">
-    <beans:property name="sessionFactory" ref="sessionFactory"/>
-    <beans:property name="ambraConfiguration" ref="ambraConfiguration"/>
-    <beans:property name="messageService" ref="messageService"/>
-<!--    <beans:property name="journalService" ref="journalService"/> -->
-  </beans:bean>
-
-  <!-- Note: the next two beans are included only because taxonomyService depends on them,
-       even though our current use of this class doesn't call them.                      -->
-  <beans:bean id="solrServerFactory" class="org.ambraproject.service.search.SolrServerFactory">
-    <beans:constructor-arg ref="ambraConfiguration"/>
-  </beans:bean>
-
-  <beans:bean id="searchService" class="org.ambraproject.service.search.SolrSearchService">
-    <beans:property name="configuration" ref="ambraConfiguration"/>
-    <beans:property name="serverFactory" ref="solrServerFactory"/>
-  </beans:bean>
-
-  <beans:bean id="cacheFactory" class="org.ambraproject.rhino.cache.CacheFactory" factory-method="getInstance" />
-
-  <beans:bean id="rhinoCache" factory-bean="cacheFactory" factory-method="getCache"/>
-
-  <beans:bean id="legacyTaxonomyService" class="org.ambraproject.service.taxonomy.TaxonomyServiceImpl">
-    <beans:property name="cache" ref="rhinoCache" />
-    <beans:property name="searchService" ref="searchService" />
-    <beans:property name="sessionFactory" ref="sessionFactory" />
-  </beans:bean>
 
   <mvc:interceptors>
     <beans:bean class="org.ambraproject.rhino.rest.LoggingInterceptor"/>

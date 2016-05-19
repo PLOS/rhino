@@ -2,8 +2,8 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
 import edu.emory.mathcs.backport.java.util.Collections;
-import org.ambraproject.models.Issue;
-import org.ambraproject.models.Journal;
+import org.ambraproject.rhino.model.Issue;
+import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalReadService;
@@ -65,7 +65,7 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
     return new EntityTransceiver<Journal>() {
       @Override
       protected Journal fetchEntity() {
-        return loadJournal(journalKey);
+        return getJournal(journalKey);
       }
 
       @Override
@@ -132,7 +132,8 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
     return "No journal found with key: " + journalKey;
   }
 
-  private Journal loadJournal(String journalKey) {
+  @Override
+  public Journal getJournal(String journalKey) {
     Journal journal = (Journal) DataAccessUtils.singleResult((List<?>)
         hibernateTemplate.findByCriteria(journalCriteria()
                 .add(Restrictions.eq("journalKey", journalKey))
