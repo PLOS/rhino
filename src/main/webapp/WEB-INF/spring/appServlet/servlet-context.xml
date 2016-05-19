@@ -88,10 +88,6 @@
     <camel:template id="messageProducerTemplate"/>
   </camel:camelContext>
 
-  <beans:bean id="cacheFactory" class="org.ambraproject.rhino.cache.CacheFactory" factory-method="getInstance" />
-
-  <beans:bean id="rhinoCache" factory-bean="cacheFactory" factory-method="getCache"/>
-
   <mvc:interceptors>
     <beans:bean class="org.ambraproject.rhino.rest.LoggingInterceptor"/>
   </mvc:interceptors>
