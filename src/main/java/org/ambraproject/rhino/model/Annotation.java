@@ -34,6 +34,8 @@ public class Annotation extends AmbraEntity {
 
   private String competingInterestBody;
 
+  private boolean isRemoved;
+
   public Annotation() {
     super();
   }
@@ -116,6 +118,14 @@ public class Annotation extends AmbraEntity {
 
   public void setHighlightedText(String highlightedText) {
     this.highlightedText = highlightedText;
+  }
+
+  public boolean getIsRemoved() {
+    return isRemoved;
+  }
+
+  public void setIsRemoved(boolean removed) {
+    isRemoved = removed;
   }
 
   @Override

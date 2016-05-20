@@ -51,9 +51,29 @@ public interface AnnotationCrudService {
   public Transceiver readComment(DoiBasedIdentity commentId)
       throws IOException;
 
+  /**
+   * Reads the comment data for a list of flagged comments to the receiver.
+   *
+   * @throws IOException
+   */
+  public Transceiver readFlaggedComments()
+      throws IOException;
+
   public Annotation createComment(CommentInputView input);
 
+  public Annotation patchComment(CommentInputView input);
+
+  public String deleteComment(DoiBasedIdentity input);
+
+  public String removeFlagsFromComment(DoiBasedIdentity input);
+
   public Flag createCommentFlag(DoiBasedIdentity commentId, CommentFlagInputView input);
+
+  public Transceiver readAllCommentFlags();
+
+  public Transceiver readCommentFlag(String flagId);
+
+  public String deleteCommentFlag(String flagId);
 
   public Transceiver readRecentComments(String journalKey, OptionalInt limit);
 
