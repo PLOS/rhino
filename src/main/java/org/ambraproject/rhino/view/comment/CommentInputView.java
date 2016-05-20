@@ -3,12 +3,14 @@ package org.ambraproject.rhino.view.comment;
 public class CommentInputView {
 
   private String articleDoi;
+  private String annotationUri;
   private String creatorUserId;
   private String parentCommentId;
   private String title;
   private String body;
   private String highlightedText;
   private String competingInterestStatement;
+  private String isRemoved;
 
   /**
    * @deprecated For deserializer only
@@ -101,4 +103,27 @@ public class CommentInputView {
     this.competingInterestStatement = competingInterestStatement;
   }
 
+  public String getIsRemoved() {
+    return isRemoved;
+  }
+
+  /**
+   * @deprecated For deserializer only
+   */
+  @Deprecated
+  public void setIsRemoved(String isRemoved) {
+    this.isRemoved = isRemoved;
+  }
+
+  public String getAnnotationUri() {
+    return annotationUri;
+  }
+
+  /**
+   * @deprecated For deserializer only
+   */
+  @Deprecated
+  public void setAnnotationUri(String annotationUri) {
+    this.annotationUri = annotationUri;
+  }
 }

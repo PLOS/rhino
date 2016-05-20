@@ -26,11 +26,12 @@ import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.util.response.Transceiver;
-import org.ambraproject.rhino.view.comment.AnnotationNodeView;
-import org.ambraproject.rhino.view.comment.AnnotationOutputView;
 import org.ambraproject.rhino.view.comment.CommentCount;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
+import org.ambraproject.rhino.view.comment.CommentFlagOutputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
+import org.ambraproject.rhino.view.comment.CommentNodeView;
+import org.ambraproject.rhino.view.comment.CommentOutputView;
 import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
@@ -40,6 +41,7 @@ import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
@@ -69,17 +71,17 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
   public Transceiver readComments(ArticleIdentity articleIdentity) throws IOException {
     return new Transceiver() {
       @Override
-      protected Collection<AnnotationOutputView> getData() throws IOException {
+      protected Collection<CommentOutputView> getData() throws IOException {
         Article article = (Article) DataAccessUtils.uniqueResult(
             hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
                     .setFetchMode("journals", FetchMode.JOIN)
                     .add(Restrictions.eq("doi", articleIdentity.getKey()))
             ));
         Collection<Annotation> comments = fetchAllAnnotations(article);
-        AnnotationOutputView.Factory factory = new AnnotationOutputView.Factory(runtimeConfiguration, article, comments);
+        CommentOutputView.Factory factory = new CommentOutputView.Factory(runtimeConfiguration, article, comments);
         return comments.stream()
             .filter(comment -> comment.getParentID() == null)
-            .sorted(AnnotationOutputView.BY_DATE)
+            .sorted(CommentOutputView.BY_DATE)
             .map(factory::buildView)
             .collect(Collectors.toList());
       }
@@ -95,7 +97,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
   public Transceiver readComment(DoiBasedIdentity commentId) throws IOException {
     return new Transceiver() {
       @Override
-      protected AnnotationOutputView getData() throws IOException {
+      protected CommentOutputView getData() throws IOException {
         Annotation annotation = getComment(commentId);
 
         // TODO: Make this more efficient. Three queries is too many.
@@ -105,7 +107,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
                     .add(Restrictions.eq("ID", annotation.getArticleID()))
             ));
 
-        return new AnnotationOutputView.Factory(runtimeConfiguration, article, fetchAllAnnotations(article)).buildView(annotation);
+        return new CommentOutputView.Factory(runtimeConfiguration, article, fetchAllAnnotations(article)).buildView(annotation);
       }
 
       @Override
@@ -123,6 +125,17 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
       throw reportNotFound(commentId);
     }
     return annotation;
+  }
+
+  private Flag getFlag(String flagId) {
+    Flag flag = (Flag) DataAccessUtils.uniqueResult(
+        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Flag.class)
+            .add(Restrictions.eq("ID", Long.parseLong(flagId)))));
+    if (flag == null) {
+      String message = "Comment flag not found at the provided ID: " + flagId;
+      throw new RestClientException(message, HttpStatus.NOT_FOUND);
+    }
+    return flag;
   }
 
   private static final Pattern DOI_PREFIX_PATTERN = Pattern.compile("^\\d+\\.\\d+/");
@@ -180,25 +193,55 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
       annotationType = AnnotationType.COMMENT;
     }
 
-    Long creator = Long.valueOf(input.getCreatorUserId());
-
     String doiPrefix = extractDoiPrefix(articleDoi.get()); // comment receives same DOI prefix as article
     UUID uuid = UUID.randomUUID(); // generate a new DOI out of a random UUID
     DoiBasedIdentity createdAnnotationUri = DoiBasedIdentity.create(doiPrefix + "annotation/" + uuid);
 
     Annotation created = new Annotation();
     created.setType(annotationType);
-    created.setUserProfileID(creator);
     created.setArticleID(articlePk);
     created.setParentID(parentCommentPk.orElse(null));
     created.setAnnotationUri(createdAnnotationUri.getKey());
-    created.setTitle(Strings.nullToEmpty(input.getTitle()));
-    created.setBody(Strings.nullToEmpty(input.getBody()));
-    created.setHighlightedText(Strings.nullToEmpty(input.getHighlightedText()));
-    created.setCompetingInterestBody(Strings.nullToEmpty(input.getCompetingInterestStatement()));
+    copyInputToComment(input, created);
 
     hibernateTemplate.save(created);
     return created;
+  }
+
+  private void copyInputToComment(CommentInputView input, Annotation comment) {
+    comment.setUserProfileID(Long.valueOf(Strings.nullToEmpty(input.getCreatorUserId())));
+    comment.setTitle(Strings.nullToEmpty(input.getTitle()));
+    comment.setBody(Strings.nullToEmpty(input.getBody()));
+    comment.setHighlightedText(Strings.nullToEmpty(input.getHighlightedText()));
+    comment.setCompetingInterestBody(Strings.nullToEmpty(input.getCompetingInterestStatement()));
+    comment.setIsRemoved(Boolean.valueOf(Strings.nullToEmpty(input.getIsRemoved())));
+  }
+
+  @Override
+  public Annotation patchComment(CommentInputView input) {
+    Annotation comment = getComment(DoiBasedIdentity.create(input.getAnnotationUri()));
+    copyInputToComment(input, comment);
+    hibernateTemplate.update(comment);
+    return comment;
+  }
+
+  @Override
+  public String deleteComment(DoiBasedIdentity commentId) {
+    Annotation comment = getComment(commentId);
+    String annotationUri = comment.getAnnotationUri();
+    hibernateTemplate.delete(comment);
+    return annotationUri;
+  }
+
+  @Override
+  public String removeFlagsFromComment(DoiBasedIdentity commentId) {
+    Annotation comment = getComment(commentId);
+    String annotationUri = comment.getAnnotationUri();
+    List<Flag> commentFlags = getAllFlags().stream()
+        .filter(f -> f.getFlaggedAnnotation().getAnnotationUri().equals(annotationUri))
+        .collect(Collectors.toList());
+    hibernateTemplate.deleteAll(commentFlags);
+    return annotationUri;
   }
 
   @Override
@@ -217,10 +260,72 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
   }
 
   @Override
+  public Transceiver readAllCommentFlags() {
+    return new Transceiver() {
+      @Override
+      protected List<CommentFlagOutputView> getData() throws IOException {
+        return getAllFlags().stream().map(CommentFlagOutputView::new).collect(Collectors.toList());
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    };
+  }
+
+  private List<Flag> getAllFlags() {
+    return (List<Flag>) hibernateTemplate
+        .execute(session -> session.createCriteria(Flag.class).list());
+  }
+
+  @Override
+  public Transceiver readCommentFlag(String flagId) {
+    return new Transceiver() {
+      @Override
+      protected CommentFlagOutputView getData() throws IOException {
+        Flag flag = getFlag(flagId);
+        return new CommentFlagOutputView(flag);
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    };
+  }
+
+  @Override
+  public String deleteCommentFlag(String flagId) {
+    Flag flag = getFlag(flagId);
+    hibernateTemplate.delete(flag);
+    return flagId;
+  }
+
+  @Override
+  public Transceiver readFlaggedComments() throws IOException {
+    return new Transceiver() {
+      @Override
+      protected List<CommentNodeView> getData() throws IOException {
+        CommentNodeView.Factory viewFactory = new CommentNodeView.Factory(runtimeConfiguration);
+        return getAllFlags().stream()
+            .map(Flag::getFlaggedAnnotation)
+            .map(viewFactory::create)
+            .collect(Collectors.toCollection(ArrayList::new));
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    };
+  }
+
+  @Override
   public Transceiver readRecentComments(String journalKey, OptionalInt limit) {
     return new Transceiver() {
       @Override
-      protected List<AnnotationNodeView> getData() throws IOException {
+      protected List<CommentNodeView> getData() throws IOException {
         List<Object[]> results = hibernateTemplate.execute(session -> {
           Query query = session.createQuery("" +
               "SELECT ann, art.doi, art.title " +
@@ -233,7 +338,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
           limit.ifPresent(query::setMaxResults);
           return query.list();
         });
-        AnnotationNodeView.Factory viewFactory = new AnnotationNodeView.Factory(runtimeConfiguration);
+        CommentNodeView.Factory viewFactory = new CommentNodeView.Factory(runtimeConfiguration);
         return results.stream()
             .map((Object[] result) -> {
               Annotation annotation = (Annotation) result[0];

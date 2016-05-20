@@ -174,6 +174,16 @@ public abstract class RestController {
   }
 
   /**
+   * Report that a RESTful operation succeeded. The returned object (if returned from a {@link RequestMapping}) will
+   * cause the REST response to indicate an "OK" HTTP status and have an empty response body.
+   *
+   * @return a response indicating "OK"
+   */
+  protected ResponseEntity<Object> reportOk(String identifier) {
+    return new ResponseEntity<>(identifier, HttpStatus.OK);
+  }
+
+  /**
    * Report that a RESTful operation to create an entity succeeded. The returned object (if returned from a {@link
    * RequestMapping}) will cause the REST response to indicate a "Created" HTTP status and have an empty response body.
    *

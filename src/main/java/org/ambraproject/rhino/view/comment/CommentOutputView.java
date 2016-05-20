@@ -24,20 +24,20 @@ import java.util.stream.Collectors;
 /**
  * View of a comment, with nested views of all its children.
  */
-public class AnnotationOutputView implements JsonOutputView {
+public class CommentOutputView implements JsonOutputView {
 
   private final ArticleVisibility parentArticle;
   private final Annotation comment;
   private final CompetingInterestStatement competingInterestStatement;
 
-  private final ImmutableList<AnnotationOutputView> replies;
+  private final ImmutableList<CommentOutputView> replies;
   private final int replyTreeSize;
   private final Date mostRecentActivity;
 
-  private AnnotationOutputView(ArticleVisibility parentArticle,
+  private CommentOutputView(ArticleVisibility parentArticle,
                                Annotation comment,
                                CompetingInterestStatement competingInterestStatement,
-                               List<AnnotationOutputView> replies,
+                               List<CommentOutputView> replies,
                                int replyTreeSize, Date mostRecentActivity) {
     this.parentArticle = Objects.requireNonNull(parentArticle);
     this.comment = Objects.requireNonNull(comment);
@@ -71,9 +71,9 @@ public class AnnotationOutputView implements JsonOutputView {
      * @param comment a comment belonging to this object's parent article
      * @return a view of the comment and all its children
      */
-    public AnnotationOutputView buildView(Annotation comment) {
+    public CommentOutputView buildView(Annotation comment) {
       List<Annotation> childObjects = commentsByParent.getOrDefault(comment.getID(), ImmutableList.of());
-      List<AnnotationOutputView> childViews = childObjects.stream()
+      List<CommentOutputView> childViews = childObjects.stream()
           .sorted(BY_DATE)
           .map(this::buildView) // recursion (terminal case is when childObjects is empty)
           .collect(Collectors.toList());
@@ -82,15 +82,15 @@ public class AnnotationOutputView implements JsonOutputView {
       int replyTreeSize = calculateReplyTreeSize(childViews);
       Date mostRecentActivity = findMostRecentActivity(comment, childViews);
 
-      return new AnnotationOutputView(parentArticle, comment, competingInterestStatement,
+      return new CommentOutputView(parentArticle, comment, competingInterestStatement,
           childViews, replyTreeSize, mostRecentActivity);
     }
 
-    private static int calculateReplyTreeSize(Collection<AnnotationOutputView> childViews) {
+    private static int calculateReplyTreeSize(Collection<CommentOutputView> childViews) {
       return childViews.size() + childViews.stream().mapToInt(view -> view.replyTreeSize).sum();
     }
 
-    private static Date findMostRecentActivity(Annotation comment, Collection<AnnotationOutputView> childViews) {
+    private static Date findMostRecentActivity(Annotation comment, Collection<CommentOutputView> childViews) {
       return childViews.stream()
           .map(view -> view.mostRecentActivity)
           .max(Comparator.naturalOrder())
@@ -135,6 +135,7 @@ public class AnnotationOutputView implements JsonOutputView {
 
     serialized.remove("competingInterestBody");
     serialized.add("competingInterestStatement", context.serialize(competingInterestStatement));
+    serialized.add("isRemoved", context.serialize(comment.getIsRemoved()));
     return serialized;
   }
 
