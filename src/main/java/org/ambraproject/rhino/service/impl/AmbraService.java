@@ -22,12 +22,10 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
-import org.ambraproject.models.Journal;
+import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.service.article.ArticleService;
-import org.ambraproject.service.syndication.SyndicationService;
 import org.apache.commons.io.IOUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -61,12 +59,6 @@ public abstract class AmbraService {
 
   @Autowired
   protected Gson entityGson;
-
-  @Autowired
-  protected ArticleService articleService;
-
-  @Autowired
-  protected SyndicationService syndicationService;
 
   /**
    * Check whether a distinct entity exists.

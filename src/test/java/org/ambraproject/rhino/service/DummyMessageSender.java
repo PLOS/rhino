@@ -13,9 +13,9 @@
 
 package org.ambraproject.rhino.service;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.ListMultimap;
-import org.ambraproject.queue.MessageSender;
 import org.w3c.dom.Document;
 
 import javax.xml.transform.OutputKeys;
@@ -31,16 +31,18 @@ import java.util.Map;
  */
 public class DummyMessageSender implements MessageSender {
 
-  public ListMultimap<String, String> messagesSent = LinkedListMultimap.create();
-  public Map<String, Object> headersSent;
+  @VisibleForTesting
+  ListMultimap<String, String> messagesSent = LinkedListMultimap.create();
+  @VisibleForTesting
+  Map<String, Object> headersSent;
 
   @Override
-  public void sendMessage(String destination, String body) {
+  public void sendBody(String destination, String body) {
     messagesSent.put(destination, body);
   }
 
   @Override
-  public void sendMessage(String destination, Document body) {
+  public void sendBody(String destination, Document body) {
     try {
       TransformerFactory factory = TransformerFactory.newInstance();
       Transformer transformer = factory.newTransformer();
@@ -57,8 +59,9 @@ public class DummyMessageSender implements MessageSender {
   }
 
   @Override
-  public void sendMessage(String destination, Object body, Map<String, Object> headers) {
-    messagesSent.put(destination, (String)body);
+  public void sendBodyAndHeaders(String destination, Object body, Map<String, Object> headers) {
+    messagesSent.put(destination, (String) body);
     headersSent = headers;
   }
+
 }

@@ -21,7 +21,7 @@ package org.ambraproject.rhino.identity;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import org.ambraproject.models.ArticleAsset;
+import org.ambraproject.rhino.model.ArticleAsset;
 import org.ambraproject.rhino.util.ContentTypeInference;
 import org.springframework.http.MediaType;
 

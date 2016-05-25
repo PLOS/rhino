@@ -24,7 +24,7 @@
   <artifactId>rhino</artifactId>
   <name>rhino</name>
   <packaging>war</packaging>
-  <version>1.4.3</version>
+  <version>1.4.4</version>
   <description>Service-oriented back end for Ambra.</description>
 
   <licenses>
@@ -51,6 +51,7 @@
     <org.slf4j-version>1.6.1</org.slf4j-version>
     <ambra.version>2.10.21</ambra.version>
     <rhombat.version>1.0.2</rhombat.version>
+    <hibernate-version>3.6.3.Final</hibernate-version>
     <conf-helper.version>2.2.1</conf-helper.version>
     <camel.version>2.10.4</camel.version>
     <activemq.version>5.2.0</activemq.version>
@@ -112,15 +113,33 @@
 
     <!-- General-use libraries -->
     <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+      <version>3.0.0</version>
+    </dependency>
+
+    <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
       <version>2.4</version>
     </dependency>
 
     <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>1.3.1</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
       <version>3.4</version>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-configuration</groupId>
+      <artifactId>commons-configuration</artifactId>
+      <version>1.6</version>
     </dependency>
 
     <dependency>
@@ -133,6 +152,17 @@
       <artifactId>gson</artifactId>
       <version>2.2.2</version>
       <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>${hibernate-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+      <version>${hibernate-version}</version>
     </dependency>
 
     <dependency>
@@ -150,88 +180,9 @@
     <!-- ========================= Begin Ambra inclusions ========================= -->
 
     <dependency>
-      <groupId>org.ambraproject</groupId>
-      <artifactId>ambra-base</artifactId>
-      <version>NED-RHINO</version>
-      <exclusions>
-        <!--These are some easy wins for reducing the size of the war, we don't need these libraries-->
-        <exclusion>
-          <groupId>org.tuckey</groupId>
-          <artifactId>urlrewritefilter</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.solr</groupId>
-          <artifactId>solr-core</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.mortbay.jetty</groupId>
-          <artifactId>jetty-util</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.ambraproject</groupId>
-          <artifactId>ambra-js</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>jcl-over-slf4j</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>*</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>net.sf.saxon</groupId>
-          <artifactId>saxon</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-    <dependency>
-      <groupId>org.ambraproject</groupId>
-      <artifactId>ambra-queue</artifactId>
-      <version>${ambra.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>*</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>net.sf.saxon</groupId>
-          <artifactId>saxon</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-    <!--This allows us to reuse test code from ambra-->
-    <dependency>
-      <groupId>org.ambraproject</groupId>
-      <artifactId>ambra-base</artifactId>
-      <version>${ambra.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>*</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>net.sf.saxon</groupId>
-          <artifactId>saxon</artifactId>
-        </exclusion>
-      </exclusions>
-      <!--In a future version of maven, this classifier may need to change to test-jar-->
-      <classifier>tests</classifier>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
       <groupId>org.plos</groupId>
       <artifactId>content-repo-library</artifactId>
       <version>1.5.0</version>
-    </dependency>
-
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>ambra-models</artifactId>
-      <version>NED-RHINO</version>
     </dependency>
 
     <!-- ========================= End Ambra inclusions ========================= -->
@@ -257,6 +208,13 @@
       <groupId>org.hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
       <version>2.3.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <scope>test</scope>
+      <version>6.9.10</version>
     </dependency>
 
 

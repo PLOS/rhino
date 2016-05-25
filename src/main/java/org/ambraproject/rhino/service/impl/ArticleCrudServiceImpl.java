@@ -24,11 +24,11 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
-import org.ambraproject.models.Article;
-import org.ambraproject.models.ArticleAsset;
-import org.ambraproject.models.ArticleRelationship;
-import org.ambraproject.models.Category;
-import org.ambraproject.models.Journal;
+import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleAsset;
+import org.ambraproject.rhino.model.ArticleRelationship;
+import org.ambraproject.rhino.model.Category;
+import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
@@ -38,8 +38,10 @@ import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.ScholarlyWork;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
+import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
+import org.ambraproject.rhino.service.SyndicationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
@@ -102,6 +104,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   TaxonomyService taxonomyService;
   @Autowired
   Gson crepoGson;
+  @Autowired
+  SyndicationService syndicationService;
+  @Autowired
+  ArticleTypeService articleTypeService;
 
   private final LegacyIngestionService legacyIngestionService = new LegacyIngestionService(this);
   private final VersionedIngestionService versionedIngestionService = new VersionedIngestionService(this);

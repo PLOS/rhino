@@ -17,14 +17,14 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.ambraproject.models.Annotation;
-import org.ambraproject.models.AnnotationType;
-import org.ambraproject.models.Article;
+import org.ambraproject.rhino.model.Annotation;
+import org.ambraproject.rhino.model.AnnotationType;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.view.comment.AnnotationOutputView;
+import org.ambraproject.rhino.view.comment.CommentOutputView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -152,7 +152,7 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
       assertTrue(createdStr.startsWith(dateFormat.format(commentCreated)), createdStr);
     }
 
-    AnnotationOutputView.Factory factory = new AnnotationOutputView.Factory(runtimeConfiguration, article,
+    CommentOutputView.Factory factory = new CommentOutputView.Factory(runtimeConfiguration, article,
         ImmutableList.of(comment1, comment2, comment3, reply, reply2, reply3));
 
     assertAnnotationsEqual(actualAnnotations.get(0), factory.buildView(comment1));
@@ -173,7 +173,7 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     }
   }
 
-  private void assertAnnotationsEqual(Map<String, ?> actualRepr, AnnotationOutputView expectedObj) {
+  private void assertAnnotationsEqual(Map<String, ?> actualRepr, CommentOutputView expectedObj) {
     Map<String, ?> expectedRepr = entityGson.fromJson(entityGson.toJson(expectedObj), Map.class);
     assertAnnotationsEqual(actualRepr, expectedRepr);
   }

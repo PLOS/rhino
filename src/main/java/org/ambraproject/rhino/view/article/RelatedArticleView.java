@@ -6,8 +6,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import org.ambraproject.models.ArticleAuthor;
-import org.ambraproject.models.ArticleRelationship;
+import org.ambraproject.rhino.model.ArticleAuthor;
+import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 

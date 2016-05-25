@@ -13,39 +13,22 @@
 
 package org.ambraproject.rhino.content.xml;
 
-import org.ambraproject.rhino.shared.XPathExtractor;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathException;
 
-/**
- * Implementation of {@link org.ambraproject.rhino.shared.XPathExtractor}.  This is only used in certain cases where we
- * share code with ambra.  For most common cases, you should extend {@link AbstractXpathReader} instead of using this.
- */
-public class XpathReader extends AbstractXpathReader implements XPathExtractor {
+public class XpathReader extends AbstractXpathReader {
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public Node selectNode(Node node, String query) throws XPathException {
     return readNode(query, node);
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public NodeList selectNodes(Node node, String query) throws XPathException {
     return (NodeList) xPath.evaluate(query, node, XPathConstants.NODESET);
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public String selectString(Node node, String query) throws XPathException {
     return readString(query, node);
   }

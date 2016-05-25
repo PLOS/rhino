@@ -30,7 +30,7 @@ class Ingestion(BaseServiceTest):
     self.verify_ingestion_text_expected_only(article[3], 'title')
     self.verify_ingestion_text_expected_only(article[4], 'pages')
     self.verify_ingestion_text_expected_only(article[5], 'eIssn')
-    self.verify_ingestion_text_expected_only(article[6], 'description')
+    #self.verify_ingestion_text_expected_only(article[6], 'description')
     self.verify_ingestion_text_expected_only(article[7], 'rights')
     self.verify_ingestion_text_expected_only(article[8], 'language')
     self.verify_ingestion_text_expected_only(article[9], 'format')

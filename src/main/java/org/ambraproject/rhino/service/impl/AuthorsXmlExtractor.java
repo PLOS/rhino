@@ -3,11 +3,10 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import org.ambraproject.rhino.shared.XPathExtractor;
+import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.util.StringReplacer;
 import org.ambraproject.rhino.view.article.AuthorView;
 import org.ambraproject.rhino.view.article.Orcid;
-import org.ambraproject.util.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -15,9 +14,15 @@ import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPathException;
 import javax.xml.xpath.XPathExpressionException;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -62,13 +67,13 @@ public final class AuthorsXmlExtractor {
   private final static String AUTHOR_CONTRIBUTIONS_XPATH = "//author-notes/fn[@fn-type='con']";
 
   private final Document doc;
-  private final XPathExtractor xpath;
+  private final XpathReader xpath;
 
   private final ImmutableMap<String, String> affiliateMap;
   private final ImmutableMap<String, String> addressMap;
   private final ImmutableMap<String, String> otherFootnotesMap;
 
-  private AuthorsXmlExtractor(Document doc, XPathExtractor xpath) throws XPathException {
+  private AuthorsXmlExtractor(Document doc, XpathReader xpath) throws XPathException {
     this.doc = Preconditions.checkNotNull(doc);
     this.xpath = Preconditions.checkNotNull(xpath);
 
@@ -81,10 +86,10 @@ public final class AuthorsXmlExtractor {
    * Retrieves the authors as {@link AuthorView}s from article XML.
    *
    * @param doc   parsed representation of the article XML
-   * @param xpath XPathExtractor to use to process xpath expressions
+   * @param xpath XpathReader to use to process xpath expressions
    * @return list of AuthorView objects
    */
-  public static List<AuthorView> getAuthors(Document doc, XPathExtractor xpath) throws XPathException {
+  public static List<AuthorView> getAuthors(Document doc, XpathReader xpath) throws XPathException {
     return new AuthorsXmlExtractor(doc, xpath).buildAuthors();
   }
 
@@ -313,10 +318,10 @@ public final class AuthorsXmlExtractor {
    * Grab all affiliations and put them into their own map
    *
    * @param doc   the article XML document
-   * @param xpath XPathExtractor to use to process xpath expressions
+   * @param xpath XpathReader to use to process xpath expressions
    * @return a Map of affiliate IDs and values
    */
-  private static Map<String, String> getAffiliateMap(Document doc, XPathExtractor xpath) throws XPathException {
+  private static Map<String, String> getAffiliateMap(Document doc, XpathReader xpath) throws XPathException {
     Map<String, String> affiliateMap = new LinkedHashMap<>();
 
     NodeList affiliationNodeList = xpath.selectNodes(doc, "//aff");
@@ -361,10 +366,10 @@ public final class AuthorsXmlExtractor {
    * Grab all addresses and put them into their own map
    *
    * @param doc   the article XML document
-   * @param xpath XPathExtractor to use to process xpath expressions
+   * @param xpath XpathReader to use to process xpath expressions
    * @return a Map of address IDs and values
    */
-  private static Map<String, String> getAddressMap(Document doc, XPathExtractor xpath) throws XPathException {
+  private static Map<String, String> getAddressMap(Document doc, XpathReader xpath) throws XPathException {
     Map<String, String> addressMap = new HashMap<>();
 
     //Grab all the Current address information and place them into a map
@@ -390,10 +395,10 @@ public final class AuthorsXmlExtractor {
    * Grab all footnotes and put them into their own map
    *
    * @param doc   the article XML document
-   * @param xpath XPathExtractor to use to process xpath expressions
+   * @param xpath XpathReader to use to process xpath expressions
    * @return a Map of footnote IDs and values
    */
-  private static Map<String, String> getOtherFootnotesMap(Document doc, XPathExtractor xpath) throws XPathException {
+  private static Map<String, String> getOtherFootnotesMap(Document doc, XpathReader xpath) throws XPathException {
     Map<String, String> otherFootnotesMap = new HashMap<>();
 
     //Grab all 'other' footnotes and put them into their own map
@@ -412,7 +417,7 @@ public final class AuthorsXmlExtractor {
 
       String footnote;
       try {
-        footnote = TextUtils.getAsXMLString(xpath.selectNode(df, "//p"));
+        footnote = getAsXMLString(xpath.selectNode(df, "//p"));
       } catch (TransformerException e) {
         throw new RuntimeException(e);
       }
@@ -422,14 +427,24 @@ public final class AuthorsXmlExtractor {
     return otherFootnotesMap;
   }
 
+  private static String getAsXMLString(Node node) throws TransformerException {
+    final Transformer tf = TransformerFactory.newInstance().newTransformer();
+    final StringWriter stringWriter = new StringWriter();
+
+    tf.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+    tf.transform(new DOMSource(node), new StreamResult(stringWriter));
+
+    return stringWriter.toString();
+  }
+
   /**
    * Get the author contributions
    *
    * @param doc   the article XML document
-   * @param xpath XPathExtractor to use to process xpath expressions
+   * @param xpath XpathReader to use to process xpath expressions
    * @return the author contributions
    */
-  public static List<String> getAuthorContributions(Document doc, XPathExtractor xpath) throws XPathException {
+  public static List<String> getAuthorContributions(Document doc, XpathReader xpath) throws XPathException {
     return findTextFromNodes(doc, AUTHOR_CONTRIBUTIONS_XPATH, xpath);
   }
 
@@ -437,10 +452,10 @@ public final class AuthorsXmlExtractor {
    * Get the competing interests statement
    *
    * @param doc   the article XML document
-   * @param xpath XPathExtractor to use to process xpath expressions
+   * @param xpath XpathReader to use to process xpath expressions
    * @return the competing interests statement
    */
-  public static List<String> getCompetingInterests(Document doc, XPathExtractor xpath) throws XPathException {
+  public static List<String> getCompetingInterests(Document doc, XpathReader xpath) throws XPathException {
     return findTextFromNodes(doc, COMPETING_INTERESTS_XPATH, xpath);
   }
 
@@ -480,13 +495,13 @@ public final class AuthorsXmlExtractor {
    * by another contrib We want to notify the end user of the relation
    *
    * @param doc            the document
-   * @param xpathExtractor XPathExtractor to use to process xpath expressions
+   * @param xpathExtractor XpathReader to use to process xpath expressions
    * @param rid            the rid to search for, the RID is an attribute of a footnote that attaches a footnote to one
    *                       or many authors
    * @return true if the rid is referenced by contribs more then once
    * @throws XPathException
    */
-  private static boolean hasRelatedFootnote(Node doc, XPathExtractor xpathExtractor, String rid)
+  private static boolean hasRelatedFootnote(Node doc, XpathReader xpathExtractor, String rid)
       throws XPathException {
     String xpath = "//contrib/xref[@ref-type='fn' and @rid='" + rid + "']";
 
@@ -508,7 +523,7 @@ public final class AuthorsXmlExtractor {
   private static String transFormCorresponding(Node correspondAddrNode) {
     String corresponding;
     try {
-      corresponding = TextUtils.getAsXMLString(correspondAddrNode);
+      corresponding = getAsXMLString(correspondAddrNode);
     } catch (TransformerException e) {
       throw new RuntimeException(e);
     }
@@ -521,7 +536,7 @@ public final class AuthorsXmlExtractor {
    * @return a list of the text content of the nodes found, or {@code null} if none
    */
   private static List<String> findTextFromNodes(Document document, String xpathExpression,
-                                                XPathExtractor xPath) throws XPathException {
+                                                XpathReader xPath) throws XPathException {
 
     NodeList nodes;
     try {
@@ -545,7 +560,7 @@ public final class AuthorsXmlExtractor {
    * Split the document-level list of corresponding authors into parts and do some string-hacking. Returns
    * ready-to-display HTML. This is far more display logic than we would like, but it was lifted directly from Ambra.
    */
-  public static List<String> getCorrespondingAuthorList(Document document, XPathExtractor xpath) throws XPathException {
+  public static List<String> getCorrespondingAuthorList(Document document, XpathReader xpath) throws XPathException {
     Node corresAuthorNode = xpath.selectNode(document, "//corresp");
     if (corresAuthorNode == null) return ImmutableList.of();
     String r = transFormCorresponding(corresAuthorNode);

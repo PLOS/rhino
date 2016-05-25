@@ -3,8 +3,8 @@ package org.ambraproject.rhino.view.article;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableSet;
-import org.ambraproject.models.Article;
-import org.ambraproject.models.Syndication;
+import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.Syndication;
 
 public class ArticleJsonConstants {
   private ArticleJsonConstants() {

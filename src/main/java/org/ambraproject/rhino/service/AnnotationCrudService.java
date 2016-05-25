@@ -13,9 +13,9 @@
 
 package org.ambraproject.rhino.service;
 
-import org.ambraproject.models.Annotation;
-import org.ambraproject.models.Article;
-import org.ambraproject.models.Flag;
+import org.ambraproject.rhino.model.Annotation;
+import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.util.response.Transceiver;
@@ -51,9 +51,29 @@ public interface AnnotationCrudService {
   public Transceiver readComment(DoiBasedIdentity commentId)
       throws IOException;
 
+  /**
+   * Reads the comment data for a list of flagged comments to the receiver.
+   *
+   * @throws IOException
+   */
+  public Transceiver readFlaggedComments()
+      throws IOException;
+
   public Annotation createComment(CommentInputView input);
 
+  public Annotation patchComment(CommentInputView input);
+
+  public String deleteComment(DoiBasedIdentity input);
+
+  public String removeFlagsFromComment(DoiBasedIdentity input);
+
   public Flag createCommentFlag(DoiBasedIdentity commentId, CommentFlagInputView input);
+
+  public Transceiver readAllCommentFlags();
+
+  public Transceiver readCommentFlag(String flagId);
+
+  public String deleteCommentFlag(String flagId);
 
   public Transceiver readRecentComments(String journalKey, OptionalInt limit);
 

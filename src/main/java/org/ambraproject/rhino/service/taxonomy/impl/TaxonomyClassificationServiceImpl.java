@@ -1,9 +1,10 @@
 package org.ambraproject.rhino.service.taxonomy.impl;
 
 import com.google.common.annotations.VisibleForTesting;
-import org.ambraproject.models.Article;
+import com.google.common.base.Charsets;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
@@ -11,7 +12,6 @@ import org.ambraproject.rhino.service.taxonomy.TaxonomyRemoteServiceInvalidBehav
 import org.ambraproject.rhino.service.taxonomy.TaxonomyRemoteServiceNotAvailableException;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyRemoteServiceNotConfiguredException;
 import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
-import org.ambraproject.util.DocumentBuilderFactoryCreator;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -26,7 +26,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
@@ -34,6 +33,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static org.ambraproject.rhino.service.impl.AmbraService.newDocumentBuilder;
 
 /**
  * This is a separate bean from {@link TaxonomyServiceImpl} because it has a special dependency on the remote taxonomy
@@ -118,6 +119,8 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     return configuration;
   }
 
+  private static final ContentType APPLICATION_XML_UTF_8 = ContentType.create("application/xml", Charsets.UTF_8);
+
   /**
    * @inheritDoc
    */
@@ -139,14 +142,9 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
         + MESSAGE_END;
 
     HttpPost post = new HttpPost(configuration.getServer().toString());
-    post.setEntity(new StringEntity(aiMessage, ContentType.APPLICATION_XML));
+    post.setEntity(new StringEntity(aiMessage, APPLICATION_XML_UTF_8));
 
-    DocumentBuilder documentBuilder;
-    try {
-      documentBuilder = DocumentBuilderFactoryCreator.createFactory().newDocumentBuilder();
-    } catch (ParserConfigurationException e) {
-      throw new RuntimeException(e); // parser configuration is default; expected never to happen
-    }
+    DocumentBuilder documentBuilder = newDocumentBuilder();
 
     Document response;
     try (CloseableHttpResponse httpResponse = httpClient.execute(post);

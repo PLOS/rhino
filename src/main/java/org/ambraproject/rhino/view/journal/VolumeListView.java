@@ -1,6 +1,6 @@
 package org.ambraproject.rhino.view.journal;
 
-import org.ambraproject.models.Volume;
+import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.view.KeyedListView;
 

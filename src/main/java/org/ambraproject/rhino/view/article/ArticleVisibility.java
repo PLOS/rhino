@@ -1,8 +1,8 @@
 package org.ambraproject.rhino.view.article;
 
 import com.google.common.base.Preconditions;
-import org.ambraproject.models.Article;
-import org.ambraproject.models.Journal;
+import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 
 import java.util.Collection;

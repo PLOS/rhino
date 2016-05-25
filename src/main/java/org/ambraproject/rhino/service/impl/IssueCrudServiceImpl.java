@@ -19,10 +19,10 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
-import org.ambraproject.models.Article;
-import org.ambraproject.models.Issue;
-import org.ambraproject.models.Journal;
-import org.ambraproject.models.Volume;
+import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.Issue;
+import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -50,6 +50,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class IssueCrudServiceImpl extends AmbraService implements IssueCrudService {
 
@@ -107,9 +108,18 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
 
     List<String> inputArticleDois = input.getArticleOrder();
     if (inputArticleDois != null) {
-      issue.setArticleDois(DoiBasedIdentity.asKeys(inputArticleDois));
+      // Sanitize input
+      inputArticleDois = inputArticleDois.stream().map(DoiBasedIdentity::asKey).collect(Collectors.toList());
+
+      List<String> persistentArticleDois = issue.getArticleDois();
+      if (persistentArticleDois == null) {
+        issue.setArticleDois(inputArticleDois);
+      } else {
+        persistentArticleDois.clear();
+        persistentArticleDois.addAll(inputArticleDois);
+      }
     } else if (issue.getArticleDois() == null) {
-      issue.setArticleDois(new ArrayList<String>(0));
+      issue.setArticleDois(new ArrayList<>(0));
     }
 
     return issue;
@@ -244,6 +254,25 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
     return (parentVolumeResults == null) ? null : new VolumeNonAssocView(
         (String) parentVolumeResults[0], (String) parentVolumeResults[1], (String) parentVolumeResults[2],
         (String) parentVolumeResults[3], (String) parentVolumeResults[4]);
+  }
+
+  @Override
+  public void delete(DoiBasedIdentity issueId) {
+    Issue issue = findIssue(issueId);
+    if (issue == null) {
+      throw new RestClientException("Issue does not exist: " + issueId, HttpStatus.NOT_FOUND);
+    }
+    List<String> currentIssueJournalKeys = hibernateTemplate.execute((Session session) -> {
+      Query query = session.createQuery("select journalKey from Journal where currentIssue = :issue");
+      query.setParameter("issue", issue);
+      return query.list();
+    });
+    if (!currentIssueJournalKeys.isEmpty()) {
+      String message = String.format("Cannot delete issue: %s. It is the current issue for: %s",
+          issueId, currentIssueJournalKeys);
+      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+    }
+    hibernateTemplate.delete(issue);
   }
 
 }

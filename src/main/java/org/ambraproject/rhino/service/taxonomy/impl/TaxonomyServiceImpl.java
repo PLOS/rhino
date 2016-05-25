@@ -1,6 +1,6 @@
 package org.ambraproject.rhino.service.taxonomy.impl;
 
-import org.ambraproject.models.Article;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.service.impl.AmbraService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;

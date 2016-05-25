@@ -1,9 +1,9 @@
 package org.ambraproject.rhino.view.article;
 
 import com.google.common.collect.ImmutableList;
-import org.ambraproject.models.Article;
-import org.ambraproject.models.Pingback;
-import org.ambraproject.models.Syndication;
+import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.Pingback;
+import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -11,9 +11,8 @@ import org.ambraproject.rhino.service.ArticleType;
 import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
+import org.ambraproject.rhino.service.SyndicationService;
 import org.ambraproject.rhino.view.comment.CommentCount;
-import org.ambraproject.service.article.NoSuchArticleIdException;
-import org.ambraproject.service.syndication.SyndicationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,12 +48,7 @@ public class ArticleOutputViewFactory {
     final ArticleIdentity articleIdentity = ArticleIdentity.create(article);
 
     Collection<RelatedArticleView> relatedArticles = articleCrudService.getRelatedArticles(article);
-    Collection<Syndication> syndications;
-    try {
-      syndications = syndicationService.getSyndications(article.getDoi());
-    } catch (NoSuchArticleIdException e) {
-      throw new RuntimeException(e); // should be impossible
-    }
+    Collection<Syndication> syndications = syndicationService.getSyndications(article.getDoi());
     if (syndications == null) {
       log.warn("SyndicationService.getSyndications returned null; assuming no syndications");
       syndications = ImmutableList.of();
