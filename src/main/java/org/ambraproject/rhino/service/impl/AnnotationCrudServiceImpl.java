@@ -15,16 +15,17 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import org.ambraproject.rhino.config.RuntimeConfiguration;
+import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.Annotation;
 import org.ambraproject.rhino.model.AnnotationType;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.model.FlagReasonCode;
-import org.ambraproject.rhino.config.RuntimeConfiguration;
-import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AnnotationCrudService;
+import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.comment.CommentCount;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
@@ -281,16 +282,15 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
 
   @Override
   public Transceiver readCommentFlag(String flagId) {
-    return new Transceiver() {
+    return new EntityTransceiver<Flag>() {
       @Override
-      protected CommentFlagOutputView getData() throws IOException {
-        Flag flag = getFlag(flagId);
-        return new CommentFlagOutputView(flag);
+      protected Flag fetchEntity() {
+        return getFlag(flagId);;
       }
 
       @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return null;
+      protected Object getView(Flag flag) {
+        return new CommentFlagOutputView(flag);
       }
     };
   }
@@ -326,7 +326,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
     return new Transceiver() {
       @Override
       protected List<CommentNodeView> getData() throws IOException {
-        List<Object[]> results = hibernateTemplate.execute(session -> {
+        List<Object[]> results = (List<Object[]>) hibernateTemplate.execute(session -> {
           Query query = session.createQuery("" +
               "SELECT ann, art.doi, art.title " +
               "FROM Annotation ann, Article art, Journal j " +

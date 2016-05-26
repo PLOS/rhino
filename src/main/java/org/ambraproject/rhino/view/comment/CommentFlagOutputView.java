@@ -21,9 +21,11 @@
 package org.ambraproject.rhino.view.comment;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.view.JsonOutputView;
+import org.ambraproject.rhino.view.user.UserIdView;
 
 /**
  * Immutable View wrapper around a comment flag
@@ -38,6 +40,16 @@ public class CommentFlagOutputView implements JsonOutputView {
 
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
-    return context.serialize(flag).getAsJsonObject();
+    JsonObject serialized = context.serialize(flag).getAsJsonObject();
+
+    serialized.remove("userProfileID");
+    serialized.add("submitter", context.serialize(new UserIdView(flag.getUserProfileID())));
+
+    // We can't provide a full CommentOutputView because that would require information about the parent article, etc.
+    // So, just point at the flagged annotation's URI.
+    serialized.remove("flaggedAnnotation");
+    serialized.addProperty("annotationUri", flag.getFlaggedAnnotation().getAnnotationUri());
+
+    return serialized;
   }
 }
