@@ -285,7 +285,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
     return new EntityTransceiver<Flag>() {
       @Override
       protected Flag fetchEntity() {
-        return getFlag(flagId);;
+        return getFlag(flagId);
       }
 
       @Override
