@@ -60,6 +60,7 @@ public class AdapterRegistry {
       .add(org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView.class)
       .add(org.ambraproject.rhino.view.asset.raw.RawAssetFileView.class)
 
+      .add(org.ambraproject.rhino.view.comment.CommentFlagOutputView.class)
       .add(org.ambraproject.rhino.view.comment.CommentNodeView.class)
       .add(org.ambraproject.rhino.view.comment.CommentOutputView.class)
 
