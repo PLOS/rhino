@@ -47,6 +47,10 @@ public class CommentFlagOutputView implements JsonOutputView {
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = context.serialize(flag).getAsJsonObject();
 
+    // Alias "comment" (the flag field containing the comment that the user submitted) to avoid ambiguity.
+    // Should match the field name used for org.ambraproject.rhino.view.comment.CommentFlagInputView.body.
+    serialized.add("body", serialized.remove("comment"));
+
     serialized.remove("userProfileID");
     serialized.add("submitter", context.serialize(new UserIdView(flag.getUserProfileID())));
 
