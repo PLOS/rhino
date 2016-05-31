@@ -27,15 +27,20 @@ import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.user.UserIdView;
 
+import java.util.Objects;
+
 /**
  * Immutable View wrapper around a comment flag
  */
 public class CommentFlagOutputView implements JsonOutputView {
 
   private final Flag flag;
+  private final CommentNodeView flaggedComment;
 
-  public CommentFlagOutputView(Flag flag) {
-    this.flag = flag;
+  // Invoked from org.ambraproject.rhino.view.comment.CommentNodeView.Factory.createFlagView()
+  CommentFlagOutputView(Flag flag, CommentNodeView flaggedComment) {
+    this.flag = Objects.requireNonNull(flag);
+    this.flaggedComment = Objects.requireNonNull(flaggedComment);
   }
 
   @Override
@@ -45,10 +50,8 @@ public class CommentFlagOutputView implements JsonOutputView {
     serialized.remove("userProfileID");
     serialized.add("submitter", context.serialize(new UserIdView(flag.getUserProfileID())));
 
-    // We can't provide a full CommentOutputView because that would require information about the parent article, etc.
-    // So, just point at the flagged annotation's URI.
     serialized.remove("flaggedAnnotation");
-    serialized.addProperty("annotationUri", flag.getFlaggedAnnotation().getAnnotationUri());
+    serialized.add("flaggedComment", context.serialize(flaggedComment));
 
     return serialized;
   }

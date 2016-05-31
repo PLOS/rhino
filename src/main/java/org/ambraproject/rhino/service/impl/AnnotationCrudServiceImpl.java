@@ -265,7 +265,8 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
     return new Transceiver() {
       @Override
       protected List<CommentFlagOutputView> getData() throws IOException {
-        return getAllFlags().stream().map(CommentFlagOutputView::new).collect(Collectors.toList());
+        CommentNodeView.Factory viewFactory = new CommentNodeView.Factory(runtimeConfiguration);
+        return getAllFlags().stream().map(viewFactory::createFlagView).collect(Collectors.toList());
       }
 
       @Override
@@ -289,8 +290,8 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
       }
 
       @Override
-      protected Object getView(Flag flag) {
-        return new CommentFlagOutputView(flag);
+      protected CommentFlagOutputView getView(Flag flag) {
+        return new CommentNodeView.Factory(runtimeConfiguration).createFlagView(flag);
       }
     };
   }
