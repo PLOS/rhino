@@ -6,22 +6,23 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleRelationship;
-import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 
-import java.util.Objects;
+import java.util.Optional;
 
 public class RelatedArticleView implements JsonOutputView, ArticleView {
 
   private final ArticleRelationship raw;
-  private final Article relatedArticle;
+  private final Optional<Article> relatedArticle;
 
   public RelatedArticleView(ArticleRelationship rawRelationship, Article relatedArticle) {
-    Preconditions.checkArgument(rawRelationship.getOtherArticleID().equals(relatedArticle.getID()));
-    Preconditions.checkArgument(rawRelationship.getOtherArticleDoi().equals(relatedArticle.getDoi()));
+    if (relatedArticle != null) {
+      Preconditions.checkArgument(rawRelationship.getOtherArticleID().equals(relatedArticle.getID()));
+      Preconditions.checkArgument(rawRelationship.getOtherArticleDoi().equals(relatedArticle.getDoi()));
+    }
 
     this.raw = rawRelationship;
-    this.relatedArticle = relatedArticle;
+    this.relatedArticle = Optional.ofNullable(relatedArticle);
   }
 
   @Override
@@ -33,9 +34,11 @@ public class RelatedArticleView implements JsonOutputView, ArticleView {
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject view = context.serialize(raw).getAsJsonObject();
     view.add("doi", view.remove("otherArticleDoi"));
-    view.add("title", context.serialize(relatedArticle.getTitle()));
-    view.add("authors", context.serialize(relatedArticle.getAuthors()));
-    view.add("date", context.serialize(relatedArticle.getDate()));
+    relatedArticle.ifPresent((Article relatedArticle) -> {
+      view.add("title", context.serialize(relatedArticle.getTitle()));
+      view.add("authors", context.serialize(relatedArticle.getAuthors()));
+      view.add("date", context.serialize(relatedArticle.getDate()));
+    });
     return view;
   }
 

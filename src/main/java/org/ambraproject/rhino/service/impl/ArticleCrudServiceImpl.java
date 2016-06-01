@@ -448,7 +448,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     if (rawRelationships.isEmpty()) return ImmutableList.of();
 
     Set<Long> relatedArticleIds = rawRelationships.stream()
-        .map(ArticleRelationship::getOtherArticleID).filter(Objects::nonNull)
+        .map(ArticleRelationship::getOtherArticleID)
+        .filter(Objects::nonNull) // not every ArticleRelationship points to an article in our own database
         .collect(Collectors.toSet());
     Map<Long, Article> relatedArticles = hibernateTemplate.execute(
         (Session session) -> {
@@ -462,7 +463,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     // The Article objects were fetched unordered, so preserve the order of the rawRelationships list.
     return rawRelationships.stream()
         .map((ArticleRelationship relationship) -> {
-          Article relatedArticle = Objects.requireNonNull(relatedArticles.get(relationship.getOtherArticleID()));
+          Article relatedArticle = relatedArticles.get(relationship.getOtherArticleID());
           return new RelatedArticleView(relationship, relatedArticle);
         })
         .collect(Collectors.toList());
