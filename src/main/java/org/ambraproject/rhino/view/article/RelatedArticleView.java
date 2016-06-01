@@ -37,6 +37,7 @@ public class RelatedArticleView implements JsonOutputView, ArticleView {
     relatedArticle.ifPresent((Article relatedArticle) -> {
       view.add("title", context.serialize(relatedArticle.getTitle()));
       view.add("authors", context.serialize(relatedArticle.getAuthors()));
+      view.add("collaborativeAuthors", context.serialize(relatedArticle.getCollaborativeAuthors()));
       view.add("date", context.serialize(relatedArticle.getDate()));
     });
     return view;
