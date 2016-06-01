@@ -8,6 +8,7 @@ import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.view.JsonOutputView;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class RelatedArticleView implements JsonOutputView, ArticleView {
@@ -21,7 +22,7 @@ public class RelatedArticleView implements JsonOutputView, ArticleView {
       Preconditions.checkArgument(rawRelationship.getOtherArticleDoi().equals(relatedArticle.getDoi()));
     }
 
-    this.raw = rawRelationship;
+    this.raw = Objects.requireNonNull(rawRelationship);
     this.relatedArticle = Optional.ofNullable(relatedArticle);
   }
 
