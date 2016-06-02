@@ -272,6 +272,14 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
           issueId, currentIssueJournalKeys);
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
+    //issue sort order must be updated to keep hibernate happy
+    hibernateTemplate.execute((Session session) -> {
+      Query query = session.createQuery("update Issue set volumeSortOrder = volumeSortOrder - 1" +
+          " where volumeID = :volumeID and volumeSortOrder > :volumeSortOrder");
+      query.setParameter("volumeID", issue.getVolumeID());
+      query.setParameter("volumeSortOrder", issue.getVolumeSortOrder());
+      return query.executeUpdate();
+    });
     hibernateTemplate.delete(issue);
   }
 
