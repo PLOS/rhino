@@ -10,9 +10,9 @@ import org.ambraproject.rhino.view.comment.CommentInputView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,12 +22,14 @@ import java.io.IOException;
 public class CommentCrudController extends DoiBasedCrudController {
 
   private static final String COMMENT_META_ROOT = "/comments";
-  private static final String FLAGS_META_ROOT = COMMENT_META_ROOT + "/flags";
-  private static final String FLAGS_META_TEMPLATE = FLAGS_META_ROOT + "/**";
-  private static final String COMMENT_META_FLAGGED_ROOT = "/flagged";
   private static final String COMMENT_META_NAMESPACE = COMMENT_META_ROOT + "/";
   private static final String COMMENT_META_TEMPLATE = COMMENT_META_NAMESPACE + "/**";
-  private static final String COMMENT_META_FLAGGED_TEMPLATE = COMMENT_META_NAMESPACE + COMMENT_META_FLAGGED_ROOT;
+
+  private static final String FLAGS_META_ROOT = "/flags";
+  private static final String FLAGS_META_TEMPLATE = FLAGS_META_ROOT + "/{flagId}";
+  private static final String FLAGS_PARAMETER = "flags";
+  private static final String FLAGGED_PARAMETER = "flagged";
+  private static final String REMOVE_ALL_FLAGS_PARAMETER = "removeAllFlags";
 
   @Override
   protected String getNamespacePrefix() {
@@ -44,7 +46,7 @@ public class CommentCrudController extends DoiBasedCrudController {
     annotationCrudService.readComment(commentId).respond(request, response, entityGson);
   }
 
-  @RequestMapping(value = COMMENT_META_FLAGGED_TEMPLATE, method = RequestMethod.GET)
+  @RequestMapping(value = COMMENT_META_ROOT, method = RequestMethod.GET, params = {FLAGGED_PARAMETER})
   public void readAllFlaggedComments(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     annotationCrudService.readFlaggedComments().respond(request, response, entityGson);
@@ -64,8 +66,7 @@ public class CommentCrudController extends DoiBasedCrudController {
     return reportCreated(created.getAnnotationUri());
   }
 
-  @RequestMapping(value = COMMENT_META_TEMPLATE, method = RequestMethod.DELETE,
-      params = "removeAllFlags")
+  @RequestMapping(value = COMMENT_META_TEMPLATE, method = RequestMethod.DELETE, params = REMOVE_ALL_FLAGS_PARAMETER)
   public ResponseEntity<?> removeAllFlags(HttpServletRequest request)
       throws IOException {
     DoiBasedIdentity commentId = parse(request);
@@ -92,7 +93,7 @@ public class CommentCrudController extends DoiBasedCrudController {
     return reportOk(deletedCommentUri);
   }
 
-  @RequestMapping(value = FLAGS_META_TEMPLATE, method = RequestMethod.POST)
+  @RequestMapping(value = COMMENT_META_TEMPLATE, method = RequestMethod.POST, params = {FLAGS_PARAMETER})
   public ResponseEntity<String> createFlag(HttpServletRequest request) throws IOException {
     DoiBasedIdentity commentId = parse(request);
     CommentFlagInputView input = readJsonFromRequest(request, CommentFlagInputView.class);
@@ -102,12 +103,13 @@ public class CommentCrudController extends DoiBasedCrudController {
 
   @RequestMapping(value = FLAGS_META_TEMPLATE, method = RequestMethod.GET)
   public void readFlag(HttpServletRequest request, HttpServletResponse response,
-      @RequestParam String flagId) throws IOException {
+                       @PathVariable("flagId") String flagId)
+      throws IOException {
     annotationCrudService.readCommentFlag(flagId).respond(request, response, entityGson);
   }
 
   @RequestMapping(value = FLAGS_META_TEMPLATE, method = RequestMethod.DELETE)
-  public ResponseEntity<String> removeFlag(@RequestParam String flagId)
+  public ResponseEntity<String> removeFlag(@PathVariable("flagId") String flagId)
       throws IOException {
     String commentUri = annotationCrudService.deleteCommentFlag(flagId);
     return reportCreated(commentUri);
