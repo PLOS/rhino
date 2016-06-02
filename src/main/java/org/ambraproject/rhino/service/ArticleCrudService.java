@@ -18,10 +18,10 @@
 
 package org.ambraproject.rhino.service;
 
-import org.ambraproject.rhino.model.Article;
-import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.util.Archive;
@@ -31,7 +31,7 @@ import org.ambraproject.rhino.view.article.RelatedArticleView;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 public interface ArticleCrudService extends DoiBasedCrudService {
@@ -187,7 +187,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * @param article an article with a populated {@code relatedArticles} field
    * @return a set of views of the related articles
    */
-  public abstract Collection<RelatedArticleView> getRelatedArticles(Article article);
+  public abstract List<RelatedArticleView> getRelatedArticles(Article article);
 
   /**
    * Read the metadata of a random article.

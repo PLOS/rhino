@@ -1,28 +1,29 @@
 package org.ambraproject.rhino.view.article;
 
-import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import org.ambraproject.rhino.model.ArticleAuthor;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleRelationship;
-import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 
-import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 public class RelatedArticleView implements JsonOutputView, ArticleView {
 
   private final ArticleRelationship raw;
-  private final Optional<String> title;
-  private final ImmutableList<ArticleAuthor> authors;
+  private final Optional<Article> relatedArticle;
 
-  public RelatedArticleView(ArticleRelationship raw, String title, List<ArticleAuthor> authors) {
-    this.raw = Preconditions.checkNotNull(raw);
-    this.title = Optional.fromNullable(title);
-    this.authors = (authors == null) ? ImmutableList.<ArticleAuthor>of() : ImmutableList.copyOf(authors);
+  public RelatedArticleView(ArticleRelationship rawRelationship, Article relatedArticle) {
+    if (relatedArticle != null) {
+      Preconditions.checkArgument(rawRelationship.getOtherArticleID().equals(relatedArticle.getID()));
+      Preconditions.checkArgument(rawRelationship.getOtherArticleDoi().equals(relatedArticle.getDoi()));
+    }
+
+    this.raw = Objects.requireNonNull(rawRelationship);
+    this.relatedArticle = Optional.ofNullable(relatedArticle);
   }
 
   @Override
@@ -32,20 +33,14 @@ public class RelatedArticleView implements JsonOutputView, ArticleView {
 
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
-    JsonObject view = new JsonObject();
-    view.addProperty("doi", raw.getOtherArticleDoi());
-
-    if (title.isPresent()) {
-      view.addProperty("title", title.get());
-    }
-    if (!authors.isEmpty()) {
-      view.add("authors", context.serialize(authors));
-    }
-
-    JsonObject rawSerialized = context.serialize(raw).getAsJsonObject();
-    rawSerialized.remove("otherArticleDoi");
-    JsonAdapterUtil.copyWithoutOverwriting(rawSerialized, view);
-
+    JsonObject view = context.serialize(raw).getAsJsonObject();
+    view.add("doi", view.remove("otherArticleDoi"));
+    relatedArticle.ifPresent((Article relatedArticle) -> {
+      view.add("title", context.serialize(relatedArticle.getTitle()));
+      view.add("authors", context.serialize(relatedArticle.getAuthors()));
+      view.add("collaborativeAuthors", context.serialize(relatedArticle.getCollaborativeAuthors()));
+      view.add("date", context.serialize(relatedArticle.getDate()));
+    });
     return view;
   }
 
