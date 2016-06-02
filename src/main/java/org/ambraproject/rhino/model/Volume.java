@@ -26,6 +26,8 @@ public class Volume extends AmbraEntity {
   private String imageUri;
   private String title;
   private String description;
+  private Long journalID;
+  private Long journalSortOrder;
 
   private List<Issue> issues;
 
@@ -86,31 +88,56 @@ public class Volume extends AmbraEntity {
     this.description = description;
   }
 
+  public Long getJournalSortOrder() {
+    return journalSortOrder;
+  }
+
+  public void setJournalSortOrder(Long journalSortOrder) {
+    this.journalSortOrder = journalSortOrder;
+  }
+
+  public Long getJournalID() {
+    return journalID;
+  }
+
+  public void setJournalID(Long journalID) {
+    this.journalID = journalID;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (!(o instanceof Volume)) return false;
+    if (o == null || getClass() != o.getClass()) return false;
 
     Volume volume = (Volume) o;
 
-    if (getID() != null ? !getID().equals(volume.getID()) : volume.getID() != null) return false;
-    if (description != null ? !description.equals(volume.description) : volume.description != null) return false;
-    if (displayName != null ? !displayName.equals(volume.displayName) : volume.displayName != null) return false;
-    if (imageUri != null ? !imageUri.equals(volume.imageUri) : volume.imageUri != null) return false;
+    if (volumeUri != null ? !volumeUri.equals(volume.volumeUri) : volume.volumeUri != null)
+      return false;
+    if (displayName != null ? !displayName.equals(volume.displayName) : volume.displayName != null)
+      return false;
+    if (imageUri != null ? !imageUri.equals(volume.imageUri) : volume.imageUri != null)
+      return false;
     if (title != null ? !title.equals(volume.title) : volume.title != null) return false;
-    if (volumeUri != null ? !volumeUri.equals(volume.volumeUri) : volume.volumeUri != null) return false;
+    if (description != null ? !description.equals(volume.description) : volume.description != null)
+      return false;
+    if (journalID != null ? !journalID.equals(volume.journalID) : volume.journalID != null)
+      return false;
+    if (journalSortOrder != null ? !journalSortOrder.equals(volume.journalSortOrder) : volume.journalSortOrder != null)
+      return false;
+    return issues != null ? issues.equals(volume.issues) : volume.issues == null;
 
-    return true;
   }
 
   @Override
   public int hashCode() {
-    int result = getID() != null ? getID().hashCode() : 0;
-    result = 31 * result + (volumeUri != null ? volumeUri.hashCode() : 0);
+    int result = volumeUri != null ? volumeUri.hashCode() : 0;
     result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
     result = 31 * result + (imageUri != null ? imageUri.hashCode() : 0);
     result = 31 * result + (title != null ? title.hashCode() : 0);
     result = 31 * result + (description != null ? description.hashCode() : 0);
+    result = 31 * result + (journalID != null ? journalID.hashCode() : 0);
+    result = 31 * result + (journalSortOrder != null ? journalSortOrder.hashCode() : 0);
+    result = 31 * result + (issues != null ? issues.hashCode() : 0);
     return result;
   }
 

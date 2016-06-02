@@ -32,4 +32,6 @@ public interface VolumeCrudService {
 
   public abstract Transceiver read(DoiBasedIdentity id) throws IOException;
 
+  public abstract void delete(DoiBasedIdentity id) throws IOException;
+
 }
