@@ -109,10 +109,10 @@ public class CommentCrudController extends DoiBasedCrudController {
   }
 
   @RequestMapping(value = FLAGS_META_TEMPLATE, method = RequestMethod.DELETE)
-  public ResponseEntity<String> removeFlag(@PathVariable("flagId") String flagId)
+  public ResponseEntity<Object> removeFlag(@PathVariable("flagId") String flagId)
       throws IOException {
-    String commentUri = annotationCrudService.deleteCommentFlag(flagId);
-    return reportCreated(commentUri);
+    annotationCrudService.deleteCommentFlag(flagId);
+    return reportOk(flagId);
   }
 
 }
