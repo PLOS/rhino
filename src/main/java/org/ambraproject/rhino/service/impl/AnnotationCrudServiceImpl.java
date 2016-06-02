@@ -238,10 +238,12 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
   public String removeFlagsFromComment(DoiBasedIdentity commentId) {
     Annotation comment = getComment(commentId);
     String annotationUri = comment.getAnnotationUri();
-    List<Flag> commentFlags = getAllFlags().stream()
-        .filter(f -> f.getFlaggedAnnotation().getAnnotationUri().equals(annotationUri))
-        .collect(Collectors.toList());
-    hibernateTemplate.deleteAll(commentFlags);
+    List<Flag> flags = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM Flag WHERE flaggedAnnotation = :comment");
+      query.setParameter("comment", comment);
+      return (List<Flag>) query.list();
+    });
+    hibernateTemplate.deleteAll(flags);
     return annotationUri;
   }
 
