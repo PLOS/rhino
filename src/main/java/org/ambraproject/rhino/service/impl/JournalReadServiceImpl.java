@@ -121,7 +121,7 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
           throw new RestClientException(message, HttpStatus.BAD_REQUEST);
         }
 
-        VolumeNonAssocView parentVolumeView = issueCrudService.getParentVolume(issue);
+        VolumeNonAssocView parentVolumeView = issueCrudService.getParentVolumeView(issue);
 
         return new IssueOutputView(issue, parentVolumeView);
       }

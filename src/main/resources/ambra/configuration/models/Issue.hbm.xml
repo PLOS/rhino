@@ -33,8 +33,6 @@
     <property name="imageUri" column="imageUri" type="string"/>
     <property name="title" column="title" type="string"/>
     <property name="description" column="description" type="text"/>
-    <property name="volumeID" column="volumeID" type="long"/>
-    <property name="volumeSortOrder" column="volumeSortOrder" type="long"/>
 
     <list name="articleDois" table="issueArticleList" cascade="all-delete-orphan" fetch="join">
       <key column="issueID"/>
