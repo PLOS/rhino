@@ -447,23 +447,23 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     List<ArticleRelationship> rawRelationships = article.getRelatedArticles();
     if (rawRelationships.isEmpty()) return ImmutableList.of();
 
-    Set<Long> relatedArticleIds = rawRelationships.stream()
-        .map(ArticleRelationship::getOtherArticleID)
+    Set<String> relatedArticleDois = rawRelationships.stream()
+        .map(ArticleRelationship::getOtherArticleDoi)
         .filter(Objects::nonNull) // not every ArticleRelationship points to an article in our own database
         .collect(Collectors.toSet());
-    Map<Long, Article> relatedArticles = hibernateTemplate.execute(
+    Map<String, Article> relatedArticles = hibernateTemplate.execute(
         (Session session) -> {
-          Query query = session.createQuery("FROM Article WHERE ID in :relatedArticleIds");
-          query.setParameterList("relatedArticleIds", relatedArticleIds);
+          Query query = session.createQuery("FROM Article WHERE doi in :relatedArticleDois");
+          query.setParameterList("relatedArticleDois", relatedArticleDois);
           return (List<Article>) query.list();
         })
-        .stream().collect(Collectors.toMap(Article::getID, Function.identity()));
+        .stream().collect(Collectors.toMap(Article::getDoi, Function.identity()));
 
     // Our Hibernate mappings maintain an explicit order of ArticleRelationships.
     // The Article objects were fetched unordered, so preserve the order of the rawRelationships list.
     return rawRelationships.stream()
         .map((ArticleRelationship relationship) -> {
-          Article relatedArticle = relatedArticles.get(relationship.getOtherArticleID());
+          Article relatedArticle = relatedArticles.get(relationship.getOtherArticleDoi());
           return new RelatedArticleView(relationship, relatedArticle);
         })
         .collect(Collectors.toList());
