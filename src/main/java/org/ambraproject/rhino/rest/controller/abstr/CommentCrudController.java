@@ -29,7 +29,6 @@ public class CommentCrudController extends DoiBasedCrudController {
   private static final String FLAGS_META_TEMPLATE = FLAGS_META_ROOT + "/{flagId}";
   private static final String FLAGS_PARAMETER = "flags";
   private static final String FLAGGED_PARAMETER = "flagged";
-  private static final String REMOVE_ALL_FLAGS_PARAMETER = "removeAllFlags";
 
   @Override
   protected String getNamespacePrefix() {
@@ -66,7 +65,7 @@ public class CommentCrudController extends DoiBasedCrudController {
     return reportCreated(created.getAnnotationUri());
   }
 
-  @RequestMapping(value = COMMENT_META_TEMPLATE, method = RequestMethod.DELETE, params = REMOVE_ALL_FLAGS_PARAMETER)
+  @RequestMapping(value = COMMENT_META_TEMPLATE, method = RequestMethod.DELETE, params = FLAGS_PARAMETER)
   public ResponseEntity<?> removeAllFlags(HttpServletRequest request)
       throws IOException {
     DoiBasedIdentity commentId = parse(request);
