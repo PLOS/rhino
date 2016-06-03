@@ -30,8 +30,6 @@
     <property name="imageUri" column="imageUri" type="string"/>
     <property name="title" column="title" type="string"/>
     <property name="description" column="description" type="text"/>
-    <property name="journalID" column="journalID" type="long"/>
-    <property name="journalSortOrder" column="journalSortOrder" type="long"/>
 
     <list name="issues" cascade="save-update" lazy="true">
       <key column="volumeID"/>

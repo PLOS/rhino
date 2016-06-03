@@ -45,7 +45,7 @@
 
     <list name="volumes" lazy="true" cascade="save-update">
       <key column="journalID"/>
-      <index column="journalSortOrder"/>
+      <list-index column="journalSortOrder"/>
       <one-to-many class="Volume"/>
     </list>
 

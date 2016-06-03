@@ -73,7 +73,7 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
         hibernateTemplate.findByCriteria(DetachedCriteria
                 .forClass(Volume.class)
                 .add(Restrictions.eq("volumeUri", volumeId.getKey()))
-                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+//                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
   }
 
@@ -141,6 +141,15 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
     };
   }
 
+  private Journal getParentJournal(Volume volume) {
+    List<Journal> journals = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("from Journal where :volume in elements(volumes)");
+      query.setParameter("volume", volume);
+      return (List<Journal>) query.list();
+    });
+    return journals.get(0); //todo: support multiple parent journals?
+  }
+
   @Override
   public void delete(DoiBasedIdentity id) throws IOException {
     Volume volume = findVolume(id);
@@ -152,15 +161,10 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
       throw new RestClientException("Volume has issues and cannot be deleted until all issues have " +
           "been deleted.", HttpStatus.BAD_REQUEST);
     }
+    Journal parentJournal = getParentJournal(volume);
+    List<Volume> volumes = parentJournal.getVolumes();
+    volumes.remove(volume);
+    hibernateTemplate.save(parentJournal);
     hibernateTemplate.delete(volume);
-
-    //volume sort order must be updated to keep hibernate happy
-    hibernateTemplate.execute((Session session) -> {
-        Query query = session.createQuery("update Volume set journalSortOrder = journalSortOrder - 1" +
-                " where journalID = :journalID and journalSortOrder > :journalSortOrder");
-        query.setParameter("journalID", volume.getID());
-        query.setParameter("journalSortOrder", volume.getJournalSortOrder());
-        return query.executeUpdate();
-      });
   }
 }
