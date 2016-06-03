@@ -19,10 +19,10 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
-import org.ambraproject.rhino.model.Journal;
-import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
@@ -31,6 +31,8 @@ import org.ambraproject.rhino.view.journal.VolumeInputView;
 import org.ambraproject.rhino.view.journal.VolumeOutputView;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.support.DataAccessUtils;
@@ -139,4 +141,29 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
     };
   }
 
+  private Journal getParentJournal(Volume volume) {
+    return hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("from Journal where :volume in elements(volumes)");
+      query.setParameter("volume", volume);
+      return (Journal) query.uniqueResult();
+    });
+  }
+
+  @Override
+  public void delete(DoiBasedIdentity id) throws IOException {
+    Volume volume = findVolume(id);
+    if (volume == null) {
+      throw new RestClientException("Volume not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
+    }
+    //cannot delete a volume if there are related issues
+    if (volume.getIssues().size() > 0) {
+      throw new RestClientException("Volume has issues and cannot be deleted until all issues have " +
+          "been deleted.", HttpStatus.BAD_REQUEST);
+    }
+    Journal parentJournal = getParentJournal(volume);
+    List<Volume> volumes = parentJournal.getVolumes();
+    volumes.remove(volume);
+    hibernateTemplate.save(parentJournal);
+    hibernateTemplate.delete(volume);
+  }
 }
