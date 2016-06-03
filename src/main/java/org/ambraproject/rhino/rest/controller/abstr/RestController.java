@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.rest.controller.abstr;
 
+import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.gson.Gson;
@@ -45,6 +46,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
@@ -63,6 +66,15 @@ public abstract class RestController {
   protected static final String ACCEPT_REQUEST_HEADER = "Accept";
   protected static final String JSONP_CALLBACK_PARAM = "callback";
 
+  private static String getRequestPath(HttpServletRequest request) {
+    String requestUri = request.getRequestURI();
+    try {
+      return URLDecoder.decode(requestUri, Charsets.UTF_8.toString());
+    } catch (UnsupportedEncodingException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   /**
    * Retrieve a RESTful argument that consists of the entire request URL after a namespace prefix. The namespace prefix
    * consists of one or more URI path elements that the API defines as a prefix for a class of RESTful "nouns" and must
@@ -78,8 +90,8 @@ public abstract class RestController {
    * @param request   the HTTP request for a REST action
    * @param optional  if true, null will be returned if no additional path exists after the namespace; if false,
    *                  IllegalArgumentException will be thrown if this is the case
-   * @param namespace the namespace in which the request was received  @return the contents of the request path after
-   *                  the namespace prefix
+   * @param namespace the namespace in which the request was received
+   * @return the contents of the request path after the namespace prefix
    * @throws IllegalArgumentException if the request URI does not start with the namespace or if the namespace does not
    *                                  end with a slash, and optional is false
    */
@@ -88,15 +100,15 @@ public abstract class RestController {
     if (namespaceLength < 3 || namespace.charAt(0) != '/' || namespace.charAt(namespaceLength - 1) != '/') {
       throw new IllegalArgumentException("Namespace must begin and end with '/'");
     }
-    String requestUri = request.getRequestURI();
-    int namespaceIndex = requestUri.indexOf(namespace);
+    String requestPath = getRequestPath(request);
+    int namespaceIndex = requestPath.indexOf(namespace);
     if (namespaceIndex < 0) {
       String message = String.format("Request URI (\"%s\") does not have expected namespace (\"%s\")",
-          requestUri, namespace);
+          requestPath, namespace);
       throw new IllegalArgumentException(message);
     }
     int namespaceEnd = namespaceIndex + namespaceLength;
-    int end = requestUri.length() - (requestUri.endsWith("/") ? 1 : 0);
+    int end = requestPath.length() - (requestPath.endsWith("/") ? 1 : 0);
     if (end <= namespaceEnd) {
       if (optional) {
         return null;
@@ -104,7 +116,7 @@ public abstract class RestController {
         throw new IllegalArgumentException("Request URI has no path variable after namespace");
       }
     }
-    return requestUri.substring(namespaceEnd, end);
+    return requestPath.substring(namespaceEnd, end);
   }
 
   /**

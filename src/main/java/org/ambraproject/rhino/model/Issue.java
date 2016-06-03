@@ -112,7 +112,6 @@ public class Issue extends AmbraEntity {
     if (imageUri != null ? !imageUri.equals(issue.imageUri) : issue.imageUri != null) return false;
     if (issueUri != null ? !issueUri.equals(issue.issueUri) : issue.issueUri != null) return false;
     if (title != null ? !title.equals(issue.title) : issue.title != null) return false;
-
     return true;
   }
 
