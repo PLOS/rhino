@@ -142,12 +142,11 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
   }
 
   private Journal getParentJournal(Volume volume) {
-    List<Journal> journals = hibernateTemplate.execute(session -> {
+    return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("from Journal where :volume in elements(volumes)");
       query.setParameter("volume", volume);
-      return (List<Journal>) query.list();
+      return (Journal) query.uniqueResult();
     });
-    return journals.get(0); //todo: support multiple parent journals?
   }
 
   @Override
