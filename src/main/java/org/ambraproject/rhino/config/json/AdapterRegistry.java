@@ -8,8 +8,6 @@ import org.ambraproject.rhino.view.KeyedStringList;
 import org.ambraproject.rhino.view.article.ArticleInputView;
 import org.ambraproject.rhino.view.article.DoiList;
 import org.ambraproject.rhino.view.article.ListInputView;
-import org.ambraproject.rhino.view.comment.CommentNodeView;
-import org.ambraproject.rhino.view.comment.CommentOutputView;
 import org.ambraproject.rhino.view.user.AuthIdList;
 
 import java.lang.reflect.Type;
@@ -62,17 +60,20 @@ public class AdapterRegistry {
       .add(org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView.class)
       .add(org.ambraproject.rhino.view.asset.raw.RawAssetFileView.class)
 
-      .add(CommentNodeView.class)
-      .add(CommentOutputView.class)
+      .add(org.ambraproject.rhino.view.comment.CommentFlagOutputView.class)
+      .add(org.ambraproject.rhino.view.comment.CommentNodeView.class)
+      .add(org.ambraproject.rhino.view.comment.CommentOutputView.class)
 
       .add(org.ambraproject.rhino.view.journal.ArticleListView.class)
       .add(org.ambraproject.rhino.view.journal.IssueOutputView.class)
       .add(org.ambraproject.rhino.view.journal.JournalListView.class)
-      .add(org.ambraproject.rhino.view.journal.JournalNonAssocView.class)
       .add(org.ambraproject.rhino.view.journal.JournalNonAssocView.ListView.class)
+      .add(org.ambraproject.rhino.view.journal.JournalNonAssocView.class)
       .add(org.ambraproject.rhino.view.journal.JournalOutputView.class)
       .add(org.ambraproject.rhino.view.journal.VolumeListView.class)
       .add(org.ambraproject.rhino.view.journal.VolumeOutputView.class)
+
+      .add(org.ambraproject.rhino.view.user.UserIdView.class)
 
       .build();
 

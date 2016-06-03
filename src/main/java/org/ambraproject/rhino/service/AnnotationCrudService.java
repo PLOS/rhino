@@ -13,11 +13,11 @@
 
 package org.ambraproject.rhino.service;
 
+import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.Annotation;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Flag;
-import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.comment.CommentCount;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
@@ -72,6 +72,8 @@ public interface AnnotationCrudService {
   public Transceiver readAllCommentFlags();
 
   public Transceiver readCommentFlag(String flagId);
+
+  public Transceiver readCommentFlagsOn(DoiBasedIdentity commentId);
 
   public String deleteCommentFlag(String flagId);
 

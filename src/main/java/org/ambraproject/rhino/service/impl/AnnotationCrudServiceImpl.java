@@ -15,16 +15,17 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import org.ambraproject.rhino.config.RuntimeConfiguration;
+import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.Annotation;
 import org.ambraproject.rhino.model.AnnotationType;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.model.FlagReasonCode;
-import org.ambraproject.rhino.config.RuntimeConfiguration;
-import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AnnotationCrudService;
+import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.comment.CommentCount;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
@@ -233,14 +234,20 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
     return annotationUri;
   }
 
+  private List<Flag> getCommentFlagsOn(Annotation comment) {
+    return hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM Flag WHERE flaggedAnnotation = :comment");
+      query.setParameter("comment", comment);
+      return (List<Flag>) query.list();
+    });
+  }
+
   @Override
   public String removeFlagsFromComment(DoiBasedIdentity commentId) {
     Annotation comment = getComment(commentId);
     String annotationUri = comment.getAnnotationUri();
-    List<Flag> commentFlags = getAllFlags().stream()
-        .filter(f -> f.getFlaggedAnnotation().getAnnotationUri().equals(annotationUri))
-        .collect(Collectors.toList());
-    hibernateTemplate.deleteAll(commentFlags);
+    List<Flag> flags = getCommentFlagsOn(comment);
+    hibernateTemplate.deleteAll(flags);
     return annotationUri;
   }
 
@@ -264,7 +271,8 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
     return new Transceiver() {
       @Override
       protected List<CommentFlagOutputView> getData() throws IOException {
-        return getAllFlags().stream().map(CommentFlagOutputView::new).collect(Collectors.toList());
+        CommentNodeView.Factory viewFactory = new CommentNodeView.Factory(runtimeConfiguration);
+        return getAllFlags().stream().map(viewFactory::createFlagView).collect(Collectors.toList());
       }
 
       @Override
@@ -281,11 +289,27 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
 
   @Override
   public Transceiver readCommentFlag(String flagId) {
+    return new EntityTransceiver<Flag>() {
+      @Override
+      protected Flag fetchEntity() {
+        return getFlag(flagId);
+      }
+
+      @Override
+      protected CommentFlagOutputView getView(Flag flag) {
+        return new CommentNodeView.Factory(runtimeConfiguration).createFlagView(flag);
+      }
+    };
+  }
+
+  @Override
+  public Transceiver readCommentFlagsOn(DoiBasedIdentity commentId) {
     return new Transceiver() {
       @Override
-      protected CommentFlagOutputView getData() throws IOException {
-        Flag flag = getFlag(flagId);
-        return new CommentFlagOutputView(flag);
+      protected Object getData() throws IOException {
+        List<Flag> flags = getCommentFlagsOn(getComment(commentId));
+        CommentNodeView.Factory viewFactory = new CommentNodeView.Factory(runtimeConfiguration);
+        return flags.stream().map(viewFactory::createFlagView).collect(Collectors.toList());
       }
 
       @Override
@@ -326,7 +350,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
     return new Transceiver() {
       @Override
       protected List<CommentNodeView> getData() throws IOException {
-        List<Object[]> results = hibernateTemplate.execute(session -> {
+        List<Object[]> results = (List<Object[]>) hibernateTemplate.execute(session -> {
           Query query = session.createQuery("" +
               "SELECT ann, art.doi, art.title " +
               "FROM Annotation ann, Article art, Journal j " +

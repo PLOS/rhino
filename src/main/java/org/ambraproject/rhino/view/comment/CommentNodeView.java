@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.rhino.model.Annotation;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
+import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.view.JsonOutputView;
 
 import java.util.Objects;
@@ -60,6 +61,10 @@ public class CommentNodeView implements JsonOutputView {
 
     public CommentNodeView create(Annotation comment) {
       return new CommentNodeView(comment, competingInterestPolicy.createStatement(comment));
+    }
+
+    public CommentFlagOutputView createFlagView(Flag commentFlag) {
+      return new CommentFlagOutputView(commentFlag, create(commentFlag.getFlaggedAnnotation()));
     }
   }
 
