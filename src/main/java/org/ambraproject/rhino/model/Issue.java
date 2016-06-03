@@ -29,8 +29,6 @@ public class Issue extends AmbraEntity {
   private String imageUri;
   private String title;
   private String description;
-  private Long volumeID;
-  private Long volumeSortOrder;
 
   private List<String> articleDois;
 
@@ -99,22 +97,6 @@ public class Issue extends AmbraEntity {
     this.articleDois = articleDois;
   }
 
-  public Long getVolumeID() {
-    return volumeID;
-  }
-
-  public void setVolumeID(Long volumeID) {
-    this.volumeID = volumeID;
-  }
-
-  public Long getVolumeSortOrder() {
-    return volumeSortOrder;
-  }
-
-  public void setVolumeSortOrder(Long volumeSortOrder) {
-    this.volumeSortOrder = volumeSortOrder;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -130,8 +112,6 @@ public class Issue extends AmbraEntity {
     if (imageUri != null ? !imageUri.equals(issue.imageUri) : issue.imageUri != null) return false;
     if (issueUri != null ? !issueUri.equals(issue.issueUri) : issue.issueUri != null) return false;
     if (title != null ? !title.equals(issue.title) : issue.title != null) return false;
-    if (volumeID != null ? !volumeID.equals(issue.volumeID) : issue.volumeID!= null) return false;
-    if (volumeSortOrder != null ? !volumeSortOrder.equals(issue.volumeSortOrder) : issue.volumeSortOrder!= null) return false;
     return true;
   }
 
@@ -145,8 +125,6 @@ public class Issue extends AmbraEntity {
     result = 31 * result + (title != null ? title.hashCode() : 0);
     result = 31 * result + (description != null ? description.hashCode() : 0);
     result = 31 * result + (articleDois != null ? articleDois.hashCode() : 0);
-    result = 31 * result + (volumeID != null ? volumeID.hashCode() : 0);
-    result = 31 * result + (volumeSortOrder != null ? volumeSortOrder.hashCode() : 0);
     return result;
   }
 
