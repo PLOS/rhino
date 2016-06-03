@@ -100,6 +100,13 @@ public class CommentCrudController extends DoiBasedCrudController {
     return reportCreated(commentFlag.getID().toString());
   }
 
+  @RequestMapping(value = COMMENT_META_TEMPLATE, method = RequestMethod.GET, params = {FLAGS_PARAMETER})
+  public void readFlagsOnComment(HttpServletRequest request, HttpServletResponse response)
+      throws IOException {
+    DoiBasedIdentity commentId = parse(request);
+    annotationCrudService.readCommentFlagsOn(commentId).respond(request, response, entityGson);
+  }
+
   @RequestMapping(value = FLAGS_META_TEMPLATE, method = RequestMethod.GET)
   public void readFlag(HttpServletRequest request, HttpServletResponse response,
                        @PathVariable("flagId") String flagId)

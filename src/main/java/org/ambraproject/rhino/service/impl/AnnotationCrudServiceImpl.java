@@ -234,15 +234,19 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
     return annotationUri;
   }
 
-  @Override
-  public String removeFlagsFromComment(DoiBasedIdentity commentId) {
-    Annotation comment = getComment(commentId);
-    String annotationUri = comment.getAnnotationUri();
-    List<Flag> flags = hibernateTemplate.execute(session -> {
+  private List<Flag> getCommentFlagsOn(Annotation comment) {
+    return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("FROM Flag WHERE flaggedAnnotation = :comment");
       query.setParameter("comment", comment);
       return (List<Flag>) query.list();
     });
+  }
+
+  @Override
+  public String removeFlagsFromComment(DoiBasedIdentity commentId) {
+    Annotation comment = getComment(commentId);
+    String annotationUri = comment.getAnnotationUri();
+    List<Flag> flags = getCommentFlagsOn(comment);
     hibernateTemplate.deleteAll(flags);
     return annotationUri;
   }
@@ -294,6 +298,23 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
       @Override
       protected CommentFlagOutputView getView(Flag flag) {
         return new CommentNodeView.Factory(runtimeConfiguration).createFlagView(flag);
+      }
+    };
+  }
+
+  @Override
+  public Transceiver readCommentFlagsOn(DoiBasedIdentity commentId) {
+    return new Transceiver() {
+      @Override
+      protected Object getData() throws IOException {
+        List<Flag> flags = getCommentFlagsOn(getComment(commentId));
+        CommentNodeView.Factory viewFactory = new CommentNodeView.Factory(runtimeConfiguration);
+        return flags.stream().map(viewFactory::createFlagView).collect(Collectors.toList());
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
       }
     };
   }
