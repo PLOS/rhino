@@ -66,13 +66,13 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
     return volume;
   }
 
-  private Volume findVolume(DoiBasedIdentity volumeId) {
-    return (Volume) DataAccessUtils.uniqueResult((List<?>)
-        hibernateTemplate.findByCriteria(DetachedCriteria
-                .forClass(Volume.class)
-                .add(Restrictions.eq("volumeUri", volumeId.getKey()))
-                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        ));
+  @Override
+  public Volume findVolume(DoiBasedIdentity volumeId) {
+    return (Volume) DataAccessUtils.uniqueResult(hibernateTemplate.findByCriteria(DetachedCriteria
+        .forClass(Volume.class)
+        .add(Restrictions.eq("volumeUri", volumeId.getKey()))
+        .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+    ));
   }
 
   @Override

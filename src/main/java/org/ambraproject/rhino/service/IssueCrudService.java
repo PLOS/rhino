@@ -18,9 +18,10 @@
 
 package org.ambraproject.rhino.service;
 
-import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.model.Issue;
+import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleIssue;
 import org.ambraproject.rhino.view.journal.IssueInputView;
@@ -39,7 +40,9 @@ public interface IssueCrudService {
 
   public abstract List<ArticleIssue> getArticleIssues(ArticleIdentity articleIdentity);
 
-  public abstract VolumeNonAssocView getParentVolume(Issue issue);
+  public abstract VolumeNonAssocView getParentVolumeView(Issue issue);
+
+  public abstract Volume getParentVolume(Issue issue);
 
   public abstract void delete(DoiBasedIdentity issueId);
 
