@@ -6,16 +6,16 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
+import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.model.Annotation;
 import org.ambraproject.rhino.model.Article;
-import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.article.ArticleVisibility;
+import org.ambraproject.rhino.view.user.UserIdView;
 
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -35,10 +35,10 @@ public class CommentOutputView implements JsonOutputView {
   private final Date mostRecentActivity;
 
   private CommentOutputView(ArticleVisibility parentArticle,
-                               Annotation comment,
-                               CompetingInterestStatement competingInterestStatement,
-                               List<CommentOutputView> replies,
-                               int replyTreeSize, Date mostRecentActivity) {
+                            Annotation comment,
+                            CompetingInterestStatement competingInterestStatement,
+                            List<CommentOutputView> replies,
+                            int replyTreeSize, Date mostRecentActivity) {
     this.parentArticle = Objects.requireNonNull(parentArticle);
     this.comment = Objects.requireNonNull(comment);
     this.competingInterestStatement = Objects.requireNonNull(competingInterestStatement);
@@ -118,15 +118,8 @@ public class CommentOutputView implements JsonOutputView {
                                   CompetingInterestStatement competingInterestStatement) {
     JsonObject serialized = context.serialize(comment).getAsJsonObject();
     serialized.remove("userProfileID");
-    Long userProfileID = comment.getUserProfileID();
 
-    if (userProfileID == null) {
-      throw new NullPointerException();
-    }
-
-    HashMap<String, Object> creator = new HashMap<>();
-    creator.put("userId", String.valueOf(userProfileID));
-    serialized.add("creator", context.serialize(creator));
+    serialized.add("creator", context.serialize(new UserIdView(comment.getUserProfileID())));
 
     serialized.remove("articleID");
     normalizeField(serialized, "title");

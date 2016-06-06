@@ -22,19 +22,18 @@ import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Lists;
 import com.google.gson.Gson;
-import org.ambraproject.rhino.model.Article;
-import org.ambraproject.rhino.model.ArticleAsset;
-import org.ambraproject.rhino.model.ArticleRelationship;
-import org.ambraproject.rhino.model.Category;
-import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleAsset;
+import org.ambraproject.rhino.model.ArticleRelationship;
+import org.ambraproject.rhino.model.Category;
+import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.ScholarlyWork;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -55,7 +54,9 @@ import org.ambraproject.rhino.view.article.RelatedArticleView;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
+import org.hibernate.Query;
 import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
@@ -78,8 +79,11 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
+import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -474,25 +478,30 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public Collection<RelatedArticleView> getRelatedArticles(Article article) {
+  public List<RelatedArticleView> getRelatedArticles(Article article) {
     List<ArticleRelationship> rawRelationships = article.getRelatedArticles();
-    List<RelatedArticleView> relatedArticleViews = Lists.newArrayListWithCapacity(rawRelationships.size());
-    for (ArticleRelationship rawRelationship : rawRelationships) {
-      if (rawRelationship.getOtherArticleID() == null) {
-        continue;
-      } // ignore when doi not present in article table
-      String otherArticleDoi = rawRelationship.getOtherArticleDoi();
+    if (rawRelationships.isEmpty()) return ImmutableList.of();
 
-      // Simple and inefficient implementation. Same solution as legacy Ambra. TODO: Optimize
-      Article relatedArticle = (Article) DataAccessUtils.uniqueResult((List<?>)
-          hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
-              .add(Restrictions.eq("doi", otherArticleDoi))));
+    Set<String> relatedArticleDois = rawRelationships.stream()
+        .map(ArticleRelationship::getOtherArticleDoi)
+        .filter(Objects::nonNull) // not every ArticleRelationship points to an article in our own database
+        .collect(Collectors.toSet());
+    Map<String, Article> relatedArticles = hibernateTemplate.execute(
+        (Session session) -> {
+          Query query = session.createQuery("FROM Article WHERE doi in :relatedArticleDois");
+          query.setParameterList("relatedArticleDois", relatedArticleDois);
+          return (List<Article>) query.list();
+        })
+        .stream().collect(Collectors.toMap(Article::getDoi, Function.identity()));
 
-      RelatedArticleView relatedArticleView = new RelatedArticleView(rawRelationship, relatedArticle.getTitle(),
-          relatedArticle.getAuthors());
-      relatedArticleViews.add(relatedArticleView);
-    }
-    return relatedArticleViews;
+    // Our Hibernate mappings maintain an explicit order of ArticleRelationships.
+    // The Article objects were fetched unordered, so preserve the order of the rawRelationships list.
+    return rawRelationships.stream()
+        .map((ArticleRelationship relationship) -> {
+          Article relatedArticle = relatedArticles.get(relationship.getOtherArticleDoi());
+          return new RelatedArticleView(relationship, relatedArticle);
+        })
+        .collect(Collectors.toList());
   }
 
   /**

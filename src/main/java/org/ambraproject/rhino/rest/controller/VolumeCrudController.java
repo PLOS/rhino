@@ -75,6 +75,14 @@ public class VolumeCrudController extends DoiBasedCrudController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
+  @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.DELETE)
+  public ResponseEntity<Object> delete(HttpServletRequest request) throws IOException {
+    DoiBasedIdentity id = parse(request);
+    volumeCrudService.delete(id);
+    return reportOk(id.getIdentifier());
+  }
+
+  @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.POST)
   public ResponseEntity<String> createIssue(HttpServletRequest request) throws IOException {
     DoiBasedIdentity volumeId = parse(request);

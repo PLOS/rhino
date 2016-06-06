@@ -21,9 +21,13 @@
 package org.ambraproject.rhino.view.comment;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.view.JsonOutputView;
+import org.ambraproject.rhino.view.user.UserIdView;
+
+import java.util.Objects;
 
 /**
  * Immutable View wrapper around a comment flag
@@ -31,13 +35,28 @@ import org.ambraproject.rhino.view.JsonOutputView;
 public class CommentFlagOutputView implements JsonOutputView {
 
   private final Flag flag;
+  private final CommentNodeView flaggedComment;
 
-  public CommentFlagOutputView(Flag flag) {
-    this.flag = flag;
+  // Invoked from org.ambraproject.rhino.view.comment.CommentNodeView.Factory.createFlagView()
+  CommentFlagOutputView(Flag flag, CommentNodeView flaggedComment) {
+    this.flag = Objects.requireNonNull(flag);
+    this.flaggedComment = Objects.requireNonNull(flaggedComment);
   }
 
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
-    return context.serialize(flag).getAsJsonObject();
+    JsonObject serialized = context.serialize(flag).getAsJsonObject();
+
+    // Alias "comment" (the flag field containing the comment that the user submitted) to avoid ambiguity.
+    // Should match the field name used for org.ambraproject.rhino.view.comment.CommentFlagInputView.body.
+    serialized.add("body", serialized.remove("comment"));
+
+    serialized.remove("userProfileID");
+    serialized.add("submitter", context.serialize(new UserIdView(flag.getUserProfileID())));
+
+    serialized.remove("flaggedAnnotation");
+    serialized.add("flaggedComment", context.serialize(flaggedComment));
+
+    return serialized;
   }
 }

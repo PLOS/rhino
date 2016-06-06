@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.journal.VolumeInputView;
 
@@ -26,10 +27,14 @@ import java.io.IOException;
 
 public interface VolumeCrudService {
 
+  public abstract Volume findVolume(DoiBasedIdentity volumeId);
+
   public abstract DoiBasedIdentity create(String journalKey, VolumeInputView input);
 
   public abstract void update(DoiBasedIdentity volumeId, VolumeInputView input);
 
   public abstract Transceiver read(DoiBasedIdentity id) throws IOException;
+
+  public abstract void delete(DoiBasedIdentity id) throws IOException;
 
 }

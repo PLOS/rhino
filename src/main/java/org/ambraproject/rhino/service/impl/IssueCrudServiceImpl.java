@@ -19,14 +19,15 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
+import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
-import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.IssueCrudService;
+import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleIssue;
@@ -41,6 +42,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateCallback;
@@ -53,6 +55,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class IssueCrudServiceImpl extends AmbraService implements IssueCrudService {
+
+  @Autowired
+  private VolumeCrudService volumeCrudService;
 
   @Override
   public Transceiver read(final DoiBasedIdentity id) throws IOException {
@@ -72,7 +77,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
 
       @Override
       protected Object getView(Issue issue) {
-        return new IssueOutputView(issue, getParentVolume(issue));
+        return new IssueOutputView(issue, getParentVolumeView(issue));
       }
     };
   }
@@ -242,18 +247,30 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
   }
 
   @Override
-  public VolumeNonAssocView getParentVolume(Issue issue) {
-    Object[] parentVolumeResults = hibernateTemplate.execute((Session session) -> {
-      String hql = "select volumeUri, displayName, imageUri, title, description " +
-          "from Volume where :issue in elements(issues)";
-      Query query = session.createQuery(hql);
-      query.setParameter("issue", issue);
-      return (Object[]) query.uniqueResult();
-    });
-
-    return (parentVolumeResults == null) ? null : new VolumeNonAssocView(
+  public VolumeNonAssocView getParentVolumeView(Issue issue) {
+    Object[] parentVolumeResults = getParentVolumeByIssue(issue);
+    if (parentVolumeResults == null) return null;
+    return new VolumeNonAssocView(
         (String) parentVolumeResults[0], (String) parentVolumeResults[1], (String) parentVolumeResults[2],
         (String) parentVolumeResults[3], (String) parentVolumeResults[4]);
+  }
+
+  @Override
+  public Volume getParentVolume(Issue issue) {
+    Object[] parentVolumeResults = getParentVolumeByIssue(issue);
+    if (parentVolumeResults == null) return null;
+    String volumeUri = (String) parentVolumeResults[0];
+    return volumeCrudService.findVolume(DoiBasedIdentity.create(volumeUri));
+  }
+
+  private Object[] getParentVolumeByIssue(Issue issue) {
+    return hibernateTemplate.execute((Session session) -> {
+        String hql = "select volumeUri, displayName, imageUri, title, description " +
+            "from Volume where :issue in elements(issues)";
+        Query query = session.createQuery(hql);
+        query.setParameter("issue", issue);
+        return (Object[]) query.uniqueResult();
+      });
   }
 
   @Override
@@ -272,6 +289,12 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
           issueId, currentIssueJournalKeys);
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
+
+    Volume parentVolume = getParentVolume(issue);
+    List<Issue> issues = parentVolume.getIssues();
+    issues.remove(issue);
+    parentVolume.setIssues(issues);
+    hibernateTemplate.save(parentVolume);
     hibernateTemplate.delete(issue);
   }
 
