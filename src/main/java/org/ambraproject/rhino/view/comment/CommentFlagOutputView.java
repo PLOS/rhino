@@ -52,7 +52,7 @@ public class CommentFlagOutputView implements JsonOutputView {
     serialized.add("body", serialized.remove("comment"));
 
     serialized.remove("userProfileID");
-    serialized.add("submitter", context.serialize(new UserIdView(flag.getUserProfileID())));
+    serialized.add("creator", context.serialize(new UserIdView(flag.getUserProfileID())));
 
     serialized.remove("flaggedAnnotation");
     serialized.add("flaggedComment", context.serialize(flaggedComment));
