@@ -72,10 +72,8 @@ import org.w3c.dom.Document;
 import javax.xml.xpath.XPathException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -533,11 +531,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
           "SELECT MAX(revisionNumber) " +
-          "FROM revision r " +
-          "INNER JOIN scholarlyWork s ON r.scholarlyWorkId = s.scholarlyWorkId " +
-          "WHERE s.doi = :doi");
-      String doi = id.getIdentifier();
-      query.setParameter("doi", doi);
+          "FROM scholarlyWork sw " +
+          "INNER JOIN ingestionEvent ie ON sw.ingestionEventId = ie.ingestionEventId " +
+          "WHERE sw.doi = :doi");
+      query.setParameter("doi", id.getIdentifier());
       Integer maxRevision = (Integer) query.uniqueResult();
       if (maxRevision == null) {
         return OptionalInt.empty();
@@ -554,45 +551,35 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     Object[] workResult = hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
-          "SELECT s.scholarlyWorkId, s.doi, s.scholarlyWorkType, s.created " +
-          "FROM scholarlyWork s " +
-          "INNER JOIN revision r ON s.scholarlyWorkId = r.scholarlyWorkId " +
-          "WHERE s.doi = :doi AND r.revisionNumber = :revisionNumber");
+          "SELECT sw.scholarlyWorkId, ie.publicationState, sw.scholarlyWorkType, sw.created " +
+          "FROM scholarlyWork sw " +
+          "INNER JOIN ingestionEvent ie ON sw.ingestionEventId = ie.ingestionEventId " +
+          "WHERE sw.doi = :doi AND ie.revisionNumber = :revisionNumber");
       query.setParameter("doi", id.getIdentifier());
       query.setParameter("revisionNumber", revision);
-      List list = query.list();
-      return (Object[]) DataAccessUtils.uniqueResult(list);
+      return (Object[]) query.uniqueResult();
     });
     if (workResult == null) {
       throw new RestClientException("DOI+revision not found: " + id + "/" + revisionNumber, HttpStatus.NOT_FOUND);
     }
-    long workId = ((BigInteger) workResult[0]).longValue();
-    String workDoi = (String) workResult[1];
+    long workId = ((Number) workResult[0]).longValue();
+    int state = (Integer) workResult[1]; // TODO: Use this
     String workType = (String) workResult[2];
     Date workTimestamp = (Date) workResult[3];
 
     List<Object[]> fileResults = (List<Object[]>) hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
           "SELECT fileType, crepoKey, crepoUuid " +
-          "FROM scholarlyWorkFile " +
+          "FROM ingestedFile " +
           "WHERE scholarlyWorkId = :scholarlyWorkId");
       query.setParameter("scholarlyWorkId", workId);
       return query.list();
     });
-    Map<String, RepoVersion> fileMap = fileResults.stream()
-        .filter((Object[] fileResult) -> fileResult[0] != null)
-        .collect(Collectors.toMap(
-            (Object[] fileResult) -> (String) fileResult[0],
-            ArticleCrudServiceImpl::buildRepoVersionFromSqlQuery));
-    Collection<RepoVersion> archivalFiles = fileResults.stream()
-        .filter((Object[] fileResult) -> fileResult[0] == null)
-        .map(ArticleCrudServiceImpl::buildRepoVersionFromSqlQuery)
-        .collect(Collectors.toList());
+    Map<String, RepoVersion> fileMap = fileResults.stream().collect(Collectors.toMap(
+        (Object[] fileResult) -> (String) fileResult[0],
+        (Object[] fileResult) -> RepoVersion.create((String) fileResult[1], (String) fileResult[2])));
 
-    return new ScholarlyWork(DoiBasedIdentity.create(workDoi), workType, fileMap, archivalFiles, revision, workTimestamp.toInstant());
+    return new ScholarlyWork(id, workType, fileMap, revision, workTimestamp.toInstant());
   }
 
-  private static RepoVersion buildRepoVersionFromSqlQuery(Object[] fileResult) {
-    return RepoVersion.create((String) fileResult[1], (String) fileResult[2]);
-  }
 }
