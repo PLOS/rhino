@@ -563,7 +563,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       throw new RestClientException("DOI+revision not found: " + id + "/" + revisionNumber, HttpStatus.NOT_FOUND);
     }
     long workId = ((Number) workResult[0]).longValue();
-    int state = (Integer) workResult[1]; // TODO: Use this
+    ScholarlyWork.PublicationState state = ScholarlyWork.PublicationState.fromValue((Integer) workResult[1]);
     String workType = (String) workResult[2];
     Date timestamp = (Date) workResult[3];
 
@@ -579,7 +579,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         (Object[] fileResult) -> (String) fileResult[0],
         (Object[] fileResult) -> RepoVersion.create((String) fileResult[1], (String) fileResult[2])));
 
-    return new ScholarlyWork(id, workType, fileMap, revision, timestamp.toInstant());
+    return new ScholarlyWork(id, workType, fileMap, revision, state, timestamp.toInstant());
   }
 
 }

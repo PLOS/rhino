@@ -134,7 +134,7 @@ class VersionedIngestionService {
           "VALUES (:endeavorId, :revisionNumber, :publicationState, NOW())");
       insertEvent.setParameter("endeavorId", endeavorId);
       insertEvent.setParameter("revisionNumber", revisionNumber);
-      insertEvent.setParameter("publicationState", 0); // TODO: Set initial value
+      insertEvent.setParameter("publicationState", ScholarlyWork.PublicationState.INGESTED.getValue());
       insertEvent.executeUpdate();
       return getLastInsertId(session);
     });
