@@ -123,15 +123,15 @@ class VersionedIngestionService {
   private long getIngestionEventId(long endeavorId, int revisionNumber) {
     return parentService.hibernateTemplate.execute(session -> {
       SQLQuery blankOtherRevisions = session.createSQLQuery("" +
-          "UPDATE ingestionEvent SET revisionNumber = NULL " +
+          "UPDATE ingestionEvent SET revisionNumber = NULL, lastModified = NOW() " +
           "WHERE endeavorId=:endeavorId AND revisionNumber=:revisionNumber");
       blankOtherRevisions.setParameter("endeavorId", endeavorId);
       blankOtherRevisions.setParameter("revisionNumber", revisionNumber);
       blankOtherRevisions.executeUpdate();
 
       SQLQuery insertEvent = session.createSQLQuery("" +
-          "INSERT INTO ingestionEvent (endeavorId, revisionNumber, publicationState) " +
-          "VALUES (:endeavorId, :revisionNumber, :publicationState)");
+          "INSERT INTO ingestionEvent (endeavorId, revisionNumber, publicationState, lastModified) " +
+          "VALUES (:endeavorId, :revisionNumber, :publicationState, NOW())");
       insertEvent.setParameter("endeavorId", endeavorId);
       insertEvent.setParameter("revisionNumber", revisionNumber);
       insertEvent.setParameter("publicationState", 0); // TODO: Set initial value

@@ -14,6 +14,7 @@ CREATE TABLE `ambra`.`ingestionEvent` (
   `revisionNumber` INT NULL,
   `publicationState` INT NOT NULL,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` TIMESTAMP NOT NULL,
   PRIMARY KEY (`ingestionEventId`),
   CONSTRAINT `fk_ingestionEvent_1`
     FOREIGN KEY (`endeavorId`)

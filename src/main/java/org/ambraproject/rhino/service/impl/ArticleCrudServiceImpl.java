@@ -551,7 +551,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     Object[] workResult = hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
-          "SELECT sw.scholarlyWorkId, ie.publicationState, sw.scholarlyWorkType, sw.created " +
+          "SELECT sw.scholarlyWorkId, ie.publicationState, sw.scholarlyWorkType, ie.lastModified " +
           "FROM scholarlyWork sw " +
           "INNER JOIN ingestionEvent ie ON sw.ingestionEventId = ie.ingestionEventId " +
           "WHERE sw.doi = :doi AND ie.revisionNumber = :revisionNumber");
@@ -565,7 +565,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     long workId = ((Number) workResult[0]).longValue();
     int state = (Integer) workResult[1]; // TODO: Use this
     String workType = (String) workResult[2];
-    Date workTimestamp = (Date) workResult[3];
+    Date timestamp = (Date) workResult[3];
 
     List<Object[]> fileResults = (List<Object[]>) hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
@@ -579,7 +579,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         (Object[] fileResult) -> (String) fileResult[0],
         (Object[] fileResult) -> RepoVersion.create((String) fileResult[1], (String) fileResult[2])));
 
-    return new ScholarlyWork(id, workType, fileMap, revision, workTimestamp.toInstant());
+    return new ScholarlyWork(id, workType, fileMap, revision, timestamp.toInstant());
   }
 
 }
