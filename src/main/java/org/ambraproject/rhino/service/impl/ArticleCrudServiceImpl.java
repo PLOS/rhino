@@ -291,7 +291,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       protected List<Integer> getData() throws IOException {
         return (List<Integer>) hibernateTemplate.execute(session -> {
           SQLQuery query = session.createSQLQuery("" +
-              "SELECT version.revisionNumber " +
+              "SELECT DISTINCT version.revisionNumber " +
               "FROM articleItem item " +
               "INNER JOIN articleVersion version ON item.versionId = version.versionId " +
               "WHERE item.doi = :doi " +
@@ -554,9 +554,11 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           "SELECT item.itemId, version.publicationState, item.articleItemType, version.lastModified " +
           "FROM articleItem item " +
           "INNER JOIN articleVersion version ON item.versionId = version.versionId " +
-          "WHERE item.doi = :doi AND version.revisionNumber = :revisionNumber");
+          "WHERE item.doi = :doi AND version.revisionNumber = :revisionNumber " +
+          "  AND version.publicationState != :replaced");
       query.setParameter("doi", id.getIdentifier());
       query.setParameter("revisionNumber", revision);
+      query.setParameter("replaced", ArticleItem.PublicationState.REPLACED.getValue());
       return (Object[]) query.uniqueResult();
     });
     if (itemResult == null) {

@@ -13,7 +13,7 @@ CREATE TABLE `ambra`.`article` (
 CREATE TABLE `ambra`.`articleVersion` (
   `versionId` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `articleId` BIGINT(20) NOT NULL,
-  `revisionNumber` INT NULL,
+  `revisionNumber` INT NOT NULL,
   `publicationState` INT NOT NULL,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `lastModified` TIMESTAMP NOT NULL,

@@ -125,12 +125,14 @@ class VersionedIngestionService {
 
   private long persistVersionId(long articlePk, int revisionNumber) {
     return parentService.hibernateTemplate.execute(session -> {
-      SQLQuery blankOtherRevisions = session.createSQLQuery("" +
-          "UPDATE articleVersion SET revisionNumber = NULL, lastModified = NOW() " +
-          "WHERE articleId=:articleId AND revisionNumber=:revisionNumber");
-      blankOtherRevisions.setParameter("articleId", articlePk);
-      blankOtherRevisions.setParameter("revisionNumber", revisionNumber);
-      blankOtherRevisions.executeUpdate();
+      SQLQuery replaceOtherRevisions = session.createSQLQuery("" +
+          "UPDATE articleVersion SET publicationState = :replaced, lastModified = NOW() " +
+          "WHERE articleId = :articleId AND revisionNumber = :revisionNumber " +
+          "  AND publicationState != :replaced");
+      replaceOtherRevisions.setParameter("articleId", articlePk);
+      replaceOtherRevisions.setParameter("revisionNumber", revisionNumber);
+      replaceOtherRevisions.setParameter("replaced", ArticleItem.PublicationState.REPLACED.getValue());
+      replaceOtherRevisions.executeUpdate();
 
       SQLQuery insertEvent = session.createSQLQuery("" +
           "INSERT INTO articleVersion (articleId, revisionNumber, publicationState, lastModified) " +
