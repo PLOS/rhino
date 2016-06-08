@@ -30,7 +30,7 @@
 
 <hibernate-mapping package="org.ambraproject.rhino.model" default-lazy="false">
 
-  <class name="Article" table="article">
+  <class name="Article" table="oldArticle">
     <id name="ID" column="articleID" type="long">
       <generator class="native"/>
     </id>

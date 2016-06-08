@@ -2,7 +2,7 @@ package org.ambraproject.rhino.rest.controller;
 
 import com.google.gson.Gson;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.model.ScholarlyWork;
+import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.util.response.Transceiver;
@@ -39,13 +39,13 @@ public class ScholarlyWorkReadController extends DoiBasedCrudController {
                    @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
     DoiBasedIdentity id = parse(request);
-    ScholarlyWork work = articleCrudService.getScholarlyWork(id,
+    ArticleItem work = articleCrudService.getArticleItem(id,
         (revisionNumber == null) ? OptionalInt.empty() : OptionalInt.of(revisionNumber));
     asTransceiver(work).respond(request, response, entityGson);
   }
 
   // TODO: Extract to service class
-  private Transceiver asTransceiver(ScholarlyWork work) {
+  private Transceiver asTransceiver(ArticleItem work) {
     return new Transceiver() {
       @Override
       protected Object getData() throws IOException {

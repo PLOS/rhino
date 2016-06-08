@@ -31,10 +31,10 @@ import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleAsset;
+import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.model.Journal;
-import org.ambraproject.rhino.model.ScholarlyWork;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleTypeService;
@@ -248,7 +248,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return new Transceiver() {
       @Override
       protected Calendar getLastModifiedDate() throws IOException {
-        return copyToCalendar(getScholarlyWork(id, revisionNumber).getTimestamp());
+        return copyToCalendar(getArticleItem(id, revisionNumber).getTimestamp());
       }
 
       @Override
@@ -291,11 +291,11 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       protected List<Integer> getData() throws IOException {
         return (List<Integer>) hibernateTemplate.execute(session -> {
           SQLQuery query = session.createSQLQuery("" +
-              "SELECT r.revisionNumber " +
-              "FROM scholarlyWork sw INNER JOIN revision r " +
-              "ON sw.scholarlyWorkId=r.scholarlyWorkId " +
-              "WHERE sw.doi=:doi " +
-              "ORDER BY r.revisionNumber ASC");
+              "SELECT version.revisionNumber " +
+              "FROM articleItem item " +
+              "INNER JOIN articleVersion version ON item.versionId = version.versionId " +
+              "WHERE item.doi = :doi " +
+              "ORDER BY version.revisionNumber ASC");
           query.setParameter("doi", id.getIdentifier());
           return query.list();
         });
@@ -530,10 +530,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public OptionalInt getLatestRevision(DoiBasedIdentity id) {
     return hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
-          "SELECT MAX(revisionNumber) " +
-          "FROM scholarlyWork sw " +
-          "INNER JOIN ingestionEvent ie ON sw.ingestionEventId = ie.ingestionEventId " +
-          "WHERE sw.doi = :doi");
+          "SELECT MAX(version.revisionNumber) " +
+          "FROM articleItem item " +
+          "INNER JOIN articleVersion version ON item.versionId = version.versionId " +
+          "WHERE item.doi = :doi");
       query.setParameter("doi", id.getIdentifier());
       Integer maxRevision = (Integer) query.uniqueResult();
       if (maxRevision == null) {
@@ -544,42 +544,42 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public ScholarlyWork getScholarlyWork(DoiBasedIdentity id, OptionalInt revisionNumber) {
+  public ArticleItem getArticleItem(DoiBasedIdentity id, OptionalInt revisionNumber) {
     int revision = revisionNumber.orElseGet(() ->
         getLatestRevision(id).orElseThrow(
             () -> new RestClientException("No revisions found for doi " + id.getIdentifier(), HttpStatus.NOT_FOUND)));
 
-    Object[] workResult = hibernateTemplate.execute(session -> {
+    Object[] itemResult = hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
-          "SELECT sw.scholarlyWorkId, ie.publicationState, sw.scholarlyWorkType, ie.lastModified " +
-          "FROM scholarlyWork sw " +
-          "INNER JOIN ingestionEvent ie ON sw.ingestionEventId = ie.ingestionEventId " +
-          "WHERE sw.doi = :doi AND ie.revisionNumber = :revisionNumber");
+          "SELECT item.itemId, version.publicationState, item.articleItemType, version.lastModified " +
+          "FROM articleItem item " +
+          "INNER JOIN articleVersion version ON item.versionId = version.versionId " +
+          "WHERE item.doi = :doi AND version.revisionNumber = :revisionNumber");
       query.setParameter("doi", id.getIdentifier());
       query.setParameter("revisionNumber", revision);
       return (Object[]) query.uniqueResult();
     });
-    if (workResult == null) {
+    if (itemResult == null) {
       throw new RestClientException("DOI+revision not found: " + id + "/" + revisionNumber, HttpStatus.NOT_FOUND);
     }
-    long workId = ((Number) workResult[0]).longValue();
-    ScholarlyWork.PublicationState state = ScholarlyWork.PublicationState.fromValue((Integer) workResult[1]);
-    String workType = (String) workResult[2];
-    Date timestamp = (Date) workResult[3];
+    long itemId = ((Number) itemResult[0]).longValue();
+    ArticleItem.PublicationState state = ArticleItem.PublicationState.fromValue((Integer) itemResult[1]);
+    String itemType = (String) itemResult[2];
+    Date timestamp = (Date) itemResult[3];
 
     List<Object[]> fileResults = (List<Object[]>) hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
           "SELECT fileType, crepoKey, crepoUuid " +
-          "FROM ingestedFile " +
-          "WHERE scholarlyWorkId = :scholarlyWorkId");
-      query.setParameter("scholarlyWorkId", workId);
+          "FROM articleFile " +
+          "WHERE itemId = :itemId");
+      query.setParameter("itemId", itemId);
       return query.list();
     });
     Map<String, RepoVersion> fileMap = fileResults.stream().collect(Collectors.toMap(
         (Object[] fileResult) -> (String) fileResult[0],
         (Object[] fileResult) -> RepoVersion.create((String) fileResult[1], (String) fileResult[2])));
 
-    return new ScholarlyWork(id, workType, fileMap, revision, state, timestamp.toInstant());
+    return new ArticleItem(id, itemType, fileMap, revision, state, timestamp.toInstant());
   }
 
 }

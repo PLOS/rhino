@@ -4,23 +4,23 @@ import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import org.ambraproject.rhino.model.ScholarlyWork;
+import org.ambraproject.rhino.model.ArticleItem;
 
 import java.util.Objects;
 
 public class ScholarlyWorkView implements JsonOutputView {
 
-  private final ScholarlyWork scholarlyWork;
+  private final ArticleItem articleItem;
 
-  public ScholarlyWorkView(ScholarlyWork scholarlyWork) {
-    this.scholarlyWork = Objects.requireNonNull(scholarlyWork);
+  public ScholarlyWorkView(ArticleItem articleItem) {
+    this.articleItem = Objects.requireNonNull(articleItem);
   }
 
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
-    JsonObject serialized = context.serialize(scholarlyWork).getAsJsonObject();
+    JsonObject serialized = context.serialize(articleItem).getAsJsonObject();
     serialized.add("revisionNumber", context.serialize(
-        scholarlyWork.getRevisionNumber().map(ImmutableList::of).orElse(ImmutableList.of())));
+        articleItem.getRevisionNumber().map(ImmutableList::of).orElse(ImmutableList.of())));
     return serialized;
   }
 }

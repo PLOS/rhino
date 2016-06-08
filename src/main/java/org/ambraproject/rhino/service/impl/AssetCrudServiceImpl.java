@@ -18,15 +18,13 @@
 
 package org.ambraproject.rhino.service.impl;
 
-import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import org.ambraproject.rhino.model.ArticleAsset;
 import org.ambraproject.rhino.model.Journal;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.model.ScholarlyWork;
+import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
@@ -38,18 +36,13 @@ import org.ambraproject.rhino.view.asset.groomed.GroomedImageView;
 import org.ambraproject.rhino.view.asset.groomed.UncategorizedAssetException;
 import org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView;
 import org.ambraproject.rhino.view.asset.raw.RawAssetFileView;
-import org.ambraproject.rhino.view.internal.RepoVersionRepr;
 import org.hibernate.Criteria;
-import org.hibernate.SQLQuery;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.NotFoundException;
-import org.plos.crepo.model.RepoCollectionList;
-import org.plos.crepo.model.RepoCollectionMetadata;
 import org.plos.crepo.model.RepoObjectMetadata;
 import org.plos.crepo.model.RepoVersion;
-import org.plos.crepo.model.RepoVersionNumber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +55,6 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.OptionalInt;
 
 public class AssetCrudServiceImpl extends AmbraService implements AssetCrudService {
@@ -202,7 +194,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
 
   @Override
   public RepoObjectMetadata getScholarlyWorkFile(String fileType, OptionalInt revisionNumber, DoiBasedIdentity assetId) {
-    ScholarlyWork work = articleCrudService.getScholarlyWork(assetId, revisionNumber);
+    ArticleItem work = articleCrudService.getArticleItem(assetId, revisionNumber);
     RepoVersion objectVersion = work.getFile(fileType)
         .orElseThrow(() -> new RestClientException("Unrecognized type: " + fileType, HttpStatus.NOT_FOUND));
     return contentRepoService.getRepoObjectMetadata(objectVersion);

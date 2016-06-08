@@ -10,8 +10,8 @@ import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.Journal;
-import org.ambraproject.rhino.model.ScholarlyWork;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.util.Archive;
@@ -90,51 +90,54 @@ class VersionedIngestionService {
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
 
-    long endeavorId = getEndeavorId(articleIdentity);
-    long ingestionEventId = getIngestionEventId(endeavorId, revision.orElseGet(parsedArticle::getRevisionNumber));
+    long articlePk = persistArticlePk(articleIdentity);
+    long versionId = persistVersionId(articlePk, revision.orElseGet(parsedArticle::getRevisionNumber));
 
     final Article articleMetadata = parsedArticle.build(new Article());
     articleMetadata.setDoi(articleIdentity.getKey());
 
     ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry,
         manuscriptAsset, manuscriptRepr, printableRepr).build();
-    persist(articlePackage, ingestionEventId);
-    persistJournal(articleMetadata, ingestionEventId);
+    persistItem(articlePackage, versionId);
+    persistJournal(articleMetadata, versionId);
 
     stubAssociativeFields(articleMetadata);
     return articleMetadata;
   }
 
-  private long getEndeavorId(ArticleIdentity articleIdentity) {
-    String endeavorDoi = articleIdentity.getIdentifier();
+  /**
+   * Get the PK of the "article" row for a DOI if it exists, and insert it if it doesn't.
+   */
+  private long persistArticlePk(ArticleIdentity articleIdentity) {
+    String articleDoi = articleIdentity.getIdentifier();
     return parentService.hibernateTemplate.execute(session -> {
-      SQLQuery selectQuery = session.createSQLQuery("SELECT endeavorId FROM endeavor WHERE doi = :doi");
-      selectQuery.setParameter("doi", endeavorDoi);
-      Number endeavorId = (Number) selectQuery.uniqueResult();
-      if (endeavorId != null) return endeavorId.longValue();
+      SQLQuery selectQuery = session.createSQLQuery("SELECT articleId FROM article WHERE doi = :doi");
+      selectQuery.setParameter("doi", articleDoi);
+      Number articlePk = (Number) selectQuery.uniqueResult();
+      if (articlePk != null) return articlePk.longValue();
 
-      SQLQuery insertQuery = session.createSQLQuery("INSERT INTO endeavor (doi) VALUES (:doi)");
-      insertQuery.setParameter("doi", endeavorDoi);
+      SQLQuery insertQuery = session.createSQLQuery("INSERT INTO article (doi) VALUES (:doi)");
+      insertQuery.setParameter("doi", articleDoi);
       insertQuery.executeUpdate();
       return getLastInsertId(session);
     });
   }
 
-  private long getIngestionEventId(long endeavorId, int revisionNumber) {
+  private long persistVersionId(long articlePk, int revisionNumber) {
     return parentService.hibernateTemplate.execute(session -> {
       SQLQuery blankOtherRevisions = session.createSQLQuery("" +
-          "UPDATE ingestionEvent SET revisionNumber = NULL, lastModified = NOW() " +
-          "WHERE endeavorId=:endeavorId AND revisionNumber=:revisionNumber");
-      blankOtherRevisions.setParameter("endeavorId", endeavorId);
+          "UPDATE articleVersion SET revisionNumber = NULL, lastModified = NOW() " +
+          "WHERE articleId=:articleId AND revisionNumber=:revisionNumber");
+      blankOtherRevisions.setParameter("articleId", articlePk);
       blankOtherRevisions.setParameter("revisionNumber", revisionNumber);
       blankOtherRevisions.executeUpdate();
 
       SQLQuery insertEvent = session.createSQLQuery("" +
-          "INSERT INTO ingestionEvent (endeavorId, revisionNumber, publicationState, lastModified) " +
-          "VALUES (:endeavorId, :revisionNumber, :publicationState, NOW())");
-      insertEvent.setParameter("endeavorId", endeavorId);
+          "INSERT INTO articleVersion (articleId, revisionNumber, publicationState, lastModified) " +
+          "VALUES (:articleId, :revisionNumber, :publicationState, NOW())");
+      insertEvent.setParameter("articleId", articlePk);
       insertEvent.setParameter("revisionNumber", revisionNumber);
-      insertEvent.setParameter("publicationState", ScholarlyWork.PublicationState.INGESTED.getValue());
+      insertEvent.setParameter("publicationState", ArticleItem.PublicationState.INGESTED.getValue());
       insertEvent.executeUpdate();
       return getLastInsertId(session);
     });
@@ -162,14 +165,14 @@ class VersionedIngestionService {
     }
   }
 
-  private void persist(ArticlePackage articlePackage, long ingestionEventId) {
-    for (ScholarlyWorkInput work : articlePackage.getAllWorks()) {
-      persist(work, ingestionEventId);
+  private void persistItem(ArticlePackage articlePackage, long versionId) {
+    for (ArticleItemInput work : articlePackage.getAllWorks()) {
+      persistItem(work, versionId);
     }
-    persistArchivalFiles(articlePackage, ingestionEventId);
+    persistArchivalFiles(articlePackage, versionId);
   }
 
-  private long persist(ScholarlyWorkInput work, long ingestionEventId) {
+  private long persistItem(ArticleItemInput work, long versionId) {
     Map<String, RepoVersion> crepoResults = new LinkedHashMap<>();
     for (Map.Entry<String, RepoObject> entry : work.getObjects().entrySet()) {
       RepoVersion result = parentService.contentRepoService.autoCreateRepoObject(entry.getValue()).getVersion();
@@ -178,20 +181,20 @@ class VersionedIngestionService {
 
     return parentService.hibernateTemplate.execute(session -> {
       SQLQuery insertWork = session.createSQLQuery("" +
-          "INSERT INTO scholarlyWork (ingestionEventId, doi, scholarlyWorkType) " +
-          "  VALUES (:ingestionEventId, :doi, :scholarlyWorkType)");
-      insertWork.setParameter("ingestionEventId", ingestionEventId);
+          "INSERT INTO articleItem (versionId, doi, articleItemType) " +
+          "  VALUES (:versionId, :doi, :articleItemType)");
+      insertWork.setParameter("versionId", versionId);
       insertWork.setParameter("doi", work.getDoi().getIdentifier());
-      insertWork.setParameter("scholarlyWorkType", work.getType());
+      insertWork.setParameter("articleItemType", work.getType());
       insertWork.executeUpdate();
-      long scholarlyWorkId = getLastInsertId(session);
+      long itemId = getLastInsertId(session);
 
       for (Map.Entry<String, RepoVersion> entry : crepoResults.entrySet()) {
         SQLQuery insertFile = session.createSQLQuery("" +
-            "INSERT INTO ingestedFile (ingestionEventId, scholarlyWorkId, fileType, crepoKey, crepoUuid) " +
-            "  VALUES (:ingestionEventId, :scholarlyWorkId, :fileType, :crepoKey, :crepoUuid)");
-        insertFile.setParameter("ingestionEventId", ingestionEventId);
-        insertFile.setParameter("scholarlyWorkId", scholarlyWorkId);
+            "INSERT INTO articleFile (versionId, itemId, fileType, crepoKey, crepoUuid) " +
+            "  VALUES (:versionId, :itemId, :fileType, :crepoKey, :crepoUuid)");
+        insertFile.setParameter("versionId", versionId);
+        insertFile.setParameter("itemId", itemId);
         insertFile.setParameter("fileType", entry.getKey());
 
         RepoVersion repoVersion = entry.getValue();
@@ -201,20 +204,20 @@ class VersionedIngestionService {
         insertFile.executeUpdate();
       }
 
-      return scholarlyWorkId;
+      return itemId;
     });
   }
 
-  private void persistArchivalFiles(ArticlePackage articlePackage, long ingestionEventId) {
+  private void persistArchivalFiles(ArticlePackage articlePackage, long versionId) {
     List<RepoVersion> archivalFiles = articlePackage.getArchivalFiles().stream()
         .map(archivalFile -> parentService.contentRepoService.autoCreateRepoObject(archivalFile).getVersion())
         .collect(Collectors.toList());
     parentService.hibernateTemplate.execute(session -> {
       for (RepoVersion archivalFile : archivalFiles) {
         SQLQuery insertFile = session.createSQLQuery("" +
-            "INSERT INTO ingestedFile (ingestionEventId, crepoKey, crepoUuid) " +
-            "  VALUES (:ingestionEventId, :crepoKey, :crepoUuid)");
-        insertFile.setParameter("ingestionEventId", ingestionEventId);
+            "INSERT INTO articleFile (versionId, crepoKey, crepoUuid) " +
+            "  VALUES (:versionId, :crepoKey, :crepoUuid)");
+        insertFile.setParameter("versionId", versionId);
         insertFile.setParameter("crepoKey", archivalFile.getKey());
         insertFile.setParameter("crepoUuid", archivalFile.getUuid());
         insertFile.executeUpdate();
@@ -223,13 +226,13 @@ class VersionedIngestionService {
     });
   }
 
-  private long persistJournal(Article article, long ingestionEventId) {
+  private long persistJournal(Article article, long versionId) {
     Journal publicationJournal = parentService.getPublicationJournal(article);
     return parentService.hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
-          "INSERT INTO publishedInJournal (ingestionEventId, journalId) " +
-          "VALUES (:ingestionEventId, :journalId)");
-      query.setParameter("ingestionEventId", ingestionEventId);
+          "INSERT INTO articlePublishedInJournal (versionId, journalId) " +
+          "VALUES (:versionId, :journalId)");
+      query.setParameter("versionId", versionId);
       query.setParameter("journalId", publicationJournal.getID());
       query.executeUpdate();
       return getLastInsertId(session);
@@ -307,7 +310,7 @@ class VersionedIngestionService {
      * TODO: Improve as described above and delete this comment block
      */
 
-    ScholarlyWork work = parentService.getScholarlyWork(id, revisionNumber);
+    ArticleItem work = parentService.getArticleItem(id, revisionNumber);
 
     RepoVersion manuscriptVersion = work.getFile("manuscript").orElseThrow(() -> {
       String message = String.format("Work exists but does not have a manuscript. DOI: %s. Revision: %s",

@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-public class ScholarlyWork {
+public class ArticleItem {
 
   public static enum PublicationState {
     INGESTED(0), PUBLISHED(1), DISABLED(2);
@@ -53,12 +53,12 @@ public class ScholarlyWork {
   private final PublicationState state;
   private final Instant timestamp;
 
-  public ScholarlyWork(DoiBasedIdentity doi,
-                       String type,
-                       Map<String, RepoVersion> files,
-                       Integer revisionNumber,
-                       PublicationState state,
-                       Instant timestamp) {
+  public ArticleItem(DoiBasedIdentity doi,
+                     String type,
+                     Map<String, RepoVersion> files,
+                     Integer revisionNumber,
+                     PublicationState state,
+                     Instant timestamp) {
     this.doi = Objects.requireNonNull(doi);
     this.type = Objects.requireNonNull(type);
     this.files = ImmutableMap.copyOf(files);
@@ -96,7 +96,7 @@ public class ScholarlyWork {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    ScholarlyWork that = (ScholarlyWork) o;
+    ArticleItem that = (ArticleItem) o;
 
     if (!doi.equals(that.doi)) return false;
     if (!type.equals(that.type)) return false;
