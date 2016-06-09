@@ -216,8 +216,13 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
   }
 
   @Override
-  public Annotation patchComment(CommentInputView input) {
-    Annotation comment = getComment(DoiBasedIdentity.create(input.getAnnotationUri()));
+  public Annotation patchComment(DoiBasedIdentity commentId, CommentInputView input) {
+    Annotation comment = getComment(commentId);
+
+    String declaredUri = input.getAnnotationUri();
+    if (declaredUri != null && !DoiBasedIdentity.create(declaredUri).equals(commentId)) {
+      throw new RestClientException("Mismatched annotationUri in body", HttpStatus.BAD_REQUEST);
+    }
 
     String creatorUserId = input.getCreatorUserId();
     if (creatorUserId != null) {

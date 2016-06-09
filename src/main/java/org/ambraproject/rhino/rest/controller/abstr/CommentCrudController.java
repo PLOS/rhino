@@ -76,8 +76,9 @@ public class CommentCrudController extends DoiBasedCrudController {
   @RequestMapping(value = COMMENT_META_TEMPLATE, method = RequestMethod.PATCH)
   public ResponseEntity<?> patch(HttpServletRequest request)
       throws IOException {
+    DoiBasedIdentity commentId = parse(request);
     CommentInputView input = readJsonFromRequest(request, CommentInputView.class);
-    Annotation patched = annotationCrudService.patchComment(input);
+    Annotation patched = annotationCrudService.patchComment(commentId, input);
     return reportOk(patched.getAnnotationUri());
   }
 
