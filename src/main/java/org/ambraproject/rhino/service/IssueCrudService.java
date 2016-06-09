@@ -44,6 +44,8 @@ public interface IssueCrudService {
 
   public abstract Volume getParentVolume(Issue issue);
 
+  public abstract Issue findIssue(DoiBasedIdentity issueId);
+
   public abstract void delete(DoiBasedIdentity issueId);
 
 }

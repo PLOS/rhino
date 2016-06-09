@@ -2,15 +2,17 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
 import edu.emory.mathcs.backport.java.util.Collections;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.IssueCrudService;
-import org.ambraproject.rhino.service.JournalReadService;
+import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
+import org.ambraproject.rhino.view.journal.JournalInputView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
 import org.ambraproject.rhino.view.journal.VolumeNonAssocView;
@@ -36,7 +38,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-public class JournalReadServiceImpl extends AmbraService implements JournalReadService {
+public class JournalCrudServiceImpl extends AmbraService implements JournalCrudService {
 
   @Autowired
   private HibernateTemplate hibernateTemplate;
@@ -65,7 +67,7 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
     return new EntityTransceiver<Journal>() {
       @Override
       protected Journal fetchEntity() {
-        return getJournal(journalKey);
+        return findJournal(journalKey);
       }
 
       @Override
@@ -128,12 +130,54 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
     };
   }
 
+  @Override
+  public void update(String journalKey, JournalInputView input) {
+    Preconditions.checkNotNull(input);
+    Journal journal = findJournal(journalKey);
+    hibernateTemplate.update(applyInput(journal, input));
+  }
+
+  private Journal applyInput(Journal journal, JournalInputView input) {
+    String currentIssueUri = input.getCurrentIssueUri();
+    if (currentIssueUri != null) {
+      Issue currentIssue = issueCrudService.findIssue(DoiBasedIdentity.create(currentIssueUri));
+      if (currentIssue == null) {
+        throw new RestClientException("Issue not found for URI: " + currentIssueUri, HttpStatus.BAD_REQUEST);
+      }
+
+      journal.setCurrentIssue(validateIssueInJournal(currentIssue, journal));
+    }
+    return journal;
+  }
+
+  private Issue validateIssueInJournal(Issue issue, Journal journal){
+
+    Object results = hibernateTemplate.execute((Session session) -> {
+      String hql = "from Journal j, Issue i, Volume v " +
+          "where j.ID = :journalId " +
+          "and i.ID = :issueId " +
+          "and v in elements(j.volumes) " +
+          "and i in elements(v.issues)";
+      Query query = session.createQuery(hql);
+      query.setParameter("journalId", journal.getID());
+      query.setParameter("issueId", issue.getID());
+      return query.uniqueResult();
+    });
+    if (results != null){
+      return issue;
+    } else {
+      throw new RestClientException("Issue with URI " + issue.getIssueUri() +
+          " not found in journal with key " + journal.getJournalKey(), HttpStatus.BAD_REQUEST);
+    }
+  }
+
   private static String journalNotFoundMessage(String journalKey) {
     return "No journal found with key: " + journalKey;
   }
 
+
   @Override
-  public Journal getJournal(String journalKey) {
+  public Journal findJournal(String journalKey) {
     Journal journal = (Journal) DataAccessUtils.singleResult((List<?>)
         hibernateTemplate.findByCriteria(journalCriteria()
                 .add(Restrictions.eq("journalKey", journalKey))
