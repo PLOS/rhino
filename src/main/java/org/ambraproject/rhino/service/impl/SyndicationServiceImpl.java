@@ -168,7 +168,7 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
     start.add(Calendar.DATE, -(numDaysInPast));
     end.add(Calendar.DATE, 1); // Include everything that happened today.
 
-    final Journal journal = journalService.getJournal(journalKey);
+    final Journal journal = journalService.findJournal(journalKey);
 
     if (journal == null) {
       throw new RuntimeException("Could not find journal for journal key: " + journalKey);

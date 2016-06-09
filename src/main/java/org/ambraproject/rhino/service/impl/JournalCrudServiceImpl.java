@@ -67,7 +67,7 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
     return new EntityTransceiver<Journal>() {
       @Override
       protected Journal fetchEntity() {
-        return getJournal(journalKey);
+        return findJournal(journalKey);
       }
 
       @Override
@@ -134,20 +134,7 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
   public void update(String journalKey, JournalInputView input) {
     Preconditions.checkNotNull(input);
     Journal journal = findJournal(journalKey);
-    if (journal == null) {
-      throw new RestClientException("Journal not found for journalKey: " + journalKey, HttpStatus.BAD_REQUEST);
-    }
-    journal = applyInput(journal, input);
-    hibernateTemplate.update(journal);
-  }
-
-  private Journal findJournal(String journalKey) {
-    return (Journal) DataAccessUtils.uniqueResult(
-        hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Journal.class)
-            .add(Restrictions.eq("journalKey", journalKey))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        ));
+    hibernateTemplate.update(applyInput(journal, input));
   }
 
   private Journal applyInput(Journal journal, JournalInputView input) {
@@ -188,8 +175,9 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
     return "No journal found with key: " + journalKey;
   }
 
+
   @Override
-  public Journal getJournal(String journalKey) {
+  public Journal findJournal(String journalKey) {
     Journal journal = (Journal) DataAccessUtils.singleResult((List<?>)
         hibernateTemplate.findByCriteria(journalCriteria()
                 .add(Restrictions.eq("journalKey", journalKey))
