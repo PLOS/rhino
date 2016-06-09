@@ -6,7 +6,7 @@ import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.util.response.Transceiver;
-import org.ambraproject.rhino.view.ScholarlyWorkView;
+import org.ambraproject.rhino.view.ArticleItemView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +21,7 @@ import java.util.Calendar;
 import java.util.OptionalInt;
 
 @Controller
-public class ScholarlyWorkReadController extends DoiBasedCrudController {
+public class ArticleItemReadController extends DoiBasedCrudController {
 
   @Autowired
   private ArticleCrudService articleCrudService;
@@ -49,7 +49,7 @@ public class ScholarlyWorkReadController extends DoiBasedCrudController {
     return new Transceiver() {
       @Override
       protected Object getData() throws IOException {
-        return new ScholarlyWorkView(work);
+        return new ArticleItemView(work);
       }
 
       @Override

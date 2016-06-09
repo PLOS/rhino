@@ -180,7 +180,7 @@ public class AssetFileCrudController extends DoiBasedCrudController {
   void previewFileFromVersionedModel(HttpServletRequest request, HttpServletResponse response,
                                      String fileType, OptionalInt revisionNumber, DoiBasedIdentity assetId)
       throws IOException {
-    RepoObjectMetadata objectMetadata = assetCrudService.getScholarlyWorkFile(fileType, revisionNumber, assetId);
+    RepoObjectMetadata objectMetadata = assetCrudService.getArticleItemFile(fileType, revisionNumber, assetId);
 
     // Used only for defaults when objectMetadata does not supply values.
     // We expect objectMetadata to always supply those values.

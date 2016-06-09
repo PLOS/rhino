@@ -8,11 +8,11 @@ import org.ambraproject.rhino.model.ArticleItem;
 
 import java.util.Objects;
 
-public class ScholarlyWorkView implements JsonOutputView {
+public class ArticleItemView implements JsonOutputView {
 
   private final ArticleItem articleItem;
 
-  public ScholarlyWorkView(ArticleItem articleItem) {
+  public ArticleItemView(ArticleItem articleItem) {
     this.articleItem = Objects.requireNonNull(articleItem);
   }
 
