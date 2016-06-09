@@ -30,9 +30,9 @@ import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 /**
- * Test for {@link JournalReadServiceImpl}
+ * Test for {@link JournalCrudServiceImpl}
  */
-public class JournalReadServiceTest extends BaseRhinoTest {
+public class JournalCrudServiceTest extends BaseRhinoTest {
 
   private static final String[][] ARTICLE_LIST = new String[][]{
       new String[]{"info:doi/10.1371/journal.pone.3333333", "Title 3"},
@@ -41,11 +41,11 @@ public class JournalReadServiceTest extends BaseRhinoTest {
   };
 
   @Autowired
-  private JournalReadService journalReadService;
+  private JournalCrudService journalCrudService;
 
   @Test
   public void testListJournals() throws IOException {
-    Map<String, ?> journals = entityGson.fromJson(journalReadService.listJournals().readJson(entityGson), Map.class);
+    Map<String, ?> journals = entityGson.fromJson(journalCrudService.listJournals().readJson(entityGson), Map.class);
     assertTrue(journals.size() > 0);
     Map<String, ?> journal = (Map<String, ?>) journals.values().iterator().next();
     assertTrue(journal.keySet().containsAll(ImmutableSet.of("journalKey", "eIssn")));
@@ -55,7 +55,7 @@ public class JournalReadServiceTest extends BaseRhinoTest {
   public void testReadCurrentIssue() throws IOException {
     Journal journal = (Journal) hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Journal.class)).get(0);
     try {
-      journalReadService.readCurrentIssue(journal.getJournalKey()).readJson(entityGson);
+      journalCrudService.readCurrentIssue(journal.getJournalKey()).readJson(entityGson);
       fail("Expected RestClientException");
     } catch (RestClientException e) {
       // expected
@@ -68,7 +68,7 @@ public class JournalReadServiceTest extends BaseRhinoTest {
     hibernateTemplate.update(journal);
 
     Map<?, ?> currentIssueResult = entityGson.fromJson(
-        journalReadService.readCurrentIssue(journal.getJournalKey()).readJson(entityGson),
+        journalCrudService.readCurrentIssue(journal.getJournalKey()).readJson(entityGson),
         Map.class);
     assertEquals(currentIssueResult.get("issueUri"), testIssueUri);
   }

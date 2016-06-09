@@ -24,7 +24,7 @@ package org.ambraproject.rhino.service.impl;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Syndication;
-import org.ambraproject.rhino.service.JournalReadService;
+import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.MessageSender;
 import org.ambraproject.rhino.service.SyndicationService;
 import org.apache.commons.configuration.Configuration;
@@ -68,7 +68,7 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
   private MessageSender messageSender;
 
   @Autowired
-  private JournalReadService journalService;
+  private JournalCrudService journalService;
 
   private final DateFormat mysqlDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 

@@ -4,8 +4,9 @@ import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.AnnotationCrudService;
-import org.ambraproject.rhino.service.JournalReadService;
+import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
+import org.ambraproject.rhino.view.journal.JournalInputView;
 import org.ambraproject.rhino.view.journal.VolumeInputView;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class JournalCrudController extends RestController {
   private static final String JOURNAL_TEMPLATE = JOURNAL_ROOT + "/{journalKey}";
 
   @Autowired
-  private JournalReadService journalReadService;
+  private JournalCrudService journalCrudService;
   @Autowired
   private VolumeCrudService volumeCrudService;
   @Autowired
@@ -40,7 +41,7 @@ public class JournalCrudController extends RestController {
   @RequestMapping(value = JOURNAL_ROOT, method = RequestMethod.GET)
   public void listJournals(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    journalReadService.listJournals().respond(request, response, entityGson);
+    journalCrudService.listJournals().respond(request, response, entityGson);
   }
 
   @Transactional(readOnly = true)
@@ -50,9 +51,9 @@ public class JournalCrudController extends RestController {
                    @RequestParam(value = "currentIssue", required = false) String currentIssue)
       throws IOException {
     if (booleanParameter(currentIssue)) {
-      journalReadService.readCurrentIssue(journalKey).respond(request, response, entityGson);
+      journalCrudService.readCurrentIssue(journalKey).respond(request, response, entityGson);
     } else {
-      journalReadService.read(journalKey).respond(request, response, entityGson);
+      journalCrudService.read(journalKey).respond(request, response, entityGson);
     }
   }
 
@@ -67,6 +68,16 @@ public class JournalCrudController extends RestController {
 
     DoiBasedIdentity volumeId = volumeCrudService.create(journalKey, input);
     return reportCreated(volumeId.getIdentifier());
+  }
+
+  @Transactional(rollbackFor = {Throwable.class})
+  @RequestMapping(value = JOURNAL_TEMPLATE, method = RequestMethod.PATCH)
+  public void update(HttpServletRequest request, HttpServletResponse response, @PathVariable String journalKey)
+      throws IOException {
+    JournalInputView input = readJsonFromRequest(request, JournalInputView.class);
+    journalCrudService.update(journalKey, input);
+
+    journalCrudService.read(journalKey).respond(request, response, entityGson);
   }
 
   @Transactional(readOnly = true)
