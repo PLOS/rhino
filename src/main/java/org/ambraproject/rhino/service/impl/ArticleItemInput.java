@@ -7,13 +7,13 @@ import org.plos.crepo.model.RepoObject;
 import java.util.Map;
 import java.util.Objects;
 
-class ScholarlyWorkInput {
+class ArticleItemInput {
 
   private final DoiBasedIdentity doi;
   private final ImmutableMap<String, RepoObject> objects;
   private final String type;
 
-  ScholarlyWorkInput(DoiBasedIdentity doi, Map<String, RepoObject> objects, String type) {
+  ArticleItemInput(DoiBasedIdentity doi, Map<String, RepoObject> objects, String type) {
     this.doi = Objects.requireNonNull(doi);
     this.objects = ImmutableMap.copyOf(objects);
     this.type = Objects.requireNonNull(type);

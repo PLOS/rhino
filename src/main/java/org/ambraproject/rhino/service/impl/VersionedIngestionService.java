@@ -10,19 +10,17 @@ import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.Journal;
-import org.ambraproject.rhino.model.ScholarlyWork;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.util.Archive;
-import org.hibernate.Query;
 import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 import org.plos.crepo.model.RepoObject;
-import org.plos.crepo.model.RepoObjectMetadata;
 import org.plos.crepo.model.RepoVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -31,12 +29,9 @@ import javax.xml.parsers.DocumentBuilder;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
@@ -51,6 +46,10 @@ class VersionedIngestionService {
 
   VersionedIngestionService(ArticleCrudServiceImpl parentService) {
     this.parentService = Preconditions.checkNotNull(parentService);
+  }
+
+  private static long getLastInsertId(Session session) {
+    return ((Number) session.createSQLQuery("SELECT LAST_INSERT_ID()").uniqueResult()).longValue();
   }
 
   Article ingest(Archive archive, OptionalInt revision) throws IOException, XmlContentException {
@@ -90,19 +89,60 @@ class VersionedIngestionService {
           manuscriptAsset.getUri(), articleIdentity.getKey());
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
+
+    long articlePk = persistArticlePk(articleIdentity);
+    long versionId = persistVersionId(articlePk, revision.orElseGet(parsedArticle::getRevisionNumber));
+
     final Article articleMetadata = parsedArticle.build(new Article());
     articleMetadata.setDoi(articleIdentity.getKey());
 
     ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry,
         manuscriptAsset, manuscriptRepr, printableRepr).build();
-    Collection<Long> createdWorkPks = persist(articlePackage);
-
-    persistJournal(articleMetadata, createdWorkPks);
-
-    persistRevision(articleIdentity, createdWorkPks, revision.orElseGet(parsedArticle::getRevisionNumber));
+    persistItem(articlePackage, versionId);
+    persistJournal(articleMetadata, versionId);
 
     stubAssociativeFields(articleMetadata);
     return articleMetadata;
+  }
+
+  /**
+   * Get the PK of the "article" row for a DOI if it exists, and insert it if it doesn't.
+   */
+  private long persistArticlePk(ArticleIdentity articleIdentity) {
+    String articleDoi = articleIdentity.getIdentifier();
+    return parentService.hibernateTemplate.execute(session -> {
+      SQLQuery selectQuery = session.createSQLQuery("SELECT articleId FROM article WHERE doi = :doi");
+      selectQuery.setParameter("doi", articleDoi);
+      Number articlePk = (Number) selectQuery.uniqueResult();
+      if (articlePk != null) return articlePk.longValue();
+
+      SQLQuery insertQuery = session.createSQLQuery("INSERT INTO article (doi) VALUES (:doi)");
+      insertQuery.setParameter("doi", articleDoi);
+      insertQuery.executeUpdate();
+      return getLastInsertId(session);
+    });
+  }
+
+  private long persistVersionId(long articlePk, int revisionNumber) {
+    return parentService.hibernateTemplate.execute(session -> {
+      SQLQuery replaceOtherRevisions = session.createSQLQuery("" +
+          "UPDATE articleVersion SET publicationState = :replaced, lastModified = NOW() " +
+          "WHERE articleId = :articleId AND revisionNumber = :revisionNumber " +
+          "  AND publicationState != :replaced");
+      replaceOtherRevisions.setParameter("articleId", articlePk);
+      replaceOtherRevisions.setParameter("revisionNumber", revisionNumber);
+      replaceOtherRevisions.setParameter("replaced", ArticleItem.PublicationState.REPLACED.getValue());
+      replaceOtherRevisions.executeUpdate();
+
+      SQLQuery insertEvent = session.createSQLQuery("" +
+          "INSERT INTO articleVersion (articleId, revisionNumber, publicationState, lastModified) " +
+          "VALUES (:articleId, :revisionNumber, :publicationState, NOW())");
+      insertEvent.setParameter("articleId", articlePk);
+      insertEvent.setParameter("revisionNumber", revisionNumber);
+      insertEvent.setParameter("publicationState", ArticleItem.PublicationState.INGESTED.getValue());
+      insertEvent.executeUpdate();
+      return getLastInsertId(session);
+    });
   }
 
   private void validateManifestCompleteness(ManifestXml manifest, Archive archive) {
@@ -127,153 +167,78 @@ class VersionedIngestionService {
     }
   }
 
-  private Collection<Long> persist(ArticlePackage articlePackage) {
-    Collection<Long> createdWorkPks = new ArrayList<>();
-
-    ScholarlyWorkInput articleWork = articlePackage.getArticleWork();
-    long articlePk = persistToSql(articleWork);
-    createdWorkPks.add(articlePk);
-    persistToCrepo(articlePk, articleWork.getObjects(), articlePackage.getArchivalFiles());
-
-    for (ScholarlyWorkInput assetWork : articlePackage.getAssetWorks()) {
-      long assetPk = persistToSql(assetWork);
-      persistToCrepo(assetPk, assetWork.getObjects(), ImmutableList.of());
-      createdWorkPks.add(assetPk);
-
-      persistRelation(articlePk, assetPk);
+  private void persistItem(ArticlePackage articlePackage, long versionId) {
+    for (ArticleItemInput work : articlePackage.getAllWorks()) {
+      persistItem(work, versionId);
     }
-
-    return createdWorkPks;
+    persistArchivalFiles(articlePackage, versionId);
   }
 
-  /**
-   * @param scholarlyWork the object to persist
-   * @return the primary key of the inserted row
-   */
-  private long persistToSql(ScholarlyWorkInput scholarlyWork) {
+  private long persistItem(ArticleItemInput work, long versionId) {
+    Map<String, RepoVersion> crepoResults = new LinkedHashMap<>();
+    for (Map.Entry<String, RepoObject> entry : work.getObjects().entrySet()) {
+      RepoVersion result = parentService.contentRepoService.autoCreateRepoObject(entry.getValue()).getVersion();
+      crepoResults.put(entry.getKey(), result);
+    }
+
     return parentService.hibernateTemplate.execute(session -> {
-      SQLQuery query = session.createSQLQuery("" +
-          "INSERT INTO scholarlyWork (doi, scholarlyWorkType)" +
-          "  VALUES (:doi, :scholarlyWorkType)");
-      query.setParameter("doi", scholarlyWork.getDoi().getIdentifier());
-      query.setParameter("scholarlyWorkType", scholarlyWork.getType());
-      query.executeUpdate();
+      SQLQuery insertWork = session.createSQLQuery("" +
+          "INSERT INTO articleItem (versionId, doi, articleItemType) " +
+          "  VALUES (:versionId, :doi, :articleItemType)");
+      insertWork.setParameter("versionId", versionId);
+      insertWork.setParameter("doi", work.getDoi().getIdentifier());
+      insertWork.setParameter("articleItemType", work.getType());
+      insertWork.executeUpdate();
+      long itemId = getLastInsertId(session);
 
-      BigInteger scholarlyWorkId = (BigInteger) DataAccessUtils.requiredUniqueResult(session.createSQLQuery(
-          "SELECT LAST_INSERT_ID()").list());
-      return scholarlyWorkId.longValue();
+      for (Map.Entry<String, RepoVersion> entry : crepoResults.entrySet()) {
+        SQLQuery insertFile = session.createSQLQuery("" +
+            "INSERT INTO articleFile (versionId, itemId, fileType, crepoKey, crepoUuid) " +
+            "  VALUES (:versionId, :itemId, :fileType, :crepoKey, :crepoUuid)");
+        insertFile.setParameter("versionId", versionId);
+        insertFile.setParameter("itemId", itemId);
+        insertFile.setParameter("fileType", entry.getKey());
+
+        RepoVersion repoVersion = entry.getValue();
+        insertFile.setParameter("crepoKey", repoVersion.getKey());
+        insertFile.setParameter("crepoUuid", repoVersion.getUuid().toString());
+
+        insertFile.executeUpdate();
+      }
+
+      return itemId;
     });
   }
 
-  private void persistJournal(Article article, Collection<Long> articlePks) {
-    Journal publicationJournal = parentService.getPublicationJournal(article);
-    for (Long articlePk : articlePks) {
-      parentService.hibernateTemplate.execute(session -> {
-        SQLQuery query = session.createSQLQuery("" +
-            "INSERT INTO scholarlyWorkJournalJoinTable (scholarlyWorkID, journalID) " +
-            "VALUES (:scholarlyWorkId, :journalID)");
-        query.setParameter("scholarlyWorkId", articlePk);
-        query.setParameter("journalID", publicationJournal.getID());
-
-        return query.executeUpdate();
-      });
-    }
-  }
-
-  private void persistRelation(long articlePk, long assetPk) {
-    parentService.hibernateTemplate.execute(session -> {
-      SQLQuery query = session.createSQLQuery("" +
-          "INSERT INTO scholarlyWorkRelation (originWorkId, targetWorkId, relationType) " +
-          "VALUES (:originWorkId, :targetWorkId, :relationType)");
-      query.setParameter("originWorkId", articlePk);
-      query.setParameter("targetWorkId", assetPk);
-      query.setParameter("relationType", "assetOf");
-
-      return query.executeUpdate();
-    });
-  }
-
-  private static class RepoObjectToPersist {
-    private final RepoObject object;
-    private final String fileType;
-    private RepoObjectMetadata metadata; // null until created
-
-    private RepoObjectToPersist(RepoObject object, String fileType) {
-      this.object = Objects.requireNonNull(object);
-      this.fileType = fileType; // nullable
-    }
-  }
-
-  private void persistToCrepo(long workPk,
-                              Map<String, RepoObject> typedObjects,
-                              Collection<RepoObject> untypedObjects) {
-    Stream<RepoObjectToPersist> typedObjectStream = typedObjects.entrySet().stream()
-        .map((Map.Entry<String, RepoObject> entry) -> new RepoObjectToPersist(entry.getValue(), entry.getKey()));
-    Stream<RepoObjectToPersist> untypedObjectStream = untypedObjects.stream()
-        .map((RepoObject obj) -> new RepoObjectToPersist(obj, null));
-    List<RepoObjectToPersist> createdObjects = Stream.concat(typedObjectStream, untypedObjectStream)
-        .parallel() // Parallelize writes to CRepo. Relies on side effects and must be thread-safe.
-        .map((RepoObjectToPersist obj) -> {
-          obj.metadata = parentService.contentRepoService.autoCreateRepoObject(obj.object);
-          return obj;
-        })
+  private void persistArchivalFiles(ArticlePackage articlePackage, long versionId) {
+    List<RepoVersion> archivalFiles = articlePackage.getArchivalFiles().stream()
+        .map(archivalFile -> parentService.contentRepoService.autoCreateRepoObject(archivalFile).getVersion())
         .collect(Collectors.toList());
-
     parentService.hibernateTemplate.execute(session -> {
-      for (RepoObjectToPersist createdObject : createdObjects) {
-        RepoVersion repoObjectPtr = createdObject.metadata.getVersion();
-
-        SQLQuery query = session.createSQLQuery("" +
-            "INSERT INTO scholarlyWorkFile (scholarlyWorkId, fileType, crepoKey, crepoUuid) " +
-            "  VALUES (:scholarlyWorkId, :fileType, :crepoKey, :crepoUuid)");
-        query.setParameter("scholarlyWorkId", workPk);
-        query.setParameter("fileType", createdObject.fileType);
-        query.setParameter("crepoKey", repoObjectPtr.getKey());
-        query.setParameter("crepoUuid", repoObjectPtr.getUuid().toString());
-        query.executeUpdate();
+      for (RepoVersion archivalFile : archivalFiles) {
+        SQLQuery insertFile = session.createSQLQuery("" +
+            "INSERT INTO articleFile (versionId, crepoKey, crepoUuid) " +
+            "  VALUES (:versionId, :crepoKey, :crepoUuid)");
+        insertFile.setParameter("versionId", versionId);
+        insertFile.setParameter("crepoKey", archivalFile.getKey());
+        insertFile.setParameter("crepoUuid", archivalFile.getUuid());
+        insertFile.executeUpdate();
       }
       return null;
     });
   }
 
-  private void persistRevision(ArticleIdentity articleDoi, Collection<Long> createdWorkPks, int revisionNumber) {
-    // Delete assets
-    parentService.hibernateTemplate.execute(session -> {
-      Query query = session.createSQLQuery("" +
-          "DELETE rev " +
-          "FROM revision rev " +
-          "INNER JOIN scholarlyWork asset ON rev.scholarlyWorkId = asset.scholarlyWorkId " +
-          "INNER JOIN scholarlyWorkRelation rel ON asset.scholarlyWorkId = rel.targetWorkId " +
-          "INNER JOIN scholarlyWork article ON article.scholarlyWorkId = rel.originWorkId " +
-          "WHERE rev.revisionNumber = :revisionNumber AND article.doi = :doi");
-      query.setParameter("revisionNumber", revisionNumber);
-      query.setParameter("doi", articleDoi.getIdentifier());
-      return query.executeUpdate();
+  private long persistJournal(Article article, long versionId) {
+    Journal publicationJournal = parentService.getPublicationJournal(article);
+    return parentService.hibernateTemplate.execute(session -> {
+      SQLQuery query = session.createSQLQuery("" +
+          "INSERT INTO articleJournalJoinTable (versionId, journalId) " +
+          "VALUES (:versionId, :journalId)");
+      query.setParameter("versionId", versionId);
+      query.setParameter("journalId", publicationJournal.getID());
+      query.executeUpdate();
+      return getLastInsertId(session);
     });
-
-    // Delete root article
-    parentService.hibernateTemplate.execute(session -> {
-      Query query = session.createSQLQuery("" +
-          "DELETE rev " +
-          "FROM revision rev INNER JOIN scholarlyWork s " +
-          "ON rev.scholarlyWorkId = s.scholarlyWorkId " +
-          "WHERE rev.revisionNumber = :revisionNumber AND s.doi = :doi");
-      query.setParameter("revisionNumber", revisionNumber);
-      query.setParameter("doi", articleDoi.getIdentifier());
-      return query.executeUpdate();
-    });
-
-    for (Long createdWorkPk : createdWorkPks) {
-      parentService.hibernateTemplate.execute(session -> {
-        Query query = session.createSQLQuery("" +
-            "INSERT INTO revision (scholarlyWorkId, revisionNumber, publicationState) " +
-            "  VALUES (:scholarlyWorkId, :revisionNumber, :publicationState)");
-        query.setParameter("scholarlyWorkId", createdWorkPk);
-        query.setParameter("revisionNumber", revisionNumber);
-        query.setParameter("publicationState", 0);
-        return query.executeUpdate();
-      });
-    }
   }
 
   private void stubAssociativeFields(Article article) {
@@ -347,7 +312,7 @@ class VersionedIngestionService {
      * TODO: Improve as described above and delete this comment block
      */
 
-    ScholarlyWork work = parentService.getScholarlyWork(id, revisionNumber);
+    ArticleItem work = parentService.getArticleItem(id, revisionNumber);
 
     RepoVersion manuscriptVersion = work.getFile("manuscript").orElseThrow(() -> {
       String message = String.format("Work exists but does not have a manuscript. DOI: %s. Revision: %s",

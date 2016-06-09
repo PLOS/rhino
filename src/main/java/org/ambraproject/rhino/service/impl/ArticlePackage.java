@@ -9,13 +9,14 @@ import java.util.Objects;
 
 class ArticlePackage {
 
-  private final ScholarlyWorkInput articleWork;
-  private final ImmutableList<ScholarlyWorkInput> assetWorks;
+  private final ArticleItemInput articleWork;
+  private final ImmutableList<ArticleItemInput> allWorks;
   private final ImmutableList<RepoObject> archivalFiles;
 
-  ArticlePackage(ScholarlyWorkInput articleWork, List<ScholarlyWorkInput> assetWorks, List<RepoObject> archivalFiles) {
+  ArticlePackage(ArticleItemInput articleWork, List<ArticleItemInput> assetWorks, List<RepoObject> archivalFiles) {
     this.articleWork = Objects.requireNonNull(articleWork);
-    this.assetWorks = ImmutableList.copyOf(assetWorks);
+    this.allWorks = ImmutableList.<ArticleItemInput>builder()
+        .add(articleWork).addAll(assetWorks).build();
     this.archivalFiles = ImmutableList.copyOf(archivalFiles);
   }
 
@@ -23,12 +24,8 @@ class ArticlePackage {
     return articleWork.getDoi();
   }
 
-  public ScholarlyWorkInput getArticleWork() {
-    return articleWork;
-  }
-
-  public ImmutableList<ScholarlyWorkInput> getAssetWorks() {
-    return assetWorks;
+  public ImmutableList<ArticleItemInput> getAllWorks() {
+    return allWorks;
   }
 
   public ImmutableList<RepoObject> getArchivalFiles() {

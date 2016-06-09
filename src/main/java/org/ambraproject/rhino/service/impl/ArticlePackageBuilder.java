@@ -66,11 +66,11 @@ class ArticlePackageBuilder {
 
   public ArticlePackage build() {
     Map<String, RepoObject> articleObjects = buildArticleObjects();
-    List<ScholarlyWorkInput> assetWorks = buildAssetWorks(article.findAllAssetNodes());
+    List<ArticleItemInput> assetWorks = buildAssetWorks(article.findAllAssetNodes());
     List<RepoObject> archivalFiles = manifest.getArchivalFiles().stream()
         .map(this::buildObjectFor).collect(Collectors.toList());
 
-    return new ArticlePackage(new ScholarlyWorkInput(articleIdentity, articleObjects, AssetType.ARTICLE.identifier),
+    return new ArticlePackage(new ArticleItemInput(articleIdentity, articleObjects, AssetType.ARTICLE.identifier),
         assetWorks, archivalFiles);
   }
 
@@ -141,8 +141,8 @@ class ArticlePackageBuilder {
    * @param assetNodeMap encapsulated descriptions of references to asset DOIs in the manuscript
    * @return the built asset table
    */
-  private List<ScholarlyWorkInput> buildAssetWorks(AssetNodesByDoi assetNodeMap) {
-    List<ScholarlyWorkInput> works = new ArrayList<>();
+  private List<ArticleItemInput> buildAssetWorks(AssetNodesByDoi assetNodeMap) {
+    List<ArticleItemInput> works = new ArrayList<>();
     for (ManifestXml.Asset asset : manifest.getAssets()) {
       AssetType assetType = findAssetType(assetNodeMap, asset);
       if (assetType == AssetType.ARTICLE) continue;
@@ -152,7 +152,7 @@ class ArticlePackageBuilder {
         FileType fileType = assetType.getFileType(representation.getName()); // TODO: Use representation.getType instead
         assetObjects.put(fileType.identifier, buildObjectFor(representation.getFile()));
       }
-      works.add(new ScholarlyWorkInput(assetIdentity, assetObjects.build(), assetType.identifier));
+      works.add(new ArticleItemInput(assetIdentity, assetObjects.build(), assetType.identifier));
     }
     return works;
   }
