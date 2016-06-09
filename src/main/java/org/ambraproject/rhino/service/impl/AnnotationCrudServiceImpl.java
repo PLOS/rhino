@@ -203,25 +203,52 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
     created.setArticleID(articlePk);
     created.setParentID(parentCommentPk.orElse(null));
     created.setAnnotationUri(createdAnnotationUri.getKey());
-    copyInputToComment(input, created);
+
+    created.setUserProfileID(Long.valueOf(Strings.nullToEmpty(input.getCreatorUserId())));
+    created.setTitle(Strings.nullToEmpty(input.getTitle()));
+    created.setBody(Strings.nullToEmpty(input.getBody()));
+    created.setHighlightedText(Strings.nullToEmpty(input.getHighlightedText()));
+    created.setCompetingInterestBody(Strings.nullToEmpty(input.getCompetingInterestStatement()));
+    created.setIsRemoved(Boolean.valueOf(Strings.nullToEmpty(input.getIsRemoved())));
 
     hibernateTemplate.save(created);
     return created;
   }
 
-  private void copyInputToComment(CommentInputView input, Annotation comment) {
-    comment.setUserProfileID(Long.valueOf(Strings.nullToEmpty(input.getCreatorUserId())));
-    comment.setTitle(Strings.nullToEmpty(input.getTitle()));
-    comment.setBody(Strings.nullToEmpty(input.getBody()));
-    comment.setHighlightedText(Strings.nullToEmpty(input.getHighlightedText()));
-    comment.setCompetingInterestBody(Strings.nullToEmpty(input.getCompetingInterestStatement()));
-    comment.setIsRemoved(Boolean.valueOf(Strings.nullToEmpty(input.getIsRemoved())));
-  }
-
   @Override
   public Annotation patchComment(CommentInputView input) {
     Annotation comment = getComment(DoiBasedIdentity.create(input.getAnnotationUri()));
-    copyInputToComment(input, comment);
+
+    String creatorUserId = input.getCreatorUserId();
+    if (creatorUserId != null) {
+      comment.setUserProfileID(Long.valueOf(creatorUserId));
+    }
+
+    String title = input.getTitle();
+    if (title != null) {
+      comment.setTitle(title);
+    }
+
+    String body = input.getBody();
+    if (body != null) {
+      comment.setBody(body);
+    }
+
+    String highlightedText = input.getHighlightedText();
+    if (highlightedText != null) {
+      comment.setHighlightedText(highlightedText);
+    }
+
+    String competingInterestStatement = input.getCompetingInterestStatement();
+    if (competingInterestStatement != null) {
+      comment.setCompetingInterestBody(competingInterestStatement);
+    }
+
+    String isRemoved = input.getIsRemoved();
+    if (isRemoved != null) {
+      comment.setIsRemoved(Boolean.valueOf(isRemoved));
+    }
+
     hibernateTemplate.update(comment);
     return comment;
   }
