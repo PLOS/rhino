@@ -57,17 +57,17 @@ CREATE TABLE `ambra`.`articleFile` (
     ON UPDATE NO ACTION,
   UNIQUE KEY `crepoUuid_UNIQUE` (`crepoUuid`));
 
-CREATE TABLE `ambra`.`articlePublishedInJournal` (
+CREATE TABLE `ambra`.`articleJournalJoinTable` (
   `versionId` BIGINT(20) NOT NULL,
   `journalId` BIGINT(20) NOT NULL,
-  INDEX `fk_articlePublishedInJournal_1_idx` (`versionId` ASC),
-  INDEX `fk_articlePublishedInJournal_2_idx` (`journalID` ASC),
-  CONSTRAINT `fk_articlePublishedInJournal_1`
+  INDEX `fk_articleJournalJoinTable_1_idx` (`versionId` ASC),
+  INDEX `fk_articleJournalJoinTable_2_idx` (`journalID` ASC),
+  CONSTRAINT `fk_articleJournalJoinTable_1`
     FOREIGN KEY (`versionId`)
     REFERENCES `ambra`.`articleVersion` (`versionId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_articlePublishedInJournal_2`
+  CONSTRAINT `fk_articleJournalJoinTable_2`
     FOREIGN KEY (`journalId`)
     REFERENCES `ambra`.`journal` (`journalID`)
     ON DELETE NO ACTION

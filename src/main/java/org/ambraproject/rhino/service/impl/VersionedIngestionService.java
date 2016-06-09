@@ -232,7 +232,7 @@ class VersionedIngestionService {
     Journal publicationJournal = parentService.getPublicationJournal(article);
     return parentService.hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
-          "INSERT INTO articlePublishedInJournal (versionId, journalId) " +
+          "INSERT INTO articleJournalJoinTable (versionId, journalId) " +
           "VALUES (:versionId, :journalId)");
       query.setParameter("versionId", versionId);
       query.setParameter("journalId", publicationJournal.getID());
