@@ -178,7 +178,7 @@ class LegacyIngestionService {
     createReciprocalRelationships(article);
 
     // This method needs the article to have already been persisted to the DB.
-    parentService.syndicationService.createSyndications(doi);
+//    parentService.syndicationService.createSyndications(doi);
   }
 
   /**

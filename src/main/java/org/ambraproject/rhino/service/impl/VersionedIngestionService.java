@@ -11,6 +11,7 @@ import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleItem;
+import org.ambraproject.rhino.model.ArticleVersionIdentifier;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
@@ -84,9 +85,10 @@ class VersionedIngestionService {
       parsedArticle = new ArticleXml(AmbraService.parseXml(manuscriptStream));
     }
     ArticleIdentity articleIdentity = parsedArticle.readDoi();
-    if (!manuscriptAsset.getUri().equals(articleIdentity.getKey())) {
+    String doi = articleIdentity.getKey();
+    if (!manuscriptAsset.getUri().equals(doi)) {
       String message = String.format("Article DOI is inconsistent. From manifest: \"%s\" From manuscript: \"%s\"",
-          manuscriptAsset.getUri(), articleIdentity.getKey());
+          manuscriptAsset.getUri(), doi);
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
 
@@ -94,7 +96,7 @@ class VersionedIngestionService {
     long versionId = persistVersionId(articlePk, revision.orElseGet(parsedArticle::getRevisionNumber));
 
     final Article articleMetadata = parsedArticle.build(new Article());
-    articleMetadata.setDoi(articleIdentity.getKey());
+    articleMetadata.setDoi(doi);
 
     ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry,
         manuscriptAsset, manuscriptRepr, printableRepr).build();
@@ -102,6 +104,9 @@ class VersionedIngestionService {
     persistJournal(articleMetadata, versionId);
 
     stubAssociativeFields(articleMetadata);
+
+    parentService.syndicationService.createSyndications(new ArticleVersionIdentifier(doi, parsedArticle.getRevisionNumber()));
+
     return articleMetadata;
   }
 

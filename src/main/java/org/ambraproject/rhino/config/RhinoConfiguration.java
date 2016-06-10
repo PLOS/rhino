@@ -25,6 +25,7 @@ import org.ambraproject.rhino.config.json.AdapterRegistry;
 import org.ambraproject.rhino.config.json.DoiBasedIdentitySerializer;
 import org.ambraproject.rhino.config.json.ExclusionSpecialCase;
 import org.ambraproject.rhino.content.xml.XpathReader;
+import org.ambraproject.rhino.model.ArticleVersionDao;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleListCrudService;
@@ -275,6 +276,9 @@ public class RhinoConfiguration extends BaseConfiguration {
   public TaxonomyService taxonomyService() {
     return new TaxonomyServiceImpl();
   }
+
+  @Bean
+  public ArticleVersionDao articleVersionDao() { return new ArticleVersionDao(); }
 
   @Bean
   public TaxonomyClassificationService taxonomyClassificationService() {
