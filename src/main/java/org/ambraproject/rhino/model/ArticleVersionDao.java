@@ -11,7 +11,7 @@ public class ArticleVersionDao {
 
   public Article getArticle(ArticleVersionIdentifier articleIdentifier) {
     Article article = hibernateTemplate.execute(session -> {
-      Query query = session.createSQLQuery("" +
+      Query query = session.createQuery("" +
           "FROM ArticleTable article " +
           "WHERE article.doi = :doi");
       query.setParameter("doi", articleIdentifier.getDoi());
@@ -25,11 +25,10 @@ public class ArticleVersionDao {
 
   public ArticleVersion getArticleVersion(ArticleVersionIdentifier articleIdentifier) {
     ArticleVersion articleVersion = hibernateTemplate.execute(session -> {
-      Query query = session.createSQLQuery("" +
-          "FROM ArticleVersion articleVersion " +
-          "INNER JOIN ArticleTable as article " +
-          "WHERE articleVersion.versionNumber = :versionNumber AND article.doi = :doi");
-      query.setParameter("versionNumber", articleIdentifier.getVersion());
+      Query query = session.createQuery("" +
+          "FROM ArticleVersion as av " +
+          "WHERE av.revisionNumber = :revisionNumber AND av.article.doi = :doi");
+      query.setParameter("revisionNumber", articleIdentifier.getRevision());
       query.setParameter("doi", articleIdentifier.getDoi());
       return (ArticleVersion) query.uniqueResult();
     });

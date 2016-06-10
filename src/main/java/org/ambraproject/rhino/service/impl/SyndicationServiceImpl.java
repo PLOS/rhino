@@ -33,6 +33,7 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationKey;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.hibernate.Query;
+import org.joda.time.DateTime;
 import org.omg.CORBA.portable.ApplicationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,14 +86,14 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
   @SuppressWarnings("unchecked")
   public Syndication getSyndication(final ArticleVersionIdentifier articleIdentifier, final String syndicationTarget) {
     return hibernateTemplate.execute(session -> {
-      Query query = session.createSQLQuery("" +
+      Query query = session.createQuery("" +
           "FROM Syndication s " +
-          "INNER JOIN ArticleVersion as version " +
-          "INNER JOIN Article as article " +
-          "WHERE s.target = :target AND article.doi = :doi AND version.versionNumber = :versionNumber");
+          "WHERE s.target = :target " +
+          "AND s.articleVersion.article.doi = :doi " +
+          "AND s.articleVersion.revisionNumber = :revisionNumber");
       query.setParameter("target", syndicationTarget);
       query.setParameter("doi", articleIdentifier.getDoi());
-      query.setParameter("versionNumber", articleIdentifier.getVersion());
+      query.setParameter("revisionNumber", articleIdentifier.getRevision());
       return (Syndication) query.uniqueResult();
     });
   }
@@ -146,6 +147,7 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
         Syndication syndication = new Syndication(articleVersion, target);
         syndication.setStatus(Syndication.STATUS_PENDING);
         syndication.setSubmissionCount(0);
+        syndication.setCreated(DateTime.now().toDate());
         hibernateTemplate.save(syndication);
         syndications.add(syndication);
       }
@@ -322,7 +324,7 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
     body.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
         .append("<ambraMessage>")
         .append("<doi>").append(articleVersionId.getDoi()).append("</doi>")
-        .append("<version>").append(articleVersionId.getVersion()).append("</doi>")
+        .append("<version>").append(articleVersionId.getRevision()).append("</doi>")
         .append("<archive>").append(archive).append("</archive>");
 
     if (additionalBodyContent != null) {

@@ -2,35 +2,27 @@ package org.ambraproject.rhino.model;
 
 public class ArticleVersionIdentifier {
 
-  private String doi;
-  private int version;
+  private final String doi;
+  private final int revision;
 
-  public ArticleVersionIdentifier(String doi, int version) {
+  public ArticleVersionIdentifier(String doi, int revision) {
     this.doi = doi;
-    this.version = version;
+    this.revision = revision;
   }
 
   public String getDoi() {
     return doi;
   }
 
-  public void setDoi(String doi) {
-    this.doi = doi;
-  }
-
-  public int getVersion() {
-    return version;
-  }
-
-  public void setVersion(int version) {
-    this.version = version;
+  public int getRevision() {
+    return revision;
   }
 
   @Override
   public String toString() {
     return "ArticleVersionIdentifier{" +
         "doi='" + doi + '\'' +
-        ", version=" + version +
+        ", version=" + revision +
         '}';
   }
 }

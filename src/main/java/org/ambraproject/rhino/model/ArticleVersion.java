@@ -19,7 +19,7 @@ public class ArticleVersion extends AmbraEntity {
 
   @JoinColumn(name = "articleId")
   @ManyToOne
-  private Article article;
+  private ArticleTable article;
 
   @Column(name = "revisionNumber")
   private int revisionNumber;
@@ -35,11 +35,11 @@ public class ArticleVersion extends AmbraEntity {
     this.versionId = versionId;
   }
 
-  public Article getArticle() {
+  public ArticleTable getArticle() {
     return article;
   }
 
-  public void setArticle(Article article) {
+  public void setArticle(ArticleTable article) {
     this.article = article;
   }
 

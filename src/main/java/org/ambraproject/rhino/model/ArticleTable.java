@@ -18,4 +18,19 @@ public class ArticleTable {
   @Column(name = "doi")
   private String doi;
 
+  public int getArticleId() {
+    return articleId;
+  }
+
+  public void setArticleId(int articleId) {
+    this.articleId = articleId;
+  }
+
+  public String getDoi() {
+    return doi;
+  }
+
+  public void setDoi(String doi) {
+    this.doi = doi;
+  }
 }

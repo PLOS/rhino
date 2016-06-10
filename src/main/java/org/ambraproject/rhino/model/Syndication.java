@@ -17,7 +17,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "syndication")
-public class Syndication extends AmbraEntity {
+public class Syndication {
   /**
    * This Article has been published, but has not yet been submitted to this syndication target.
    */
@@ -58,6 +58,9 @@ public class Syndication extends AmbraEntity {
 
   @Column(name = "lastSubmitTimestamp")
   private Date lastSubmitTimestamp;
+
+  @Column(name = "created")
+  private Date created;
 
   public Syndication() {
     super();
@@ -123,6 +126,14 @@ public class Syndication extends AmbraEntity {
 
   public void setLastSubmitTimestamp(Date lastSubmitTimestamp) {
     this.lastSubmitTimestamp = lastSubmitTimestamp;
+  }
+
+  public Date getCreated() {
+    return created;
+  }
+
+  public void setCreated(Date created) {
+    this.created = created;
   }
 
   @Override

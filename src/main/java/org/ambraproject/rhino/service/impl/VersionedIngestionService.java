@@ -105,7 +105,9 @@ class VersionedIngestionService {
 
     stubAssociativeFields(articleMetadata);
 
-    parentService.syndicationService.createSyndications(new ArticleVersionIdentifier(doi, parsedArticle.getRevisionNumber()));
+    ArticleVersionIdentifier articleIdentifier = new ArticleVersionIdentifier(
+        articleIdentity.getIdentifier(), parsedArticle.getRevisionNumber());
+    parentService.syndicationService.createSyndications(articleIdentifier);
 
     return articleMetadata;
   }
