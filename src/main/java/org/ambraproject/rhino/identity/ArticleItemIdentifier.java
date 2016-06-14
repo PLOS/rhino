@@ -2,6 +2,15 @@ package org.ambraproject.rhino.identity;
 
 import java.util.Objects;
 
+/**
+ * An identifier for one article item, on a particular revision of its parent article.
+ * <p>
+ * Compare to {@link ArticleVersionIdentifier}, which has similar fields but refers to something different. An article
+ * item has a parent version, which has a parent article. This class's DOI refers to the item's own DOI, which may be,
+ * but is not always, the same as the article's DOI.
+ * <p>
+ * A persistent service is needed to resolve the identified item into its parent article version.
+ */
 public final class ArticleItemIdentifier {
 
   private final Doi doi;

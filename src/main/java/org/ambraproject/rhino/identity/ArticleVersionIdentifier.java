@@ -2,6 +2,12 @@ package org.ambraproject.rhino.identity;
 
 import java.util.Objects;
 
+/**
+ * An identifier for one ingested version of an article.
+ * <p>
+ * Instances of this class can indicate only article versions that are persisted with a non-null revision number, i.e.,
+ * the most recently ingested version with that number.
+ */
 public final class ArticleVersionIdentifier {
 
   private final ArticleIdentifier articleIdentifier;

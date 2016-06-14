@@ -2,6 +2,11 @@ package org.ambraproject.rhino.identity;
 
 import java.util.Objects;
 
+/**
+ * An identifier for a file that is part of the corpus.
+ * <p>
+ * Only files with a non-null parent article item may be identified this way. (Other files exist only to be repacked.)
+ */
 public final class ArticleFileIdentifier {
 
   private final ArticleItemIdentifier itemIdentifier;

@@ -2,6 +2,9 @@ package org.ambraproject.rhino.identity;
 
 import java.util.Objects;
 
+/**
+ * An identifier for an entire article, spanning all of its versions and their component items.
+ */
 public final class ArticleIdentifier {
 
   private final Doi doi;
