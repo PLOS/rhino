@@ -14,27 +14,81 @@
 package org.ambraproject.rhino.model;
 
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Model class containing all information for a journal.
  *
  * @author Juan Peralta 4/12/2012
  */
+@Entity
+@Table(name = "journal")
 public class Journal extends AmbraEntity {
 
+  @Id
+  @GeneratedValue
+  @Column
+  private int journalID;
+
+  @Column
   private String journalKey;
+
+  @Column
   private String eIssn;
+
+  @Column
   private String imageUri;
+
+  @Column
   private String title;
+
+  @Column
   private String description;
 
+  @JoinColumn(name = "currentIssueID")
+  @ManyToOne
   private Issue currentIssue;
 
+  @Cascade(CascadeType.SAVE_UPDATE)
+  @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+  @JoinTable(
+      name = "volume",
+      joinColumns = @JoinColumn(name = "journalID"),
+      inverseJoinColumns = @JoinColumn(name = "volumeID"))
   private List<Volume> volumes;
 
+  @Cascade(CascadeType.SAVE_UPDATE)
+  @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+  @JoinTable(
+      name = "articleList",
+      joinColumns = @JoinColumn(name = "journalID"),
+      inverseJoinColumns = @JoinColumn(name = "articleListID"))
   private Collection<ArticleList> articleLists;
+
+  @Cascade(CascadeType.SAVE_UPDATE)
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(
+      name = "articleJournalJoinTable",
+      joinColumns = @JoinColumn(name = "journalId"),
+      inverseJoinColumns = @JoinColumn(name = "versionId")
+  )
+  private Set<ArticleVersion> articleVersions;
 
   public Journal() {
     super();
@@ -107,6 +161,22 @@ public class Journal extends AmbraEntity {
 
   public void setArticleLists(Collection<ArticleList> articleLists) {
     this.articleLists = articleLists;
+  }
+
+  public int getJournalID() {
+    return journalID;
+  }
+
+  public void setJournalID(int journalID) {
+    this.journalID = journalID;
+  }
+
+  public Set<ArticleVersion> getArticleVersions() {
+    return articleVersions;
+  }
+
+  public void setArticleVersions(Set<ArticleVersion> articleVersions) {
+    this.articleVersions = articleVersions;
   }
 
   @Override

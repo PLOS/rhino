@@ -39,12 +39,12 @@ public interface SyndicationService {
    * Get the list of Syndication objects for this <code>articleDoi</code>. If there are no Syndications for this
    * articleDoi, then return an empty List. `
    *
-   * @param articleDoi The unique identifier for the Article which was (or is to be) syndicated
+   * @param articleIdentifier The unique identifier for the Article which was (or is to be) syndicated
    * @return The List of Syndications for this <code>articleDoi</code>. If there are no Syndications for this
    * articleDoi, then return an empty List
    * @throws org.ambraproject.service.article.NoSuchArticleIdException If the specified article doesn't exist
    */
-  public List<Syndication> getSyndications(String articleDoi);
+  public List<Syndication> getSyndications(ArticleVersionIdentifier articleIdentifier);
 
   /**
    * Return the syndication for the given article and the given target.  Return null if there is none.

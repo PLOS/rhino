@@ -37,30 +37,33 @@ public class Syndication {
   public static final String STATUS_FAILURE = "FAILURE";
 
   @Id @GeneratedValue
-  @Column(name = "syndicationId")
+  @Column
   private int syndicationId;
 
   @ManyToOne
-  @JoinColumn(name = "articleVersionId")
+  @JoinColumn(name = "versionId")
   private ArticleVersion articleVersion;
 
-  @Column(name = "target")
+  @Column
   private String target;
 
-  @Column(name = "status")
+  @Column
   private String status;
 
-  @Column(name = "submissionCount")
+  @Column
   private int submissionCount;
 
-  @Column(name = "errorMessage")
+  @Column
   private String errorMessage;
 
-  @Column(name = "lastSubmitTimestamp")
+  @Column
   private Date lastSubmitTimestamp;
 
-  @Column(name = "created")
+  @Column
   private Date created;
+
+  @Column //todo: pull this into a super class along with created
+  private Date lastModified;
 
   public Syndication() {
     super();
@@ -134,6 +137,14 @@ public class Syndication {
 
   public void setCreated(Date created) {
     this.created = created;
+  }
+
+  public Date getLastModified() {
+    return lastModified;
+  }
+
+  public void setLastModified(Date lastModified) {
+    this.lastModified = lastModified;
   }
 
   @Override

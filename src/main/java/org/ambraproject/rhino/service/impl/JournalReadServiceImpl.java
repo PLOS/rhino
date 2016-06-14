@@ -134,10 +134,13 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
 
   @Override
   public Journal getJournal(String journalKey) {
-    Journal journal = (Journal) DataAccessUtils.singleResult((List<?>)
-        hibernateTemplate.findByCriteria(journalCriteria()
-                .add(Restrictions.eq("journalKey", journalKey))
-        ));
+    Journal journal = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "FROM Journal j " +
+          "WHERE j.journalKey = :journalKey ");
+      query.setParameter("journalKey", journalKey);
+      return (Journal) query.uniqueResult();
+    });
     if (journal == null) {
       throw new RestClientException(journalNotFoundMessage(journalKey), HttpStatus.NOT_FOUND);
     }

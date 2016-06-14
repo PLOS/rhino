@@ -32,10 +32,10 @@ import java.util.Date;
 public abstract class AmbraEntity {
   private Long ID;
 
-  @Column(name = "created")
+  @Column
   private Date created;
 
-  @Column(name = "lastModified")
+  @Column
   private Date lastModified;
 
   public AmbraEntity() {
