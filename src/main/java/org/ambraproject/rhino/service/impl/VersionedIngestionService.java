@@ -11,7 +11,7 @@ import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleItem;
-import org.ambraproject.rhino.model.ArticleVersionIdentifier;
+import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
@@ -105,11 +105,11 @@ class VersionedIngestionService {
 
     stubAssociativeFields(articleMetadata);
 
-    ArticleVersionIdentifier articleIdentifier = new ArticleVersionIdentifier(
+    ArticleVersionIdentifier versionIdentifier = ArticleVersionIdentifier.create(
         articleIdentity.getIdentifier(), parsedArticle.getRevisionNumber());
 
     if (isSyndicatableType(articleMetadata.getTypes())) {
-      parentService.syndicationService.createSyndications(articleIdentifier);
+      parentService.syndicationService.createSyndications(versionIdentifier);
     }
 
     return articleMetadata;

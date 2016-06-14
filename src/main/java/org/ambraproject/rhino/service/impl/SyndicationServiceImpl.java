@@ -23,7 +23,7 @@ package org.ambraproject.rhino.service.impl;
 
 import org.ambraproject.rhino.model.ArticleVersion;
 import org.ambraproject.rhino.model.ArticleVersionDao;
-import org.ambraproject.rhino.model.ArticleVersionIdentifier;
+import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.service.JournalReadService;
@@ -70,7 +70,7 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
 
   @Override
   @SuppressWarnings("unchecked")
-  public Syndication getSyndication(final ArticleVersionIdentifier articleIdentifier, final String syndicationTarget) {
+  public Syndication getSyndication(final ArticleVersionIdentifier versionIdentifier, final String syndicationTarget) {
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "FROM Syndication s " +
@@ -78,22 +78,22 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
           "AND s.articleVersion.article.doi = :doi " +
           "AND s.articleVersion.revisionNumber = :revisionNumber");
       query.setParameter("target", syndicationTarget);
-      query.setParameter("doi", articleIdentifier.getDoi());
-      query.setParameter("revisionNumber", articleIdentifier.getRevision());
+      query.setParameter("doi", versionIdentifier.getArticleIdentifier().getDoi().getName());
+      query.setParameter("revisionNumber", versionIdentifier.getRevision());
       return (Syndication) query.uniqueResult();
     });
   }
 
   @Transactional(readOnly = true)
   @SuppressWarnings("unchecked")
-  public List<Syndication> getSyndications(final ArticleVersionIdentifier articleIdentifier) {
+  public List<Syndication> getSyndications(final ArticleVersionIdentifier versionIdentifier) {
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "FROM Syndication s " +
           "WHERE s.articleVersion.article.doi = :doi " +
           "AND s.articleVersion.revisionNumber = :revisionNumber");
-      query.setParameter("doi", articleIdentifier.getDoi());
-      query.setParameter("revisionNumber", articleIdentifier.getRevision());
+      query.setParameter("doi", versionIdentifier.getArticleIdentifier().getDoi().getName());
+      query.setParameter("revisionNumber", versionIdentifier.getRevision());
       return (List<Syndication>) query.list();
     });
   }
@@ -117,8 +117,8 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
   @Transactional(rollbackFor = {Throwable.class})
   @Override
   @SuppressWarnings("unchecked")
-  public List<Syndication> createSyndications(ArticleVersionIdentifier articleIdentifier) {
-    ArticleVersion articleVersion = articleVersionDao.getArticleVersion(articleIdentifier);
+  public List<Syndication> createSyndications(ArticleVersionIdentifier versionIdentifier) {
+    ArticleVersion articleVersion = articleVersionDao.getArticleVersion(versionIdentifier);
 
     List<HierarchicalConfiguration> allSyndicationTargets = ((HierarchicalConfiguration)
         configuration).configurationsAt("ambra.services.syndications.syndication");
@@ -126,7 +126,7 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
     if (allSyndicationTargets == null || allSyndicationTargets.size() < 1) { // Should never happen.
       log.warn("There are no Syndication Targets defined in the property: " +
           "ambra.services.syndications.syndication so no Syndication objects were created for " +
-          "the article with ID = " + articleIdentifier);
+          "the article with ID = " + versionIdentifier);
       return new ArrayList<>();
     }
 
@@ -134,7 +134,7 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
 
     for (HierarchicalConfiguration targetNode : allSyndicationTargets) {
       String target = targetNode.getString("[@target]");
-      Syndication existingSyndication = getSyndication(articleIdentifier, target);
+      Syndication existingSyndication = getSyndication(versionIdentifier, target);
       //todo: cleanup - this list return is not used
       if (existingSyndication != null) {
         syndications.add(existingSyndication);
@@ -304,7 +304,7 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
     StringBuilder body = new StringBuilder();
     body.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
         .append("<ambraMessage>")
-        .append("<doi>").append(articleVersionId.getDoi()).append("</doi>")
+        .append("<doi>").append(articleVersionId.getArticleIdentifier().getDoi().getName()).append("</doi>")
         .append("<version>").append(articleVersionId.getRevision()).append("</doi>");
 
     if (additionalBodyContent != null) {
