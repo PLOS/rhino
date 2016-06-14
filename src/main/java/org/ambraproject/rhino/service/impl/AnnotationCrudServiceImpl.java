@@ -27,7 +27,6 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
-import org.ambraproject.rhino.view.comment.CommentCount;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentFlagOutputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
@@ -413,12 +412,26 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
   }
 
   @Override
-  public CommentCount getCommentCount(Article article) {
-    long root = (Long) DataAccessUtils.requiredSingleResult(hibernateTemplate.find(
-        "SELECT COUNT(*) FROM Annotation WHERE articleID = ? AND parentID IS NULL", article.getID()));
-    long all = (Long) DataAccessUtils.requiredSingleResult(hibernateTemplate.find(
-        "SELECT COUNT(*) FROM Annotation WHERE articleID = ?", article.getID()));
-    return new CommentCount(root, all);
+  public Transceiver getCommentCount(Article article) {
+    return new Transceiver() {
+      @Override
+      protected Object getData() throws IOException {
+        Object result = hibernateTemplate.execute(session -> {
+          Query query = session.createQuery("" +
+              "SELECT NEW MAP(COUNT(*) AS all, SUM(CASE WHEN ann.parentID IS NULL THEN 1 ELSE 0 END) AS root) " +
+              "FROM Annotation ann " +
+              "WHERE ann.articleID = :articleID ");
+          query.setParameter("articleID", article.getID());
+          return query.uniqueResult();
+        });
+        return result;
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    };
   }
 
 }

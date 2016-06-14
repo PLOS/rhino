@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
@@ -191,6 +192,15 @@ public class ArticleCrudController extends ArticleSpaceController {
       throws IOException {
     ArticleIdentity id = parse(request);
     annotationCrudService.readComments(id).respond(request, response, entityGson);
+  }
+
+  @Transactional(readOnly = true)
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "commentCount")
+  public void getCommentCount(HttpServletRequest request, HttpServletResponse response)
+      throws IOException {
+    ArticleIdentity id = parse(request);
+    Article article = articleCrudService.findArticleById(id);
+    annotationCrudService.getCommentCount(article).respond(request, response, entityGson);
   }
 
   /**
