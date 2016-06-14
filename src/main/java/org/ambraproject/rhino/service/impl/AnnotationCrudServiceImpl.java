@@ -45,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.UUID;
@@ -415,8 +416,8 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
   public Transceiver getCommentCount(Article article) {
     return new Transceiver() {
       @Override
-      protected Object getData() throws IOException {
-        Object result = hibernateTemplate.execute(session -> {
+      protected Map<String, Object> getData() throws IOException {
+        Map<String, Object> result = (Map<String, Object>) hibernateTemplate.execute(session -> {
           Query query = session.createQuery("" +
               "SELECT NEW MAP(COUNT(*) AS all, SUM(CASE WHEN ann.parentID IS NULL THEN 1 ELSE 0 END) AS root) " +
               "FROM Annotation ann " +
