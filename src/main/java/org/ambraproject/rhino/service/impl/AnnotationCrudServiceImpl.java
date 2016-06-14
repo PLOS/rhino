@@ -419,7 +419,8 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
       protected Map<String, Object> getData() throws IOException {
         Map<String, Object> result = (Map<String, Object>) hibernateTemplate.execute(session -> {
           Query query = session.createQuery("" +
-              "SELECT NEW MAP(COUNT(*) AS all, SUM(CASE WHEN ann.parentID IS NULL THEN 1 ELSE 0 END) AS root) " +
+              "SELECT NEW MAP(COUNT(*) AS all, " +
+              "COALESCE(SUM(CASE WHEN ann.parentID IS NULL THEN 1 ELSE 0 END), 0) AS root) " +
               "FROM Annotation ann " +
               "WHERE ann.articleID = :articleID ");
           query.setParameter("articleID", article.getID());
