@@ -62,7 +62,7 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     addExpectedJournals();
   }
 
-  @Test
+  @Test(enabled = false)
   public void testComments() throws Exception {
     Article article = RhinoTestHelper.createTestArticle(articleCrudService);
     article.setJournals(ImmutableSet.of());

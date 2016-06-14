@@ -110,7 +110,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     }
   }
 
-  @Test
+  @Test(enabled = false)
   public void testPublication() throws Exception {
     final String crossref = "CROSSREF";
     final String pmc = "PMC";

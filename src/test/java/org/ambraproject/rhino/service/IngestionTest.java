@@ -230,7 +230,7 @@ public class IngestionTest extends BaseRhinoTest {
     }
   }
 
-  @Test(dataProvider = "generatedIngestionData")
+  @Test(dataProvider = "generatedIngestionData", enabled = false)
   public void testIngestion(File jsonFile, File xmlFile) throws Exception {
     final Article expected = RhinoTestHelper.readReferenceCase(jsonFile);
     createTestJournal(expected.geteIssn());
@@ -271,7 +271,7 @@ public class IngestionTest extends BaseRhinoTest {
     assertFalse(StringUtils.isBlank(response.readJson(entityGson)));
   }
 
-  @Test(dataProvider = "generatedZipIngestionData")
+  @Test(dataProvider = "generatedZipIngestionData", enabled = false)
   public void testZipIngestion(File jsonFile, File zipFile) throws Exception {
     final Article expected = RhinoTestHelper.readReferenceCase(jsonFile);
     createTestJournal(expected.geteIssn());
@@ -299,7 +299,7 @@ public class IngestionTest extends BaseRhinoTest {
     assertEquals(failures.size(), 0, "Mismatched Article fields for " + expected.getDoi());
   }
 
-  @Test
+  @Test(enabled = false)
   public void testReingestion() throws Exception {
     createTestJournal("1932-6203");
     long start = System.currentTimeMillis();
