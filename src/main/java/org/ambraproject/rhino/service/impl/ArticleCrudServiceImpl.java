@@ -37,12 +37,14 @@ import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleAsset;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRelationship;
+import org.ambraproject.rhino.model.ArticleVersion;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.AssetCrudService;
+import org.ambraproject.rhino.service.JournalReadService;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.service.SyndicationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
@@ -97,7 +99,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Autowired
   AssetCrudService assetCrudService;
-
   @Autowired
   RuntimeConfiguration runtimeConfiguration;
   @Autowired
@@ -114,6 +115,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   SyndicationService syndicationService;
   @Autowired
   ArticleTypeService articleTypeService;
+  @Autowired
+  JournalReadService journalReadService;
 
   private final LegacyIngestionService legacyIngestionService = new LegacyIngestionService(this);
   private final VersionedIngestionService versionedIngestionService = new VersionedIngestionService(this);
@@ -194,8 +197,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       String msg = "eIssn not set for article: " + article.getDoi();
       throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
     } else {
-      Journal journal = (Journal) DataAccessUtils.uniqueResult((List<?>)
-          hibernateTemplate.findByCriteria(journalCriteria().add(Restrictions.eq("eIssn", eissn))));
+      Journal journal = journalReadService.getJournalByEissn(eissn);
       if (journal == null) {
         String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
         throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
@@ -581,6 +583,30 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         (Object[] fileResult) -> RepoVersion.create((String) fileResult[1], (String) fileResult[2])));
 
     return new ArticleItem(DoiBasedIdentity.create(id.getDoi().getName()), itemType, fileMap, id.getRevision(), state, timestamp.toInstant());
+  }
+
+  public ArticleVersion getArticleVersion(ArticleVersionIdentifier articleIdentifier) {
+    ArticleVersion articleVersion = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "FROM ArticleVersion as av " +
+          "WHERE av.revisionNumber = :revisionNumber " +
+          "AND av.article.doi = :doi " +
+          "AND av.publicationState != :replaced");
+      query.setParameter("revisionNumber", articleIdentifier.getRevision());
+      query.setParameter("doi", articleIdentifier.getArticleIdentifier().getDoi().getName());
+      query.setParameter("replaced", ArticleItem.PublicationState.REPLACED.getValue());
+      return (ArticleVersion) query.uniqueResult();
+    });
+    if (articleVersion == null) {
+      throw new NoSuchArticleIdException(articleIdentifier);
+    }
+    return articleVersion;
+  }
+
+  private class NoSuchArticleIdException extends RuntimeException {
+    private NoSuchArticleIdException(ArticleVersionIdentifier articleIdentifier) {
+      super("No such article: " + articleIdentifier);
+    }
   }
 
 }

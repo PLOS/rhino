@@ -26,6 +26,7 @@ import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleItem;
+import org.ambraproject.rhino.model.ArticleVersion;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
@@ -240,4 +241,6 @@ public interface ArticleCrudService extends DoiBasedCrudService {
 
 
   public abstract ArticleItem getArticleItem(ArticleItemIdentifier id);
+
+  public abstract ArticleVersion getArticleVersion(ArticleVersionIdentifier articleIdentifier);
 }

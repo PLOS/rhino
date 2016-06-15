@@ -14,4 +14,6 @@ public interface JournalReadService {
   public abstract Transceiver readCurrentIssue(String journalKey);
 
   Journal getJournal(String journalKey);
+
+  Journal getJournalByEissn(String eIssn);
 }
