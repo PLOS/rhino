@@ -85,15 +85,15 @@ class VersionedIngestionService {
     try (InputStream manuscriptStream = new BufferedInputStream(archive.openFile(manuscriptEntry))) {
       parsedArticle = new ArticleXml(AmbraService.parseXml(manuscriptStream));
     }
-    ArticleIdentifier articleIdentity = ArticleIdentifier.create(parsedArticle.readDoi().getIdentifier());
-    Doi doi = articleIdentity.getDoi();
+    ArticleIdentifier articleIdentifier = ArticleIdentifier.create(parsedArticle.readDoi().getIdentifier());
+    Doi doi = articleIdentifier.getDoi();
     if (!manuscriptAsset.getUri().equals(doi.getUri().toString())) {
       String message = String.format("Article DOI is inconsistent. From manifest: \"%s\" From manuscript: \"%s\"",
           manuscriptAsset.getUri(), doi.getUri());
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
 
-    long articlePk = persistArticlePk(articleIdentity);
+    long articlePk = persistArticlePk(articleIdentifier);
     long versionId = persistVersionId(articlePk, revision.orElseGet(parsedArticle::getRevisionNumber));
 
     final Article articleMetadata = parsedArticle.build(new Article());
@@ -107,7 +107,7 @@ class VersionedIngestionService {
     stubAssociativeFields(articleMetadata);
 
     ArticleVersionIdentifier versionIdentifier = ArticleVersionIdentifier.create(
-        articleIdentity.getDoi(), parsedArticle.getRevisionNumber());
+        articleIdentifier.getDoi(), parsedArticle.getRevisionNumber());
 
     if (isSyndicatableType(articleMetadata.getTypes())) {
       parentService.syndicationService.createSyndications(versionIdentifier);
