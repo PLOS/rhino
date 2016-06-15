@@ -40,7 +40,6 @@ import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedListView;
 import org.ambraproject.rhino.view.asset.groomed.GroomedAssetsView;
 import org.ambraproject.rhino.view.asset.raw.RawAssetCollectionView;
-import org.ambraproject.rhino.view.comment.CommentCount;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,7 +85,6 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     private final ImmutableList<ArticleIssue> articleIssues;
     private final ImmutableMap<String, Syndication> syndications;
     private final ImmutableList<Pingback> pingbacks;
-    private final CommentCount commentCount;
 
     // Package-private; should be called only by ArticleOutputViewFactory
     AugmentedView(Article article,
@@ -96,7 +94,6 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
                   Collection<ArticleIssue> articleIssues,
                   Collection<Syndication> syndications,
                   Collection<Pingback> pingbacks,
-                  CommentCount commentCount,
                   boolean excludeCitations) {
       super(article, excludeCitations);
       this.nlmArticleType = Optional.fromNullable(nlmArticleType);
@@ -105,7 +102,6 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
       this.articleIssues = ImmutableList.copyOf(articleIssues);
       this.syndications = Maps.uniqueIndex(syndications, Syndication::getTarget);
       this.pingbacks = ImmutableList.copyOf(pingbacks);
-      this.commentCount = commentCount;
     }
 
     @Override
@@ -121,8 +117,6 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
       if (articleType.isPresent()) {
         serialized.add("articleType", context.serialize(articleType.get()));
       }
-
-      serialized.add("commentCount", context.serialize(commentCount));
 
       JsonElement syndications = serializeSyndications(this.syndications.values(), context);
       if (syndications != null) {

@@ -26,7 +26,7 @@ import org.ambraproject.rhino.model.ArticleVersion;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.JournalReadService;
+import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.MessageSender;
 import org.ambraproject.rhino.service.SyndicationService;
 import org.apache.commons.configuration.Configuration;
@@ -65,7 +65,7 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
   private MessageSender messageSender;
 
   @Autowired
-  private JournalReadService journalService;
+  private JournalCrudService journalService;
 
   @Autowired
   private ArticleCrudService articleCrudService;
@@ -162,7 +162,7 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
     LocalDate startDate = LocalDate.now().minus(numDaysInPast, ChronoUnit.DAYS);
     Instant startTime = startDate.atStartOfDay(ZoneId.systemDefault()).toInstant();
 
-    final Journal journal = journalService.getJournal(journalKey);
+    final Journal journal = journalService.findJournal(journalKey);
 
     if (journal == null) {
       throw new RuntimeException("Could not find journal for journal key: " + journalKey);

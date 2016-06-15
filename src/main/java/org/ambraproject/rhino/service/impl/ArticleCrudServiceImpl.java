@@ -44,7 +44,7 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.AssetCrudService;
-import org.ambraproject.rhino.service.JournalReadService;
+import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.service.SyndicationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
@@ -116,7 +116,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Autowired
   ArticleTypeService articleTypeService;
   @Autowired
-  JournalReadService journalReadService;
+  JournalCrudService journalCrudService;
 
   private final LegacyIngestionService legacyIngestionService = new LegacyIngestionService(this);
   private final VersionedIngestionService versionedIngestionService = new VersionedIngestionService(this);
@@ -197,7 +197,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       String msg = "eIssn not set for article: " + article.getDoi();
       throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
     } else {
-      Journal journal = journalReadService.getJournalByEissn(eissn);
+      Journal journal = journalCrudService.findJournalByEissn(eissn);
       if (journal == null) {
         String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
         throw new RestClientException(msg, HttpStatus.BAD_REQUEST);

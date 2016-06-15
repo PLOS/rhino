@@ -27,7 +27,6 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
-import org.ambraproject.rhino.view.comment.CommentCount;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentFlagOutputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
@@ -46,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.UUID;
@@ -203,25 +203,57 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
     created.setArticleID(articlePk);
     created.setParentID(parentCommentPk.orElse(null));
     created.setAnnotationUri(createdAnnotationUri.getKey());
-    copyInputToComment(input, created);
+
+    created.setUserProfileID(Long.valueOf(Strings.nullToEmpty(input.getCreatorUserId())));
+    created.setTitle(Strings.nullToEmpty(input.getTitle()));
+    created.setBody(Strings.nullToEmpty(input.getBody()));
+    created.setHighlightedText(Strings.nullToEmpty(input.getHighlightedText()));
+    created.setCompetingInterestBody(Strings.nullToEmpty(input.getCompetingInterestStatement()));
+    created.setIsRemoved(Boolean.valueOf(Strings.nullToEmpty(input.getIsRemoved())));
 
     hibernateTemplate.save(created);
     return created;
   }
 
-  private void copyInputToComment(CommentInputView input, Annotation comment) {
-    comment.setUserProfileID(Long.valueOf(Strings.nullToEmpty(input.getCreatorUserId())));
-    comment.setTitle(Strings.nullToEmpty(input.getTitle()));
-    comment.setBody(Strings.nullToEmpty(input.getBody()));
-    comment.setHighlightedText(Strings.nullToEmpty(input.getHighlightedText()));
-    comment.setCompetingInterestBody(Strings.nullToEmpty(input.getCompetingInterestStatement()));
-    comment.setIsRemoved(Boolean.valueOf(Strings.nullToEmpty(input.getIsRemoved())));
-  }
-
   @Override
-  public Annotation patchComment(CommentInputView input) {
-    Annotation comment = getComment(DoiBasedIdentity.create(input.getAnnotationUri()));
-    copyInputToComment(input, comment);
+  public Annotation patchComment(DoiBasedIdentity commentId, CommentInputView input) {
+    Annotation comment = getComment(commentId);
+
+    String declaredUri = input.getAnnotationUri();
+    if (declaredUri != null && !DoiBasedIdentity.create(declaredUri).equals(commentId)) {
+      throw new RestClientException("Mismatched annotationUri in body", HttpStatus.BAD_REQUEST);
+    }
+
+    String creatorUserId = input.getCreatorUserId();
+    if (creatorUserId != null) {
+      comment.setUserProfileID(Long.valueOf(creatorUserId));
+    }
+
+    String title = input.getTitle();
+    if (title != null) {
+      comment.setTitle(title);
+    }
+
+    String body = input.getBody();
+    if (body != null) {
+      comment.setBody(body);
+    }
+
+    String highlightedText = input.getHighlightedText();
+    if (highlightedText != null) {
+      comment.setHighlightedText(highlightedText);
+    }
+
+    String competingInterestStatement = input.getCompetingInterestStatement();
+    if (competingInterestStatement != null) {
+      comment.setCompetingInterestBody(competingInterestStatement);
+    }
+
+    String isRemoved = input.getIsRemoved();
+    if (isRemoved != null) {
+      comment.setIsRemoved(Boolean.valueOf(isRemoved));
+    }
+
     hibernateTemplate.update(comment);
     return comment;
   }
@@ -381,12 +413,27 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
   }
 
   @Override
-  public CommentCount getCommentCount(Article article) {
-    long root = (Long) DataAccessUtils.requiredSingleResult(hibernateTemplate.find(
-        "SELECT COUNT(*) FROM Annotation WHERE articleID = ? AND parentID IS NULL", article.getID()));
-    long all = (Long) DataAccessUtils.requiredSingleResult(hibernateTemplate.find(
-        "SELECT COUNT(*) FROM Annotation WHERE articleID = ?", article.getID()));
-    return new CommentCount(root, all);
+  public Transceiver getCommentCount(Article article) {
+    return new Transceiver() {
+      @Override
+      protected Map<String, Object> getData() throws IOException {
+        Map<String, Object> result = (Map<String, Object>) hibernateTemplate.execute(session -> {
+          Query query = session.createQuery("" +
+              "SELECT NEW MAP(COUNT(*) AS all, " +
+              "COALESCE(SUM(CASE WHEN ann.parentID IS NULL THEN 1 ELSE 0 END), 0) AS root) " +
+              "FROM Annotation ann " +
+              "WHERE ann.articleID = :articleID ");
+          query.setParameter("articleID", article.getID());
+          return query.uniqueResult();
+        });
+        return result;
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    };
   }
 
 }

@@ -160,7 +160,8 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
     issue.setDescription(description);
   }
 
-  private Issue findIssue(DoiBasedIdentity issueId) {
+  @Override
+  public Issue findIssue(DoiBasedIdentity issueId) {
     return (Issue) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
                 .forClass(Issue.class)
