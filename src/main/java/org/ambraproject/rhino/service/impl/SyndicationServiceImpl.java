@@ -39,8 +39,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -156,17 +159,8 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
     Integer numDaysInPast = configuration.getInteger(
         "ambra.virtualJournals." + journalKey + ".syndications.display.numDaysInPast", 30);
 
-    // The most recent midnight.  No need to futz about with exact dates.
-    final Calendar start = Calendar.getInstance();
-    start.set(Calendar.HOUR, 0);
-    start.set(Calendar.MINUTE, 0);
-    start.set(Calendar.SECOND, 0);
-    start.set(Calendar.MILLISECOND, 0);
-
-    final Calendar end = (Calendar) start.clone(); // The most recent midnight (last night)
-
-    start.add(Calendar.DATE, -(numDaysInPast));
-    end.add(Calendar.DATE, 1); // Include everything that happened today.
+    LocalDate startDate = LocalDate.now().minus(numDaysInPast, ChronoUnit.DAYS);
+    Instant startTime = startDate.atStartOfDay(ZoneId.systemDefault()).toInstant();
 
     final Journal journal = journalService.getJournal(journalKey);
 
@@ -182,12 +176,11 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
           "JOIN av.journals j " +
           "WHERE j.journalKey = :journalKey " +
           "AND s.status in (:inProgressStatus, :failureStatus)" +
-          "AND s.lastModified between :start and :end");
+          "AND s.lastModified > :startTime");
       query.setParameter("journalKey", journalKey);
       query.setParameter("inProgressStatus", Syndication.STATUS_IN_PROGRESS);
       query.setParameter("failureStatus", Syndication.STATUS_FAILURE);
-      query.setParameter("start", start.getTime());
-      query.setParameter("end", end.getTime());
+      query.setDate("startTime", Date.from(startTime));
       return (List<Syndication>) query.list();
     });
   }
