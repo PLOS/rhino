@@ -22,10 +22,10 @@
 package org.ambraproject.rhino.service.impl;
 
 import org.ambraproject.rhino.model.ArticleVersion;
-import org.ambraproject.rhino.model.ArticleVersionDao;
 import org.ambraproject.rhino.model.ArticleVersionIdentifier;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Syndication;
+import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.JournalReadService;
 import org.ambraproject.rhino.service.MessageSender;
 import org.ambraproject.rhino.service.SyndicationService;
@@ -33,7 +33,6 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationKey;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.hibernate.Query;
-import org.joda.time.DateTime;
 import org.omg.CORBA.portable.ApplicationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,7 +65,7 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
   private JournalReadService journalService;
 
   @Autowired
-  private ArticleVersionDao articleVersionDao;
+  private ArticleCrudService articleCrudService;
 
   @Override
   @SuppressWarnings("unchecked")
@@ -118,7 +117,7 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
   @Override
   @SuppressWarnings("unchecked")
   public List<Syndication> createSyndications(ArticleVersionIdentifier articleIdentifier) {
-    ArticleVersion articleVersion = articleVersionDao.getArticleVersion(articleIdentifier);
+    ArticleVersion articleVersion = articleCrudService.getArticleVersion(articleIdentifier);
 
     List<HierarchicalConfiguration> allSyndicationTargets = ((HierarchicalConfiguration)
         configuration).configurationsAt("ambra.services.syndications.syndication");
@@ -142,7 +141,6 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
         Syndication syndication = new Syndication(articleVersion, target);
         syndication.setStatus(Syndication.STATUS_PENDING);
         syndication.setSubmissionCount(0);
-        syndication.setCreated(DateTime.now().toDate());
         hibernateTemplate.save(syndication);
         syndications.add(syndication);
       }
@@ -198,7 +196,7 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
   @SuppressWarnings("unchecked")
   @Override
   public Syndication syndicate(ArticleVersionIdentifier articleVersionIdentifier, String syndicationTarget) {
-    ArticleVersion articleVersion = articleVersionDao.getArticleVersion(articleVersionIdentifier);
+    ArticleVersion articleVersion = articleCrudService.getArticleVersion(articleVersionIdentifier);
 
     Syndication syndication = getSyndication(articleVersionIdentifier, syndicationTarget);
     if (syndication == null) {

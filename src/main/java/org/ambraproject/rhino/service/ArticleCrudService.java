@@ -21,8 +21,10 @@ package org.ambraproject.rhino.service;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.Article;
-import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.ArticleItem;
+import org.ambraproject.rhino.model.ArticleVersion;
+import org.ambraproject.rhino.model.ArticleVersionIdentifier;
+import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.util.Archive;
@@ -237,4 +239,6 @@ public interface ArticleCrudService extends DoiBasedCrudService {
 
 
   public abstract ArticleItem getArticleItem(DoiBasedIdentity id, OptionalInt revisionNumber);
+
+  public abstract ArticleVersion getArticleVersion(ArticleVersionIdentifier articleIdentifier);
 }

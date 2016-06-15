@@ -255,7 +255,7 @@ class VersionedIngestionService {
           "INSERT INTO articleJournalJoinTable (versionId, journalId) " +
           "VALUES (:versionId, :journalId)");
       query.setParameter("versionId", versionId);
-      query.setParameter("journalId", publicationJournal.getID());
+      query.setParameter("journalId", publicationJournal.getJournalID());
       query.executeUpdate();
       return getLastInsertId(session);
     });

@@ -20,7 +20,6 @@
  */
 package org.ambraproject.rhino.model;
 
-import javax.persistence.Column;
 import java.util.Date;
 
 /**
@@ -32,10 +31,8 @@ import java.util.Date;
 public abstract class AmbraEntity {
   private Long ID;
 
-  @Column
   private Date created;
 
-  @Column
   private Date lastModified;
 
   public AmbraEntity() {

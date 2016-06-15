@@ -39,12 +39,12 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "journal")
-public class Journal extends AmbraEntity {
+public class Journal extends AmbraEntity{
 
   @Id
   @GeneratedValue
   @Column
-  private int journalID;
+  private Long journalID;
 
   @Column
   private String journalKey;
@@ -97,6 +97,14 @@ public class Journal extends AmbraEntity {
   public Journal(String journalKey) {
     super();
     this.journalKey = journalKey;
+  }
+
+  public Long getJournalID() {
+    return journalID;
+  }
+
+  public void setJournalID(Long journalID) {
+    this.journalID = journalID;
   }
 
   public String getJournalKey() {
@@ -163,13 +171,6 @@ public class Journal extends AmbraEntity {
     this.articleLists = articleLists;
   }
 
-  public int getJournalID() {
-    return journalID;
-  }
-
-  public void setJournalID(int journalID) {
-    this.journalID = journalID;
-  }
 
   public Set<ArticleVersion> getArticleVersions() {
     return articleVersions;
@@ -186,7 +187,7 @@ public class Journal extends AmbraEntity {
 
     Journal journal = (Journal) o;
 
-    if (getID() != null ? !getID().equals(journal.getID()) : journal.getID() != null) return false;
+    if (getJournalID() != null ? !getJournalID().equals(journal.getJournalID()) : journal.getJournalID() != null) return false;
     if (description != null ? !description.equals(journal.description) : journal.description != null) return false;
     if (eIssn != null ? !eIssn.equals(journal.eIssn) : journal.eIssn != null) return false;
     if (imageUri != null ? !imageUri.equals(journal.imageUri) : journal.imageUri != null) return false;
@@ -198,7 +199,7 @@ public class Journal extends AmbraEntity {
 
   @Override
   public int hashCode() {
-    int result = getID() != null ? getID().hashCode() : 0;
+    int result = getJournalID() != null ? getJournalID().hashCode() : 0;
     result = 31 * result + (journalKey != null ? journalKey.hashCode() : 0);
     result = 31 * result + (eIssn != null ? eIssn.hashCode() : 0);
     result = 31 * result + (imageUri != null ? imageUri.hashCode() : 0);
@@ -210,7 +211,7 @@ public class Journal extends AmbraEntity {
   @Override
   public String toString() {
     return "Journal{" +
-        "id='" + getID() + '\'' +
+        "id='" + getJournalID() + '\'' +
         ", journalKey='" + journalKey + '\'' +
         ", eIssn='" + eIssn + '\'' +
         ", imageUri='" + imageUri + '\'' +

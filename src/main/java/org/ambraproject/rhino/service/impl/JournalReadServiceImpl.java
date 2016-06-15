@@ -36,6 +36,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+@SuppressWarnings("JpaQlInspection")
 public class JournalReadServiceImpl extends AmbraService implements JournalReadService {
 
   @Autowired
@@ -135,14 +136,25 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
   @Override
   public Journal getJournal(String journalKey) {
     Journal journal = hibernateTemplate.execute(session -> {
-      Query query = session.createQuery("" +
-          "FROM Journal j " +
-          "WHERE j.journalKey = :journalKey ");
+      Query query = session.createQuery("FROM Journal j WHERE j.journalKey = :journalKey ");
       query.setParameter("journalKey", journalKey);
       return (Journal) query.uniqueResult();
     });
     if (journal == null) {
       throw new RestClientException(journalNotFoundMessage(journalKey), HttpStatus.NOT_FOUND);
+    }
+    return journal;
+  }
+
+  @Override
+  public Journal getJournalByEissn(String eIssn) {
+    Journal journal = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM Journal j WHERE j.eIssn = :eIssn");
+      query.setParameter("eIssn", eIssn);
+      return (Journal) query.uniqueResult();
+    });
+    if (journal == null) {
+      throw new RestClientException("No journal found with eIssn: " + eIssn, HttpStatus.NOT_FOUND);
     }
     return journal;
   }
