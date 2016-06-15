@@ -30,7 +30,9 @@ import java.util.Date;
  */
 public abstract class AmbraEntity {
   private Long ID;
+
   private Date created;
+
   private Date lastModified;
 
   public AmbraEntity() {

@@ -35,7 +35,6 @@ import org.ambraproject.rhino.service.taxonomy.DummyTaxonomyClassificationServic
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyServiceImpl;
-import org.apache.commons.configuration.CombinedConfiguration;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.plos.crepo.service.ContentRepoService;
@@ -50,7 +49,6 @@ import org.yaml.snakeyaml.Yaml;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.Properties;
 
 @Configuration

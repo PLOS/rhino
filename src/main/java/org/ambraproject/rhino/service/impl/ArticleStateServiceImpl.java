@@ -30,7 +30,6 @@ import org.ambraproject.rhino.service.MessageSender;
 import org.ambraproject.rhino.service.SyndicationService;
 import org.ambraproject.rhino.view.article.ArticleInputView;
 import org.apache.camel.CamelExecutionException;
-import org.apache.camel.ProducerTemplate;
 import org.apache.commons.configuration.Configuration;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -218,7 +217,7 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
       // IN_PROGRESS?  Or base it on the Syndication.status of the appropriate target?
       // Not sure yet.
       if (update.getStatus().equals(Syndication.STATUS_IN_PROGRESS)) {
-        syndicationService.syndicate(article.getDoi(), update.getTarget());
+        //syndicationService.syndicate(article.getDoi(), update.getTarget()); todo: implement with versioning
       }
 
       // TODO: un-syndicate, if necessary.

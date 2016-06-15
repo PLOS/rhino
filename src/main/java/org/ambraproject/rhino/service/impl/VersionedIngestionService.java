@@ -8,9 +8,11 @@ import com.google.common.collect.Sets;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
-import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.ArticleIdentifier;
+import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleItem;
+import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
@@ -83,18 +85,19 @@ class VersionedIngestionService {
     try (InputStream manuscriptStream = new BufferedInputStream(archive.openFile(manuscriptEntry))) {
       parsedArticle = new ArticleXml(AmbraService.parseXml(manuscriptStream));
     }
-    ArticleIdentity articleIdentity = parsedArticle.readDoi();
-    if (!manuscriptAsset.getUri().equals(articleIdentity.getKey())) {
+    ArticleIdentifier articleIdentifier = ArticleIdentifier.create(parsedArticle.readDoi().getIdentifier());
+    Doi doi = articleIdentifier.getDoi();
+    if (!manuscriptAsset.getUri().equals(doi.getUri().toString())) {
       String message = String.format("Article DOI is inconsistent. From manifest: \"%s\" From manuscript: \"%s\"",
-          manuscriptAsset.getUri(), articleIdentity.getKey());
+          manuscriptAsset.getUri(), doi.getUri());
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
 
-    long articlePk = persistArticlePk(articleIdentity);
+    long articlePk = persistArticlePk(articleIdentifier);
     long versionId = persistVersionId(articlePk, revision.orElseGet(parsedArticle::getRevisionNumber));
 
     final Article articleMetadata = parsedArticle.build(new Article());
-    articleMetadata.setDoi(articleIdentity.getKey());
+    articleMetadata.setDoi(doi.getUri().toString());
 
     ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry,
         manuscriptAsset, manuscriptRepr, printableRepr).build();
@@ -102,14 +105,33 @@ class VersionedIngestionService {
     persistJournal(articleMetadata, versionId);
 
     stubAssociativeFields(articleMetadata);
+
+    ArticleVersionIdentifier versionIdentifier = ArticleVersionIdentifier.create(
+        articleIdentifier.getDoi(), parsedArticle.getRevisionNumber());
+
+    if (isSyndicatableType(articleMetadata.getTypes())) {
+      parentService.syndicationService.createSyndications(versionIdentifier);
+    }
+
     return articleMetadata;
   }
 
   /**
-   * Get the PK of the "article" row for a DOI if it exists, and insert it if it doesn't.
+   * @param articleTypes All the article types of the Article for which Syndication objects are being created
+   * @return Whether to create a Syndication object for this Article
    */
-  private long persistArticlePk(ArticleIdentity articleIdentity) {
-    String articleDoi = articleIdentity.getIdentifier();
+  private boolean isSyndicatableType(Set<String> articleTypes) {
+    String articleTypeDoNotCreateSyndication = "http://rdf.plos.org/RDF/articleType/Issue%20Image";
+    return !(articleTypes != null && articleTypes.contains(articleTypeDoNotCreateSyndication));
+  }
+
+
+  /**
+   * Get the PK of the "article" row for a DOI if it exists, and insert it if it doesn't.
+   * @param articleIdentifier
+   */
+  private long persistArticlePk(ArticleIdentifier articleIdentifier) {
+    String articleDoi = articleIdentifier.getDoiName();
     return parentService.hibernateTemplate.execute(session -> {
       SQLQuery selectQuery = session.createSQLQuery("SELECT articleId FROM article WHERE doi = :doi");
       selectQuery.setParameter("doi", articleDoi);
@@ -235,7 +257,7 @@ class VersionedIngestionService {
           "INSERT INTO articleJournalJoinTable (versionId, journalId) " +
           "VALUES (:versionId, :journalId)");
       query.setParameter("versionId", versionId);
-      query.setParameter("journalId", publicationJournal.getID());
+      query.setParameter("journalId", publicationJournal.getJournalID());
       query.executeUpdate();
       return getLastInsertId(session);
     });
@@ -293,7 +315,7 @@ class VersionedIngestionService {
    * @deprecated method signature accommodates testing and will be changed
    */
   @Deprecated
-  Article getArticleMetadata(ArticleIdentity id, OptionalInt revisionNumber, ArticleMetadataSource source) {
+  Article getArticleMetadata(ArticleVersionIdentifier versionId, ArticleMetadataSource source) {
     /*
      * *** Implementation notes ***
      *
@@ -312,7 +334,7 @@ class VersionedIngestionService {
      * TODO: Improve as described above and delete this comment block
      */
 
-    ArticleItem work = parentService.getArticleItem(id, revisionNumber);
+    ArticleItem work = parentService.getArticleItem(versionId.getItemFor());
 
     RepoVersion manuscriptVersion = work.getFile("manuscript").orElseThrow(() -> {
       String message = String.format("Work exists but does not have a manuscript. DOI: %s. Revision: %s",

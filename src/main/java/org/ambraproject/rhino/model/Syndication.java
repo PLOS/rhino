@@ -1,5 +1,12 @@
 package org.ambraproject.rhino.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.util.Date;
 
 /**
@@ -8,7 +15,9 @@ import java.util.Date;
  *
  * @author Alex Kudlick  11/17/11
  */
-public class Syndication extends AmbraEntity {
+@Entity
+@Table(name = "syndication")
+public class Syndication {
   /**
    * This Article has been published, but has not yet been submitted to this syndication target.
    */
@@ -27,30 +36,59 @@ public class Syndication extends AmbraEntity {
    */
   public static final String STATUS_FAILURE = "FAILURE";
 
+  @Id @GeneratedValue
+  @Column
+  private int syndicationId;
 
-  private String doi;
+  @ManyToOne
+  @JoinColumn(name = "versionId")
+  private ArticleVersion articleVersion;
+
+  @Column
   private String target;
+
+  @Column
   private String status;
+
+  @Column
   private int submissionCount;
+
+  @Column
   private String errorMessage;
+
+  @Column
   private Date lastSubmitTimestamp;
+
+  @Column
+  private Date created;
+
+  @Column //todo: pull this into a super class along with created
+  private Date lastModified;
 
   public Syndication() {
     super();
   }
 
-  public Syndication(String doi, String target) {
+  public Syndication(ArticleVersion articleVersion, String target) {
     this();
     this.target = target;
-    this.doi = doi;
+    this.articleVersion = articleVersion;
   }
 
-  public String getDoi() {
-    return doi;
+  public int getSyndicationId() {
+    return syndicationId;
   }
 
-  public void setDoi(String doi) {
-    this.doi = doi;
+  public void setSyndicationId(int syndicationId) {
+    this.syndicationId = syndicationId;
+  }
+
+  public ArticleVersion getArticleVersion() {
+    return articleVersion;
+  }
+
+  public void setArticleVersion(ArticleVersion articleVersion) {
+    this.articleVersion = articleVersion;
   }
 
   public String getTarget() {
@@ -93,32 +131,56 @@ public class Syndication extends AmbraEntity {
     this.lastSubmitTimestamp = lastSubmitTimestamp;
   }
 
+  public Date getCreated() {
+    return created;
+  }
+
+  public void setCreated(Date created) {
+    this.created = created;
+  }
+
+  public Date getLastModified() {
+    return lastModified;
+  }
+
+  public void setLastModified(Date lastModified) {
+    this.lastModified = lastModified;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (!(o instanceof Syndication)) return false;
+    if (o == null || getClass() != o.getClass()) return false;
 
     Syndication that = (Syndication) o;
 
-    if (doi != null ? !doi.equals(that.doi) : that.doi != null) return false;
-    if (status != null ? !status.equals(that.status) : that.status != null) return false;
-    if (target != null ? !target.equals(that.target) : that.target != null) return false;
+    if (syndicationId != that.syndicationId) return false;
+    if (submissionCount != that.submissionCount) return false;
+    if (!articleVersion.equals(that.articleVersion)) return false;
+    if (!target.equals(that.target)) return false;
+    if (!status.equals(that.status)) return false;
+    if (errorMessage != null ? !errorMessage.equals(that.errorMessage) : that.errorMessage != null)
+      return false;
+    return lastSubmitTimestamp != null ? lastSubmitTimestamp.equals(that.lastSubmitTimestamp) : that.lastSubmitTimestamp == null;
 
-    return true;
   }
 
   @Override
   public int hashCode() {
-    int result = doi != null ? doi.hashCode() : 0;
-    result = 31 * result + (target != null ? target.hashCode() : 0);
-    result = 31 * result + (status != null ? status.hashCode() : 0);
+    int result = syndicationId;
+    result = 31 * result + articleVersion.hashCode();
+    result = 31 * result + target.hashCode();
+    result = 31 * result + status.hashCode();
+    result = 31 * result + submissionCount;
+    result = 31 * result + (errorMessage != null ? errorMessage.hashCode() : 0);
+    result = 31 * result + (lastSubmitTimestamp != null ? lastSubmitTimestamp.hashCode() : 0);
     return result;
   }
 
   @Override
   public String toString() {
     return "Syndication{" +
-        "doi='" + doi + '\'' +
+        "articleVersion='" + articleVersion + '\'' +
         ", target='" + target + '\'' +
         ", status='" + status + '\'' +
         '}';

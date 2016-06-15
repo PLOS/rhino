@@ -768,7 +768,7 @@ public class IngestionTest extends BaseRhinoTest {
 
   private Syndication buildExpectedSyndication(String target, Article article) {
     Syndication result = new Syndication();
-    result.setDoi(article.getDoi());
+//    result.setDoi(article.getDoi());
     result.setTarget(target);
     result.setStatus("PENDING");
     result.setSubmissionCount(0);

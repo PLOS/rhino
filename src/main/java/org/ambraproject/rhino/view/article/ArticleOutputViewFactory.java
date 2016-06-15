@@ -1,10 +1,10 @@
 package org.ambraproject.rhino.view.article;
 
 import com.google.common.collect.ImmutableList;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Pingback;
 import org.ambraproject.rhino.model.Syndication;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleType;
@@ -48,7 +48,7 @@ public class ArticleOutputViewFactory {
     final ArticleIdentity articleIdentity = ArticleIdentity.create(article);
 
     Collection<RelatedArticleView> relatedArticles = articleCrudService.getRelatedArticles(article);
-    Collection<Syndication> syndications = syndicationService.getSyndications(article.getDoi());
+    Collection<Syndication> syndications = syndicationService.getSyndications(null); //todo: get articleIdentifier
     if (syndications == null) {
       log.warn("SyndicationService.getSyndications returned null; assuming no syndications");
       syndications = ImmutableList.of();

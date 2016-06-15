@@ -18,11 +18,16 @@
 
 package org.ambraproject.rhino.service;
 
+import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.ArticleItemIdentifier;
+import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
+import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.Article;
-import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.ArticleItem;
+import org.ambraproject.rhino.model.ArticleVersion;
+import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.util.Archive;
@@ -214,8 +219,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * @deprecated <em>TEMPORARY.</em> To be removed when the versioned data model is fully supported.
    */
   @Deprecated
-  public abstract Transceiver readVersionedMetadata(ArticleIdentity id,
-                                                    OptionalInt revisionNumber,
+  public abstract Transceiver readVersionedMetadata(ArticleVersionIdentifier versionId,
                                                     ArticleMetadataSource source);
 
   /**
@@ -230,11 +234,13 @@ public interface ArticleCrudService extends DoiBasedCrudService {
     FULL_MANUSCRIPT, FRONT_MATTER, FRONT_AND_BACK_MATTER
   }
 
-  public abstract Transceiver readRevisions(ArticleIdentity id);
+  public abstract Transceiver readRevisions(ArticleIdentifier id);
 
 
-  public abstract OptionalInt getLatestRevision(DoiBasedIdentity id);
+  public abstract int getLatestRevision(Doi doi);
 
 
-  public abstract ArticleItem getArticleItem(DoiBasedIdentity id, OptionalInt revisionNumber);
+  public abstract ArticleItem getArticleItem(ArticleItemIdentifier id);
+
+  public abstract ArticleVersion getArticleVersion(ArticleVersionIdentifier articleIdentifier);
 }

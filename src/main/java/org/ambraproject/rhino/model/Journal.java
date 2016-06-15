@@ -14,27 +14,81 @@
 package org.ambraproject.rhino.model;
 
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Model class containing all information for a journal.
  *
  * @author Juan Peralta 4/12/2012
  */
-public class Journal extends AmbraEntity {
+@Entity
+@Table(name = "journal")
+public class Journal extends AmbraEntity{
 
+  @Id
+  @GeneratedValue
+  @Column
+  private Long journalID;
+
+  @Column
   private String journalKey;
+
+  @Column
   private String eIssn;
+
+  @Column
   private String imageUri;
+
+  @Column
   private String title;
+
+  @Column
   private String description;
 
+  @JoinColumn(name = "currentIssueID")
+  @ManyToOne
   private Issue currentIssue;
 
+  @Cascade(CascadeType.SAVE_UPDATE)
+  @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+  @JoinTable(
+      name = "volume",
+      joinColumns = @JoinColumn(name = "journalID"),
+      inverseJoinColumns = @JoinColumn(name = "volumeID"))
   private List<Volume> volumes;
 
+  @Cascade(CascadeType.SAVE_UPDATE)
+  @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+  @JoinTable(
+      name = "articleList",
+      joinColumns = @JoinColumn(name = "journalID"),
+      inverseJoinColumns = @JoinColumn(name = "articleListID"))
   private Collection<ArticleList> articleLists;
+
+  @Cascade(CascadeType.SAVE_UPDATE)
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(
+      name = "articleJournalJoinTable",
+      joinColumns = @JoinColumn(name = "journalId"),
+      inverseJoinColumns = @JoinColumn(name = "versionId")
+  )
+  private Set<ArticleVersion> articleVersions;
 
   public Journal() {
     super();
@@ -43,6 +97,14 @@ public class Journal extends AmbraEntity {
   public Journal(String journalKey) {
     super();
     this.journalKey = journalKey;
+  }
+
+  public Long getJournalID() {
+    return journalID;
+  }
+
+  public void setJournalID(Long journalID) {
+    this.journalID = journalID;
   }
 
   public String getJournalKey() {
@@ -109,6 +171,15 @@ public class Journal extends AmbraEntity {
     this.articleLists = articleLists;
   }
 
+
+  public Set<ArticleVersion> getArticleVersions() {
+    return articleVersions;
+  }
+
+  public void setArticleVersions(Set<ArticleVersion> articleVersions) {
+    this.articleVersions = articleVersions;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -116,7 +187,7 @@ public class Journal extends AmbraEntity {
 
     Journal journal = (Journal) o;
 
-    if (getID() != null ? !getID().equals(journal.getID()) : journal.getID() != null) return false;
+    if (getJournalID() != null ? !getJournalID().equals(journal.getJournalID()) : journal.getJournalID() != null) return false;
     if (description != null ? !description.equals(journal.description) : journal.description != null) return false;
     if (eIssn != null ? !eIssn.equals(journal.eIssn) : journal.eIssn != null) return false;
     if (imageUri != null ? !imageUri.equals(journal.imageUri) : journal.imageUri != null) return false;
@@ -128,7 +199,7 @@ public class Journal extends AmbraEntity {
 
   @Override
   public int hashCode() {
-    int result = getID() != null ? getID().hashCode() : 0;
+    int result = getJournalID() != null ? getJournalID().hashCode() : 0;
     result = 31 * result + (journalKey != null ? journalKey.hashCode() : 0);
     result = 31 * result + (eIssn != null ? eIssn.hashCode() : 0);
     result = 31 * result + (imageUri != null ? imageUri.hashCode() : 0);
@@ -140,7 +211,7 @@ public class Journal extends AmbraEntity {
   @Override
   public String toString() {
     return "Journal{" +
-        "id='" + getID() + '\'' +
+        "id='" + getJournalID() + '\'' +
         ", journalKey='" + journalKey + '\'' +
         ", eIssn='" + eIssn + '\'' +
         ", imageUri='" + imageUri + '\'' +
