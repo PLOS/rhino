@@ -176,7 +176,7 @@ public class ArticleCrudController extends ArticleSpaceController {
         : excludeCitations ? ArticleMetadataSource.FRONT_MATTER
         : ArticleMetadataSource.FRONT_AND_BACK_MATTER;
 
-    Doi id = Doi.create(parse(request).getIdentifier());
+    Doi id = Doi.create(getIdentifier(request));
     int revisionNumberValue = (revisionNumber == null) ? articleCrudService.getLatestRevision(id) : revisionNumber;
     ArticleVersionIdentifier versionId = ArticleVersionIdentifier.create(id, revisionNumberValue);
     articleCrudService.readVersionedMetadata(versionId, sourceObj).respond(request, response, entityGson);
@@ -185,7 +185,7 @@ public class ArticleCrudController extends ArticleSpaceController {
   @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = {"revisions", "versionedPreview"})
   public void getRevisions(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    ArticleIdentifier id = ArticleIdentifier.create(parse(request).getIdentifier());
+    ArticleIdentifier id = ArticleIdentifier.create(getIdentifier(request));
     articleCrudService.readRevisions(id).respond(request, response, entityGson);
   }
 

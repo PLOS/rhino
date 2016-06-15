@@ -38,7 +38,7 @@ public class ArticleItemReadController extends DoiBasedCrudController {
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
-    Doi id = Doi.create(parse(request).getIdentifier());
+    Doi id = Doi.create(getIdentifier(request));
     int revisionNumberValue = (revisionNumber == null) ? articleCrudService.getLatestRevision(id) : revisionNumber;
     ArticleItem work = articleCrudService.getArticleItem(ArticleItemIdentifier.create(id, revisionNumberValue));
     asTransceiver(work).respond(request, response, entityGson);
