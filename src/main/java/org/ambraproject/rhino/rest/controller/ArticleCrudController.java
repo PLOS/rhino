@@ -18,8 +18,11 @@
 
 package org.ambraproject.rhino.rest.controller;
 
+import org.ambraproject.rhino.identity.ArticleFileIdentifier;
+import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
+import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
@@ -45,7 +48,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.OptionalInt;
 
 /**
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -170,19 +172,20 @@ public class ArticleCrudController extends ArticleSpaceController {
       @RequestParam(value = "excludeCitations", required = false) boolean excludeCitations,
       @RequestParam(value = "parseFullManuscript", required = false) boolean parseFullManuscript)
       throws IOException {
-    ArticleIdentity id = parse(request);
     ArticleMetadataSource sourceObj = parseFullManuscript ? ArticleMetadataSource.FULL_MANUSCRIPT
         : excludeCitations ? ArticleMetadataSource.FRONT_MATTER
         : ArticleMetadataSource.FRONT_AND_BACK_MATTER;
-    OptionalInt revisionNumberObj = (revisionNumber == null) ? OptionalInt.empty() : OptionalInt.of(revisionNumber);
-    articleCrudService.readVersionedMetadata(id, revisionNumberObj, sourceObj)
-        .respond(request, response, entityGson);
+
+    Doi id = Doi.create(parse(request).getIdentifier());
+    int revisionNumberValue = (revisionNumber == null) ? articleCrudService.getLatestRevision(id) : revisionNumber;
+    ArticleVersionIdentifier versionId = ArticleVersionIdentifier.create(id, revisionNumberValue);
+    articleCrudService.readVersionedMetadata(versionId, sourceObj).respond(request, response, entityGson);
   }
 
   @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = {"revisions", "versionedPreview"})
   public void getRevisions(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    ArticleIdentity id = parse(request);
+    ArticleIdentifier id = ArticleIdentifier.create(parse(request).getIdentifier());
     articleCrudService.readRevisions(id).respond(request, response, entityGson);
   }
 
@@ -231,9 +234,10 @@ public class ArticleCrudController extends ArticleSpaceController {
   public void readXml(HttpServletRequest request, HttpServletResponse response,
                       @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
-    DoiBasedIdentity assetId = DoiBasedIdentity.create(getIdentifier(request));
-    OptionalInt revisionNumberObj = (revisionNumber == null) ? OptionalInt.empty() : OptionalInt.of(revisionNumber);
-    assetFileCrudController.previewFileFromVersionedModel(request, response, "manuscript", revisionNumberObj, assetId);
+    Doi assetId = Doi.create(getIdentifier(request));
+    int revisionNumberValue = (revisionNumber == null) ? articleCrudService.getLatestRevision(assetId) : revisionNumber;
+    assetFileCrudController.previewFileFromVersionedModel(request, response,
+        ArticleFileIdentifier.create(assetId, revisionNumberValue, "manuscript"));
   }
 
   /**

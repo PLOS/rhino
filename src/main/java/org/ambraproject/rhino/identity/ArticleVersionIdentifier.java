@@ -22,6 +22,10 @@ public final class ArticleVersionIdentifier {
     return new ArticleVersionIdentifier(articleIdentifier, revision);
   }
 
+  public static ArticleVersionIdentifier create(Doi articleIdentifier, int revision) {
+    return create(ArticleIdentifier.create(articleIdentifier), revision);
+  }
+
   public static ArticleVersionIdentifier create(String articleIdentifier, int revision) {
     return create(ArticleIdentifier.create(articleIdentifier), revision);
   }
@@ -32,6 +36,13 @@ public final class ArticleVersionIdentifier {
 
   public int getRevision() {
     return revision;
+  }
+
+  /**
+   * @return the identifier for the article item containing this version's manuscript
+   */
+  public ArticleItemIdentifier getItemFor() {
+    return ArticleItemIdentifier.create(articleIdentifier.getDoi(), revision);
   }
 
   @Override
