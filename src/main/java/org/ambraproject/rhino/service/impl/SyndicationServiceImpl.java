@@ -80,7 +80,7 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
           "AND s.articleVersion.article.doi = :doi " +
           "AND s.articleVersion.revisionNumber = :revisionNumber");
       query.setParameter("target", syndicationTarget);
-      query.setParameter("doi", versionIdentifier.getArticleIdentifier().getDoi().getName());
+      query.setParameter("doi", versionIdentifier.getDoiName());
       query.setParameter("revisionNumber", versionIdentifier.getRevision());
       return (Syndication) query.uniqueResult();
     });
@@ -94,7 +94,7 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
           "FROM Syndication s " +
           "WHERE s.articleVersion.article.doi = :doi " +
           "AND s.articleVersion.revisionNumber = :revisionNumber");
-      query.setParameter("doi", versionIdentifier.getArticleIdentifier().getDoi().getName());
+      query.setParameter("doi", versionIdentifier.getDoiName());
       query.setParameter("revisionNumber", versionIdentifier.getRevision());
       return (List<Syndication>) query.list();
     });
@@ -295,7 +295,7 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
     StringBuilder body = new StringBuilder();
     body.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
         .append("<ambraMessage>")
-        .append("<doi>").append(articleVersionId.getArticleIdentifier().getDoi().getName()).append("</doi>")
+        .append("<doi>").append(articleVersionId.getDoiName()).append("</doi>")
         .append("<version>").append(articleVersionId.getRevision()).append("</doi>");
 
     if (additionalBodyContent != null) {

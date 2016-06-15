@@ -38,6 +38,11 @@ public final class ArticleVersionIdentifier {
     return revision;
   }
 
+  // Convenience method for unpacking into persistent form
+  public String getDoiName() {
+    return articleIdentifier.getDoiName();
+  }
+
   /**
    * @return the identifier for the article item containing this version's manuscript
    */

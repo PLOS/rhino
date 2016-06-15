@@ -25,6 +25,11 @@ public final class ArticleIdentifier {
     return doi;
   }
 
+  // Convenience method for unpacking into persistent form
+  public String getDoiName() {
+    return doi.getName();
+  }
+
   @Override
   public String toString() {
     return "ArticleIdentifier{" +

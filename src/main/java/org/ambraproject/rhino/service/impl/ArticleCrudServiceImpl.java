@@ -301,7 +301,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
               "INNER JOIN articleVersion version ON item.versionId = version.versionId " +
               "WHERE item.doi = :doi " +
               "ORDER BY version.revisionNumber ASC");
-          query.setParameter("doi", id.getDoi().getName());
+          query.setParameter("doi", id.getDoiName());
           return query.list();
         });
       }
@@ -557,7 +557,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           "INNER JOIN articleVersion version ON item.versionId = version.versionId " +
           "WHERE item.doi = :doi AND version.revisionNumber = :revisionNumber " +
           "  AND version.publicationState != :replaced");
-      query.setParameter("doi", id.getDoi().getName());
+      query.setParameter("doi", id.getDoiName());
       query.setParameter("revisionNumber", id.getRevision());
       query.setParameter("replaced", ArticleItem.PublicationState.REPLACED.getValue());
       return (Object[]) query.uniqueResult();
@@ -582,7 +582,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         (Object[] fileResult) -> (String) fileResult[0],
         (Object[] fileResult) -> RepoVersion.create((String) fileResult[1], (String) fileResult[2])));
 
-    return new ArticleItem(DoiBasedIdentity.create(id.getDoi().getName()), itemType, fileMap, id.getRevision(), state, timestamp.toInstant());
+    return new ArticleItem(DoiBasedIdentity.create(id.getDoiName()), itemType, fileMap, id.getRevision(), state, timestamp.toInstant());
   }
 
   public ArticleVersion getArticleVersion(ArticleVersionIdentifier articleIdentifier) {
@@ -593,7 +593,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           "AND av.article.doi = :doi " +
           "AND av.publicationState != :replaced");
       query.setParameter("revisionNumber", articleIdentifier.getRevision());
-      query.setParameter("doi", articleIdentifier.getArticleIdentifier().getDoi().getName());
+      query.setParameter("doi", articleIdentifier.getDoiName());
       query.setParameter("replaced", ArticleItem.PublicationState.REPLACED.getValue());
       return (ArticleVersion) query.uniqueResult();
     });

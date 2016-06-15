@@ -131,7 +131,7 @@ class VersionedIngestionService {
    * @param articleIdentifier
    */
   private long persistArticlePk(ArticleIdentifier articleIdentifier) {
-    String articleDoi = articleIdentifier.getDoi().getName();
+    String articleDoi = articleIdentifier.getDoiName();
     return parentService.hibernateTemplate.execute(session -> {
       SQLQuery selectQuery = session.createSQLQuery("SELECT articleId FROM article WHERE doi = :doi");
       selectQuery.setParameter("doi", articleDoi);
