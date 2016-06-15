@@ -1,7 +1,8 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.gson.Gson;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.identity.ArticleItemIdentifier;
+import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -18,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.OptionalInt;
 
 @Controller
 public class ArticleItemReadController extends DoiBasedCrudController {
@@ -38,9 +38,9 @@ public class ArticleItemReadController extends DoiBasedCrudController {
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
-    DoiBasedIdentity id = parse(request);
-    ArticleItem work = articleCrudService.getArticleItem(id,
-        (revisionNumber == null) ? OptionalInt.empty() : OptionalInt.of(revisionNumber));
+    Doi id = Doi.create(parse(request).getIdentifier());
+    int revisionNumberValue = (revisionNumber == null) ? articleCrudService.getLatestRevision(id) : revisionNumber;
+    ArticleItem work = articleCrudService.getArticleItem(ArticleItemIdentifier.create(id, revisionNumberValue));
     asTransceiver(work).respond(request, response, entityGson);
   }
 

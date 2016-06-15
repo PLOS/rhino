@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.service;
 
+import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
@@ -64,6 +65,6 @@ public interface AssetCrudService extends DoiBasedCrudService {
   public Transceiver readFileMetadata(AssetFileIdentity id)
       throws IOException;
 
-  public abstract RepoObjectMetadata getArticleItemFile(String fileType, OptionalInt revisionNumber, DoiBasedIdentity assetId);
+  public abstract RepoObjectMetadata getArticleItemFile(ArticleFileIdentifier fileId);
 
 }

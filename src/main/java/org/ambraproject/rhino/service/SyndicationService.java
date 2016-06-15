@@ -21,7 +21,7 @@
 
 package org.ambraproject.rhino.service;
 
-import org.ambraproject.rhino.model.ArticleVersionIdentifier;
+import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
 import org.ambraproject.rhino.model.Syndication;
 
 import java.util.List;
@@ -39,21 +39,21 @@ public interface SyndicationService {
    * Get the list of Syndication objects for this <code>articleDoi</code>. If there are no Syndications for this
    * articleDoi, then return an empty List. `
    *
-   * @param articleIdentifier The unique identifier for the Article which was (or is to be) syndicated
+   * @param versionIdentifier The unique identifier for the Article which was (or is to be) syndicated
    * @return The List of Syndications for this <code>articleDoi</code>. If there are no Syndications for this
    * articleDoi, then return an empty List
    * @throws org.ambraproject.service.article.NoSuchArticleIdException If the specified article doesn't exist
    */
-  public List<Syndication> getSyndications(ArticleVersionIdentifier articleIdentifier);
+  public List<Syndication> getSyndications(ArticleVersionIdentifier versionIdentifier);
 
   /**
    * Return the syndication for the given article and the given target.  Return null if there is none.
    *
-   * @param articleIdentifier the doi of the article to query
+   * @param versionIdentifier the doi of the article to query
    * @param target     the syndication target
    * @return the matching syndication, if it exists, else null
    */
-  public Syndication getSyndication(ArticleVersionIdentifier articleIdentifier, String target);
+  public Syndication getSyndication(ArticleVersionIdentifier versionIdentifier, String target);
 
   /**
    * Update the Syndication object specified by the <code>articleDoi</code> and <code>syndicationTarget</code>
@@ -85,11 +85,11 @@ public interface SyndicationService {
    * which was previously published and syndicated.
    * <p/>
    *
-   * @param articleIdentifier The unique identifier for the Article which was (or is to be) syndicated
+   * @param versionIdentifier The unique identifier for the Article which was (or is to be) syndicated
    * @return The complete list of Syndication objects for this Article
    * @throws org.ambraproject.service.article.NoSuchArticleIdException if the article doesn't exist
    */
-  public List<Syndication> createSyndications(ArticleVersionIdentifier articleIdentifier);
+  public List<Syndication> createSyndications(ArticleVersionIdentifier versionIdentifier);
 
   /**
    * Get Syndications (from the current journal) that each have a <code>status</code> of either <i>failed</i> or <i>in

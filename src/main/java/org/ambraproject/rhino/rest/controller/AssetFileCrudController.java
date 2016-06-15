@@ -21,9 +21,11 @@ package org.ambraproject.rhino.rest.controller;
 import com.google.common.base.Joiner;
 import com.google.common.io.ByteStreams;
 import com.google.common.net.HttpHeaders;
+import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
+import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.ErrorType;
@@ -47,7 +49,6 @@ import java.sql.Timestamp;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalInt;
 
 import static org.ambraproject.rhino.service.impl.AmbraService.reportNotFound;
 
@@ -58,6 +59,8 @@ public class AssetFileCrudController extends DoiBasedCrudController {
   private static final String ASSET_NAMESPACE = ASSET_ROOT + "/";
   private static final String ASSET_TEMPLATE = ASSET_NAMESPACE + "**";
 
+  @Autowired
+  private ArticleCrudService articleCrudService;
   @Autowired
   private AssetCrudService assetCrudService;
   @Autowired
@@ -172,15 +175,16 @@ public class AssetFileCrudController extends DoiBasedCrudController {
                                             @RequestParam(value = "type", required = true) String fileType,
                                             @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
-    DoiBasedIdentity assetId = DoiBasedIdentity.create(getIdentifier(request));
-    OptionalInt revisionNumberObj = (revisionNumber == null) ? OptionalInt.empty() : OptionalInt.of(revisionNumber);
-    previewFileFromVersionedModel(request, response, fileType, revisionNumberObj, assetId);
+    Doi assetId = Doi.create(getIdentifier(request));
+    int revisionNumberValue = (revisionNumber == null) ? articleCrudService.getLatestRevision(assetId) : revisionNumber;
+
+    previewFileFromVersionedModel(request, response, ArticleFileIdentifier.create(assetId, revisionNumberValue, fileType));
   }
 
   void previewFileFromVersionedModel(HttpServletRequest request, HttpServletResponse response,
-                                     String fileType, OptionalInt revisionNumber, DoiBasedIdentity assetId)
+                                     ArticleFileIdentifier fileId)
       throws IOException {
-    RepoObjectMetadata objectMetadata = assetCrudService.getArticleItemFile(fileType, revisionNumber, assetId);
+    RepoObjectMetadata objectMetadata = assetCrudService.getArticleItemFile(fileId);
 
     // Used only for defaults when objectMetadata does not supply values.
     // We expect objectMetadata to always supply those values.
