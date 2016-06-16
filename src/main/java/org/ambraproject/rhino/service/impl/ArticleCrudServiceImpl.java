@@ -332,6 +332,30 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return articleOutputViewFactory.create(article, excludeCitations);
   }
 
+  @Override
+  public Transceiver readVersionedAuthors(ArticleVersionIdentifier versionId) {
+    return new Transceiver() {
+      private InputStream openManuscriptStream() {
+        ArticleItem articleItem = getArticleItem(versionId.getItemFor());
+        RepoVersion manuscriptFile = articleItem.getFile("manuscript").orElseThrow(() ->
+            new RestClientException("Not an article item: " + versionId, HttpStatus.BAD_REQUEST));
+        return contentRepoService.getRepoObject(manuscriptFile);
+      }
+
+      @Override
+      protected Object getData() throws IOException {
+        try (InputStream manuscriptStream = openManuscriptStream()) {
+          return parseAuthors(manuscriptStream);
+        }
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    };
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -353,22 +377,28 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
       @Override
       protected Object getData() throws IOException {
-        Document doc = parseXml(readXml(id));
-        List<AuthorView> authors;
-        List<String> authorContributions;
-        List<String> competingInterests;
-        List<String> correspondingAuthorList;
-        try {
-          authors = AuthorsXmlExtractor.getAuthors(doc, xpathReader);
-          authorContributions = AuthorsXmlExtractor.getAuthorContributions(doc, xpathReader);
-          competingInterests = AuthorsXmlExtractor.getCompetingInterests(doc, xpathReader);
-          correspondingAuthorList = AuthorsXmlExtractor.getCorrespondingAuthorList(doc, xpathReader);
-        } catch (XPathException e) {
-          throw new RuntimeException("Invalid XML when parsing authors from: " + id, e);
+        try (InputStream manuscriptStream = readXml(id)) {
+          return parseAuthors(manuscriptStream);
         }
-        return new ArticleAllAuthorsView(authors, authorContributions, competingInterests, correspondingAuthorList);
       }
     };
+  }
+
+  private ArticleAllAuthorsView parseAuthors(InputStream manuscriptStream) throws IOException {
+    Document doc = parseXml(manuscriptStream);
+    List<AuthorView> authors;
+    List<String> authorContributions;
+    List<String> competingInterests;
+    List<String> correspondingAuthorList;
+    try {
+      authors = AuthorsXmlExtractor.getAuthors(doc, xpathReader);
+      authorContributions = AuthorsXmlExtractor.getAuthorContributions(doc, xpathReader);
+      competingInterests = AuthorsXmlExtractor.getCompetingInterests(doc, xpathReader);
+      correspondingAuthorList = AuthorsXmlExtractor.getCorrespondingAuthorList(doc, xpathReader);
+    } catch (XPathException e) {
+      throw new RuntimeException("Invalid XML when parsing authors", e);
+    }
+    return new ArticleAllAuthorsView(authors, authorContributions, competingInterests, correspondingAuthorList);
   }
 
   /**
@@ -585,6 +615,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return new ArticleItem(DoiBasedIdentity.create(id.getDoiName()), itemType, fileMap, id.getRevision(), state, timestamp.toInstant());
   }
 
+  @Override
   public ArticleVersion getArticleVersion(ArticleVersionIdentifier articleIdentifier) {
     ArticleVersion articleVersion = hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +

@@ -44,7 +44,8 @@ public class ArticleOutputViewFactory {
     final ArticleIdentity articleIdentity = ArticleIdentity.create(article);
 
     Collection<RelatedArticleView> relatedArticles = articleCrudService.getRelatedArticles(article);
-    Collection<Syndication> syndications = syndicationService.getSyndications(null); //todo: get articleIdentifier
+    //Collection<Syndication> syndications = syndicationService.getSyndications(null); //todo: get articleIdentifier
+    Collection<Syndication> syndications = null;
     if (syndications == null) {
       log.warn("SyndicationService.getSyndications returned null; assuming no syndications");
       syndications = ImmutableList.of();

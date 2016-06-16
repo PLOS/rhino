@@ -225,6 +225,27 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @throws IOException
    */
   @Transactional(readOnly = true)
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = {"authors", "versionedPreview"})
+  public void readAuthorsVersioned(HttpServletRequest request, HttpServletResponse response,
+                                   @RequestParam(value = "revision", required = false) Integer revisionNumber)
+      throws IOException {
+    Doi id = Doi.create(getIdentifier(request));
+    int revisionNumberValue = (revisionNumber == null) ? articleCrudService.getLatestRevision(id) : revisionNumber;
+    ArticleVersionIdentifier versionId = ArticleVersionIdentifier.create(id, revisionNumberValue);
+
+    articleCrudService.readVersionedAuthors(versionId).respond(request, response, entityGson);
+  }
+
+  /**
+   * Retrieves a list of objects representing the authors of the article. While the article metadata contains author
+   * names, this list will contain more author information than the article metadata, such as author affiliations,
+   * corresponding author, etc.
+   *
+   * @param request
+   * @param response
+   * @throws IOException
+   */
+  @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "authors")
   public void readAuthors(HttpServletRequest request, HttpServletResponse response)
       throws IOException {

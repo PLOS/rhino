@@ -144,6 +144,8 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   public abstract Transceiver readAuthors(ArticleIdentity id)
       throws IOException;
 
+  public abstract Transceiver readVersionedAuthors(ArticleVersionIdentifier versionId);
+
   /**
    * Read category information from the Ambra database.
    *
