@@ -13,9 +13,6 @@
 
 package org.ambraproject.rhino.model;
 
-import org.hibernate.annotations.Parameter;
-import org.hibernate.annotations.Type;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,12 +33,6 @@ public class Comment {
   @GeneratedValue
   @Column
   private Long commentId;
-
-  @Column
-  @Type(type = "org.ambraproject.rhino.config.HibernateAdaptingType",
-      parameters = {@Parameter(name = "class", value = "org.ambraproject.rhino.model.CommentType"),
-          @Parameter(name = "adapter", value = "ADAPTER")})
-  private CommentType type;
 
   @Column
   private Long userProfileID;
@@ -80,14 +71,6 @@ public class Comment {
 
   public Comment() {
     super();
-  }
-
-  public Comment(Long userProfileID, CommentType type, ArticleTable article) {
-    this();
-
-    this.userProfileID = userProfileID;
-    this.type = type;
-    this.article = article;
   }
 
   public Long getCommentId() {
@@ -150,14 +133,6 @@ public class Comment {
     this.commentUri = commentUri;
   }
 
-  public CommentType getType() {
-    return type;
-  }
-
-  public void setType(CommentType type) {
-    this.type = type;
-  }
-
   public String getTitle() {
     return title;
   }
@@ -208,7 +183,6 @@ public class Comment {
     if (article != null ? !article.equals(that.article) : that.article != null) return false;
     if (body != null ? !body.equals(that.body) : that.body != null) return false;
     if (title != null ? !title.equals(that.title) : that.title != null) return false;
-    if (type != that.type) return false;
 
     return true;
   }
@@ -216,7 +190,6 @@ public class Comment {
   @Override
   public int hashCode() {
     int result = article != null ? article.hashCode() : 0;
-    result = 31 * result + (type != null ? type.hashCode() : 0);
     result = 31 * result + (title != null ? title.hashCode() : 0);
     result = 31 * result + (body != null ? body.hashCode() : 0);
     return result;
@@ -225,8 +198,7 @@ public class Comment {
   @Override
   public String toString() {
     return "Comment{" +
-        "type=" + type +
-        ", title='" + title + '\'' +
+        "title='" + title + '\'' +
         ", body='" + body + '\'' +
         '}';
   }

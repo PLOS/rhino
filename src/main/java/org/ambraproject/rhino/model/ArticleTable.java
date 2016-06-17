@@ -18,6 +18,16 @@ public class ArticleTable { //todo: rename to "Article" once the old Article cla
   @Column(name = "doi")
   private String doi;
 
+//todo: figure this out if possible to get list of comments on article w/o a new table or column
+//  @Cascade(CascadeType.SAVE_UPDATE)
+//  @ManyToMany(fetch = FetchType.LAZY)
+//  @JoinTable(
+//      name = "comment",
+//      joinColumns = @JoinColumn(name = "commentId"),
+//      inverseJoinColumns = @JoinColumn(name = "articleId")
+//  )
+//  private Set<Comment> comments;
+
   public Long getArticleId() {
     return articleId;
   }
@@ -33,6 +43,14 @@ public class ArticleTable { //todo: rename to "Article" once the old Article cla
   public void setDoi(String doi) {
     this.doi = doi;
   }
+
+//  public Set<Comment> getComments() {
+//    return comments;
+//  }
+//
+//  public void setComments(Set<Comment> comments) {
+//    this.comments = comments;
+//  }
 
   @Override
   public boolean equals(Object o) {

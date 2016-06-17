@@ -45,7 +45,7 @@ public class Flag extends AmbraEntity {
 
   @Column
   @Type(type = "org.ambraproject.rhino.config.HibernateAdaptingType",
-      parameters = {@Parameter(name = "class", value = "org.ambraproject.rhino.model.CommentType"),
+      parameters = {@Parameter(name = "class", value = "org.ambraproject.rhino.model.FlagReasonCode"),
           @Parameter(name = "adapter", value = "ADAPTER")})
   private FlagReasonCode reason;
 

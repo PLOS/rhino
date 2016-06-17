@@ -23,11 +23,11 @@ import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
-import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
-import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.service.ArticleListCrudService;
+import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhombat.HttpDateUtil;
@@ -202,7 +202,7 @@ public class ArticleCrudController extends ArticleSpaceController {
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "comments")
   public void readComments(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    ArticleIdentity id = parse(request);
+    ArticleIdentifier id = ArticleIdentifier.create(getIdentifier(request));
     commentCrudService.readComments(id).respond(request, response, entityGson);
   }
 
@@ -210,8 +210,8 @@ public class ArticleCrudController extends ArticleSpaceController {
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "commentCount")
   public void getCommentCount(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    ArticleIdentity id = parse(request);
-    Article article = articleCrudService.findArticleById(id);
+    ArticleIdentifier id = ArticleIdentifier.create(getIdentifier(request));
+    ArticleTable article = articleCrudService.getArticle(id);
     commentCrudService.getCommentCount(article).respond(request, response, entityGson);
   }
 

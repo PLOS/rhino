@@ -15,7 +15,7 @@ package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Comment;
 import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.util.response.Transceiver;
@@ -78,6 +78,6 @@ public interface CommentCrudService {
 
   public Transceiver readRecentComments(String journalKey, OptionalInt limit);
 
-  public Transceiver getCommentCount(Article article);
+  public Transceiver getCommentCount(ArticleTable article);
 
 }

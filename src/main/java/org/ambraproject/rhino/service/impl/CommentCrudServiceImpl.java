@@ -19,10 +19,8 @@ import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Comment;
-import org.ambraproject.rhino.model.CommentType;
 import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.model.FlagReasonCode;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -36,14 +34,15 @@ import org.ambraproject.rhino.view.comment.CommentInputView;
 import org.ambraproject.rhino.view.comment.CommentNodeView;
 import org.ambraproject.rhino.view.comment.CommentOutputView;
 import org.hibernate.Query;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -151,17 +150,13 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
 
     final ArticleTable article;
     final Comment parentComment;
-    final CommentType commentType;
     if (parentCommentUri.isPresent()) {
-      // The comment is a reply to a parent comment.
-      // The client might not have declared the parent article, so look it up from the parent comment.
       parentComment = getComment(DoiBasedIdentity.create(parentCommentUri.get().getKey()));
       if (parentComment == null) {
         throw new RestClientException("Parent comment not found: " + parentCommentUri, HttpStatus.BAD_REQUEST);
       }
 
       article = parentComment.getArticle();
-      commentType = CommentType.REPLY;
 
       ArticleIdentity articleDoiFromDb = ArticleIdentity.create(parentComment.getArticle().getDoi());
       if (!articleDoi.isPresent()) {
@@ -179,7 +174,6 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
 
       article = articleCrudService.getArticle(ArticleIdentifier.create(articleDoi.get().getKey()));
       parentComment = null;
-      commentType = CommentType.COMMENT;
     }
 
     String doiPrefix = extractDoiPrefix(articleDoi.get()); // comment receives same DOI prefix as article
@@ -187,21 +181,16 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     DoiBasedIdentity createdCommentUri = DoiBasedIdentity.create(doiPrefix + "annotation/" + uuid);
 
     Comment created = new Comment();
-    created.setType(commentType);
     created.setArticle(article);
     created.setParent(parentComment);
     created.setCommentUri(createdCommentUri.getKey());
-
-    //todo: these dates should be automatic, but is throwing error if left undefined
-    created.setCreated(DateTime.now().toDate());
-    created.setLastModified(DateTime.now().toDate());
-
     created.setUserProfileID(Long.valueOf(Strings.nullToEmpty(input.getCreatorUserId())));
     created.setTitle(Strings.nullToEmpty(input.getTitle()));
     created.setBody(Strings.nullToEmpty(input.getBody()));
     created.setHighlightedText(Strings.nullToEmpty(input.getHighlightedText()));
     created.setCompetingInterestBody(Strings.nullToEmpty(input.getCompetingInterestStatement()));
     created.setIsRemoved(Boolean.valueOf(Strings.nullToEmpty(input.getIsRemoved())));
+    created.setLastModified(Date.from(Instant.now()));
 
     hibernateTemplate.save(created);
     return created;
@@ -285,6 +274,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     flag.setUserProfileId(flagCreator);
     flag.setComment(input.getBody());
     flag.setReason(FlagReasonCode.fromString(input.getReasonCode()));
+    flag.setLastModified(Date.from(Instant.now()));
 
     hibernateTemplate.save(flag);
     return flag;
@@ -405,7 +395,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   }
 
   @Override
-  public Transceiver getCommentCount(Article article) {
+  public Transceiver getCommentCount(ArticleTable article) {
     return new Transceiver() {
       @Override
       protected Map<String, Object> getData() throws IOException {
@@ -415,7 +405,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
               "COALESCE(SUM(CASE WHEN ann.parentID IS NULL THEN 1 ELSE 0 END), 0) AS root) " +
               "FROM Annotation ann " +
               "WHERE ann.articleID = :articleID ");
-          query.setParameter("articleID", article.getID());
+          query.setParameter("articleID", article.getArticleId());
           return query.uniqueResult();
         });
         return result;
