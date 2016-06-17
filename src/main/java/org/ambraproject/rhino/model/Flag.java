@@ -13,26 +13,70 @@
 
 package org.ambraproject.rhino.model;
 
+import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import java.util.Date;
+
 /**
  * @author Alex Kudlick 3/7/12
  */
+@Entity
+@Table(name = "commentFlag")
 public class Flag extends AmbraEntity {
 
+  @Id
+  @GeneratedValue
+  @Column
+  private Long commentFlagId;
+
+  @Column
   private String comment;
-  private Long userProfileID;
+
+  @Column
+  private Long userProfileId;
+
+  @Column
+  @Type(type = "org.ambraproject.rhino.config.HibernateAdaptingType",
+      parameters = {@Parameter(name = "class", value = "org.ambraproject.rhino.model.CommentType"),
+          @Parameter(name = "adapter", value = "ADAPTER")})
   private FlagReasonCode reason;
-  private Annotation flaggedAnnotation;
+
+  @ManyToOne
+  @JoinColumn(name = "commentId")
+  private Comment flaggedComment;
+
+  @Column
+  private Date created;
+
+  @Column
+  private Date lastModified;
 
   public Flag() {
     super();
     this.reason = FlagReasonCode.OTHER;
   }
 
-  public Flag(Long userProfileID, FlagReasonCode reason, Annotation flaggedAnnotation) {
+  public Flag(Long userProfileId, FlagReasonCode reason, Comment flaggedComment) {
     super();
-    this.userProfileID = userProfileID;
+    this.userProfileId = userProfileId;
     this.reason = reason;
-    this.flaggedAnnotation = flaggedAnnotation;
+    this.flaggedComment = flaggedComment;
+  }
+
+  public Long getCommentFlagId() {
+    return commentFlagId;
+  }
+
+  public void setCommentFlagId(Long commentId) {
+    this.commentFlagId = commentId;
   }
 
   public String getComment() {
@@ -43,12 +87,12 @@ public class Flag extends AmbraEntity {
     this.comment = comment;
   }
 
-  public Long getUserProfileID() {
-    return userProfileID;
+  public Long getUserProfileId() {
+    return userProfileId;
   }
 
-  public void setUserProfileID(Long userProfileID) {
-    this.userProfileID = userProfileID;
+  public void setUserProfileId(Long userProfileId) {
+    this.userProfileId = userProfileId;
   }
 
   public FlagReasonCode getReason() {
@@ -59,29 +103,54 @@ public class Flag extends AmbraEntity {
     this.reason = reason;
   }
 
-  public Annotation getFlaggedAnnotation() {
-    return flaggedAnnotation;
+  public Comment getFlaggedComment() {
+    return flaggedComment;
   }
 
-  public void setFlaggedAnnotation(Annotation flaggedAnnotation) {
-    this.flaggedAnnotation = flaggedAnnotation;
+  public void setFlaggedComment(Comment flaggedComment) {
+    this.flaggedComment = flaggedComment;
+  }
+
+  public Date getCreated() {
+    return created;
+  }
+
+  public void setCreated(Date created) {
+    this.created = created;
+  }
+
+  public Date getLastModified() {
+    return lastModified;
+  }
+
+  public void setLastModified(Date lastModified) {
+    this.lastModified = lastModified;
   }
 
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (!(o instanceof Flag)) return false;
+    if (o == null || getClass() != o.getClass()) return false;
 
     Flag flag = (Flag) o;
 
-    if (getID() != null ? !getID().equals(flag.getID()) : flag.getID() != null) return false;
+    if (commentFlagId != flag.commentFlagId) return false;
+    if (comment != null ? !comment.equals(flag.comment) : flag.comment != null) return false;
+    if (userProfileId != null ? !userProfileId.equals(flag.userProfileId) : flag.userProfileId != null)
+      return false;
+    if (reason != flag.reason) return false;
+    return flaggedComment != null ? flaggedComment.equals(flag.flaggedComment) : flag.flaggedComment == null;
 
-    return true;
   }
 
   @Override
   public int hashCode() {
-    return getID().hashCode();
+    Long result = commentFlagId;
+    result = 31 * result + (comment != null ? comment.hashCode() : 0);
+    result = 31 * result + (userProfileId != null ? userProfileId.hashCode() : 0);
+    result = 31 * result + (reason != null ? reason.hashCode() : 0);
+    result = 31 * result + (flaggedComment != null ? flaggedComment.hashCode() : 0);
+    return result.intValue();
   }
 
   @Override

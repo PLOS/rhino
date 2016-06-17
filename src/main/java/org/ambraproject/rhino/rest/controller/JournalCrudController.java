@@ -3,7 +3,7 @@ package org.ambraproject.rhino.rest.controller;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
-import org.ambraproject.rhino.service.AnnotationCrudService;
+import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.view.journal.JournalInputView;
@@ -35,7 +35,7 @@ public class JournalCrudController extends RestController {
   @Autowired
   private VolumeCrudService volumeCrudService;
   @Autowired
-  private AnnotationCrudService annotationCrudService;
+  private CommentCrudService commentCrudService;
 
   @Transactional(readOnly = true)
   @RequestMapping(value = JOURNAL_ROOT, method = RequestMethod.GET)
@@ -87,7 +87,7 @@ public class JournalCrudController extends RestController {
                                 @RequestParam(value = "limit", required = false) Integer limit)
       throws IOException {
     OptionalInt limitObj = (limit == null) ? OptionalInt.empty() : OptionalInt.of(limit);
-    annotationCrudService.readRecentComments(journalKey, limitObj).respond(request, response, entityGson);
+    commentCrudService.readRecentComments(journalKey, limitObj).respond(request, response, entityGson);
   }
 
 }

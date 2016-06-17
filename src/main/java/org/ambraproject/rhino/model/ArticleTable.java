@@ -13,16 +13,16 @@ public class ArticleTable { //todo: rename to "Article" once the old Article cla
   @Id
   @GeneratedValue
   @Column(name = "articleId")
-  private int articleId;
+  private Long articleId;
 
   @Column(name = "doi")
   private String doi;
 
-  public int getArticleId() {
+  public Long getArticleId() {
     return articleId;
   }
 
-  public void setArticleId(int articleId) {
+  public void setArticleId(Long articleId) {
     this.articleId = articleId;
   }
 
@@ -48,8 +48,8 @@ public class ArticleTable { //todo: rename to "Article" once the old Article cla
 
   @Override
   public int hashCode() {
-    int result = articleId;
+    Long result = articleId;
     result = 31 * result + doi.hashCode();
-    return result;
+    return result.intValue();
   }
 }

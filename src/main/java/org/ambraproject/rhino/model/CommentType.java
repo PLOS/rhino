@@ -18,13 +18,13 @@ import org.ambraproject.rhino.config.PersistenceAdapter;
 /**
  * Types of annotations
  */
-public enum AnnotationType {
+public enum CommentType {
   COMMENT("Comment"), //comment on an article
   REPLY("Reply");
 
   private String string;
 
-  private AnnotationType(String string) {
+  private CommentType(String string) {
     this.string = string;
   }
 
@@ -33,7 +33,7 @@ public enum AnnotationType {
     return this.string;
   }
 
-  public static AnnotationType fromString(String string) {
+  public static CommentType fromString(String string) {
     if (COMMENT.string.equals(string)) {
       return COMMENT;
     } else if (REPLY.string.equals(string)) {
@@ -46,10 +46,10 @@ public enum AnnotationType {
     }
   }
 
-  public static final PersistenceAdapter<AnnotationType, String> ADAPTER = new PersistenceAdapter<AnnotationType, String>() {
+  public static final PersistenceAdapter<CommentType, String> ADAPTER = new PersistenceAdapter<CommentType, String>() {
     @Override
-    public Class<AnnotationType> getModelClass() {
-      return AnnotationType.class;
+    public Class<CommentType> getModelClass() {
+      return CommentType.class;
     }
 
     @Override
@@ -58,12 +58,12 @@ public enum AnnotationType {
     }
 
     @Override
-    public String encode(AnnotationType model) {
+    public String encode(CommentType model) {
       return model.toString();
     }
 
     @Override
-    public AnnotationType decode(String data) {
+    public CommentType decode(String data) {
       try {
         return fromString(data);
       } catch (IllegalArgumentException e) {
