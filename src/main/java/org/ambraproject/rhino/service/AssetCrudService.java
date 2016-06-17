@@ -18,9 +18,7 @@
 
 package org.ambraproject.rhino.service;
 
-import com.google.common.base.Optional;
-import org.ambraproject.rhino.model.ArticleAsset;
-import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
@@ -29,6 +27,7 @@ import org.plos.crepo.model.RepoObjectMetadata;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.OptionalInt;
 
 public interface AssetCrudService extends DoiBasedCrudService {
 
@@ -66,17 +65,6 @@ public interface AssetCrudService extends DoiBasedCrudService {
   public Transceiver readFileMetadata(AssetFileIdentity id)
       throws IOException;
 
-  /**
-   * Find the parent article of an asset. If the argument identifies an article, the same identity is returned.
-   *
-   * @param identity the identity of an article or an article asset
-   * @return the parent article
-   */
-  public abstract ArticleIdentity getParentArticle(DoiBasedIdentity identity);
-
-  public abstract RepoObjectMetadata getAssetObject(ArticleIdentity parentArticleId,
-                                                    AssetIdentity assetId,
-                                                    Optional<Integer> versionNumber,
-                                                    String fileType);
+  public abstract RepoObjectMetadata getArticleItemFile(ArticleFileIdentifier fileId);
 
 }

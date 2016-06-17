@@ -2,9 +2,9 @@ package org.ambraproject.rhino.rest.controller.abstr;
 
 import com.wordnik.swagger.annotations.ApiOperation;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.model.Annotation;
+import org.ambraproject.rhino.model.Comment;
 import org.ambraproject.rhino.model.Flag;
-import org.ambraproject.rhino.service.AnnotationCrudService;
+import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,40 +36,40 @@ public class CommentCrudController extends DoiBasedCrudController {
   }
 
   @Autowired
-  private AnnotationCrudService annotationCrudService;
+  private CommentCrudService commentCrudService;
 
   @RequestMapping(value = COMMENT_META_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     DoiBasedIdentity commentId = parse(request);
-    annotationCrudService.readComment(commentId).respond(request, response, entityGson);
+    commentCrudService.readComment(commentId).respond(request, response, entityGson);
   }
 
   @RequestMapping(value = COMMENT_META_ROOT, method = RequestMethod.GET, params = {FLAGGED_PARAMETER})
   public void readAllFlaggedComments(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    annotationCrudService.readFlaggedComments().respond(request, response, entityGson);
+    commentCrudService.readFlaggedComments().respond(request, response, entityGson);
   }
 
   @RequestMapping(value = FLAGS_META_ROOT, method = RequestMethod.GET)
   public void readAllFlags(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    annotationCrudService.readAllCommentFlags().respond(request, response, entityGson);
+    commentCrudService.readAllCommentFlags().respond(request, response, entityGson);
   }
 
   @RequestMapping(value = COMMENT_META_ROOT, method = RequestMethod.POST)
   public ResponseEntity<?> create(HttpServletRequest request)
       throws IOException {
     CommentInputView input = readJsonFromRequest(request, CommentInputView.class);
-    Annotation created = annotationCrudService.createComment(input);
-    return reportCreated(created.getAnnotationUri());
+    Comment created = commentCrudService.createComment(input);
+    return reportCreated(created.getCommentUri());
   }
 
   @RequestMapping(value = COMMENT_META_TEMPLATE, method = RequestMethod.DELETE, params = FLAGS_PARAMETER)
   public ResponseEntity<?> removeAllFlags(HttpServletRequest request)
       throws IOException {
     DoiBasedIdentity commentId = parse(request);
-    String commentUri = annotationCrudService.removeFlagsFromComment(commentId);
+    String commentUri = commentCrudService.removeFlagsFromComment(commentId);
     return reportOk(commentUri);
   }
 
@@ -78,8 +78,8 @@ public class CommentCrudController extends DoiBasedCrudController {
       throws IOException {
     DoiBasedIdentity commentId = parse(request);
     CommentInputView input = readJsonFromRequest(request, CommentInputView.class);
-    Annotation patched = annotationCrudService.patchComment(commentId, input);
-    return reportOk(patched.getAnnotationUri());
+    Comment patched = commentCrudService.patchComment(commentId, input);
+    return reportOk(patched.getCommentUri());
   }
 
   @RequestMapping(value = COMMENT_META_TEMPLATE, method = RequestMethod.DELETE)
@@ -89,7 +89,7 @@ public class CommentCrudController extends DoiBasedCrudController {
   public ResponseEntity<?> delete(HttpServletRequest request)
       throws IOException {
     DoiBasedIdentity commentId = parse(request);
-    String deletedCommentUri = annotationCrudService.deleteComment(commentId);
+    String deletedCommentUri = commentCrudService.deleteComment(commentId);
     return reportOk(deletedCommentUri);
   }
 
@@ -97,7 +97,7 @@ public class CommentCrudController extends DoiBasedCrudController {
   public ResponseEntity<String> createFlag(HttpServletRequest request) throws IOException {
     DoiBasedIdentity commentId = parse(request);
     CommentFlagInputView input = readJsonFromRequest(request, CommentFlagInputView.class);
-    Flag commentFlag = annotationCrudService.createCommentFlag(commentId, input);
+    Flag commentFlag = commentCrudService.createCommentFlag(commentId, input);
     return reportCreated(commentFlag.getID().toString());
   }
 
@@ -105,20 +105,20 @@ public class CommentCrudController extends DoiBasedCrudController {
   public void readFlagsOnComment(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     DoiBasedIdentity commentId = parse(request);
-    annotationCrudService.readCommentFlagsOn(commentId).respond(request, response, entityGson);
+    commentCrudService.readCommentFlagsOn(commentId).respond(request, response, entityGson);
   }
 
   @RequestMapping(value = FLAGS_META_TEMPLATE, method = RequestMethod.GET)
   public void readFlag(HttpServletRequest request, HttpServletResponse response,
                        @PathVariable("flagId") String flagId)
       throws IOException {
-    annotationCrudService.readCommentFlag(flagId).respond(request, response, entityGson);
+    commentCrudService.readCommentFlag(flagId).respond(request, response, entityGson);
   }
 
   @RequestMapping(value = FLAGS_META_TEMPLATE, method = RequestMethod.DELETE)
   public ResponseEntity<Object> removeFlag(@PathVariable("flagId") String flagId)
       throws IOException {
-    annotationCrudService.deleteCommentFlag(flagId);
+    commentCrudService.deleteCommentFlag(flagId);
     return reportOk(flagId);
   }
 

@@ -91,12 +91,7 @@ public abstract class Archive implements Closeable {
     if (!files.containsKey(Preconditions.checkNotNull(entryName))) {
       throw new IllegalArgumentException("Archive does not contain an entry named: " + entryName);
     }
-    return new RepoObject.ContentAccessor() {
-      @Override
-      public InputStream open() throws IOException {
-        return openFile(entryName);
-      }
-    };
+    return () -> openFile(entryName);
   }
 
   /**

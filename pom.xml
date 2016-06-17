@@ -90,6 +90,12 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
+    <repository>
+      <id>JBoss</id>
+      <name>JBoss Repsitory</name>
+      <layout>default</layout>
+      <url>http://repository.jboss.org/maven2</url>
+    </repository>
   </repositories>
 
   <distributionManagement>
@@ -163,6 +169,16 @@
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-entitymanager</artifactId>
       <version>${hibernate-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-commons-annotations</artifactId>
+      <version>3.2.0.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-annotations</artifactId>
+      <version>3.5.6-Final</version>
     </dependency>
 
     <dependency>
@@ -300,6 +316,12 @@
         </exclusion>
       </exclusions>
       <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate.javax.persistence</groupId>
+      <artifactId>hibernate-jpa-2.0-api</artifactId>
+      <version>1.0.1.Final</version>
     </dependency>
 
     <!-- @Inject -->

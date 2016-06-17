@@ -16,15 +16,18 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
+import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.model.Annotation;
-import org.ambraproject.rhino.model.AnnotationType;
 import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Comment;
+import org.ambraproject.rhino.model.CommentType;
 import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.model.FlagReasonCode;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.service.AnnotationCrudService;
+import org.ambraproject.rhino.service.ArticleCrudService;
+import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
@@ -32,12 +35,9 @@ import org.ambraproject.rhino.view.comment.CommentFlagOutputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
 import org.ambraproject.rhino.view.comment.CommentNodeView;
 import org.ambraproject.rhino.view.comment.CommentOutputView;
-import org.hibernate.FetchMode;
 import org.hibernate.Query;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Restrictions;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
@@ -53,10 +53,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class AnnotationCrudServiceImpl extends AmbraService implements AnnotationCrudService {
+@SuppressWarnings("JpaQlInspection")
+public class CommentCrudServiceImpl extends AmbraService implements CommentCrudService {
 
   @Autowired
   private RuntimeConfiguration runtimeConfiguration;
+
+  @Autowired
+  private ArticleCrudService articleCrudService;
 
   /**
    * Fetch all annotations that belong to an article.
@@ -64,24 +68,20 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
    * @param article the article
    * @return the collection of annotations
    */
-  private Collection<Annotation> fetchAllAnnotations(Article article) {
-    return (List<Annotation>) hibernateTemplate.find("FROM Annotation WHERE articleID = ?", article.getID());
+  private Collection<Comment> fetchAllComments(ArticleTable article) {
+    return (List<Comment>) hibernateTemplate.find("FROM comment WHERE articleId = ?", article.getArticleId());
   }
 
   @Override
-  public Transceiver readComments(ArticleIdentity articleIdentity) throws IOException {
+  public Transceiver readComments(ArticleIdentifier articleId) throws IOException {
     return new Transceiver() {
       @Override
       protected Collection<CommentOutputView> getData() throws IOException {
-        Article article = (Article) DataAccessUtils.uniqueResult(
-            hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
-                    .setFetchMode("journals", FetchMode.JOIN)
-                    .add(Restrictions.eq("doi", articleIdentity.getKey()))
-            ));
-        Collection<Annotation> comments = fetchAllAnnotations(article);
-        CommentOutputView.Factory factory = new CommentOutputView.Factory(runtimeConfiguration, article, comments);
+        ArticleTable article = articleCrudService.getArticle(articleId);
+        Collection<Comment> comments = fetchAllComments(article);
+        CommentOutputView.Factory factory = new CommentOutputView.Factory(runtimeConfiguration, comments);
         return comments.stream()
-            .filter(comment -> comment.getParentID() == null)
+            .filter(comment -> comment.getParent() == null)
             .sorted(CommentOutputView.BY_DATE)
             .map(factory::buildView)
             .collect(Collectors.toList());
@@ -99,16 +99,9 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
     return new Transceiver() {
       @Override
       protected CommentOutputView getData() throws IOException {
-        Annotation annotation = getComment(commentId);
-
-        // TODO: Make this more efficient. Three queries is too many.
-        Article article = (Article) DataAccessUtils.uniqueResult(
-            hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
-                    .setFetchMode("journals", FetchMode.JOIN)
-                    .add(Restrictions.eq("ID", annotation.getArticleID()))
-            ));
-
-        return new CommentOutputView.Factory(runtimeConfiguration, article, fetchAllAnnotations(article)).buildView(annotation);
+        Comment comment = getComment(commentId);
+        return new CommentOutputView.Factory(runtimeConfiguration,
+            fetchAllComments(comment.getArticle())).buildView(comment);
       }
 
       @Override
@@ -118,20 +111,24 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
     };
   }
 
-  private Annotation getComment(DoiBasedIdentity commentId) {
-    Annotation annotation = (Annotation) DataAccessUtils.uniqueResult(
-        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Annotation.class)
-            .add(Restrictions.eq("annotationUri", commentId.getKey()))));
-    if (annotation == null) {
+  private Comment getComment(DoiBasedIdentity commentId) {
+    Comment comment = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM Comment WHERE commentUri = :commentUri");
+      query.setParameter("commentUri", commentId.getKey());
+      return (Comment) query.uniqueResult();
+    });
+    if (comment == null) {
       throw reportNotFound(commentId);
     }
-    return annotation;
+    return comment;
   }
 
   private Flag getFlag(String flagId) {
-    Flag flag = (Flag) DataAccessUtils.uniqueResult(
-        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Flag.class)
-            .add(Restrictions.eq("ID", Long.parseLong(flagId)))));
+    Flag flag = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM CommentFlag WHERE flagId = :flagId");
+      query.setParameter("flagId", flagId);
+      return (Flag) query.uniqueResult();
+    });
     if (flag == null) {
       String message = "Comment flag not found at the provided ID: " + flagId;
       throw new RestClientException(message, HttpStatus.NOT_FOUND);
@@ -148,30 +145,25 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
   }
 
   @Override
-  public Annotation createComment(CommentInputView input) {
+  public Comment createComment(CommentInputView input) {
     final Optional<DoiBasedIdentity> parentCommentUri = Optional.ofNullable(input.getParentCommentId()).map(DoiBasedIdentity::create);
     Optional<ArticleIdentity> articleDoi = Optional.ofNullable(input.getArticleDoi()).map(ArticleIdentity::create);
 
-    final Long articlePk;
-    final Optional<Long> parentCommentPk;
-    final AnnotationType annotationType;
+    final ArticleTable article;
+    final Comment parentComment;
+    final CommentType commentType;
     if (parentCommentUri.isPresent()) {
       // The comment is a reply to a parent comment.
       // The client might not have declared the parent article, so look it up from the parent comment.
-      Object[] parentAnnotationData = (Object[]) DataAccessUtils.uniqueResult(hibernateTemplate.find("" +
-              "SELECT ann.ID, ann.articleID, art.doi " +
-              "FROM Annotation ann, Article art " +
-              "WHERE ann.annotationUri = ? AND ann.articleID = art.ID",
-          parentCommentUri.get().getKey()));
-      if (parentAnnotationData == null) {
+      parentComment = getComment(DoiBasedIdentity.create(parentCommentUri.get().getKey()));
+      if (parentComment == null) {
         throw new RestClientException("Parent comment not found: " + parentCommentUri, HttpStatus.BAD_REQUEST);
       }
 
-      parentCommentPk = Optional.of((Long) parentAnnotationData[0]);
-      articlePk = (Long) parentAnnotationData[1];
-      annotationType = AnnotationType.REPLY;
+      article = parentComment.getArticle();
+      commentType = CommentType.REPLY;
 
-      ArticleIdentity articleDoiFromDb = ArticleIdentity.create((String) parentAnnotationData[2]);
+      ArticleIdentity articleDoiFromDb = ArticleIdentity.create(parentComment.getArticle().getDoi());
       if (!articleDoi.isPresent()) {
         articleDoi = Optional.of(articleDoiFromDb);
       } else if (!articleDoi.get().equals(articleDoiFromDb)) {
@@ -185,24 +177,24 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
         throw new RestClientException("Must provide articleDoi or parentCommentId", HttpStatus.BAD_REQUEST);
       }
 
-      articlePk = (Long) DataAccessUtils.uniqueResult(hibernateTemplate.find(
-          "SELECT ID FROM Article WHERE doi = ?", articleDoi.get().getKey()));
-      if (articlePk == null) {
-        throw new RestClientException("Parent article not found: " + articleDoi.get(), HttpStatus.BAD_REQUEST);
-      }
-      parentCommentPk = Optional.empty();
-      annotationType = AnnotationType.COMMENT;
+      article = articleCrudService.getArticle(ArticleIdentifier.create(articleDoi.get().getKey()));
+      parentComment = null;
+      commentType = CommentType.COMMENT;
     }
 
     String doiPrefix = extractDoiPrefix(articleDoi.get()); // comment receives same DOI prefix as article
     UUID uuid = UUID.randomUUID(); // generate a new DOI out of a random UUID
-    DoiBasedIdentity createdAnnotationUri = DoiBasedIdentity.create(doiPrefix + "annotation/" + uuid);
+    DoiBasedIdentity createdCommentUri = DoiBasedIdentity.create(doiPrefix + "annotation/" + uuid);
 
-    Annotation created = new Annotation();
-    created.setType(annotationType);
-    created.setArticleID(articlePk);
-    created.setParentID(parentCommentPk.orElse(null));
-    created.setAnnotationUri(createdAnnotationUri.getKey());
+    Comment created = new Comment();
+    created.setType(commentType);
+    created.setArticle(article);
+    created.setParent(parentComment);
+    created.setCommentUri(createdCommentUri.getKey());
+
+    //todo: these dates should be automatic, but is throwing error if left undefined
+    created.setCreated(DateTime.now().toDate());
+    created.setLastModified(DateTime.now().toDate());
 
     created.setUserProfileID(Long.valueOf(Strings.nullToEmpty(input.getCreatorUserId())));
     created.setTitle(Strings.nullToEmpty(input.getTitle()));
@@ -216,8 +208,8 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
   }
 
   @Override
-  public Annotation patchComment(DoiBasedIdentity commentId, CommentInputView input) {
-    Annotation comment = getComment(commentId);
+  public Comment patchComment(DoiBasedIdentity commentId, CommentInputView input) {
+    Comment comment = getComment(commentId);
 
     String declaredUri = input.getAnnotationUri();
     if (declaredUri != null && !DoiBasedIdentity.create(declaredUri).equals(commentId)) {
@@ -260,13 +252,13 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
 
   @Override
   public String deleteComment(DoiBasedIdentity commentId) {
-    Annotation comment = getComment(commentId);
-    String annotationUri = comment.getAnnotationUri();
+    Comment comment = getComment(commentId);
+    String commentUri = comment.getCommentUri();
     hibernateTemplate.delete(comment);
-    return annotationUri;
+    return commentUri;
   }
 
-  private List<Flag> getCommentFlagsOn(Annotation comment) {
+  private List<Flag> getCommentFlagsOn(Comment comment) {
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("FROM Flag WHERE flaggedAnnotation = :comment");
       query.setParameter("comment", comment);
@@ -276,8 +268,8 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
 
   @Override
   public String removeFlagsFromComment(DoiBasedIdentity commentId) {
-    Annotation comment = getComment(commentId);
-    String annotationUri = comment.getAnnotationUri();
+    Comment comment = getComment(commentId);
+    String annotationUri = comment.getCommentUri();
     List<Flag> flags = getCommentFlagsOn(comment);
     hibernateTemplate.deleteAll(flags);
     return annotationUri;
@@ -285,12 +277,12 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
 
   @Override
   public Flag createCommentFlag(DoiBasedIdentity commentId, CommentFlagInputView input) {
-    Annotation comment = getComment(commentId);
+    Comment comment = getComment(commentId);
     Long flagCreator = Long.valueOf(input.getCreatorUserId());
 
     Flag flag = new Flag();
-    flag.setFlaggedAnnotation(comment);
-    flag.setUserProfileID(flagCreator);
+    flag.setFlaggedComment(comment);
+    flag.setUserProfileId(flagCreator);
     flag.setComment(input.getBody());
     flag.setReason(FlagReasonCode.fromString(input.getReasonCode()));
 
@@ -365,7 +357,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
       protected List<CommentNodeView> getData() throws IOException {
         CommentNodeView.Factory viewFactory = new CommentNodeView.Factory(runtimeConfiguration);
         return getAllFlags().stream()
-            .map(Flag::getFlaggedAnnotation)
+            .map(Flag::getFlaggedComment)
             .map(viewFactory::create)
             .collect(Collectors.toCollection(ArrayList::new));
       }
@@ -397,10 +389,10 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
         CommentNodeView.Factory viewFactory = new CommentNodeView.Factory(runtimeConfiguration);
         return results.stream()
             .map((Object[] result) -> {
-              Annotation annotation = (Annotation) result[0];
+              Comment comment = (Comment) result[0];
               String articleDoi = (String) result[1];
               String articleTitle = (String) result[2];
-              return viewFactory.create(annotation, journalKey, articleDoi, articleTitle);
+              return viewFactory.create(comment, journalKey, articleDoi, articleTitle);
             })
             .collect(Collectors.toList());
       }

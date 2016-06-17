@@ -18,10 +18,14 @@
 
 package org.ambraproject.rhino.rest.controller;
 
+import org.ambraproject.rhino.identity.ArticleFileIdentifier;
+import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
+import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
-import org.ambraproject.rhino.service.AnnotationCrudService;
+import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
@@ -45,7 +49,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -71,7 +74,7 @@ public class ArticleCrudController extends ArticleSpaceController {
   private static final String EXCLUDE_PARAM = "exclude";
 
   @Autowired
-  private AnnotationCrudService annotationCrudService;
+  private CommentCrudService commentCrudService;
 
   @Autowired
   private AssetFileCrudController assetFileCrudController;
@@ -166,16 +169,25 @@ public class ArticleCrudController extends ArticleSpaceController {
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "versionedPreview")
   public void previewMetadataFromVersionedModel(
       HttpServletRequest request, HttpServletResponse response,
-      @RequestParam(value = "version", required = false) Integer versionNumber,
+      @RequestParam(value = "revision", required = false) Integer revisionNumber,
       @RequestParam(value = "excludeCitations", required = false) boolean excludeCitations,
       @RequestParam(value = "parseFullManuscript", required = false) boolean parseFullManuscript)
       throws IOException {
-    ArticleIdentity id = parse(request);
     ArticleMetadataSource sourceObj = parseFullManuscript ? ArticleMetadataSource.FULL_MANUSCRIPT
         : excludeCitations ? ArticleMetadataSource.FRONT_MATTER
         : ArticleMetadataSource.FRONT_AND_BACK_MATTER;
-    articleCrudService.readVersionedMetadata(id, Optional.ofNullable(versionNumber), sourceObj)
-        .respond(request, response, entityGson);
+
+    Doi id = Doi.create(getIdentifier(request));
+    int revisionNumberValue = (revisionNumber == null) ? articleCrudService.getLatestRevision(id) : revisionNumber;
+    ArticleVersionIdentifier versionId = ArticleVersionIdentifier.create(id, revisionNumberValue);
+    articleCrudService.readVersionedMetadata(versionId, sourceObj).respond(request, response, entityGson);
+  }
+
+  @Transactional(readOnly = true)
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = {"revisions", "versionedPreview"})
+  public void getRevisions(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    ArticleIdentifier id = ArticleIdentifier.create(getIdentifier(request));
+    articleCrudService.readRevisions(id).respond(request, response, entityGson);
   }
 
   /**
@@ -191,7 +203,7 @@ public class ArticleCrudController extends ArticleSpaceController {
   public void readComments(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     ArticleIdentity id = parse(request);
-    annotationCrudService.readComments(id).respond(request, response, entityGson);
+    commentCrudService.readComments(id).respond(request, response, entityGson);
   }
 
   @Transactional(readOnly = true)
@@ -200,7 +212,7 @@ public class ArticleCrudController extends ArticleSpaceController {
       throws IOException {
     ArticleIdentity id = parse(request);
     Article article = articleCrudService.findArticleById(id);
-    annotationCrudService.getCommentCount(article).respond(request, response, entityGson);
+    commentCrudService.getCommentCount(article).respond(request, response, entityGson);
   }
 
   /**
@@ -229,10 +241,13 @@ public class ArticleCrudController extends ArticleSpaceController {
    */
   @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "xml")
-  public void readXml(HttpServletRequest request, HttpServletResponse response)
+  public void readXml(HttpServletRequest request, HttpServletResponse response,
+                      @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
-    ArticleIdentity id = parse(request);
-    assetFileCrudController.read(request, response, id.forXmlAsset());
+    Doi assetId = Doi.create(getIdentifier(request));
+    int revisionNumberValue = (revisionNumber == null) ? articleCrudService.getLatestRevision(assetId) : revisionNumber;
+    assetFileCrudController.previewFileFromVersionedModel(request, response,
+        ArticleFileIdentifier.create(assetId, revisionNumberValue, "manuscript"));
   }
 
   /**

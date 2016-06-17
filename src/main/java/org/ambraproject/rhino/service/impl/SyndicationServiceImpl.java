@@ -21,35 +21,31 @@
 
 package org.ambraproject.rhino.service.impl;
 
-import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
+import org.ambraproject.rhino.model.ArticleVersion;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Syndication;
+import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.MessageSender;
 import org.ambraproject.rhino.service.SyndicationService;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationKey;
 import org.apache.commons.configuration.HierarchicalConfiguration;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.Query;
 import org.omg.CORBA.portable.ApplicationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.support.DataAccessUtils;
-import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Manage the syndication process, including creating and updating Syndication objects, as well as pushing syndication
@@ -58,6 +54,7 @@ import java.util.Set;
  * @author Scott Sterling
  * @author Joe Osowski
  */
+@SuppressWarnings({"JpaQlInspection"})
 public class SyndicationServiceImpl extends AmbraService implements SyndicationService {
   private static final Logger log = LoggerFactory.getLogger(SyndicationServiceImpl.class);
 
@@ -70,34 +67,47 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
   @Autowired
   private JournalCrudService journalService;
 
-  private final DateFormat mysqlDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-
-
-  /**
-   * @param articleTypes All the article types of the Article for which Syndication objects are being created
-   * @return Whether to create a Syndication object for this Article
-   */
-  private boolean isSyndicatableType(Set<String> articleTypes) {
-    String articleTypeDoNotCreateSyndication = "http://rdf.plos.org/RDF/articleType/Issue%20Image";
-    return !(articleTypes != null && articleTypes.contains(articleTypeDoNotCreateSyndication));
-  }
+  @Autowired
+  private ArticleCrudService articleCrudService;
 
   @Override
   @SuppressWarnings("unchecked")
-  public Syndication getSyndication(final String articleDoi, final String syndicationTarget) {
-    return (Syndication) DataAccessUtils.uniqueResult(hibernateTemplate.findByCriteria(
-        DetachedCriteria.forClass(Syndication.class)
-            .add(Restrictions.eq("target", syndicationTarget))
-            .add(Restrictions.eq("doi", articleDoi))));
+  public Syndication getSyndication(final ArticleVersionIdentifier versionIdentifier, final String syndicationTarget) {
+    return hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "FROM Syndication s " +
+          "WHERE s.target = :target " +
+          "AND s.articleVersion.article.doi = :doi " +
+          "AND s.articleVersion.revisionNumber = :revisionNumber");
+      query.setParameter("target", syndicationTarget);
+      query.setParameter("doi", versionIdentifier.getDoiName());
+      query.setParameter("revisionNumber", versionIdentifier.getRevision());
+      return (Syndication) query.uniqueResult();
+    });
+  }
+
+  @Transactional(readOnly = true)
+  @SuppressWarnings("unchecked")
+  public List<Syndication> getSyndications(final ArticleVersionIdentifier versionIdentifier) {
+    return hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "FROM Syndication s " +
+          "WHERE s.articleVersion.article.doi = :doi " +
+          "AND s.articleVersion.revisionNumber = :revisionNumber");
+      query.setParameter("doi", versionIdentifier.getDoiName());
+      query.setParameter("revisionNumber", versionIdentifier.getRevision());
+      return (List<Syndication>) query.list();
+    });
   }
 
   @Transactional(rollbackFor = {Throwable.class})
   @Override
-  public Syndication updateSyndication(final String articleDoi, final String syndicationTarget, final String status,
-                                       final String errorMessage) {
-    Syndication syndication = getSyndication(articleDoi, syndicationTarget);
+  public Syndication updateSyndication(final ArticleVersionIdentifier articleVersionIdentifier,
+      final String syndicationTarget, final String status, final String errorMessage) {
+    Syndication syndication = getSyndication(articleVersionIdentifier, syndicationTarget);
     if (syndication == null) {
-      throw new RuntimeException("No such syndication for doi " + articleDoi + " and target " + syndicationTarget);
+      throw new RuntimeException("No such syndication for doi " + articleVersionIdentifier
+          + " and target " + syndicationTarget);
     }
     syndication.setStatus(status);
     syndication.setErrorMessage(errorMessage);
@@ -109,36 +119,29 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
   @Transactional(rollbackFor = {Throwable.class})
   @Override
   @SuppressWarnings("unchecked")
-  public List<Syndication> createSyndications(String articleDoi) {
-    Article article = (Article) DataAccessUtils.uniqueResult(hibernateTemplate.findByCriteria(
-        DetachedCriteria.forClass(Article.class)
-            .add(Restrictions.eq("doi", articleDoi))));
-    if (article == null) {
-      throw new NoSuchArticleIdException(articleDoi);
-    }
-    if (!isSyndicatableType(article.getTypes())) {
-      //don't syndicate
-      return new ArrayList<>();
-    }
+  public List<Syndication> createSyndications(ArticleVersionIdentifier versionIdentifier) {
+    ArticleVersion articleVersion = articleCrudService.getArticleVersion(versionIdentifier);
+
     List<HierarchicalConfiguration> allSyndicationTargets = ((HierarchicalConfiguration)
         configuration).configurationsAt("ambra.services.syndications.syndication");
 
     if (allSyndicationTargets == null || allSyndicationTargets.size() < 1) { // Should never happen.
       log.warn("There are no Syndication Targets defined in the property: " +
           "ambra.services.syndications.syndication so no Syndication objects were created for " +
-          "the article with ID = " + articleDoi);
+          "the article with ID = " + versionIdentifier);
       return new ArrayList<>();
     }
 
-    List<Syndication> syndications = new ArrayList<Syndication>(allSyndicationTargets.size());
+    List<Syndication> syndications = new ArrayList<>(allSyndicationTargets.size());
 
     for (HierarchicalConfiguration targetNode : allSyndicationTargets) {
       String target = targetNode.getString("[@target]");
-      Syndication existingSyndication = getSyndication(articleDoi, target);
+      Syndication existingSyndication = getSyndication(versionIdentifier, target);
+      //todo: cleanup - this list return is not used
       if (existingSyndication != null) {
         syndications.add(existingSyndication);
       } else {
-        Syndication syndication = new Syndication(articleDoi, target);
+        Syndication syndication = new Syndication(articleVersion, target);
         syndication.setStatus(Syndication.STATUS_PENDING);
         syndication.setSubmissionCount(0);
         hibernateTemplate.save(syndication);
@@ -156,17 +159,8 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
     Integer numDaysInPast = configuration.getInteger(
         "ambra.virtualJournals." + journalKey + ".syndications.display.numDaysInPast", 30);
 
-    // The most recent midnight.  No need to futz about with exact dates.
-    final Calendar start = Calendar.getInstance();
-    start.set(Calendar.HOUR, 0);
-    start.set(Calendar.MINUTE, 0);
-    start.set(Calendar.SECOND, 0);
-    start.set(Calendar.MILLISECOND, 0);
-
-    final Calendar end = (Calendar) start.clone(); // The most recent midnight (last night)
-
-    start.add(Calendar.DATE, -(numDaysInPast));
-    end.add(Calendar.DATE, 1); // Include everything that happened today.
+    LocalDate startDate = LocalDate.now().minus(numDaysInPast, ChronoUnit.DAYS);
+    Instant startTime = startDate.atStartOfDay(ZoneId.systemDefault()).toInstant();
 
     final Journal journal = journalService.findJournal(journalKey);
 
@@ -174,51 +168,33 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
       throw new RuntimeException("Could not find journal for journal key: " + journalKey);
     }
 
-    return (List<Syndication>) hibernateTemplate.execute(new HibernateCallback() {
-      public Object doInHibernate(Session session) throws HibernateException, SQLException {
-        StringBuilder sql = new StringBuilder();
-        sql.append("select {s.*} from syndication s ")
-            .append("join article a on s.doi = a.doi ")
-            .append("where s.status in ('" + Syndication.STATUS_IN_PROGRESS + "','" + Syndication.STATUS_FAILURE + "')")
-            .append("and s.lastModified between '").append(mysqlDateFormat.format(start.getTime())).append("'")
-            .append(" and '").append(mysqlDateFormat.format(end.getTime())).append("' and ")
-            .append("a.eIssn = '").append(journal.geteIssn()).append("'");
-
-        return session.createSQLQuery(sql.toString())
-            .addEntity("s", Syndication.class).list();
-      }
+    return hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "SELECT s " +
+          "FROM Syndication s " +
+          "JOIN s.articleVersion av " +
+          "JOIN av.journals j " +
+          "WHERE j.journalKey = :journalKey " +
+          "AND s.status in (:inProgressStatus, :failureStatus)" +
+          "AND s.lastModified > :startTime");
+      query.setParameter("journalKey", journalKey);
+      query.setParameter("inProgressStatus", Syndication.STATUS_IN_PROGRESS);
+      query.setParameter("failureStatus", Syndication.STATUS_FAILURE);
+      query.setDate("startTime", Date.from(startTime));
+      return (List<Syndication>) query.list();
     });
-  }
-
-  @Transactional(readOnly = true)
-  @SuppressWarnings("unchecked")
-  public List<Syndication> getSyndications(final String articleDoi) {
-    return (List<Syndication>) hibernateTemplate.findByCriteria(
-        DetachedCriteria.forClass(Syndication.class)
-            .add(Restrictions.eq("doi", articleDoi)));
   }
 
   @Transactional(rollbackFor = {Throwable.class})
   @SuppressWarnings("unchecked")
   @Override
-  public Syndication syndicate(String articleDoi, String syndicationTarget) {
-    List<Article> matchingArticle = (List<Article>) hibernateTemplate.findByCriteria(
-        DetachedCriteria.forClass(Article.class)
-            .add(Restrictions.eq("doi", articleDoi)), 0, 1);
-    if (matchingArticle.size() == 0) {
-      throw new NoSuchArticleIdException("The article may have been deleted."
-          + " Please reingest this article before attempting to syndicate to it.");
-    }
-    final String archiveName = matchingArticle.get(0).getArchiveName();
-    if (archiveName == null || archiveName.isEmpty()) {
-      throw new RuntimeException("The article " + articleDoi
-          + " does not have an archive file associated with it.");
-    }
+  public Syndication syndicate(ArticleVersionIdentifier articleVersionIdentifier, String syndicationTarget) {
+    ArticleVersion articleVersion = articleCrudService.getArticleVersion(articleVersionIdentifier);
 
-    Syndication syndication = getSyndication(articleDoi, syndicationTarget);
+    Syndication syndication = getSyndication(articleVersionIdentifier, syndicationTarget);
     if (syndication == null) {
       //no existing syndication
-      syndication = new Syndication(articleDoi, syndicationTarget);
+      syndication = new Syndication(articleVersion, syndicationTarget);
       syndication.setStatus(Syndication.STATUS_IN_PROGRESS);
       syndication.setErrorMessage(null);
       syndication.setSubmissionCount(1);
@@ -233,18 +209,19 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
     }
 
     try {
-      //  Send message.
-      sendSyndicationMessage(syndicationTarget, articleDoi, archiveName);
-      log.info("Successfully sent a Message to plos-queue for {} to be syndicated to {}", articleDoi, syndicationTarget);
+      //Send message
+      sendSyndicationMessage(syndicationTarget, articleVersionIdentifier);
+      log.info("Successfully sent a Message to plos-queue for {} to be syndicated to {}",
+          articleVersionIdentifier, syndicationTarget);
       return syndication;
     } catch (Exception e) {
-      log.warn("Error syndicating " + articleDoi + " to " + syndicationTarget, e);
+      log.warn("Error syndicating " + articleVersionIdentifier + " to " + syndicationTarget, e);
       //update to failure and return updated syndication
-      return updateSyndication(articleDoi, syndicationTarget, Syndication.STATUS_FAILURE, e.getMessage());
+      return updateSyndication(articleVersionIdentifier, syndicationTarget, Syndication.STATUS_FAILURE, e.getMessage());
     }
   }
 
-  private void sendSyndicationMessage(String target, String articleId, String archive)
+  private void sendSyndicationMessage(String target, ArticleVersionIdentifier articleVersionId)
       throws ApplicationException {
     List<HierarchicalConfiguration> syndications = ((HierarchicalConfiguration) configuration)
         .configurationsAt("ambra.services.syndications.syndication");
@@ -265,7 +242,7 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
       throw new RuntimeException(target + " queue not configured");
     }
 
-    messageSender.sendBody(queue, createBody(articleId, archive, additionalBodyContent));
+    messageSender.sendBody(queue, createBody(articleVersionId, additionalBodyContent));
 
   }
 
@@ -314,12 +291,12 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
     }
   }
 
-  private String createBody(String articleId, String archive, String additionalBodyContent) {
+  private String createBody(ArticleVersionIdentifier articleVersionId, String additionalBodyContent) {
     StringBuilder body = new StringBuilder();
     body.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
         .append("<ambraMessage>")
-        .append("<doi>").append(articleId).append("</doi>")
-        .append("<archive>").append(archive).append("</archive>");
+        .append("<doi>").append(articleVersionId.getDoiName()).append("</doi>")
+        .append("<version>").append(articleVersionId.getRevision()).append("</doi>");
 
     if (additionalBodyContent != null) {
       body.append(additionalBodyContent);
@@ -329,11 +306,4 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
 
     return body.toString();
   }
-
-  private class NoSuchArticleIdException extends RuntimeException {
-    private NoSuchArticleIdException(String articleDoi) {
-      super("No such article: " + articleDoi);
-    }
-  }
-
 }

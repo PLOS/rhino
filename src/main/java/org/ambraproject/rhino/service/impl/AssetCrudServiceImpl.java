@@ -18,16 +18,16 @@
 
 package org.ambraproject.rhino.service.impl;
 
-import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.model.ArticleAsset;
 import org.ambraproject.rhino.model.Journal;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.model.DoiAssociation;
+import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
@@ -39,16 +39,14 @@ import org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView;
 import org.ambraproject.rhino.view.asset.raw.RawAssetFileView;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.NotFoundException;
-import org.plos.crepo.model.RepoCollectionMetadata;
 import org.plos.crepo.model.RepoObjectMetadata;
 import org.plos.crepo.model.RepoVersion;
-import org.plos.crepo.model.RepoVersionNumber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 
@@ -58,10 +56,14 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.OptionalInt;
 
 public class AssetCrudServiceImpl extends AmbraService implements AssetCrudService {
 
   private static final Logger log = LoggerFactory.getLogger(AssetCrudServiceImpl.class);
+
+  @Autowired
+  private ArticleCrudService articleCrudService;
 
   /**
    * {@inheritDoc}
@@ -192,30 +194,12 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   }
 
   @Override
-  public ArticleIdentity getParentArticle(DoiBasedIdentity identity) {
-    String parentArticleDoi = (String) DataAccessUtils.uniqueResult(
-        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(DoiAssociation.class)
-            .setProjection(Projections.property("parentArticleDoi"))
-            .add(Restrictions.eq("doi", identity.getIdentifier()))));
-    return (parentArticleDoi == null) ? null : ArticleIdentity.create(parentArticleDoi);
-  }
-
-  @Override
-  public RepoObjectMetadata getAssetObject(ArticleIdentity parentArticleId,
-                                           AssetIdentity assetId,
-                                           Optional<Integer> versionNumber,
-                                           String fileType) {
-    RepoCollectionMetadata articleCollection;
-    if (versionNumber.isPresent()) {
-      articleCollection = contentRepoService.getCollection(new RepoVersionNumber(
-          parentArticleId.getIdentifier(), versionNumber.get()));
-    } else {
-      articleCollection = contentRepoService.getLatestCollection(parentArticleId.getIdentifier());
-    }
-
-    AssetTable<RepoVersion> assetTable = AssetTable.buildFromAssetMetadata(articleCollection);
-    RepoVersion fileVersion = assetTable.lookup(assetId, fileType);
-    return contentRepoService.getRepoObjectMetadata(fileVersion);
+  public RepoObjectMetadata getArticleItemFile(ArticleFileIdentifier fileId) {
+    ArticleItem work = articleCrudService.getArticleItem(fileId.getItemIdentifier());
+    String fileType = fileId.getFileType();
+    RepoVersion objectVersion = work.getFile(fileType)
+        .orElseThrow(() -> new RestClientException("Unrecognized type: " + fileType, HttpStatus.NOT_FOUND));
+    return contentRepoService.getRepoObjectMetadata(objectVersion);
   }
 
 }

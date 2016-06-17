@@ -20,14 +20,14 @@ package org.ambraproject.rhino.config;
 
 import com.google.common.io.Closeables;
 import org.ambraproject.rhino.content.xml.XpathReader;
-import org.ambraproject.rhino.service.AnnotationCrudService;
+import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.DummyMessageSender;
 import org.ambraproject.rhino.service.LegacyConfiguration;
 import org.ambraproject.rhino.service.MessageSender;
 import org.ambraproject.rhino.service.SyndicationService;
-import org.ambraproject.rhino.service.impl.AnnotationCrudServiceImpl;
+import org.ambraproject.rhino.service.impl.CommentCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.SyndicationServiceImpl;
@@ -35,7 +35,6 @@ import org.ambraproject.rhino.service.taxonomy.DummyTaxonomyClassificationServic
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyServiceImpl;
-import org.apache.commons.configuration.CombinedConfiguration;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.plos.crepo.service.ContentRepoService;
@@ -50,7 +49,6 @@ import org.yaml.snakeyaml.Yaml;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.Properties;
 
 @Configuration
@@ -136,8 +134,8 @@ public class TestConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public AnnotationCrudService annotationCrudService() {
-    return new AnnotationCrudServiceImpl();
+  public CommentCrudService annotationCrudService() {
+    return new CommentCrudServiceImpl();
   }
 
   @Bean

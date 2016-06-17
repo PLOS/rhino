@@ -17,4 +17,6 @@ public interface JournalCrudService {
   public abstract Transceiver readCurrentIssue(String journalKey);
 
   public abstract Journal findJournal(String journalKey);
+
+  public abstract Journal findJournalByEissn(String eIssn);
 }

@@ -38,6 +38,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+@SuppressWarnings("JpaQlInspection")
 public class JournalCrudServiceImpl extends AmbraService implements JournalCrudService {
 
   @Autowired
@@ -178,12 +179,26 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
 
   @Override
   public Journal findJournal(String journalKey) {
-    Journal journal = (Journal) DataAccessUtils.singleResult((List<?>)
-        hibernateTemplate.findByCriteria(journalCriteria()
-                .add(Restrictions.eq("journalKey", journalKey))
-        ));
+    Journal journal = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM Journal j WHERE j.journalKey = :journalKey ");
+      query.setParameter("journalKey", journalKey);
+      return (Journal) query.uniqueResult();
+    });
     if (journal == null) {
       throw new RestClientException(journalNotFoundMessage(journalKey), HttpStatus.NOT_FOUND);
+    }
+    return journal;
+  }
+
+  @Override
+  public Journal findJournalByEissn(String eIssn) {
+    Journal journal = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM Journal j WHERE j.eIssn = :eIssn");
+      query.setParameter("eIssn", eIssn);
+      return (Journal) query.uniqueResult();
+    });
+    if (journal == null) {
+      throw new RestClientException("No journal found with eIssn: " + eIssn, HttpStatus.NOT_FOUND);
     }
     return journal;
   }

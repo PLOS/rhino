@@ -18,9 +18,16 @@
 
 package org.ambraproject.rhino.service;
 
+import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.ArticleItemIdentifier;
+import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
+import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleItem;
+import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.ArticleVersion;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
@@ -33,6 +40,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 public interface ArticleCrudService extends DoiBasedCrudService {
 
@@ -43,11 +51,13 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    *
    * @param archive    the local .zip file
    * @param suppliedId the identifier supplied for the article, if any
+   * @param revision   the forced revision number if present (else, will be taken from manuscript)
    * @return the created or update Article
    * @throws org.ambraproject.rhino.rest.RestClientException if the DOI is already used
    * @throws IOException
    */
-  public abstract Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode)
+  public abstract Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode,
+                                       OptionalInt revision)
       throws IOException;
 
   /**
@@ -162,8 +172,6 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    */
   public abstract String getRawCategoriesAndText(ArticleIdentity id) throws IOException;
 
-  public abstract void setAssetService(AssetCrudService assetService);
-
   /**
    * List the DOIs of all ingested articles, or a described subset.
    *
@@ -212,8 +220,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * @deprecated <em>TEMPORARY.</em> To be removed when the versioned data model is fully supported.
    */
   @Deprecated
-  public abstract Transceiver readVersionedMetadata(ArticleIdentity id,
-                                                    Optional<Integer> versionNumber,
+  public abstract Transceiver readVersionedMetadata(ArticleVersionIdentifier versionId,
                                                     ArticleMetadataSource source);
 
   /**
@@ -228,4 +235,15 @@ public interface ArticleCrudService extends DoiBasedCrudService {
     FULL_MANUSCRIPT, FRONT_MATTER, FRONT_AND_BACK_MATTER
   }
 
+  public abstract Transceiver readRevisions(ArticleIdentifier id);
+
+
+  public abstract int getLatestRevision(Doi doi);
+
+
+  public abstract ArticleItem getArticleItem(ArticleItemIdentifier id);
+
+  public abstract ArticleVersion getArticleVersion(ArticleVersionIdentifier articleIdentifier);
+
+  public abstract ArticleTable getArticle(ArticleIdentifier articleIdentifier);
 }
