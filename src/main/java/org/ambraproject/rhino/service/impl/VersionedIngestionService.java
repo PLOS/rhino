@@ -96,7 +96,7 @@ class VersionedIngestionService {
 
     long articlePk = persistArticlePk(articleIdentifier);
     long ingestionId = persistIngestion(articlePk);
-    persistRevision(ingestionId, revision.orElseGet(parsedArticle::getRevisionNumber));
+    persistRevision(articlePk, ingestionId, revision.orElseGet(parsedArticle::getRevisionNumber));
 
     final Article articleMetadata = parsedArticle.build(new Article());
     articleMetadata.setDoi(doi.getUri().toString());
@@ -170,25 +170,19 @@ class VersionedIngestionService {
     });
   }
 
-  private void persistRevision(long ingestionId, int revisionNumber) {
+  private void persistRevision(long articleId, long ingestionId, int revisionNumber) {
     parentService.hibernateTemplate.execute(session -> {
       // Find an articleRevision row (if it exists) that has the same revision number and belongs to the same article.
       // Join articleRevision through articleIngestion to get to the "grandparent" article.
-      // The outer SELECT searches pre-existing ingestions. The nested SELECT gets the *new* ingestion's article.
       SQLQuery findExistingRevision = session.createSQLQuery("" +
           "SELECT articleRevision.revisionId " +
           "FROM articleRevision " +
           "  INNER JOIN articleIngestion ON articleRevision.ingestionId = articleIngestion.ingestionId " +
           "  INNER JOIN article ON articleIngestion.articleId = article.articleId " +
           "WHERE articleRevision.revisionNumber = :revisionNumber " +
-          "  AND article.articleId = (" +
-          "    SELECT article.articleId " +
-          "    FROM articleIngestion INNER JOIN article " +
-          "    ON articleIngestion.articleId = article.articleId " +
-          "    WHERE articleIngestion.ingestionId = :newIngestionId " +
-          "  )");
+          "  AND article.articleId = :articleId");
       findExistingRevision.setParameter("revisionNumber", revisionNumber);
-      findExistingRevision.setParameter("newIngestionId", ingestionId);
+      findExistingRevision.setParameter("articleId", articleId);
       Number existingRevisionId = (Number) findExistingRevision.uniqueResult();
 
       if (existingRevisionId != null) {
