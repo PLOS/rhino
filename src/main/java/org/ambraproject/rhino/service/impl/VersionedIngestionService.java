@@ -172,6 +172,9 @@ class VersionedIngestionService {
 
   private void persistRevision(long ingestionId, int revisionNumber) {
     parentService.hibernateTemplate.execute(session -> {
+      // Find an articleRevision row (if it exists) that has the same revision number and belongs to the same article.
+      // Join articleRevision through articleIngestion to get to the "grandparent" article.
+      // The outer SELECT searches pre-existing ingestions. The nested SELECT gets the *new* ingestion's article.
       SQLQuery findExistingRevision = session.createSQLQuery("" +
           "SELECT articleRevision.revisionId " +
           "FROM articleRevision " +
@@ -182,10 +185,10 @@ class VersionedIngestionService {
           "    SELECT article.articleId " +
           "    FROM articleIngestion INNER JOIN article " +
           "    ON articleIngestion.articleId = article.articleId " +
-          "    WHERE articleIngestion.ingestionId = :ingestionId " +
+          "    WHERE articleIngestion.ingestionId = :newIngestionId " +
           "  )");
       findExistingRevision.setParameter("revisionNumber", revisionNumber);
-      findExistingRevision.setParameter("ingestionId", ingestionId);
+      findExistingRevision.setParameter("newIngestionId", ingestionId);
       Number existingRevisionId = (Number) findExistingRevision.uniqueResult();
 
       if (existingRevisionId != null) {
