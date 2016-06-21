@@ -7,13 +7,13 @@ CREATE TABLE `syndication` (
   `status` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `submissionCount` int(11) DEFAULT NULL,
   `errorMessage` longtext CHARACTER SET utf8 COLLATE utf8_bin,
-  `created` datetime NOT NULL,
-  `lastSubmitTimestamp` datetime DEFAULT NULL,
-  `lastModified` datetime DEFAULT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastSubmitTimestamp` timestamp DEFAULT NULL,
+  `lastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`syndicationId`),
-  UNIQUE KEY `articleVersionId` (`articleVersionId`,`target`),
+  UNIQUE KEY `versionId` (`versionId`,`target`),
   CONSTRAINT `fk_syndication_1`
-  FOREIGN KEY (`articleVersionID`)
+  FOREIGN KEY (`versionID`)
   REFERENCES `ambra`.`articleVersion` (`versionId`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION
