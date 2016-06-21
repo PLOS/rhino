@@ -8,7 +8,7 @@ CREATE TABLE `syndication` (
   `submissionCount` int(11) DEFAULT NULL,
   `errorMessage` longtext CHARACTER SET utf8 COLLATE utf8_bin,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `lastSubmitTimestamp` datetime DEFAULT NULL,
+  `lastSubmitTimestamp` timestamp DEFAULT NULL,
   `lastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`syndicationId`),
   UNIQUE KEY `versionId` (`versionId`,`target`),
