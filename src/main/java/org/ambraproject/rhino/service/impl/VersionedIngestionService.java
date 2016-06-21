@@ -9,10 +9,11 @@ import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
+import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
+import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleItem;
-import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
@@ -94,23 +95,24 @@ class VersionedIngestionService {
     }
 
     long articlePk = persistArticlePk(articleIdentifier);
-    long versionId = persistVersionId(articlePk, revision.orElseGet(parsedArticle::getRevisionNumber));
+    long ingestionId = persistIngestion(articlePk);
+    persistRevision(ingestionId, revision.orElseGet(parsedArticle::getRevisionNumber));
 
     final Article articleMetadata = parsedArticle.build(new Article());
     articleMetadata.setDoi(doi.getUri().toString());
 
     ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry,
         manuscriptAsset, manuscriptRepr, printableRepr).build();
-    persistItem(articlePackage, versionId);
-    persistJournal(articleMetadata, versionId);
+    persistItem(articlePackage, ingestionId);
+    persistJournal(articleMetadata, ingestionId);
 
     stubAssociativeFields(articleMetadata);
 
-    ArticleVersionIdentifier versionIdentifier = ArticleVersionIdentifier.create(
+    ArticleIngestionIdentifier ingestionIdentifier = ArticleIngestionIdentifier.create(
         articleIdentifier.getDoi(), parsedArticle.getRevisionNumber());
 
     if (isSyndicatableType(articleMetadata.getTypes())) {
-      parentService.syndicationService.createSyndications(versionIdentifier);
+//      parentService.syndicationService.createSyndications(ingestionIdentifier);
     }
 
     return articleMetadata;
@@ -128,6 +130,7 @@ class VersionedIngestionService {
 
   /**
    * Get the PK of the "article" row for a DOI if it exists, and insert it if it doesn't.
+   *
    * @param articleIdentifier
    */
   private long persistArticlePk(ArticleIdentifier articleIdentifier) {
@@ -145,25 +148,62 @@ class VersionedIngestionService {
     });
   }
 
-  private long persistVersionId(long articlePk, int revisionNumber) {
+  private static final int FIRST_INGESTION_NUMBER = 1;
+
+  private long persistIngestion(long articlePk) {
     return parentService.hibernateTemplate.execute(session -> {
-      SQLQuery replaceOtherRevisions = session.createSQLQuery("" +
-          "UPDATE articleVersion SET publicationState = :replaced, lastModified = NOW() " +
-          "WHERE articleId = :articleId AND revisionNumber = :revisionNumber " +
-          "  AND publicationState != :replaced");
-      replaceOtherRevisions.setParameter("articleId", articlePk);
-      replaceOtherRevisions.setParameter("revisionNumber", revisionNumber);
-      replaceOtherRevisions.setParameter("replaced", ArticleItem.PublicationState.REPLACED.getValue());
-      replaceOtherRevisions.executeUpdate();
+      SQLQuery findNextIngestionNumber = session.createSQLQuery(
+          "SELECT MAX(ingestionNumber) FROM articleIngestion WHERE articleId = :articleId");
+      findNextIngestionNumber.setParameter("articleId", articlePk);
+      Number maxIngestionNumber = (Number) findNextIngestionNumber.uniqueResult();
+      int nextIngestionNumber = (maxIngestionNumber == null) ? FIRST_INGESTION_NUMBER
+          : maxIngestionNumber.intValue() + 1;
 
       SQLQuery insertEvent = session.createSQLQuery("" +
-          "INSERT INTO articleVersion (articleId, revisionNumber, publicationState, lastModified) " +
-          "VALUES (:articleId, :revisionNumber, :publicationState, NOW())");
+          "INSERT INTO articleIngestion (articleId, ingestionNumber, visibility) " +
+          "VALUES (:articleId, :ingestionNumber, :visibility)");
       insertEvent.setParameter("articleId", articlePk);
-      insertEvent.setParameter("revisionNumber", revisionNumber);
-      insertEvent.setParameter("publicationState", ArticleItem.PublicationState.INGESTED.getValue());
+      insertEvent.setParameter("ingestionNumber", nextIngestionNumber);
+      insertEvent.setParameter("visibility", ArticleItem.Visibility.INGESTED.getValue());
       insertEvent.executeUpdate();
       return getLastInsertId(session);
+    });
+  }
+
+  private void persistRevision(long ingestionId, int revisionNumber) {
+    parentService.hibernateTemplate.execute(session -> {
+      SQLQuery findExistingRevision = session.createSQLQuery("" +
+          "SELECT articleRevision.revisionId " +
+          "FROM articleRevision " +
+          "  INNER JOIN articleIngestion ON articleRevision.ingestionId = articleIngestion.ingestionId " +
+          "  INNER JOIN article ON articleIngestion.articleId = article.articleId " +
+          "WHERE articleRevision.revisionNumber = :revisionNumber " +
+          "  AND article.articleId = (" +
+          "    SELECT article.articleId " +
+          "    FROM articleIngestion INNER JOIN article " +
+          "    ON articleIngestion.articleId = article.articleId " +
+          "    WHERE articleIngestion.ingestionId = :ingestionId " +
+          "  )");
+      findExistingRevision.setParameter("revisionNumber", revisionNumber);
+      findExistingRevision.setParameter("ingestionId", ingestionId);
+      Number existingRevisionId = (Number) findExistingRevision.uniqueResult();
+
+      if (existingRevisionId != null) {
+        SQLQuery updateRevision = session.createSQLQuery("" +
+            "UPDATE articleRevision SET revisionNumber = :revisionNumber " +
+            "WHERE revisionId = :revisionId");
+        updateRevision.setParameter("revisionNumber", revisionNumber);
+        updateRevision.setParameter("revisionId", existingRevisionId);
+        return updateRevision.executeUpdate();
+      } else {
+        SQLQuery insertRevision = session.createSQLQuery("" +
+            "INSERT INTO articleRevision (ingestionId, revisionNumber) " +
+            "VALUES (:ingestionId, :revisionNumber)");
+        insertRevision.setParameter("ingestionId", ingestionId);
+        insertRevision.setParameter("revisionNumber", revisionNumber);
+        insertRevision.executeUpdate();
+        return getLastInsertId(session);
+      }
     });
   }
 
@@ -189,14 +229,14 @@ class VersionedIngestionService {
     }
   }
 
-  private void persistItem(ArticlePackage articlePackage, long versionId) {
+  private void persistItem(ArticlePackage articlePackage, long ingestionId) {
     for (ArticleItemInput work : articlePackage.getAllWorks()) {
-      persistItem(work, versionId);
+      persistItem(work, ingestionId);
     }
-    persistArchivalFiles(articlePackage, versionId);
+    persistArchivalFiles(articlePackage, ingestionId);
   }
 
-  private long persistItem(ArticleItemInput work, long versionId) {
+  private long persistItem(ArticleItemInput work, long ingestionId) {
     Map<String, RepoVersion> crepoResults = new LinkedHashMap<>();
     for (Map.Entry<String, RepoObject> entry : work.getObjects().entrySet()) {
       RepoVersion result = parentService.contentRepoService.autoCreateRepoObject(entry.getValue()).getVersion();
@@ -205,9 +245,9 @@ class VersionedIngestionService {
 
     return parentService.hibernateTemplate.execute(session -> {
       SQLQuery insertWork = session.createSQLQuery("" +
-          "INSERT INTO articleItem (versionId, doi, articleItemType) " +
-          "  VALUES (:versionId, :doi, :articleItemType)");
-      insertWork.setParameter("versionId", versionId);
+          "INSERT INTO articleItem (ingestionId, doi, articleItemType) " +
+          "  VALUES (:ingestionId, :doi, :articleItemType)");
+      insertWork.setParameter("ingestionId", ingestionId);
       insertWork.setParameter("doi", work.getDoi().getIdentifier());
       insertWork.setParameter("articleItemType", work.getType());
       insertWork.executeUpdate();
@@ -215,9 +255,9 @@ class VersionedIngestionService {
 
       for (Map.Entry<String, RepoVersion> entry : crepoResults.entrySet()) {
         SQLQuery insertFile = session.createSQLQuery("" +
-            "INSERT INTO articleFile (versionId, itemId, fileType, crepoKey, crepoUuid) " +
-            "  VALUES (:versionId, :itemId, :fileType, :crepoKey, :crepoUuid)");
-        insertFile.setParameter("versionId", versionId);
+            "INSERT INTO articleFile (ingestionId, itemId, fileType, crepoKey, crepoUuid) " +
+            "  VALUES (:ingestionId, :itemId, :fileType, :crepoKey, :crepoUuid)");
+        insertFile.setParameter("ingestionId", ingestionId);
         insertFile.setParameter("itemId", itemId);
         insertFile.setParameter("fileType", entry.getKey());
 
@@ -232,16 +272,16 @@ class VersionedIngestionService {
     });
   }
 
-  private void persistArchivalFiles(ArticlePackage articlePackage, long versionId) {
+  private void persistArchivalFiles(ArticlePackage articlePackage, long ingestionId) {
     List<RepoVersion> archivalFiles = articlePackage.getArchivalFiles().stream()
         .map(archivalFile -> parentService.contentRepoService.autoCreateRepoObject(archivalFile).getVersion())
         .collect(Collectors.toList());
     parentService.hibernateTemplate.execute(session -> {
       for (RepoVersion archivalFile : archivalFiles) {
         SQLQuery insertFile = session.createSQLQuery("" +
-            "INSERT INTO articleFile (versionId, crepoKey, crepoUuid) " +
-            "  VALUES (:versionId, :crepoKey, :crepoUuid)");
-        insertFile.setParameter("versionId", versionId);
+            "INSERT INTO articleFile (ingestionId, crepoKey, crepoUuid) " +
+            "  VALUES (:ingestionId, :crepoKey, :crepoUuid)");
+        insertFile.setParameter("ingestionId", ingestionId);
         insertFile.setParameter("crepoKey", archivalFile.getKey());
         insertFile.setParameter("crepoUuid", archivalFile.getUuid());
         insertFile.executeUpdate();
@@ -250,13 +290,13 @@ class VersionedIngestionService {
     });
   }
 
-  private long persistJournal(Article article, long versionId) {
+  private long persistJournal(Article article, long ingestionId) {
     Journal publicationJournal = parentService.getPublicationJournal(article);
     return parentService.hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
-          "INSERT INTO articleJournalJoinTable (versionId, journalId) " +
-          "VALUES (:versionId, :journalId)");
-      query.setParameter("versionId", versionId);
+          "INSERT INTO articleJournalJoinTable (ingestionId, journalId) " +
+          "VALUES (:ingestionId, :journalId)");
+      query.setParameter("ingestionId", ingestionId);
       query.setParameter("journalId", publicationJournal.getJournalID());
       query.executeUpdate();
       return getLastInsertId(session);
@@ -315,7 +355,7 @@ class VersionedIngestionService {
    * @deprecated method signature accommodates testing and will be changed
    */
   @Deprecated
-  Article getArticleMetadata(ArticleVersionIdentifier versionId, ArticleMetadataSource source) {
+  Article getArticleMetadata(ArticleRevisionIdentifier revisionId, ArticleMetadataSource source) {
     /*
      * *** Implementation notes ***
      *
@@ -334,7 +374,7 @@ class VersionedIngestionService {
      * TODO: Improve as described above and delete this comment block
      */
 
-    ArticleItem work = parentService.getArticleItem(versionId.getItemFor());
+    ArticleItem work = parentService.getArticleItem(revisionId.getItemFor());
 
     RepoVersion manuscriptVersion = work.getFile("manuscript").orElseThrow(() -> {
       String message = String.format("Work exists but does not have a manuscript. DOI: %s. Revision: %s",

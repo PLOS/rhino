@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class ArticleItem {
 
-  public static enum PublicationState {
+  public static enum Visibility {
     /**
      * The article version has been ingested, but is not yet visible to end users.
      */
@@ -34,7 +34,7 @@ public class ArticleItem {
     private final String label;
     private final int value;
 
-    private PublicationState(int value) {
+    private Visibility(int value) {
       this.label = name().toLowerCase();
       this.value = value;
     }
@@ -47,11 +47,11 @@ public class ArticleItem {
       return value;
     }
 
-    private static final ImmutableMap<Integer, PublicationState> BY_VALUE = Maps.uniqueIndex(
-        EnumSet.allOf(PublicationState.class), PublicationState::getValue);
+    private static final ImmutableMap<Integer, Visibility> BY_VALUE = Maps.uniqueIndex(
+        EnumSet.allOf(Visibility.class), Visibility::getValue);
 
-    public static PublicationState fromValue(int value) {
-      PublicationState state = BY_VALUE.get(value);
+    public static Visibility fromValue(int value) {
+      Visibility state = BY_VALUE.get(value);
       if (state == null) {
         throw new IllegalArgumentException(
             String.format("Received value: %d. Must be one of: %s", value, BY_VALUE.keySet()));
@@ -65,14 +65,14 @@ public class ArticleItem {
   private final String type;
   private final ImmutableMap<String, RepoVersion> files;
   private final Optional<Integer> revisionNumber;
-  private final PublicationState state;
+  private final Visibility state;
   private final Instant timestamp;
 
   public ArticleItem(DoiBasedIdentity doi,
                      String type,
                      Map<String, RepoVersion> files,
                      Integer revisionNumber,
-                     PublicationState state,
+                     Visibility state,
                      Instant timestamp) {
     this.doi = Objects.requireNonNull(doi);
     this.type = Objects.requireNonNull(type);
@@ -98,7 +98,7 @@ public class ArticleItem {
     return revisionNumber;
   }
 
-  public PublicationState getState() {
+  public Visibility getState() {
     return state;
   }
 

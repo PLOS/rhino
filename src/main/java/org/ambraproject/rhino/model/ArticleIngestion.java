@@ -17,7 +17,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "articleVersion")
-public class ArticleVersion extends AmbraEntity {
+public class ArticleIngestion extends AmbraEntity {
 
   @Id
   @GeneratedValue
@@ -88,7 +88,7 @@ public class ArticleVersion extends AmbraEntity {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    ArticleVersion that = (ArticleVersion) o;
+    ArticleIngestion that = (ArticleIngestion) o;
 
     if (versionId != that.versionId) return false;
     if (revisionNumber != that.revisionNumber) return false;

@@ -42,7 +42,7 @@ public class Syndication {
 
   @ManyToOne
   @JoinColumn(name = "versionId")
-  private ArticleVersion articleVersion;
+  private ArticleIngestion articleIngestion;
 
   @Column
   private String target;
@@ -69,10 +69,10 @@ public class Syndication {
     super();
   }
 
-  public Syndication(ArticleVersion articleVersion, String target) {
+  public Syndication(ArticleIngestion articleIngestion, String target) {
     this();
     this.target = target;
-    this.articleVersion = articleVersion;
+    this.articleIngestion = articleIngestion;
   }
 
   public int getSyndicationId() {
@@ -83,12 +83,12 @@ public class Syndication {
     this.syndicationId = syndicationId;
   }
 
-  public ArticleVersion getArticleVersion() {
-    return articleVersion;
+  public ArticleIngestion getArticleIngestion() {
+    return articleIngestion;
   }
 
-  public void setArticleVersion(ArticleVersion articleVersion) {
-    this.articleVersion = articleVersion;
+  public void setArticleIngestion(ArticleIngestion articleIngestion) {
+    this.articleIngestion = articleIngestion;
   }
 
   public String getTarget() {
@@ -156,7 +156,7 @@ public class Syndication {
 
     if (syndicationId != that.syndicationId) return false;
     if (submissionCount != that.submissionCount) return false;
-    if (!articleVersion.equals(that.articleVersion)) return false;
+    if (!articleIngestion.equals(that.articleIngestion)) return false;
     if (!target.equals(that.target)) return false;
     if (!status.equals(that.status)) return false;
     if (errorMessage != null ? !errorMessage.equals(that.errorMessage) : that.errorMessage != null)
@@ -168,7 +168,7 @@ public class Syndication {
   @Override
   public int hashCode() {
     int result = syndicationId;
-    result = 31 * result + articleVersion.hashCode();
+    result = 31 * result + articleIngestion.hashCode();
     result = 31 * result + target.hashCode();
     result = 31 * result + status.hashCode();
     result = 31 * result + submissionCount;
@@ -180,7 +180,7 @@ public class Syndication {
   @Override
   public String toString() {
     return "Syndication{" +
-        "articleVersion='" + articleVersion + '\'' +
+        "articleVersion='" + articleIngestion + '\'' +
         ", target='" + target + '\'' +
         ", status='" + status + '\'' +
         '}';

@@ -28,16 +28,17 @@ import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleItemIdentifier;
-import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
+import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleAsset;
+import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRelationship;
-import org.ambraproject.rhino.model.ArticleVersion;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -248,7 +249,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Deprecated
   @Override
-  public Transceiver readVersionedMetadata(final ArticleVersionIdentifier versionId,
+  public Transceiver readVersionedMetadata(final ArticleRevisionIdentifier versionId,
                                            final ArticleMetadataSource source) {
     return new Transceiver() {
       @Override
@@ -559,14 +560,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           "  AND version.publicationState != :replaced");
       query.setParameter("doi", id.getDoiName());
       query.setParameter("revisionNumber", id.getRevision());
-      query.setParameter("replaced", ArticleItem.PublicationState.REPLACED.getValue());
+      query.setParameter("replaced", ArticleItem.Visibility.REPLACED.getValue());
       return (Object[]) query.uniqueResult();
     });
     if (itemResult == null) {
       throw new RestClientException("DOI+revision not found: " + id, HttpStatus.NOT_FOUND);
     }
     long itemId = ((Number) itemResult[0]).longValue();
-    ArticleItem.PublicationState state = ArticleItem.PublicationState.fromValue((Integer) itemResult[1]);
+    ArticleItem.Visibility state = ArticleItem.Visibility.fromValue((Integer) itemResult[1]);
     String itemType = (String) itemResult[2];
     Date timestamp = (Date) itemResult[3];
 
@@ -585,26 +586,33 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return new ArticleItem(DoiBasedIdentity.create(id.getDoiName()), itemType, fileMap, id.getRevision(), state, timestamp.toInstant());
   }
 
-  public ArticleVersion getArticleVersion(ArticleVersionIdentifier articleIdentifier) {
-    ArticleVersion articleVersion = hibernateTemplate.execute(session -> {
+  @Override
+  public ArticleIngestion getArticleIngestion(ArticleIngestionIdentifier ingestionId) {
+    return null; // TODO: Implement
+  }
+
+  @Override
+  public ArticleIngestion getArticleIngestion(ArticleRevisionIdentifier revisionId) {
+    ArticleIngestion articleIngestion = hibernateTemplate.execute(session -> {
+      // TODO: Update query?
       Query query = session.createQuery("" +
           "FROM ArticleVersion as av " +
           "WHERE av.revisionNumber = :revisionNumber " +
           "AND av.article.doi = :doi " +
           "AND av.publicationState != :replaced");
-      query.setParameter("revisionNumber", articleIdentifier.getRevision());
-      query.setParameter("doi", articleIdentifier.getDoiName());
-      query.setParameter("replaced", ArticleItem.PublicationState.REPLACED.getValue());
-      return (ArticleVersion) query.uniqueResult();
+      query.setParameter("revisionNumber", revisionId.getRevision());
+      query.setParameter("doi", revisionId.getDoiName());
+      query.setParameter("replaced", ArticleItem.Visibility.REPLACED.getValue());
+      return (ArticleIngestion) query.uniqueResult();
     });
-    if (articleVersion == null) {
-      throw new NoSuchArticleIdException(articleIdentifier);
+    if (articleIngestion == null) {
+      throw new NoSuchArticleIdException(revisionId);
     }
-    return articleVersion;
+    return articleIngestion;
   }
 
   private class NoSuchArticleIdException extends RuntimeException {
-    private NoSuchArticleIdException(ArticleVersionIdentifier articleIdentifier) {
+    private NoSuchArticleIdException(ArticleRevisionIdentifier articleIdentifier) {
       super("No such article: " + articleIdentifier);
     }
   }

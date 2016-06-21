@@ -8,25 +8,25 @@ import java.util.Objects;
  * Instances of this class can indicate only article versions that are persisted with a non-null revision number, i.e.,
  * the most recently ingested version with that number.
  */
-public final class ArticleVersionIdentifier {
+public final class ArticleRevisionIdentifier {
 
   private final ArticleIdentifier articleIdentifier;
   private final int revision;
 
-  private ArticleVersionIdentifier(ArticleIdentifier articleIdentifier, int revision) {
+  private ArticleRevisionIdentifier(ArticleIdentifier articleIdentifier, int revision) {
     this.articleIdentifier = Objects.requireNonNull(articleIdentifier);
     this.revision = revision;
   }
 
-  public static ArticleVersionIdentifier create(ArticleIdentifier articleIdentifier, int revision) {
-    return new ArticleVersionIdentifier(articleIdentifier, revision);
+  public static ArticleRevisionIdentifier create(ArticleIdentifier articleIdentifier, int revision) {
+    return new ArticleRevisionIdentifier(articleIdentifier, revision);
   }
 
-  public static ArticleVersionIdentifier create(Doi articleIdentifier, int revision) {
+  public static ArticleRevisionIdentifier create(Doi articleIdentifier, int revision) {
     return create(ArticleIdentifier.create(articleIdentifier), revision);
   }
 
-  public static ArticleVersionIdentifier create(String articleIdentifier, int revision) {
+  public static ArticleRevisionIdentifier create(String articleIdentifier, int revision) {
     return create(ArticleIdentifier.create(articleIdentifier), revision);
   }
 
@@ -63,7 +63,7 @@ public final class ArticleVersionIdentifier {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    ArticleVersionIdentifier that = (ArticleVersionIdentifier) o;
+    ArticleRevisionIdentifier that = (ArticleRevisionIdentifier) o;
 
     if (revision != that.revision) return false;
     return articleIdentifier.equals(that.articleIdentifier);

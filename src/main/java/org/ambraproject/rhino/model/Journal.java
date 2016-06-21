@@ -88,7 +88,7 @@ public class Journal extends AmbraEntity{
       joinColumns = @JoinColumn(name = "journalId"),
       inverseJoinColumns = @JoinColumn(name = "versionId")
   )
-  private Set<ArticleVersion> articleVersions;
+  private Set<ArticleIngestion> articleIngestions;
 
   public Journal() {
     super();
@@ -172,12 +172,12 @@ public class Journal extends AmbraEntity{
   }
 
 
-  public Set<ArticleVersion> getArticleVersions() {
-    return articleVersions;
+  public Set<ArticleIngestion> getArticleIngestions() {
+    return articleIngestions;
   }
 
-  public void setArticleVersions(Set<ArticleVersion> articleVersions) {
-    this.articleVersions = articleVersions;
+  public void setArticleIngestions(Set<ArticleIngestion> articleIngestions) {
+    this.articleIngestions = articleIngestions;
   }
 
   @Override

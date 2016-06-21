@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * An identifier for one article item, on a particular revision of its parent article.
  * <p>
- * Compare to {@link ArticleVersionIdentifier}, which has similar fields but refers to something different. An article
+ * Compare to {@link ArticleRevisionIdentifier}, which has similar fields but refers to something different. An article
  * item has a parent version, which has a parent article. This class's DOI refers to the item's own DOI, which may be,
  * but is not always, the same as the article's DOI.
  * <p>

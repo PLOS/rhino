@@ -21,7 +21,7 @@ package org.ambraproject.rhino.rest.controller;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
+import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
@@ -179,7 +179,7 @@ public class ArticleCrudController extends ArticleSpaceController {
 
     Doi id = Doi.create(getIdentifier(request));
     int revisionNumberValue = (revisionNumber == null) ? articleCrudService.getLatestRevision(id) : revisionNumber;
-    ArticleVersionIdentifier versionId = ArticleVersionIdentifier.create(id, revisionNumberValue);
+    ArticleRevisionIdentifier versionId = ArticleRevisionIdentifier.create(id, revisionNumberValue);
     articleCrudService.readVersionedMetadata(versionId, sourceObj).respond(request, response, entityGson);
   }
 
