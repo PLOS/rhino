@@ -59,7 +59,8 @@ public class CommentOutputView implements JsonOutputView {
      */
     public Factory(RuntimeConfiguration runtimeConfiguration, Collection<Comment> comments) {
       this.competingInterestPolicy = new CompetingInterestPolicy(runtimeConfiguration);
-      this.parentArticle = null;//todo: ArticleVisibility.create(parentArticle);
+      //todo: take into account visibility. Old call: ArticleVisibility.create(parentArticle);
+      this.parentArticle = null;
       this.commentsByParent = comments.stream()
           .filter(comment -> comment.getParent() != null)
           .collect(Collectors.groupingBy(Comment::getParentId));

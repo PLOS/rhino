@@ -14,7 +14,6 @@
 package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.identity.ArticleIdentifier;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Comment;
 import org.ambraproject.rhino.model.Flag;
@@ -44,10 +43,10 @@ public interface CommentCrudService {
   /**
    * Reads the comment data for a single comment to the receiver.
    *
-   * @param commentId identifies the comment
+   * @param commentUri identifies the comment
    * @throws IOException
    */
-  public Transceiver readComment(DoiBasedIdentity commentId)
+  public Transceiver readComment(String commentUri)
       throws IOException;
 
   /**
@@ -60,19 +59,19 @@ public interface CommentCrudService {
 
   public Comment createComment(CommentInputView input);
 
-  public Comment patchComment(DoiBasedIdentity commentId, CommentInputView input);
+  public Comment patchComment(String commentUri, CommentInputView input);
 
-  public String deleteComment(DoiBasedIdentity input);
+  public String deleteComment(String commentUri);
 
-  public String removeFlagsFromComment(DoiBasedIdentity input);
+  public String removeFlagsFromComment(String commentUri);
 
-  public Flag createCommentFlag(DoiBasedIdentity commentId, CommentFlagInputView input);
+  public Flag createCommentFlag(String commentUri, CommentFlagInputView input);
 
   public Transceiver readAllCommentFlags();
 
   public Transceiver readCommentFlag(String flagId);
 
-  public Transceiver readCommentFlagsOn(DoiBasedIdentity commentId);
+  public Transceiver readCommentFlagsOn(String commentUri);
 
   public String deleteCommentFlag(String flagId);
 
