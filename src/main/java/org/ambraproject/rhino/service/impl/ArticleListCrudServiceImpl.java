@@ -7,6 +7,7 @@ import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleList;
+import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.ArticleListIdentity;
@@ -119,8 +120,8 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     }
 
     if (articleIds.isPresent()) {
-      List<Article> newArticles = fetchArticles(articleIds.get());
-      List<Article> oldArticles = list.getArticles();
+      List<ArticleTable> newArticles = fetchArticles(articleIds.get());
+      List<ArticleTable> oldArticles = list.getArticles();
       oldArticles.clear();
       oldArticles.addAll(newArticles);
     }
@@ -136,7 +137,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
    * @return the articles in the same order, if all exist
    * @throws RestClientException if not every article ID belongs to an existing article
    */
-  private List<Article> fetchArticles(Set<ArticleIdentity> articleIds) {
+  private List<ArticleTable> fetchArticles(Set<ArticleIdentity> articleIds) {
     if (articleIds.isEmpty()) return ImmutableList.of();
     final Map<String, Integer> articleKeys = new HashMap<>();
     int i = 0;
@@ -144,15 +145,15 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
       articleKeys.put(articleId.getKey(), i++);
     }
 
-    List<Article> articles = (List<Article>) hibernateTemplate.findByNamedParam(
-        "from Article where doi in :articleKeys", "articleKeys", articleKeys.keySet());
+    List<ArticleTable> articles = (List<ArticleTable>) hibernateTemplate.findByNamedParam(
+        "from ArticleTable where doi in :articleKeys", "articleKeys", articleKeys.keySet());
     if (articles.size() < articleKeys.size()) {
       throw new RestClientException(buildMissingArticleMessage(articles, articleKeys.keySet()), HttpStatus.NOT_FOUND);
     }
 
-    Collections.sort(articles, new Comparator<Article>() {
+    Collections.sort(articles, new Comparator<ArticleTable>() {
       @Override
-      public int compare(Article o1, Article o2) {
+      public int compare(ArticleTable o1, ArticleTable o2) {
         // We expect the error check above to guarantee that both values will be found in the map
         int i1 = articleKeys.get(o1.getDoi());
         int i2 = articleKeys.get(o2.getDoi());
@@ -163,9 +164,9 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     return articles;
   }
 
-  private static String buildMissingArticleMessage(Collection<Article> foundArticles, Collection<String> requestedArticleKeys) {
+  private static String buildMissingArticleMessage(Collection<ArticleTable> foundArticles, Collection<String> requestedArticleKeys) {
     ImmutableSet.Builder<String> foundArticleKeys = ImmutableSet.builder();
-    for (Article foundArticle : foundArticles) {
+    for (ArticleTable foundArticle : foundArticles) {
       foundArticleKeys.add(foundArticle.getDoi());
     }
 
