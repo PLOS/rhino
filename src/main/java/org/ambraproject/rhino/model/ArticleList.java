@@ -13,15 +13,46 @@
 
 package org.ambraproject.rhino.model;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.List;
 
+@Entity
+@Table(name = "articleList")
 public class ArticleList extends AmbraEntity {
 
+  @Id
+  @GeneratedValue
+  @Column
+  private long articleListID;
+
+  @Column
   private String listType;
+
+  @Column
   private String listKey;
+
+  @Column
   private String displayName;
 
-  private List<Article> articles;
+  @Cascade(CascadeType.SAVE_UPDATE)
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(
+      name = "articleListJoinTable",
+      joinColumns = @JoinColumn(name = "articleListID"),
+      inverseJoinColumns = @JoinColumn(name = "articleID")
+  )
+  private List<ArticleTable> articles;
 
   public ArticleList() {
     super();
@@ -30,6 +61,14 @@ public class ArticleList extends AmbraEntity {
   public ArticleList(String listKey) {
     super();
     this.listKey = listKey;
+  }
+
+  public long getArticleListID() {
+    return articleListID;
+  }
+
+  public void setArticleListID(long articleListID) {
+    this.articleListID = articleListID;
   }
 
   public String getListType() {
@@ -56,11 +95,11 @@ public class ArticleList extends AmbraEntity {
     this.displayName = displayName;
   }
 
-  public List<Article> getArticles() {
+  public List<ArticleTable> getArticles() {
     return articles;
   }
 
-  public void setArticles(List<Article> articles) {
+  public void setArticles(List<ArticleTable> articles) {
     this.articles = articles;
   }
 
@@ -71,7 +110,7 @@ public class ArticleList extends AmbraEntity {
 
     ArticleList articleList = (ArticleList) o;
 
-    if (getID() != null ? !getID().equals(articleList.getID()) : articleList.getID() != null) return false;
+    if (articleListID != articleList.articleListID) return false;
     if (articles != null ? !articles.equals(articleList.articles) : articleList.articles != null) return false;
     if (displayName != null ? !displayName.equals(articleList.displayName) : articleList.displayName != null) {
       return false;
@@ -84,7 +123,7 @@ public class ArticleList extends AmbraEntity {
 
   @Override
   public int hashCode() {
-    int result = getID() != null ? getID().hashCode() : 0;
+    int result = (int) (articleListID ^ (articleListID >>> 32));
     result = 31 * result + (listType != null ? listType.hashCode() : 0);
     result = 31 * result + (listKey != null ? listKey.hashCode() : 0);
     result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
@@ -95,7 +134,7 @@ public class ArticleList extends AmbraEntity {
   @Override
   public String toString() {
     return "ArticleList{" +
-        "id='" + getID() + '\'' +
+        "id='" + articleListID + '\'' +
         ", listType='" + listType + '\'' +
         ", listKey='" + listKey + '\'' +
         '}';
