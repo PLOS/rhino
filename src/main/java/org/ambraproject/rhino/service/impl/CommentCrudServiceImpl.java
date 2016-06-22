@@ -66,8 +66,8 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
    * @param article the article
    * @return the collection of annotations
    */
-  private Collection<Comment> fetchAllComments(ArticleTable article) {
-    return (List<Comment>) hibernateTemplate.find("FROM Comment WHERE articleId = ?", article.getArticleId());
+  private ArrayList<Comment> fetchAllComments(ArticleTable article) {
+    return (ArrayList<Comment>) hibernateTemplate.find("FROM Comment WHERE articleId = ?", article.getArticleId());
   }
 
   @Override
@@ -76,7 +76,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
       @Override
       protected Collection<CommentOutputView> getData() throws IOException {
         ArticleTable article = articleCrudService.getArticle(articleId);
-        Collection<Comment> comments = fetchAllComments(article);
+        ArrayList<Comment> comments = fetchAllComments(article);
         CommentOutputView.Factory factory = new CommentOutputView.Factory(runtimeConfiguration, comments);
         return comments.stream()
             .filter(comment -> comment.getParent() == null)
