@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import java.util.Set;
 
 @Entity
-@Table(name = "articleVersion")
+@Table(name = "articleIngestion")
 public class ArticleIngestion extends AmbraEntity {
 
   @Id
@@ -29,10 +29,7 @@ public class ArticleIngestion extends AmbraEntity {
   private ArticleTable article;
 
   @Column
-  private int revisionNumber;
-
-  @Column
-  private int publicationState;
+  private int visibility;
 
   @Cascade(CascadeType.SAVE_UPDATE)
   @ManyToMany(fetch = FetchType.LAZY)
@@ -59,20 +56,12 @@ public class ArticleIngestion extends AmbraEntity {
     this.article = article;
   }
 
-  public int getRevisionNumber() {
-    return revisionNumber;
+  public int getVisibility() {
+    return visibility;
   }
 
-  public void setRevisionNumber(int revisionNumber) {
-    this.revisionNumber = revisionNumber;
-  }
-
-  public int getPublicationState() {
-    return publicationState;
-  }
-
-  public void setPublicationState(int publicationState) {
-    this.publicationState = publicationState;
+  public void setVisibility(int visibility) {
+    this.visibility = visibility;
   }
 
   public Set<Journal> getJournals() {
@@ -91,28 +80,28 @@ public class ArticleIngestion extends AmbraEntity {
     ArticleIngestion that = (ArticleIngestion) o;
 
     if (versionId != that.versionId) return false;
-    if (revisionNumber != that.revisionNumber) return false;
-    if (publicationState != that.publicationState) return false;
-    return article.equals(that.article);
+    if (visibility != that.visibility) return false;
+    if (article != null ? !article.equals(that.article) : that.article != null) return false;
+    return journals != null ? journals.equals(that.journals) : that.journals == null;
 
   }
 
   @Override
   public int hashCode() {
     int result = (int) (versionId ^ (versionId >>> 32));
-    result = 31 * result + article.hashCode();
-    result = 31 * result + revisionNumber;
-    result = 31 * result + publicationState;
+    result = 31 * result + (article != null ? article.hashCode() : 0);
+    result = 31 * result + visibility;
+    result = 31 * result + (journals != null ? journals.hashCode() : 0);
     return result;
   }
 
   @Override
   public String toString() {
-    return "ArticleVersion{" +
+    return "ArticleIngestion{" +
         "versionId=" + versionId +
         ", article=" + article +
-        ", revisionNumber=" + revisionNumber +
-        ", publicationState=" + publicationState +
+        ", visibility=" + visibility +
+        ", journals=" + journals +
         '}';
   }
 }
