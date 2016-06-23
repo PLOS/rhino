@@ -20,8 +20,8 @@ import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.util.Archive;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.plos.crepo.model.RepoObject;
-import org.plos.crepo.model.RepoVersion;
+import org.plos.crepo.model.input.RepoObjectInput;
+import org.plos.crepo.model.identity.RepoVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -235,7 +235,7 @@ class VersionedIngestionService {
 
   private long persistItem(ArticleItemInput work, long ingestionId) {
     Map<String, RepoVersion> crepoResults = new LinkedHashMap<>();
-    for (Map.Entry<String, RepoObject> entry : work.getObjects().entrySet()) {
+    for (Map.Entry<String, RepoObjectInput> entry : work.getObjects().entrySet()) {
       RepoVersion result = parentService.contentRepoService.autoCreateRepoObject(entry.getValue()).getVersion();
       crepoResults.put(entry.getKey(), result);
     }

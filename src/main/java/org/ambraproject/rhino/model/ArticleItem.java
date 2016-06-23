@@ -3,7 +3,7 @@ package org.ambraproject.rhino.model;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.plos.crepo.model.RepoVersion;
+import org.plos.crepo.model.identity.RepoVersion;
 
 import java.time.Instant;
 import java.util.EnumSet;

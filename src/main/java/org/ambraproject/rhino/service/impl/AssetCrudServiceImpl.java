@@ -20,12 +20,11 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
-import org.ambraproject.rhino.model.ArticleAsset;
-import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.model.ArticleAsset;
 import org.ambraproject.rhino.model.ArticleItem;
+import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
@@ -42,8 +41,8 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.NotFoundException;
-import org.plos.crepo.model.RepoObjectMetadata;
-import org.plos.crepo.model.RepoVersion;
+import org.plos.crepo.model.identity.RepoVersion;
+import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +55,6 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.OptionalInt;
 
 public class AssetCrudServiceImpl extends AmbraService implements AssetCrudService {
 

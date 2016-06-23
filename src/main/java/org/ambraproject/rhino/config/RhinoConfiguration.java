@@ -63,13 +63,11 @@ import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
 import org.apache.commons.configuration.ConfigurationException;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.hibernate.SessionFactory;
-import org.plos.crepo.config.ContentRepoAccessConfig;
+import org.plos.crepo.config.HttpClientFunction;
 import org.plos.crepo.service.ContentRepoService;
 import org.plos.crepo.service.ContentRepoServiceImpl;
 import org.springframework.context.annotation.Bean;
@@ -89,6 +87,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 
 /**
@@ -199,27 +198,9 @@ public class RhinoConfiguration extends BaseConfiguration {
                                                final CloseableHttpClient httpClient) {
     RuntimeConfiguration.ContentRepoEndpoint corpus = runtimeConfiguration.getCorpusBucket();
     final String repoServer = Preconditions.checkNotNull(corpus.getAddress().toString());
-    final String bucketName = Preconditions.checkNotNull(corpus.getBucket());
-    Preconditions.checkNotNull(httpClient);
+    Objects.requireNonNull(httpClient);
 
-    ContentRepoAccessConfig accessConfig = new ContentRepoAccessConfig() {
-      @Override
-      public String getRepoServer() {
-        return repoServer;
-      }
-
-      @Override
-      public String getBucketName() {
-        return bucketName;
-      }
-
-      @Override
-      public CloseableHttpResponse open(HttpUriRequest request) throws IOException {
-        return httpClient.execute(request);
-      }
-    };
-
-    return new ContentRepoServiceImpl(accessConfig);
+    return new ContentRepoServiceImpl(repoServer, HttpClientFunction.from(httpClient));
   }
 
 
