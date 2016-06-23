@@ -13,7 +13,6 @@ import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.article.ArticleTableVisibility;
 import org.ambraproject.rhino.view.user.UserIdView;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
@@ -59,7 +58,7 @@ public class CommentOutputView implements JsonOutputView {
     /**
      * @param comments      all comments belonging to the parent article
      */
-    public Factory(RuntimeConfiguration runtimeConfiguration, ArrayList<Comment> comments) {
+    public Factory(RuntimeConfiguration runtimeConfiguration, List<Comment> comments) {
       this.competingInterestPolicy = new CompetingInterestPolicy(runtimeConfiguration);
       Doi doi = Doi.create(comments.get(0).getArticle().getDoi()); //todo: get(0) is unnecessary
       this.parentArticle = ArticleTableVisibility.create(doi);
