@@ -205,7 +205,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     Comment comment = getComment(commentId);
 
     String declaredUri = input.getAnnotationUri();
-    if (declaredUri != null && !declaredUri.equals(commentId)) {
+    if (declaredUri != null && !CommentIdentifier.create(declaredUri).equals(commentId)) {
       throw new RestClientException("Mismatched commentUri in body", HttpStatus.BAD_REQUEST);
     }
 
