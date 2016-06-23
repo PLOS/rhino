@@ -27,12 +27,12 @@ public class ContentRepoController extends RestController {
   public ResponseEntity<?> serve(@PathVariable("key") String key,
                                  @PathVariable("version") String version)
       throws IOException {
-    RuntimeConfiguration.ContentRepoEndpoint editorialBucket = runtimeConfiguration.getEditorialBucket();
+    RuntimeConfiguration.ContentRepoEndpoint editorialBucket = runtimeConfiguration.getEditorialStorage();
     URI address;
     String bucketName;
     if (editorialBucket == null
         || (address = editorialBucket.getAddress()) == null
-        || (bucketName = editorialBucket.getBucket()) == null) {
+        || (bucketName = editorialBucket.getDefaultBucket()) == null) {
       throw new RuntimeException("contentRepo.editorial is not configured");
     }
     if ("file".equals(address.getScheme())) {
