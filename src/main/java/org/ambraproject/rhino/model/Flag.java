@@ -145,12 +145,12 @@ public class Flag {
 
   @Override
   public int hashCode() {
-    Long result = commentFlagId;
+    int result = Long.hashCode(commentFlagId);
     result = 31 * result + (comment != null ? comment.hashCode() : 0);
     result = 31 * result + (userProfileId != null ? userProfileId.hashCode() : 0);
     result = 31 * result + (reason != null ? reason.hashCode() : 0);
     result = 31 * result + (flaggedComment != null ? flaggedComment.hashCode() : 0);
-    return result.intValue();
+    return result;
   }
 
   @Override

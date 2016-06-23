@@ -14,6 +14,7 @@
 package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.identity.ArticleIdentifier;
+import org.ambraproject.rhino.identity.CommentIdentifier;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Comment;
 import org.ambraproject.rhino.model.Flag;
@@ -59,19 +60,19 @@ public interface CommentCrudService {
 
   public Comment createComment(CommentInputView input);
 
-  public Comment patchComment(String commentUri, CommentInputView input);
+  public Comment patchComment(CommentIdentifier commentId, CommentInputView input);
 
-  public String deleteComment(String commentUri);
+  public String deleteComment(CommentIdentifier commentId);
 
-  public String removeFlagsFromComment(String commentUri);
+  public String removeFlagsFromComment(CommentIdentifier commentId);
 
-  public Flag createCommentFlag(String commentUri, CommentFlagInputView input);
+  public Flag createCommentFlag(CommentIdentifier commentId, CommentFlagInputView input);
 
   public Transceiver readAllCommentFlags();
 
   public Transceiver readCommentFlag(Long flagId);
 
-  public Transceiver readCommentFlagsOn(String commentUri);
+  public Transceiver readCommentFlagsOn(CommentIdentifier commentId);
 
   public Long deleteCommentFlag(Long flagId);
 

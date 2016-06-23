@@ -66,8 +66,8 @@ public class ArticleTable { //todo: rename to "Article" once the old Article cla
 
   @Override
   public int hashCode() {
-    Long result = articleId;
+    int result = Long.hashCode(articleId);
     result = 31 * result + doi.hashCode();
-    return result.intValue();
+    return result;
   }
 }
