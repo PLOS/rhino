@@ -75,5 +75,26 @@ public class CommentNodeView implements JsonOutputView {
     return serialized;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    CommentNodeView that = (CommentNodeView) o;
+
+    if (comment != null ? !comment.equals(that.comment) : that.comment != null) return false;
+    if (competingInterestStatement != null ? !competingInterestStatement.equals(that.competingInterestStatement) : that.competingInterestStatement != null)
+      return false;
+    return parentArticle != null ? parentArticle.equals(that.parentArticle) : that.parentArticle == null;
+
+  }
+
+  @Override
+  public int hashCode() {
+    int result = comment != null ? comment.hashCode() : 0;
+    result = 31 * result + (competingInterestStatement != null ? competingInterestStatement.hashCode() : 0);
+    result = 31 * result + (parentArticle != null ? parentArticle.hashCode() : 0);
+    return result;
+  }
 }
 

@@ -94,16 +94,16 @@ public class CommentCrudController extends CommentSpaceController {
 
   @RequestMapping(value = FLAGS_META_TEMPLATE, method = RequestMethod.GET)
   public void readFlag(HttpServletRequest request, HttpServletResponse response,
-                       @PathVariable("flagId") String flagId)
+                       @PathVariable("flagId") Long flagId)
       throws IOException {
     commentCrudService.readCommentFlag(flagId).respond(request, response, entityGson);
   }
 
   @RequestMapping(value = FLAGS_META_TEMPLATE, method = RequestMethod.DELETE)
-  public ResponseEntity<Object> removeFlag(@PathVariable("flagId") String flagId)
+  public ResponseEntity<Object> removeFlag(@PathVariable("flagId") Long flagId)
       throws IOException {
     commentCrudService.deleteCommentFlag(flagId);
-    return reportOk(flagId);
+    return reportOk(flagId.toString());
   }
 
 }

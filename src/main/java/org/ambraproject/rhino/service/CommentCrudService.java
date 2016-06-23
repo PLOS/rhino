@@ -69,11 +69,11 @@ public interface CommentCrudService {
 
   public Transceiver readAllCommentFlags();
 
-  public Transceiver readCommentFlag(String flagId);
+  public Transceiver readCommentFlag(Long flagId);
 
   public Transceiver readCommentFlagsOn(String commentUri);
 
-  public String deleteCommentFlag(String flagId);
+  public Long deleteCommentFlag(Long flagId);
 
   public Transceiver readRecentComments(String journalKey, OptionalInt limit);
 

@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -120,9 +121,9 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     return comment;
   }
 
-  private Flag getFlag(String commentFlagId) {
+  private Flag getFlag(Long commentFlagId) {
     Flag flag = hibernateTemplate.execute(session -> {
-      Query query = session.createQuery("FROM CommentFlag WHERE commentFlagId = :commentFlagId");
+      Query query = session.createQuery("FROM Flag WHERE commentFlagId = :commentFlagId");
       query.setParameter("commentFlagId", commentFlagId);
       return (Flag) query.uniqueResult();
     });
@@ -249,7 +250,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
 
   private List<Flag> getCommentFlagsOn(Comment comment) {
     return hibernateTemplate.execute(session -> {
-      Query query = session.createQuery("FROM Flag WHERE flaggedAnnotation = :comment");
+      Query query = session.createQuery("FROM Flag WHERE flaggedComment = :comment");
       query.setParameter("comment", comment);
       return (List<Flag>) query.list();
     });
@@ -304,7 +305,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   }
 
   @Override
-  public Transceiver readCommentFlag(String flagId) {
+  public Transceiver readCommentFlag(Long flagId) {
     return new Transceiver() {
 
       @Override
@@ -338,7 +339,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   }
 
   @Override
-  public String deleteCommentFlag(String flagId) {
+  public Long deleteCommentFlag(Long flagId) {
     Flag flag = getFlag(flagId);
     hibernateTemplate.delete(flag);
     return flagId;
@@ -348,12 +349,12 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   public Transceiver readFlaggedComments() throws IOException {
     return new Transceiver() {
       @Override
-      protected List<CommentNodeView> getData() throws IOException {
+      protected HashSet<CommentNodeView> getData() throws IOException {
         CommentNodeView.Factory viewFactory = new CommentNodeView.Factory(runtimeConfiguration);
         return getAllFlags().stream()
             .map(Flag::getFlaggedComment)
             .map(viewFactory::create)
-            .collect(Collectors.toCollection(ArrayList::new));
+            .collect(Collectors.toCollection(HashSet::new));
       }
 
       @Override
