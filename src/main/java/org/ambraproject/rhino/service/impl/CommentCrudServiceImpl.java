@@ -26,6 +26,7 @@ import org.ambraproject.rhino.model.FlagReasonCode;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;
+import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentFlagOutputView;
@@ -307,17 +308,16 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
 
   @Override
   public Transceiver readCommentFlag(Long flagId) {
-    return new Transceiver() {
+    return new EntityTransceiver<Flag>() {
 
       @Override
-      protected Object getData() {
-        Flag flag = getFlag(flagId);
-        return new CommentNodeView.Factory(runtimeConfiguration).createFlagView(flag);
+      protected Flag fetchEntity() {
+        return getFlag(flagId);
       }
 
       @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return null;
+      protected Object getView(Flag flag) {
+        return new CommentNodeView.Factory(runtimeConfiguration).createFlagView(flag);
       }
     };
   }

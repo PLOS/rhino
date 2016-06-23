@@ -30,7 +30,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "commentFlag")
-public class Flag {
+public class Flag implements Timestamped {
 
   @Id
   @GeneratedValue
@@ -119,6 +119,7 @@ public class Flag {
     this.created = created;
   }
 
+  @Override
   public Date getLastModified() {
     return lastModified;
   }
