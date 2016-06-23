@@ -30,7 +30,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "commentFlag")
-public class Flag extends AmbraEntity {
+public class Flag {
 
   @Id
   @GeneratedValue

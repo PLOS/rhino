@@ -25,7 +25,6 @@ import org.ambraproject.rhino.model.FlagReasonCode;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;
-import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentFlagOutputView;
@@ -121,14 +120,14 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     return comment;
   }
 
-  private Flag getFlag(String flagId) {
+  private Flag getFlag(String commentFlagId) {
     Flag flag = hibernateTemplate.execute(session -> {
-      Query query = session.createQuery("FROM CommentFlag WHERE flagId = :flagId");
-      query.setParameter("flagId", flagId);
+      Query query = session.createQuery("FROM CommentFlag WHERE commentFlagId = :commentFlagId");
+      query.setParameter("commentFlagId", commentFlagId);
       return (Flag) query.uniqueResult();
     });
     if (flag == null) {
-      String message = "Comment flag not found at the provided ID: " + flagId;
+      String message = "Comment flag not found at the provided ID: " + commentFlagId;
       throw new RestClientException(message, HttpStatus.NOT_FOUND);
     }
     return flag;
@@ -274,6 +273,9 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     flag.setUserProfileId(flagCreator);
     flag.setComment(input.getBody());
     flag.setReason(FlagReasonCode.fromString(input.getReasonCode()));
+
+    //todo: shouldn't have to set these here
+    flag.setCreated(Date.from(Instant.now()));
     flag.setLastModified(Date.from(Instant.now()));
 
     hibernateTemplate.save(flag);
@@ -303,15 +305,17 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
 
   @Override
   public Transceiver readCommentFlag(String flagId) {
-    return new EntityTransceiver<Flag>() {
+    return new Transceiver() {
+
       @Override
-      protected Flag fetchEntity() {
-        return getFlag(flagId);
+      protected Object getData() {
+        Flag flag = getFlag(flagId);
+        return new CommentNodeView.Factory(runtimeConfiguration).createFlagView(flag);
       }
 
       @Override
-      protected CommentFlagOutputView getView(Flag flag) {
-        return new CommentNodeView.Factory(runtimeConfiguration).createFlagView(flag);
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
       }
     };
   }

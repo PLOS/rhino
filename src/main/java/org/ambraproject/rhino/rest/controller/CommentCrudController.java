@@ -82,7 +82,7 @@ public class CommentCrudController extends CommentSpaceController {
     String commentUri = parse(request).getIdentifier();
     CommentFlagInputView input = readJsonFromRequest(request, CommentFlagInputView.class);
     Flag commentFlag = commentCrudService.createCommentFlag(commentUri, input);
-    return reportCreated(commentFlag.getID().toString());
+    return reportCreated(commentFlag.getCommentFlagId().toString());
   }
 
   @RequestMapping(value = COMMENT_META_TEMPLATE, method = RequestMethod.GET, params = {FLAGS_PARAMETER})
