@@ -79,7 +79,8 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
       protected Collection<CommentOutputView> getData() throws IOException {
         ArticleTable article = articleCrudService.getArticle(articleId);
         List<Comment> comments = fetchAllComments(article);
-        CommentOutputView.Factory factory = new CommentOutputView.Factory(runtimeConfiguration, comments);
+        CommentOutputView.Factory factory = new CommentOutputView.Factory(runtimeConfiguration,
+            comments, article);
         return comments.stream()
             .filter(comment -> comment.getParent() == null)
             .sorted(CommentOutputView.BY_DATE)
@@ -101,7 +102,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
       protected CommentOutputView getData() throws IOException {
         Comment comment = getComment(commentId);
         return new CommentOutputView.Factory(runtimeConfiguration,
-            fetchAllComments(comment.getArticle())).buildView(comment);
+            fetchAllComments(comment.getArticle()), comment.getArticle()).buildView(comment);
       }
 
       @Override
