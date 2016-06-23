@@ -95,11 +95,11 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   }
 
   @Override
-  public Transceiver readComment(String commentUri) throws IOException {
+  public Transceiver readComment(CommentIdentifier commentId) throws IOException {
     return new Transceiver() {
       @Override
       protected CommentOutputView getData() throws IOException {
-        Comment comment = getComment(CommentIdentifier.create(commentUri));
+        Comment comment = getComment(commentId);
         return new CommentOutputView.Factory(runtimeConfiguration,
             fetchAllComments(comment.getArticle())).buildView(comment);
       }

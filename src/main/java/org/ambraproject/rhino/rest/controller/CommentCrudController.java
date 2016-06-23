@@ -22,12 +22,12 @@ import java.io.IOException;
 @Controller
 public class CommentCrudController extends DoiBasedCrudController {
 
-  protected static final String COMMENT_META_ROOT = "/comments";
-  protected static final String COMMENT_META_NAMESPACE = COMMENT_META_ROOT + "/";
-  protected static final String COMMENT_META_TEMPLATE = COMMENT_META_NAMESPACE + "/**";
+  private static final String COMMENT_META_ROOT = "/comments";
+  private static final String COMMENT_META_NAMESPACE = COMMENT_META_ROOT + "/";
+  private static final String COMMENT_META_TEMPLATE = COMMENT_META_NAMESPACE + "/**";
 
-  protected static final String FLAGS_META_ROOT = "/flags";
-  protected static final String FLAGS_META_TEMPLATE = FLAGS_META_ROOT + "/{flagId}";
+  private static final String FLAGS_META_ROOT = "/flags";
+  private static final String FLAGS_META_TEMPLATE = FLAGS_META_ROOT + "/{flagId}";
 
   @Autowired
   protected CommentCrudService commentCrudService;
@@ -47,8 +47,8 @@ public class CommentCrudController extends DoiBasedCrudController {
   @RequestMapping(value = COMMENT_META_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    String commentUri = parseCommentId(request).getDoiName();
-    commentCrudService.readComment(commentUri).respond(request, response, entityGson);
+    CommentIdentifier commentId = parseCommentId(request);
+    commentCrudService.readComment(commentId).respond(request, response, entityGson);
   }
 
   @RequestMapping(value = COMMENT_META_ROOT, method = RequestMethod.GET, params = {FLAGGED_PARAMETER})

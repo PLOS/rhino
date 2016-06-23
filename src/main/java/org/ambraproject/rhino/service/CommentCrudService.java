@@ -44,10 +44,10 @@ public interface CommentCrudService {
   /**
    * Reads the comment data for a single comment to the receiver.
    *
-   * @param commentUri identifies the comment
+   * @param commentId identifies the comment
    * @throws IOException
    */
-  public Transceiver readComment(String commentUri)
+  public Transceiver readComment(CommentIdentifier commentId)
       throws IOException;
 
   /**
