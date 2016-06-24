@@ -28,7 +28,7 @@ import java.util.Date;
  *
  * @author Alex Kudlick 11/9/11
  */
-public abstract class AmbraEntity {
+public abstract class AmbraEntity implements Timestamped {
   private Long ID;
 
   private Date created;
@@ -56,6 +56,7 @@ public abstract class AmbraEntity {
     this.created = created;
   }
 
+  @Override
   public Date getLastModified() {
     return lastModified;
   }

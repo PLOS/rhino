@@ -13,16 +13,26 @@ public class ArticleTable { //todo: rename to "Article" once the old Article cla
   @Id
   @GeneratedValue
   @Column(name = "articleId")
-  private int articleId;
+  private Long articleId;
 
   @Column(name = "doi")
   private String doi;
 
-  public int getArticleId() {
+//todo: figure this out if possible to get list of comments on article w/o a new table or column
+//  @Cascade(CascadeType.SAVE_UPDATE)
+//  @ManyToMany(fetch = FetchType.LAZY)
+//  @JoinTable(
+//      name = "comment",
+//      joinColumns = @JoinColumn(name = "commentId"),
+//      inverseJoinColumns = @JoinColumn(name = "articleId")
+//  )
+//  private Set<Comment> comments;
+
+  public Long getArticleId() {
     return articleId;
   }
 
-  public void setArticleId(int articleId) {
+  public void setArticleId(Long articleId) {
     this.articleId = articleId;
   }
 
@@ -33,6 +43,14 @@ public class ArticleTable { //todo: rename to "Article" once the old Article cla
   public void setDoi(String doi) {
     this.doi = doi;
   }
+
+//  public Set<Comment> getComments() {
+//    return comments;
+//  }
+//
+//  public void setComments(Set<Comment> comments) {
+//    this.comments = comments;
+//  }
 
   @Override
   public boolean equals(Object o) {
@@ -48,7 +66,7 @@ public class ArticleTable { //todo: rename to "Article" once the old Article cla
 
   @Override
   public int hashCode() {
-    int result = articleId;
+    int result = Long.hashCode(articleId);
     result = 31 * result + doi.hashCode();
     return result;
   }

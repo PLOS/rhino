@@ -13,39 +13,72 @@
 
 package org.ambraproject.rhino.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import java.util.Date;
+
 /**
  * @author Alex Kudlick 3/7/12
  */
-public class Annotation extends AmbraEntity {
+@Entity
+@Table(name = "comment")
+public class Comment {
 
-  private AnnotationType type;
+  @Id
+  @GeneratedValue
+  @Column
+  private Long commentId;
+
+  @Column
   private Long userProfileID;
 
-  //ID of the article to which this refers
-  private Long articleID;
+  @ManyToOne
+  @JoinColumn(name = "articleId")
+  private ArticleTable article;
 
-  //If this is a reply, this holds the ID of the annotation which this is in reply to
-  private Long parentID;
-  private String annotationUri;
+  @ManyToOne
+  @JoinColumn(name = "parentId")
+  private Comment parent;
 
+  @Column
+  private String commentUri;
+
+  @Column
   private String title;
+
+  @Column
   private String body;
+
+  @Column
   private String highlightedText;
 
+  @Column
   private String competingInterestBody;
 
+  @Column
+  private Date created;
+
+  @Column
+  private Date lastModified;
+  
+  @Column
   private boolean isRemoved;
 
-  public Annotation() {
+  public Comment() {
     super();
   }
 
-  public Annotation(Long userProfileID, AnnotationType type, Long articleID) {
-    this();
+  public Long getCommentId() {
+    return commentId;
+  }
 
-    this.userProfileID = userProfileID;
-    this.type = type;
-    this.articleID = articleID;
+  public void setCommentId(Long commentId) {
+    this.commentId = commentId;
   }
 
   public Long getUserProfileID() {
@@ -56,36 +89,48 @@ public class Annotation extends AmbraEntity {
     this.userProfileID = userProfileID;
   }
 
-  public Long getArticleID() {
-    return articleID;
+  public ArticleTable getArticle() {
+    return article;
   }
 
-  public void setArticleID(Long articleID) {
-    this.articleID = articleID;
+  public void setArticle(ArticleTable article) {
+    this.article = article;
   }
 
-  public Long getParentID() {
-    return parentID;
+  public Comment getParent() {
+    return parent;
   }
 
-  public void setParentID(Long parentID) {
-    this.parentID = parentID;
+  public Long getParentId() {
+    return parent.getCommentId();
   }
 
-  public String getAnnotationUri() {
-    return annotationUri;
+  public void setParent(Comment parent) {
+    this.parent = parent;
   }
 
-  public void setAnnotationUri(String annotationUri) {
-    this.annotationUri = annotationUri;
+  public Date getCreated() {
+    return created;
   }
 
-  public AnnotationType getType() {
-    return type;
+  public void setCreated(Date created) {
+    this.created = created;
   }
 
-  public void setType(AnnotationType type) {
-    this.type = type;
+  public Date getLastModified() {
+    return lastModified;
+  }
+
+  public void setLastModified(Date lastModified) {
+    this.lastModified = lastModified;
+  }
+
+  public String getCommentUri() {
+    return commentUri;
+  }
+
+  public void setCommentUri(String commentUri) {
+    this.commentUri = commentUri;
   }
 
   public String getTitle() {
@@ -131,22 +176,20 @@ public class Annotation extends AmbraEntity {
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (!(o instanceof Annotation)) return false;
+    if (!(o instanceof Comment)) return false;
 
-    Annotation that = (Annotation) o;
+    Comment that = (Comment) o;
 
-    if (articleID != null ? !articleID.equals(that.articleID) : that.articleID != null) return false;
+    if (article != null ? !article.equals(that.article) : that.article != null) return false;
     if (body != null ? !body.equals(that.body) : that.body != null) return false;
     if (title != null ? !title.equals(that.title) : that.title != null) return false;
-    if (type != that.type) return false;
 
     return true;
   }
 
   @Override
   public int hashCode() {
-    int result = articleID != null ? articleID.hashCode() : 0;
-    result = 31 * result + (type != null ? type.hashCode() : 0);
+    int result = article != null ? article.hashCode() : 0;
     result = 31 * result + (title != null ? title.hashCode() : 0);
     result = 31 * result + (body != null ? body.hashCode() : 0);
     return result;
@@ -154,9 +197,8 @@ public class Annotation extends AmbraEntity {
 
   @Override
   public String toString() {
-    return "Annotation{" +
-        "type=" + type +
-        ", title='" + title + '\'' +
+    return "Comment{" +
+        "title='" + title + '\'' +
         ", body='" + body + '\'' +
         '}';
   }

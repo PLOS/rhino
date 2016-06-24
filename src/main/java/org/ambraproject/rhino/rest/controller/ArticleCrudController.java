@@ -23,11 +23,11 @@ import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
-import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
-import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.service.ArticleListCrudService;
+import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhombat.HttpDateUtil;
@@ -74,7 +74,7 @@ public class ArticleCrudController extends ArticleSpaceController {
   private static final String EXCLUDE_PARAM = "exclude";
 
   @Autowired
-  private AnnotationCrudService annotationCrudService;
+  private CommentCrudService commentCrudService;
 
   @Autowired
   private AssetFileCrudController assetFileCrudController;
@@ -202,17 +202,17 @@ public class ArticleCrudController extends ArticleSpaceController {
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "comments")
   public void readComments(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    ArticleIdentity id = parse(request);
-    annotationCrudService.readComments(id).respond(request, response, entityGson);
+    ArticleIdentifier id = ArticleIdentifier.create(getIdentifier(request));
+    commentCrudService.readComments(id).respond(request, response, entityGson);
   }
 
   @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "commentCount")
   public void getCommentCount(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    ArticleIdentity id = parse(request);
-    Article article = articleCrudService.findArticleById(id);
-    annotationCrudService.getCommentCount(article).respond(request, response, entityGson);
+    ArticleIdentifier id = ArticleIdentifier.create(getIdentifier(request));
+    ArticleTable article = articleCrudService.getArticle(id);
+    commentCrudService.getCommentCount(article).respond(request, response, entityGson);
   }
 
   /**

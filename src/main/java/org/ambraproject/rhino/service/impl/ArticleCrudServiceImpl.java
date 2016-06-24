@@ -39,6 +39,7 @@ import org.ambraproject.rhino.model.ArticleAsset;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRelationship;
+import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -612,8 +613,24 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return articleIngestion;
   }
 
+  public ArticleTable getArticle(ArticleIdentifier articleIdentifier) {
+    ArticleTable article = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM ArticleTable WHERE doi = :doi");
+      query.setParameter("doi", articleIdentifier.getDoiName());
+      return (ArticleTable) query.uniqueResult();
+    });
+    if (article == null) {
+      throw new NoSuchArticleIdException(articleIdentifier);
+    }
+    return article;
+  }
+
   private class NoSuchArticleIdException extends RuntimeException {
     private NoSuchArticleIdException(ArticleRevisionIdentifier articleIdentifier) {
+      super("No such article: " + articleIdentifier);
+    }
+
+    private NoSuchArticleIdException(ArticleIdentifier articleIdentifier) {
       super("No such article: " + articleIdentifier);
     }
   }

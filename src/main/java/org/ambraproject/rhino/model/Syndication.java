@@ -62,7 +62,7 @@ public class Syndication {
   @Column
   private Date created;
 
-  @Column //todo: pull this into a super class along with created
+  @Column
   private Date lastModified;
 
   public Syndication() {
