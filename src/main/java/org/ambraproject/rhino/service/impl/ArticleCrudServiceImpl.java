@@ -536,9 +536,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public int getLatestRevision(Doi doi) {
     return hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
-          "SELECT MAX(version.revisionNumber) " +
+          "SELECT MAX(revision.revisionNumber) " +
           "FROM articleItem item " +
-          "INNER JOIN articleVersion version ON item.versionId = version.versionId " +
+          "  INNER JOIN articleIngestion ingestion ON item.ingestionId = ingestion.ingestionId " +
+          "  INNER JOIN articleRevision revision ON ingestion.ingestionId = revision.ingestionId " +
           "WHERE item.doi = :doi");
       query.setParameter("doi", doi.getName());
       Integer maxRevision = (Integer) query.uniqueResult();
