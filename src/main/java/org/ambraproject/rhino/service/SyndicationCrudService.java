@@ -23,7 +23,10 @@ package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
 import org.ambraproject.rhino.model.Syndication;
+import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.view.article.SyndicationInputView;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -33,7 +36,7 @@ import java.util.List;
  * @author Scott Sterling
  * @author Alex Kudlick
  */
-public interface SyndicationService {
+public interface SyndicationCrudService {
 
   /**
    * Get the list of Syndication objects for this <code>articleDoi</code>. If there are no Syndications for this
@@ -87,24 +90,27 @@ public interface SyndicationService {
    *
    * @param versionIdentifier The unique identifier for the Article which was (or is to be) syndicated
    * @return The complete list of Syndication objects for this Article
-   * @throws org.ambraproject.service.article.NoSuchArticleIdException if the article doesn't exist
    */
   public List<Syndication> createSyndications(ArticleVersionIdentifier versionIdentifier);
 
+  public Syndication createSyndication(ArticleVersionIdentifier versionIdentifier, String target);
+
   /**
-   * Get Syndications (from the current journal) that each have a <code>status</code> of either <i>failed</i> or <i>in
-   * progress</i> and a <code>lastModified</code> within the past number of days defined by the configuration property
+   * Get Syndications (from the current journal) that each have a <code>status</code> defined in statuses
+   * and a <code>lastModified</code> within the past number of days defined by the configuration property
    * <code>ambra.virtualJournals.JOURN AL_KEY.syndications.display.numDaysInPast</code>, where <i>JOURNAL_KEY</i> is the
-   * <code>journalKey</code> parameter.  By default, a <i>failed</i> or <i>in progress</i> Syndication can be up to 30
+   * <code>journalKey</code> parameter.  By default, a syndication can be up to 30
    * days old and still appear in this list.
    *
    * @param journalKey Indicates which journal configuration is to be used when determining how many days in the past
    *                   the oldest Syndications can be.  This property is passed in because the Action class (which calls
    *                   this method) has easy access to this value, while this Service class does not
-   * @return Syndications which have a <code>status</code> of either <i>failed</i> or <i>in progress</i> and a
+   * @return Syndications which have a <code>status</code> within the statuses list and a
    * <i>statusTimestamp</i> up to a certain number of days in the past.
    */
-  public List<Syndication> getFailedAndInProgressSyndications(String journalKey);
+  public List<Syndication> getSyndications(String journalKey, List<String> statuses);
+
+  public Transceiver readSyndications(String journalKey, List<String> statuses) throws IOException;
 
   /**
    * Send a message to the message queue indicating that the Article identified by <code>articleDoi</code> should be

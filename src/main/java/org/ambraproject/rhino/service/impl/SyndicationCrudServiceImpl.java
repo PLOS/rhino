@@ -28,7 +28,9 @@ import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.MessageSender;
-import org.ambraproject.rhino.service.SyndicationService;
+import org.ambraproject.rhino.service.SyndicationCrudService;
+import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.view.article.SyndicationOutputView;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationKey;
 import org.apache.commons.configuration.HierarchicalConfiguration;
@@ -39,13 +41,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Manage the syndication process, including creating and updating Syndication objects, as well as pushing syndication
@@ -55,8 +60,8 @@ import java.util.List;
  * @author Joe Osowski
  */
 @SuppressWarnings({"JpaQlInspection"})
-public class SyndicationServiceImpl extends AmbraService implements SyndicationService {
-  private static final Logger log = LoggerFactory.getLogger(SyndicationServiceImpl.class);
+public class SyndicationCrudServiceImpl extends AmbraService implements SyndicationCrudService {
+  private static final Logger log = LoggerFactory.getLogger(SyndicationCrudServiceImpl.class);
 
   @Autowired
   private Configuration configuration;
@@ -120,7 +125,6 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
   @Override
   @SuppressWarnings("unchecked")
   public List<Syndication> createSyndications(ArticleVersionIdentifier versionIdentifier) {
-    ArticleVersion articleVersion = articleCrudService.getArticleVersion(versionIdentifier);
 
     List<HierarchicalConfiguration> allSyndicationTargets = ((HierarchicalConfiguration)
         configuration).configurationsAt("ambra.services.syndications.syndication");
@@ -141,21 +145,25 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
       if (existingSyndication != null) {
         syndications.add(existingSyndication);
       } else {
-        Syndication syndication = new Syndication(articleVersion, target);
-        syndication.setStatus(Syndication.STATUS_PENDING);
-        syndication.setSubmissionCount(0);
-        hibernateTemplate.save(syndication);
-        syndications.add(syndication);
+        syndications.add(createSyndication(versionIdentifier, target));
       }
     }
     return syndications;
   }
 
+  @Override
+  public Syndication createSyndication(ArticleVersionIdentifier versionIdentifier, String target) {
+    ArticleVersion articleVersion = articleCrudService.getArticleVersion(versionIdentifier);
+    Syndication syndication = new Syndication(articleVersion, target);
+    syndication.setStatus(Syndication.STATUS_PENDING);
+    syndication.setSubmissionCount(0);
+    hibernateTemplate.save(syndication);
+    return syndication;
+  }
 
   @Transactional
-  @SuppressWarnings("unchecked")
   @Override
-  public List<Syndication> getFailedAndInProgressSyndications(final String journalKey) {
+  public List<Syndication> getSyndications(final String journalKey, final List<String> statuses) {
     Integer numDaysInPast = configuration.getInteger(
         "ambra.virtualJournals." + journalKey + ".syndications.display.numDaysInPast", 30);
 
@@ -175,18 +183,34 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
           "JOIN s.articleVersion av " +
           "JOIN av.journals j " +
           "WHERE j.journalKey = :journalKey " +
-          "AND s.status in (:inProgressStatus, :failureStatus)" +
+          "AND s.status in (:statuses)" +
           "AND s.lastModified > :startTime");
       query.setParameter("journalKey", journalKey);
-      query.setParameter("inProgressStatus", Syndication.STATUS_IN_PROGRESS);
-      query.setParameter("failureStatus", Syndication.STATUS_FAILURE);
+      query.setParameterList("statuses", statuses);
       query.setDate("startTime", Date.from(startTime));
       return (List<Syndication>) query.list();
     });
   }
 
+  @Override
+  public Transceiver readSyndications(String journalKey, List<String> statuses) throws IOException {
+    return new Transceiver() {
+      @Override
+      protected Object getData() throws IOException {
+        List<Syndication> syndications = getSyndications(journalKey, statuses);
+        return syndications.stream()
+            .map(new SyndicationOutputView.Factory()::createSyndicationView)
+            .collect(Collectors.toList());
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    };
+  }
+
   @Transactional(rollbackFor = {Throwable.class})
-  @SuppressWarnings("unchecked")
   @Override
   public Syndication syndicate(ArticleVersionIdentifier articleVersionIdentifier, String syndicationTarget) {
     ArticleVersion articleVersion = articleCrudService.getArticleVersion(articleVersionIdentifier);

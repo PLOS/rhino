@@ -27,7 +27,7 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.service.MessageSender;
-import org.ambraproject.rhino.service.SyndicationService;
+import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.ambraproject.rhino.view.article.ArticleInputView;
 import org.apache.camel.CamelExecutionException;
 import org.apache.commons.configuration.Configuration;
@@ -82,7 +82,7 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
   private IngestibleService ingestibleService;
 
   @Autowired
-  private SyndicationService syndicationService;
+  private SyndicationCrudService syndicationService;
 
   /**
    * Attaches additional XML info to an article document specifying the journals it is published in.

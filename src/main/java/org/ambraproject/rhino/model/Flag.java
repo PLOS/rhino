@@ -13,6 +13,8 @@
 
 package org.ambraproject.rhino.model;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 
@@ -23,6 +25,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import java.util.Date;
 
 /**
@@ -53,10 +56,14 @@ public class Flag implements Timestamped {
   @JoinColumn(name = "commentId")
   private Comment flaggedComment;
 
-  @Column
+  @Generated(value= GenerationTime.INSERT)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
   private Date created;
 
-  @Column
+  @Generated(value= GenerationTime.ALWAYS)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
   private Date lastModified;
 
   public Flag() {
