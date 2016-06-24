@@ -37,6 +37,7 @@ import java.util.stream.Collectors;
 
 class ArticlePackageBuilder {
 
+  private final String destinationBucketName;
   private final Archive archive;
   private final ArticleXml article;
   private final ManifestXml manifest;
@@ -46,8 +47,9 @@ class ArticlePackageBuilder {
   private final ManifestXml.Representation printableRepr;
   private final ArticleIdentity articleIdentity;
 
-  ArticlePackageBuilder(Archive archive, ArticleXml article, ManifestXml manifest, String manifestEntry,
+  ArticlePackageBuilder(String destinationBucketName, Archive archive, ArticleXml article, ManifestXml manifest, String manifestEntry,
                         ManifestXml.Asset manuscriptAsset, ManifestXml.Representation manuscriptRepr, ManifestXml.Representation printableRepr) {
+    this.destinationBucketName = Objects.requireNonNull(destinationBucketName);
     this.archive = Objects.requireNonNull(archive);
     this.article = Objects.requireNonNull(article);
     this.manifest = Objects.requireNonNull(manifest);
@@ -92,33 +94,33 @@ class ArticlePackageBuilder {
   }
 
   private RepoObjectInput buildObject(ManifestXml.ManifestFile manifestFile, String contentType) {
-    return RepoObjectInput.builder(manifestFile.getCrepoKey())
-        .contentAccessor(archive.getContentAccessorFor(manifestFile.getEntry()))
-        .contentType(contentType)
-        .downloadName(manifestFile.getEntry())
+    return RepoObjectInput.builder(destinationBucketName, manifestFile.getCrepoKey())
+        .setContentAccessor(archive.getContentAccessorFor(manifestFile.getEntry()))
+        .setContentType(contentType)
+        .setDownloadName(manifestFile.getEntry())
         .build();
   }
 
   private Map<String, RepoObjectInput> buildArticleObjects() {
     ImmutableMap.Builder<String, RepoObjectInput> articleObjects = ImmutableMap.builder();
     articleObjects.put("manifest",
-        RepoObjectInput.builder("manifest/" + articleIdentity.getIdentifier())
-            .contentAccessor(archive.getContentAccessorFor(manifestEntry))
-            .downloadName(manifestEntry)
-            .contentType(MediaType.APPLICATION_XML)
+        RepoObjectInput.builder(destinationBucketName, "manifest/" + articleIdentity.getIdentifier())
+            .setContentAccessor(archive.getContentAccessorFor(manifestEntry))
+            .setDownloadName(manifestEntry)
+            .setContentType(MediaType.APPLICATION_XML)
             .build());
     articleObjects.put("manuscript", buildObjectFor(manuscriptAsset, manuscriptRepr));
     articleObjects.put("printable", buildObjectFor(manuscriptAsset, printableRepr));
 
     articleObjects.put("front",
-        RepoObjectInput.builder("front/" + articleIdentity.getIdentifier())
-            .byteContent(serializeXml(article.extractFrontMatter()))
-            .contentType(MediaType.APPLICATION_XML)
+        RepoObjectInput.builder(destinationBucketName, "front/" + articleIdentity.getIdentifier())
+            .setByteContent(serializeXml(article.extractFrontMatter()))
+            .setContentType(MediaType.APPLICATION_XML)
             .build());
     articleObjects.put("frontAndBack",
-        RepoObjectInput.builder("frontAndBack/" + articleIdentity.getIdentifier())
-            .byteContent(serializeXml(article.extractFrontAndBackMatter()))
-            .contentType(MediaType.APPLICATION_XML)
+        RepoObjectInput.builder(destinationBucketName, "frontAndBack/" + articleIdentity.getIdentifier())
+            .setByteContent(serializeXml(article.extractFrontAndBackMatter()))
+            .setContentType(MediaType.APPLICATION_XML)
             .build());
     return articleObjects.build();
   }

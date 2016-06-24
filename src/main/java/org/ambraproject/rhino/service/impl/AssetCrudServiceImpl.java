@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
+import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
@@ -41,6 +42,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.NotFoundException;
+import org.plos.crepo.model.identity.RepoId;
 import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.slf4j.Logger;
@@ -68,8 +70,9 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    */
   @Override
   public InputStream read(AssetFileIdentity assetId) {
+    RepoId repoId = RepoId.create(runtimeConfiguration.getCorpusStorage().getDefaultBucket(), assetId.toString());
     try {
-      return contentRepoService.getLatestRepoObject(assetId.toString());
+      return contentRepoService.getLatestRepoObject(repoId);
     } catch (ContentRepoException | NotFoundException e) {
       String message = String.format("Asset not found at DOI \"%s\" with extension \"%s\"",
           assetId.getIdentifier(), assetId.getFileExtension());

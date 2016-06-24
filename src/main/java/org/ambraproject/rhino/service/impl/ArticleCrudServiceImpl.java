@@ -68,6 +68,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.ErrorType;
+import org.plos.crepo.model.identity.RepoId;
 import org.plos.crepo.model.identity.RepoVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -100,8 +101,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Autowired
   AssetCrudService assetCrudService;
-  @Autowired
-  RuntimeConfiguration runtimeConfiguration;
   @Autowired
   protected PingbackReadService pingbackReadService;
   @Autowired
@@ -176,12 +175,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public InputStream readXml(ArticleIdentity id) {
+  public InputStream readXml(ArticleIdentity articleIdentity) {
+    RepoId repoId = RepoId.create(runtimeConfiguration.getCorpusStorage().getDefaultBucket(),
+        articleIdentity.forXmlAsset().getFilePath());
     try {
-      return contentRepoService.getLatestRepoObject(id.forXmlAsset().getFilePath());
+      return contentRepoService.getLatestRepoObject(repoId);
     } catch (ContentRepoException e) {
       if (e.getErrorType() == ErrorType.ErrorFetchingObject) {
-        throw reportNotFound(id);
+        throw reportNotFound(articleIdentity);
       } else {
         throw e;
       }
@@ -573,7 +574,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     List<Object[]> fileResults = (List<Object[]>) hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
-          "SELECT fileType, crepoKey, crepoUuid " +
+          "SELECT fileType, bucketName, crepoKey, crepoUuid " +
           "FROM articleFile " +
           "WHERE itemId = :itemId");
       query.setParameter("itemId", itemId);
@@ -581,7 +582,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     });
     Map<String, RepoVersion> fileMap = fileResults.stream().collect(Collectors.toMap(
         (Object[] fileResult) -> (String) fileResult[0],
-        (Object[] fileResult) -> RepoVersion.create((String) fileResult[1], (String) fileResult[2])));
+        (Object[] fileResult) -> RepoVersion.create((String) fileResult[1], (String) fileResult[2], (String) fileResult[3])));
 
     return new ArticleItem(DoiBasedIdentity.create(id.getDoiName()), itemType, fileMap, id.getRevision(), state, timestamp.toInstant());
   }

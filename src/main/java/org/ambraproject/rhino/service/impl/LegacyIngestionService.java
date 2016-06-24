@@ -36,6 +36,7 @@ import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.plos.crepo.model.input.RepoObjectInput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.support.DataAccessUtils;
@@ -474,7 +475,13 @@ class LegacyIngestionService {
         assetData = ByteStreams.toByteArray(stream);
       }
       articleAsset.setSize(assetData.length);
-      parentService.write(assetData, fileId);
+      String bucketName = parentService.runtimeConfiguration.getCorpusStorage().getDefaultBucket();
+      RepoObjectInput repoObject = RepoObjectInput.builder(bucketName, fileId.getFilePath())
+          .setByteContent(assetData)
+          .setContentType(fileId.inferContentType().toString())
+          .setDownloadName(fileId.getFileName())
+          .build();
+      parentService.contentRepoService.autoCreateRepoObject(repoObject);
     }
   }
 

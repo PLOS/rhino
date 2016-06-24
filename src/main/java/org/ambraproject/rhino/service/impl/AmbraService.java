@@ -22,6 +22,7 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
+import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.Journal;
@@ -32,7 +33,7 @@ import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
-import org.plos.crepo.model.input.RepoObjectInput;
+import org.plos.crepo.model.identity.RepoId;
 import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
@@ -59,6 +60,9 @@ public abstract class AmbraService {
 
   @Autowired
   protected Gson entityGson;
+
+  @Autowired
+  protected RuntimeConfiguration runtimeConfiguration;
 
   /**
    * Check whether a distinct entity exists.
@@ -110,25 +114,9 @@ public abstract class AmbraService {
     }
   }
 
-  /**
-   * Write a raw asset to the file store. If something is already stored at the same ID, it is overwritten; else, a new
-   * file is created.
-   *
-   * @param fileData the data to write, as raw bytes
-   * @param identity the asset identity
-   * @throws IOException
-   */
-  protected void write(byte[] fileData, AssetFileIdentity identity) throws IOException {
-    RepoObjectInput repoObject = RepoObjectInput.builder(identity.getFilePath())
-        .byteContent(fileData)
-        .contentType(identity.inferContentType().toString())
-        .downloadName(identity.getFileName())
-        .build();
-    contentRepoService.autoCreateRepoObject(repoObject);
-  }
-
   protected void deleteAssetFile(AssetFileIdentity identity) {
-    contentRepoService.deleteLatestRepoObject(identity.getFilePath()); // TODO: Need to delete all versions?
+    RepoId repoId = RepoId.create(runtimeConfiguration.getCorpusStorage().getDefaultBucket(), identity.getFilePath());
+    contentRepoService.deleteLatestRepoObject(repoId); // TODO: Need to delete all versions?
   }
 
   protected static Document parseXml(byte[] bytes) throws IOException, RestClientException {
