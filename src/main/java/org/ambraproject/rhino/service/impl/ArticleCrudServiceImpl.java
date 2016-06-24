@@ -40,6 +40,7 @@ import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.ArticleVisibility;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -255,7 +256,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return new Transceiver() {
       @Override
       protected Calendar getLastModifiedDate() throws IOException {
-        return copyToCalendar(getArticleItem(versionId.getItemFor()).getTimestamp());
+        return copyToCalendar(getArticleItem(versionId.getItemFor()).getLastModified());
       }
 
       @Override
@@ -562,14 +563,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           "  AND version.publicationState != :replaced");
       query.setParameter("doi", id.getDoiName());
       query.setParameter("revisionNumber", id.getRevision());
-      query.setParameter("replaced", ArticleItem.Visibility.REPLACED.getValue());
+      query.setParameter("replaced", ArticleVisibility.REPLACED.getValue());
       return (Object[]) query.uniqueResult();
     });
     if (itemResult == null) {
       throw new RestClientException("DOI+revision not found: " + id, HttpStatus.NOT_FOUND);
     }
     long itemId = ((Number) itemResult[0]).longValue();
-    ArticleItem.Visibility state = ArticleItem.Visibility.fromValue((Integer) itemResult[1]);
+    ArticleVisibility state = ArticleVisibility.fromValue((Integer) itemResult[1]);
     String itemType = (String) itemResult[2];
     Date timestamp = (Date) itemResult[3];
 
@@ -585,7 +586,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         (Object[] fileResult) -> (String) fileResult[0],
         (Object[] fileResult) -> RepoVersion.create((String) fileResult[1], (String) fileResult[2])));
 
-    return new ArticleItem(DoiBasedIdentity.create(id.getDoiName()), itemType, fileMap, id.getRevision(), state, timestamp.toInstant());
+    return null; // TODO: Update above query to return ArticleItem
   }
 
   @Override
@@ -604,7 +605,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           "AND av.publicationState != :replaced");
       query.setParameter("revisionNumber", revisionId.getRevision());
       query.setParameter("doi", revisionId.getDoiName());
-      query.setParameter("replaced", ArticleItem.Visibility.REPLACED.getValue());
+      query.setParameter("replaced", ArticleVisibility.REPLACED.getValue());
       return (ArticleIngestion) query.uniqueResult();
     });
     if (articleIngestion == null) {

@@ -52,22 +52,17 @@ public class ArticleTable { //todo: rename to "Article" once the old Article cla
 //    this.comments = comments;
 //  }
 
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-
     ArticleTable that = (ArticleTable) o;
-
-    if (articleId != that.articleId) return false;
-    return doi.equals(that.doi);
-
+    return doi != null ? doi.equals(that.doi) : that.doi == null;
   }
 
   @Override
   public int hashCode() {
-    int result = Long.hashCode(articleId);
-    result = 31 * result + doi.hashCode();
-    return result;
+    return doi != null ? doi.hashCode() : 0;
   }
 }

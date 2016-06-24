@@ -13,11 +13,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
 @Table(name = "articleIngestion")
-public class ArticleIngestion extends AmbraEntity {
+public class ArticleIngestion implements Timestamped {
 
   @Id
   @GeneratedValue
@@ -27,6 +28,9 @@ public class ArticleIngestion extends AmbraEntity {
   @JoinColumn(name = "articleId")
   @ManyToOne
   private ArticleTable article;
+
+  @Column
+  private int ingestionNumber;
 
   @Column
   private int visibility;
@@ -39,6 +43,10 @@ public class ArticleIngestion extends AmbraEntity {
       inverseJoinColumns = @JoinColumn(name = "journalId")
   )
   private Set<Journal> journals;
+
+  @Column
+  private Date lastModified;
+
 
   public long getVersionId() {
     return versionId;
@@ -54,6 +62,14 @@ public class ArticleIngestion extends AmbraEntity {
 
   public void setArticle(ArticleTable article) {
     this.article = article;
+  }
+
+  public int getIngestionNumber() {
+    return ingestionNumber;
+  }
+
+  public void setIngestionNumber(int ingestionNumber) {
+    this.ingestionNumber = ingestionNumber;
   }
 
   public int getVisibility() {
@@ -73,27 +89,33 @@ public class ArticleIngestion extends AmbraEntity {
   }
 
   @Override
+  public Date getLastModified() {
+    return lastModified;
+  }
+
+  public void setLastModified(Date lastModified) {
+    this.lastModified = lastModified;
+  }
+
+
+  @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
     ArticleIngestion that = (ArticleIngestion) o;
 
-    if (versionId != that.versionId) return false;
-    if (visibility != that.visibility) return false;
-    if (article != null ? !article.equals(that.article) : that.article != null) return false;
-    return journals != null ? journals.equals(that.journals) : that.journals == null;
-
+    if (ingestionNumber != that.ingestionNumber) return false;
+    return article != null ? article.equals(that.article) : that.article == null;
   }
 
   @Override
   public int hashCode() {
-    int result = (int) (versionId ^ (versionId >>> 32));
-    result = 31 * result + (article != null ? article.hashCode() : 0);
-    result = 31 * result + visibility;
-    result = 31 * result + (journals != null ? journals.hashCode() : 0);
+    int result = article != null ? article.hashCode() : 0;
+    result = 31 * result + ingestionNumber;
     return result;
   }
+
 
   @Override
   public String toString() {

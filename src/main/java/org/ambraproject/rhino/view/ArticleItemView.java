@@ -19,8 +19,6 @@ public class ArticleItemView implements JsonOutputView {
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = context.serialize(articleItem).getAsJsonObject();
-    serialized.add("revisionNumber", context.serialize(
-        articleItem.getRevisionNumber().map(ImmutableList::of).orElse(ImmutableList.of())));
     return serialized;
   }
 }

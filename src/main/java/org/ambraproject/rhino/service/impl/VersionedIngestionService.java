@@ -13,7 +13,9 @@ import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleFile;
 import org.ambraproject.rhino.model.ArticleItem;
+import org.ambraproject.rhino.model.ArticleVisibility;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
@@ -164,7 +166,7 @@ class VersionedIngestionService {
           "VALUES (:articleId, :ingestionNumber, :visibility)");
       insertEvent.setParameter("articleId", articlePk);
       insertEvent.setParameter("ingestionNumber", nextIngestionNumber);
-      insertEvent.setParameter("visibility", ArticleItem.Visibility.INGESTED.getValue());
+      insertEvent.setParameter("visibility", ArticleVisibility.INGESTED.getValue());
       insertEvent.executeUpdate();
       return getLastInsertId(session);
     });
@@ -373,14 +375,14 @@ class VersionedIngestionService {
 
     ArticleItem work = parentService.getArticleItem(revisionId.getItemFor());
 
-    RepoVersion manuscriptVersion = work.getFile("manuscript").orElseThrow(() -> {
+    ArticleFile manuscriptVersion = work.getFile("manuscript").orElseThrow(() -> {
       String message = String.format("Work exists but does not have a manuscript. DOI: %s. Revision: %s",
-          work.getDoi(), work.getRevisionNumber().map(Object::toString).orElse("(none)"));
+          work.getDoi(), work.getIngestion().getIngestionNumber());
       return new RestClientException(message, HttpStatus.BAD_REQUEST);
     });
 
     Document document;
-    try (InputStream manuscriptStream = parentService.contentRepoService.getRepoObject(manuscriptVersion)) {
+    try (InputStream manuscriptStream = parentService.contentRepoService.getRepoObject(manuscriptVersion.getCrepoVersion())) {
       DocumentBuilder documentBuilder = AmbraService.newDocumentBuilder();
       log.debug("In getArticleMetadata source={} documentBuilder.parse() called", source);
       document = documentBuilder.parse(manuscriptStream);
