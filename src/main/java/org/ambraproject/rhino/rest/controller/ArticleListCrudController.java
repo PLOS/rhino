@@ -3,7 +3,6 @@ package org.ambraproject.rhino.rest.controller;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.ArticleListIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;

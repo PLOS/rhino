@@ -50,7 +50,7 @@ public class ArticleList extends AmbraEntity {
   @JoinTable(
       name = "articleListJoinTable",
       joinColumns = @JoinColumn(name = "articleListId"),
-      inverseJoinColumns = @JoinColumn(name = "articleID")
+      inverseJoinColumns = @JoinColumn(name = "articleId")
   )
   private List<ArticleTable> articles;
 
