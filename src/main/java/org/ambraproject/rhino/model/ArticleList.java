@@ -34,7 +34,7 @@ public class ArticleList extends AmbraEntity {
   @Id
   @GeneratedValue
   @Column
-  private long articleListID;
+  private long articleListId;
 
   @Column
   private String listType;
@@ -49,7 +49,7 @@ public class ArticleList extends AmbraEntity {
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(
       name = "articleListJoinTable",
-      joinColumns = @JoinColumn(name = "articleListID"),
+      joinColumns = @JoinColumn(name = "articleListId"),
       inverseJoinColumns = @JoinColumn(name = "articleID")
   )
   private List<ArticleTable> articles;
@@ -63,12 +63,12 @@ public class ArticleList extends AmbraEntity {
     this.listKey = listKey;
   }
 
-  public long getArticleListID() {
-    return articleListID;
+  public long getArticleListId() {
+    return articleListId;
   }
 
-  public void setArticleListID(long articleListID) {
-    this.articleListID = articleListID;
+  public void setArticleListId(long articleListId) {
+    this.articleListId = articleListId;
   }
 
   public String getListType() {
@@ -110,7 +110,7 @@ public class ArticleList extends AmbraEntity {
 
     ArticleList articleList = (ArticleList) o;
 
-    if (articleListID != articleList.articleListID) return false;
+    if (articleListId != articleList.articleListId) return false;
     if (articles != null ? !articles.equals(articleList.articles) : articleList.articles != null) return false;
     if (displayName != null ? !displayName.equals(articleList.displayName) : articleList.displayName != null) {
       return false;
@@ -123,7 +123,7 @@ public class ArticleList extends AmbraEntity {
 
   @Override
   public int hashCode() {
-    int result = (int) (articleListID ^ (articleListID >>> 32));
+    int result = (int) (articleListId ^ (articleListId >>> 32));
     result = 31 * result + (listType != null ? listType.hashCode() : 0);
     result = 31 * result + (listKey != null ? listKey.hashCode() : 0);
     result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
@@ -134,7 +134,7 @@ public class ArticleList extends AmbraEntity {
   @Override
   public String toString() {
     return "ArticleList{" +
-        "id='" + articleListID + '\'' +
+        "id='" + articleListId + '\'' +
         ", listType='" + listType + '\'' +
         ", listKey='" + listKey + '\'' +
         '}';

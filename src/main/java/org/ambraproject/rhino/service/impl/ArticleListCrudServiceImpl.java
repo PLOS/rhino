@@ -5,12 +5,11 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
-import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.identity.ArticleIdentifier;
+import org.ambraproject.rhino.identity.ArticleListIdentity;
 import org.ambraproject.rhino.model.ArticleList;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
-import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.ArticleListIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.util.response.Transceiver;
@@ -60,7 +59,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
   }
 
   @Override
-  public ArticleListView create(ArticleListIdentity identity, String displayName, Set<ArticleIdentity> articleIds) {
+  public ArticleListView create(ArticleListIdentity identity, String displayName, Set<ArticleIdentifier> articleIds) {
     if (listExists(identity)) {
       throw new RestClientException("List already exists: " + identity, HttpStatus.BAD_REQUEST);
     }
@@ -111,7 +110,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
 
   @Override
   public ArticleListView update(ArticleListIdentity identity, Optional<String> displayName,
-                                Optional<? extends Set<ArticleIdentity>> articleIds) {
+                                Optional<? extends Set<ArticleIdentifier>> articleIds) {
     ArticleListView listView = getArticleList(identity);
     ArticleList list = listView.getArticleList();
 
@@ -137,12 +136,12 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
    * @return the articles in the same order, if all exist
    * @throws RestClientException if not every article ID belongs to an existing article
    */
-  private List<ArticleTable> fetchArticles(Set<ArticleIdentity> articleIds) {
+  private List<ArticleTable> fetchArticles(Set<ArticleIdentifier> articleIds) {
     if (articleIds.isEmpty()) return ImmutableList.of();
     final Map<String, Integer> articleKeys = new HashMap<>();
     int i = 0;
-    for (ArticleIdentity articleId : articleIds) {
-      articleKeys.put(articleId.getKey(), i++);
+    for (ArticleIdentifier articleId : articleIds) {
+      articleKeys.put(articleId.getDoiName(), i++);
     }
 
     List<ArticleTable> articles = (List<ArticleTable>) hibernateTemplate.findByNamedParam(
@@ -242,7 +241,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     };
   }
 
-  private Collection<ArticleListView> findContainingLists(final ArticleIdentity articleId) {
+  private Collection<ArticleListView> findContainingLists(final ArticleIdentifier articleId) {
     return hibernateTemplate.execute(new HibernateCallback<Collection<ArticleListView>>() {
       @Override
       public Collection<ArticleListView> doInHibernate(Session session) {
@@ -250,7 +249,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
             "select j.journalKey, l " +
             "from Journal j join j.articleLists l join l.articles a " +
             "where a.doi=:doi");
-        query.setString("doi", articleId.getKey());
+        query.setString("doi", articleId.getDoiName());
         List<Object[]> results = query.list();
         return asArticleListViews(results);
       }
@@ -258,7 +257,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
   }
 
   @Override
-  public Transceiver readContainingLists(final ArticleIdentity articleId) {
+  public Transceiver readContainingLists(final ArticleIdentifier articleId) {
     return new Transceiver() {
       @Override
       protected Collection<ArticleListView> getData() throws IOException {

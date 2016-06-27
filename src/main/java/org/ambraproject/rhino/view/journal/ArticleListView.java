@@ -37,8 +37,9 @@ public class ArticleListView implements JsonOutputView {
     JsonObject serialized = context.serialize(getIdentity()).getAsJsonObject();
     serialized.addProperty("title", articleList.getDisplayName());
 
-    List<ArticleOutputView> articleIdList = Lists.transform(articleList.getArticles(), ArticleOutputView::createMinimalView);
-    serialized.add("articles", context.serialize(articleIdList));
+    // TODO: uncomment when article output view is ready for use with new model
+//    List<ArticleOutputView> articleIdList = Lists.transform(articleList.getArticles(), ArticleOutputView::createMinimalView);
+//    serialized.add("articles", context.serialize(articleIdList));
 
     return serialized;
   }
