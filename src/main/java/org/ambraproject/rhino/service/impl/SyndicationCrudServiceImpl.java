@@ -103,11 +103,11 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
 
   @Transactional(rollbackFor = {Throwable.class})
   @Override
-  public Syndication updateSyndication(final ArticleVersionIdentifier versionIdentifier,
+  public Syndication updateSyndication(final ArticleVersionIdentifier versionId,
       final String syndicationTarget, final String status, final String errorMessage) {
-    Syndication syndication = getSyndication(versionIdentifier, syndicationTarget);
+    Syndication syndication = getSyndication(versionId, syndicationTarget);
     if (syndication == null) {
-      throw new RuntimeException("No such syndication for doi " + versionIdentifier
+      throw new RuntimeException("No such syndication for doi " + versionId
           + " and target " + syndicationTarget);
     }
     syndication.setStatus(status);
@@ -238,7 +238,7 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
     }
   }
 
-  private void sendSyndicationMessage(String target, ArticleVersionIdentifier articleVersionId)
+  private void sendSyndicationMessage(String target, ArticleVersionIdentifier versionId)
       throws ApplicationException {
     List<HierarchicalConfiguration> syndications = ((HierarchicalConfiguration) configuration)
         .configurationsAt("ambra.services.syndications.syndication");
@@ -259,7 +259,7 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
       throw new RuntimeException(target + " queue not configured");
     }
 
-    messageSender.sendBody(queue, createBody(articleVersionId, additionalBodyContent));
+    messageSender.sendBody(queue, createBody(versionId, additionalBodyContent));
 
   }
 
@@ -308,12 +308,12 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
     }
   }
 
-  private String createBody(ArticleVersionIdentifier articleVersionId, String additionalBodyContent) {
+  private String createBody(ArticleVersionIdentifier versionId, String additionalBodyContent) {
     StringBuilder body = new StringBuilder();
     body.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
         .append("<ambraMessage>")
-        .append("<doi>").append(articleVersionId.getDoiName()).append("</doi>")
-        .append("<version>").append(articleVersionId.getRevision()).append("</doi>");
+        .append("<doi>").append(versionId.getDoiName()).append("</doi>")
+        .append("<version>").append(versionId.getRevision()).append("</doi>");
 
     if (additionalBodyContent != null) {
       body.append(additionalBodyContent);

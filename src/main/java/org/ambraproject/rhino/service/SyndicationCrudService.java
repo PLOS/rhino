@@ -67,14 +67,14 @@ public interface SyndicationCrudService {
    * <code>articleDoi</code> and <code>syndicationTarget</code>, then no action will be performed. The existing
    * Syndication object will be returned</li>
    *
-   * @param versionIdentifier        The unique identifier for the Article which was (or is to be) syndicated
+   * @param versionId        The unique identifier for the Article which was (or is to be) syndicated
    * @param syndicationTarget The organization to which this Article was (or will be) syndicated
    * @param status            The current status of this syndication (e.g., pending, failure, success, etc)
    * @param errorMessage      Any failure during the process of updating this Syndication. A null in this field will
    *                          <strong>not</strong> update the errorMessage of this Syndication
    * @return The Syndication that matches the <code>articleDoi</code> and <code>syndicationTarget</code> parameters
    */
-  public Syndication updateSyndication(ArticleVersionIdentifier versionIdentifier, String syndicationTarget, String status, String errorMessage);
+  public Syndication updateSyndication(ArticleVersionIdentifier versionId, String syndicationTarget, String status, String errorMessage);
 
   /**
    * For the Article indicated by <code>articleDoi</code>, create a new Syndication object for each possible syndication
