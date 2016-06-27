@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.rest.controller;
 
+import com.wordnik.swagger.annotations.ApiOperation;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -339,6 +340,18 @@ public class ArticleCrudController extends ArticleSpaceController {
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
     Syndication created = syndicationCrudService.createSyndication(versionId, input.getTarget());
     return reportCreated(created.toString());
+  }
+
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.POST, params = "syndicate")
+  @ApiOperation(value = "syndicate", notes = "Send a syndication message to the queue for processing. " +
+      "Will create and add a syndication to the database if none exist for current article and target.")
+  public ResponseEntity<?> syndicate(HttpServletRequest request,
+      @RequestParam(value = "revision", required = false) Integer revisionNumber)
+      throws IOException {
+    ArticleVersionIdentifier versionId = getArticleVersionIdentifier(request, revisionNumber);
+    SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
+    Syndication created = syndicationCrudService.syndicate(versionId, input.getTarget());
+    return reportOk(created.toString());
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PATCH, params = "syndications")
