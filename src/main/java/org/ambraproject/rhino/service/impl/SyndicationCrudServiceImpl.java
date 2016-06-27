@@ -25,10 +25,12 @@ import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
 import org.ambraproject.rhino.model.ArticleVersion;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Syndication;
+import org.ambraproject.rhino.model.SyndicationStatuses;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.MessageSender;
 import org.ambraproject.rhino.service.SyndicationCrudService;
+import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.SyndicationOutputView;
 import org.apache.commons.configuration.Configuration;
@@ -48,6 +50,7 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -153,7 +156,7 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
   public Syndication createSyndication(ArticleVersionIdentifier versionId, String target) {
     ArticleVersion articleVersion = articleCrudService.getArticleVersion(versionId);
     Syndication syndication = new Syndication(articleVersion, target);
-    syndication.setStatus(Syndication.STATUS_PENDING);
+    syndication.setStatus(SyndicationStatuses.PENDING.name());
     syndication.setSubmissionCount(0);
     hibernateTemplate.save(syndication);
     return syndication;
@@ -192,13 +195,18 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
 
   @Override
   public Transceiver readSyndications(String journalKey, List<String> statuses) throws IOException {
-    return new Transceiver() {
+    return new EntityCollectionTransceiver<Syndication>() {
+
       @Override
-      protected Object getData() throws IOException {
-        List<Syndication> syndications = getSyndications(journalKey, statuses);
+      protected Object getView(Collection<? extends Syndication> syndications) {
         return syndications.stream()
-            .map(new SyndicationOutputView.Factory()::createSyndicationView)
+            .map(SyndicationOutputView::createSyndicationView)
             .collect(Collectors.toList());
+      }
+
+      @Override
+      protected Collection<? extends Syndication> fetchEntities() {
+        return getSyndications(journalKey, statuses);
       }
 
       @Override
@@ -216,12 +224,12 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
     Syndication syndication = getSyndication(versionId, syndicationTarget);
     if (syndication == null) {
       syndication = new Syndication(articleVersion, syndicationTarget);
-      syndication.setStatus(Syndication.STATUS_IN_PROGRESS);
+      syndication.setStatus(SyndicationStatuses.IN_PROGRESS.name());
       syndication.setSubmissionCount(1);
       syndication.setLastSubmitTimestamp(new Date());
       hibernateTemplate.save(syndication);
     } else {
-      syndication.setStatus(Syndication.STATUS_IN_PROGRESS);
+      syndication.setStatus(SyndicationStatuses.IN_PROGRESS.name());
       syndication.setSubmissionCount(syndication.getSubmissionCount() + 1);
       syndication.setLastSubmitTimestamp(new Date());
       hibernateTemplate.update(syndication);
@@ -234,7 +242,7 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
       return syndication;
     } catch (Exception e) {
       log.warn("Error syndicating " + versionId + " to " + syndicationTarget, e);
-      return updateSyndication(versionId, syndicationTarget, Syndication.STATUS_FAILURE, e.getMessage());
+      return updateSyndication(versionId, syndicationTarget, SyndicationStatuses.FAILURE.name(), e.getMessage());
     }
   }
 

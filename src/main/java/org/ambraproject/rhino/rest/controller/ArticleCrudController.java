@@ -333,19 +333,19 @@ public class ArticleCrudController extends ArticleSpaceController {
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.POST, params = "syndications")
-  public ResponseEntity<?> createSyndication(HttpServletRequest request,
+  public ResponseEntity<Object> createSyndication(HttpServletRequest request,
       @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
     ArticleVersionIdentifier versionId = getArticleVersionIdentifier(request, revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
-    Syndication created = syndicationCrudService.createSyndication(versionId, input.getTarget());
-    return reportCreated(created.toString());
+    syndicationCrudService.createSyndication(versionId, input.getTarget());
+    return reportCreated();
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.POST, params = "syndicate")
   @ApiOperation(value = "syndicate", notes = "Send a syndication message to the queue for processing. " +
       "Will create and add a syndication to the database if none exist for current article and target.")
-  public ResponseEntity<?> syndicate(HttpServletRequest request,
+  public ResponseEntity<Object> syndicate(HttpServletRequest request,
       @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
     ArticleVersionIdentifier versionId = getArticleVersionIdentifier(request, revisionNumber);
@@ -355,7 +355,7 @@ public class ArticleCrudController extends ArticleSpaceController {
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PATCH, params = "syndications")
-  public ResponseEntity<?> patchSyndication(HttpServletRequest request,
+  public ResponseEntity<Object> patchSyndication(HttpServletRequest request,
       @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
     ArticleVersionIdentifier versionId = getArticleVersionIdentifier(request, revisionNumber);

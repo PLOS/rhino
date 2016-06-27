@@ -16,12 +16,8 @@ public class SyndicationOutputView implements JsonOutputView {
     this.syndication = Objects.requireNonNull(syndication);
   }
 
-
-  public static class Factory {
-
-    public SyndicationOutputView createSyndicationView(Syndication syndication) {
-      return new SyndicationOutputView(syndication);
-    }
+  public static SyndicationOutputView createSyndicationView(Syndication syndication) {
+    return new SyndicationOutputView(syndication);
   }
 
   static JsonObject serializeBase(JsonSerializationContext context, Syndication syndication) {
