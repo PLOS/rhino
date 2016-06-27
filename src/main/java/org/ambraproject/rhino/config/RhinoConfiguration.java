@@ -25,7 +25,7 @@ import org.ambraproject.rhino.config.json.AdapterRegistry;
 import org.ambraproject.rhino.config.json.DoiBasedIdentitySerializer;
 import org.ambraproject.rhino.config.json.ExclusionSpecialCase;
 import org.ambraproject.rhino.content.xml.XpathReader;
-import org.ambraproject.rhino.service.AnnotationCrudService;
+import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
@@ -42,7 +42,7 @@ import org.ambraproject.rhino.service.MessageSender;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.service.SyndicationService;
 import org.ambraproject.rhino.service.VolumeCrudService;
-import org.ambraproject.rhino.service.impl.AnnotationCrudServiceImpl;
+import org.ambraproject.rhino.service.impl.CommentCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleListCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
@@ -269,8 +269,8 @@ public class RhinoConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public AnnotationCrudService annotationCrudService() {
-    return new AnnotationCrudServiceImpl();
+  public CommentCrudService annotationCrudService() {
+    return new CommentCrudServiceImpl();
   }
 
   @Bean

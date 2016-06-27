@@ -3,7 +3,7 @@ package org.ambraproject.rhino.view.comment;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import org.ambraproject.rhino.model.Annotation;
+import org.ambraproject.rhino.model.Comment;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.view.JsonOutputView;
@@ -28,18 +28,18 @@ public class CommentNodeView implements JsonOutputView {
     }
   }
 
-  private final Annotation comment;
+  private final Comment comment;
   private final CompetingInterestStatement competingInterestStatement;
   private final ArticleReference parentArticle;
 
-  private CommentNodeView(Annotation comment, CompetingInterestStatement competingInterestStatement,
+  private CommentNodeView(Comment comment, CompetingInterestStatement competingInterestStatement,
       ArticleReference parentArticle) {
     this.comment = Objects.requireNonNull(comment);
     this.competingInterestStatement = Objects.requireNonNull(competingInterestStatement);
     this.parentArticle = Objects.requireNonNull(parentArticle);
   }
 
-  private CommentNodeView(Annotation comment, CompetingInterestStatement competingInterestStatement) {
+  private CommentNodeView(Comment comment, CompetingInterestStatement competingInterestStatement) {
     this.comment = Objects.requireNonNull(comment);
     this.competingInterestStatement = Objects.requireNonNull(competingInterestStatement);
     this.parentArticle = null;
@@ -52,19 +52,19 @@ public class CommentNodeView implements JsonOutputView {
       this.competingInterestPolicy = new CompetingInterestPolicy(runtimeConfiguration);
     }
 
-    public CommentNodeView create(Annotation comment, String journalKey, String articleDoi,
+    public CommentNodeView create(Comment comment, String journalKey, String articleDoi,
         String articleTitle) {
       return new CommentNodeView(comment,
           competingInterestPolicy.createStatement(comment),
           new ArticleReference(articleDoi, articleTitle, journalKey));
     }
 
-    public CommentNodeView create(Annotation comment) {
+    public CommentNodeView create(Comment comment) {
       return new CommentNodeView(comment, competingInterestPolicy.createStatement(comment));
     }
 
     public CommentFlagOutputView createFlagView(Flag commentFlag) {
-      return new CommentFlagOutputView(commentFlag, create(commentFlag.getFlaggedAnnotation()));
+      return new CommentFlagOutputView(commentFlag, create(commentFlag.getFlaggedComment()));
     }
   }
 
@@ -75,5 +75,26 @@ public class CommentNodeView implements JsonOutputView {
     return serialized;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    CommentNodeView that = (CommentNodeView) o;
+
+    if (comment != null ? !comment.equals(that.comment) : that.comment != null) return false;
+    if (competingInterestStatement != null ? !competingInterestStatement.equals(that.competingInterestStatement) : that.competingInterestStatement != null)
+      return false;
+    return parentArticle != null ? parentArticle.equals(that.parentArticle) : that.parentArticle == null;
+
+  }
+
+  @Override
+  public int hashCode() {
+    int result = comment != null ? comment.hashCode() : 0;
+    result = 31 * result + (competingInterestStatement != null ? competingInterestStatement.hashCode() : 0);
+    result = 31 * result + (parentArticle != null ? parentArticle.hashCode() : 0);
+    return result;
+  }
 }
 

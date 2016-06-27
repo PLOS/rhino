@@ -1,7 +1,7 @@
 package org.ambraproject.rhino.view.comment;
 
 import com.google.common.base.Strings;
-import org.ambraproject.rhino.model.Annotation;
+import org.ambraproject.rhino.model.Comment;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 
 import java.time.ZoneId;
@@ -19,7 +19,7 @@ class CompetingInterestPolicy {
         .atStartOfDay(ZoneId.systemDefault()).toInstant());
   }
 
-  CompetingInterestStatement createStatement(Annotation comment) {
+  CompetingInterestStatement createStatement(Comment comment) {
     String competingInterestBody = comment.getCompetingInterestBody();
     boolean hasCompetingInterests = !Strings.isNullOrEmpty(competingInterestBody);
     boolean creatorWasPrompted = hasCompetingInterests || comment.getCreated().after(startDate);

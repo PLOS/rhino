@@ -13,10 +13,10 @@
 
 package org.ambraproject.rhino.service;
 
-import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.model.Annotation;
-import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.identity.ArticleIdentifier;
+import org.ambraproject.rhino.identity.CommentIdentifier;
+import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Comment;
 import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
@@ -29,16 +29,16 @@ import java.util.OptionalInt;
  * Service that handles comments and replies associated with articles. For legacy reasons, these are referred to
  * internally as "annotations," and they share a common implementation.
  */
-public interface AnnotationCrudService {
+public interface CommentCrudService {
 
   /**
    * Forwards all comments, and any replies associated with them, for a given article to the receiver.  The comments are
    * returned as a list.  Each comment has a "replies" list that contains any replies (recursively).
    *
-   * @param articleIdentity identifies the article
+   * @param articleId identifies the article
    * @throws IOException
    */
-  public Transceiver readComments(ArticleIdentity articleIdentity)
+  public Transceiver readComments(ArticleIdentifier articleId)
       throws IOException;
 
   /**
@@ -47,7 +47,7 @@ public interface AnnotationCrudService {
    * @param commentId identifies the comment
    * @throws IOException
    */
-  public Transceiver readComment(DoiBasedIdentity commentId)
+  public Transceiver readComment(CommentIdentifier commentId)
       throws IOException;
 
   /**
@@ -58,26 +58,26 @@ public interface AnnotationCrudService {
   public Transceiver readFlaggedComments()
       throws IOException;
 
-  public Annotation createComment(CommentInputView input);
+  public Comment createComment(CommentInputView input);
 
-  public Annotation patchComment(DoiBasedIdentity commentId, CommentInputView input);
+  public Comment patchComment(CommentIdentifier commentId, CommentInputView input);
 
-  public String deleteComment(DoiBasedIdentity input);
+  public String deleteComment(CommentIdentifier commentId);
 
-  public String removeFlagsFromComment(DoiBasedIdentity input);
+  public String removeFlagsFromComment(CommentIdentifier commentId);
 
-  public Flag createCommentFlag(DoiBasedIdentity commentId, CommentFlagInputView input);
+  public Flag createCommentFlag(CommentIdentifier commentId, CommentFlagInputView input);
 
   public Transceiver readAllCommentFlags();
 
-  public Transceiver readCommentFlag(String flagId);
+  public Transceiver readCommentFlag(Long flagId);
 
-  public Transceiver readCommentFlagsOn(DoiBasedIdentity commentId);
+  public Transceiver readCommentFlagsOn(CommentIdentifier commentId);
 
-  public String deleteCommentFlag(String flagId);
+  public Long deleteCommentFlag(Long flagId);
 
   public Transceiver readRecentComments(String journalKey, OptionalInt limit);
 
-  public Transceiver getCommentCount(Article article);
+  public Transceiver getCommentCount(ArticleTable article);
 
 }
