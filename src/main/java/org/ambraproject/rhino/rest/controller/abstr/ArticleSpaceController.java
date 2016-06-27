@@ -15,9 +15,6 @@ public abstract class ArticleSpaceController extends DoiBasedCrudController {
   protected static final String ARTICLE_NAMESPACE = ARTICLE_ROOT + '/';
   protected static final String ARTICLE_TEMPLATE = ARTICLE_NAMESPACE + "**";
 
-  protected static final String SYNDICATION_ROOT = ARTICLE_TEMPLATE + "/syndications";
-  protected static final String SYNDICATION_NAMESPACE = SYNDICATION_ROOT + '/';
-
   @Autowired
   protected ArticleCrudService articleCrudService;
 
