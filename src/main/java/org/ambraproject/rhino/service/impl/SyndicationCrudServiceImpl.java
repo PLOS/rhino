@@ -78,13 +78,14 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
   @Override
   @SuppressWarnings("unchecked")
   public Syndication getSyndication(final ArticleVersionIdentifier versionId, final String syndicationTarget) {
+    ArticleVersion articleVersion = articleCrudService.getArticleVersion(versionId);
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "FROM Syndication s " +
           "WHERE s.target = :target " +
           "AND s.articleVersion = :articleVersion");
       query.setParameter("target", syndicationTarget);
-      query.setParameter("articleVersion", versionId);
+      query.setParameter("articleVersion", articleVersion);
       return (Syndication) query.uniqueResult();
     });
   }
@@ -92,11 +93,12 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
   @Transactional(readOnly = true)
   @SuppressWarnings("unchecked")
   public List<Syndication> getSyndications(final ArticleVersionIdentifier versionId) {
+    ArticleVersion articleVersion = articleCrudService.getArticleVersion(versionId);
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "FROM Syndication s " +
           "WHERE s.articleVersion = :articleVersion");
-      query.setParameter("articleVersion", versionId);
+      query.setParameter("articleVersion", articleVersion);
       return (List<Syndication>) query.list();
     });
   }
@@ -131,8 +133,6 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
           "the article with ID = " + versionId);
       return new ArrayList<>();
     }
-
-    ArticleVersion articleVersion = articleCrudService.getArticleVersion(versionId);
 
     List<Syndication> syndications = new ArrayList<>(allSyndicationTargets.size());
 
