@@ -25,6 +25,10 @@ public class ArticleFile implements Timestamped {
   @ManyToOne
   private ArticleIngestion ingestion;
 
+  @JoinColumn(name = "itemId")
+  @ManyToOne
+  private ArticleItem item;
+
   @Column
   private String fileType;
   @Column
@@ -50,6 +54,14 @@ public class ArticleFile implements Timestamped {
 
   public void setIngestion(ArticleIngestion ingestion) {
     this.ingestion = ingestion;
+  }
+
+  public ArticleItem getItem() {
+    return item;
+  }
+
+  public void setItem(ArticleItem item) {
+    this.item = item;
   }
 
   public String getFileType() {
