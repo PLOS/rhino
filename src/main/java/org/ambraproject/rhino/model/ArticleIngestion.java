@@ -23,7 +23,7 @@ public class ArticleIngestion implements Timestamped {
   @Id
   @GeneratedValue
   @Column
-  private long versionId;
+  private long ingestionId;
 
   @JoinColumn(name = "articleId")
   @ManyToOne
@@ -39,7 +39,7 @@ public class ArticleIngestion implements Timestamped {
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(
       name = "articleJournalJoinTable",
-      joinColumns = @JoinColumn(name = "versionId"),
+      joinColumns = @JoinColumn(name = "ingestionId"),
       inverseJoinColumns = @JoinColumn(name = "journalId")
   )
   private Set<Journal> journals;
@@ -49,11 +49,11 @@ public class ArticleIngestion implements Timestamped {
 
 
   public long getVersionId() {
-    return versionId;
+    return ingestionId;
   }
 
-  public void setVersionId(long versionId) {
-    this.versionId = versionId;
+  public void setVersionId(long ingestionId) {
+    this.ingestionId = ingestionId;
   }
 
   public ArticleTable getArticle() {
@@ -120,7 +120,7 @@ public class ArticleIngestion implements Timestamped {
   @Override
   public String toString() {
     return "ArticleIngestion{" +
-        "versionId=" + versionId +
+        "ingestionId=" + ingestionId +
         ", article=" + article +
         ", visibility=" + visibility +
         ", journals=" + journals +

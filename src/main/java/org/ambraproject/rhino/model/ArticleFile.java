@@ -37,7 +37,7 @@ public class ArticleFile implements Timestamped {
   private String crepoUuid;
 
   @Column
-  private Date lastModified;
+  private Date created;
 
 
   public long getFileId() {
@@ -88,13 +88,18 @@ public class ArticleFile implements Timestamped {
     this.crepoUuid = crepoUuid;
   }
 
-  @Override
-  public Date getLastModified() {
-    return lastModified;
+  public Date getCreated() {
+    return created;
   }
 
-  public void setLastModified(Date lastModified) {
-    this.lastModified = lastModified;
+  public void setCreated(Date created) {
+    this.created = created;
+  }
+
+  @Transient
+  @Override
+  public Date getLastModified() {
+    return getCreated();
   }
 
 

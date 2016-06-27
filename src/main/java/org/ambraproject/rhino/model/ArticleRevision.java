@@ -7,28 +7,34 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import java.util.Date;
 
 @Entity
-@Table(name = "articleIngestion")
-public class ArticleRevision {
+@Table(name = "articleRevision")
+public class ArticleRevision implements Timestamped {
 
   @Id
   @GeneratedValue
   @Column
-  private long versionId;
+  private long revisionId;
 
   @JoinColumn(name = "ingestionId")
   @OneToOne
   private ArticleIngestion ingestion;
 
+  @Column
   private int revisionNumber;
 
-  public long getVersionId() {
-    return versionId;
+  @Column
+  private Date created;
+
+  public long getRevisionId() {
+    return revisionId;
   }
 
-  public void setVersionId(long versionId) {
-    this.versionId = versionId;
+  public void setRevisionId(long revisionId) {
+    this.revisionId = revisionId;
   }
 
   public ArticleIngestion getIngestion() {
@@ -47,6 +53,21 @@ public class ArticleRevision {
     this.revisionNumber = revisionNumber;
   }
 
+  public Date getCreated() {
+    return created;
+  }
+
+  public void setCreated(Date created) {
+    this.created = created;
+  }
+
+  @Transient
+  @Override
+  public Date getLastModified() {
+    return getCreated();
+  }
+
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -54,7 +75,7 @@ public class ArticleRevision {
 
     ArticleRevision that = (ArticleRevision) o;
 
-    if (versionId != that.versionId) return false;
+    if (revisionId != that.revisionId) return false;
     if (revisionNumber != that.revisionNumber) return false;
     return ingestion != null ? ingestion.equals(that.ingestion) : that.ingestion == null;
 
@@ -62,7 +83,7 @@ public class ArticleRevision {
 
   @Override
   public int hashCode() {
-    int result = (int) (versionId ^ (versionId >>> 32));
+    int result = (int) (revisionId ^ (revisionId >>> 32));
     result = 31 * result + (ingestion != null ? ingestion.hashCode() : 0);
     result = 31 * result + revisionNumber;
     return result;
@@ -71,7 +92,7 @@ public class ArticleRevision {
   @Override
   public String toString() {
     return "ArticleRevision{" +
-        "versionId=" + versionId +
+        "revisionId=" + revisionId +
         ", ingestion=" + ingestion +
         ", revisionNumber=" + revisionNumber +
         '}';

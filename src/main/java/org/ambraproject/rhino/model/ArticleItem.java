@@ -43,7 +43,7 @@ public class ArticleItem implements Timestamped {
   private Collection<ArticleFile> files;
 
   @Column
-  private Date lastModified;
+  private Date created;
 
 
   public long getItemId() {
@@ -86,15 +86,19 @@ public class ArticleItem implements Timestamped {
     this.files = files;
   }
 
+  public Date getCreated() {
+    return created;
+  }
+
+  public void setCreated(Date created) {
+    this.created = created;
+  }
+
+  @Transient
   @Override
   public Date getLastModified() {
-    return lastModified;
+    return getCreated();
   }
-
-  public void setLastModified(Date lastModified) {
-    this.lastModified = lastModified;
-  }
-
 
   private transient ImmutableMap<String, ArticleFile> fileMap;
 
@@ -110,7 +114,7 @@ public class ArticleItem implements Timestamped {
   }
 
   @Transient
-  public ImmutableSet<String> getFileTypes(String fileType) {
+  public ImmutableSet<String> getFileTypes() {
     return getFileMap().keySet();
   }
 

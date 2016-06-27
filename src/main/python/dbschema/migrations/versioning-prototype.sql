@@ -44,6 +44,7 @@ CREATE TABLE `ambra`.`articleFile` (
   `fileType` VARCHAR(128) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci',
   `crepoKey` VARCHAR(255) NOT NULL,
   `crepoUuid` VARCHAR(36) NOT NULL,
+  `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`fileId`),
   CONSTRAINT `fk_articleFile_1`
     FOREIGN KEY (`ingestionId`)
@@ -61,6 +62,7 @@ CREATE TABLE `ambra`.`articleRevision` (
   `revisionId` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `ingestionId` BIGINT(20) NOT NULL,
   `revisionNumber` INT NOT NULL,
+  `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`revisionId`),
   CONSTRAINT `fk_articleRevision_1`
     FOREIGN KEY (`ingestionId`)
