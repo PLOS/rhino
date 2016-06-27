@@ -25,10 +25,14 @@ import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
 import org.ambraproject.rhino.model.ArticleVersion;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Syndication;
+import org.ambraproject.rhino.model.SyndicationStatuses;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.MessageSender;
-import org.ambraproject.rhino.service.SyndicationService;
+import org.ambraproject.rhino.service.SyndicationCrudService;
+import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
+import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.view.article.SyndicationOutputView;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationKey;
 import org.apache.commons.configuration.HierarchicalConfiguration;
@@ -39,13 +43,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Manage the syndication process, including creating and updating Syndication objects, as well as pushing syndication
@@ -55,8 +63,8 @@ import java.util.List;
  * @author Joe Osowski
  */
 @SuppressWarnings({"JpaQlInspection"})
-public class SyndicationServiceImpl extends AmbraService implements SyndicationService {
-  private static final Logger log = LoggerFactory.getLogger(SyndicationServiceImpl.class);
+public class SyndicationCrudServiceImpl extends AmbraService implements SyndicationCrudService {
+  private static final Logger log = LoggerFactory.getLogger(SyndicationCrudServiceImpl.class);
 
   @Autowired
   private Configuration configuration;
@@ -72,41 +80,39 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
 
   @Override
   @SuppressWarnings("unchecked")
-  public Syndication getSyndication(final ArticleVersionIdentifier versionIdentifier, final String syndicationTarget) {
+  public Syndication getSyndication(final ArticleVersionIdentifier versionId, final String syndicationTarget) {
+    ArticleVersion articleVersion = articleCrudService.getArticleVersion(versionId);
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "FROM Syndication s " +
           "WHERE s.target = :target " +
-          "AND s.articleVersion.article.doi = :doi " +
-          "AND s.articleVersion.revisionNumber = :revisionNumber");
+          "AND s.articleVersion = :articleVersion");
       query.setParameter("target", syndicationTarget);
-      query.setParameter("doi", versionIdentifier.getDoiName());
-      query.setParameter("revisionNumber", versionIdentifier.getRevision());
+      query.setParameter("articleVersion", articleVersion);
       return (Syndication) query.uniqueResult();
     });
   }
 
   @Transactional(readOnly = true)
   @SuppressWarnings("unchecked")
-  public List<Syndication> getSyndications(final ArticleVersionIdentifier versionIdentifier) {
+  public List<Syndication> getSyndications(final ArticleVersionIdentifier versionId) {
+    ArticleVersion articleVersion = articleCrudService.getArticleVersion(versionId);
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "FROM Syndication s " +
-          "WHERE s.articleVersion.article.doi = :doi " +
-          "AND s.articleVersion.revisionNumber = :revisionNumber");
-      query.setParameter("doi", versionIdentifier.getDoiName());
-      query.setParameter("revisionNumber", versionIdentifier.getRevision());
+          "WHERE s.articleVersion = :articleVersion");
+      query.setParameter("articleVersion", articleVersion);
       return (List<Syndication>) query.list();
     });
   }
 
   @Transactional(rollbackFor = {Throwable.class})
   @Override
-  public Syndication updateSyndication(final ArticleVersionIdentifier articleVersionIdentifier,
+  public Syndication updateSyndication(final ArticleVersionIdentifier versionId,
       final String syndicationTarget, final String status, final String errorMessage) {
-    Syndication syndication = getSyndication(articleVersionIdentifier, syndicationTarget);
+    Syndication syndication = getSyndication(versionId, syndicationTarget);
     if (syndication == null) {
-      throw new RuntimeException("No such syndication for doi " + articleVersionIdentifier
+      throw new RuntimeException("No such syndication for doi " + versionId
           + " and target " + syndicationTarget);
     }
     syndication.setStatus(status);
@@ -119,8 +125,7 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
   @Transactional(rollbackFor = {Throwable.class})
   @Override
   @SuppressWarnings("unchecked")
-  public List<Syndication> createSyndications(ArticleVersionIdentifier versionIdentifier) {
-    ArticleVersion articleVersion = articleCrudService.getArticleVersion(versionIdentifier);
+  public List<Syndication> createSyndications(ArticleVersionIdentifier versionId) {
 
     List<HierarchicalConfiguration> allSyndicationTargets = ((HierarchicalConfiguration)
         configuration).configurationsAt("ambra.services.syndications.syndication");
@@ -128,7 +133,7 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
     if (allSyndicationTargets == null || allSyndicationTargets.size() < 1) { // Should never happen.
       log.warn("There are no Syndication Targets defined in the property: " +
           "ambra.services.syndications.syndication so no Syndication objects were created for " +
-          "the article with ID = " + versionIdentifier);
+          "the article with ID = " + versionId);
       return new ArrayList<>();
     }
 
@@ -136,26 +141,30 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
 
     for (HierarchicalConfiguration targetNode : allSyndicationTargets) {
       String target = targetNode.getString("[@target]");
-      Syndication existingSyndication = getSyndication(versionIdentifier, target);
+      Syndication existingSyndication = getSyndication(versionId, target);
       //todo: cleanup - this list return is not used
       if (existingSyndication != null) {
         syndications.add(existingSyndication);
       } else {
-        Syndication syndication = new Syndication(articleVersion, target);
-        syndication.setStatus(Syndication.STATUS_PENDING);
-        syndication.setSubmissionCount(0);
-        hibernateTemplate.save(syndication);
-        syndications.add(syndication);
+        syndications.add(createSyndication(versionId, target));
       }
     }
     return syndications;
   }
 
+  @Override
+  public Syndication createSyndication(ArticleVersionIdentifier versionId, String target) {
+    ArticleVersion articleVersion = articleCrudService.getArticleVersion(versionId);
+    Syndication syndication = new Syndication(articleVersion, target);
+    syndication.setStatus(SyndicationStatuses.PENDING.name());
+    syndication.setSubmissionCount(0);
+    hibernateTemplate.save(syndication);
+    return syndication;
+  }
 
   @Transactional
-  @SuppressWarnings("unchecked")
   @Override
-  public List<Syndication> getFailedAndInProgressSyndications(final String journalKey) {
+  public List<Syndication> getSyndications(final String journalKey, final List<String> statuses) {
     Integer numDaysInPast = configuration.getInteger(
         "ambra.virtualJournals." + journalKey + ".syndications.display.numDaysInPast", 30);
 
@@ -175,53 +184,69 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
           "JOIN s.articleVersion av " +
           "JOIN av.journals j " +
           "WHERE j.journalKey = :journalKey " +
-          "AND s.status in (:inProgressStatus, :failureStatus)" +
+          "AND s.status in (:statuses)" +
           "AND s.lastModified > :startTime");
       query.setParameter("journalKey", journalKey);
-      query.setParameter("inProgressStatus", Syndication.STATUS_IN_PROGRESS);
-      query.setParameter("failureStatus", Syndication.STATUS_FAILURE);
+      query.setParameterList("statuses", statuses);
       query.setDate("startTime", Date.from(startTime));
       return (List<Syndication>) query.list();
     });
   }
 
-  @Transactional(rollbackFor = {Throwable.class})
-  @SuppressWarnings("unchecked")
   @Override
-  public Syndication syndicate(ArticleVersionIdentifier articleVersionIdentifier, String syndicationTarget) {
-    ArticleVersion articleVersion = articleCrudService.getArticleVersion(articleVersionIdentifier);
+  public Transceiver readSyndications(String journalKey, List<String> statuses) throws IOException {
+    return new EntityCollectionTransceiver<Syndication>() {
 
-    Syndication syndication = getSyndication(articleVersionIdentifier, syndicationTarget);
+      @Override
+      protected Object getView(Collection<? extends Syndication> syndications) {
+        return syndications.stream()
+            .map(SyndicationOutputView::createSyndicationView)
+            .collect(Collectors.toList());
+      }
+
+      @Override
+      protected Collection<? extends Syndication> fetchEntities() {
+        return getSyndications(journalKey, statuses);
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    };
+  }
+
+  @Transactional(rollbackFor = {Throwable.class})
+  @Override
+  public Syndication syndicate(ArticleVersionIdentifier versionId, String syndicationTarget) {
+    ArticleVersion articleVersion = articleCrudService.getArticleVersion(versionId);
+
+    Syndication syndication = getSyndication(versionId, syndicationTarget);
     if (syndication == null) {
-      //no existing syndication
       syndication = new Syndication(articleVersion, syndicationTarget);
-      syndication.setStatus(Syndication.STATUS_IN_PROGRESS);
-      syndication.setErrorMessage(null);
+      syndication.setStatus(SyndicationStatuses.IN_PROGRESS.name());
       syndication.setSubmissionCount(1);
       syndication.setLastSubmitTimestamp(new Date());
       hibernateTemplate.save(syndication);
     } else {
-      syndication.setStatus(Syndication.STATUS_IN_PROGRESS);
-      syndication.setErrorMessage(null);
+      syndication.setStatus(SyndicationStatuses.IN_PROGRESS.name());
       syndication.setSubmissionCount(syndication.getSubmissionCount() + 1);
       syndication.setLastSubmitTimestamp(new Date());
       hibernateTemplate.update(syndication);
     }
 
     try {
-      //Send message
-      sendSyndicationMessage(syndicationTarget, articleVersionIdentifier);
+      sendSyndicationMessage(syndicationTarget, versionId);
       log.info("Successfully sent a Message to plos-queue for {} to be syndicated to {}",
-          articleVersionIdentifier, syndicationTarget);
+          versionId, syndicationTarget);
       return syndication;
     } catch (Exception e) {
-      log.warn("Error syndicating " + articleVersionIdentifier + " to " + syndicationTarget, e);
-      //update to failure and return updated syndication
-      return updateSyndication(articleVersionIdentifier, syndicationTarget, Syndication.STATUS_FAILURE, e.getMessage());
+      log.warn("Error syndicating " + versionId + " to " + syndicationTarget, e);
+      return updateSyndication(versionId, syndicationTarget, SyndicationStatuses.FAILURE.name(), e.getMessage());
     }
   }
 
-  private void sendSyndicationMessage(String target, ArticleVersionIdentifier articleVersionId)
+  private void sendSyndicationMessage(String target, ArticleVersionIdentifier versionId)
       throws ApplicationException {
     List<HierarchicalConfiguration> syndications = ((HierarchicalConfiguration) configuration)
         .configurationsAt("ambra.services.syndications.syndication");
@@ -242,7 +267,7 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
       throw new RuntimeException(target + " queue not configured");
     }
 
-    messageSender.sendBody(queue, createBody(articleVersionId, additionalBodyContent));
+    messageSender.sendBody(queue, createBody(versionId, additionalBodyContent));
 
   }
 
@@ -291,12 +316,12 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
     }
   }
 
-  private String createBody(ArticleVersionIdentifier articleVersionId, String additionalBodyContent) {
+  private String createBody(ArticleVersionIdentifier versionId, String additionalBodyContent) {
     StringBuilder body = new StringBuilder();
     body.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
         .append("<ambraMessage>")
-        .append("<doi>").append(articleVersionId.getDoiName()).append("</doi>")
-        .append("<version>").append(articleVersionId.getRevision()).append("</doi>");
+        .append("<doi>").append(versionId.getDoiName()).append("</doi>")
+        .append("<version>").append(versionId.getRevision()).append("</doi>");
 
     if (additionalBodyContent != null) {
       body.append(additionalBodyContent);

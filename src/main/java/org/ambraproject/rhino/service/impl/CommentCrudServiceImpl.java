@@ -38,11 +38,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -193,10 +191,6 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     created.setCompetingInterestBody(Strings.nullToEmpty(input.getCompetingInterestStatement()));
     created.setIsRemoved(Boolean.valueOf(Strings.nullToEmpty(input.getIsRemoved())));
 
-    //todo: shouldn't have to set these here
-    created.setCreated(Date.from(Instant.now()));
-    created.setLastModified(Date.from(Instant.now()));
-
     hibernateTemplate.save(created);
     return created;
   }
@@ -277,10 +271,6 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     flag.setUserProfileId(flagCreator);
     flag.setComment(input.getBody());
     flag.setReason(FlagReasonCode.fromString(input.getReasonCode()));
-
-    //todo: shouldn't have to set these here
-    flag.setCreated(Date.from(Instant.now()));
-    flag.setLastModified(Date.from(Instant.now()));
 
     hibernateTemplate.save(flag);
     return flag;

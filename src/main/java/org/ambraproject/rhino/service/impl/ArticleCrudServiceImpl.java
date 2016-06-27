@@ -47,7 +47,7 @@ import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
-import org.ambraproject.rhino.service.SyndicationService;
+import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
@@ -113,7 +113,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Autowired
   Gson crepoGson;
   @Autowired
-  SyndicationService syndicationService;
+  SyndicationCrudService syndicationService;
   @Autowired
   ArticleTypeService articleTypeService;
   @Autowired
