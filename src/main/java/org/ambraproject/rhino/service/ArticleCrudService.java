@@ -75,7 +75,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   public abstract Article writeArchiveAsVersionedOnly(Archive archive) throws IOException;
 
   /**
-   * Repopulates article category information by making a call to the taxonomy server.
+   * Populates article category information by making a call to the taxonomy server.
    *
    * @param articleId the identifier of the article
    */

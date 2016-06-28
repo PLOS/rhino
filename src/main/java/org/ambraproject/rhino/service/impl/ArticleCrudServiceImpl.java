@@ -96,12 +96,11 @@ import java.util.stream.Collectors;
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
  */
+@SuppressWarnings("JpaQlInspection")
 public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudService {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudServiceImpl.class);
 
-  @Autowired
-  ArticleCrudService articleCrudService;
   @Autowired
   AssetCrudService assetCrudService;
   @Autowired
@@ -208,7 +207,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    */
   @Override
   public Journal getPublicationJournal(ArticleTable article) {
-    ArticleVersion articleVersion = articleCrudService.getArticleVersion(article);
+    ArticleVersion articleVersion = getArticleVersion(article);
     Set<Journal> journals = articleVersion.getJournals();
     return journals.iterator().next();
   }

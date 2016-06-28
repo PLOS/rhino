@@ -30,6 +30,6 @@ public class DummyTaxonomyClassificationService implements TaxonomyClassificatio
 
   @Override
   public void populateCategories(ArticleTable article, Document xml) {
-    
+
   }
 }
