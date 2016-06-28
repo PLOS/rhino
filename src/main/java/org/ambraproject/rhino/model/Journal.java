@@ -76,7 +76,7 @@ public class Journal extends AmbraEntity{
   @JoinTable(
       name = "articleList",
       joinColumns = @JoinColumn(name = "journalID"),
-      inverseJoinColumns = @JoinColumn(name = "articleListID"))
+      inverseJoinColumns = @JoinColumn(name = "articleListId"))
   private Collection<ArticleList> articleLists;
 
   public Journal() {
