@@ -18,28 +18,43 @@
  */
 package org.ambraproject.rhino.model;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import java.util.Date;
+
 /**
  * @author Alex Kudlick 11/10/11
  */
-public class Category extends AmbraEntity {
+@Entity
+@Table(name = "category")
+public class Category implements Timestamped {
 
+  @Id
+  @GeneratedValue
+  @Column
+  private int categoryId;
+
+  @Column
   private String path;
 
-  /**
-   * @return the top-level category that this category rolls up to.
-   */
-  public String getMainCategory() {
-    String[] fields = path.split("\\/");
-    return fields[1];
-  }
+  @Generated(value= GenerationTime.INSERT)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
+  private Date created;
 
-  /**
-   * @return the most-specific (deepest in the taxonomic hierarchy) category.
-   */
-  public String getSubCategory() {
-    String[] fields = path.split("\\/");
-    return fields[fields.length - 1];
-  }
+  @Generated(value= GenerationTime.ALWAYS)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
+  private Date lastModified;
+
+  private int weight;
 
   /**
    * @return the full path, starting at the top-level of the taxonomic hierarchy, to this category.  Levels are
@@ -62,6 +77,39 @@ public class Category extends AmbraEntity {
       throw new IllegalArgumentException("Invalid category path: " + path);
     }
     this.path = path;
+  }
+
+  public int getCategoryId() {
+    return categoryId;
+  }
+
+  public void setCategoryId(int categoryId) {
+    this.categoryId = categoryId;
+  }
+
+  public Date getCreated() {
+    return created;
+  }
+
+  public void setCreated(Date created) {
+    this.created = created;
+  }
+
+  @Override
+  public Date getLastModified() {
+    return lastModified;
+  }
+
+  public void setLastModified(Date lastModified) {
+    this.lastModified = lastModified;
+  }
+
+  public int getWeight() {
+    return weight;
+  }
+
+  public void setWeight(int weight) {
+    this.weight = weight;
   }
 
   @Override

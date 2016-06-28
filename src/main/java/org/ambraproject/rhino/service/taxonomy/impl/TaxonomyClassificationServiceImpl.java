@@ -2,9 +2,10 @@ package org.ambraproject.rhino.service.taxonomy.impl;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Charsets;
+import com.google.common.collect.Maps;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
-import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
@@ -18,9 +19,11 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.hibernate.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -30,9 +33,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static org.ambraproject.rhino.service.impl.AmbraService.newDocumentBuilder;
 
@@ -72,6 +80,9 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
       "  </VectorParam>\n" +
       "</TMMAI>";
 
+  // Number of most-weighted category leaf nodes to associate with each article
+  // TODO: Make configurable?
+  private static final int CATEGORY_COUNT = 8;
 
   @Autowired
   private CloseableHttpClient httpClient;
@@ -81,15 +92,17 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   private ArticleTypeService articleTypeService;
   @Autowired
   private ArticleCrudService articleCrudService;
+  @Autowired
+  protected HibernateTemplate hibernateTemplate;
 
   /**
    * @inheritDoc
    */
   @Override
-  public List<WeightedTerm> classifyArticle(Document articleXml, Article article)  {
+  public List<WeightedTerm> classifyArticle(ArticleTable article, Document articleXml)  {
     RuntimeConfiguration.TaxonomyConfiguration configuration = getTaxonomyConfiguration();
 
-    List<String> rawTerms = getRawTerms(articleXml, article, false);
+    List<String> rawTerms = getRawTerms(articleXml, article, false /*isTextRequired*/);
     List<WeightedTerm> results = new ArrayList<>(rawTerms.size());
 
     for (String rawTerm : rawTerms) {
@@ -125,17 +138,17 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
    * @inheritDoc
    */
   @Override
-  public List<String> getRawTerms(Document articleXml, Article article,
-                                  boolean isTextRequired) {
+  public List<String> getRawTerms(Document articleXml, ArticleTable article, boolean isTextRequired) {
     RuntimeConfiguration.TaxonomyConfiguration configuration = getTaxonomyConfiguration();
+
 
     String toCategorize = getCategorizationContent(articleXml);
 
     String header = String.format(MESSAGE_HEADER,
-        new SimpleDateFormat("yyyy-MM-dd").format(article.getDate()),
+        new SimpleDateFormat("yyyy-MM-dd").format(article.getPublicationDate()),
         articleCrudService.getPublicationJournal(article).getTitle(),
-        articleTypeService.getArticleType(article).getHeading(),
-        ArticleIdentity.create(article).getIdentifier());
+        "TODO",//articleTypeService.getArticleType(article).getHeading(), //todo: add article type here
+        article.getDoi());
 
     String aiMessage = String.format(MESSAGE_BEGIN, configuration.getThesaurus())
         + StringEscapeUtils.escapeXml10(String.format(MESSAGE_DOC_ELEMENT, header, toCategorize))
@@ -176,6 +189,90 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     }
 
     return results;
+  }
+
+  /**
+   * Populates article category information by making a call to the taxonomy server. Will not throw
+   * an exception if we cannot communicate or get results from the taxonomy server. Will not
+   * request weightedTerms for amendments.
+   *
+   * @param article the Article model instance
+   * @param xml     Document representing the article XML
+   */
+  public void populateCategories(ArticleTable article, Document xml) {
+    List<WeightedTerm> terms;
+    String doi = article.getDoi();
+
+    article.setCategories(new HashSet<>());
+    boolean isAmendment = false; //todo: fix or remove this when we find a home for article types
+
+    if (!isAmendment) {
+      terms = classifyArticle(article, xml);
+      if (terms != null && terms.size() > 0) {
+        setArticleCategories(article, terms);
+      } else {
+        log.error("Taxonomy server returned 0 terms. Cannot populate Categories. " + doi);
+      }
+    }
+  }
+
+  private void setArticleCategories(ArticleTable article, List<WeightedTerm> weightedTerms) {
+    weightedTerms = WeightedTerm.BY_DESCENDING_WEIGHT.immutableSortedCopy(weightedTerms);
+
+    List<WeightedTerm> results = new ArrayList<>(weightedTerms.size());
+    Set<String> uniqueLeafs = new HashSet<>();
+
+    for (WeightedTerm s : weightedTerms) {
+      if (s.getPath().charAt(0) != '/') {
+        throw new IllegalArgumentException("Bad category: " + s);
+      }
+
+      //We want a count of distinct lead nodes.  When this
+      //Reaches eight stop.  Note the second check, we can be at
+      //eight uniqueLeafs, but still finding different paths.  Stop
+      //Adding when a new unique leaf is found.  Yes, a little confusing
+      if (uniqueLeafs.size() == CATEGORY_COUNT && !uniqueLeafs.contains(s.getLeafTerm())) {
+        break;
+      } else {
+        //getSubCategory returns leaf node of the path
+        uniqueLeafs.add(s.getLeafTerm());
+        results.add(s);
+      }
+    }
+
+    article.setCategories(resolveIntoCategories(results));
+  }
+
+  private Set<Category> resolveIntoCategories(List<WeightedTerm> terms) {
+    Set<String> termStrings = terms.stream()
+        .map(WeightedTerm::getPath)
+        .collect(Collectors.toSet());
+
+    Collection<Category> existingCategories = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM Category WHERE path IN (:terms)");
+      query.setParameterList("terms", termStrings);
+      return query.list();
+    });
+    Map<String, Category> existingCategoryMap = Maps.uniqueIndex(existingCategories, Category::getPath);
+
+    Set<Category> categories = new HashSet<>();
+    for (WeightedTerm term : terms) {
+      Category category = existingCategoryMap.get(term.getPath());
+      if (category == null) {
+        /*
+         * A new category from the taxonomy server, which is not yet persisted in our system. Create it now.
+         *
+         * This risks a race condition if two articles are being populated concurrently and both have the same new
+         * category, which can cause a "MySQLIntegrityConstraintViolationException: Duplicate entry" error.
+         */
+        category = new Category();
+        category.setPath(term.getPath());
+        category.setWeight(term.getWeight());
+        hibernateTemplate.save(category);
+      }
+      categories.add(category);
+    }
+    return categories;
   }
 
   // There appears to be a bug in the AI getSuggestedTermsFullPath method.

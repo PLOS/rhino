@@ -144,9 +144,6 @@ class LegacyIngestionService {
       throw ArticleCrudServiceImpl.complainAboutXml(e);
     }
 
-    // TODO: If an article should have multiple journals, how does it get them?
-    article.setJournals(Sets.newHashSet(parentService.getPublicationJournal(article)));
-    initializeCategories(article, xml.getDocument());
     populateRelatedArticles(article, xml);
 
     return article;
@@ -494,117 +491,6 @@ class LegacyIngestionService {
     throw new RestClientException("No manifest found in archive " + archive.getArchiveName(),
         HttpStatus.METHOD_NOT_ALLOWED);
   }
-
-  /**
-   * Populate categories while initially ingesting an article, preventing any exceptions from halting ingestion.
-   */
-  private void initializeCategories(Article article, Document xml) {
-    try {
-      populateCategories(article, xml);
-    } catch (Exception e) {
-      log.error("Category population failed. Continuing ingestion.", e);
-    }
-  }
-
-  /**
-   * Populates article category information by making a call to the taxonomy server. Will not throw
-   * an exception if we cannot communicate or get results from the taxonomy server. Will not
-   * request categories for amendments.
-   *
-   * @param article the Article model instance
-   * @param xml     Document representing the article XML
-   */
-  public void populateCategories(Article article, Document xml) {
-    List<WeightedTerm> terms;
-    String doi = article.getDoi();
-
-    boolean isAmendment = isAmendment(article);
-
-    if (!isAmendment) {
-      terms = parentService.taxonomyService.classifyArticle(xml, article);
-      if (terms != null && terms.size() > 0) {
-        setArticleCategories(article, terms);
-      } else {
-        log.error("Taxonomy server returned 0 terms. Cannot populate Categories. " + doi);
-        article.setCategories(new HashMap<>());
-      }
-    } else {
-      article.setCategories(new HashMap<>());
-    }
-  }
-
-  private static final ImmutableSet<String> AMENDMENT_TYPE_HEADINGS = ImmutableSet.of(
-      "Expression of Concern", "Correction", "Retraction");
-
-  private boolean isAmendment(Article article) {
-    ArticleType articleType = parentService.articleTypeService.getArticleType(article);
-    return (articleType != null) && AMENDMENT_TYPE_HEADINGS.contains(articleType.getHeading());
-  }
-
-  // Number of most-weighted category leaf nodes to associate with each article
-  // TODO: Make configurable?
-  private static final int CATEGORY_COUNT = 8;
-
-  private void setArticleCategories(Article article, List<WeightedTerm> categories) {
-    categories = WeightedTerm.BY_DESCENDING_WEIGHT.immutableSortedCopy(categories);
-
-    List<WeightedTerm> results = new ArrayList<>(categories.size());
-    Set<String> uniqueLeafs = new HashSet<>();
-
-    for (WeightedTerm s : categories) {
-      if (s.getPath().charAt(0) != '/') {
-        throw new IllegalArgumentException("Bad category: " + s);
-      }
-
-      //We want a count of distinct lead nodes.  When this
-      //Reaches eight stop.  Note the second check, we can be at
-      //eight uniqueLeafs, but still finding different paths.  Stop
-      //Adding when a new unique leaf is found.  Yes, a little confusing
-      if (uniqueLeafs.size() == CATEGORY_COUNT && !uniqueLeafs.contains(s.getLeafTerm())) {
-        break;
-      } else {
-        //getSubCategory returns leaf node of the path
-        uniqueLeafs.add(s.getLeafTerm());
-        results.add(s);
-      }
-    }
-
-    Map<Category, Integer> categoryEntities = resolveIntoCategoryEntities(results);
-    article.setCategories(categoryEntities);
-  }
-
-  private Map<Category, Integer> resolveIntoCategoryEntities(List<WeightedTerm> terms) {
-    Set<String> termStrings = terms.stream()
-        .map(WeightedTerm::getPath)
-        .collect(Collectors.toSet());
-
-    Collection<Category> existingCategories = parentService.hibernateTemplate.execute(session -> {
-      Query query = session.createQuery("FROM Category WHERE path IN (:terms)");
-      query.setParameterList("terms", termStrings);
-      return query.list();
-    });
-    Map<String, Category> existingCategoryMap = Maps.uniqueIndex(existingCategories, Category::getPath);
-
-    Map<Category, Integer> categories = Maps.newLinkedHashMapWithExpectedSize(terms.size());
-    for (WeightedTerm term : terms) {
-      Category category = existingCategoryMap.get(term.getPath());
-      if (category == null) {
-        /*
-         * A new category from the taxonomy server, which is not yet persisted in our system. Create it now.
-         *
-         * This risks a race condition if two articles are being populated concurrently and both have the same new
-         * category, which can cause a "MySQLIntegrityConstraintViolationException: Duplicate entry" error.
-         */
-        category = new Category();
-        category.setPath(term.getPath());
-        parentService.hibernateTemplate.save(category);
-      }
-      categories.put(category, term.getWeight());
-    }
-
-    return categories;
-  }
-
 
   private void populateRelatedArticles(Article article, ArticleXml xml) {
     List<ArticleRelationship> xmlRelationships = xml.parseRelatedArticles();

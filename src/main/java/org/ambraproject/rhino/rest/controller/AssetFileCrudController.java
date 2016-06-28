@@ -178,7 +178,8 @@ public class AssetFileCrudController extends DoiBasedCrudController {
     Doi assetId = Doi.create(getIdentifier(request));
     int revisionNumberValue = (revisionNumber == null) ? articleCrudService.getLatestRevision(assetId) : revisionNumber;
 
-    previewFileFromVersionedModel(request, response, ArticleFileIdentifier.create(assetId, revisionNumberValue, fileType));
+    ArticleFileIdentifier fileId = ArticleFileIdentifier.create(assetId, revisionNumberValue, fileType);
+    previewFileFromVersionedModel(request, response, fileId);
   }
 
   void previewFileFromVersionedModel(HttpServletRequest request, HttpServletResponse response,
