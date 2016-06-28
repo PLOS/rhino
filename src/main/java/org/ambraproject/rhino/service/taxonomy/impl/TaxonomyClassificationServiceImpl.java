@@ -6,6 +6,8 @@ import com.google.common.collect.Maps;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Category;
+import org.ambraproject.rhino.model.WeightedCategory;
+import org.ambraproject.rhino.model.WeightedCategoryId;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
@@ -240,10 +242,10 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
       }
     }
 
-    article.setCategories(resolveIntoCategories(results));
+    article.setCategories(resolveIntoCategories(results, article));
   }
 
-  private Set<Category> resolveIntoCategories(List<WeightedTerm> terms) {
+  private Set<Category> resolveIntoCategories(List<WeightedTerm> terms, ArticleTable article) {
     Set<String> termStrings = terms.stream()
         .map(WeightedTerm::getPath)
         .collect(Collectors.toSet());
@@ -267,9 +269,11 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
          */
         category = new Category();
         category.setPath(term.getPath());
-        category.setWeight(term.getWeight());
         hibernateTemplate.save(category);
       }
+      WeightedCategoryId id = new WeightedCategoryId(category.getCategoryId(), article.getArticleId().intValue());
+      WeightedCategory weightedCategory = new WeightedCategory(id, term.getWeight());
+      hibernateTemplate.save(weightedCategory);
       categories.add(category);
     }
     return categories;

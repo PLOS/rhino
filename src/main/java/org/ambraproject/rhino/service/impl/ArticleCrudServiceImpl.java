@@ -162,7 +162,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public void populateCategories(ArticleIdentifier articleId) throws IOException {
     ArticleTable article = getArticle(articleId);
-    ArticleVersion articleVersion = getArticleVersion(article);
+    ArticleVersion articleVersion = getLatestArticleVersion(article);
     Document manuscriptXml = getManuscriptXml(articleVersion);
     taxonomyService.populateCategories(article, manuscriptXml);
   }
@@ -207,7 +207,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    */
   @Override
   public Journal getPublicationJournal(ArticleTable article) {
-    ArticleVersion articleVersion = getArticleVersion(article);
+    ArticleVersion articleVersion = getLatestArticleVersion(article);
     Set<Journal> journals = articleVersion.getJournals();
     return journals.iterator().next();
   }
@@ -425,14 +425,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       @Override
       protected Calendar getLastModifiedDate() {
         ArticleTable article = getArticle(articleId);
-        ArticleVersion articleVersion = getArticleVersion(article);
+        ArticleVersion articleVersion = getLatestArticleVersion(article);
         return copyToCalendar(articleVersion.getLastModified());
       }
 
       @Override
       protected Object getData() throws IOException {
         ArticleTable article = getArticle(articleId);
-        ArticleVersion articleVersion = getArticleVersion(article);
+        ArticleVersion articleVersion = getLatestArticleVersion(article);
         Document manuscriptXml = getManuscriptXml(articleVersion);
         List<String> rawTerms = taxonomyService.getRawTerms(manuscriptXml, article, false /*isTextRequired*/);
         List<String> cleanedTerms = new ArrayList<>();
@@ -452,7 +452,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public String getRawCategoriesAndText(final ArticleIdentifier articleId) throws IOException {
     ArticleTable article = getArticle(articleId);
-    ArticleVersion articleVersion = getArticleVersion(article);
+    ArticleVersion articleVersion = getLatestArticleVersion(article);
     Document manuscriptXml = getManuscriptXml(articleVersion);
 
     List<String> rawTermsAndText = taxonomyService.getRawTerms(manuscriptXml, article, true /*isTextRequired*/);
@@ -634,12 +634,16 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return articleVersion;
   }
 
-  public ArticleVersion getArticleVersion(ArticleTable article) {
+  public ArticleVersion getLatestArticleVersion(ArticleTable article) {
+    int latestRevision = getLatestRevision(Doi.create(article.getDoi()));
     ArticleVersion articleVersion = hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "FROM ArticleVersion as av " +
-          "WHERE av.article = :article");
+          "WHERE av.article = :article " +
+          "AND av.revisionNumber = :latestRevision"
+      );
       query.setParameter("article", article);
+      query.setParameter("latestRevision", latestRevision);
       return (ArticleVersion) query.uniqueResult();
     });
     if (articleVersion == null) {

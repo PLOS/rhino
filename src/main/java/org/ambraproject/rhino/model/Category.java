@@ -27,6 +27,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -34,7 +35,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "category")
-public class Category implements Timestamped {
+public class Category implements Timestamped, Serializable {
 
   @Id
   @GeneratedValue
@@ -53,8 +54,6 @@ public class Category implements Timestamped {
   @Temporal(javax.persistence.TemporalType.TIMESTAMP)
   @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
   private Date lastModified;
-
-  private int weight;
 
   /**
    * @return the full path, starting at the top-level of the taxonomic hierarchy, to this category.  Levels are
@@ -102,14 +101,6 @@ public class Category implements Timestamped {
 
   public void setLastModified(Date lastModified) {
     this.lastModified = lastModified;
-  }
-
-  public int getWeight() {
-    return weight;
-  }
-
-  public void setWeight(int weight) {
-    this.weight = weight;
   }
 
   @Override

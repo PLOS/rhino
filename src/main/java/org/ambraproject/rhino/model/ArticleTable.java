@@ -15,12 +15,13 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
 @Entity
 @Table(name = "article")
-public class ArticleTable implements Timestamped { //todo: rename to "Article" once the old Article class is removed
+public class ArticleTable implements Timestamped, Serializable { //todo: rename to "Article" once the old Article class is removed
 
   @Id
   @GeneratedValue
@@ -78,7 +79,7 @@ public class ArticleTable implements Timestamped { //todo: rename to "Article" o
 
   @Override
   public Date getLastModified() {
-    return null;
+    return publicationDate; //todo: get latest revision modified date?
   }
 
   @Override

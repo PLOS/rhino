@@ -246,7 +246,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
 
   public abstract ArticleVersion getArticleVersion(ArticleVersionIdentifier articleIdentifier);
 
-  public abstract ArticleVersion getArticleVersion(ArticleTable article);
+  public abstract ArticleVersion getLatestArticleVersion(ArticleTable article);
 
   public abstract ArticleTable getArticle(ArticleIdentifier articleIdentifier);
 
