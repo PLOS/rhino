@@ -43,12 +43,12 @@ class Ingestion(BaseServiceTest):
     self.verify_ingestion_text_expected_only(article[16], 'publisherName')
     self.verify_ingestion_text_expected_only(article[17], 'url')
 
-  def verify_syndications(self):
+  def verify_syndications(self, zip_article):
     """
     Validate ingestion with Syndication table
     """
     print 'Verify Syndications'
-    syndications = self.get_syndications_sql_archiveName(resources.ZIP_ARTICLE)
+    syndications = self.get_syndications_sql_archiveName(zip_article)
     syndications_json = self.parsed.get_attribute('syndications')
     self.verify_array(syndications, syndications_json)
     for syndication in syndications:
@@ -58,12 +58,12 @@ class Ingestion(BaseServiceTest):
         self.verify_ingestion_text(syndications_json[target]['status'], syndication[2], target + '.status')
         self.verify_ingestion_attribute(syndications_json[target]['submissionCount'], syndication[3], target + '.submissionCount')
 
-  def verify_journals(self):
+  def verify_journals(self,zip_article):
     """
     Validate ingestion with articlePublishedJournals  table
     """
     print 'Verify Journals'
-    journals = self.get_journals_sql_archiveName(resources.ZIP_ARTICLE)
+    journals = self.get_journals_sql_archiveName(zip_article)
     journals_json = self.parsed.get_attribute('journals')
     self.verify_array(journals, journals_json)
     for journal in journals:
@@ -72,12 +72,12 @@ class Ingestion(BaseServiceTest):
       self.verify_ingestion_text(journals_json[journal_name]['eIssn'], journal[1], journal_name + '.eIssn')
       self.verify_ingestion_text(journals_json[journal_name]['title'], journal[2], journal_name + '.title')
 
-  def verify_citedArticles(self):
+  def verify_citedArticles(self, zip_article):
     """
     Validate ingestion with CitedArticles  table
     """
     print 'Verify CitedArticles and CitedPersons'
-    citedArticles = self.get_citedArticles_sql_archiveName(resources.ZIP_ARTICLE)
+    citedArticles = self.get_citedArticles_sql_archiveName(zip_article)
     citedArticles_json = self.parsed.get_attribute('citedArticles')
     self.verify_array(citedArticles, citedArticles_json)
     i = 0
@@ -119,12 +119,12 @@ class Ingestion(BaseServiceTest):
       self.verify_ingestion_text(citedPersons_json[i]['suffix'], citedPerson[3], 'suffix')
       i = i + 1
 
-  def verify_article_file(self, content_type, file_type):
+  def verify_article_file(self, zip_article, content_type, file_type):
     """
     Validate ingestion's files with Assert table
     """
     print 'Verify Article\'s files ' + file_type
-    asset_file = self.get_asset_file(content_type, resources.ZIP_ARTICLE)
+    asset_file = self.get_asset_file(content_type, zip_article)
     asset_file_json = self.parsed.get_attribute(file_type)
     if asset_file and asset_file_json:
       self.verify_ingestion_text(asset_file_json['file'], asset_file[0], 'file')
@@ -133,22 +133,22 @@ class Ingestion(BaseServiceTest):
       self.verify_ingestion_text(asset_file_json['metadata']['contentType'], asset_file[3], 'contentType')
       self.verify_ingestion_attribute(asset_file_json['metadata']['size'], asset_file[4], 'size')
 
-  def verify_article_figures(self):
+  def verify_article_figures(self, zip_article):
     """
     Validate ingestion's figures with Assert table
     """
     print 'Verify Article\'s figures'
-    self.verify_article_assets('fig', 'figures')
+    self.verify_article_assets(zip_article, 'fig', 'figures')
 
-  def verify_article_graphics(self):
+  def verify_article_graphics(self, zip_article):
     """
     Validate ingestion's graphics with Assert table
     """
     print 'Verify Article\'s graphics'
-    self.verify_article_assets('inline-formula, disp-formula', 'graphics')
+    self.verify_article_assets(zip_article,'inline-formula, disp-formula', 'graphics')
 
-  def verify_article_assets(self, assets_type, assets_json_name):
-    assets = self.get_asset_figures_graphics(assets_type, resources.ZIP_ARTICLE)
+  def verify_article_assets(self,zip_article, assets_type, assets_json_name):
+    assets = self.get_asset_figures_graphics(assets_type, zip_article)
     assets_json = self.parsed.get_attribute(assets_json_name)
     i = 0
     for asset in assets:

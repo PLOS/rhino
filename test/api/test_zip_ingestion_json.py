@@ -68,16 +68,16 @@ class ZipIngestionTest(ZIPIngestionJson):
     # Validate response with Article table
     self.verify_article()
     # Validate response with Syndication table
-    self.verify_syndications()
+    self.verify_syndications(resources.ZIP_ARTICLE)
     # Validate response with Journal table
-    self.verify_journals()
+    self.verify_journals(resources.ZIP_ARTICLE)
     # Validate response with CitedArticle and CitedPerson tables
-    self.verify_citedArticles()
+    self.verify_citedArticles(resources.ZIP_ARTICLE)
     # Validate response with ArticleAsset table
-    self.verify_article_file(resources.PDF_CONTENT_TYPE, 'articlePdf')
-    self.verify_article_file(resources.XML_CONTENT_TYPE, 'articleXml')
+    self.verify_article_file(resources.ZIP_ARTICLE, resources.PDF_CONTENT_TYPE, 'articlePdf')
+    self.verify_article_file(resources.ZIP_ARTICLE, resources.XML_CONTENT_TYPE, 'articleXml')
     #self.verify_article_figures()
-    self.verify_article_graphics()
+    self.verify_article_graphics(resources.ZIP_ARTICLE)
 
   def delete_test_article(self):
     try:
