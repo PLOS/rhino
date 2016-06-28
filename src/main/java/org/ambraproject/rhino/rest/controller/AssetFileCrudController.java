@@ -21,6 +21,7 @@ package org.ambraproject.rhino.rest.controller;
 import com.google.common.base.Joiner;
 import com.google.common.io.ByteStreams;
 import com.google.common.net.HttpHeaders;
+import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.Doi;
@@ -29,7 +30,8 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.ErrorType;
-import org.plos.crepo.model.RepoObjectMetadata;
+import org.plos.crepo.model.identity.RepoId;
+import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,7 +50,6 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.Optional;
 
 import static org.ambraproject.rhino.service.impl.AmbraService.reportNotFound;
 
@@ -65,6 +66,8 @@ public class AssetFileCrudController extends DoiBasedCrudController {
   private AssetCrudService assetCrudService;
   @Autowired
   private ContentRepoService contentRepoService;
+  @Autowired
+  private RuntimeConfiguration runtimeConfiguration;
 
   @Override
   protected String getNamespacePrefix() {
@@ -94,32 +97,32 @@ public class AssetFileCrudController extends DoiBasedCrudController {
     read(request, response, parse(request));
   }
 
-  void read(HttpServletRequest request, HttpServletResponse response, AssetFileIdentity id)
+  void read(HttpServletRequest request, HttpServletResponse response, AssetFileIdentity assetFileIdentity)
       throws IOException {
+    RepoId repoId = RepoId.create(runtimeConfiguration.getCorpusStorage().getDefaultBucket(),
+        assetFileIdentity.toString());
     RepoObjectMetadata objMeta;
     try {
-      objMeta = contentRepoService.getLatestRepoObjectMetadata(id.toString());
+      objMeta = contentRepoService.getLatestRepoObjectMetadata(repoId);
     } catch (ContentRepoException e) {
       if (e.getErrorType() == ErrorType.ErrorFetchingObjectMeta) {
-        throw reportNotFound(id);
+        throw reportNotFound(assetFileIdentity);
       } else {
         throw e;
       }
     }
 
-    serve(request, response, id, objMeta);
+    serve(request, response, assetFileIdentity, objMeta);
   }
 
   private void serve(HttpServletRequest request, HttpServletResponse response,
                      AssetFileIdentity id, RepoObjectMetadata objMeta)
       throws IOException {
-    Optional<String> contentType = Optional.ofNullable(objMeta.getContentType().orNull());
     // In case contentType field is empty, default to what we would have written at ingestion
-    response.setHeader(HttpHeaders.CONTENT_TYPE, contentType.orElseGet(() -> id.inferContentType().toString()));
+    response.setHeader(HttpHeaders.CONTENT_TYPE, objMeta.getContentType().orElseGet(() -> id.inferContentType().toString()));
 
-    Optional<String> filename = Optional.ofNullable(objMeta.getDownloadName().orNull());
     // In case downloadName field is empty, default to what we would have written at ingestion
-    String contentDisposition = "attachment; filename=" + filename.orElseGet(() -> id.getFileName()); // TODO: 'attachment' is not always correct
+    String contentDisposition = "attachment; filename=" + objMeta.getDownloadName().orElseGet(id::getFileName); // TODO: 'attachment' is not always correct
     response.setHeader(HttpHeaders.CONTENT_DISPOSITION, contentDisposition);
 
     Timestamp timestamp = objMeta.getTimestamp();

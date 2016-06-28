@@ -1,6 +1,6 @@
 package org.ambraproject.rhino.model;
 
-import org.plos.crepo.model.RepoVersion;
+import org.plos.crepo.model.identity.RepoVersion;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,6 +31,8 @@ public class ArticleFile implements Timestamped {
 
   @Column
   private String fileType;
+  @Column
+  private String bucketName;
   @Column
   private String crepoKey;
   @Column
@@ -70,6 +72,14 @@ public class ArticleFile implements Timestamped {
 
   public void setFileType(String fileType) {
     this.fileType = fileType;
+  }
+
+  public String getBucketName() {
+    return bucketName;
+  }
+
+  public void setBucketName(String bucketName) {
+    this.bucketName = bucketName;
   }
 
   public String getCrepoKey() {
@@ -112,7 +122,7 @@ public class ArticleFile implements Timestamped {
   @Transient
   public RepoVersion getCrepoVersion() {
     return (crepoVersion != null) ? crepoVersion :
-        (crepoVersion = RepoVersion.create(crepoKey, crepoUuid));
+        (crepoVersion = RepoVersion.create(bucketName, crepoKey, crepoUuid));
   }
 
 

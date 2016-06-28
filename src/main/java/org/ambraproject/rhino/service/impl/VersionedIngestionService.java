@@ -22,8 +22,9 @@ import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.util.Archive;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.plos.crepo.model.RepoObject;
-import org.plos.crepo.model.RepoVersion;
+import org.plos.crepo.model.identity.RepoId;
+import org.plos.crepo.model.identity.RepoVersion;
+import org.plos.crepo.model.input.RepoObjectInput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -103,7 +104,10 @@ class VersionedIngestionService {
     final Article articleMetadata = parsedArticle.build(new Article());
     articleMetadata.setDoi(doi.getUri().toString());
 
-    ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry,
+    // TODO: Allow bucket name to be specified as an ingestion parameter
+    String destinationBucketName = parentService.runtimeConfiguration.getCorpusStorage().getDefaultBucket();
+
+    ArticlePackage articlePackage = new ArticlePackageBuilder(destinationBucketName, archive, parsedArticle, manifestXml, manifestEntry,
         manuscriptAsset, manuscriptRepr, printableRepr).build();
     persistItem(articlePackage, ingestionId);
     persistJournal(articleMetadata, ingestionId);
@@ -237,7 +241,7 @@ class VersionedIngestionService {
 
   private long persistItem(ArticleItemInput work, long ingestionId) {
     Map<String, RepoVersion> crepoResults = new LinkedHashMap<>();
-    for (Map.Entry<String, RepoObject> entry : work.getObjects().entrySet()) {
+    for (Map.Entry<String, RepoObjectInput> entry : work.getObjects().entrySet()) {
       RepoVersion result = parentService.contentRepoService.autoCreateRepoObject(entry.getValue()).getVersion();
       crepoResults.put(entry.getKey(), result);
     }
@@ -254,14 +258,16 @@ class VersionedIngestionService {
 
       for (Map.Entry<String, RepoVersion> entry : crepoResults.entrySet()) {
         SQLQuery insertFile = session.createSQLQuery("" +
-            "INSERT INTO articleFile (ingestionId, itemId, fileType, crepoKey, crepoUuid) " +
-            "  VALUES (:ingestionId, :itemId, :fileType, :crepoKey, :crepoUuid)");
+            "INSERT INTO articleFile (ingestionId, itemId, fileType, bucketName, crepoKey, crepoUuid) " +
+            "  VALUES (:ingestionId, :itemId, :fileType, :bucketName, :crepoKey, :crepoUuid)");
         insertFile.setParameter("ingestionId", ingestionId);
         insertFile.setParameter("itemId", itemId);
         insertFile.setParameter("fileType", entry.getKey());
 
         RepoVersion repoVersion = entry.getValue();
-        insertFile.setParameter("crepoKey", repoVersion.getKey());
+        RepoId repoId = repoVersion.getId();
+        insertFile.setParameter("bucketName", repoId.getBucketName());
+        insertFile.setParameter("crepoKey", repoId.getKey());
         insertFile.setParameter("crepoUuid", repoVersion.getUuid().toString());
 
         insertFile.executeUpdate();
@@ -278,10 +284,12 @@ class VersionedIngestionService {
     parentService.hibernateTemplate.execute(session -> {
       for (RepoVersion archivalFile : archivalFiles) {
         SQLQuery insertFile = session.createSQLQuery("" +
-            "INSERT INTO articleFile (ingestionId, crepoKey, crepoUuid) " +
-            "  VALUES (:ingestionId, :crepoKey, :crepoUuid)");
+            "INSERT INTO articleFile (ingestionId, bucketName, crepoKey, crepoUuid) " +
+            "  VALUES (:ingestionId, :bucketName, :crepoKey, :crepoUuid)");
         insertFile.setParameter("ingestionId", ingestionId);
-        insertFile.setParameter("crepoKey", archivalFile.getKey());
+        RepoId repoId = archivalFile.getId();
+        insertFile.setParameter("bucketName", repoId.getBucketName());
+        insertFile.setParameter("crepoKey", repoId.getKey());
         insertFile.setParameter("crepoUuid", archivalFile.getUuid());
         insertFile.executeUpdate();
       }

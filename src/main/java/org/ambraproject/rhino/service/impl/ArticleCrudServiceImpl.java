@@ -23,7 +23,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
-import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
@@ -70,6 +69,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.ErrorType;
+import org.plos.crepo.model.identity.RepoId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,8 +101,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Autowired
   AssetCrudService assetCrudService;
-  @Autowired
-  RuntimeConfiguration runtimeConfiguration;
   @Autowired
   protected PingbackReadService pingbackReadService;
   @Autowired
@@ -177,12 +175,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public InputStream readXml(ArticleIdentity id) {
+  public InputStream readXml(ArticleIdentity articleIdentity) {
+    RepoId repoId = RepoId.create(runtimeConfiguration.getCorpusStorage().getDefaultBucket(),
+        articleIdentity.forXmlAsset().getFilePath());
     try {
-      return contentRepoService.getLatestRepoObject(id.forXmlAsset().getFilePath());
+      return contentRepoService.getLatestRepoObject(repoId);
     } catch (ContentRepoException e) {
       if (e.getErrorType() == ErrorType.ErrorFetchingObject) {
-        throw reportNotFound(id);
+        throw reportNotFound(articleIdentity);
       } else {
         throw e;
       }

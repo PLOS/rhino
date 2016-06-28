@@ -42,6 +42,7 @@ CREATE TABLE `ambra`.`articleFile` (
   `ingestionId` BIGINT(20) NOT NULL,
   `itemId` BIGINT(20) NULL,
   `fileType` VARCHAR(128) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci',
+  `bucketName` VARCHAR(255) NOT NULL,
   `crepoKey` VARCHAR(255) NOT NULL,
   `crepoUuid` VARCHAR(36) NOT NULL,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
