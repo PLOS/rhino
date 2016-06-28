@@ -70,7 +70,6 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.ErrorType;
-import org.plos.crepo.model.RepoVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -537,12 +536,11 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public int getLatestRevision(Doi doi) {
     return hibernateTemplate.execute(session -> {
-      SQLQuery query = session.createSQLQuery("" +
-          "SELECT MAX(revision.revisionNumber) " +
-          "FROM articleItem item " +
-          "  INNER JOIN articleIngestion ingestion ON item.ingestionId = ingestion.ingestionId " +
-          "  INNER JOIN articleRevision revision ON ingestion.ingestionId = revision.ingestionId " +
-          "WHERE item.doi = :doi");
+      Query query = session.createQuery("" +
+          "SELECT MAX(rev.revisionNumber) " +
+          "FROM ArticleRevision rev, ArticleItem item " +
+          "WHERE item.doi = :doi " +
+          "  AND rev.ingestion = item.ingestion");
       query.setParameter("doi", doi.getName());
       Integer maxRevision = (Integer) query.uniqueResult();
       if (maxRevision == null) {
@@ -554,44 +552,30 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public ArticleItem getArticleItem(ArticleItemIdentifier id) {
-    Object[] itemResult = hibernateTemplate.execute(session -> {
-      SQLQuery query = session.createSQLQuery("" +
-          "SELECT item.itemId, version.publicationState, item.articleItemType, version.lastModified " +
-          "FROM articleItem item " +
-          "INNER JOIN articleVersion version ON item.versionId = version.versionId " +
-          "WHERE item.doi = :doi AND version.revisionNumber = :revisionNumber " +
-          "  AND version.publicationState != :replaced");
+    return hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "SELECT item " +
+          "FROM ArticleItem item, ArticleRevision rev " +
+          "WHERE item.ingestion = rev.ingestion " +
+          "  AND item.doi = :doi " +
+          "  AND rev.revisionNumber = :revisionNumber");
       query.setParameter("doi", id.getDoiName());
       query.setParameter("revisionNumber", id.getRevision());
-      query.setParameter("replaced", ArticleVisibility.REPLACED.getValue());
-      return (Object[]) query.uniqueResult();
+      return (ArticleItem) query.uniqueResult();
     });
-    if (itemResult == null) {
-      throw new RestClientException("DOI+revision not found: " + id, HttpStatus.NOT_FOUND);
-    }
-    long itemId = ((Number) itemResult[0]).longValue();
-    ArticleVisibility state = ArticleVisibility.fromValue((Integer) itemResult[1]);
-    String itemType = (String) itemResult[2];
-    Date timestamp = (Date) itemResult[3];
-
-    List<Object[]> fileResults = (List<Object[]>) hibernateTemplate.execute(session -> {
-      SQLQuery query = session.createSQLQuery("" +
-          "SELECT fileType, crepoKey, crepoUuid " +
-          "FROM articleFile " +
-          "WHERE itemId = :itemId");
-      query.setParameter("itemId", itemId);
-      return query.list();
-    });
-    Map<String, RepoVersion> fileMap = fileResults.stream().collect(Collectors.toMap(
-        (Object[] fileResult) -> (String) fileResult[0],
-        (Object[] fileResult) -> RepoVersion.create((String) fileResult[1], (String) fileResult[2])));
-
-    return null; // TODO: Update above query to return ArticleItem
   }
 
   @Override
-  public ArticleIngestion getArticleIngestion(ArticleIngestionIdentifier ingestionId) {
-    return null; // TODO: Implement
+  public ArticleIngestion getArticleIngestion(ArticleIngestionIdentifier id) {
+    return hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "FROM ArticleIngestion " +
+          "WHERE article.doi = :doi " +
+          "  AND ingestionNumber = :ingestionNumber");
+      query.setParameter("doi", id.getDoiName());
+      query.setParameter("ingestionNumber", id.getIngestionNumber());
+      return (ArticleIngestion) query.uniqueResult();
+    });
   }
 
   @Override
