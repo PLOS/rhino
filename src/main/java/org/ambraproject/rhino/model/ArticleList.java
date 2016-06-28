@@ -25,11 +25,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "articleList")
-public class ArticleList extends AmbraEntity {
+public class ArticleList implements Timestamped {
 
   @Id
   @GeneratedValue
@@ -44,6 +45,12 @@ public class ArticleList extends AmbraEntity {
 
   @Column
   private String displayName;
+
+  @Column
+  private Date created;
+
+  @Column
+  private Date lastModified;
 
   @Cascade(CascadeType.SAVE_UPDATE)
   @ManyToMany(fetch = FetchType.LAZY)
@@ -101,6 +108,23 @@ public class ArticleList extends AmbraEntity {
 
   public void setArticles(List<ArticleTable> articles) {
     this.articles = articles;
+  }
+
+  @Override
+  public Date getLastModified() {
+    return lastModified;
+  }
+
+  public void setLastModified(Date lastModified) {
+    this.lastModified = lastModified;
+  }
+
+  public Date getCreated() {
+    return created;
+  }
+
+  public void setCreated(Date created) {
+    this.created = created;
   }
 
   @Override
