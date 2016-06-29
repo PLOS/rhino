@@ -425,9 +425,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return new Transceiver() {
       @Override
       protected Calendar getLastModifiedDate() {
-        ArticleTable article = getArticle(articleId);
-        ArticleVersion articleVersion = getLatestArticleVersion(article);
-        return copyToCalendar(articleVersion.getLastModified());
+        return null;
       }
 
       @Override
