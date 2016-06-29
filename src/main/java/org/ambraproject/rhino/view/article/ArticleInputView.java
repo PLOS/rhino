@@ -109,7 +109,7 @@ public class ArticleInputView {
     }
 
     private Map<String, SyndicationUpdate> getSyndicationUpdates(JsonObject jsonObject) {
-      JsonElement syndicationsObject = jsonObject.get(ArticleJsonConstants.MemberNames.SYNDICATIONS);
+      JsonElement syndicationsObject = jsonObject.get(ArticleJsonNames.SYNDICATIONS);
       if (syndicationsObject == null) {
         return null;
       }
@@ -117,7 +117,7 @@ public class ArticleInputView {
       Map<String, SyndicationUpdate> syndicationUpdateMap = Maps.newLinkedHashMap();
       for (Map.Entry<String, JsonElement> entry : syndicationsObject.getAsJsonObject().entrySet()) {
         String target = entry.getKey();
-        String status = entry.getValue().getAsJsonObject().get(ArticleJsonConstants.MemberNames.SYNDICATION_STATUS).getAsJsonPrimitive().getAsString();
+        String status = entry.getValue().getAsJsonObject().get(ArticleJsonNames.SYNDICATION_STATUS).getAsJsonPrimitive().getAsString();
         status = status.toUpperCase();
         if (!SyndicationStatus.getValidLabels().contains(status)) {
           throw new JsonParseException("Not a valid syndication status: " + status);
@@ -135,7 +135,7 @@ public class ArticleInputView {
     }
 
     private Integer getPublicationState(JsonObject jsonObject) {
-      JsonElement stateValue = jsonObject.get(ArticleJsonConstants.MemberNames.STATE);
+      JsonElement stateValue = jsonObject.get(ArticleJsonNames.STATE);
       if (stateValue == null) {
         return null;
       }

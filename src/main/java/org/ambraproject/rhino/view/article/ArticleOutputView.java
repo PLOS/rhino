@@ -52,8 +52,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.ambraproject.rhino.view.article.ArticleJsonConstants.MemberNames;
-
 /**
  * A view of an article for printing to JSON.
  */
@@ -114,12 +112,12 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
         serialized.addProperty("nlmArticleType", nlmArticleType.get());
       }
       if (articleType.isPresent()) {
-        serialized.add("articleType", context.serialize(articleType.get()));
+        serialized.add(ArticleJsonNames.ARTICLE_TYPE, context.serialize(articleType.get()));
       }
 
       JsonElement syndications = serializeSyndications(this.syndications.values(), context);
       if (syndications != null) {
-        serialized.add(MemberNames.SYNDICATIONS, syndications);
+        serialized.add(ArticleJsonNames.SYNDICATIONS, syndications);
       }
       serializePingbackDigest(serialized, context);
 
@@ -128,7 +126,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
 
       serialized.add("relatedArticles", context.serialize(relatedArticles));
 
-      serialized.add(MemberNames.PINGBACKS, context.serialize(pingbacks));
+      serialized.add(ArticleJsonNames.PINGBACKS, context.serialize(pingbacks));
     }
 
     /**
@@ -173,11 +171,11 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = new JsonObject();
-    serialized.addProperty(MemberNames.DOI, article.getDoi()); // Force it to be printed first, for human-friendliness
+    serialized.addProperty(ArticleJsonNames.DOI, article.getDoi()); // Force it to be printed first, for human-friendliness
 
     int articleState = article.getState();
     PublicationState pubState = PublicationState.fromValue(articleState);
-    serialized.addProperty(MemberNames.STATE, pubState.getLabel());
+    serialized.addProperty(ArticleJsonNames.STATE, pubState.getLabel());
 
     Set<Journal> journals = article.getJournals();
     KeyedListView<Journal> journalsView = JournalNonAssocView.wrapList(journals);

@@ -32,6 +32,7 @@ import org.ambraproject.rhino.service.MessageSender;
 import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.view.article.ArticleJsonNames;
 import org.ambraproject.rhino.view.article.SyndicationOutputView;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationKey;
@@ -87,7 +88,7 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
           "FROM Syndication s " +
           "WHERE s.target = :target " +
           "AND s.articleVersion = :articleVersion");
-      query.setParameter("target", syndicationTarget);
+      query.setParameter(ArticleJsonNames.SYNDICATION_TARGET, syndicationTarget);
       query.setParameter("articleVersion", articleVersion);
       return (Syndication) query.uniqueResult();
     });

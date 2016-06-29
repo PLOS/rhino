@@ -21,7 +21,7 @@ public class DoiList extends KeyedStringList {
 
   @Override
   protected String getMemberName() {
-    return ArticleJsonConstants.MemberNames.DOI;
+    return ArticleJsonNames.DOI;
   }
 
 }
