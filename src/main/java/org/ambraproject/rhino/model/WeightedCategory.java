@@ -1,38 +1,52 @@
 package org.ambraproject.rhino.model;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "articleCategoryJoinTable")
-public class WeightedCategory {
+public class WeightedCategory implements Serializable {
 
-  @EmbeddedId
-  private WeightedCategoryId weightedCategoryId;
-  @Column(name = "weight")
+  @Id
+  @JoinColumn(name = "categoryId")
+  @ManyToOne
+  private Category category;
+  @Id
+  @JoinColumn(name = "articleId")
+  @ManyToOne
+  private ArticleTable article;
+
+  @Column
   private int weight;
 
-  public WeightedCategory(WeightedCategoryId weightedCategoryId, int weight) {
-    this.weightedCategoryId = weightedCategoryId;
+  public WeightedCategory() {
+  }
+
+  public WeightedCategory(Category category, ArticleTable article, int weight) {
+    this.category = category;
+    this.article = article;
     this.weight = weight;
   }
 
-  public int getCategoryId() {
-    return weightedCategoryId.getCategoryId();
+  public Category getCategory() {
+    return category;
   }
 
-  public int getArticleId() {
-    return weightedCategoryId.getArticleId();
+  public void setCategory(Category category) {
+    this.category = category;
   }
 
-  public void setCategoryId(int categoryId) {
-    weightedCategoryId.setCategoryId(categoryId);
+  public ArticleTable getArticle() {
+    return article;
   }
 
-  public void setArticleId(int articleId) {
-    weightedCategoryId.setArticleId(articleId);
+  public void setArticle(ArticleTable article) {
+    this.article = article;
   }
 
   public int getWeight() {
@@ -50,12 +64,15 @@ public class WeightedCategory {
 
     WeightedCategory that = (WeightedCategory) o;
 
-    return weightedCategoryId != null ? weightedCategoryId.equals(that.weightedCategoryId) : that.weightedCategoryId == null;
+    if (!category.equals(that.category)) return false;
+    return article.equals(that.article);
 
   }
 
   @Override
   public int hashCode() {
-    return weightedCategoryId != null ? weightedCategoryId.hashCode() : 0;
+    int result = category.hashCode();
+    result = 31 * result + article.hashCode();
+    return result;
   }
 }

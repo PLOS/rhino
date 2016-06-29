@@ -1,9 +1,11 @@
 package org.ambraproject.rhino.service.taxonomy;
 
 import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Category;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -47,5 +49,7 @@ public interface TaxonomyClassificationService {
    * @param xml     Document representing the article XML
    */
   public void populateCategories(ArticleTable article, Document xml);
+
+  public Collection<Category> getCategoriesForArticle(ArticleTable article);
 
 }

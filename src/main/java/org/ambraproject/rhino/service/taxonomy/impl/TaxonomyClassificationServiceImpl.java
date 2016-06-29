@@ -7,7 +7,6 @@ import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.model.WeightedCategory;
-import org.ambraproject.rhino.model.WeightedCategoryId;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
@@ -52,6 +51,7 @@ import static org.ambraproject.rhino.service.impl.AmbraService.newDocumentBuilde
  *
  * @author Alex Kudlick Date: 7/3/12
  */
+@SuppressWarnings("JpaQlInspection")
 public class TaxonomyClassificationServiceImpl implements TaxonomyClassificationService {
 
   private static final Logger log = LoggerFactory.getLogger(TaxonomyClassificationServiceImpl.class);
@@ -193,6 +193,29 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     return results;
   }
 
+  public Collection<Category> getCategoriesForArticle(ArticleTable article) {
+    return hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "SELECT category " +
+          "FROM WeightedCategory wc " +
+          "WHERE wc.article = :article");
+      query.setParameter("article", article);
+      return (Collection<Category>) query.list();
+    });
+  }
+
+  public WeightedCategory getWeightedCategory(ArticleTable article, Category category) {
+    return hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "FROM WeightedCategory " +
+          "WHERE article = :article " +
+          "AND category = :category");
+      query.setParameter("article", article);
+      query.setParameter("category", category);
+      return (WeightedCategory) query.uniqueResult();
+    });
+  }
+
   /**
    * Populates article category information by making a call to the taxonomy server. Will not throw
    * an exception if we cannot communicate or get results from the taxonomy server. Will not
@@ -205,20 +228,20 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     List<WeightedTerm> terms;
     String doi = article.getDoi();
 
-    article.setCategories(new HashSet<>());
     boolean isAmendment = false; //todo: fix or remove this when we find a home for article types
 
     if (!isAmendment) {
       terms = classifyArticle(article, xml);
       if (terms != null && terms.size() > 0) {
-        setArticleCategories(article, terms);
+        List<WeightedTerm> leadNodes = getDistinctLeadNodes(terms);
+        persistCategories(leadNodes, article);
       } else {
         log.error("Taxonomy server returned 0 terms. Cannot populate Categories. " + doi);
       }
     }
   }
 
-  private void setArticleCategories(ArticleTable article, List<WeightedTerm> weightedTerms) {
+  private List<WeightedTerm> getDistinctLeadNodes(List<WeightedTerm> weightedTerms) {
     weightedTerms = WeightedTerm.BY_DESCENDING_WEIGHT.immutableSortedCopy(weightedTerms);
 
     List<WeightedTerm> results = new ArrayList<>(weightedTerms.size());
@@ -241,11 +264,10 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
         results.add(s);
       }
     }
-
-    article.setCategories(resolveIntoCategories(results, article));
+    return results;
   }
 
-  private Set<Category> resolveIntoCategories(List<WeightedTerm> terms, ArticleTable article) {
+  private void persistCategories(List<WeightedTerm> terms, ArticleTable article) {
     Set<String> termStrings = terms.stream()
         .map(WeightedTerm::getPath)
         .collect(Collectors.toSet());
@@ -253,11 +275,12 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     Collection<Category> existingCategories = hibernateTemplate.execute(session -> {
       Query query = session.createQuery("FROM Category WHERE path IN (:terms)");
       query.setParameterList("terms", termStrings);
-      return query.list();
+      return (Collection<Category>) query.list();
     });
-    Map<String, Category> existingCategoryMap = Maps.uniqueIndex(existingCategories, Category::getPath);
 
-    Set<Category> categories = new HashSet<>();
+    Map<String, Category> existingCategoryMap = Maps.uniqueIndex(existingCategories, Category::getPath);
+    Collection<Category> categoriesForArticle = getCategoriesForArticle(article);
+
     for (WeightedTerm term : terms) {
       Category category = existingCategoryMap.get(term.getPath());
       if (category == null) {
@@ -271,12 +294,15 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
         category.setPath(term.getPath());
         hibernateTemplate.save(category);
       }
-      WeightedCategoryId id = new WeightedCategoryId(category.getCategoryId(), article.getArticleId().intValue());
-      WeightedCategory weightedCategory = new WeightedCategory(id, term.getWeight());
-      hibernateTemplate.save(weightedCategory);
-      categories.add(category);
+
+      if (!categoriesForArticle.contains(category)) {
+        hibernateTemplate.save(new WeightedCategory(category, article, term.getWeight()));
+      } else {
+        WeightedCategory weightedCategory = getWeightedCategory(article, category);
+        weightedCategory.setWeight(term.getWeight());
+        hibernateTemplate.update(weightedCategory);
+      }
     }
-    return categories;
   }
 
   // There appears to be a bug in the AI getSuggestedTermsFullPath method.

@@ -25,7 +25,7 @@ import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
 import org.ambraproject.rhino.model.ArticleVersion;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Syndication;
-import org.ambraproject.rhino.model.SyndicationStatuses;
+import org.ambraproject.rhino.model.SyndicationStatus;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.MessageSender;
@@ -156,7 +156,7 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
   public Syndication createSyndication(ArticleVersionIdentifier versionId, String target) {
     ArticleVersion articleVersion = articleCrudService.getArticleVersion(versionId);
     Syndication syndication = new Syndication(articleVersion, target);
-    syndication.setStatus(SyndicationStatuses.PENDING.name());
+    syndication.setStatus(SyndicationStatus.PENDING.name());
     syndication.setSubmissionCount(0);
     hibernateTemplate.save(syndication);
     return syndication;
@@ -224,12 +224,12 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
     Syndication syndication = getSyndication(versionId, syndicationTarget);
     if (syndication == null) {
       syndication = new Syndication(articleVersion, syndicationTarget);
-      syndication.setStatus(SyndicationStatuses.IN_PROGRESS.name());
+      syndication.setStatus(SyndicationStatus.IN_PROGRESS.name());
       syndication.setSubmissionCount(1);
       syndication.setLastSubmitTimestamp(new Date());
       hibernateTemplate.save(syndication);
     } else {
-      syndication.setStatus(SyndicationStatuses.IN_PROGRESS.name());
+      syndication.setStatus(SyndicationStatus.IN_PROGRESS.name());
       syndication.setSubmissionCount(syndication.getSubmissionCount() + 1);
       syndication.setLastSubmitTimestamp(new Date());
       hibernateTemplate.update(syndication);
@@ -242,7 +242,7 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
       return syndication;
     } catch (Exception e) {
       log.warn("Error syndicating " + versionId + " to " + syndicationTarget, e);
-      return updateSyndication(versionId, syndicationTarget, SyndicationStatuses.FAILURE.name(), e.getMessage());
+      return updateSyndication(versionId, syndicationTarget, SyndicationStatus.FAILURE.name(), e.getMessage());
     }
   }
 

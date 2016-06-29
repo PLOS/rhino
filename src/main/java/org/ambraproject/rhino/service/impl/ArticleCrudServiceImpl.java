@@ -409,7 +409,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
       @Override
       protected Object getView(ArticleTable entity) {
-        return entity.getCategories();
+        return taxonomyService.getCategoriesForArticle(entity);
       }
     };
   }

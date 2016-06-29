@@ -1,6 +1,6 @@
 package org.ambraproject.rhino.model;
 
-public enum SyndicationStatuses {
+public enum SyndicationStatus {
   /**
    * This Article has been published, but has not yet been submitted to this syndication target.
    */

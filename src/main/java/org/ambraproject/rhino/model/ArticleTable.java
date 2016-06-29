@@ -1,23 +1,16 @@
 package org.ambraproject.rhino.model;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 @Table(name = "article")
@@ -35,15 +28,6 @@ public class ArticleTable implements Timestamped, Serializable { //todo: rename 
   @Temporal(javax.persistence.TemporalType.TIMESTAMP)
   @Column(name = "created", insertable = false, updatable = false, columnDefinition = "timestamp default current_timestamp")
   private Date publicationDate;
-
-  @Cascade(CascadeType.SAVE_UPDATE)
-  @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(
-      name = "articleCategoryJoinTable",
-      joinColumns = @JoinColumn(name = "categoryId"),
-      inverseJoinColumns = @JoinColumn(name = "articleId")
-  )
-  private Set<Category> categories;
 
   public Long getArticleId() {
     return articleId;
@@ -67,14 +51,6 @@ public class ArticleTable implements Timestamped, Serializable { //todo: rename 
 
   public void setPublicationDate(Date publicationDate) {
     this.publicationDate = publicationDate;
-  }
-
-  public Set<Category> getCategories() {
-    return categories;
-  }
-
-  public void setCategories(Set<Category> categories) {
-    this.categories = categories;
   }
 
   @Override
