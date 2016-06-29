@@ -13,15 +13,53 @@
 
 package org.ambraproject.rhino.model;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import java.util.Date;
 import java.util.List;
 
-public class ArticleList extends AmbraEntity {
+@Entity
+@Table(name = "articleList")
+public class ArticleList implements Timestamped {
 
+  @Id
+  @GeneratedValue
+  @Column
+  private long articleListId;
+
+  @Column
   private String listType;
+
+  @Column
   private String listKey;
+
+  @Column
   private String displayName;
 
-  private List<Article> articles;
+  @Column
+  private Date created;
+
+  @Column
+  private Date lastModified;
+
+  @Cascade(CascadeType.SAVE_UPDATE)
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(
+      name = "articleListJoinTable",
+      joinColumns = @JoinColumn(name = "articleListId"),
+      inverseJoinColumns = @JoinColumn(name = "articleId")
+  )
+  private List<ArticleTable> articles;
 
   public ArticleList() {
     super();
@@ -30,6 +68,14 @@ public class ArticleList extends AmbraEntity {
   public ArticleList(String listKey) {
     super();
     this.listKey = listKey;
+  }
+
+  public long getArticleListId() {
+    return articleListId;
+  }
+
+  public void setArticleListId(long articleListId) {
+    this.articleListId = articleListId;
   }
 
   public String getListType() {
@@ -56,12 +102,29 @@ public class ArticleList extends AmbraEntity {
     this.displayName = displayName;
   }
 
-  public List<Article> getArticles() {
+  public List<ArticleTable> getArticles() {
     return articles;
   }
 
-  public void setArticles(List<Article> articles) {
+  public void setArticles(List<ArticleTable> articles) {
     this.articles = articles;
+  }
+
+  @Override
+  public Date getLastModified() {
+    return lastModified;
+  }
+
+  public void setLastModified(Date lastModified) {
+    this.lastModified = lastModified;
+  }
+
+  public Date getCreated() {
+    return created;
+  }
+
+  public void setCreated(Date created) {
+    this.created = created;
   }
 
   @Override
@@ -71,7 +134,7 @@ public class ArticleList extends AmbraEntity {
 
     ArticleList articleList = (ArticleList) o;
 
-    if (getID() != null ? !getID().equals(articleList.getID()) : articleList.getID() != null) return false;
+    if (articleListId != articleList.articleListId) return false;
     if (articles != null ? !articles.equals(articleList.articles) : articleList.articles != null) return false;
     if (displayName != null ? !displayName.equals(articleList.displayName) : articleList.displayName != null) {
       return false;
@@ -84,7 +147,7 @@ public class ArticleList extends AmbraEntity {
 
   @Override
   public int hashCode() {
-    int result = getID() != null ? getID().hashCode() : 0;
+    int result = (int) (articleListId ^ (articleListId >>> 32));
     result = 31 * result + (listType != null ? listType.hashCode() : 0);
     result = 31 * result + (listKey != null ? listKey.hashCode() : 0);
     result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
@@ -95,7 +158,7 @@ public class ArticleList extends AmbraEntity {
   @Override
   public String toString() {
     return "ArticleList{" +
-        "id='" + getID() + '\'' +
+        "id='" + articleListId + '\'' +
         ", listType='" + listType + '\'' +
         ", listKey='" + listKey + '\'' +
         '}';

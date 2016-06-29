@@ -11,8 +11,6 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 
-import static org.ambraproject.rhino.view.article.ArticleJsonConstants.MemberNames;
-
 /**
  * A view of an article containing only its stateful attributes that can be modified by the client directly. This is the
  * output analogue to {@link ArticleInputView}.
@@ -39,9 +37,9 @@ public class ArticleStateView implements JsonOutputView, ArticleView {
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = new JsonObject();
-    serialized.addProperty(MemberNames.DOI, doi);
-    serialized.addProperty(MemberNames.STATE, publicationState);
-    serialized.add(MemberNames.SYNDICATIONS, ArticleOutputView.serializeSyndications(syndications, context));
+    serialized.addProperty(ArticleJsonNames.DOI, doi);
+    serialized.addProperty(ArticleJsonNames.STATE, publicationState);
+    serialized.add(ArticleJsonNames.SYNDICATIONS, ArticleOutputView.serializeSyndications(syndications, context));
     return serialized;
   }
 

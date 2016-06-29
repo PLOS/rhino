@@ -1,5 +1,8 @@
 package org.ambraproject.rhino.model;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import java.util.Date;
 
 /**
@@ -17,24 +21,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "syndication")
-public class Syndication {
-  /**
-   * This Article has been published, but has not yet been submitted to this syndication target.
-   */
-  public static final String STATUS_PENDING = "PENDING";
-  /**
-   * This Article has been submitted to this syndication target, but the process is not yet complete.
-   */
-  public static final String STATUS_IN_PROGRESS = "IN_PROGRESS";
-  /**
-   * This Article has been successfully submitted to this syndication target.
-   */
-  public static final String STATUS_SUCCESS = "SUCCESS";
-  /**
-   * This Article was submitted to this syndication target, but the process failed. The reason for this failure should
-   * be written into the <i>errorMessage</i> variable.
-   */
-  public static final String STATUS_FAILURE = "FAILURE";
+public class Syndication implements Timestamped{
 
   @Id @GeneratedValue
   @Column
@@ -59,10 +46,14 @@ public class Syndication {
   @Column
   private Date lastSubmitTimestamp;
 
-  @Column
+  @Generated(value= GenerationTime.INSERT)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
   private Date created;
 
-  @Column
+  @Generated(value= GenerationTime.ALWAYS)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
   private Date lastModified;
 
   public Syndication() {

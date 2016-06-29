@@ -24,13 +24,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Model class containing all information for a journal.
@@ -78,17 +76,8 @@ public class Journal extends AmbraEntity{
   @JoinTable(
       name = "articleList",
       joinColumns = @JoinColumn(name = "journalID"),
-      inverseJoinColumns = @JoinColumn(name = "articleListID"))
+      inverseJoinColumns = @JoinColumn(name = "articleListId"))
   private Collection<ArticleList> articleLists;
-
-  @Cascade(CascadeType.SAVE_UPDATE)
-  @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(
-      name = "articleJournalJoinTable",
-      joinColumns = @JoinColumn(name = "journalId"),
-      inverseJoinColumns = @JoinColumn(name = "ingestionId")
-  )
-  private Set<ArticleIngestion> articleIngestions;
 
   public Journal() {
     super();
@@ -169,15 +158,6 @@ public class Journal extends AmbraEntity{
 
   public void setArticleLists(Collection<ArticleList> articleLists) {
     this.articleLists = articleLists;
-  }
-
-
-  public Set<ArticleIngestion> getArticleIngestions() {
-    return articleIngestions;
-  }
-
-  public void setArticleIngestions(Set<ArticleIngestion> articleIngestions) {
-    this.articleIngestions = articleIngestions;
   }
 
   @Override

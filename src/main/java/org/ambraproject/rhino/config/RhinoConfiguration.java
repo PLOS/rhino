@@ -40,7 +40,7 @@ import org.ambraproject.rhino.service.LegacyArticleTypeService;
 import org.ambraproject.rhino.service.LegacyConfiguration;
 import org.ambraproject.rhino.service.MessageSender;
 import org.ambraproject.rhino.service.PingbackReadService;
-import org.ambraproject.rhino.service.SyndicationService;
+import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.service.impl.CommentCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
@@ -52,7 +52,7 @@ import org.ambraproject.rhino.service.impl.IngestibleServiceImpl;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.JournalCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.PingbackReadServiceImpl;
-import org.ambraproject.rhino.service.impl.SyndicationServiceImpl;
+import org.ambraproject.rhino.service.impl.SyndicationCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
@@ -275,8 +275,8 @@ public class RhinoConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public SyndicationService syndicationService() {
-    return new SyndicationServiceImpl();
+  public SyndicationCrudService syndicationService() {
+    return new SyndicationCrudServiceImpl();
   }
 
   @Bean

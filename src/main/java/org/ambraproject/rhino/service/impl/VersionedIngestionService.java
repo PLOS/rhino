@@ -15,8 +15,8 @@ import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleFile;
 import org.ambraproject.rhino.model.ArticleItem;
-import org.ambraproject.rhino.model.ArticleVisibility;
 import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.PublicationState;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.util.Archive;
@@ -170,7 +170,7 @@ class VersionedIngestionService {
           "VALUES (:articleId, :ingestionNumber, :visibility)");
       insertEvent.setParameter("articleId", articlePk);
       insertEvent.setParameter("ingestionNumber", nextIngestionNumber);
-      insertEvent.setParameter("visibility", ArticleVisibility.INGESTED.getValue());
+      insertEvent.setParameter("visibility", PublicationState.INGESTED.getValue());
       insertEvent.executeUpdate();
       return getLastInsertId(session);
     });

@@ -23,7 +23,8 @@ import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleAsset;
 import org.ambraproject.rhino.model.Journal;
-import org.ambraproject.rhino.model.Syndication;
+import org.ambraproject.rhino.model.PublicationState;
+import org.ambraproject.rhino.model.SyndicationStatus;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.util.Archive;
@@ -126,16 +127,16 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     Article article = articleCrudService.writeArchive(archive,
         Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY, OptionalInt.empty());
     ArticleIdentity articleId = ArticleIdentity.create(article);
-    assertEquals(article.getState(), Article.STATE_UNPUBLISHED);
+    assertEquals(article.getState(), PublicationState.INGESTED.getValue());
     for (ArticleAsset asset : article.getAssets()) {
       checkFileExistence(AssetFileIdentity.from(asset), true);
     }
 
     ArticleOutputView outputView = articleOutputViewFactory.create(article, false);
-    assertEquals(outputView.getArticle().getState(), Article.STATE_UNPUBLISHED);
-    assertEquals(outputView.getSyndication(crossref).getStatus(), Syndication.STATUS_PENDING);
-    assertEquals(outputView.getSyndication(pmc).getStatus(), Syndication.STATUS_PENDING);
-    assertEquals(outputView.getSyndication(pubmed).getStatus(), Syndication.STATUS_PENDING);
+    assertEquals(outputView.getArticle().getState(), PublicationState.INGESTED.getValue());
+    assertEquals(outputView.getSyndication(crossref).getStatus(), SyndicationStatus.PENDING.getLabel());
+    assertEquals(outputView.getSyndication(pmc).getStatus(), SyndicationStatus.PENDING.getLabel());
+    assertEquals(outputView.getSyndication(pubmed).getStatus(), SyndicationStatus.PENDING.getLabel());
 
     String inputJson = ""
         + "{"
@@ -153,17 +154,17 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
         + "  }"
         + "}";
     ArticleInputView inputView = entityGson.fromJson(inputJson, ArticleInputView.class);
-    assertEquals(inputView.getPublicationState().get().intValue(), Article.STATE_ACTIVE);
-    assertEquals(inputView.getSyndicationUpdate(crossref).getStatus(), Syndication.STATUS_IN_PROGRESS);
-    assertEquals(inputView.getSyndicationUpdate(pmc).getStatus(), Syndication.STATUS_IN_PROGRESS);
-    assertEquals(inputView.getSyndicationUpdate(pubmed).getStatus(), Syndication.STATUS_IN_PROGRESS);
+    assertEquals(inputView.getPublicationState().get().intValue(), PublicationState.PUBLISHED.getValue());
+    assertEquals(inputView.getSyndicationUpdate(crossref).getStatus(), SyndicationStatus.IN_PROGRESS.getLabel());
+    assertEquals(inputView.getSyndicationUpdate(pmc).getStatus(), SyndicationStatus.IN_PROGRESS.getLabel());
+    assertEquals(inputView.getSyndicationUpdate(pubmed).getStatus(), SyndicationStatus.IN_PROGRESS.getLabel());
     article = articleStateService.update(articleId, inputView);
 
     ArticleOutputView result = articleOutputViewFactory.create(article, false);
-    assertEquals(result.getArticle().getState(), Article.STATE_ACTIVE);
-    assertEquals(result.getSyndication(crossref).getStatus(), Syndication.STATUS_IN_PROGRESS);
-    assertEquals(result.getSyndication(pmc).getStatus(), Syndication.STATUS_IN_PROGRESS);
-    assertEquals(result.getSyndication(pubmed).getStatus(), Syndication.STATUS_IN_PROGRESS);
+    assertEquals(result.getArticle().getState(), PublicationState.PUBLISHED.getValue());
+    assertEquals(result.getSyndication(crossref).getStatus(), SyndicationStatus.IN_PROGRESS.getLabel());
+    assertEquals(result.getSyndication(pmc).getStatus(), SyndicationStatus.IN_PROGRESS.getLabel());
+    assertEquals(result.getSyndication(pubmed).getStatus(), SyndicationStatus.IN_PROGRESS.getLabel());
     ArticleStateServiceImpl impl = (ArticleStateServiceImpl) articleStateService;
     DummyMessageSender dummySender = (DummyMessageSender) impl.messageSender;
     assertEquals(dummySender.messagesSent.size(), 5);
@@ -190,7 +191,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     // Confirm that disabling the article removes it from the solr index.
     inputView = entityGson.fromJson("{'state': 'disabled'}", ArticleInputView.class);
     article = articleStateService.update(articleId, inputView);
-    assertEquals(article.getState(), Article.STATE_DISABLED);
+    assertEquals(article.getState(), PublicationState.DISABLED.getValue());
     assertEquals(dummySender.messagesSent.size(), 6);
     List<String> deletionMessages = dummySender.messagesSent.get("activemq:fake.delete.queue");
     assertEquals(deletionMessages.size(), 1);

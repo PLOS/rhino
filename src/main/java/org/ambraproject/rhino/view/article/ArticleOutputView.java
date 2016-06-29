@@ -33,6 +33,7 @@ import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Pingback;
+import org.ambraproject.rhino.model.PublicationState;
 import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.service.ArticleType;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
@@ -50,10 +51,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static org.ambraproject.rhino.view.article.ArticleJsonConstants.MemberNames;
-import static org.ambraproject.rhino.view.article.ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS;
-import static org.ambraproject.rhino.view.article.ArticleJsonConstants.getPublicationStateName;
 
 /**
  * A view of an article for printing to JSON.
@@ -115,12 +112,12 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
         serialized.addProperty("nlmArticleType", nlmArticleType.get());
       }
       if (articleType.isPresent()) {
-        serialized.add("articleType", context.serialize(articleType.get()));
+        serialized.add(ArticleJsonNames.ARTICLE_TYPE, context.serialize(articleType.get()));
       }
 
       JsonElement syndications = serializeSyndications(this.syndications.values(), context);
       if (syndications != null) {
-        serialized.add(MemberNames.SYNDICATIONS, syndications);
+        serialized.add(ArticleJsonNames.SYNDICATIONS, syndications);
       }
       serializePingbackDigest(serialized, context);
 
@@ -129,7 +126,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
 
       serialized.add("relatedArticles", context.serialize(relatedArticles));
 
-      serialized.add(MemberNames.PINGBACKS, context.serialize(pingbacks));
+      serialized.add(ArticleJsonNames.PINGBACKS, context.serialize(pingbacks));
     }
 
     /**
@@ -174,16 +171,11 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = new JsonObject();
-    serialized.addProperty(MemberNames.DOI, article.getDoi()); // Force it to be printed first, for human-friendliness
+    serialized.addProperty(ArticleJsonNames.DOI, article.getDoi()); // Force it to be printed first, for human-friendliness
 
     int articleState = article.getState();
-    String pubState = getPublicationStateName(articleState);
-    if (pubState == null) {
-      String message = String.format("Article.state field has unexpected value (%d). Expected one of: %s",
-          articleState, PUBLICATION_STATE_CONSTANTS);
-      throw new IllegalStateException(message);
-    }
-    serialized.addProperty(MemberNames.STATE, pubState);
+    PublicationState pubState = PublicationState.fromValue(articleState);
+    serialized.addProperty(ArticleJsonNames.STATE, pubState.getLabel());
 
     Set<Journal> journals = article.getJournals();
     KeyedListView<Journal> journalsView = JournalNonAssocView.wrapList(journals);

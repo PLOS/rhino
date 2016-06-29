@@ -18,18 +18,21 @@
 
 package org.ambraproject.rhino.rest.controller;
 
+import com.wordnik.swagger.annotations.ApiOperation;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;
+import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
+import org.ambraproject.rhino.view.article.SyndicationInputView;
 import org.ambraproject.rhombat.HttpDateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,6 +84,9 @@ public class ArticleCrudController extends ArticleSpaceController {
 
   @Autowired
   private ArticleListCrudService articleListCrudService;
+
+  @Autowired
+  private SyndicationCrudService syndicationCrudService;
 
   @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET)
@@ -177,10 +183,14 @@ public class ArticleCrudController extends ArticleSpaceController {
         : excludeCitations ? ArticleMetadataSource.FRONT_MATTER
         : ArticleMetadataSource.FRONT_AND_BACK_MATTER;
 
+    ArticleVersionIdentifier versionId = getArticleVersionIdentifier(request, revisionNumber);
+    articleCrudService.readVersionedMetadata(versionId, sourceObj).respond(request, response, entityGson);
+  }
+
+  private ArticleVersionIdentifier getArticleVersionIdentifier(HttpServletRequest request, Integer revisionNumber) {
     Doi id = Doi.create(getIdentifier(request));
     int revisionNumberValue = (revisionNumber == null) ? articleCrudService.getLatestRevision(id) : revisionNumber;
-    ArticleRevisionIdentifier versionId = ArticleRevisionIdentifier.create(id, revisionNumberValue);
-    articleCrudService.readVersionedMetadata(versionId, sourceObj).respond(request, response, entityGson);
+    return ArticleVersionIdentifier.create(id, revisionNumberValue);
   }
 
   @Transactional(readOnly = true)
@@ -287,7 +297,7 @@ public class ArticleCrudController extends ArticleSpaceController {
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "lists")
   public void getContainingLists(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    ArticleIdentity id = parse(request);
+    ArticleIdentifier id = ArticleIdentifier.create(getIdentifier(request));
     articleListCrudService.readContainingLists(id).respond(request, response, entityGson);
   }
 
@@ -319,6 +329,39 @@ public class ArticleCrudController extends ArticleSpaceController {
     ResponseEntity<String> response = new ResponseEntity<>(categoriesAndText, responseHeader,
         HttpStatus.OK);
     return response;
+  }
+
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.POST, params = "syndications")
+  public ResponseEntity<Object> createSyndication(HttpServletRequest request,
+      @RequestParam(value = "revision", required = false) Integer revisionNumber)
+      throws IOException {
+    ArticleVersionIdentifier versionId = getArticleVersionIdentifier(request, revisionNumber);
+    SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
+    syndicationCrudService.createSyndication(versionId, input.getTarget());
+    return reportCreated();
+  }
+
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.POST, params = "syndicate")
+  @ApiOperation(value = "syndicate", notes = "Send a syndication message to the queue for processing. " +
+      "Will create and add a syndication to the database if none exist for current article and target.")
+  public ResponseEntity<Object> syndicate(HttpServletRequest request,
+      @RequestParam(value = "revision", required = false) Integer revisionNumber)
+      throws IOException {
+    ArticleVersionIdentifier versionId = getArticleVersionIdentifier(request, revisionNumber);
+    SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
+    Syndication created = syndicationCrudService.syndicate(versionId, input.getTarget());
+    return reportOk(created.toString());
+  }
+
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PATCH, params = "syndications")
+  public ResponseEntity<Object> patchSyndication(HttpServletRequest request,
+      @RequestParam(value = "revision", required = false) Integer revisionNumber)
+      throws IOException {
+    ArticleVersionIdentifier versionId = getArticleVersionIdentifier(request, revisionNumber);
+    SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
+    Syndication patched = syndicationCrudService.updateSyndication(versionId, input.getTarget(),
+        input.getStatus(), input.getErrorMessage());
+    return reportOk(patched.toString());
   }
 
   /**

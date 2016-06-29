@@ -1,7 +1,7 @@
 package org.ambraproject.rhino.util.response;
 
 import com.google.common.base.Preconditions;
-import org.ambraproject.rhino.model.AmbraEntity;
+import org.ambraproject.rhino.model.Timestamped;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -13,7 +13,7 @@ import java.util.Date;
  *
  * @param <E> the persistent entity type
  */
-public abstract class EntityCollectionTransceiver<E extends AmbraEntity> extends Transceiver {
+public abstract class EntityCollectionTransceiver<E extends Timestamped> extends Transceiver {
 
   private Collection<? extends E> entities = null;
 
@@ -38,7 +38,7 @@ public abstract class EntityCollectionTransceiver<E extends AmbraEntity> extends
   @Override
   protected Calendar getLastModifiedDate() throws IOException {
     Date lastOfAll = null;
-    for (AmbraEntity entity : getEntities()) {
+    for (E entity : getEntities()) {
       Date lastModified = entity.getLastModified();
       if (lastOfAll == null || (lastModified != null && lastModified.after(lastOfAll))) {
         lastOfAll = lastModified;

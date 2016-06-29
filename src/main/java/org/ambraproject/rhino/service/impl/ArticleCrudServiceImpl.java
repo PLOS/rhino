@@ -39,16 +39,16 @@ import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.model.ArticleTable;
-import org.ambraproject.rhino.model.ArticleVisibility;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.PublicationState;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
-import org.ambraproject.rhino.service.SyndicationService;
+import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
@@ -112,7 +112,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Autowired
   Gson crepoGson;
   @Autowired
-  SyndicationService syndicationService;
+  SyndicationCrudService syndicationService;
   @Autowired
   ArticleTypeService articleTypeService;
   @Autowired
@@ -589,7 +589,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           "AND av.publicationState != :replaced");
       query.setParameter("revisionNumber", revisionId.getRevision());
       query.setParameter("doi", revisionId.getDoiName());
-      query.setParameter("replaced", ArticleVisibility.REPLACED.getValue());
+      query.setParameter("replaced", PublicationState.REPLACED.getValue());
       return (ArticleIngestion) query.uniqueResult();
     });
     if (articleIngestion == null) {

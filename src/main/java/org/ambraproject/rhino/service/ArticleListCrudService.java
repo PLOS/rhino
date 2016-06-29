@@ -1,12 +1,11 @@
 package org.ambraproject.rhino.service;
 
 import com.google.common.base.Optional;
-import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleListIdentity;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.journal.ArticleListView;
 
-import java.util.Collection;
 import java.util.Set;
 
 public interface ArticleListCrudService {
@@ -19,10 +18,10 @@ public interface ArticleListCrudService {
    * @param articleIds  the non-empty set of articles that will display the link
    * @return the created list (augmented with its parent journal key)
    */
-  ArticleListView create(ArticleListIdentity identity, String displayName, Set<ArticleIdentity> articleIds);
+  ArticleListView create(ArticleListIdentity identity, String displayName, Set<ArticleIdentifier> articleIds);
 
   ArticleListView update(ArticleListIdentity identity, Optional<String> displayName,
-                         Optional<? extends Set<ArticleIdentity>> articleIds);
+                         Optional<? extends Set<ArticleIdentifier>> articleIds);
 
   Transceiver read(ArticleListIdentity identity);
 
@@ -34,6 +33,6 @@ public interface ArticleListCrudService {
    * @param articleId the identity of an article
    * @return the identities of all lists that contain the article
    */
-  Transceiver readContainingLists(ArticleIdentity articleId);
+  Transceiver readContainingLists(ArticleIdentifier articleId);
 
 }
