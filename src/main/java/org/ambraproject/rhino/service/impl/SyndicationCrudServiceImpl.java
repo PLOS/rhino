@@ -32,6 +32,7 @@ import org.ambraproject.rhino.service.MessageSender;
 import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.view.article.ArticleJsonNames;
 import org.ambraproject.rhino.view.article.SyndicationOutputView;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationKey;
@@ -87,7 +88,7 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
           "FROM Syndication s " +
           "WHERE s.target = :target " +
           "AND s.articleVersion = :articleVersion");
-      query.setParameter("target", syndicationTarget);
+      query.setParameter(ArticleJsonNames.SYNDICATION_TARGET, syndicationTarget);
       query.setParameter("articleVersion", articleVersion);
       return (Syndication) query.uniqueResult();
     });
@@ -156,7 +157,7 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
   public Syndication createSyndication(ArticleVersionIdentifier versionId, String target) {
     ArticleVersion articleVersion = articleCrudService.getArticleVersion(versionId);
     Syndication syndication = new Syndication(articleVersion, target);
-    syndication.setStatus(SyndicationStatus.PENDING.name());
+    syndication.setStatus(SyndicationStatus.PENDING.getLabel());
     syndication.setSubmissionCount(0);
     hibernateTemplate.save(syndication);
     return syndication;
@@ -224,12 +225,12 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
     Syndication syndication = getSyndication(versionId, syndicationTarget);
     if (syndication == null) {
       syndication = new Syndication(articleVersion, syndicationTarget);
-      syndication.setStatus(SyndicationStatus.IN_PROGRESS.name());
+      syndication.setStatus(SyndicationStatus.IN_PROGRESS.getLabel());
       syndication.setSubmissionCount(1);
       syndication.setLastSubmitTimestamp(new Date());
       hibernateTemplate.save(syndication);
     } else {
-      syndication.setStatus(SyndicationStatus.IN_PROGRESS.name());
+      syndication.setStatus(SyndicationStatus.IN_PROGRESS.getLabel());
       syndication.setSubmissionCount(syndication.getSubmissionCount() + 1);
       syndication.setLastSubmitTimestamp(new Date());
       hibernateTemplate.update(syndication);
@@ -242,7 +243,7 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
       return syndication;
     } catch (Exception e) {
       log.warn("Error syndicating " + versionId + " to " + syndicationTarget, e);
-      return updateSyndication(versionId, syndicationTarget, SyndicationStatus.FAILURE.name(), e.getMessage());
+      return updateSyndication(versionId, syndicationTarget, SyndicationStatus.FAILURE.getLabel(), e.getMessage());
     }
   }
 

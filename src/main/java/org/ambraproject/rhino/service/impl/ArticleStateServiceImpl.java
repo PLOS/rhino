@@ -14,13 +14,13 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleAsset;
 import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.PublicationState;
 import org.ambraproject.rhino.model.SyndicationStatus;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -51,6 +51,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -186,24 +187,25 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
       throws IOException {
     Article article = loadArticle(articleId);
 
-    Optional<Integer> updatedState = input.getPublicationState();
+    Optional<PublicationState> updatedState = input.getPublicationState().map(PublicationState::fromValue);
     if (updatedState.isPresent()) {
-      if (updatedState.get() == Article.STATE_ACTIVE && article.getState() == Article.STATE_DISABLED) {
+      PublicationState articleState = PublicationState.fromValue(article.getState());
+      if (updatedState.get() == PublicationState.PUBLISHED && articleState == PublicationState.DISABLED) {
         throw new RestClientException("A disabled article cannot be published; it must first be re-ingested",
             HttpStatus.METHOD_NOT_ALLOWED);
       } else {
-        article.setState(updatedState.get());
+        article.setState(updatedState.get().getValue());
       }
 
-      boolean isPublished = (article.getState() == Article.STATE_ACTIVE);
+      boolean isPublished = (articleState == PublicationState.PUBLISHED);
       updateSolrIndex(articleId, article, isPublished);
       hibernateTemplate.update(article);
 
-      if (updatedState.get() == Article.STATE_ACTIVE) {
+      if (updatedState.get() == PublicationState.PUBLISHED) {
         queueCrossRefRefresh(article.getDoi());
       }
 
-      if (updatedState.get() == Article.STATE_DISABLED) {
+      if (updatedState.get() == PublicationState.DISABLED) {
         for (ArticleAsset asset : article.getAssets()) {
           deleteAssetFile(AssetFileIdentity.from(asset));
         }
@@ -216,7 +218,7 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
       // TODO: should we always re-attempt the syndication, as we do here, if it's
       // IN_PROGRESS?  Or base it on the Syndication.status of the appropriate target?
       // Not sure yet.
-      if (update.getStatus().equals(SyndicationStatus.IN_PROGRESS.name())) {
+      if (update.getStatus().equals(SyndicationStatus.IN_PROGRESS.getLabel())) {
         //syndicationService.syndicate(article.getDoi(), update.getTarget()); todo: implement with versioning
       }
 

@@ -42,6 +42,7 @@ import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.ArticleVersion;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.PublicationState;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleTypeService;
@@ -590,14 +591,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           "  AND version.publicationState != :replaced");
       query.setParameter("doi", id.getDoiName());
       query.setParameter("revisionNumber", id.getRevision());
-      query.setParameter("replaced", ArticleItem.PublicationState.REPLACED.getValue());
+      query.setParameter("replaced", PublicationState.REPLACED.getValue());
       return (Object[]) query.uniqueResult();
     });
     if (itemResult == null) {
       throw new RestClientException("DOI+revision not found: " + id, HttpStatus.NOT_FOUND);
     }
     long itemId = ((Number) itemResult[0]).longValue();
-    ArticleItem.PublicationState state = ArticleItem.PublicationState.fromValue((Integer) itemResult[1]);
+    PublicationState state = PublicationState.fromValue((Integer) itemResult[1]);
     String itemType = (String) itemResult[2];
     Date timestamp = (Date) itemResult[3];
 
@@ -625,7 +626,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           "AND av.publicationState != :replaced");
       query.setParameter("revisionNumber", articleIdentifier.getRevision());
       query.setParameter("doi", articleIdentifier.getDoiName());
-      query.setParameter("replaced", ArticleItem.PublicationState.REPLACED.getValue());
+      query.setParameter("replaced", PublicationState.REPLACED.getValue());
       return (ArticleVersion) query.uniqueResult();
     });
     if (articleVersion == null) {

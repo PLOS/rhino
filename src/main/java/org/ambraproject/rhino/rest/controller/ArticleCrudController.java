@@ -316,7 +316,7 @@ public class ArticleCrudController extends ArticleSpaceController {
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "lists")
   public void getContainingLists(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    ArticleIdentity id = parse(request);
+    ArticleIdentifier id = ArticleIdentifier.create(getIdentifier(request));
     articleListCrudService.readContainingLists(id).respond(request, response, entityGson);
   }
 

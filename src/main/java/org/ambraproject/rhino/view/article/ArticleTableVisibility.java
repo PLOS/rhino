@@ -3,6 +3,7 @@ package org.ambraproject.rhino.view.article;
 import com.google.common.base.Preconditions;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.PublicationState;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 
 import java.util.Collection;
@@ -21,7 +22,7 @@ public class ArticleTableVisibility {
 
   public ArticleTableVisibility(Doi doi, int state, Collection<Journal> journals) {
     this.doi = Preconditions.checkNotNull(doi);
-    this.state = ArticleJsonConstants.getPublicationStateName(state);
+    this.state = PublicationState.fromValue(state).getLabel();
     this.journals = JournalNonAssocView.wrapList(journals);
     Preconditions.checkArgument(this.state != null);
   }

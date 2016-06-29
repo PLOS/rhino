@@ -2,7 +2,7 @@ package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
-import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleListIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
@@ -49,7 +49,7 @@ public class ArticleListCrudController extends RestController {
     if (!title.isPresent()) {
       throw new RestClientException("title required", HttpStatus.BAD_REQUEST);
     }
-    Optional<ImmutableSet<ArticleIdentity>> articleDois = inputView.getArticleIds();
+    Optional<ImmutableSet<ArticleIdentifier>> articleDois = inputView.getArticleIds();
     if (!articleDois.isPresent()) {
       throw new RestClientException("articleDois required", HttpStatus.BAD_REQUEST);
     }
