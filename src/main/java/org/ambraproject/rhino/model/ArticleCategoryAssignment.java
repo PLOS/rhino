@@ -9,8 +9,8 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "articleCategoryJoinTable")
-public class WeightedCategory implements Serializable {
+@Table(name = "articleCategoryAssignment")
+public class ArticleCategoryAssignment implements Serializable {
 
   @Id
   @JoinColumn(name = "categoryId")
@@ -24,10 +24,10 @@ public class WeightedCategory implements Serializable {
   @Column
   private int weight;
 
-  public WeightedCategory() {
+  public ArticleCategoryAssignment() {
   }
 
-  public WeightedCategory(Category category, ArticleTable article, int weight) {
+  public ArticleCategoryAssignment(Category category, ArticleTable article, int weight) {
     this.category = category;
     this.article = article;
     this.weight = weight;
@@ -62,7 +62,7 @@ public class WeightedCategory implements Serializable {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    WeightedCategory that = (WeightedCategory) o;
+    ArticleCategoryAssignment that = (ArticleCategoryAssignment) o;
 
     if (!category.equals(that.category)) return false;
     return article.equals(that.article);

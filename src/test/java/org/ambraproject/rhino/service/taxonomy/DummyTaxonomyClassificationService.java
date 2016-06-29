@@ -2,9 +2,11 @@ package org.ambraproject.rhino.service.taxonomy;
 
 import com.google.common.collect.ImmutableList;
 import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Category;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 public class DummyTaxonomyClassificationService implements TaxonomyClassificationService {
@@ -31,5 +33,10 @@ public class DummyTaxonomyClassificationService implements TaxonomyClassificatio
   @Override
   public void populateCategories(ArticleTable article, Document xml) {
 
+  }
+
+  @Override
+  public Collection<Category> getCategoriesForArticle(ArticleTable article) {
+    return null;
   }
 }

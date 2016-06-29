@@ -6,7 +6,7 @@ import com.google.common.collect.Maps;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Category;
-import org.ambraproject.rhino.model.WeightedCategory;
+import org.ambraproject.rhino.model.ArticleCategoryAssignment;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
@@ -197,22 +197,22 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "SELECT category " +
-          "FROM WeightedCategory wc " +
-          "WHERE wc.article = :article");
+          "FROM ArticleCategoryAssignment aca " +
+          "WHERE aca.article = :article");
       query.setParameter("article", article);
       return (Collection<Category>) query.list();
     });
   }
 
-  public WeightedCategory getWeightedCategory(ArticleTable article, Category category) {
+  public ArticleCategoryAssignment getArticleCategoryAssignment(ArticleTable article, Category category) {
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
-          "FROM WeightedCategory " +
+          "FROM ArticleCategoryAssignment " +
           "WHERE article = :article " +
           "AND category = :category");
       query.setParameter("article", article);
       query.setParameter("category", category);
-      return (WeightedCategory) query.uniqueResult();
+      return (ArticleCategoryAssignment) query.uniqueResult();
     });
   }
 
@@ -296,11 +296,11 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
       }
 
       if (!categoriesForArticle.contains(category)) {
-        hibernateTemplate.save(new WeightedCategory(category, article, term.getWeight()));
+        hibernateTemplate.save(new ArticleCategoryAssignment(category, article, term.getWeight()));
       } else {
-        WeightedCategory weightedCategory = getWeightedCategory(article, category);
-        weightedCategory.setWeight(term.getWeight());
-        hibernateTemplate.update(weightedCategory);
+        ArticleCategoryAssignment assignment = getArticleCategoryAssignment(article, category);
+        assignment.setWeight(term.getWeight());
+        hibernateTemplate.update(assignment);
       }
     }
   }
