@@ -5,7 +5,7 @@ import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableSet;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Syndication;
-import org.ambraproject.rhino.model.SyndicationStatuses;
+import org.ambraproject.rhino.model.SyndicationStatus;
 
 public class ArticleJsonConstants {
   private ArticleJsonConstants() {
@@ -81,9 +81,9 @@ public class ArticleJsonConstants {
    * Valid values for {@link Syndication#setStatus}.
    */
   public static final ImmutableSet<String> SYNDICATION_STATUSES = ImmutableSet.of(
-      SyndicationStatuses.PENDING.name(),
-      SyndicationStatuses.IN_PROGRESS.name(),
-      SyndicationStatuses.SUCCESS.name(),
-      SyndicationStatuses.FAILURE.name());
+      SyndicationStatus.PENDING.name(),
+      SyndicationStatus.IN_PROGRESS.name(),
+      SyndicationStatus.SUCCESS.name(),
+      SyndicationStatus.FAILURE.name());
 
 }

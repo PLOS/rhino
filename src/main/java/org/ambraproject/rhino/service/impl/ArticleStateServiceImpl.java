@@ -21,7 +21,7 @@ import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleAsset;
 import org.ambraproject.rhino.model.Journal;
-import org.ambraproject.rhino.model.SyndicationStatuses;
+import org.ambraproject.rhino.model.SyndicationStatus;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
@@ -216,7 +216,7 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
       // TODO: should we always re-attempt the syndication, as we do here, if it's
       // IN_PROGRESS?  Or base it on the Syndication.status of the appropriate target?
       // Not sure yet.
-      if (update.getStatus().equals(SyndicationStatuses.IN_PROGRESS.name())) {
+      if (update.getStatus().equals(SyndicationStatus.IN_PROGRESS.name())) {
         //syndicationService.syndicate(article.getDoi(), update.getTarget()); todo: implement with versioning
       }
 
