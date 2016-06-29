@@ -42,10 +42,6 @@ public enum SyndicationStatus {
   private static final ImmutableMap<String, SyndicationStatus> BY_LABEL = Maps.uniqueIndex(
       EnumSet.allOf(SyndicationStatus.class), SyndicationStatus::getLabel);
 
-  public static Optional<SyndicationStatus> getByLabel(String label) {
-    return Optional.ofNullable(BY_LABEL.get(label));
-  }
-
   public static ImmutableSet<String> getValidLabels() {
     return BY_LABEL.keySet();
   }

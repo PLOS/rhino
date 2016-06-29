@@ -2,6 +2,7 @@ package org.ambraproject.rhino.model;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Maps;
 
 import java.util.EnumSet;
@@ -59,8 +60,9 @@ public enum PublicationState {
   }
 
 
-  private static final ImmutableMap<String, PublicationState> BY_LABEL = Maps.uniqueIndex(
-      EnumSet.allOf(PublicationState.class), PublicationState::getLabel);
+  private static final ImmutableMap<String, PublicationState> BY_LABEL = ImmutableSortedMap.copyOf(
+      Maps.uniqueIndex(EnumSet.allOf(PublicationState.class), PublicationState::getLabel),
+      String.CASE_INSENSITIVE_ORDER); // for case-insensitive lookup
 
   public static Optional<PublicationState> fromLabel(String label) {
     return Optional.ofNullable(BY_LABEL.get(label));
