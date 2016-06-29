@@ -1,6 +1,5 @@
 package org.ambraproject.rhino.view.article;
 
-import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
@@ -13,19 +12,15 @@ import org.ambraproject.rhino.model.SyndicationStatus;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.apache.commons.collections.CollectionUtils;
 import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.http.HttpStatus;
-import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -131,33 +126,24 @@ public class ArticleCriteria {
       criteria = criteria.add(Restrictions.in("state", publicationStates.get()));
       projectionList.add(Projections.property("state"));
       return new ArticleViewList(Lists.transform((List<Object[]>) hibernateTemplate.findByCriteria(criteria),
-          DOI_AND_STATE_AS_VIEW));
+          (Object[] input) -> {
+            String doi = (String) input[0];
+            Integer pubStateConstant = (Integer) input[1];
+            PublicationState pubStateName = PublicationState.fromValue(pubStateConstant);
+            return new ArticleStateView(doi, pubStateName.getLabel(), null);
+          }));
     }
     if (includeLastModifiedDate) {
       projectionList.add(Projections.property("lastModified"));
       return new ArticleViewList(Lists.transform((List<Object[]>) hibernateTemplate.findByCriteria(criteria),
-          DOI_AND_TIMESTAMP_AS_VIEW));
+          (Object[] input) -> {
+            String doi = (String) input[0];
+            Date lastModified = (Date) input[1];
+            return new TimestampedDoi(doi, lastModified);
+          }));
     }
     return new DoiList((List<String>) hibernateTemplate.findByCriteria(criteria));
   }
-
-  private static final Function<Object[], ArticleView> DOI_AND_STATE_AS_VIEW = new Function<Object[], ArticleView>() {
-    @Override
-    public ArticleView apply(Object[] input) {
-      String doi = (String) input[0];
-      Integer pubStateConstant = (Integer) input[1];
-      PublicationState pubStateName = PublicationState.fromValue(pubStateConstant);
-      return new ArticleStateView(doi, pubStateName.getLabel(), null);
-    }
-  };
-  private static final Function<Object[], ArticleView> DOI_AND_TIMESTAMP_AS_VIEW = new Function<Object[], ArticleView>() {
-    @Override
-    public ArticleView apply(Object[] input) {
-      String doi = (String) input[0];
-      Date lastModified = (Date) input[1];
-      return new TimestampedDoi(doi, lastModified);
-    }
-  };
 
   private static class TimestampedDoi implements ArticleView {
     private final String doi;
@@ -182,14 +168,14 @@ public class ArticleCriteria {
    * Special-case hack requiring weird logic.
    */
   private ArticleViewList findBySyndication(HibernateTemplate hibernateTemplate) {
-    List<Object[]> results = hibernateTemplate.execute(new HibernateCallback<List<Object[]>>() {
-      @Override
-      public List<Object[]> doInHibernate(Session session) throws HibernateException, SQLException {
-        Query query = session.createQuery(SYND_QUERY);
-        query.setParameterList("syndStatuses", syndicationStatuses.get());
-        query.setParameterList("pubStates", publicationStates.or(PublicationState.getValidValues()));
-        return (List<Object[]>) query.list();
-      }
+    List<Object[]> results = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery(""
+          + "select a.doi, a.state, s from Article a, Syndication s "
+          + "where (a.doi = s.doi) and (s.status in (:syndStatuses)) and (a.state in (:pubStates)) "
+          + "order by a.lastModified asc, a.doi asc");
+      query.setParameterList("syndStatuses", syndicationStatuses.get());
+      query.setParameterList("pubStates", publicationStates.or(PublicationState.getValidValues()));
+      return (List<Object[]>) query.list();
     });
 
     List<ArticleStateView> views = Lists.newArrayListWithExpectedSize(results.size() / EXPECTED_SYNDICATION_TARGETS);
@@ -214,11 +200,6 @@ public class ArticleCriteria {
 
     return new ArticleViewList(views);
   }
-
-  private static final String SYND_QUERY = ""
-      + "select a.doi, a.state, s from Article a, Syndication s "
-      + "where (a.doi = s.doi) and (s.status in (:syndStatuses)) and (a.state in (:pubStates)) "
-      + "order by a.lastModified asc, a.doi asc";
 
   private static class ArticleStateViewBuilder {
     private final String doi;
