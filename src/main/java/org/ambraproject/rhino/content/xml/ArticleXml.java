@@ -33,6 +33,7 @@ import org.ambraproject.rhino.model.ArticleEditor;
 import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.model.CitedArticle;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.model.PublicationState;
 import org.ambraproject.rhino.util.NodeListAdapter;
 import org.ambraproject.rhino.util.StringReplacer;
 import org.slf4j.Logger;
@@ -215,7 +216,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   private static void setConstants(Article article) {
     // These are constants because they are implied by how we get the input
     article.setFormat("text/xml");
-    article.setState(Article.STATE_UNPUBLISHED);
+    article.setState(PublicationState.INGESTED.getValue());
   }
 
   private void setFromXml(final Article article) throws XmlContentException {

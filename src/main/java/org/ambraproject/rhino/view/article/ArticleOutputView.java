@@ -33,6 +33,7 @@ import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Pingback;
+import org.ambraproject.rhino.model.PublicationState;
 import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.service.ArticleType;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
@@ -52,8 +53,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.ambraproject.rhino.view.article.ArticleJsonConstants.MemberNames;
-import static org.ambraproject.rhino.view.article.ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS;
-import static org.ambraproject.rhino.view.article.ArticleJsonConstants.getPublicationStateName;
 
 /**
  * A view of an article for printing to JSON.
@@ -177,13 +176,8 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     serialized.addProperty(MemberNames.DOI, article.getDoi()); // Force it to be printed first, for human-friendliness
 
     int articleState = article.getState();
-    String pubState = getPublicationStateName(articleState);
-    if (pubState == null) {
-      String message = String.format("Article.state field has unexpected value (%d). Expected one of: %s",
-          articleState, PUBLICATION_STATE_CONSTANTS);
-      throw new IllegalStateException(message);
-    }
-    serialized.addProperty(MemberNames.STATE, pubState);
+    PublicationState pubState = PublicationState.fromValue(articleState);
+    serialized.addProperty(MemberNames.STATE, pubState.getLabel());
 
     Set<Journal> journals = article.getJournals();
     KeyedListView<Journal> journalsView = JournalNonAssocView.wrapList(journals);

@@ -29,22 +29,6 @@ import java.util.Set;
  * @author Alex Kudlick 11/8/11
  */
 public class Article extends AmbraEntity {
-  /**
-   * Article state of "Active"
-   */
-  public static final int STATE_ACTIVE = 0;
-  /**
-   * Article state of "Unpublished"
-   */
-  public static final int STATE_UNPUBLISHED = 1;
-  /**
-   * Article state of "Disabled"
-   */
-  public static final int STATE_DISABLED = 2;
-  /**
-   * Active article states
-   */
-  public static final int[] ACTIVE_STATES = {STATE_ACTIVE};
 
   private String doi;
 

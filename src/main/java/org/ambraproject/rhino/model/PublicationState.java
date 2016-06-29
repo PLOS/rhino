@@ -1,9 +1,11 @@
 package org.ambraproject.rhino.model;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 
 import java.util.EnumSet;
+import java.util.Optional;
 
 public enum PublicationState {
   /**
@@ -39,6 +41,7 @@ public enum PublicationState {
     return value;
   }
 
+
   private static final ImmutableMap<Integer, PublicationState> BY_VALUE = Maps.uniqueIndex(
       EnumSet.allOf(PublicationState.class), PublicationState::getValue);
 
@@ -50,4 +53,21 @@ public enum PublicationState {
     }
     return state;
   }
+
+  public static ImmutableSet<Integer> getValidValues() {
+    return BY_VALUE.keySet();
+  }
+
+
+  private static final ImmutableMap<String, PublicationState> BY_LABEL = Maps.uniqueIndex(
+      EnumSet.allOf(PublicationState.class), PublicationState::getLabel);
+
+  public static Optional<PublicationState> fromLabel(String label) {
+    return Optional.ofNullable(BY_LABEL.get(label));
+  }
+
+  public static ImmutableSet<String> getValidLabels() {
+    return BY_LABEL.keySet();
+  }
+
 }

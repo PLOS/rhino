@@ -7,6 +7,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.PublicationState;
 import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.model.SyndicationStatus;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -65,11 +66,9 @@ public class ArticleCriteria {
     } else {
       ImmutableSet.Builder<Integer> builder = ImmutableSet.builder();
       for (String clientPubState : clientPubStates) {
-        Integer pubStateConstant = ArticleJsonConstants.getPublicationStateConstant(clientPubState);
-        if (pubStateConstant == null) {
-          throw unrecognizedInputs("publication state", clientPubStates, ArticleJsonConstants.PUBLICATION_STATE_NAMES);
-        }
-        builder.add(pubStateConstant);
+        PublicationState pubStateConstant = PublicationState.fromLabel(clientPubState)
+            .orElseThrow(()->unrecognizedInputs("publication state", clientPubStates, PublicationState.getValidLabels()));
+        builder.add(pubStateConstant.getValue());
       }
       publicationStateConstants = Optional.of(builder.build());
     }
@@ -147,8 +146,8 @@ public class ArticleCriteria {
     public ArticleView apply(Object[] input) {
       String doi = (String) input[0];
       Integer pubStateConstant = (Integer) input[1];
-      String pubStateName = ArticleJsonConstants.getPublicationStateName(pubStateConstant);
-      return new ArticleStateView(doi, pubStateName, null);
+      PublicationState pubStateName = PublicationState.fromValue(pubStateConstant);
+      return new ArticleStateView(doi, pubStateName.getLabel(), null);
     }
   };
   private static final Function<Object[], ArticleView> DOI_AND_TIMESTAMP_AS_VIEW = new Function<Object[], ArticleView>() {
@@ -188,8 +187,8 @@ public class ArticleCriteria {
       public List<Object[]> doInHibernate(Session session) throws HibernateException, SQLException {
         Query query = session.createQuery(SYND_QUERY);
         query.setParameterList("syndStatuses", syndicationStatuses.get());
-        query.setParameterList("pubStates", publicationStates.or(ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS));
-        return query.list();
+        query.setParameterList("pubStates", publicationStates.or(PublicationState.getValidValues()));
+        return (List<Object[]>) query.list();
       }
     });
 
@@ -198,14 +197,14 @@ public class ArticleCriteria {
     for (Object[] result : results) {
       String doi = (String) result[0];
       Integer pubStateConstant = (Integer) result[1];
-      String pubStateName = ArticleJsonConstants.getPublicationStateName(pubStateConstant);
+      PublicationState pubState = PublicationState.fromValue(pubStateConstant);
       Syndication syndication = (Syndication) result[2];
 
       if (builder == null || !doi.equals(builder.doi)) {
         if (builder != null) {
           views.add(builder.build());
         }
-        builder = new ArticleStateViewBuilder(doi, pubStateName);
+        builder = new ArticleStateViewBuilder(doi, pubState.getLabel());
       }
       builder.syndications.add(syndication);
     }
