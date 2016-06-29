@@ -21,7 +21,7 @@
 
 package org.ambraproject.rhino.service;
 
-import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
+import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.util.response.Transceiver;
 
@@ -41,20 +41,20 @@ public interface SyndicationCrudService {
    * Get the list of Syndication objects for this <code>articleDoi</code>. If there are no Syndications for this
    * articleDoi, then return an empty List. `
    *
-   * @param ingestionId The unique identifier for the Article which was (or is to be) syndicated
+   * @param revisionId The unique identifier for the Article which was (or is to be) syndicated
    * @return The List of Syndications for this <code>articleDoi</code>. If there are no Syndications for this
    * articleDoi, then return an empty List
    */
-  public List<Syndication> getSyndications(ArticleIngestionIdentifier ingestionId);
+  public List<Syndication> getSyndications(ArticleRevisionIdentifier revisionId);
 
   /**
    * Return the syndication for the given article and the given target.  Return null if there is none.
    *
-   * @param ingestionId       the doi of the article to query
+   * @param revisionId        the doi of the article to query
    * @param syndicationTarget the syndication target
    * @return the matching syndication, if it exists, else null
    */
-  public Syndication getSyndication(ArticleIngestionIdentifier ingestionId, String syndicationTarget);
+  public Syndication getSyndication(ArticleRevisionIdentifier revisionId, String syndicationTarget);
 
   /**
    * Update the Syndication object specified by the <code>articleDoi</code> and <code>syndicationTarget</code>
@@ -67,14 +67,14 @@ public interface SyndicationCrudService {
    * <code>articleDoi</code> and <code>syndicationTarget</code>, then no action will be performed. The existing
    * Syndication object will be returned</li>
    *
-   * @param ingestionId       The unique identifier for the Article which was (or is to be) syndicated
+   * @param revisionId        The unique identifier for the Article which was (or is to be) syndicated
    * @param syndicationTarget The organization to which this Article was (or will be) syndicated
    * @param status            The current status of this syndication (e.g., pending, failure, success, etc)
    * @param errorMessage      Any failure during the process of updating this Syndication. A null in this field will
    *                          <strong>not</strong> update the errorMessage of this Syndication
    * @return The Syndication that matches the <code>articleDoi</code> and <code>syndicationTarget</code> parameters
    */
-  public Syndication updateSyndication(ArticleIngestionIdentifier ingestionId, String syndicationTarget, String status, String errorMessage);
+  public Syndication updateSyndication(ArticleRevisionIdentifier revisionId, String syndicationTarget, String status, String errorMessage);
 
   /**
    * For the Article indicated by <code>articleDoi</code>, create a new Syndication object for each possible syndication
@@ -86,25 +86,25 @@ public interface SyndicationCrudService {
    * which was previously published and syndicated.
    * <p/>
    *
-   * @param ingestionId The unique identifier for the Article which was (or is to be) syndicated
+   * @param revisionId The unique identifier for the Article which was (or is to be) syndicated
    * @return The complete list of Syndication objects for this Article
    */
-  public List<Syndication> createSyndications(ArticleIngestionIdentifier ingestionId);
+  public List<Syndication> createSyndications(ArticleRevisionIdentifier revisionId);
 
-  public Syndication createSyndication(ArticleIngestionIdentifier ingestionId, String target);
+  public Syndication createSyndication(ArticleRevisionIdentifier revisionId, String target);
 
   /**
-   * Get Syndications (from the current journal) that each have a <code>status</code> defined in statuses
-   * and a <code>lastModified</code> within the past number of days defined by the configuration property
+   * Get Syndications (from the current journal) that each have a <code>status</code> defined in statuses and a
+   * <code>lastModified</code> within the past number of days defined by the configuration property
    * <code>ambra.virtualJournals.JOURN AL_KEY.syndications.display.numDaysInPast</code>, where <i>JOURNAL_KEY</i> is the
-   * <code>journalKey</code> parameter.  By default, a syndication can be up to 30
-   * days old and still appear in this list.
+   * <code>journalKey</code> parameter.  By default, a syndication can be up to 30 days old and still appear in this
+   * list.
    *
    * @param journalKey Indicates which journal configuration is to be used when determining how many days in the past
    *                   the oldest Syndications can be.  This property is passed in because the Action class (which calls
    *                   this method) has easy access to this value, while this Service class does not
-   * @return Syndications which have a <code>status</code> within the statuses list and a
-   * <i>statusTimestamp</i> up to a certain number of days in the past.
+   * @return Syndications which have a <code>status</code> within the statuses list and a <i>statusTimestamp</i> up to a
+   * certain number of days in the past.
    */
   public List<Syndication> getSyndications(String journalKey, List<String> statuses);
 
@@ -118,12 +118,12 @@ public interface SyndicationCrudService {
    * status set to "in progress".  If the message cannot be pushed to the message queue, then the corresponding
    * Syndication object will have its status set to "failure".
    *
-   * @param ingestionId       The ID for the Article which will be syndicated to the <code>syndicationTarget</code>
+   * @param revisionId        The ID for the Article which will be syndicated to the <code>syndicationTarget</code>
    * @param syndicationTarget The syndication target to which will be sent the Article designated by
    *                          <code>articleDoi</code>
    * @return The Syndication object which matches the <code>articleDoi</code> and <code>syndicationTarget</code>
    * parameters.  Contains the latest status information.
    */
-  public Syndication syndicate(ArticleIngestionIdentifier ingestionId, String syndicationTarget);
+  public Syndication syndicate(ArticleRevisionIdentifier revisionId, String syndicationTarget);
 
 }

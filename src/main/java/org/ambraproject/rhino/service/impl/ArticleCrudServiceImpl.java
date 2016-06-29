@@ -38,10 +38,10 @@ import org.ambraproject.rhino.model.ArticleAsset;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRelationship;
+import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.model.Journal;
-import org.ambraproject.rhino.model.PublicationState;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleTypeService;
@@ -579,23 +579,20 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public ArticleIngestion getArticleIngestion(ArticleRevisionIdentifier revisionId) {
-    ArticleIngestion articleIngestion = hibernateTemplate.execute(session -> {
-      // TODO: Update query?
+  public ArticleRevision getArticleRevision(ArticleRevisionIdentifier revisionId) {
+    ArticleRevision revision = hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
-          "FROM ArticleVersion as av " +
-          "WHERE av.revisionNumber = :revisionNumber " +
-          "AND av.article.doi = :doi " +
-          "AND av.publicationState != :replaced");
+          "FROM ArticleRevision " +
+          "WHERE revisionNumber = :revisionNumber " +
+          "AND ingestion.article.doi = :doi");
       query.setParameter("revisionNumber", revisionId.getRevision());
       query.setParameter("doi", revisionId.getDoiName());
-      query.setParameter("replaced", PublicationState.REPLACED.getValue());
-      return (ArticleIngestion) query.uniqueResult();
+      return (ArticleRevision) query.uniqueResult();
     });
-    if (articleIngestion == null) {
+    if (revision == null) {
       throw new NoSuchArticleIdException(revisionId);
     }
-    return articleIngestion;
+    return revision;
   }
 
   public ArticleTable getArticle(ArticleIdentifier articleIdentifier) {

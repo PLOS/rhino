@@ -22,6 +22,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Syndication;
@@ -183,14 +184,14 @@ public class ArticleCrudController extends ArticleSpaceController {
         : excludeCitations ? ArticleMetadataSource.FRONT_MATTER
         : ArticleMetadataSource.FRONT_AND_BACK_MATTER;
 
-    ArticleVersionIdentifier versionId = getArticleVersionIdentifier(request, revisionNumber);
+    ArticleRevisionIdentifier versionId = getArticleRevisionIdentifier(request, revisionNumber);
     articleCrudService.readVersionedMetadata(versionId, sourceObj).respond(request, response, entityGson);
   }
 
-  private ArticleVersionIdentifier getArticleVersionIdentifier(HttpServletRequest request, Integer revisionNumber) {
+  private ArticleRevisionIdentifier getArticleRevisionIdentifier(HttpServletRequest request, Integer revisionNumber) {
     Doi id = Doi.create(getIdentifier(request));
     int revisionNumberValue = (revisionNumber == null) ? articleCrudService.getLatestRevision(id) : revisionNumber;
-    return ArticleVersionIdentifier.create(id, revisionNumberValue);
+    return ArticleRevisionIdentifier.create(id, revisionNumberValue);
   }
 
   @Transactional(readOnly = true)
@@ -335,9 +336,9 @@ public class ArticleCrudController extends ArticleSpaceController {
   public ResponseEntity<Object> createSyndication(HttpServletRequest request,
       @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
-    ArticleVersionIdentifier versionId = getArticleVersionIdentifier(request, revisionNumber);
+    ArticleRevisionIdentifier revisionId = getArticleRevisionIdentifier(request, revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
-    syndicationCrudService.createSyndication(versionId, input.getTarget());
+    syndicationCrudService.createSyndication(revisionId, input.getTarget());
     return reportCreated();
   }
 
@@ -347,9 +348,9 @@ public class ArticleCrudController extends ArticleSpaceController {
   public ResponseEntity<Object> syndicate(HttpServletRequest request,
       @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
-    ArticleVersionIdentifier versionId = getArticleVersionIdentifier(request, revisionNumber);
+    ArticleRevisionIdentifier revisionId = getArticleRevisionIdentifier(request, revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
-    Syndication created = syndicationCrudService.syndicate(versionId, input.getTarget());
+    Syndication created = syndicationCrudService.syndicate(revisionId, input.getTarget());
     return reportOk(created.toString());
   }
 
@@ -357,9 +358,9 @@ public class ArticleCrudController extends ArticleSpaceController {
   public ResponseEntity<Object> patchSyndication(HttpServletRequest request,
       @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
-    ArticleVersionIdentifier versionId = getArticleVersionIdentifier(request, revisionNumber);
+    ArticleRevisionIdentifier revisionId = getArticleRevisionIdentifier(request, revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
-    Syndication patched = syndicationCrudService.updateSyndication(versionId, input.getTarget(),
+    Syndication patched = syndicationCrudService.updateSyndication(revisionId, input.getTarget(),
         input.getStatus(), input.getErrorMessage());
     return reportOk(patched.toString());
   }

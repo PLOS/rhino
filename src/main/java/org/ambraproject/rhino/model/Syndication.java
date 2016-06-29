@@ -28,8 +28,8 @@ public class Syndication implements Timestamped{
   private int syndicationId;
 
   @ManyToOne
-  @JoinColumn(name = "versionId")
-  private ArticleIngestion articleIngestion;
+  @JoinColumn(name = "revisionId")
+  private ArticleRevision articleRevision;
 
   @Column
   private String target;
@@ -60,10 +60,10 @@ public class Syndication implements Timestamped{
     super();
   }
 
-  public Syndication(ArticleIngestion articleIngestion, String target) {
+  public Syndication(ArticleRevision articleRevision, String target) {
     this();
     this.target = target;
-    this.articleIngestion = articleIngestion;
+    this.articleRevision = articleRevision;
   }
 
   public int getSyndicationId() {
@@ -74,12 +74,12 @@ public class Syndication implements Timestamped{
     this.syndicationId = syndicationId;
   }
 
-  public ArticleIngestion getArticleIngestion() {
-    return articleIngestion;
+  public ArticleRevision getArticleRevision() {
+    return articleRevision;
   }
 
-  public void setArticleIngestion(ArticleIngestion articleIngestion) {
-    this.articleIngestion = articleIngestion;
+  public void setArticleRevision(ArticleRevision articleRevision) {
+    this.articleRevision = articleRevision;
   }
 
   public String getTarget() {
@@ -147,7 +147,7 @@ public class Syndication implements Timestamped{
 
     if (syndicationId != that.syndicationId) return false;
     if (submissionCount != that.submissionCount) return false;
-    if (!articleIngestion.equals(that.articleIngestion)) return false;
+    if (!articleRevision.equals(that.articleRevision)) return false;
     if (!target.equals(that.target)) return false;
     if (!status.equals(that.status)) return false;
     if (errorMessage != null ? !errorMessage.equals(that.errorMessage) : that.errorMessage != null)
@@ -159,7 +159,7 @@ public class Syndication implements Timestamped{
   @Override
   public int hashCode() {
     int result = syndicationId;
-    result = 31 * result + articleIngestion.hashCode();
+    result = 31 * result + articleRevision.hashCode();
     result = 31 * result + target.hashCode();
     result = 31 * result + status.hashCode();
     result = 31 * result + submissionCount;
@@ -171,7 +171,7 @@ public class Syndication implements Timestamped{
   @Override
   public String toString() {
     return "Syndication{" +
-        "articleVersion='" + articleIngestion + '\'' +
+        "articleVersion='" + articleRevision + '\'' +
         ", target='" + target + '\'' +
         ", status='" + status + '\'' +
         '}';
