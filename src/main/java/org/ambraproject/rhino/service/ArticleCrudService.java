@@ -35,6 +35,7 @@ import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.RelatedArticleView;
+import org.w3c.dom.Document;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -74,11 +75,11 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   public abstract Article writeArchiveAsVersionedOnly(Archive archive) throws IOException;
 
   /**
-   * Repopulates article category information by making a call to the taxonomy server.
+   * Populates article category information by making a call to the taxonomy server.
    *
-   * @param id the identifier of the article
+   * @param articleId the identifier of the article
    */
-  public abstract void repopulateCategories(ArticleIdentity id) throws IOException;
+  public abstract void populateCategories(ArticleIdentifier articleId) throws IOException;
 
   /**
    * Open a stream to read the XML file for an article, as raw bytes. The caller must close the stream.
@@ -114,7 +115,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    *                         isn't matched to a journal in the database
    */
 
-  public abstract Journal getPublicationJournal(Article article) throws RestClientException;
+  public abstract Journal getPublicationJournal(ArticleTable article) throws RestClientException;
 
   /**
    * Read the metadata of an article.
@@ -148,29 +149,29 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   /**
    * Read category information from the Ambra database.
    *
-   * @param id specifies the article
+   * @param articleId specifies the article
    * @throws IOException
    */
-  public abstract Transceiver readCategories(ArticleIdentity id)
+  public abstract Transceiver readCategories(ArticleIdentifier articleId)
       throws IOException;
 
   /**
    * Get raw taxonomy terms from the taxonomy server about an article.
    *
-   * @param id specifies the article
+   * @param articleId specifies the article
    * @throws IOException
    */
-  public abstract Transceiver getRawCategories(ArticleIdentity id)
+  public abstract Transceiver getRawCategories(ArticleIdentifier articleId)
       throws IOException;
 
   /**
    * Get the text that is sent to the taxonomy server as well as the taxonomy terms returned by the server
    *
-   * @param id specifies the article
+   * @param articleId specifies the article
    * @return a String containing the text and raw categories
    * @throws IOException
    */
-  public abstract String getRawCategoriesAndText(ArticleIdentity id) throws IOException;
+  public abstract String getRawCategoriesAndText(ArticleIdentifier articleId) throws IOException;
 
   /**
    * List the DOIs of all ingested articles, or a described subset.
@@ -245,5 +246,9 @@ public interface ArticleCrudService extends DoiBasedCrudService {
 
   public abstract ArticleVersion getArticleVersion(ArticleVersionIdentifier articleIdentifier);
 
+  public abstract ArticleVersion getLatestArticleVersion(ArticleTable article);
+
   public abstract ArticleTable getArticle(ArticleIdentifier articleIdentifier);
+
+  public abstract Document getManuscriptXml(ArticleVersion articleVersion) throws IOException;
 }
