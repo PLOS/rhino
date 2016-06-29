@@ -1,7 +1,6 @@
 package org.ambraproject.rhino.view.article;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -11,10 +10,13 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import org.ambraproject.rhino.model.PublicationState;
+import org.ambraproject.rhino.model.SyndicationStatus;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Type;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * A view of an update to an article's state as submitted by a REST client.
@@ -27,7 +29,7 @@ public class ArticleInputView {
 
     private SyndicationUpdate(String target, String status) {
       Preconditions.checkArgument(StringUtils.isNotBlank(target));
-      Preconditions.checkArgument(ArticleJsonConstants.SYNDICATION_STATUSES.contains(status));
+      Preconditions.checkArgument(SyndicationStatus.getValidLabels().contains(status));
       this.target = target;
       this.status = status;
     }
@@ -64,8 +66,8 @@ public class ArticleInputView {
   private final ImmutableMap<String, SyndicationUpdate> syndicationUpdates;
 
   private ArticleInputView(Integer publicationState, Map<String, SyndicationUpdate> syndicationUpdates) {
-    Preconditions.checkArgument(publicationState == null || ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS.contains(publicationState));
-    this.publicationState = Optional.fromNullable(publicationState);
+    Preconditions.checkArgument(publicationState == null || PublicationState.getValidValues().contains(publicationState));
+    this.publicationState = Optional.ofNullable(publicationState);
     this.syndicationUpdates = (syndicationUpdates == null)
         ? ImmutableMap.<String, SyndicationUpdate>of()
         : ImmutableMap.copyOf(syndicationUpdates);
@@ -107,7 +109,7 @@ public class ArticleInputView {
     }
 
     private Map<String, SyndicationUpdate> getSyndicationUpdates(JsonObject jsonObject) {
-      JsonElement syndicationsObject = jsonObject.get(ArticleJsonConstants.MemberNames.SYNDICATIONS);
+      JsonElement syndicationsObject = jsonObject.get(ArticleJsonNames.SYNDICATIONS);
       if (syndicationsObject == null) {
         return null;
       }
@@ -115,9 +117,9 @@ public class ArticleInputView {
       Map<String, SyndicationUpdate> syndicationUpdateMap = Maps.newLinkedHashMap();
       for (Map.Entry<String, JsonElement> entry : syndicationsObject.getAsJsonObject().entrySet()) {
         String target = entry.getKey();
-        String status = entry.getValue().getAsJsonObject().get(ArticleJsonConstants.MemberNames.SYNDICATION_STATUS).getAsJsonPrimitive().getAsString();
+        String status = entry.getValue().getAsJsonObject().get(ArticleJsonNames.SYNDICATION_STATUS).getAsJsonPrimitive().getAsString();
         status = status.toUpperCase();
-        if (!ArticleJsonConstants.SYNDICATION_STATUSES.contains(status)) {
+        if (!SyndicationStatus.getValidLabels().contains(status)) {
           throw new JsonParseException("Not a valid syndication status: " + status);
         }
 
@@ -133,20 +135,19 @@ public class ArticleInputView {
     }
 
     private Integer getPublicationState(JsonObject jsonObject) {
-      JsonElement stateValue = jsonObject.get(ArticleJsonConstants.MemberNames.STATE);
+      JsonElement stateValue = jsonObject.get(ArticleJsonNames.STATE);
       if (stateValue == null) {
         return null;
       }
 
-      String pubStateName = stateValue.getAsJsonPrimitive().getAsString();
-      pubStateName = pubStateName.toLowerCase();
-      Integer pubStateConstant = ArticleJsonConstants.getPublicationStateConstant(pubStateName);
-      if (pubStateConstant == null) {
-        String message = String.format("Unrecognized publication state: \"%s\". Expected one of: %s",
-            pubStateName, ArticleJsonConstants.PUBLICATION_STATE_NAMES);
-        throw new JsonParseException(message);
-      }
-      return pubStateConstant;
+      String pubStateName = stateValue.getAsJsonPrimitive().getAsString().toLowerCase();
+      PublicationState pubStateConstant = PublicationState.fromLabel(pubStateName)
+          .<RuntimeException>orElseThrow(() -> {
+            String message = String.format("Unrecognized publication state: \"%s\". Expected one of: %s",
+                pubStateName, PublicationState.getValidLabels());
+            throw new JsonParseException(message);
+          });
+      return pubStateConstant.getValue();
     }
   };
 

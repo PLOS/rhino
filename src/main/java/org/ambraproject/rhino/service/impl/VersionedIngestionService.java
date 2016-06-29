@@ -14,6 +14,7 @@ import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
 import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.PublicationState;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.util.Archive;
@@ -153,7 +154,7 @@ class VersionedIngestionService {
           "  AND publicationState != :replaced");
       replaceOtherRevisions.setParameter("articleId", articlePk);
       replaceOtherRevisions.setParameter("revisionNumber", revisionNumber);
-      replaceOtherRevisions.setParameter("replaced", ArticleItem.PublicationState.REPLACED.getValue());
+      replaceOtherRevisions.setParameter("replaced", PublicationState.REPLACED.getValue());
       replaceOtherRevisions.executeUpdate();
 
       SQLQuery insertEvent = session.createSQLQuery("" +
@@ -161,7 +162,7 @@ class VersionedIngestionService {
           "VALUES (:articleId, :revisionNumber, :publicationState, NOW())");
       insertEvent.setParameter("articleId", articlePk);
       insertEvent.setParameter("revisionNumber", revisionNumber);
-      insertEvent.setParameter("publicationState", ArticleItem.PublicationState.INGESTED.getValue());
+      insertEvent.setParameter("publicationState", PublicationState.INGESTED.getValue());
       insertEvent.executeUpdate();
       return getLastInsertId(session);
     });
