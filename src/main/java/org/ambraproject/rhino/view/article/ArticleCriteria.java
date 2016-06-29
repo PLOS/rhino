@@ -8,6 +8,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Syndication;
+import org.ambraproject.rhino.model.SyndicationStatus;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.apache.commons.collections.CollectionUtils;
 import org.hibernate.Criteria;
@@ -80,8 +81,8 @@ public class ArticleCriteria {
       ImmutableSet.Builder<String> builder = ImmutableSet.builder();
       for (String clientSyndStatus : clientSyndStatuses) {
         clientSyndStatus = clientSyndStatus.toUpperCase();
-        if (!ArticleJsonConstants.SYNDICATION_STATUSES.contains(clientSyndStatus)) {
-          throw unrecognizedInputs("syndication status", clientSyndStatuses, ArticleJsonConstants.SYNDICATION_STATUSES);
+        if (!SyndicationStatus.getValidLabels().contains(clientSyndStatus)) {
+          throw unrecognizedInputs("syndication status", clientSyndStatuses, SyndicationStatus.getValidLabels());
         }
         builder.add(clientSyndStatus);
       }

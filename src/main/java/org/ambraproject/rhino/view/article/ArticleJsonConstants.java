@@ -77,13 +77,4 @@ public class ArticleJsonConstants {
     public static final String ARTICLE_TYPE = "articleType";
   }
 
-  /**
-   * Valid values for {@link Syndication#setStatus}.
-   */
-  public static final ImmutableSet<String> SYNDICATION_STATUSES = ImmutableSet.of(
-      SyndicationStatus.PENDING.name(),
-      SyndicationStatus.IN_PROGRESS.name(),
-      SyndicationStatus.SUCCESS.name(),
-      SyndicationStatus.FAILURE.name());
-
 }

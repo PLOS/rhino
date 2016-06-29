@@ -216,7 +216,7 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
       // TODO: should we always re-attempt the syndication, as we do here, if it's
       // IN_PROGRESS?  Or base it on the Syndication.status of the appropriate target?
       // Not sure yet.
-      if (update.getStatus().equals(SyndicationStatus.IN_PROGRESS.name())) {
+      if (update.getStatus().equals(SyndicationStatus.IN_PROGRESS.getLabel())) {
         //syndicationService.syndicate(article.getDoi(), update.getTarget()); todo: implement with versioning
       }
 

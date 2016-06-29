@@ -11,6 +11,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import org.ambraproject.rhino.model.SyndicationStatus;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Type;
@@ -27,7 +28,7 @@ public class ArticleInputView {
 
     private SyndicationUpdate(String target, String status) {
       Preconditions.checkArgument(StringUtils.isNotBlank(target));
-      Preconditions.checkArgument(ArticleJsonConstants.SYNDICATION_STATUSES.contains(status));
+      Preconditions.checkArgument(SyndicationStatus.getValidLabels().contains(status));
       this.target = target;
       this.status = status;
     }
@@ -117,7 +118,7 @@ public class ArticleInputView {
         String target = entry.getKey();
         String status = entry.getValue().getAsJsonObject().get(ArticleJsonConstants.MemberNames.SYNDICATION_STATUS).getAsJsonPrimitive().getAsString();
         status = status.toUpperCase();
-        if (!ArticleJsonConstants.SYNDICATION_STATUSES.contains(status)) {
+        if (!SyndicationStatus.getValidLabels().contains(status)) {
           throw new JsonParseException("Not a valid syndication status: " + status);
         }
 

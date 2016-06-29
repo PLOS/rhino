@@ -127,9 +127,9 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
 
     ArticleOutputView outputView = articleOutputViewFactory.create(article, false);
     assertEquals(outputView.getArticle().getState(), Article.STATE_UNPUBLISHED);
-    assertEquals(outputView.getSyndication(crossref).getStatus(), SyndicationStatus.PENDING.name());
-    assertEquals(outputView.getSyndication(pmc).getStatus(), SyndicationStatus.PENDING.name());
-    assertEquals(outputView.getSyndication(pubmed).getStatus(), SyndicationStatus.PENDING.name());
+    assertEquals(outputView.getSyndication(crossref).getStatus(), SyndicationStatus.PENDING.getLabel());
+    assertEquals(outputView.getSyndication(pmc).getStatus(), SyndicationStatus.PENDING.getLabel());
+    assertEquals(outputView.getSyndication(pubmed).getStatus(), SyndicationStatus.PENDING.getLabel());
 
     String inputJson = ""
         + "{"
@@ -148,16 +148,16 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
         + "}";
     ArticleInputView inputView = entityGson.fromJson(inputJson, ArticleInputView.class);
     assertEquals(inputView.getPublicationState().get().intValue(), Article.STATE_ACTIVE);
-    assertEquals(inputView.getSyndicationUpdate(crossref).getStatus(), SyndicationStatus.IN_PROGRESS.name());
-    assertEquals(inputView.getSyndicationUpdate(pmc).getStatus(), SyndicationStatus.IN_PROGRESS.name());
-    assertEquals(inputView.getSyndicationUpdate(pubmed).getStatus(), SyndicationStatus.IN_PROGRESS.name());
+    assertEquals(inputView.getSyndicationUpdate(crossref).getStatus(), SyndicationStatus.IN_PROGRESS.getLabel());
+    assertEquals(inputView.getSyndicationUpdate(pmc).getStatus(), SyndicationStatus.IN_PROGRESS.getLabel());
+    assertEquals(inputView.getSyndicationUpdate(pubmed).getStatus(), SyndicationStatus.IN_PROGRESS.getLabel());
     article = articleStateService.update(articleId, inputView);
 
     ArticleOutputView result = articleOutputViewFactory.create(article, false);
     assertEquals(result.getArticle().getState(), Article.STATE_ACTIVE);
-    assertEquals(result.getSyndication(crossref).getStatus(), SyndicationStatus.IN_PROGRESS.name());
-    assertEquals(result.getSyndication(pmc).getStatus(), SyndicationStatus.IN_PROGRESS.name());
-    assertEquals(result.getSyndication(pubmed).getStatus(), SyndicationStatus.IN_PROGRESS.name());
+    assertEquals(result.getSyndication(crossref).getStatus(), SyndicationStatus.IN_PROGRESS.getLabel());
+    assertEquals(result.getSyndication(pmc).getStatus(), SyndicationStatus.IN_PROGRESS.getLabel());
+    assertEquals(result.getSyndication(pubmed).getStatus(), SyndicationStatus.IN_PROGRESS.getLabel());
     ArticleStateServiceImpl impl = (ArticleStateServiceImpl) articleStateService;
     DummyMessageSender dummySender = (DummyMessageSender) impl.messageSender;
     assertEquals(dummySender.messagesSent.size(), 5);
