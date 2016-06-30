@@ -22,10 +22,14 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
+import org.ambraproject.rhino.identity.ArticleItemIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Syndication;
+import org.ambraproject.rhino.rest.ClientItemId;
+import org.ambraproject.rhino.rest.ClientItemIdResolver;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.service.ArticleListCrudService;
@@ -177,6 +181,7 @@ public class ArticleCrudController extends ArticleSpaceController {
   public void previewMetadataFromVersionedModel(
       HttpServletRequest request, HttpServletResponse response,
       @RequestParam(value = "revision", required = false) Integer revisionNumber,
+      @RequestParam(value = "ingestion", required = false) Integer ingestionNumber,
       @RequestParam(value = "excludeCitations", required = false) boolean excludeCitations,
       @RequestParam(value = "parseFullManuscript", required = false) boolean parseFullManuscript)
       throws IOException {
@@ -184,8 +189,10 @@ public class ArticleCrudController extends ArticleSpaceController {
         : excludeCitations ? ArticleMetadataSource.FRONT_MATTER
         : ArticleMetadataSource.FRONT_AND_BACK_MATTER;
 
-    ArticleRevisionIdentifier versionId = getArticleRevisionIdentifier(request, revisionNumber);
-    articleCrudService.readVersionedMetadata(versionId, sourceObj).respond(request, response, entityGson);
+    ClientItemId itemId = ClientItemIdResolver.resolve(getIdentifier(request), revisionNumber, ingestionNumber);
+    ArticleIngestionIdentifier ingestionId = articleCrudService.resolveToIngestion(itemId);
+
+    articleCrudService.readVersionedMetadata(ingestionId, sourceObj).respond(request, response, entityGson);
   }
 
   private ArticleRevisionIdentifier getArticleRevisionIdentifier(HttpServletRequest request, Integer revisionNumber) {
@@ -253,12 +260,13 @@ public class ArticleCrudController extends ArticleSpaceController {
   @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "xml")
   public void readXml(HttpServletRequest request, HttpServletResponse response,
-                      @RequestParam(value = "revision", required = false) Integer revisionNumber)
+                      @RequestParam(value = "revision", required = false) Integer revisionNumber,
+                      @RequestParam(value = "ingestion", required = false) Integer ingestionNumber)
       throws IOException {
-    Doi assetId = Doi.create(getIdentifier(request));
-    int revisionNumberValue = (revisionNumber == null) ? articleCrudService.getLatestRevision(assetId) : revisionNumber;
-    assetFileCrudController.previewFileFromVersionedModel(request, response,
-        ArticleFileIdentifier.create(assetId, revisionNumberValue, "manuscript"));
+    ClientItemId id = ClientItemIdResolver.resolve(getIdentifier(request), revisionNumber, ingestionNumber);
+    ArticleItemIdentifier itemId = articleCrudService.resolveToItem(id);
+    ArticleFileIdentifier fileId = ArticleFileIdentifier.create(itemId, "manuscript");
+    assetFileCrudController.previewFileFromVersionedModel(request, response, fileId);
   }
 
   /**

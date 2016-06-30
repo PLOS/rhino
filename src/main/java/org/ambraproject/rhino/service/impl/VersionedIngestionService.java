@@ -362,7 +362,7 @@ class VersionedIngestionService {
    * @deprecated method signature accommodates testing and will be changed
    */
   @Deprecated
-  Article getArticleMetadata(ArticleRevisionIdentifier revisionId, ArticleMetadataSource source) {
+  Article getArticleMetadata(ArticleIngestionIdentifier ingestionId, ArticleMetadataSource source) {
     /*
      * *** Implementation notes ***
      *
@@ -381,7 +381,7 @@ class VersionedIngestionService {
      * TODO: Improve as described above and delete this comment block
      */
 
-    ArticleItem work = parentService.getArticleItem(revisionId.getItemFor());
+    ArticleItem work = parentService.getArticleItem(ingestionId.getItemFor());
 
     ArticleFile manuscriptVersion = work.getFile("manuscript").orElseThrow(() -> {
       String message = String.format("Work exists but does not have a manuscript. DOI: %s. Revision: %s",

@@ -31,6 +31,7 @@ import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.rest.ClientItemId;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.util.Archive;
@@ -222,7 +223,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * @deprecated <em>TEMPORARY.</em> To be removed when the versioned data model is fully supported.
    */
   @Deprecated
-  public abstract Transceiver readVersionedMetadata(ArticleRevisionIdentifier versionId,
+  public abstract Transceiver readVersionedMetadata(ArticleIngestionIdentifier ingestionId,
                                                     ArticleMetadataSource source);
 
   /**
@@ -245,9 +246,14 @@ public interface ArticleCrudService extends DoiBasedCrudService {
 
   public abstract ArticleItem getArticleItem(ArticleItemIdentifier id);
 
-  public abstract ArticleIngestion getArticleIngestion(ArticleIngestionIdentifier articleIdentifier);
+  public abstract ArticleIngestion getArticleIngestion(ArticleIngestionIdentifier articleId);
 
-  public abstract ArticleRevision getArticleRevision(ArticleRevisionIdentifier articleIdentifier);
+  public abstract ArticleRevision getArticleRevision(ArticleRevisionIdentifier revisionId);
 
   public abstract ArticleTable getArticle(ArticleIdentifier articleIdentifier);
+
+  public abstract ArticleIngestionIdentifier resolveToIngestion(ClientItemId id);
+
+  public abstract ArticleItemIdentifier resolveToItem(ClientItemId id);
+
 }

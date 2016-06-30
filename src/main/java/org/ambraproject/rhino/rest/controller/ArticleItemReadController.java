@@ -2,8 +2,9 @@ package org.ambraproject.rhino.rest.controller;
 
 import com.google.gson.Gson;
 import org.ambraproject.rhino.identity.ArticleItemIdentifier;
-import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.ArticleItem;
+import org.ambraproject.rhino.rest.ClientItemId;
+import org.ambraproject.rhino.rest.ClientItemIdResolver;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.util.response.Transceiver;
@@ -36,11 +37,12 @@ public class ArticleItemReadController extends DoiBasedCrudController {
   @Transactional(readOnly = true)
   @RequestMapping(value = "/work/**", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
-                   @RequestParam(value = "revision", required = false) Integer revisionNumber)
+                   @RequestParam(value = "revision", required = false) Integer revisionNumber,
+                   @RequestParam(value = "ingestion", required = false) Integer ingestionNumber)
       throws IOException {
-    Doi id = Doi.create(getIdentifier(request));
-    int revisionNumberValue = (revisionNumber == null) ? articleCrudService.getLatestRevision(id) : revisionNumber;
-    ArticleItem work = articleCrudService.getArticleItem(ArticleItemIdentifier.create(id, revisionNumberValue));
+    ClientItemId id = ClientItemIdResolver.resolve(getIdentifier(request), revisionNumber, ingestionNumber);
+    ArticleItemIdentifier itemId = articleCrudService.resolveToItem(id);
+    ArticleItem work = articleCrudService.getArticleItem(itemId);
     asTransceiver(work).respond(request, response, entityGson);
   }
 

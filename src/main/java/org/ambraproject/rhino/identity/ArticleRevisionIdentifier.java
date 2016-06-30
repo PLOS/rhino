@@ -43,13 +43,6 @@ public final class ArticleRevisionIdentifier {
     return articleIdentifier.getDoiName();
   }
 
-  /**
-   * @return the identifier for the article item containing this version's manuscript
-   */
-  public ArticleItemIdentifier getItemFor() {
-    return ArticleItemIdentifier.create(articleIdentifier.getDoi(), revision);
-  }
-
   @Override
   public String toString() {
     return "ArticleVersionIdentifier{" +

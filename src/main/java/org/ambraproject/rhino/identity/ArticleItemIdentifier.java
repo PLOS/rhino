@@ -3,38 +3,38 @@ package org.ambraproject.rhino.identity;
 import java.util.Objects;
 
 /**
- * An identifier for one article item, on a particular revision of its parent article.
+ * An identifier for one article item, on a particular ingestion of its parent article.
  * <p>
- * Compare to {@link ArticleRevisionIdentifier}, which has similar fields but refers to something different. An article
- * item has a parent version, which has a parent article. This class's DOI refers to the item's own DOI, which may be,
- * but is not always, the same as the article's DOI.
+ * Compare to {@link ArticleIngestionIdentifier} and {@link ArticleRevisionIdentifier}, which has similar fields but
+ * refers to something different. An article item has a parent version, which has a parent article. This class's DOI
+ * refers to the item's own DOI, which may be, but is not always, the same as the article's DOI.
  * <p>
  * A persistent service is needed to resolve the identified item into its parent article version.
  */
 public final class ArticleItemIdentifier {
 
   private final Doi doi;
-  private final int revision;
+  private final int ingestionNumber;
 
-  private ArticleItemIdentifier(Doi doi, int revision) {
+  private ArticleItemIdentifier(Doi doi, int ingestionNumber) {
     this.doi = Objects.requireNonNull(doi);
-    this.revision = revision;
+    this.ingestionNumber = ingestionNumber;
   }
 
-  public static ArticleItemIdentifier create(Doi doi, int revision) {
-    return new ArticleItemIdentifier(doi, revision);
+  public static ArticleItemIdentifier create(Doi doi, int ingestionNumber) {
+    return new ArticleItemIdentifier(doi, ingestionNumber);
   }
 
-  public static ArticleItemIdentifier create(String doi, int revision) {
-    return create(Doi.create(doi), revision);
+  public static ArticleItemIdentifier create(String doi, int ingestionNumber) {
+    return create(Doi.create(doi), ingestionNumber);
   }
 
   public Doi getDoi() {
     return doi;
   }
 
-  public int getRevision() {
-    return revision;
+  public int getIngestionNumber() {
+    return ingestionNumber;
   }
 
   // Convenience method for unpacking into persistent form
@@ -46,7 +46,7 @@ public final class ArticleItemIdentifier {
   public String toString() {
     return "ArticleItemIdentifier{" +
         "doi=" + doi +
-        ", revision='" + revision + '\'' +
+        ", ingestionNumber='" + ingestionNumber + '\'' +
         '}';
   }
 
@@ -57,7 +57,7 @@ public final class ArticleItemIdentifier {
 
     ArticleItemIdentifier that = (ArticleItemIdentifier) o;
 
-    if (revision != that.revision) return false;
+    if (ingestionNumber != that.ingestionNumber) return false;
     return doi.equals(that.doi);
 
   }
@@ -65,7 +65,7 @@ public final class ArticleItemIdentifier {
   @Override
   public int hashCode() {
     int result = doi.hashCode();
-    result = 31 * result + revision;
+    result = 31 * result + ingestionNumber;
     return result;
   }
 

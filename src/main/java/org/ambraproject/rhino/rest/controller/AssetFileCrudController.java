@@ -23,8 +23,11 @@ import com.google.common.io.ByteStreams;
 import com.google.common.net.HttpHeaders;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
+import org.ambraproject.rhino.identity.ArticleItemIdentifier;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.Doi;
+import org.ambraproject.rhino.rest.ClientItemId;
+import org.ambraproject.rhino.rest.ClientItemIdResolver;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
@@ -176,12 +179,13 @@ public class AssetFileCrudController extends DoiBasedCrudController {
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET, params = "versionedPreview")
   public void previewFileFromVersionedModel(HttpServletRequest request, HttpServletResponse response,
                                             @RequestParam(value = "type", required = true) String fileType,
-                                            @RequestParam(value = "revision", required = false) Integer revisionNumber)
+                                            @RequestParam(value = "revision", required = false) Integer revisionNumber,
+                                            @RequestParam(value = "ingestion", required = false) Integer ingestionNumber)
       throws IOException {
-    Doi assetId = Doi.create(getIdentifier(request));
-    int revisionNumberValue = (revisionNumber == null) ? articleCrudService.getLatestRevision(assetId) : revisionNumber;
-
-    previewFileFromVersionedModel(request, response, ArticleFileIdentifier.create(assetId, revisionNumberValue, fileType));
+    ClientItemId id = ClientItemIdResolver.resolve(getIdentifier(request), revisionNumber, ingestionNumber);
+    ArticleItemIdentifier itemId = articleCrudService.resolveToItem(id);
+    ArticleFileIdentifier fileId = ArticleFileIdentifier.create(itemId, fileType);
+    previewFileFromVersionedModel(request, response, fileId);
   }
 
   void previewFileFromVersionedModel(HttpServletRequest request, HttpServletResponse response,

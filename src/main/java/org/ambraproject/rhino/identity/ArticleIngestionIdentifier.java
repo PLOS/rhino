@@ -37,6 +37,13 @@ public final class ArticleIngestionIdentifier {
     return articleIdentifier.getDoiName();
   }
 
+  /**
+   * @return the identifier for the article item containing this version's manuscript
+   */
+  public ArticleItemIdentifier getItemFor() {
+    return ArticleItemIdentifier.create(articleIdentifier.getDoi(), ingestionNumber);
+  }
+
   @Override
   public String toString() {
     return "ArticleIngestionIdentifier{" +
