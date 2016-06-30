@@ -60,9 +60,9 @@ public class Syndication implements Timestamped{
     super();
   }
 
-  public Syndication(ArticleVersion articleVersion, String target) {
+  public Syndication(ArticleVersion articleVersion, SyndicationTarget target) {
     this();
-    this.target = target;
+    this.target = target.getLabel();
     this.articleVersion = articleVersion;
   }
 

@@ -5,6 +5,7 @@ public class SyndicationInputView {
   private String target;
   private String status;
   private String errorMessage;
+  private String queue;
 
   public String getTarget() {
     return target;
@@ -30,6 +31,14 @@ public class SyndicationInputView {
     this.errorMessage = errorMessage;
   }
 
+  public String getQueue() {
+    return queue;
+  }
+
+  public void setQueue(String queue) {
+    this.queue = queue;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -39,7 +48,9 @@ public class SyndicationInputView {
 
     if (target != null ? !target.equals(that.target) : that.target != null) return false;
     if (status != null ? !status.equals(that.status) : that.status != null) return false;
-    return errorMessage != null ? errorMessage.equals(that.errorMessage) : that.errorMessage == null;
+    if (errorMessage != null ? !errorMessage.equals(that.errorMessage) : that.errorMessage != null)
+      return false;
+    return queue != null ? queue.equals(that.queue) : that.queue == null;
 
   }
 
@@ -48,6 +59,7 @@ public class SyndicationInputView {
     int result = target != null ? target.hashCode() : 0;
     result = 31 * result + (status != null ? status.hashCode() : 0);
     result = 31 * result + (errorMessage != null ? errorMessage.hashCode() : 0);
+    result = 31 * result + (queue != null ? queue.hashCode() : 0);
     return result;
   }
 }

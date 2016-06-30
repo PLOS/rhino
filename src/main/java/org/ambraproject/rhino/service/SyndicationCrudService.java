@@ -23,6 +23,7 @@ package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
 import org.ambraproject.rhino.model.Syndication;
+import org.ambraproject.rhino.model.SyndicationTarget;
 import org.ambraproject.rhino.util.response.Transceiver;
 
 import java.io.IOException;
@@ -54,7 +55,7 @@ public interface SyndicationCrudService {
    * @param syndicationTarget     the syndication target
    * @return the matching syndication, if it exists, else null
    */
-  public Syndication getSyndication(ArticleVersionIdentifier versionId, String syndicationTarget);
+  public Syndication getSyndication(ArticleVersionIdentifier versionId, SyndicationTarget syndicationTarget);
 
   /**
    * Update the Syndication object specified by the <code>articleDoi</code> and <code>syndicationTarget</code>
@@ -74,12 +75,11 @@ public interface SyndicationCrudService {
    *                          <strong>not</strong> update the errorMessage of this Syndication
    * @return The Syndication that matches the <code>articleDoi</code> and <code>syndicationTarget</code> parameters
    */
-  public Syndication updateSyndication(ArticleVersionIdentifier versionId, String syndicationTarget, String status, String errorMessage);
+  public Syndication updateSyndication(ArticleVersionIdentifier versionId, SyndicationTarget syndicationTarget, String status, String errorMessage);
 
   /**
-   * For the Article indicated by <code>articleDoi</code>, create a new Syndication object for each possible syndication
-   * target which does not already have a Syndication object. Return the complete list of Syndication objects for this
-   * Article.
+   * For the Article indicated by <code>articleDoi</code>, create a new Syndication object specified by the input
+   * target. Return the Syndication object for this Article.
    * <p/>
    * If a Syndication object for a given syndication target already exists for this Article, then the datastore will not
    * be updated for that Syndication object. This silent failure mode is useful during the re-ingestion of any Article
@@ -87,11 +87,11 @@ public interface SyndicationCrudService {
    * <p/>
    *
    * @param versionId The unique identifier for the Article which was (or is to be) syndicated
+   * @param syndicationTarget The syndication target to which will be sent the Article designated by
+   *                          <code>articleDoi</code>
    * @return The complete list of Syndication objects for this Article
    */
-  public List<Syndication> createSyndications(ArticleVersionIdentifier versionId);
-
-  public Syndication createSyndication(ArticleVersionIdentifier versionId, String target);
+  public Syndication createSyndication(ArticleVersionIdentifier versionId, SyndicationTarget syndicationTarget);
 
   /**
    * Get Syndications (from the current journal) that each have a <code>status</code> defined in statuses
@@ -121,9 +121,10 @@ public interface SyndicationCrudService {
    * @param versionId        The ID for the Article which will be syndicated to the <code>syndicationTarget</code>
    * @param syndicationTarget The syndication target to which will be sent the Article designated by
    *                          <code>articleDoi</code>
+   * @param queue String indicating which Queue endpoint to send the syndication message to
    * @return The Syndication object which matches the <code>articleDoi</code> and <code>syndicationTarget</code>
    * parameters.  Contains the latest status information.
    */
-  public Syndication syndicate(ArticleVersionIdentifier versionId, String syndicationTarget);
+  public Syndication syndicate(ArticleVersionIdentifier versionId, SyndicationTarget syndicationTarget, String queue);
 
 }

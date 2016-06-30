@@ -107,25 +107,8 @@ class VersionedIngestionService {
 
     stubAssociativeFields(articleMetadata);
 
-    ArticleVersionIdentifier versionIdentifier = ArticleVersionIdentifier.create(
-        articleIdentifier.getDoi(), parsedArticle.getRevisionNumber());
-
-    if (isSyndicatableType(articleMetadata.getTypes())) {
-      parentService.syndicationService.createSyndications(versionIdentifier);
-    }
-
     return articleMetadata;
   }
-
-  /**
-   * @param articleTypes All the article types of the Article for which Syndication objects are being created
-   * @return Whether to create a Syndication object for this Article
-   */
-  private boolean isSyndicatableType(Set<String> articleTypes) {
-    String articleTypeDoNotCreateSyndication = "http://rdf.plos.org/RDF/articleType/Issue%20Image";
-    return !(articleTypes != null && articleTypes.contains(articleTypeDoNotCreateSyndication));
-  }
-
 
   /**
    * Get the PK of the "article" row for a DOI if it exists, and insert it if it doesn't.

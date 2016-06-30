@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.rest.controller;
 
+import com.google.common.base.Strings;
 import com.wordnik.swagger.annotations.ApiOperation;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
@@ -26,6 +27,7 @@ import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Syndication;
+import org.ambraproject.rhino.model.SyndicationTarget;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.service.ArticleListCrudService;
@@ -334,7 +336,9 @@ public class ArticleCrudController extends ArticleSpaceController {
       throws IOException {
     ArticleVersionIdentifier versionId = getArticleVersionIdentifier(request, revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
-    syndicationCrudService.createSyndication(versionId, input.getTarget());
+    SyndicationTarget syndicationTarget = getSyndicationTarget(input);
+
+    syndicationCrudService.createSyndication(versionId, syndicationTarget);
     return reportCreated();
   }
 
@@ -346,7 +350,14 @@ public class ArticleCrudController extends ArticleSpaceController {
       throws IOException {
     ArticleVersionIdentifier versionId = getArticleVersionIdentifier(request, revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
-    Syndication created = syndicationCrudService.syndicate(versionId, input.getTarget());
+    SyndicationTarget syndicationTarget = getSyndicationTarget(input);
+
+    String queue = input.getQueue();
+    if (Strings.isNullOrEmpty(queue)) {
+      queue = "activemq:plos." + syndicationTarget.getLabel().toLowerCase();
+    }
+
+    Syndication created = syndicationCrudService.syndicate(versionId, syndicationTarget, queue);
     return reportOk(created.toString());
   }
 
@@ -356,9 +367,18 @@ public class ArticleCrudController extends ArticleSpaceController {
       throws IOException {
     ArticleVersionIdentifier versionId = getArticleVersionIdentifier(request, revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
-    Syndication patched = syndicationCrudService.updateSyndication(versionId, input.getTarget(),
-        input.getStatus(), input.getErrorMessage());
+
+    Syndication patched = syndicationCrudService.updateSyndication(versionId,
+        getSyndicationTarget(input), input.getStatus(), input.getErrorMessage());
     return reportOk(patched.toString());
+  }
+
+  private SyndicationTarget getSyndicationTarget(SyndicationInputView input) {
+    String target = input.getTarget();
+    if (!SyndicationTarget.getValidLabels().contains(target)) {
+      throw new RuntimeException("Invalid target specified for syndication: " + target);
+    }
+    return SyndicationTarget.valueOf(target);
   }
 
   /**
