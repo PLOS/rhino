@@ -166,11 +166,10 @@ class VersionedIngestionService {
           : maxIngestionNumber.intValue() + 1;
 
       SQLQuery insertEvent = session.createSQLQuery("" +
-          "INSERT INTO articleIngestion (articleId, ingestionNumber, visibility) " +
-          "VALUES (:articleId, :ingestionNumber, :visibility)");
+          "INSERT INTO articleIngestion (articleId, ingestionNumber) " +
+          "VALUES (:articleId, :ingestionNumber)");
       insertEvent.setParameter("articleId", articlePk);
       insertEvent.setParameter("ingestionNumber", nextIngestionNumber);
-      insertEvent.setParameter("visibility", PublicationState.INGESTED.getValue());
       insertEvent.executeUpdate();
       return getLastInsertId(session);
     });
@@ -200,10 +199,11 @@ class VersionedIngestionService {
         return updateRevision.executeUpdate();
       } else {
         SQLQuery insertRevision = session.createSQLQuery("" +
-            "INSERT INTO articleRevision (ingestionId, revisionNumber) " +
-            "VALUES (:ingestionId, :revisionNumber)");
+            "INSERT INTO articleRevision (ingestionId, revisionNumber, publicationState) " +
+            "VALUES (:ingestionId, :revisionNumber, :publicationState)");
         insertRevision.setParameter("ingestionId", ingestionId);
         insertRevision.setParameter("revisionNumber", revisionNumber);
+        insertRevision.setParameter("publicationState", PublicationState.INGESTED.getValue());
         insertRevision.executeUpdate();
         return getLastInsertId(session);
       }

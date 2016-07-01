@@ -32,9 +32,6 @@ public class ArticleIngestion implements Timestamped {
   @Column
   private int ingestionNumber;
 
-  @Column
-  private int visibility;
-
   @Cascade(CascadeType.SAVE_UPDATE)
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(
@@ -70,14 +67,6 @@ public class ArticleIngestion implements Timestamped {
 
   public void setIngestionNumber(int ingestionNumber) {
     this.ingestionNumber = ingestionNumber;
-  }
-
-  public int getVisibility() {
-    return visibility;
-  }
-
-  public void setVisibility(int visibility) {
-    this.visibility = visibility;
   }
 
   public Set<Journal> getJournals() {
@@ -122,7 +111,6 @@ public class ArticleIngestion implements Timestamped {
     return "ArticleIngestion{" +
         "ingestionId=" + ingestionId +
         ", article=" + article +
-        ", visibility=" + visibility +
         ", journals=" + journals +
         '}';
   }

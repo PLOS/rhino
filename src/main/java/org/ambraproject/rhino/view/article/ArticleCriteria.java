@@ -62,7 +62,7 @@ public class ArticleCriteria {
       ImmutableSet.Builder<Integer> builder = ImmutableSet.builder();
       for (String clientPubState : clientPubStates) {
         PublicationState pubStateConstant = PublicationState.fromLabel(clientPubState)
-            .orElseThrow(()->unrecognizedInputs("publication state", clientPubStates, PublicationState.getValidLabels()));
+            .orElseThrow(() -> unrecognizedInputs("publication state", clientPubStates, PublicationState.getValidLabels()));
         builder.add(pubStateConstant.getValue());
       }
       publicationStateConstants = Optional.of(builder.build());
