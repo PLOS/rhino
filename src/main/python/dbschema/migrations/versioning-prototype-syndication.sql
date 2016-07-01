@@ -3,7 +3,7 @@ RENAME TABLE `syndication` TO `oldSyndication`;
 CREATE TABLE `syndication` (
   `syndicationId` bigint(20) NOT NULL AUTO_INCREMENT,
   `versionId` BIGINT(20) NOT NULL,
-  `target` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `targetQueue` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `status` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `submissionCount` int(11) DEFAULT NULL,
   `errorMessage` longtext CHARACTER SET utf8 COLLATE utf8_bin,

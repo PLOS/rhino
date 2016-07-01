@@ -26,7 +26,6 @@ import org.ambraproject.rhino.model.ArticleVersion;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.model.SyndicationStatus;
-import org.ambraproject.rhino.model.SyndicationTarget;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.MessageSender;
@@ -79,14 +78,14 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
   @Override
   @SuppressWarnings("unchecked")
   public Syndication getSyndication(final ArticleVersionIdentifier versionId,
-      final SyndicationTarget syndicationTarget) {
+      final String syndicationTargetQueue) {
     ArticleVersion articleVersion = articleCrudService.getArticleVersion(versionId);
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "FROM Syndication s " +
-          "WHERE s.target = :target " +
+          "WHERE s.targetQueue = :targetQueue " +
           "AND s.articleVersion = :articleVersion");
-      query.setParameter(ArticleJsonNames.SYNDICATION_TARGET, syndicationTarget.getLabel());
+      query.setParameter(ArticleJsonNames.SYNDICATION_TARGET, syndicationTargetQueue);
       query.setParameter("articleVersion", articleVersion);
       return (Syndication) query.uniqueResult();
     });
@@ -108,11 +107,11 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
   @Transactional(rollbackFor = {Throwable.class})
   @Override
   public Syndication updateSyndication(final ArticleVersionIdentifier versionId,
-      final SyndicationTarget syndicationTarget, final String status, final String errorMessage) {
-    Syndication syndication = getSyndication(versionId, syndicationTarget);
+      final String syndicationTargetQueue, final String status, final String errorMessage) {
+    Syndication syndication = getSyndication(versionId, syndicationTargetQueue);
     if (syndication == null) {
       throw new RuntimeException("No such syndication for doi " + versionId
-          + " and target " + syndicationTarget);
+          + " and target " + syndicationTargetQueue);
     }
     syndication.setStatus(status);
     syndication.setErrorMessage(errorMessage);
@@ -122,9 +121,9 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
   }
 
   @Override
-  public Syndication createSyndication(ArticleVersionIdentifier versionId, SyndicationTarget target) {
+  public Syndication createSyndication(ArticleVersionIdentifier versionId, String syndicationTargetQueue) {
     ArticleVersion articleVersion = articleCrudService.getArticleVersion(versionId);
-    Syndication syndication = new Syndication(articleVersion, target);
+    Syndication syndication = new Syndication(articleVersion, syndicationTargetQueue);
     syndication.setStatus(SyndicationStatus.PENDING.getLabel());
     syndication.setSubmissionCount(0);
     hibernateTemplate.save(syndication);
@@ -187,13 +186,12 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
 
   @Transactional(rollbackFor = {Throwable.class})
   @Override
-  public Syndication syndicate(ArticleVersionIdentifier versionId, SyndicationTarget syndicationTarget,
-      String queue) {
+  public Syndication syndicate(ArticleVersionIdentifier versionId, String syndicationTargetQueue) {
     ArticleVersion articleVersion = articleCrudService.getArticleVersion(versionId);
 
-    Syndication syndication = getSyndication(versionId, syndicationTarget);
+    Syndication syndication = getSyndication(versionId, syndicationTargetQueue);
     if (syndication == null) {
-      syndication = new Syndication(articleVersion, syndicationTarget);
+      syndication = new Syndication(articleVersion, syndicationTargetQueue);
       syndication.setStatus(SyndicationStatus.IN_PROGRESS.getLabel());
       syndication.setSubmissionCount(1);
       syndication.setLastSubmitTimestamp(new Date());
@@ -206,13 +204,14 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
     }
 
     try {
-      messageSender.sendBody(queue, createBody(versionId));
+      messageSender.sendBody(syndicationTargetQueue, createBody(versionId));
       log.info("Successfully sent a Message to plos-queue for {} to be syndicated to {}",
-          versionId, syndicationTarget);
+          versionId, syndicationTargetQueue);
       return syndication;
     } catch (Exception e) {
-      log.warn("Error syndicating " + versionId + " to " + syndicationTarget, e);
-      return updateSyndication(versionId, syndicationTarget, SyndicationStatus.FAILURE.getLabel(), e.getMessage());
+      log.warn("Error syndicating " + versionId + " to " + syndicationTargetQueue, e);
+      return updateSyndication(versionId, syndicationTargetQueue,
+          SyndicationStatus.FAILURE.getLabel(), e.getMessage());
     }
   }
 

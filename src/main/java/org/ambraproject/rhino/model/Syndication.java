@@ -32,7 +32,7 @@ public class Syndication implements Timestamped{
   private ArticleVersion articleVersion;
 
   @Column
-  private String target;
+  private String targetQueue;
 
   @Column
   private String status;
@@ -60,9 +60,9 @@ public class Syndication implements Timestamped{
     super();
   }
 
-  public Syndication(ArticleVersion articleVersion, SyndicationTarget target) {
+  public Syndication(ArticleVersion articleVersion, String targetQueue) {
     this();
-    this.target = target.getLabel();
+    this.targetQueue = targetQueue;
     this.articleVersion = articleVersion;
   }
 
@@ -83,11 +83,11 @@ public class Syndication implements Timestamped{
   }
 
   public String getTarget() {
-    return target;
+    return targetQueue;
   }
 
   public void setTarget(String target) {
-    this.target = target;
+    this.targetQueue = target;
   }
 
   public String getStatus() {
@@ -148,7 +148,7 @@ public class Syndication implements Timestamped{
     if (syndicationId != that.syndicationId) return false;
     if (submissionCount != that.submissionCount) return false;
     if (!articleVersion.equals(that.articleVersion)) return false;
-    if (!target.equals(that.target)) return false;
+    if (!targetQueue.equals(that.targetQueue)) return false;
     if (!status.equals(that.status)) return false;
     if (errorMessage != null ? !errorMessage.equals(that.errorMessage) : that.errorMessage != null)
       return false;
@@ -160,7 +160,7 @@ public class Syndication implements Timestamped{
   public int hashCode() {
     int result = syndicationId;
     result = 31 * result + articleVersion.hashCode();
-    result = 31 * result + target.hashCode();
+    result = 31 * result + targetQueue.hashCode();
     result = 31 * result + status.hashCode();
     result = 31 * result + submissionCount;
     result = 31 * result + (errorMessage != null ? errorMessage.hashCode() : 0);
@@ -171,8 +171,8 @@ public class Syndication implements Timestamped{
   @Override
   public String toString() {
     return "Syndication{" +
-        "articleVersion='" + articleVersion + '\'' +
-        ", target='" + target + '\'' +
+        "article version='" + articleVersion + '\'' +
+        ", target queue='" + targetQueue + '\'' +
         ", status='" + status + '\'' +
         '}';
   }
