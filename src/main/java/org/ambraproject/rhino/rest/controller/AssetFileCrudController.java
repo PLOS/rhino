@@ -25,7 +25,6 @@ import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.ArticleItemIdentifier;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
-import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.rest.ClientItemId;
 import org.ambraproject.rhino.rest.ClientItemIdResolver;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
@@ -184,6 +183,7 @@ public class AssetFileCrudController extends DoiBasedCrudController {
       throws IOException {
     ClientItemId id = ClientItemIdResolver.resolve(getIdentifier(request), revisionNumber, ingestionNumber);
     ArticleItemIdentifier itemId = articleCrudService.resolveToItem(id);
+
     ArticleFileIdentifier fileId = ArticleFileIdentifier.create(itemId, fileType);
     previewFileFromVersionedModel(request, response, fileId);
   }

@@ -1,32 +1,33 @@
 package org.ambraproject.rhino.model;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name = "article")
-public class ArticleTable { //todo: rename to "Article" once the old Article class is removed
+public class ArticleTable implements Timestamped, Serializable { //todo: rename to "Article" once the old Article class is removed
 
   @Id
   @GeneratedValue
-  @Column(name = "articleId")
+  @Column
   private Long articleId;
 
-  @Column(name = "doi")
+  @Column
   private String doi;
 
-//todo: figure this out if possible to get list of comments on article w/o a new table or column
-//  @Cascade(CascadeType.SAVE_UPDATE)
-//  @ManyToMany(fetch = FetchType.LAZY)
-//  @JoinTable(
-//      name = "comment",
-//      joinColumns = @JoinColumn(name = "commentId"),
-//      inverseJoinColumns = @JoinColumn(name = "articleId")
-//  )
-//  private Set<Comment> comments;
+  @Generated(value = GenerationTime.INSERT)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(name = "created", insertable = false, updatable = false, columnDefinition = "timestamp default current_timestamp")
+  private Date publicationDate;
 
   public Long getArticleId() {
     return articleId;
@@ -44,13 +45,18 @@ public class ArticleTable { //todo: rename to "Article" once the old Article cla
     this.doi = doi;
   }
 
-//  public Set<Comment> getComments() {
-//    return comments;
-//  }
-//
-//  public void setComments(Set<Comment> comments) {
-//    this.comments = comments;
-//  }
+  public Date getPublicationDate() {
+    return publicationDate;
+  }
+
+  public void setPublicationDate(Date publicationDate) {
+    this.publicationDate = publicationDate;
+  }
+
+  @Override
+  public Date getLastModified() {
+    return publicationDate; //todo: get latest revision modified date?
+  }
 
 
   @Override

@@ -25,6 +25,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
+import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
@@ -71,6 +72,7 @@ import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.ErrorType;
 import org.plos.crepo.model.identity.RepoId;
+import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,6 +98,7 @@ import java.util.stream.Collectors;
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
  */
+@SuppressWarnings("JpaQlInspection")
 public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudService {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudServiceImpl.class);
@@ -157,10 +160,21 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public void repopulateCategories(ArticleIdentity id) throws IOException {
-    Article article = findArticleById(id);
-    Document xml = parseXml(readXml(id));
-    legacyIngestionService.populateCategories(article, xml);
+  public void populateCategories(ArticleIdentifier articleId) throws IOException {
+    ArticleTable article = getArticle(articleId);
+    ArticleRevision revision = getLatestArticleRevision(article);
+    Document manuscriptXml = getManuscriptXml(revision);
+    taxonomyService.populateCategories(article, manuscriptXml);
+  }
+
+  @Override
+  public Document getManuscriptXml(ArticleRevision revision) throws IOException {
+    Doi articleDoi = Doi.create(revision.getIngestion().getArticle().getDoi());
+    ArticleItemIdentifier articleItemId = resolveRevisionToItem(articleDoi, revision.getRevisionNumber());
+    ArticleFileIdentifier manuscriptId = ArticleFileIdentifier.create(articleItemId, "manuscript");
+    RepoObjectMetadata objectMetadata = assetCrudService.getArticleItemFile(manuscriptId);
+    InputStream manuscriptInputStream = contentRepoService.getRepoObject(objectMetadata.getVersion());
+    return parseXml(manuscriptInputStream);
   }
 
   static RestClientException complainAboutXml(XmlContentException e) {
@@ -192,8 +206,16 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   /**
    * {@inheritDoc}
+   * @param article
    */
   @Override
+  public Journal getPublicationJournal(ArticleTable article) {
+    ArticleRevision revision = getLatestArticleRevision(article);
+    Set<Journal> journals = revision.getIngestion().getJournals();
+    return journals.iterator().next(); // TODO: Need original journal?
+  }
+
+  @Deprecated
   public Journal getPublicationJournal(Article article) {
     String eissn = article.geteIssn();
     if (eissn == null) {
@@ -376,41 +398,44 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   /**
    * {@inheritDoc}
+   * @param articleId
    */
   @Override
-  public Transceiver readCategories(final ArticleIdentity id) throws IOException {
+  public Transceiver readCategories(final ArticleIdentifier articleId) throws IOException {
 
-    return new EntityTransceiver<Article>() {
+    return new EntityTransceiver<ArticleTable>() {
 
       @Override
-      protected Article fetchEntity() {
-        return findArticleById(id);
+      protected ArticleTable fetchEntity() {
+        return getArticle(articleId);
       }
 
       @Override
-      protected Object getView(Article entity) {
-        return entity.getCategories();
+      protected Object getView(ArticleTable entity) {
+        return taxonomyService.getCategoriesForArticle(entity);
       }
     };
   }
+
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public Transceiver getRawCategories(final ArticleIdentity id)
-      throws IOException {
+  public Transceiver getRawCategories(final ArticleIdentifier articleId) throws IOException {
 
     return new Transceiver() {
       @Override
       protected Calendar getLastModifiedDate() {
-        return copyToCalendar(findArticleById(id).getLastModified());
+        return null;
       }
 
       @Override
       protected Object getData() throws IOException {
-        List<String> rawTerms = taxonomyService.getRawTerms(parseXml(readXml(id)),
-            findArticleById(id), false);
+        ArticleTable article = getArticle(articleId);
+        ArticleRevision revision = getLatestArticleRevision(article);
+        Document manuscriptXml = getManuscriptXml(revision);
+        List<String> rawTerms = taxonomyService.getRawTerms(manuscriptXml, article, false /*isTextRequired*/);
         List<String> cleanedTerms = new ArrayList<>();
         for (String term : rawTerms) {
           term = term.replaceAll("<TERM>", "").replaceAll("</TERM>", "");
@@ -423,11 +448,15 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   /**
    * {@inheritDoc}
+   * @param articleId
    */
   @Override
-  public String getRawCategoriesAndText(final ArticleIdentity id) throws IOException {
-    List<String> rawTermsAndText = taxonomyService.getRawTerms(parseXml(readXml(id)),
-        findArticleById(id), true);
+  public String getRawCategoriesAndText(final ArticleIdentifier articleId) throws IOException {
+    ArticleTable article = getArticle(articleId);
+    ArticleRevision revision = getLatestArticleRevision(article);
+    Document manuscriptXml = getManuscriptXml(revision);
+
+    List<String> rawTermsAndText = taxonomyService.getRawTerms(manuscriptXml, article, true /*isTextRequired*/);
     StringBuilder cleanedTermsAndText = new StringBuilder();
     cleanedTermsAndText.append("<pre>");
     // HTML-escape the text, which is in the first element of the result array
@@ -594,6 +623,26 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return revision;
   }
 
+  @Override
+  public ArticleRevision getLatestArticleRevision(ArticleTable article) {
+    int latestRevision = getLatestRevision(Doi.create(article.getDoi()));
+    ArticleRevision revision = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "FROM ArticleVersion as av " +
+          "WHERE av.article = :article " +
+          "AND av.revisionNumber = :latestRevision"
+      );
+      query.setParameter("article", article);
+      query.setParameter("latestRevision", latestRevision);
+      return (ArticleRevision) query.uniqueResult();
+    });
+    if (revision == null) {
+      throw new NoSuchArticleIdException(ArticleIdentifier.create(article.getDoi()));
+    }
+    return revision;
+  }
+
+  @Override
   public ArticleTable getArticle(ArticleIdentifier articleIdentifier) {
     ArticleTable article = hibernateTemplate.execute(session -> {
       Query query = session.createQuery("FROM ArticleTable WHERE doi = :doi");

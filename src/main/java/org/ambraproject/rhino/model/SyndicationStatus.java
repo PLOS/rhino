@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 
 import java.util.EnumSet;
-import java.util.Optional;
 
 public enum SyndicationStatus {
   /**

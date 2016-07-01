@@ -131,27 +131,6 @@ public class ArticleCrudController extends ArticleSpaceController {
     articleCrudService.listRecent(query).respond(request, response, entityGson);
   }
 
-
-  /**
-   * Repopulates article category information by making a call to the taxonomy server.
-   *
-   * @param request          HttpServletRequest
-   * @param response         HttpServletResponse
-   * @throws IOException
-   */
-  @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.POST,
-      params = "repopulateCategories")
-  public void repopulateCategories(HttpServletRequest request, HttpServletResponse response)
-      throws IOException {
-    ArticleIdentity id = parse(request);
-
-    articleCrudService.repopulateCategories(id);
-
-    // Report the current categories
-    articleCrudService.readCategories(id).respond(request, response, entityGson);
-  }
-
   /**
    * Retrieves metadata about an article.
    *
@@ -270,6 +249,25 @@ public class ArticleCrudController extends ArticleSpaceController {
   }
 
   /**
+   * Populates article category information by making a call to the taxonomy server.
+   *
+   * @param request          HttpServletRequest
+   * @param response         HttpServletResponse
+   * @throws IOException
+   */
+  @Transactional(rollbackFor = {Throwable.class})
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.POST,
+      params = "populateCategories")
+  public void populateCategories(HttpServletRequest request, HttpServletResponse response)
+      throws IOException {
+    ArticleIdentifier articleId = ArticleIdentifier.create(getIdentifier(request));
+    articleCrudService.populateCategories(articleId);
+
+    // Report the current categories
+    articleCrudService.readCategories(articleId).respond(request, response, entityGson);
+  }
+
+  /**
    * Retrieves a list of objects representing categories associated with the article.
    *
    * @param request
@@ -280,8 +278,8 @@ public class ArticleCrudController extends ArticleSpaceController {
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "categories")
   public void readCategories(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    ArticleIdentity id = parse(request);
-    articleCrudService.readCategories(id).respond(request, response, entityGson);
+    ArticleIdentifier articleId = ArticleIdentifier.create(getIdentifier(request));
+    articleCrudService.readCategories(articleId).respond(request, response, entityGson);
   }
 
   /**
@@ -295,8 +293,28 @@ public class ArticleCrudController extends ArticleSpaceController {
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "rawCategories")
   public void getRawCategories(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    ArticleIdentity id = parse(request);
-    articleCrudService.getRawCategories(id).respond(request, response, entityGson);
+    ArticleIdentifier articleId = ArticleIdentifier.create(getIdentifier(request));
+    articleCrudService.getRawCategories(articleId).respond(request, response, entityGson);
+  }
+
+  /**
+   * Retrieves the raw taxonomy categories associated with the article along with the text that is sent to the
+   * taxonomy server for classification
+   *
+   * @param request
+   * @return a String containing the text and raw categories in the form of <text> \n\n <categories>
+   * @throws IOException
+   */
+  @Transactional(readOnly = true)
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "rawCategoriesAndText")
+  public ResponseEntity<String> getRawCategoriesAndText(HttpServletRequest request)
+      throws IOException {
+    ArticleIdentifier articleId = ArticleIdentifier.create(getIdentifier(request));
+
+    String categoriesAndText = articleCrudService.getRawCategoriesAndText(articleId);
+    HttpHeaders responseHeader = new HttpHeaders();
+    responseHeader.setContentType(MediaType.TEXT_HTML);
+    return new ResponseEntity<>(categoriesAndText, responseHeader, HttpStatus.OK);
   }
 
   /**
@@ -316,28 +334,6 @@ public class ArticleCrudController extends ArticleSpaceController {
     ArticleIdentity id = parse(request);
     articleCrudService.delete(id);
     return reportOk();
-  }
-
-  /**
-   * Retrieves the raw taxonomy categories associated with the article along with the text that is sent to the
-   * taxonomy server for classification
-   *
-   * @param request
-   * @return a String containing the text and raw categories in the form of <text> \n\n <categories>
-   * @throws IOException
-   */
-  @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "rawCategoriesAndText")
-  public ResponseEntity<String> getRawCategoriesAndText(HttpServletRequest request)
-      throws IOException {
-    ArticleIdentity id = parse(request);
-
-    String categoriesAndText = articleCrudService.getRawCategoriesAndText(id);
-    HttpHeaders responseHeader = new HttpHeaders();
-    responseHeader.setContentType(MediaType.TEXT_HTML);
-    ResponseEntity<String> response = new ResponseEntity<>(categoriesAndText, responseHeader,
-        HttpStatus.OK);
-    return response;
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.POST, params = "syndications")

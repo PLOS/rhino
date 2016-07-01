@@ -16,9 +16,9 @@ package org.ambraproject.rhino.rest.controller;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Category;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
@@ -32,7 +32,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.OptionalLong;
 
 /**
@@ -70,9 +69,9 @@ public class TaxonomyController extends RestController {
       String articleCategoryTerm = Iterables.getLast(TAXONOMY_PATH_SPLITTER.split(category.getPath()));
       if (categoryTerm.contentEquals(articleCategoryTerm)) {
         if (action.contentEquals("remove")) {
-          taxonomyService.deflagArticleCategory(article.getID(), category.getID(), userIdObj);
+          taxonomyService.deflagArticleCategory(article.getID(), category.getCategoryId(), userIdObj);
         } else if (action.contentEquals("add")) {
-          taxonomyService.flagArticleCategory(article.getID(), category.getID(), userIdObj);
+          taxonomyService.flagArticleCategory(article.getID(), category.getCategoryId(), userIdObj);
         }
       }
     }
