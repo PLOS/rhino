@@ -117,7 +117,6 @@ class VersionedIngestionService {
     return articleMetadata;
   }
 
-
   /**
    * @param articleTypes All the article types of the Article for which Syndication objects are being created
    * @return Whether to create a Syndication object for this Article
