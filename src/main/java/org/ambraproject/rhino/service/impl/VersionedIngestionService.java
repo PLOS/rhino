@@ -13,6 +13,7 @@ import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
+import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.PublicationState;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -116,6 +117,7 @@ class VersionedIngestionService {
 
     return articleMetadata;
   }
+
 
   /**
    * @param articleTypes All the article types of the Article for which Syndication objects are being created

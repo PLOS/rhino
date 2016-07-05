@@ -24,6 +24,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
+import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
@@ -38,11 +39,13 @@ import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleAsset;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRelationship;
+import org.ambraproject.rhino.model.ArticleRelationshipType;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.ArticleVersion;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.PublicationState;
+import org.ambraproject.rhino.model.VersionedArticleRelationship;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleTypeService;
@@ -535,6 +538,36 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           return new RelatedArticleView(relationship, relatedArticle);
         })
         .collect(Collectors.toList());
+  }
+
+  @Override
+  public void refreshArticleRelationships(ArticleIdentifier articleId) throws IOException {
+    ArticleTable article = getArticle(articleId);
+    ArticleVersion articleVersion = getLatestArticleVersion(article);
+    ArticleXml articleXml = new ArticleXml(getManuscriptXml(articleVersion));
+
+    // TODO: parse directly into new VersionedArticleRelationship objects when legacy parse code no longer needed
+    List<ArticleRelationship> xmlRelationships = articleXml.parseRelatedArticles();
+    hibernateTemplate.execute(session -> {
+      SQLQuery deleteQuery = session.createSQLQuery("DELETE FROM articleRelationship WHERE sourceArticleId = :articleId");
+      deleteQuery.setParameter("articleId", article.getArticleId());
+      deleteQuery.executeUpdate();
+      return null;
+    });
+    for (ArticleRelationship ar : xmlRelationships) {
+      ArticleRelationshipType arType = ArticleRelationshipType.fromString(ar.getType());
+      if (ar.getOtherArticleID() != null && arType != null) {
+        hibernateTemplate.execute(session -> {
+          SQLQuery insertQuery = session.createSQLQuery("" +
+              "INSERT INTO articleRelationship (sourceArticleId, targetArticleId, type, sortOrder) " +
+              "VALUES (:sourceId, :targetId, :type)");
+          insertQuery.setParameter("sourceId", ar.getParentArticle().getID());
+          insertQuery.setParameter("targetId", ar.getOtherArticleID());
+          insertQuery.setParameter("type", arType.toString());
+          return null;
+        });
+      }
+    }
   }
 
   /**

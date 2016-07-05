@@ -198,6 +198,8 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    */
   public abstract List<RelatedArticleView> getRelatedArticles(Article article);
 
+  void refreshArticleRelationships(ArticleIdentifier articleId) throws IOException;
+
   /**
    * Read the metadata of a random article.
    *
