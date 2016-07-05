@@ -334,7 +334,8 @@ public class ArticleCrudController extends ArticleSpaceController {
       throws IOException {
     ArticleVersionIdentifier versionId = getArticleVersionIdentifier(request, revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
-    syndicationCrudService.createSyndication(versionId, input.getTarget());
+
+    syndicationCrudService.createSyndication(versionId, input.getTargetQueue());
     return reportCreated();
   }
 
@@ -346,7 +347,8 @@ public class ArticleCrudController extends ArticleSpaceController {
       throws IOException {
     ArticleVersionIdentifier versionId = getArticleVersionIdentifier(request, revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
-    Syndication created = syndicationCrudService.syndicate(versionId, input.getTarget());
+
+    Syndication created = syndicationCrudService.syndicate(versionId, input.getTargetQueue());
     return reportOk(created.toString());
   }
 
@@ -356,8 +358,9 @@ public class ArticleCrudController extends ArticleSpaceController {
       throws IOException {
     ArticleVersionIdentifier versionId = getArticleVersionIdentifier(request, revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
-    Syndication patched = syndicationCrudService.updateSyndication(versionId, input.getTarget(),
-        input.getStatus(), input.getErrorMessage());
+
+    Syndication patched = syndicationCrudService.updateSyndication(versionId,
+        input.getTargetQueue(), input.getStatus(), input.getErrorMessage());
     return reportOk(patched.toString());
   }
 
