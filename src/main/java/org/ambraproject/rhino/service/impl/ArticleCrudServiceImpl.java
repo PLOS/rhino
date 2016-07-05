@@ -45,7 +45,6 @@ import org.ambraproject.rhino.model.ArticleVersion;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.PublicationState;
-import org.ambraproject.rhino.model.VersionedArticleRelationship;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleTypeService;

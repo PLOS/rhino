@@ -27,8 +27,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * An outgoing relationship between two articles (e.g. for corrections, sourceArticle = correction article,
