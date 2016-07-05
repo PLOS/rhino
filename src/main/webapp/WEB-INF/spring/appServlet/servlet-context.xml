@@ -83,6 +83,8 @@
     <beans:property name="transactionManager" ref="jmsTransactionManager"/>
   </beans:bean>
 
+  <beans:bean class="org.ambraproject.rhino.config.SpringMvcConfiguration" />
+
   <camel:camelContext xmlns="http://camel.apache.org/schema/spring">
     <camel:jmxAgent id="plos-queue" createConnector="false"/>
     <camel:template id="messageProducerTemplate"/>

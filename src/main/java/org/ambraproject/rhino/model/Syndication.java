@@ -28,8 +28,8 @@ public class Syndication implements Timestamped{
   private int syndicationId;
 
   @ManyToOne
-  @JoinColumn(name = "versionId")
-  private ArticleVersion articleVersion;
+  @JoinColumn(name = "revisionId")
+  private ArticleRevision articleRevision;
 
   @Column
   private String targetQueue;
@@ -60,10 +60,10 @@ public class Syndication implements Timestamped{
     super();
   }
 
-  public Syndication(ArticleVersion articleVersion, String targetQueue) {
+  public Syndication(ArticleRevision articleRevision, String targetQueue) {
     this();
     this.targetQueue = targetQueue;
-    this.articleVersion = articleVersion;
+    this.articleRevision = articleRevision;
   }
 
   public int getSyndicationId() {
@@ -74,12 +74,12 @@ public class Syndication implements Timestamped{
     this.syndicationId = syndicationId;
   }
 
-  public ArticleVersion getArticleVersion() {
-    return articleVersion;
+  public ArticleRevision getArticleRevision() {
+    return articleRevision;
   }
 
-  public void setArticleVersion(ArticleVersion articleVersion) {
-    this.articleVersion = articleVersion;
+  public void setArticleRevision(ArticleRevision articleRevision) {
+    this.articleRevision = articleRevision;
   }
 
   public String getTarget() {
@@ -147,33 +147,46 @@ public class Syndication implements Timestamped{
 
     if (syndicationId != that.syndicationId) return false;
     if (submissionCount != that.submissionCount) return false;
-    if (!articleVersion.equals(that.articleVersion)) return false;
-    if (!targetQueue.equals(that.targetQueue)) return false;
-    if (!status.equals(that.status)) return false;
-    if (errorMessage != null ? !errorMessage.equals(that.errorMessage) : that.errorMessage != null)
+    if (articleRevision != null ? !articleRevision.equals(that.articleRevision) : that.articleRevision != null) {
       return false;
-    return lastSubmitTimestamp != null ? lastSubmitTimestamp.equals(that.lastSubmitTimestamp) : that.lastSubmitTimestamp == null;
+    }
+    if (targetQueue != null ? !targetQueue.equals(that.targetQueue) : that.targetQueue != null) return false;
+    if (status != null ? !status.equals(that.status) : that.status != null) return false;
+    if (errorMessage != null ? !errorMessage.equals(that.errorMessage) : that.errorMessage != null) return false;
+    if (lastSubmitTimestamp != null ? !lastSubmitTimestamp.equals(that.lastSubmitTimestamp) : that.lastSubmitTimestamp != null) {
+      return false;
+    }
+    if (created != null ? !created.equals(that.created) : that.created != null) return false;
+    return lastModified != null ? lastModified.equals(that.lastModified) : that.lastModified == null;
 
   }
 
   @Override
   public int hashCode() {
     int result = syndicationId;
-    result = 31 * result + articleVersion.hashCode();
-    result = 31 * result + targetQueue.hashCode();
-    result = 31 * result + status.hashCode();
+    result = 31 * result + (articleRevision != null ? articleRevision.hashCode() : 0);
+    result = 31 * result + (targetQueue != null ? targetQueue.hashCode() : 0);
+    result = 31 * result + (status != null ? status.hashCode() : 0);
     result = 31 * result + submissionCount;
     result = 31 * result + (errorMessage != null ? errorMessage.hashCode() : 0);
     result = 31 * result + (lastSubmitTimestamp != null ? lastSubmitTimestamp.hashCode() : 0);
+    result = 31 * result + (created != null ? created.hashCode() : 0);
+    result = 31 * result + (lastModified != null ? lastModified.hashCode() : 0);
     return result;
   }
 
   @Override
   public String toString() {
     return "Syndication{" +
-        "article version='" + articleVersion + '\'' +
-        ", target queue='" + targetQueue + '\'' +
+        "syndicationId=" + syndicationId +
+        ", articleRevision=" + articleRevision +
+        ", targetQueue='" + targetQueue + '\'' +
         ", status='" + status + '\'' +
+        ", submissionCount=" + submissionCount +
+        ", errorMessage='" + errorMessage + '\'' +
+        ", lastSubmitTimestamp=" + lastSubmitTimestamp +
+        ", created=" + created +
+        ", lastModified=" + lastModified +
         '}';
   }
 }

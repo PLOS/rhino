@@ -21,8 +21,8 @@
 
 package org.ambraproject.rhino.service.impl;
 
-import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
-import org.ambraproject.rhino.model.ArticleVersion;
+import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
+import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.model.SyndicationStatus;
@@ -77,24 +77,25 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
 
   @Override
   @SuppressWarnings("unchecked")
-  public Syndication getSyndication(final ArticleVersionIdentifier versionId,
-      final String syndicationTargetQueue) {
-    ArticleVersion articleVersion = articleCrudService.getArticleVersion(versionId);
+  public Syndication getSyndication(final ArticleRevisionIdentifier revisionId,
+                                    final String syndicationTargetQueue) {
+    ArticleRevision articleRevision = articleCrudService.getArticleRevision(revisionId);
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "FROM Syndication s " +
           "WHERE s.targetQueue = :targetQueue " +
-          "AND s.articleVersion = :articleVersion");
+          "AND s.articleRevision = :articleRevision");
       query.setParameter(ArticleJsonNames.SYNDICATION_TARGET, syndicationTargetQueue);
-      query.setParameter("articleVersion", articleVersion);
+      query.setParameter("articleRevision", articleRevision);
       return (Syndication) query.uniqueResult();
     });
   }
 
   @Transactional(readOnly = true)
   @SuppressWarnings("unchecked")
-  public List<Syndication> getSyndications(final ArticleVersionIdentifier versionId) {
-    ArticleVersion articleVersion = articleCrudService.getArticleVersion(versionId);
+  @Override
+  public List<Syndication> getSyndications(ArticleRevisionIdentifier revisionId) {
+    ArticleRevision articleVersion = articleCrudService.getArticleRevision(revisionId);
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "FROM Syndication s " +
@@ -106,11 +107,11 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
 
   @Transactional(rollbackFor = {Throwable.class})
   @Override
-  public Syndication updateSyndication(final ArticleVersionIdentifier versionId,
+  public Syndication updateSyndication(final ArticleRevisionIdentifier revisionId,
       final String syndicationTargetQueue, final String status, final String errorMessage) {
-    Syndication syndication = getSyndication(versionId, syndicationTargetQueue);
+    Syndication syndication = getSyndication(revisionId, syndicationTargetQueue);
     if (syndication == null) {
-      throw new RuntimeException("No such syndication for doi " + versionId
+      throw new RuntimeException("No such syndication for doi " + revisionId
           + " and target " + syndicationTargetQueue);
     }
     syndication.setStatus(status);
@@ -121,8 +122,8 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
   }
 
   @Override
-  public Syndication createSyndication(ArticleVersionIdentifier versionId, String syndicationTargetQueue) {
-    ArticleVersion articleVersion = articleCrudService.getArticleVersion(versionId);
+  public Syndication createSyndication(ArticleRevisionIdentifier revisionId, String syndicationTargetQueue) {
+    ArticleRevision articleVersion = articleCrudService.getArticleRevision(revisionId);
     Syndication syndication = new Syndication(articleVersion, syndicationTargetQueue);
     syndication.setStatus(SyndicationStatus.PENDING.getLabel());
     syndication.setSubmissionCount(0);
@@ -186,10 +187,10 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
 
   @Transactional(rollbackFor = {Throwable.class})
   @Override
-  public Syndication syndicate(ArticleVersionIdentifier versionId, String syndicationTargetQueue) {
-    ArticleVersion articleVersion = articleCrudService.getArticleVersion(versionId);
+  public Syndication syndicate(ArticleRevisionIdentifier revisionId, String syndicationTargetQueue) {
+      ArticleRevision articleVersion = articleCrudService.getArticleRevision(revisionId);
 
-    Syndication syndication = getSyndication(versionId, syndicationTargetQueue);
+    Syndication syndication = getSyndication(revisionId, syndicationTargetQueue);
     if (syndication == null) {
       syndication = new Syndication(articleVersion, syndicationTargetQueue);
       syndication.setStatus(SyndicationStatus.IN_PROGRESS.getLabel());
@@ -204,23 +205,23 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
     }
 
     try {
-      messageSender.sendBody(syndicationTargetQueue, createBody(versionId));
+      messageSender.sendBody(syndicationTargetQueue, createBody(revisionId));
       log.info("Successfully sent a Message to plos-queue for {} to be syndicated to {}",
-          versionId, syndicationTargetQueue);
+          revisionId, syndicationTargetQueue);
       return syndication;
     } catch (Exception e) {
-      log.warn("Error syndicating " + versionId + " to " + syndicationTargetQueue, e);
-      return updateSyndication(versionId, syndicationTargetQueue,
+      log.warn("Error syndicating " + revisionId + " to " + syndicationTargetQueue, e);
+      return updateSyndication(revisionId, syndicationTargetQueue,
           SyndicationStatus.FAILURE.getLabel(), e.getMessage());
     }
   }
 
-  private String createBody(ArticleVersionIdentifier versionId) {
+  private String createBody(ArticleRevisionIdentifier revisionId) {
     StringBuilder body = new StringBuilder();
     body.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
         .append("<ambraMessage>")
-        .append("<doi>").append(versionId.getDoiName()).append("</doi>")
-        .append("<version>").append(versionId.getRevision()).append("</doi>")
+        .append("<doi>").append(revisionId.getDoiName()).append("</doi>")
+        .append("<version>").append(revisionId.getRevision()).append("</doi>")
         .append("</ambraMessage>");
 
     return body.toString();

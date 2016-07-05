@@ -1,61 +1,123 @@
 package org.ambraproject.rhino.model;
 
 import com.google.common.collect.ImmutableMap;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.plos.crepo.model.RepoVersion;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Maps;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
-import java.time.Instant;
-import java.util.Map;
-import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import java.util.Collection;
+import java.util.Date;
 import java.util.Optional;
 
-public class ArticleItem {
+@Entity
+@Table(name = "articleItem")
+public class ArticleItem implements Timestamped {
+
+  @Id
+  @GeneratedValue
+  @Column
+  private long itemId;
+
+  @JoinColumn(name = "ingestionId")
+  @ManyToOne
+  private ArticleIngestion ingestion;
+
+  @Column
+  private String doi;
+
+  @Column(name = "articleItemType")
+  private String itemType;
+
+  @Cascade(CascadeType.SAVE_UPDATE)
+  @OneToMany(targetEntity = ArticleFile.class, mappedBy = "item")
+  private Collection<ArticleFile> files;
+
+  @Column
+  private Date created;
 
 
-  private final DoiBasedIdentity doi;
-  private final String type;
-  private final ImmutableMap<String, RepoVersion> files;
-  private final Optional<Integer> revisionNumber;
-  private final PublicationState state;
-  private final Instant timestamp;
-
-  public ArticleItem(DoiBasedIdentity doi,
-                     String type,
-                     Map<String, RepoVersion> files,
-                     Integer revisionNumber,
-                     PublicationState state,
-                     Instant timestamp) {
-    this.doi = Objects.requireNonNull(doi);
-    this.type = Objects.requireNonNull(type);
-    this.files = ImmutableMap.copyOf(files);
-    this.revisionNumber = Optional.ofNullable(revisionNumber);
-    this.state = Objects.requireNonNull(state);
-    this.timestamp = Objects.requireNonNull(timestamp);
+  public long getItemId() {
+    return itemId;
   }
 
-  public DoiBasedIdentity getDoi() {
+  public void setItemId(long itemId) {
+    this.itemId = itemId;
+  }
+
+  public ArticleIngestion getIngestion() {
+    return ingestion;
+  }
+
+  public void setIngestion(ArticleIngestion ingestion) {
+    this.ingestion = ingestion;
+  }
+
+  public String getDoi() {
     return doi;
   }
 
-  public String getType() {
-    return type;
+  public void setDoi(String doi) {
+    this.doi = doi;
   }
 
-  public Optional<RepoVersion> getFile(String fileType) {
-    return Optional.ofNullable(files.get(fileType));
+  public String getItemType() {
+    return itemType;
   }
 
-  public Optional<Integer> getRevisionNumber() {
-    return revisionNumber;
+  public void setItemType(String itemType) {
+    this.itemType = itemType;
   }
 
-  public PublicationState getState() {
-    return state;
+  public Collection<ArticleFile> getFiles() {
+    return files;
   }
 
-  public Instant getTimestamp() {
-    return timestamp;
+  public void setFiles(Collection<ArticleFile> files) {
+    this.files = files;
   }
+
+  public Date getCreated() {
+    return created;
+  }
+
+  public void setCreated(Date created) {
+    this.created = created;
+  }
+
+  @Transient
+  @Override
+  public Date getLastModified() {
+    return getCreated();
+  }
+
+  private transient ImmutableMap<String, ArticleFile> fileMap;
+
+  @Transient
+  private ImmutableMap<String, ArticleFile> getFileMap() {
+    return (fileMap != null) ? fileMap :
+        (fileMap = Maps.uniqueIndex(getFiles(), ArticleFile::getFileType));
+  }
+
+  @Transient
+  public Optional<ArticleFile> getFile(String fileType) {
+    return Optional.ofNullable(getFileMap().get(fileType));
+  }
+
+  @Transient
+  public ImmutableSet<String> getFileTypes() {
+    return getFileMap().keySet();
+  }
+
 
   @Override
   public boolean equals(Object o) {
@@ -64,21 +126,15 @@ public class ArticleItem {
 
     ArticleItem that = (ArticleItem) o;
 
-    if (!doi.equals(that.doi)) return false;
-    if (!type.equals(that.type)) return false;
-    if (!files.equals(that.files)) return false;
-    if (!revisionNumber.equals(that.revisionNumber)) return false;
-    return timestamp.equals(that.timestamp);
+    if (ingestion != null ? !ingestion.equals(that.ingestion) : that.ingestion != null) return false;
+    return doi != null ? doi.equals(that.doi) : that.doi == null;
 
   }
 
   @Override
   public int hashCode() {
-    int result = doi.hashCode();
-    result = 31 * result + type.hashCode();
-    result = 31 * result + files.hashCode();
-    result = 31 * result + revisionNumber.hashCode();
-    result = 31 * result + timestamp.hashCode();
+    int result = ingestion != null ? ingestion.hashCode() : 0;
+    result = 31 * result + (doi != null ? doi.hashCode() : 0);
     return result;
   }
 }

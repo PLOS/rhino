@@ -21,12 +21,12 @@ public final class ArticleFileIdentifier {
     return new ArticleFileIdentifier(itemIdentifier, fileType);
   }
 
-  public static ArticleFileIdentifier create(Doi doi, int revision, String fileType) {
-    return create(ArticleItemIdentifier.create(doi, revision), fileType);
+  public static ArticleFileIdentifier create(Doi doi, int ingestionNumber, String fileType) {
+    return create(ArticleItemIdentifier.create(doi, ingestionNumber), fileType);
   }
 
-  public static ArticleFileIdentifier create(String doi, int revision, String fileType) {
-    return create(ArticleItemIdentifier.create(doi, revision), fileType);
+  public static ArticleFileIdentifier create(String doi, int ingestionNumber, String fileType) {
+    return create(ArticleItemIdentifier.create(doi, ingestionNumber), fileType);
   }
 
   public ArticleItemIdentifier getItemIdentifier() {

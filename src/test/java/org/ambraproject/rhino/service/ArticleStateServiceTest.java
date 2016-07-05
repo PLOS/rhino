@@ -17,6 +17,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.RhinoTestHelper;
+import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.model.Article;
@@ -36,6 +37,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.NotFoundException;
+import org.plos.crepo.model.identity.RepoId;
 import org.plos.crepo.service.ContentRepoService;
 import org.plos.crepo.service.InMemoryContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +82,9 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
   @Autowired
   private Gson entityGson;
 
+  @Autowired
+  private RuntimeConfiguration runtimeConfiguration;
+
   @Test
   public void testServiceAutowiring() {
     assertNotNull(articleStateService);
@@ -101,7 +106,8 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
   }
 
   private void checkFileExistence(AssetFileIdentity fileIdentity, boolean expectedToExist) throws IOException {
-    try (InputStream stream = contentRepoService.getLatestRepoObject(fileIdentity.toString())) {
+    RepoId repoId = RepoId.create(runtimeConfiguration.getCorpusStorage().getDefaultBucket(), fileIdentity.toString());
+    try (InputStream stream = contentRepoService.getLatestRepoObject(repoId)) {
       assertNotNull(stream);
       assertTrue(expectedToExist);
     } catch (InMemoryContentRepoService.InMemoryContentRepoServiceException|NotFoundException nfe) {

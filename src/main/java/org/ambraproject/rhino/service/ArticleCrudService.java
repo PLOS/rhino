@@ -20,15 +20,18 @@ package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleItemIdentifier;
-import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
+import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
+import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
-import org.ambraproject.rhino.model.ArticleVersion;
 import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.rest.ClientItemId;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.util.Archive;
@@ -221,7 +224,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * @deprecated <em>TEMPORARY.</em> To be removed when the versioned data model is fully supported.
    */
   @Deprecated
-  public abstract Transceiver readVersionedMetadata(ArticleVersionIdentifier versionId,
+  public abstract Transceiver readVersionedMetadata(ArticleIngestionIdentifier ingestionId,
                                                     ArticleMetadataSource source);
 
   /**
@@ -244,11 +247,18 @@ public interface ArticleCrudService extends DoiBasedCrudService {
 
   public abstract ArticleItem getArticleItem(ArticleItemIdentifier id);
 
-  public abstract ArticleVersion getArticleVersion(ArticleVersionIdentifier articleIdentifier);
+  public abstract ArticleIngestion getArticleIngestion(ArticleIngestionIdentifier articleId);
 
-  public abstract ArticleVersion getLatestArticleVersion(ArticleTable article);
+  public abstract ArticleRevision getArticleRevision(ArticleRevisionIdentifier revisionId);
+
+  public abstract ArticleRevision getLatestArticleRevision(ArticleTable article);
 
   public abstract ArticleTable getArticle(ArticleIdentifier articleIdentifier);
 
-  public abstract Document getManuscriptXml(ArticleVersion articleVersion) throws IOException;
+  public abstract Document getManuscriptXml(ArticleRevision articleRevision) throws IOException;
+
+  public abstract ArticleIngestionIdentifier resolveToIngestion(ClientItemId id);
+
+  public abstract ArticleItemIdentifier resolveToItem(ClientItemId id);
+
 }
