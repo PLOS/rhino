@@ -70,7 +70,7 @@ class VersionedIngestionService {
     try (InputStream manifestStream = new BufferedInputStream(archive.openFile(manifestEntry))) {
       manifestXml = new ManifestXml(AmbraService.parseXml(manifestStream));
     }
-    validateManifestCompleteness(manifestXml, archive);
+    //validateManifestCompleteness(manifestXml, archive);
 
     ImmutableList<ManifestXml.Asset> assets = manifestXml.getAssets();
     ManifestXml.Asset manuscriptAsset = findManuscriptAsset(assets);

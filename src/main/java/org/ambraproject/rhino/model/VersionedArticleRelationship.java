@@ -23,6 +23,8 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -39,6 +41,11 @@ import java.util.Date;
 @Table(name = "articleRelationship")
 public class VersionedArticleRelationship implements Timestamped {
 
+  @Id
+  @GeneratedValue
+  @Column
+  private int articleRelationshipId;
+
   @ManyToOne
   @JoinColumn(name = "sourceArticleId")
   private ArticleTable sourceArticle;
@@ -48,10 +55,7 @@ public class VersionedArticleRelationship implements Timestamped {
   private ArticleTable targetArticle;
 
   @Column
-  @Type(type = "org.ambraproject.rhino.config.HibernateAdaptingType",
-      parameters = {@Parameter(name = "class", value = "org.ambraproject.rhino.model.ArticleRelationshipType"),
-          @Parameter(name = "adapter", value = "ADAPTER")})
-  private ArticleRelationshipType type;
+  private String type;
 
   @Column
   private Date created;
@@ -75,11 +79,11 @@ public class VersionedArticleRelationship implements Timestamped {
     this.targetArticle = targetArticle;
   }
 
-  public ArticleRelationshipType getType() {
+  public String getType() {
     return type;
   }
 
-  public void setType(ArticleRelationshipType type) {
+  public void setType(String type) {
     this.type = type;
   }
 

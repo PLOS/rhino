@@ -39,7 +39,6 @@ import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleAsset;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRelationship;
-import org.ambraproject.rhino.model.ArticleRelationshipType;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.ArticleVersion;
 import org.ambraproject.rhino.model.Category;
@@ -545,7 +544,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     ArticleVersion articleVersion = getLatestArticleVersion(article);
     ArticleXml articleXml = new ArticleXml(getManuscriptXml(articleVersion));
 
-    // TODO: parse directly into new VersionedArticleRelationship objects when legacy parse code no longer needed
+    // TODO: replace legacy parse code when no longer needed for legacy ingestion
     List<ArticleRelationship> xmlRelationships = articleXml.parseRelatedArticles();
     hibernateTemplate.execute(session -> {
       SQLQuery deleteQuery = session.createSQLQuery("DELETE FROM articleRelationship WHERE sourceArticleId = :articleId");
@@ -553,18 +552,28 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       deleteQuery.executeUpdate();
       return null;
     });
+
     for (ArticleRelationship ar : xmlRelationships) {
-      ArticleRelationshipType arType = ArticleRelationshipType.fromString(ar.getType());
-      if (ar.getOtherArticleID() != null && arType != null) {
-        hibernateTemplate.execute(session -> {
-          SQLQuery insertQuery = session.createSQLQuery("" +
-              "INSERT INTO articleRelationship (sourceArticleId, targetArticleId, type, sortOrder) " +
-              "VALUES (:sourceId, :targetId, :type)");
-          insertQuery.setParameter("sourceId", ar.getParentArticle().getID());
-          insertQuery.setParameter("targetId", ar.getOtherArticleID());
-          insertQuery.setParameter("type", arType.toString());
-          return null;
-        });
+      if (ar.getOtherArticleDoi() != null) {
+        ArticleTable targetArticle = null;
+        try {
+          targetArticle = getArticle(ArticleIdentifier.create(ar.getOtherArticleDoi()));
+        } catch (NoSuchArticleIdException e) {
+          // likely a reference to an article external to PLOS and so the relationship is not persisted
+        }
+        if (targetArticle != null) {
+          Long targetId = targetArticle.getArticleId();
+          hibernateTemplate.execute(session -> {
+            SQLQuery insertQuery = session.createSQLQuery("" +
+                "INSERT INTO articleRelationship (sourceArticleId, targetArticleId, type) " +
+                "VALUES (:sourceId, :targetId, :type)");
+            insertQuery.setParameter("sourceId", article.getArticleId());
+            insertQuery.setParameter("targetId", targetId);
+            insertQuery.setParameter("type", ar.getType());
+            insertQuery.executeUpdate();
+            return null;
+          });
+        }
       }
     }
   }
