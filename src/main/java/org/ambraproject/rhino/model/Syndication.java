@@ -32,7 +32,7 @@ public class Syndication implements Timestamped{
   private ArticleRevision articleRevision;
 
   @Column
-  private String target;
+  private String targetQueue;
 
   @Column
   private String status;
@@ -60,9 +60,9 @@ public class Syndication implements Timestamped{
     super();
   }
 
-  public Syndication(ArticleRevision articleRevision, String target) {
+  public Syndication(ArticleRevision articleRevision, String targetQueue) {
     this();
-    this.target = target;
+    this.targetQueue = targetQueue;
     this.articleRevision = articleRevision;
   }
 
@@ -83,11 +83,11 @@ public class Syndication implements Timestamped{
   }
 
   public String getTarget() {
-    return target;
+    return targetQueue;
   }
 
   public void setTarget(String target) {
-    this.target = target;
+    this.targetQueue = target;
   }
 
   public String getStatus() {
@@ -147,33 +147,46 @@ public class Syndication implements Timestamped{
 
     if (syndicationId != that.syndicationId) return false;
     if (submissionCount != that.submissionCount) return false;
-    if (!articleRevision.equals(that.articleRevision)) return false;
-    if (!target.equals(that.target)) return false;
-    if (!status.equals(that.status)) return false;
-    if (errorMessage != null ? !errorMessage.equals(that.errorMessage) : that.errorMessage != null)
+    if (articleRevision != null ? !articleRevision.equals(that.articleRevision) : that.articleRevision != null) {
       return false;
-    return lastSubmitTimestamp != null ? lastSubmitTimestamp.equals(that.lastSubmitTimestamp) : that.lastSubmitTimestamp == null;
+    }
+    if (targetQueue != null ? !targetQueue.equals(that.targetQueue) : that.targetQueue != null) return false;
+    if (status != null ? !status.equals(that.status) : that.status != null) return false;
+    if (errorMessage != null ? !errorMessage.equals(that.errorMessage) : that.errorMessage != null) return false;
+    if (lastSubmitTimestamp != null ? !lastSubmitTimestamp.equals(that.lastSubmitTimestamp) : that.lastSubmitTimestamp != null) {
+      return false;
+    }
+    if (created != null ? !created.equals(that.created) : that.created != null) return false;
+    return lastModified != null ? lastModified.equals(that.lastModified) : that.lastModified == null;
 
   }
 
   @Override
   public int hashCode() {
     int result = syndicationId;
-    result = 31 * result + articleRevision.hashCode();
-    result = 31 * result + target.hashCode();
-    result = 31 * result + status.hashCode();
+    result = 31 * result + (articleRevision != null ? articleRevision.hashCode() : 0);
+    result = 31 * result + (targetQueue != null ? targetQueue.hashCode() : 0);
+    result = 31 * result + (status != null ? status.hashCode() : 0);
     result = 31 * result + submissionCount;
     result = 31 * result + (errorMessage != null ? errorMessage.hashCode() : 0);
     result = 31 * result + (lastSubmitTimestamp != null ? lastSubmitTimestamp.hashCode() : 0);
+    result = 31 * result + (created != null ? created.hashCode() : 0);
+    result = 31 * result + (lastModified != null ? lastModified.hashCode() : 0);
     return result;
   }
 
   @Override
   public String toString() {
     return "Syndication{" +
-        "articleVersion='" + articleRevision + '\'' +
-        ", target='" + target + '\'' +
+        "syndicationId=" + syndicationId +
+        ", articleRevision=" + articleRevision +
+        ", targetQueue='" + targetQueue + '\'' +
         ", status='" + status + '\'' +
+        ", submissionCount=" + submissionCount +
+        ", errorMessage='" + errorMessage + '\'' +
+        ", lastSubmitTimestamp=" + lastSubmitTimestamp +
+        ", created=" + created +
+        ", lastModified=" + lastModified +
         '}';
   }
 }

@@ -50,11 +50,11 @@ public interface SyndicationCrudService {
   /**
    * Return the syndication for the given article and the given target.  Return null if there is none.
    *
-   * @param revisionId        the doi of the article to query
-   * @param syndicationTarget the syndication target
+   * @param revisionId             the doi of the article to query
+   * @param syndicationTargetQueue the syndication target
    * @return the matching syndication, if it exists, else null
    */
-  public Syndication getSyndication(ArticleRevisionIdentifier revisionId, String syndicationTarget);
+  public Syndication getSyndication(ArticleRevisionIdentifier revisionId, String syndicationTargetQueue);
 
   /**
    * Update the Syndication object specified by the <code>articleDoi</code> and <code>syndicationTarget</code>
@@ -68,30 +68,29 @@ public interface SyndicationCrudService {
    * Syndication object will be returned</li>
    *
    * @param revisionId        The unique identifier for the Article which was (or is to be) syndicated
-   * @param syndicationTarget The organization to which this Article was (or will be) syndicated
+   * @param syndicationTargetQueue The organization to which this Article was (or will be) syndicated
    * @param status            The current status of this syndication (e.g., pending, failure, success, etc)
    * @param errorMessage      Any failure during the process of updating this Syndication. A null in this field will
    *                          <strong>not</strong> update the errorMessage of this Syndication
    * @return The Syndication that matches the <code>articleDoi</code> and <code>syndicationTarget</code> parameters
    */
-  public Syndication updateSyndication(ArticleRevisionIdentifier revisionId, String syndicationTarget, String status, String errorMessage);
+  public Syndication updateSyndication(ArticleRevisionIdentifier revisionId, String syndicationTargetQueue, String status, String errorMessage);
 
   /**
-   * For the Article indicated by <code>articleDoi</code>, create a new Syndication object for each possible syndication
-   * target which does not already have a Syndication object. Return the complete list of Syndication objects for this
-   * Article.
+   * For the Article indicated by <code>articleDoi</code>, create a new Syndication object specified by the input
+   * target. Return the Syndication object for this Article.
    * <p/>
    * If a Syndication object for a given syndication target already exists for this Article, then the datastore will not
    * be updated for that Syndication object. This silent failure mode is useful during the re-ingestion of any Article
    * which was previously published and syndicated.
    * <p/>
    *
-   * @param revisionId The unique identifier for the Article which was (or is to be) syndicated
+   * @param revisionId             The unique identifier for the Article which was (or is to be) syndicated
+   * @param syndicationTargetQueue The syndication target to which will be sent the Article designated by
+   *                               <code>articleDoi</code>
    * @return The complete list of Syndication objects for this Article
    */
-  public List<Syndication> createSyndications(ArticleRevisionIdentifier revisionId);
-
-  public Syndication createSyndication(ArticleRevisionIdentifier revisionId, String target);
+  public Syndication createSyndication(ArticleRevisionIdentifier revisionId, String syndicationTargetQueue);
 
   /**
    * Get Syndications (from the current journal) that each have a <code>status</code> defined in statuses and a
@@ -118,12 +117,11 @@ public interface SyndicationCrudService {
    * status set to "in progress".  If the message cannot be pushed to the message queue, then the corresponding
    * Syndication object will have its status set to "failure".
    *
-   * @param revisionId        The ID for the Article which will be syndicated to the <code>syndicationTarget</code>
-   * @param syndicationTarget The syndication target to which will be sent the Article designated by
-   *                          <code>articleDoi</code>
+   * @param revisionId             The ID for the Article which will be syndicated to the <code>syndicationTarget</code>
+   * @param syndicationTargetQueue String indicating which Queue endpoint to send the syndication message to
    * @return The Syndication object which matches the <code>articleDoi</code> and <code>syndicationTarget</code>
    * parameters.  Contains the latest status information.
    */
-  public Syndication syndicate(ArticleRevisionIdentifier revisionId, String syndicationTarget);
+  public Syndication syndicate(ArticleRevisionIdentifier revisionId, String syndicationTargetQueue);
 
 }

@@ -10,7 +10,6 @@ import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
-import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleFile;
@@ -114,25 +113,8 @@ class VersionedIngestionService {
 
     stubAssociativeFields(articleMetadata);
 
-    ArticleIngestionIdentifier ingestionIdentifier = ArticleIngestionIdentifier.create(
-        articleIdentifier.getDoi(), parsedArticle.getRevisionNumber());
-
-    if (isSyndicatableType(articleMetadata.getTypes())) {
-//      parentService.syndicationService.createSyndications(ingestionIdentifier);
-    }
-
     return articleMetadata;
   }
-
-  /**
-   * @param articleTypes All the article types of the Article for which Syndication objects are being created
-   * @return Whether to create a Syndication object for this Article
-   */
-  private boolean isSyndicatableType(Set<String> articleTypes) {
-    String articleTypeDoNotCreateSyndication = "http://rdf.plos.org/RDF/articleType/Issue%20Image";
-    return !(articleTypes != null && articleTypes.contains(articleTypeDoNotCreateSyndication));
-  }
-
 
   /**
    * Get the PK of the "article" row for a DOI if it exists, and insert it if it doesn't.

@@ -35,10 +35,7 @@ import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleJsonNames;
 import org.ambraproject.rhino.view.article.SyndicationOutputView;
 import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.ConfigurationKey;
-import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.hibernate.Query;
-import org.omg.CORBA.portable.ApplicationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +46,6 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -81,15 +77,16 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
 
   @Override
   @SuppressWarnings("unchecked")
-  public Syndication getSyndication(final ArticleRevisionIdentifier revisionId, final String syndicationTarget) {
-    ArticleRevision articleVersion = articleCrudService.getArticleRevision(revisionId);
+  public Syndication getSyndication(final ArticleRevisionIdentifier revisionId,
+                                    final String syndicationTargetQueue) {
+    ArticleRevision articleRevision = articleCrudService.getArticleRevision(revisionId);
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "FROM Syndication s " +
-          "WHERE s.target = :target " +
-          "AND s.articleVersion = :articleVersion");
-      query.setParameter(ArticleJsonNames.SYNDICATION_TARGET, syndicationTarget);
-      query.setParameter("articleVersion", articleVersion);
+          "WHERE s.targetQueue = :targetQueue " +
+          "AND s.articleRevision = :articleRevision");
+      query.setParameter(ArticleJsonNames.SYNDICATION_TARGET, syndicationTargetQueue);
+      query.setParameter("articleRevision", articleRevision);
       return (Syndication) query.uniqueResult();
     });
   }
@@ -111,11 +108,11 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
   @Transactional(rollbackFor = {Throwable.class})
   @Override
   public Syndication updateSyndication(final ArticleRevisionIdentifier revisionId,
-                                       final String syndicationTarget, final String status, final String errorMessage) {
-    Syndication syndication = getSyndication(revisionId, syndicationTarget);
+      final String syndicationTargetQueue, final String status, final String errorMessage) {
+    Syndication syndication = getSyndication(revisionId, syndicationTargetQueue);
     if (syndication == null) {
       throw new RuntimeException("No such syndication for doi " + revisionId
-          + " and target " + syndicationTarget);
+          + " and target " + syndicationTargetQueue);
     }
     syndication.setStatus(status);
     syndication.setErrorMessage(errorMessage);
@@ -124,40 +121,10 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
     return syndication;
   }
 
-  @Transactional(rollbackFor = {Throwable.class})
   @Override
-  @SuppressWarnings("unchecked")
-  public List<Syndication> createSyndications(ArticleRevisionIdentifier revisionId) {
-
-    List<HierarchicalConfiguration> allSyndicationTargets = ((HierarchicalConfiguration)
-        configuration).configurationsAt("ambra.services.syndications.syndication");
-
-    if (allSyndicationTargets == null || allSyndicationTargets.size() < 1) { // Should never happen.
-      log.warn("There are no Syndication Targets defined in the property: " +
-          "ambra.services.syndications.syndication so no Syndication objects were created for " +
-          "the article with ID = " + revisionId);
-      return new ArrayList<>();
-    }
-
-    List<Syndication> syndications = new ArrayList<>(allSyndicationTargets.size());
-
-    for (HierarchicalConfiguration targetNode : allSyndicationTargets) {
-      String target = targetNode.getString("[@target]");
-      Syndication existingSyndication = getSyndication(revisionId, target);
-      //todo: cleanup - this list return is not used
-      if (existingSyndication != null) {
-        syndications.add(existingSyndication);
-      } else {
-        syndications.add(createSyndication(revisionId, target));
-      }
-    }
-    return syndications;
-  }
-
-  @Override
-  public Syndication createSyndication(ArticleRevisionIdentifier revisionId, String target) {
+  public Syndication createSyndication(ArticleRevisionIdentifier revisionId, String syndicationTargetQueue) {
     ArticleRevision articleVersion = articleCrudService.getArticleRevision(revisionId);
-    Syndication syndication = new Syndication(articleVersion, target);
+    Syndication syndication = new Syndication(articleVersion, syndicationTargetQueue);
     syndication.setStatus(SyndicationStatus.PENDING.getLabel());
     syndication.setSubmissionCount(0);
     hibernateTemplate.save(syndication);
@@ -220,12 +187,12 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
 
   @Transactional(rollbackFor = {Throwable.class})
   @Override
-  public Syndication syndicate(ArticleRevisionIdentifier revisionId, String syndicationTarget) {
-    ArticleRevision articleVersion = articleCrudService.getArticleRevision(revisionId);
+  public Syndication syndicate(ArticleRevisionIdentifier revisionId, String syndicationTargetQueue) {
+      ArticleRevision articleVersion = articleCrudService.getArticleRevision(revisionId);
 
-    Syndication syndication = getSyndication(revisionId, syndicationTarget);
+    Syndication syndication = getSyndication(revisionId, syndicationTargetQueue);
     if (syndication == null) {
-      syndication = new Syndication(articleVersion, syndicationTarget);
+      syndication = new Syndication(articleVersion, syndicationTargetQueue);
       syndication.setStatus(SyndicationStatus.IN_PROGRESS.getLabel());
       syndication.setSubmissionCount(1);
       syndication.setLastSubmitTimestamp(new Date());
@@ -238,98 +205,24 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
     }
 
     try {
-      sendSyndicationMessage(syndicationTarget, revisionId);
+      messageSender.sendBody(syndicationTargetQueue, createBody(revisionId));
       log.info("Successfully sent a Message to plos-queue for {} to be syndicated to {}",
-          revisionId, syndicationTarget);
+          revisionId, syndicationTargetQueue);
       return syndication;
     } catch (Exception e) {
-      log.warn("Error syndicating " + revisionId + " to " + syndicationTarget, e);
-      return updateSyndication(revisionId, syndicationTarget, SyndicationStatus.FAILURE.getLabel(), e.getMessage());
+      log.warn("Error syndicating " + revisionId + " to " + syndicationTargetQueue, e);
+      return updateSyndication(revisionId, syndicationTargetQueue,
+          SyndicationStatus.FAILURE.getLabel(), e.getMessage());
     }
   }
 
-  private void sendSyndicationMessage(String target, ArticleRevisionIdentifier revisionId)
-      throws ApplicationException {
-    List<HierarchicalConfiguration> syndications = ((HierarchicalConfiguration) configuration)
-        .configurationsAt("ambra.services.syndications.syndication");
-
-    String queue = null;
-    String additionalBodyContent = null;
-    if (syndications != null) {
-      for (HierarchicalConfiguration syndication : syndications) {
-        if (target.equals(syndication.getString("[@target]"))) {
-          queue = syndication.getString("queue", null);
-          HierarchicalConfiguration message = (HierarchicalConfiguration) syndication.subset("message");
-          additionalBodyContent = createAdditionalBodyFromConfiguration(message);
-        }
-      }
-    }
-
-    if (queue == null) {
-      throw new RuntimeException(target + " queue not configured");
-    }
-
-    messageSender.sendBody(queue, createBody(revisionId, additionalBodyContent));
-
-  }
-
-  /**
-   * If there is content inside <syndication><message> configuration append it to message.
-   *
-   * @param configuration Sub configuration under "message" tag.
-   * @return XML code snippet.
-   */
-  private static String createAdditionalBodyFromConfiguration(HierarchicalConfiguration configuration) {
-    if (configuration == null || configuration.isEmpty()) {
-      return null;
-    }
-    Visitor visitor = new Visitor();
-    configuration.getRoot().visit(visitor, new ConfigurationKey(""));
-    return visitor.body.toString();
-  }
-
-  /**
-   * Visitor class for rendering XML string from configuration. Warning: will not handle XML attributes in
-   * configuration.
-   */
-  private static class Visitor extends HierarchicalConfiguration.NodeVisitor {
-    private final StringBuilder body = new StringBuilder();
-
-    @Override
-    public void visitBeforeChildren(HierarchicalConfiguration.Node node, ConfigurationKey configurationKey) {
-      String name = node.getName();
-      if (name != null) {
-        body.append('<').append(name).append('>');
-      }
-      Object value = node.getValue();
-      if (value != null) {
-        body.append((String) value);
-      }
-      super.visitBeforeChildren(node, configurationKey);
-    }
-
-    @Override
-    public void visitAfterChildren(HierarchicalConfiguration.Node node, ConfigurationKey configurationKey) {
-      String name = node.getName();
-      if (name != null) {
-        body.append("</").append(name).append('>');
-      }
-      super.visitAfterChildren(node, configurationKey);
-    }
-  }
-
-  private String createBody(ArticleRevisionIdentifier revisionId, String additionalBodyContent) {
+  private String createBody(ArticleRevisionIdentifier revisionId) {
     StringBuilder body = new StringBuilder();
     body.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
         .append("<ambraMessage>")
         .append("<doi>").append(revisionId.getDoiName()).append("</doi>")
-        .append("<version>").append(revisionId.getRevision()).append("</doi>");
-
-    if (additionalBodyContent != null) {
-      body.append(additionalBodyContent);
-    }
-
-    body.append("</ambraMessage>");
+        .append("<version>").append(revisionId.getRevision()).append("</doi>")
+        .append("</ambraMessage>");
 
     return body.toString();
   }
