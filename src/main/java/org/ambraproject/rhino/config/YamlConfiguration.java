@@ -59,47 +59,78 @@ public class YamlConfiguration implements RuntimeConfiguration {
   }
 
 
-  private static final ContentRepoEndpoint NULL_CONTENT_REPO_ENDPOINT = new ContentRepoEndpoint() {
+  private static final MultiBucketContentRepoEndpoint NULL_CONTENT_REPO_ENDPOINT = new MultiBucketContentRepoEndpoint() {
     @Override
     public URI getAddress() {
       return null;
     }
 
     @Override
-    public String getBucket() {
+    public String getDefaultBucket() {
+      return null;
+    }
+
+    @Override
+    public ImmutableSet<String> getAllBuckets() {
       return null;
     }
   };
 
-  private static ContentRepoEndpoint buildContentRepoEndpointView(final ContentRepoEndpointInput input) {
-    return (input == null) ? NULL_CONTENT_REPO_ENDPOINT
-        : new ContentRepoEndpoint() {
+  private transient MultiBucketContentRepoEndpoint corpusStorageView;
+
+  @Override
+  public MultiBucketContentRepoEndpoint getCorpusStorage() {
+    return (corpusStorageView != null) ? corpusStorageView
+        : (input.contentRepo == null) ? NULL_CONTENT_REPO_ENDPOINT
+        : (input.contentRepo.corpus == null) ? NULL_CONTENT_REPO_ENDPOINT
+        : (corpusStorageView = new MultiBucketContentRepoEndpoint() {
+
+      private final ImmutableSet<String> buckets;
+
+      {
+        ImmutableSet.Builder<String> buckets = ImmutableSet.builder();
+        buckets.add(getDefaultBucket());
+        if (input.contentRepo.corpus.secondaryBuckets != null) {
+          buckets.addAll(input.contentRepo.corpus.secondaryBuckets);
+        }
+        this.buckets = buckets.build();
+      }
+
       @Override
       public URI getAddress() {
-        return input.address;
+        return input.contentRepo.corpus.address;
       }
 
       @Override
-      public String getBucket() {
-        return input.bucket;
+      public String getDefaultBucket() {
+        return input.contentRepo.corpus.bucket;
       }
-    };
+
+      @Override
+      public ImmutableSet<String> getAllBuckets() {
+        return buckets;
+      }
+    });
   }
 
-  @Override
-  public ContentRepoEndpoint getCorpusBucket() {
-    return buildContentRepoEndpointView(
-        (input.contentRepo == null) ? null
-            : (input.contentRepo.corpus == null) ? null
-            : input.contentRepo.corpus);
-  }
+  private transient ContentRepoEndpoint editorialStorageView;
 
   @Override
-  public ContentRepoEndpoint getEditorialBucket() {
-    return buildContentRepoEndpointView(
-        (input.contentRepo == null) ? null
-            : (input.contentRepo.editorial == null) ? null
-            : input.contentRepo.editorial);
+  public ContentRepoEndpoint getEditorialStorage() {
+    return (editorialStorageView != null) ? editorialStorageView
+        : (input.contentRepo == null) ? NULL_CONTENT_REPO_ENDPOINT
+        : (input.contentRepo.editorial == null) ? NULL_CONTENT_REPO_ENDPOINT
+        : (editorialStorageView = new ContentRepoEndpoint() {
+      @Override
+      public URI getAddress() {
+        return input.contentRepo.editorial.address;
+      }
+
+      @Override
+      public String getDefaultBucket() {
+        return input.contentRepo.editorial.bucket;
+      }
+    });
   }
 
 
@@ -278,7 +309,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
 
   public static class ContentRepoInput {
     private ContentRepoEndpointInput editorial; // upstairs
-    private ContentRepoEndpointInput corpus;  // downstairs
+    private MultibucketContentRepoEndpointInput corpus;  // downstairs
 
     /**
      * @deprecated For reflective access by SnakeYAML only
@@ -292,14 +323,14 @@ public class YamlConfiguration implements RuntimeConfiguration {
      * @deprecated For reflective access by SnakeYAML only
      */
     @Deprecated
-    public void setCorpus(ContentRepoEndpointInput corpus) {
+    public void setCorpus(MultibucketContentRepoEndpointInput corpus) {
       this.corpus = corpus;
     }
   }
 
   public static class ContentRepoEndpointInput {
-    private URI address;
-    private String bucket;
+    protected URI address;
+    protected String bucket;
 
     /**
      * @deprecated For reflective access by SnakeYAML only
@@ -316,18 +347,18 @@ public class YamlConfiguration implements RuntimeConfiguration {
     public void setBucket(String bucket) {
       this.bucket = bucket;
     }
+  }
 
-    private final ContentRepoEndpoint immutableView = new ContentRepoEndpoint() {
-      @Override
-      public URI getAddress() {
-        return address;
-      }
+  public static class MultibucketContentRepoEndpointInput extends ContentRepoEndpointInput {
+    private List<String> secondaryBuckets;
 
-      @Override
-      public String getBucket() {
-        return bucket;
-      }
-    };
+    /**
+     * @deprecated For reflective access by SnakeYAML only
+     */
+    @Deprecated
+    public void setSecondaryBuckets(List<String> secondaryBuckets) {
+      this.secondaryBuckets = secondaryBuckets;
+    }
   }
 
   public static class HttpConnectionPoolConfigurationInput {

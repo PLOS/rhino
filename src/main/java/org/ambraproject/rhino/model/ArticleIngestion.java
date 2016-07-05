@@ -13,42 +13,44 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
-@Table(name = "articleVersion")
-public class ArticleVersion extends AmbraEntity {
+@Table(name = "articleIngestion")
+public class ArticleIngestion implements Timestamped {
 
   @Id
   @GeneratedValue
   @Column
-  private long versionId;
+  private long ingestionId;
 
   @JoinColumn(name = "articleId")
   @ManyToOne
   private ArticleTable article;
 
   @Column
-  private int revisionNumber;
-
-  @Column
-  private int publicationState;
+  private int ingestionNumber;
 
   @Cascade(CascadeType.SAVE_UPDATE)
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(
       name = "articleJournalJoinTable",
-      joinColumns = @JoinColumn(name = "versionId"),
+      joinColumns = @JoinColumn(name = "ingestionId"),
       inverseJoinColumns = @JoinColumn(name = "journalId")
   )
   private Set<Journal> journals;
 
+  @Column
+  private Date lastModified;
+
+
   public long getVersionId() {
-    return versionId;
+    return ingestionId;
   }
 
-  public void setVersionId(long versionId) {
-    this.versionId = versionId;
+  public void setVersionId(long ingestionId) {
+    this.ingestionId = ingestionId;
   }
 
   public ArticleTable getArticle() {
@@ -59,20 +61,12 @@ public class ArticleVersion extends AmbraEntity {
     this.article = article;
   }
 
-  public int getRevisionNumber() {
-    return revisionNumber;
+  public int getIngestionNumber() {
+    return ingestionNumber;
   }
 
-  public void setRevisionNumber(int revisionNumber) {
-    this.revisionNumber = revisionNumber;
-  }
-
-  public int getPublicationState() {
-    return publicationState;
-  }
-
-  public void setPublicationState(int publicationState) {
-    this.publicationState = publicationState;
+  public void setIngestionNumber(int ingestionNumber) {
+    this.ingestionNumber = ingestionNumber;
   }
 
   public Set<Journal> getJournals() {
@@ -84,35 +78,40 @@ public class ArticleVersion extends AmbraEntity {
   }
 
   @Override
+  public Date getLastModified() {
+    return lastModified;
+  }
+
+  public void setLastModified(Date lastModified) {
+    this.lastModified = lastModified;
+  }
+
+
+  @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    ArticleVersion that = (ArticleVersion) o;
+    ArticleIngestion that = (ArticleIngestion) o;
 
-    if (versionId != that.versionId) return false;
-    if (revisionNumber != that.revisionNumber) return false;
-    if (publicationState != that.publicationState) return false;
-    return article.equals(that.article);
-
+    if (ingestionNumber != that.ingestionNumber) return false;
+    return article != null ? article.equals(that.article) : that.article == null;
   }
 
   @Override
   public int hashCode() {
-    int result = (int) (versionId ^ (versionId >>> 32));
-    result = 31 * result + article.hashCode();
-    result = 31 * result + revisionNumber;
-    result = 31 * result + publicationState;
+    int result = article != null ? article.hashCode() : 0;
+    result = 31 * result + ingestionNumber;
     return result;
   }
 
+
   @Override
   public String toString() {
-    return "ArticleVersion{" +
-        "versionId=" + versionId +
+    return "ArticleIngestion{" +
+        "ingestionId=" + ingestionId +
         ", article=" + article +
-        ", revisionNumber=" + revisionNumber +
-        ", publicationState=" + publicationState +
+        ", journals=" + journals +
         '}';
   }
 }

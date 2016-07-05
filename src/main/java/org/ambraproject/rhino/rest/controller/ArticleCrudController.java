@@ -22,10 +22,14 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
+import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
+import org.ambraproject.rhino.identity.ArticleItemIdentifier;
+import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Syndication;
+import org.ambraproject.rhino.rest.ClientItemId;
+import org.ambraproject.rhino.rest.ClientItemIdResolver;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.service.ArticleListCrudService;
@@ -156,6 +160,7 @@ public class ArticleCrudController extends ArticleSpaceController {
   public void previewMetadataFromVersionedModel(
       HttpServletRequest request, HttpServletResponse response,
       @RequestParam(value = "revision", required = false) Integer revisionNumber,
+      @RequestParam(value = "ingestion", required = false) Integer ingestionNumber,
       @RequestParam(value = "excludeCitations", required = false) boolean excludeCitations,
       @RequestParam(value = "parseFullManuscript", required = false) boolean parseFullManuscript)
       throws IOException {
@@ -163,14 +168,16 @@ public class ArticleCrudController extends ArticleSpaceController {
         : excludeCitations ? ArticleMetadataSource.FRONT_MATTER
         : ArticleMetadataSource.FRONT_AND_BACK_MATTER;
 
-    ArticleVersionIdentifier versionId = getArticleVersionIdentifier(request, revisionNumber);
-    articleCrudService.readVersionedMetadata(versionId, sourceObj).respond(request, response, entityGson);
+    ClientItemId itemId = ClientItemIdResolver.resolve(getIdentifier(request), revisionNumber, ingestionNumber);
+    ArticleIngestionIdentifier ingestionId = articleCrudService.resolveToIngestion(itemId);
+
+    articleCrudService.readVersionedMetadata(ingestionId, sourceObj).respond(request, response, entityGson);
   }
 
-  private ArticleVersionIdentifier getArticleVersionIdentifier(HttpServletRequest request, Integer revisionNumber) {
+  private ArticleRevisionIdentifier getArticleRevisionIdentifier(HttpServletRequest request, Integer revisionNumber) {
     Doi id = Doi.create(getIdentifier(request));
     int revisionNumberValue = (revisionNumber == null) ? articleCrudService.getLatestRevision(id) : revisionNumber;
-    return ArticleVersionIdentifier.create(id, revisionNumberValue);
+    return ArticleRevisionIdentifier.create(id, revisionNumberValue);
   }
 
   @Transactional(readOnly = true)
@@ -232,12 +239,13 @@ public class ArticleCrudController extends ArticleSpaceController {
   @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "xml")
   public void readXml(HttpServletRequest request, HttpServletResponse response,
-                      @RequestParam(value = "revision", required = false) Integer revisionNumber)
+                      @RequestParam(value = "revision", required = false) Integer revisionNumber,
+                      @RequestParam(value = "ingestion", required = false) Integer ingestionNumber)
       throws IOException {
-    Doi assetId = Doi.create(getIdentifier(request));
-    int revisionNumberValue = (revisionNumber == null) ? articleCrudService.getLatestRevision(assetId) : revisionNumber;
-    assetFileCrudController.previewFileFromVersionedModel(request, response,
-        ArticleFileIdentifier.create(assetId, revisionNumberValue, "manuscript"));
+    ClientItemId id = ClientItemIdResolver.resolve(getIdentifier(request), revisionNumber, ingestionNumber);
+    ArticleItemIdentifier itemId = articleCrudService.resolveToItem(id);
+    ArticleFileIdentifier fileId = ArticleFileIdentifier.create(itemId, "manuscript");
+    assetFileCrudController.previewFileFromVersionedModel(request, response, fileId);
   }
 
   /**
@@ -349,9 +357,10 @@ public class ArticleCrudController extends ArticleSpaceController {
   public ResponseEntity<Object> createSyndication(HttpServletRequest request,
       @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
-    ArticleVersionIdentifier versionId = getArticleVersionIdentifier(request, revisionNumber);
+    ArticleRevisionIdentifier revisionId = getArticleRevisionIdentifier(request, revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
-    syndicationCrudService.createSyndication(versionId, input.getTarget());
+
+    syndicationCrudService.createSyndication(revisionId, input.getTargetQueue());
     return reportCreated();
   }
 
@@ -361,9 +370,10 @@ public class ArticleCrudController extends ArticleSpaceController {
   public ResponseEntity<Object> syndicate(HttpServletRequest request,
       @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
-    ArticleVersionIdentifier versionId = getArticleVersionIdentifier(request, revisionNumber);
+    ArticleRevisionIdentifier revisionId = getArticleRevisionIdentifier(request, revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
-    Syndication created = syndicationCrudService.syndicate(versionId, input.getTarget());
+
+    Syndication created = syndicationCrudService.syndicate(revisionId, input.getTargetQueue());
     return reportOk(created.toString());
   }
 
@@ -371,10 +381,11 @@ public class ArticleCrudController extends ArticleSpaceController {
   public ResponseEntity<Object> patchSyndication(HttpServletRequest request,
       @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
-    ArticleVersionIdentifier versionId = getArticleVersionIdentifier(request, revisionNumber);
+    ArticleRevisionIdentifier revisionId = getArticleRevisionIdentifier(request, revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
-    Syndication patched = syndicationCrudService.updateSyndication(versionId, input.getTarget(),
-        input.getStatus(), input.getErrorMessage());
+
+    Syndication patched = syndicationCrudService.updateSyndication(revisionId,
+        input.getTargetQueue(), input.getStatus(), input.getErrorMessage());
     return reportOk(patched.toString());
   }
 

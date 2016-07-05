@@ -14,7 +14,7 @@ public class ArticleJsonNames {
   public static final String DOI = "doi";
   public static final String STATE = "state";
   public static final String SYNDICATIONS = "syndications";
-  public static final String SYNDICATION_TARGET = "target";
+  public static final String SYNDICATION_TARGET = "targetQueue";
   public static final String SYNDICATION_STATUS = "status";
   public static final String PINGBACKS = "pingbacks";
   public static final String ARTICLE_TYPE = "articleType";

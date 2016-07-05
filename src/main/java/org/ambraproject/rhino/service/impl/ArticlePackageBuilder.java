@@ -15,7 +15,7 @@ import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.ContentTypeInference;
-import org.plos.crepo.model.RepoObject;
+import org.plos.crepo.model.input.RepoObjectInput;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -37,6 +37,7 @@ import java.util.stream.Collectors;
 
 class ArticlePackageBuilder {
 
+  private final String destinationBucketName;
   private final Archive archive;
   private final ArticleXml article;
   private final ManifestXml manifest;
@@ -46,8 +47,9 @@ class ArticlePackageBuilder {
   private final ManifestXml.Representation printableRepr;
   private final ArticleIdentity articleIdentity;
 
-  ArticlePackageBuilder(Archive archive, ArticleXml article, ManifestXml manifest, String manifestEntry,
+  ArticlePackageBuilder(String destinationBucketName, Archive archive, ArticleXml article, ManifestXml manifest, String manifestEntry,
                         ManifestXml.Asset manuscriptAsset, ManifestXml.Representation manuscriptRepr, ManifestXml.Representation printableRepr) {
+    this.destinationBucketName = Objects.requireNonNull(destinationBucketName);
     this.archive = Objects.requireNonNull(archive);
     this.article = Objects.requireNonNull(article);
     this.manifest = Objects.requireNonNull(manifest);
@@ -65,16 +67,16 @@ class ArticlePackageBuilder {
   }
 
   public ArticlePackage build() {
-    Map<String, RepoObject> articleObjects = buildArticleObjects();
+    Map<String, RepoObjectInput> articleObjects = buildArticleObjects();
     List<ArticleItemInput> assetWorks = buildAssetWorks(article.findAllAssetNodes());
-    List<RepoObject> archivalFiles = manifest.getArchivalFiles().stream()
+    List<RepoObjectInput> archivalFiles = manifest.getArchivalFiles().stream()
         .map(this::buildObjectFor).collect(Collectors.toList());
 
     return new ArticlePackage(new ArticleItemInput(articleIdentity, articleObjects, AssetType.ARTICLE.identifier),
         assetWorks, archivalFiles);
   }
 
-  private RepoObject buildObjectFor(ManifestXml.Asset asset, ManifestXml.Representation representation) {
+  private RepoObjectInput buildObjectFor(ManifestXml.Asset asset, ManifestXml.Representation representation) {
     ManifestXml.ManifestFile manifestFile = representation.getFile();
     String mimetype = manifestFile.getMimetype();
     if (mimetype == null) {
@@ -83,7 +85,7 @@ class ArticlePackageBuilder {
     return buildObject(manifestFile, mimetype);
   }
 
-  private RepoObject buildObjectFor(ManifestXml.ManifestFile manifestFile) {
+  private RepoObjectInput buildObjectFor(ManifestXml.ManifestFile manifestFile) {
     String mimetype = manifestFile.getMimetype();
     if (mimetype == null) {
       mimetype = ContentTypeInference.inferContentType(manifestFile.getEntry());
@@ -91,34 +93,34 @@ class ArticlePackageBuilder {
     return buildObject(manifestFile, mimetype);
   }
 
-  private RepoObject buildObject(ManifestXml.ManifestFile manifestFile, String contentType) {
-    return new RepoObject.RepoObjectBuilder(manifestFile.getCrepoKey())
-        .contentAccessor(archive.getContentAccessorFor(manifestFile.getEntry()))
-        .contentType(contentType)
-        .downloadName(manifestFile.getEntry())
+  private RepoObjectInput buildObject(ManifestXml.ManifestFile manifestFile, String contentType) {
+    return RepoObjectInput.builder(destinationBucketName, manifestFile.getCrepoKey())
+        .setContentAccessor(archive.getContentAccessorFor(manifestFile.getEntry()))
+        .setContentType(contentType)
+        .setDownloadName(manifestFile.getEntry())
         .build();
   }
 
-  private Map<String, RepoObject> buildArticleObjects() {
-    ImmutableMap.Builder<String, RepoObject> articleObjects = ImmutableMap.builder();
+  private Map<String, RepoObjectInput> buildArticleObjects() {
+    ImmutableMap.Builder<String, RepoObjectInput> articleObjects = ImmutableMap.builder();
     articleObjects.put("manifest",
-        new RepoObject.RepoObjectBuilder("manifest/" + articleIdentity.getIdentifier())
-            .contentAccessor(archive.getContentAccessorFor(manifestEntry))
-            .downloadName(manifestEntry)
-            .contentType(MediaType.APPLICATION_XML)
+        RepoObjectInput.builder(destinationBucketName, "manifest/" + articleIdentity.getIdentifier())
+            .setContentAccessor(archive.getContentAccessorFor(manifestEntry))
+            .setDownloadName(manifestEntry)
+            .setContentType(MediaType.APPLICATION_XML)
             .build());
     articleObjects.put("manuscript", buildObjectFor(manuscriptAsset, manuscriptRepr));
     articleObjects.put("printable", buildObjectFor(manuscriptAsset, printableRepr));
 
     articleObjects.put("front",
-        new RepoObject.RepoObjectBuilder("front/" + articleIdentity.getIdentifier())
-            .byteContent(serializeXml(article.extractFrontMatter()))
-            .contentType(MediaType.APPLICATION_XML)
+        RepoObjectInput.builder(destinationBucketName, "front/" + articleIdentity.getIdentifier())
+            .setByteContent(serializeXml(article.extractFrontMatter()))
+            .setContentType(MediaType.APPLICATION_XML)
             .build());
     articleObjects.put("frontAndBack",
-        new RepoObject.RepoObjectBuilder("frontAndBack/" + articleIdentity.getIdentifier())
-            .byteContent(serializeXml(article.extractFrontAndBackMatter()))
-            .contentType(MediaType.APPLICATION_XML)
+        RepoObjectInput.builder(destinationBucketName, "frontAndBack/" + articleIdentity.getIdentifier())
+            .setByteContent(serializeXml(article.extractFrontAndBackMatter()))
+            .setContentType(MediaType.APPLICATION_XML)
             .build());
     return articleObjects.build();
   }
@@ -146,7 +148,7 @@ class ArticlePackageBuilder {
     for (ManifestXml.Asset asset : manifest.getAssets()) {
       AssetType assetType = findAssetType(assetNodeMap, asset);
       if (assetType == AssetType.ARTICLE) continue;
-      ImmutableMap.Builder<String, RepoObject> assetObjects = ImmutableMap.builder();
+      ImmutableMap.Builder<String, RepoObjectInput> assetObjects = ImmutableMap.builder();
       AssetIdentity assetIdentity = AssetIdentity.create(asset.getUri());
       for (ManifestXml.Representation representation : asset.getRepresentations()) {
         FileType fileType = assetType.getFileType(representation.getName()); // TODO: Use representation.getType instead

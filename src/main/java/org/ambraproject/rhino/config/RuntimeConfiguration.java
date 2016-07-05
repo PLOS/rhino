@@ -19,6 +19,8 @@
 
 package org.ambraproject.rhino.config;
 
+import com.google.common.collect.ImmutableSet;
+
 import java.net.URI;
 import java.net.URL;
 import java.time.LocalDate;
@@ -46,9 +48,16 @@ public interface RuntimeConfiguration {
     URI getAddress();
 
     /**
-     * @return the name of the bucket on that server to use
+     * @return the name of the bucket on that server to use when none is specified
      */
-    String getBucket();
+    String getDefaultBucket();
+  }
+
+  interface MultiBucketContentRepoEndpoint extends ContentRepoEndpoint {
+    /**
+     * @return the names of all buckets that may be specified to use
+     */
+    ImmutableSet<String> getAllBuckets();
   }
 
   /**
@@ -58,7 +67,7 @@ public interface RuntimeConfiguration {
    *
    * @return the corpus bucket name
    */
-  ContentRepoEndpoint getCorpusBucket();
+  MultiBucketContentRepoEndpoint getCorpusStorage();
 
   /**
    * Return the content repository bucket from which the system should pick up editorial (non-article) content. Returns
@@ -66,7 +75,7 @@ public interface RuntimeConfiguration {
    *
    * @return the homepage bucket name
    */
-  ContentRepoEndpoint getEditorialBucket();
+  ContentRepoEndpoint getEditorialStorage();
 
   interface HttpConnectionPoolConfiguration {
     /**
