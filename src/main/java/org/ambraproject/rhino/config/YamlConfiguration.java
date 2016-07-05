@@ -93,7 +93,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
         if (input.contentRepo.corpus.secondaryBuckets != null) {
           buckets.addAll(input.contentRepo.corpus.secondaryBuckets);
         }
-        this.buckets = null;
+        this.buckets = buckets.build();
       }
 
       @Override
