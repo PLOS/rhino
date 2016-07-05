@@ -276,7 +276,7 @@ public class ArticleCrudController extends ArticleSpaceController {
 
   /**
    * A temporary endpoint for testing the creation of article relationships
-   * This functionality ultimately be subsumed under the publication and revision assignment workflow.
+   * This functionality should ultimately be subsumed under the publication and revision assignment workflow.
    *
    * @param request
    * @param response
