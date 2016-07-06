@@ -11,10 +11,10 @@ CREATE TABLE `syndication` (
   `lastSubmitTimestamp` timestamp NULL DEFAULT NULL,
   `lastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`syndicationId`),
-  UNIQUE KEY `revisionId` (`revisionId`,`target`),
+  UNIQUE KEY `revisionId` (`revisionId`,`targetQueue`),
   CONSTRAINT `fk_syndication_1`
   FOREIGN KEY (`revisionId`)
-  REFERENCES `ambra`.`articleVersion` (`revisionId`)
+  REFERENCES `ambra`.`articleRevision` (`revisionId`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION
 );
