@@ -85,6 +85,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -590,6 +591,15 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       query.setParameter("doi", id.getDoiName());
       query.setParameter("ingestionNumber", id.getIngestionNumber());
       return (ArticleItem) query.uniqueResult();
+    });
+  }
+
+  @Override
+  public Collection <ArticleItem> getAllArticleItems(Doi doi) {
+    return hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM ArticleItem WHERE doi = :doi ");
+      query.setParameter("doi", doi.getName());
+      return (Collection<ArticleItem>) query.list();
     });
   }
 

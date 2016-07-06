@@ -10,7 +10,6 @@ import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
-import org.ambraproject.rhino.identity.ArticleItemIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleFile;
@@ -92,6 +91,11 @@ class VersionedIngestionService {
     }
     ArticleIdentifier articleIdentifier = ArticleIdentifier.create(parsedArticle.readDoi().getIdentifier());
     Doi doi = articleIdentifier.getDoi();
+
+    for (ManifestXml.Asset asset : assets) {
+      validateAssetUniqueness(asset, doi);
+    }
+
     if (!manuscriptAsset.getUri().equals(doi.getUri().toString())) {
       String message = String.format("Article DOI is inconsistent. From manifest: \"%s\" From manuscript: \"%s\"",
           manuscriptAsset.getUri(), doi.getUri());
@@ -101,8 +105,6 @@ class VersionedIngestionService {
     long articlePk = persistArticlePk(articleIdentifier);
     long ingestionId = persistIngestion(articlePk);
     int revisionNumber = revision.orElseGet(parsedArticle::getRevisionNumber);
-
-    validateAssetUniqueness(assets, parentService.resolveRevisionToIngestion(doi, revisionNumber));
 
     persistRevision(articlePk, ingestionId, revisionNumber);
 
@@ -220,18 +222,15 @@ class VersionedIngestionService {
     }
   }
 
-  private void validateAssetUniqueness(ImmutableList<ManifestXml.Asset> assets,
-      ArticleIngestionIdentifier ingestionId) {
-    for (ManifestXml.Asset asset : assets) {
-      Doi assetDoi = Doi.create(asset.getUri());
-      int ingestionNumber = ingestionId.getIngestionNumber();
-      ArticleItem item = parentService.getArticleItem(ArticleItemIdentifier.create(assetDoi, ingestionNumber));
-      if (item != null) {
-        ArticleTable parentArticle = item.getIngestion().getArticle();
-        if (!Doi.create(parentArticle.getDoi()).equals(ingestionId.getArticleIdentifier().getDoi())) {
-          throw new RestClientException("Duplicate article asset with doi: " + assetDoi +
-              ", ingestion number: " + ingestionNumber, HttpStatus.BAD_REQUEST);
-        }
+  private void validateAssetUniqueness(ManifestXml.Asset asset, Doi doi) {
+    Doi assetDoi = Doi.create(asset.getUri());
+    for (ArticleItem existingItem : parentService.getAllArticleItems(assetDoi)) {
+      ArticleTable existingParentArticle = existingItem.getIngestion().getArticle();
+      if (!Doi.create(existingParentArticle.getDoi()).equals(doi)) {
+        String errorMessage = String.format("Incoming article ingestion (doi:%s) has a duplicate " +
+            "article asset (doi:%s). Duplicate asset belongs to article doi: %s.",
+            doi.getName(), assetDoi, existingParentArticle.getDoi());
+        throw new RestClientException(errorMessage, HttpStatus.BAD_REQUEST);
       }
     }
   }
@@ -360,7 +359,7 @@ class VersionedIngestionService {
    * The legacy Hibernate model object {@link Article} is used as a data-holder for convenience and compatibility. This
    * method constructs it anew, not by accessing Hibnerate, and populates only a subset of its normal fields.
    *
-   * @param id     the ID of the article to serve
+   * @param ingestionId the ID of the article to serve
    * @param source whether to parse the extracted front matter or the full, original manuscript
    * @return an object containing metadata that could be extracted from the manuscript, with other fields unfilled
    * @deprecated method signature accommodates testing and will be changed
