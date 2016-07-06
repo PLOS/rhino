@@ -104,9 +104,8 @@ class VersionedIngestionService {
 
     long articlePk = persistArticlePk(articleIdentifier);
     long ingestionId = persistIngestion(articlePk);
-    int revisionNumber = revision.orElseGet(parsedArticle::getRevisionNumber);
-
-    persistRevision(articlePk, ingestionId, revisionNumber);
+    
+    persistRevision(articlePk, ingestionId, revision.orElseGet(parsedArticle::getRevisionNumber));
 
     final Article articleMetadata = parsedArticle.build(new Article());
     articleMetadata.setDoi(doi.getUri().toString());
