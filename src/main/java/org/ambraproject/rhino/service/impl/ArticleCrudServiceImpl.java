@@ -23,7 +23,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
-import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
@@ -542,16 +541,16 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public void refreshArticleRelationships(ArticleIdentifier articleId) throws IOException {
-    ArticleTable article = getArticle(articleId);
-    ArticleVersion articleVersion = getLatestArticleVersion(article);
-    ArticleXml articleXml = new ArticleXml(getManuscriptXml(articleVersion));
+  public void refreshArticleRelationships(ArticleRevisionIdentifier articleRevId) throws IOException {
+    ArticleRevision articleRev = getArticleRevision(articleRevId);
+    ArticleXml articleXml = new ArticleXml(getManuscriptXml(articleRev));
+    Long articleId = articleRev.getIngestion().getArticle().getArticleId();
 
     // TODO: replace legacy parse code when no longer needed for legacy ingestion
     List<ArticleRelationship> xmlRelationships = articleXml.parseRelatedArticles();
     hibernateTemplate.execute(session -> {
       SQLQuery deleteQuery = session.createSQLQuery("DELETE FROM articleRelationship WHERE sourceArticleId = :articleId");
-      deleteQuery.setParameter("articleId", article.getArticleId());
+      deleteQuery.setParameter("articleId", articleId);
       deleteQuery.executeUpdate();
       return null;
     });
@@ -570,7 +569,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
             SQLQuery insertQuery = session.createSQLQuery("" +
                 "INSERT INTO articleRelationship (sourceArticleId, targetArticleId, type) " +
                 "VALUES (:sourceId, :targetId, :type)");
-            insertQuery.setParameter("sourceId", article.getArticleId());
+            insertQuery.setParameter("sourceId", articleId);
             insertQuery.setParameter("targetId", targetId);
             insertQuery.setParameter("type", ar.getType());
             insertQuery.executeUpdate();

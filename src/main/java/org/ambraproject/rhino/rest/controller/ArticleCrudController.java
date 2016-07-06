@@ -295,8 +295,8 @@ public class ArticleCrudController extends ArticleSpaceController {
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "relationships")
   public void refreshArticleRelationships(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    ArticleIdentifier articleId = ArticleIdentifier.create(getIdentifier(request));
-    articleCrudService.refreshArticleRelationships(articleId);
+    ArticleRevisionIdentifier articleRevId = getArticleRevisionIdentifier(request, null);
+    articleCrudService.refreshArticleRelationships(articleRevId);
   }
 
   /**
