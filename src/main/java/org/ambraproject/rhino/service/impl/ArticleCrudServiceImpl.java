@@ -546,38 +546,34 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     ArticleXml articleXml = new ArticleXml(getManuscriptXml(articleRev));
     Long articleId = articleRev.getIngestion().getArticle().getArticleId();
 
-    // TODO: replace legacy parse code when no longer needed for legacy ingestion
+    // TODO: refactor parse code to populate VersionedArticleRelationship when legacy ingestion code not needed
     List<ArticleRelationship> xmlRelationships = articleXml.parseRelatedArticles();
     hibernateTemplate.execute(session -> {
       SQLQuery deleteQuery = session.createSQLQuery("DELETE FROM articleRelationship WHERE sourceArticleId = :articleId");
       deleteQuery.setParameter("articleId", articleId);
       deleteQuery.executeUpdate();
-      return null;
-    });
 
-    for (ArticleRelationship ar : xmlRelationships) {
-      if (ar.getOtherArticleDoi() != null) {
-        ArticleTable targetArticle = null;
-        try {
-          targetArticle = getArticle(ArticleIdentifier.create(ar.getOtherArticleDoi()));
-        } catch (NoSuchArticleIdException e) {
-          // likely a reference to an article external to PLOS and so the relationship is not persisted
-        }
-        if (targetArticle != null) {
-          Long targetId = targetArticle.getArticleId();
-          hibernateTemplate.execute(session -> {
+      for (ArticleRelationship ar : xmlRelationships) {
+        if (ar.getOtherArticleDoi() != null) {
+          ArticleTable targetArticle = null;
+          try {
+            targetArticle = getArticle(ArticleIdentifier.create(ar.getOtherArticleDoi()));
+          } catch (NoSuchArticleIdException e) {
+            // likely a reference to an article external to PLOS and so the relationship is not persisted
+          }
+          if (targetArticle != null) {
             SQLQuery insertQuery = session.createSQLQuery("" +
                 "INSERT INTO articleRelationship (sourceArticleId, targetArticleId, type) " +
                 "VALUES (:sourceId, :targetId, :type)");
             insertQuery.setParameter("sourceId", articleId);
-            insertQuery.setParameter("targetId", targetId);
+            insertQuery.setParameter("targetId", targetArticle.getArticleId());
             insertQuery.setParameter("type", ar.getType());
             insertQuery.executeUpdate();
-            return null;
-          });
+          }
         }
       }
-    }
+      return null;
+    });
   }
 
   /**
