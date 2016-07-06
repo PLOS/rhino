@@ -259,6 +259,8 @@ public interface ArticleCrudService extends DoiBasedCrudService {
 
   public abstract ArticleIngestionIdentifier resolveToIngestion(ClientItemId id);
 
+  public abstract ArticleIngestionIdentifier resolveRevisionToIngestion(Doi doi, int revisionNumber);
+
   public abstract ArticleItemIdentifier resolveToItem(ClientItemId id);
 
 }

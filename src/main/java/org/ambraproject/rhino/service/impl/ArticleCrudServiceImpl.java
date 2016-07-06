@@ -665,7 +665,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
   }
 
-  private ArticleIngestionIdentifier resolveRevisionToIngestion(Doi doi, int revisionNumber) {
+  @Override
+  public ArticleIngestionIdentifier resolveRevisionToIngestion(Doi doi, int revisionNumber) {
     Integer ingestionNumber = hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "SELECT ingestion.ingestionNumber " +

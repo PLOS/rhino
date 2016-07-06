@@ -102,7 +102,7 @@ class VersionedIngestionService {
     long ingestionId = persistIngestion(articlePk);
     int revisionNumber = revision.orElseGet(parsedArticle::getRevisionNumber);
 
-    validateAssetUniqueness(assets, articleIdentifier, revisionNumber);
+    validateAssetUniqueness(assets, parentService.resolveRevisionToIngestion(doi, revisionNumber));
 
     persistRevision(articlePk, ingestionId, revisionNumber);
 
@@ -221,15 +221,16 @@ class VersionedIngestionService {
   }
 
   private void validateAssetUniqueness(ImmutableList<ManifestXml.Asset> assets,
-      ArticleIdentifier articleId, int versionId) {
+      ArticleIngestionIdentifier ingestionId) {
     for (ManifestXml.Asset asset : assets) {
       Doi assetDoi = Doi.create(asset.getUri());
-      ArticleItem item = parentService.getArticleItem(ArticleItemIdentifier.create(assetDoi, versionId));
+      int ingestionNumber = ingestionId.getIngestionNumber();
+      ArticleItem item = parentService.getArticleItem(ArticleItemIdentifier.create(assetDoi, ingestionNumber));
       if (item != null) {
         ArticleTable parentArticle = item.getIngestion().getArticle();
-        if (!Doi.create(parentArticle.getDoi()).equals(articleId.getDoi())) {
+        if (!Doi.create(parentArticle.getDoi()).equals(ingestionId.getArticleIdentifier().getDoi())) {
           throw new RestClientException("Duplicate article asset with doi: " + assetDoi +
-              ", revision: " + versionId, HttpStatus.BAD_REQUEST);
+              ", ingestion number: " + ingestionNumber, HttpStatus.BAD_REQUEST);
         }
       }
     }
