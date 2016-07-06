@@ -10,10 +10,12 @@ import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
+import org.ambraproject.rhino.identity.ArticleItemIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleFile;
 import org.ambraproject.rhino.model.ArticleItem;
+import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.PublicationState;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -98,7 +100,11 @@ class VersionedIngestionService {
 
     long articlePk = persistArticlePk(articleIdentifier);
     long ingestionId = persistIngestion(articlePk);
-    persistRevision(articlePk, ingestionId, revision.orElseGet(parsedArticle::getRevisionNumber));
+    int revisionNumber = revision.orElseGet(parsedArticle::getRevisionNumber);
+
+    validateAssetUniqueness(assets, articleIdentifier, revisionNumber);
+
+    persistRevision(articlePk, ingestionId, revisionNumber);
 
     final Article articleMetadata = parsedArticle.build(new Article());
     articleMetadata.setDoi(doi.getUri().toString());
@@ -211,6 +217,21 @@ class VersionedIngestionService {
           + (missingFromArchive.isEmpty() ? "" : (" Files in manifest not included in archive: " + missingFromArchive))
           + (missingFromManifest.isEmpty() ? "" : (" Files in archive not described in manifest: " + missingFromManifest));
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  private void validateAssetUniqueness(ImmutableList<ManifestXml.Asset> assets,
+      ArticleIdentifier articleId, int versionId) {
+    for (ManifestXml.Asset asset : assets) {
+      Doi assetDoi = Doi.create(asset.getUri());
+      ArticleItem item = parentService.getArticleItem(ArticleItemIdentifier.create(assetDoi, versionId));
+      if (item != null) {
+        ArticleTable parentArticle = item.getIngestion().getArticle();
+        if (!Doi.create(parentArticle.getDoi()).equals(articleId.getDoi())) {
+          throw new RestClientException("Duplicate article asset with doi: " + assetDoi +
+              ", revision: " + versionId, HttpStatus.BAD_REQUEST);
+        }
+      }
     }
   }
 
