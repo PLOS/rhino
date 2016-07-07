@@ -27,7 +27,6 @@ import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.model.article.Citation;
@@ -45,6 +44,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * An NLM-format XML document that can be "ingested" to build an {@link ArticleMetadata} object.
@@ -194,10 +194,10 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
    */
   @Override
   public ArticleMetadata build() throws XmlContentException {
-    ArticleMetadata article = new ArticleMetadata();
+    ArticleMetadata.Builder article = ArticleMetadata.builder();
     setConstants(article);
     setFromXml(article);
-    return article;
+    return article.build();
   }
 
   /**
@@ -205,12 +205,12 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
    *
    * @param article the article to modify
    */
-  private static void setConstants(ArticleMetadata article) {
+  private static void setConstants(ArticleMetadata.Builder article) {
     // These are constants because they are implied by how we get the input
     article.setFormat("text/xml");
   }
 
-  private void setFromXml(final ArticleMetadata article) throws XmlContentException {
+  private void setFromXml(final ArticleMetadata.Builder article) throws XmlContentException {
     article.setDoi(readDoi().getName());
 
     article.setTitle(buildXmlExcerpt(readNode("/article/front/article-meta/title-group/article-title")));
@@ -391,20 +391,16 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
   }
 
   private List<Citation> parseCitations(List<Node> refNodes) throws XmlContentException {
-    List<Citation> citations = Lists.newArrayListWithCapacity(refNodes.size());
-    for (Node refNode : refNodes) {
-      Citation citation = new Citation();
-      citation.setKey(readString("child::label", refNode));
+    return refNodes.stream().map(refNode -> {
+      String key = readString("child::label", refNode);
 
       Node citationNode = readNode("(child::element-citation|child::mixed-citation|child::nlm-citation)", refNode);
       if (citationNode == null) {
         throw new XmlContentException("All citation (<ref>) nodes expected to contain one of: "
             + "element-citation, mixed-citation, nlm-citation");
       }
-      citation = new CitedArticleXml(citationNode).build();
-      citations.add(citation);
-    }
-    return citations;
+      return new CitedArticleXml(key, citationNode).build();
+    }).collect(Collectors.toList());
   }
 
   /**

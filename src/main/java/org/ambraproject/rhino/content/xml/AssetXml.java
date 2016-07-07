@@ -49,8 +49,7 @@ public class AssetXml extends AbstractArticleXml<AssetMetadata> {
 
   @Override
   public AssetMetadata build() throws XmlContentException {
-    AssetMetadata asset = new AssetMetadata();
-    asset.setDoi(assetId.getKey());
+    String doi = assetId.getKey();
 
     Node contextNode = xml;
     if (GRAPHIC.equals(contextNode.getNodeName())) {
@@ -58,13 +57,13 @@ public class AssetXml extends AbstractArticleXml<AssetMetadata> {
       // TODO: Ambra bug? Just using contextElement="graphic" makes more sense and is consistent with other cases.
       contextNode = contextNode.getParentNode();
     }
-    asset.setContextElement(contextNode.getNodeName());
+    String contextElement = contextNode.getNodeName();
 
-    asset.setTitle(Strings.nullToEmpty(readString("child::label")));
+    String title = Strings.nullToEmpty(readString("child::label"));
     Node captionNode = readNode("child::caption");
-    asset.setDescription((captionNode != null) ? buildTextWithMarkup(captionNode) : "");
+    String description = (captionNode != null) ? buildTextWithMarkup(captionNode) : "";
 
-    return asset;
+    return new AssetMetadata(doi, contextElement, title, description);
   }
 
 }

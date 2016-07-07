@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,13 +39,17 @@ public class CitedArticleXml extends AbstractArticleXml<Citation> {
 
   private static final Logger log = LoggerFactory.getLogger(CitedArticleXml.class);
 
-  protected CitedArticleXml(Node xml) {
+  private final String key;
+
+  protected CitedArticleXml(String key, Node xml) {
     super(xml);
+    this.key = Objects.requireNonNull(key);
   }
 
   @Override
   public Citation build() throws XmlContentException {
-    Citation citation = new Citation();
+    Citation.Builder citation = Citation.builder();
+    citation.setKey(key);
     setTypeAndJournal(citation);
     citation.setTitle(buildTitle());
     String volume = readString("child::volume");
@@ -79,7 +84,7 @@ public class CitedArticleXml extends AbstractArticleXml<Citation> {
     citation.setEditors(readPersons(editorNodes));
     citation.setCollaborativeAuthors(Lists.newArrayList(readTextList("child::collab")));
 
-    return citation;
+    return citation.build();
   }
 
   /**
@@ -91,7 +96,7 @@ public class CitedArticleXml extends AbstractArticleXml<Citation> {
   /**
    * Sets the citationType and journal properties of a CitedArticle appropriately based on the XML.
    */
-  private void setTypeAndJournal(Citation citation) {
+  private void setTypeAndJournal(Citation.Builder citation) {
     String type = readString("attribute::publication-type");
     if (Strings.isNullOrEmpty(type)) {
       return;
