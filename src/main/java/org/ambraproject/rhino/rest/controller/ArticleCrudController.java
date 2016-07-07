@@ -263,6 +263,23 @@ public class ArticleCrudController extends ArticleSpaceController {
   }
 
   /**
+   * A temporary endpoint for testing the creation of article relationships
+   * This functionality should ultimately be subsumed under the publication and revision assignment workflow.
+   *
+   * @param request
+   * @param response
+   * @throws IOException
+   */
+  @Deprecated
+  @Transactional(readOnly = false)
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "relationships")
+  public void refreshArticleRelationships(HttpServletRequest request, HttpServletResponse response)
+      throws IOException {
+    ArticleRevisionIdentifier articleRevId = getArticleRevisionIdentifier(request, null);
+    articleCrudService.refreshArticleRelationships(articleRevId);
+  }
+
+  /**
    * Retrieves a list of objects representing raw taxonomy categories associated with the article.
    *
    * @param request

@@ -11,7 +11,9 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRevision;
+import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.PublicationState;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
@@ -89,6 +91,11 @@ public class VersionedIngestionService extends AmbraService {
     }
     ArticleIdentifier articleIdentifier = ArticleIdentifier.create(parsedArticle.readDoi().getIdentifier());
     Doi doi = articleIdentifier.getDoi();
+
+    for (ManifestXml.Asset asset : assets) {
+      validateAssetUniqueness(asset, doi);
+    }
+
     if (!manuscriptAsset.getUri().equals(doi.getUri().toString())) {
       String message = String.format("Article DOI is inconsistent. From manifest: \"%s\" From manuscript: \"%s\"",
           manuscriptAsset.getUri(), doi.getUri());
@@ -98,6 +105,7 @@ public class VersionedIngestionService extends AmbraService {
     long articlePk = persistArticlePk(articleIdentifier);
     IngestionPersistenceResult ingestionResult = persistIngestion(articlePk);
     long ingestionId = ingestionResult.pk;
+
     persistRevision(articlePk, ingestionId, revision.orElseGet(parsedArticle::getRevisionNumber));
 
     final ArticleMetadata articleMetadata = parsedArticle.build();
@@ -220,6 +228,19 @@ public class VersionedIngestionService extends AmbraService {
           + (missingFromArchive.isEmpty() ? "" : (" Files in manifest not included in archive: " + missingFromArchive))
           + (missingFromManifest.isEmpty() ? "" : (" Files in archive not described in manifest: " + missingFromManifest));
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  private void validateAssetUniqueness(ManifestXml.Asset asset, Doi articleDoi) {
+    Doi assetDoi = Doi.create(asset.getUri());
+    for (ArticleItem existingItem : articleCrudService.getAllArticleItems(assetDoi)) {
+      ArticleTable existingParentArticle = existingItem.getIngestion().getArticle();
+      if (!Doi.create(existingParentArticle.getDoi()).equals(articleDoi)) {
+        String errorMessage = String.format("Incoming article ingestion (doi:%s) has a duplicate " +
+            "article asset (doi:%s). Duplicate asset belongs to article doi: %s.",
+            articleDoi.getName(), assetDoi, existingParentArticle.getDoi());
+        throw new RestClientException(errorMessage, HttpStatus.BAD_REQUEST);
+      }
     }
   }
 
@@ -354,7 +375,7 @@ public class VersionedIngestionService extends AmbraService {
    * The legacy Hibernate model object {@link Article} is used as a data-holder for convenience and compatibility. This
    * method constructs it anew, not by accessing Hibnerate, and populates only a subset of its normal fields.
    *
-   * @param ingestionId     the ID of the article to serve
+   * @param ingestionId the ID of the article to serve
    * @return an object containing metadata that could be extracted from the manuscript, with other fields unfilled
    */
   ArticleMetadata getArticleMetadata(ArticleIngestionIdentifier ingestionId) throws IOException {

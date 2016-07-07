@@ -21,6 +21,7 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
@@ -39,6 +40,8 @@ import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.VersionedArticleRelationship;
+import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.ambraproject.rhino.rest.ClientItemId;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -78,6 +81,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -427,6 +431,48 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         .collect(Collectors.toList());
   }
 
+  @Override
+  public List<VersionedArticleRelationship> getArticleRelationships(ArticleIdentifier articleId) {
+    return (List<VersionedArticleRelationship>) hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "SELECT ar " +
+          "FROM VersionedArticleRelationship ar " +
+          "WHERE ar.sourceArticle.doi = :doi ");
+      query.setParameter("doi", articleId.getDoiName());
+      return query.list();});
+  }
+
+  @Override
+  public void refreshArticleRelationships(ArticleRevisionIdentifier articleRevId) throws IOException {
+    ArticleRevision sourceArticleRev = getArticleRevision(articleRevId);
+    ArticleXml sourceArticleXml = new ArticleXml(getManuscriptXml(sourceArticleRev));
+    ArticleTable sourceArticle = sourceArticleRev.getIngestion().getArticle();
+
+    // TODO: refactor parse code to populate VersionedArticleRelationship when legacy ingestion code not needed
+    List<RelatedArticleLink> xmlRelationships = sourceArticleXml.parseRelatedArticles();
+    List<VersionedArticleRelationship> dbRelationships = getArticleRelationships(ArticleIdentifier.create(sourceArticle.getDoi()));
+    for (VersionedArticleRelationship ar: dbRelationships) {
+      hibernateTemplate.delete(ar);
+    }
+    for (RelatedArticleLink ar : xmlRelationships) {
+      if (ar.getHref() != null) {
+        ArticleTable targetArticle = null;
+        try {
+          targetArticle = getArticle(ArticleIdentifier.create(ar.getHref()));
+        } catch (NoSuchArticleIdException e) {
+          // likely a reference to an article external to our system and so the relationship is not persisted
+        }
+        if (targetArticle != null) {
+          VersionedArticleRelationship newAr = new VersionedArticleRelationship();
+          newAr.setSourceArticle(sourceArticle);
+          newAr.setTargetArticle(targetArticle);
+          newAr.setType(ar.getType());
+          hibernateTemplate.save(newAr);
+        }
+      }
+    }
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -478,6 +524,15 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       query.setParameter("doi", id.getDoiName());
       query.setParameter("ingestionNumber", id.getIngestionNumber());
       return (ArticleItem) query.uniqueResult();
+    });
+  }
+
+  @Override
+  public Collection <ArticleItem> getAllArticleItems(Doi doi) {
+    return hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM ArticleItem WHERE doi = :doi ");
+      query.setParameter("doi", doi.getName());
+      return (Collection<ArticleItem>) query.list();
     });
   }
 
@@ -571,7 +626,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       super("No such article: " + articleIdentifier);
     }
   }
-
+  
   private ArticleIngestionIdentifier resolveRevisionToIngestion(Doi doi, int revisionNumber) {
     Integer ingestionNumber = hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +

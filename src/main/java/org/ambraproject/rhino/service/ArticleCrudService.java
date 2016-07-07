@@ -31,6 +31,7 @@ import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.VersionedArticleRelationship;
 import org.ambraproject.rhino.rest.ClientItemId;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
@@ -42,6 +43,7 @@ import org.w3c.dom.Document;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.List;
 
 public interface ArticleCrudService {
@@ -154,6 +156,10 @@ public interface ArticleCrudService {
    */
   public abstract List<RelatedArticleView> getRelatedArticles(Article article);
 
+  List<VersionedArticleRelationship> getArticleRelationships(ArticleIdentifier articleId);
+
+  void refreshArticleRelationships(ArticleRevisionIdentifier articleRevId) throws IOException;
+
   /**
    * Read the metadata of a random article.
    *
@@ -195,6 +201,8 @@ public interface ArticleCrudService {
 
 
   public abstract ArticleItem getArticleItem(ArticleItemIdentifier id);
+
+  public abstract Collection<ArticleItem> getAllArticleItems(Doi doi);
 
   public abstract ArticleIngestion getArticleIngestion(ArticleIngestionIdentifier articleId);
 
