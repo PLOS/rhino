@@ -42,6 +42,7 @@ import org.w3c.dom.Document;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
@@ -246,6 +247,8 @@ public interface ArticleCrudService extends DoiBasedCrudService {
 
 
   public abstract ArticleItem getArticleItem(ArticleItemIdentifier id);
+
+  public abstract Collection<ArticleItem> getAllArticleItems(Doi doi);
 
   public abstract ArticleIngestion getArticleIngestion(ArticleIngestionIdentifier articleId);
 
