@@ -221,14 +221,14 @@ class VersionedIngestionService {
     }
   }
 
-  private void validateAssetUniqueness(ManifestXml.Asset asset, Doi doi) {
+  private void validateAssetUniqueness(ManifestXml.Asset asset, Doi articleDoi) {
     Doi assetDoi = Doi.create(asset.getUri());
     for (ArticleItem existingItem : parentService.getAllArticleItems(assetDoi)) {
       ArticleTable existingParentArticle = existingItem.getIngestion().getArticle();
-      if (!Doi.create(existingParentArticle.getDoi()).equals(doi)) {
+      if (!Doi.create(existingParentArticle.getDoi()).equals(articleDoi)) {
         String errorMessage = String.format("Incoming article ingestion (doi:%s) has a duplicate " +
             "article asset (doi:%s). Duplicate asset belongs to article doi: %s.",
-            doi.getName(), assetDoi, existingParentArticle.getDoi());
+            articleDoi.getName(), assetDoi, existingParentArticle.getDoi());
         throw new RestClientException(errorMessage, HttpStatus.BAD_REQUEST);
       }
     }
