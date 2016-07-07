@@ -9,7 +9,7 @@ This test requires sshpass to be installed %apt-get install sshpass
 
 import os, random, subprocess
 from ..api.RequestObject.ingestibles_json import IngestiblesJson, OK, CREATED, NOT_ALLOWED
-from ..Base.Config import INGESTION_HOST, INGEST_USER, RHINO_INGEST_PATH
+from ..Base.Config import INGESTION_HOST, INGEST_USER, RHINO_INGEST_PATH, SSH_PASSWORD
 import resources
 
 INGESTED_DATA_PATH = '/var/spool/ambra/ingested'
@@ -65,7 +65,7 @@ class IngestiblesTest(IngestiblesJson):
     except:
       self.delete_files_in_ingest(files)
       raise
-    self.copy_file_to_ingest(files=files)
+    self.copy_file_to_ingest()
     try:
       # TODO: response here is not JSON, is that a bug?
       # So I added a param to not parse as json.
@@ -77,25 +77,23 @@ class IngestiblesTest(IngestiblesJson):
       self.delete_files_in_ingest(files)
       raise
 
-  # copy N files from test/data directory to Rhino's ingest directory
-  # assuming Rhino is using local file system.
-  def copy_file_to_ingest(self, count=1, files=None):
+  # copy N files from INGESTED_DATA_PATH variable directory to Rhino's ingest directory
+  def copy_file_to_ingest(self, count=1):
     files = []
-    if not files:
-      try:
-        COMMAND= 'sshpass -pShoh1yar ssh -o StrictHostKeyChecking=no ' + HOST_HOME + ' ls ' + INGESTED_DATA_PATH
-        string_file_names = subprocess.check_output(COMMAND, shell=True)
-        counter = string_file_names.count('.zip')
-        random_number = random.randint(0,counter-1)
-        record = string_file_names.split('\n')[random_number]
-        files.append(record)
-      except:
-        raise RuntimeError('error reading directory %r'%(INGESTED_DATA_PATH,))
-      random.shuffle(files)
-      files = files[:count]
+    try:
+      COMMAND= 'sshpass -p' + SSH_PASSWORD + ' ssh -o StrictHostKeyChecking=no ' + HOST_HOME + ' ls ' + INGESTED_DATA_PATH
+      string_file_names = subprocess.check_output(COMMAND, shell=True)
+      counter = string_file_names.count('.zip')
+      random_number = random.randint(0,counter-1)
+      record = string_file_names.split('\n')[random_number]
+      files.append(record)
+    except:
+      raise RuntimeError('error reading directory %r'%(INGESTED_DATA_PATH,))
+    random.shuffle(files)
+    files = files[:count]
     for filename in files:
       print(filename)
-      COMMAND= 'sshpass -pShoh1yar ssh -o StrictHostKeyChecking=no ' + HOST_HOME + ' sudo cp ' + INGESTED_DATA_PATH + '/' + filename + ' ' +  INGESTION_QUEUE_DATA_PATH
+      COMMAND= 'sshpass -p' + SSH_PASSWORD + ' ssh -o StrictHostKeyChecking=no ' + HOST_HOME + ' sudo cp ' + INGESTED_DATA_PATH + '/' + filename + ' ' +  INGESTION_QUEUE_DATA_PATH
       string_files_moved = subprocess.check_output(COMMAND, shell=True)
       print (string_files_moved)
     return files
@@ -105,7 +103,7 @@ class IngestiblesTest(IngestiblesJson):
       src = os.path.join(RHINO_INGEST_PATH, filename)
       try:
         COMMAND_DELETE = ' sudo rm ' + src
-        COMMAND= 'sshpass -pShoh1yar ssh -o StrictHostKeyChecking=no ' + HOST_HOME + COMMAND_DELETE
+        COMMAND= 'sshpass -p' + SSH_PASSWORD + ' ssh -o StrictHostKeyChecking=no ' + HOST_HOME + COMMAND_DELETE
         print('sshpass -pPassword ssh -o StrictHostKeyChecking=no ' + HOST_HOME + COMMAND_DELETE)
         os.system(COMMAND)
       except:
