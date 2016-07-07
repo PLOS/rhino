@@ -44,6 +44,7 @@ import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.VersionedArticleRelationship;
 import org.ambraproject.rhino.rest.ClientItemId;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -541,39 +542,45 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
+  public List<VersionedArticleRelationship> getArticleRelationships(ArticleIdentifier articleId) {
+    return (List<VersionedArticleRelationship>) hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "SELECT ar " +
+          "FROM VersionedArticleRelationship ar " +
+          "WHERE ar.sourceArticle.doi = :doi ");
+      query.setParameter("doi", articleId.getDoiName());
+      return query.list();});
+  }
+
+  @Override
   public void refreshArticleRelationships(ArticleRevisionIdentifier articleRevId) throws IOException {
-    ArticleRevision articleRev = getArticleRevision(articleRevId);
-    ArticleXml articleXml = new ArticleXml(getManuscriptXml(articleRev));
-    Long articleId = articleRev.getIngestion().getArticle().getArticleId();
+    ArticleRevision sourceArticleRev = getArticleRevision(articleRevId);
+    ArticleXml sourceArticleXml = new ArticleXml(getManuscriptXml(sourceArticleRev));
+    ArticleTable sourceArticle = sourceArticleRev.getIngestion().getArticle();
 
     // TODO: refactor parse code to populate VersionedArticleRelationship when legacy ingestion code not needed
-    List<ArticleRelationship> xmlRelationships = articleXml.parseRelatedArticles();
-    hibernateTemplate.execute(session -> {
-      SQLQuery deleteQuery = session.createSQLQuery("DELETE FROM articleRelationship WHERE sourceArticleId = :articleId");
-      deleteQuery.setParameter("articleId", articleId);
-      deleteQuery.executeUpdate();
-
-      for (ArticleRelationship ar : xmlRelationships) {
-        if (ar.getOtherArticleDoi() != null) {
-          ArticleTable targetArticle = null;
-          try {
-            targetArticle = getArticle(ArticleIdentifier.create(ar.getOtherArticleDoi()));
-          } catch (NoSuchArticleIdException e) {
-            // likely a reference to an article external to PLOS and so the relationship is not persisted
-          }
-          if (targetArticle != null) {
-            SQLQuery insertQuery = session.createSQLQuery("" +
-                "INSERT INTO articleRelationship (sourceArticleId, targetArticleId, type) " +
-                "VALUES (:sourceId, :targetId, :type)");
-            insertQuery.setParameter("sourceId", articleId);
-            insertQuery.setParameter("targetId", targetArticle.getArticleId());
-            insertQuery.setParameter("type", ar.getType());
-            insertQuery.executeUpdate();
-          }
+    List<ArticleRelationship> xmlRelationships = sourceArticleXml.parseRelatedArticles();
+    List<VersionedArticleRelationship> dbRelationships = getArticleRelationships(ArticleIdentifier.create(sourceArticle.getDoi()));
+    for (VersionedArticleRelationship ar: dbRelationships) {
+      hibernateTemplate.delete(ar);
+    }
+    for (ArticleRelationship ar : xmlRelationships) {
+      if (ar.getOtherArticleDoi() != null) {
+        ArticleTable targetArticle = null;
+        try {
+          targetArticle = getArticle(ArticleIdentifier.create(ar.getOtherArticleDoi()));
+        } catch (NoSuchArticleIdException e) {
+          // likely a reference to an article external to PLOS and so the relationship is not persisted
+        }
+        if (targetArticle != null) {
+          VersionedArticleRelationship newAr = new VersionedArticleRelationship();
+          newAr.setSourceArticle(sourceArticle);
+          newAr.setTargetArticle(targetArticle);
+          newAr.setType(ar.getType());
+          hibernateTemplate.save(newAr);
         }
       }
-      return null;
-    });
+    }
   }
 
   /**
