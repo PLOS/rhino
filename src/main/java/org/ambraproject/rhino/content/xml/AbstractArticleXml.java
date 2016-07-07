@@ -24,7 +24,7 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.article.NlmPerson;
 import org.ambraproject.rhino.util.NodeListAdapter;
 import org.ambraproject.rhino.util.StringReplacer;
@@ -89,7 +89,7 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
       })
   );
 
-  protected String getAssetDoi(Node assetNode) {
+  protected Doi getAssetDoi(Node assetNode) {
     String nodeName = assetNode.getNodeName();
     String doi;
     if (GRAPHIC_NODE_PARENTS.contains(nodeName)) {
@@ -105,7 +105,7 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
       log.warn("An asset node ({}) does not have DOI as expected", assetNode.getNodeName());
       return null;
     }
-    return DoiBasedIdentity.asIdentifier(doi);
+    return Doi.create(doi);
   }
 
   /**

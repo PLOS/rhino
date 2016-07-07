@@ -18,13 +18,14 @@
 
 package org.ambraproject.rhino.content.xml;
 
-import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import org.ambraproject.rhino.identity.AssetIdentity;
+import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.article.AssetMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
+
+import java.util.Objects;
 
 /**
  * Contains a whole article as an NLM-format XML document and extracts metadata for one asset.
@@ -33,7 +34,7 @@ public class AssetXml extends AbstractArticleXml<AssetMetadata> {
 
   private static final Logger log = LoggerFactory.getLogger(AssetXml.class);
 
-  private final AssetIdentity assetId;
+  private final Doi assetId;
 
   /**
    * The Node passed to this constructor may be a full document or just the asset node. In the former case, this class
@@ -42,14 +43,14 @@ public class AssetXml extends AbstractArticleXml<AssetMetadata> {
    * @param xml
    * @param assetId
    */
-  public AssetXml(Node xml, AssetIdentity assetId) {
+  public AssetXml(Node xml, Doi assetId) {
     super(xml);
-    this.assetId = Preconditions.checkNotNull(assetId);
+    this.assetId = Objects.requireNonNull(assetId);
   }
 
   @Override
   public AssetMetadata build() throws XmlContentException {
-    String doi = assetId.getKey();
+    String doi = assetId.getName();
 
     Node contextNode = xml;
     if (GRAPHIC.equals(contextNode.getNodeName())) {

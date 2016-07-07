@@ -34,6 +34,7 @@ public class ArticleIngestionView implements JsonOutputView {
     serialized.addProperty("ingestionNumber", ingestion.getIngestionNumber());
 
     JsonAdapterUtil.copyWithoutOverwriting(context.serialize(metadata).getAsJsonObject(), serialized);
+    serialized.remove("assets"); // TODO: Create groomed view for ArticleItem/ArticleFile objects
 
     serialized.add("relatedArticles", context.serialize(relationships));
 

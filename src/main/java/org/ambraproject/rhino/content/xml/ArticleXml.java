@@ -29,6 +29,7 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
+import org.ambraproject.rhino.model.article.AssetMetadata;
 import org.ambraproject.rhino.model.article.Citation;
 import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.ambraproject.rhino.util.NodeListAdapter;
@@ -86,9 +87,9 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
   public AssetNodesByDoi findAllAssetNodes() {
     // Find all nodes of an asset type and map them by DOI
     List<Node> rawNodes = readNodeList(ASSET_EXPRESSION);
-    ListMultimap<String, Node> nodeMap = LinkedListMultimap.create(rawNodes.size());
+    ListMultimap<Doi, Node> nodeMap = LinkedListMultimap.create(rawNodes.size());
     for (Node node : rawNodes) {
-      String assetDoi = getAssetDoi(node);
+      Doi assetDoi = getAssetDoi(node);
       if (assetDoi != null) {
         nodeMap.put(assetDoi, node);
       } else {
@@ -97,7 +98,7 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     }
 
     // Replace <graphic> nodes without changing keys or iteration order
-    for (Map.Entry<String, Node> entry : nodeMap.entries()) {
+    for (Map.Entry<Doi, Node> entry : nodeMap.entries()) {
       Node node = entry.getValue();
       if (node.getNodeName().equals(GRAPHIC)) {
         entry.setValue(replaceGraphicNode(node));
@@ -172,7 +173,7 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
    * @param outerNode an asset node such that {@code getAssetDoi(outerNode) == null}
    * @param nodeMap   the map to modify if a nested DOI is found
    */
-  private void findNestedDoi(Node outerNode, Multimap<String, Node> nodeMap) {
+  private void findNestedDoi(Node outerNode, Multimap<Doi, Node> nodeMap) {
     Preconditions.checkNotNull(nodeMap);
 
     // Currently, the only special case handled here is
@@ -181,7 +182,7 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     if (TABLE_WRAP.equals(outerNode.getNodeName())) {
       Node graphicNode = readNode("descendant::" + GRAPHIC, outerNode);
       if (graphicNode != null) {
-        String doi = getAssetDoi(graphicNode);
+        Doi doi = getAssetDoi(graphicNode);
         if (doi != null) {
           nodeMap.put(doi, outerNode);
         }
@@ -248,6 +249,8 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     article.setUrl(buildUrl(readString("/article/front/article-meta/article-id[@pub-id-type = 'doi']")));
 
     article.setRelatedArticles(parseRelatedArticles());
+
+    article.setAssets(parseAssets());
   }
 
   /**
@@ -445,6 +448,22 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
       relatedArticles.add(relatedArticle);
     }
     return relatedArticles;
+  }
+
+  private List<AssetMetadata> parseAssets() {
+    AssetNodesByDoi nodeMap = findAllAssetNodes();
+    return nodeMap.getDois().stream().map((Doi assetDoi) -> {
+      ImmutableList<Node> nodes = nodeMap.getNodes(assetDoi);
+      List<AssetMetadata> assetMetadataList = nodes.stream()
+          .map(assetNode -> new AssetXml(assetNode, assetDoi).build())
+          .distinct()
+          .collect(Collectors.toList());
+      if (assetMetadataList.size() > 1) {
+        // TODO: It might be okay if the duplicate AssetMetadata objects differ only by contextElement
+        throw new XmlContentException("Non-matching duplicate assets with DOI: " + assetDoi);
+      }
+      return assetMetadataList.get(0);
+    }).collect(Collectors.toList());
   }
 
 }

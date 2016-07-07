@@ -163,7 +163,7 @@ class ArticlePackageBuilder {
       return AssetType.ARTICLE;
     }
     Doi assetIdentity = Doi.create(asset.getUri());
-    if (!assetNodeMap.getDois().contains(assetIdentity.getName())) {
+    if (!assetNodeMap.getDois().contains(assetIdentity)) {
       if (asset.isStrikingImage()) {
         return AssetType.STANDALONE_STRIKING_IMAGE;
       } else {
@@ -171,7 +171,7 @@ class ArticlePackageBuilder {
       }
     }
 
-    List<Node> nodes = assetNodeMap.getNodes(assetIdentity.getName());
+    List<Node> nodes = assetNodeMap.getNodes(assetIdentity);
     AssetType identifiedType = null;
     for (Node node : nodes) {
       String nodeName = node.getNodeName();
