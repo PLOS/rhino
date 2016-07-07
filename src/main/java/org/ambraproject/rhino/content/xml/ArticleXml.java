@@ -27,13 +27,10 @@ import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
-import org.ambraproject.rhino.model.Article;
-import org.ambraproject.rhino.model.ArticleAuthor;
-import org.ambraproject.rhino.model.ArticleEditor;
-import org.ambraproject.rhino.model.ArticleRelationship;
-import org.ambraproject.rhino.model.CitedArticle;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.model.PublicationState;
+import org.ambraproject.rhino.model.article.ArticleMetadata;
+import org.ambraproject.rhino.model.article.Citation;
+import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.ambraproject.rhino.util.NodeListAdapter;
 import org.ambraproject.rhino.util.StringReplacer;
 import org.slf4j.Logger;
@@ -42,25 +39,18 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.annotation.Nullable;
 import java.net.URLEncoder;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TimeZone;
 
 /**
- * An NLM-format XML document that can be "ingested" to build an {@link Article} object.
+ * An NLM-format XML document that can be "ingested" to build an {@link ArticleMetadata} object.
  */
-public class ArticleXml extends AbstractArticleXml<Article> {
+public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleXml.class);
-
-  private static final TimeZone UTC = TimeZone.getTimeZone("UTC");
 
   public ArticleXml(Document xml) {
     super(xml);
@@ -202,7 +192,8 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    * {@inheritDoc}
    */
   @Override
-  public Article build(Article article) throws XmlContentException {
+  public ArticleMetadata build() throws XmlContentException {
+    ArticleMetadata article = new ArticleMetadata();
     setConstants(article);
     setFromXml(article);
     return article;
@@ -213,13 +204,12 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    *
    * @param article the article to modify
    */
-  private static void setConstants(Article article) {
+  private static void setConstants(ArticleMetadata article) {
     // These are constants because they are implied by how we get the input
     article.setFormat("text/xml");
-    article.setState(PublicationState.INGESTED.getValue());
   }
 
-  private void setFromXml(final Article article) throws XmlContentException {
+  private void setFromXml(final ArticleMetadata article) throws XmlContentException {
     article.setTitle(buildXmlExcerpt(readNode("/article/front/article-meta/title-group/article-title")));
     article.seteIssn(checkEissn(readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]")));
     article.setDescription(buildXmlExcerpt(findAbstractNode()));
@@ -241,97 +231,18 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     article.setPublisherLocation(readString("/article/front/journal-meta/publisher/publisher-loc"));
 
     article.setLanguage(parseLanguage(readString("/article/@xml:lang")));
-    article.setDate(parseDate(readNode("/article/front/article-meta/pub-date[@pub-type=\"epub\"]")));
+    article.setPublicationDate(parseDate(readNode("/article/front/article-meta/pub-date[@pub-type=\"epub\"]")));
 
-    // We have to be careful when setting Article properties that have a one-to-many relationship with entities
-    // that are marked 'cascade="all-delete-orphans"' in the hibernate config.  This is especially important
-    // during reingestion.  If we call the setter of such a property, and it's already populated, then the old
-    // entries are garbage-collected and eventually deleted from the database.  This is usually not what we
-    // want, and it leads to bugs.
-
-    // TODO: this can probably be made more elegant with lambdas once we are on Java 8.
-
-    final Set<String> newTypes = buildArticleTypes();
-    setDeletableChildrenRelationship(article, article.getTypes(), newTypes, new Runnable() {
-      @Override
-      public void run() {
-        article.setTypes(newTypes);
-      }
-    });
-
-    final List<CitedArticle> newCitedArticles = parseCitations(readNodeList("/article/back/ref-list/ref"));
-    setDeletableChildrenRelationship(article, article.getCitedArticles(), newCitedArticles, new Runnable() {
-      @Override
-      public void run() {
-        article.setCitedArticles(newCitedArticles);
-      }
-    });
-
-    final List<ArticleAuthor> newAuthors = readAuthors(readNodeList(
-        "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/name"));
-    setDeletableChildrenRelationship(article, article.getAuthors(), newAuthors, new Runnable() {
-      @Override
-      public void run() {
-        article.setAuthors(newAuthors);
-      }
-    });
-
-    final List<ArticleEditor> newEditors = readEditors(readNodeList(
-        "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"editor\"]/name"));
-    setDeletableChildrenRelationship(article, article.getEditors(), newEditors, new Runnable() {
-      @Override
-      public void run() {
-        article.setEditors(newEditors);
-      }
-    });
-
-    final List<String> newCollaborativeAuthors = parseCollaborativeAuthors(readNodeList(
-        "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/collab"));
-    setDeletableChildrenRelationship(article, article.getCollaborativeAuthors(), newCollaborativeAuthors,
-        new Runnable() {
-          @Override
-          public void run() {
-            article.setCollaborativeAuthors(newCollaborativeAuthors);
-          }
-        }
-    );
+    article.setTypes(buildArticleTypes());
+    article.setCitedArticles(parseCitations(readNodeList("/article/back/ref-list/ref")));
+    article.setAuthors(readPersons(readNodeList(
+        "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/name")));
+    article.setEditors(readPersons(readNodeList(
+        "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"editor\"]/name")));
+    article.setCollaborativeAuthors(parseCollaborativeAuthors(readNodeList(
+        "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/collab")));
 
     article.setUrl(buildUrl(readString("/article/front/article-meta/article-id[@pub-id-type = 'doi']")));
-  }
-
-  /**
-   * Safely sets a property of an article that has a one-to-many relationship, and is automatically deleted when
-   * dissociated from the parent.  The collection will only be set if it differs from the values already defined.
-   * <p/>
-   * For example, instead of <pre>article.setFoo(newStuff);</pre>
-   * you should instead do
-   * <pre>
-   *   setDeletableChildrenRelationship(article, article.getFoo(), newStuff, new Runnable() {
-   *     public void run() {
-   *       article.setFoo(newStuff);
-   *     }
-   *   }
-   * </pre>
-   *
-   * @param article        parent object
-   * @param existingValues existing values obtained by calling the getter on article
-   * @param newValues      new values that will be set if they differ from existingValues
-   * @param setter         encapsulates the property's setter method, which will be called with newValues when run
-   */
-  private void setDeletableChildrenRelationship(Article article, @Nullable Collection existingValues,
-                                                Collection newValues, Runnable setter) {
-    if (!newValues.equals(existingValues)) {
-      if (existingValues != null) {
-
-        // This is the safe and recommended way to work with a hibernate all-delete-orphan property.  Instead
-        // of calling the setter with the new collection, work with the existing collection, which is already
-        // imbued with hibernate magic.
-        existingValues.clear();
-        existingValues.addAll(newValues);
-      } else {
-        setter.run();
-      }
-    }
   }
 
   /**
@@ -364,7 +275,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   }
 
   /**
-   * @return the appropriate value for the rights property of {@link Article}, based on the article XML.
+   * @return the appropriate value for the rights property of {@link ArticleMetadata}, based on the article XML.
    */
   private static String buildRights(String holder, String license) throws XmlContentException {
     if (license == null) {
@@ -377,7 +288,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   }
 
   /**
-   * @return the appropriate value for the pages property of {@link Article}, based on the article XML.
+   * @return the appropriate value for the pages property of {@link ArticleMetadata}, based on the article XML.
    */
   private static String buildPages(String pageCount) {
     if (Strings.isNullOrEmpty(pageCount)) {
@@ -461,7 +372,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     return language.toLowerCase();
   }
 
-  private Date parseDate(Node dateNode) throws XmlContentException {
+  private LocalDate parseDate(Node dateNode) throws XmlContentException {
     int year, month, day;
     try {
       year = Integer.parseInt(readString("child::year", dateNode));
@@ -470,43 +381,14 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     } catch (NumberFormatException e) {
       throw new XmlContentException("Expected numbers for date fields", e);
     }
-    Calendar date = GregorianCalendar.getInstance();
 
-    // Need to call clear to clear out fields we don't set below (like milliseconds).
-    date.clear();
-
-    // TODO: figure out if we want to set time zone.  I'm leaving it out for now
-    // so that the tests will pass in all locales (the date returned by this method
-    // will be in the same time zone as the ones used in the tests).
-//    date.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
-
-    // Note that Calendar wants month to be zero-based.
-    date.set(year, month - 1, day, 0, 0, 0);
-    return date.getTime();
+    return LocalDate.of(year, month, day);
   }
 
-  private List<ArticleAuthor> readAuthors(List<Node> authorNodes) throws XmlContentException {
-    List<ArticleAuthor> authors = Lists.newArrayListWithCapacity(authorNodes.size());
-    for (Node authorNode : authorNodes) {
-      ArticleAuthor author = parsePersonName(authorNode).copyTo(new ArticleAuthor());
-      authors.add(author);
-    }
-    return authors;
-  }
-
-  private List<ArticleEditor> readEditors(List<Node> editorNodes) throws XmlContentException {
-    List<ArticleEditor> editors = Lists.newArrayListWithCapacity(editorNodes.size());
-    for (Node editorNode : editorNodes) {
-      ArticleEditor editor = parsePersonName(editorNode).copyTo(new ArticleEditor());
-      editors.add(editor);
-    }
-    return editors;
-  }
-
-  private List<CitedArticle> parseCitations(List<Node> refNodes) throws XmlContentException {
-    List<CitedArticle> citations = Lists.newArrayListWithCapacity(refNodes.size());
+  private List<Citation> parseCitations(List<Node> refNodes) throws XmlContentException {
+    List<Citation> citations = Lists.newArrayListWithCapacity(refNodes.size());
     for (Node refNode : refNodes) {
-      CitedArticle citation = new CitedArticle();
+      Citation citation = new Citation();
       citation.setKey(readString("child::label", refNode));
 
       Node citationNode = readNode("(child::element-citation|child::mixed-citation|child::nlm-citation)", refNode);
@@ -514,7 +396,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
         throw new XmlContentException("All citation (<ref>) nodes expected to contain one of: "
             + "element-citation, mixed-citation, nlm-citation");
       }
-      citation = new CitedArticleXml(citationNode).build(citation);
+      citation = new CitedArticleXml(citationNode).build();
       citations.add(citation);
     }
     return citations;
@@ -545,20 +427,20 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   }
 
   /**
-   * Parse {@link ArticleRelationship} objects from XML.
+   * Parse {@link RelatedArticleLink} objects from XML.
    * <p/>
-   * These are returned from here, rather than set in the {@link Article} object during normal parsing, so they can get
-   * special handling.
+   * These are returned from here, rather than set in the {@link ArticleMetadata} object during normal parsing, so they
+   * can get special handling.
    *
    * @return the article relationships defined by the XML
    */
-  public List<ArticleRelationship> parseRelatedArticles() {
+  public List<RelatedArticleLink> parseRelatedArticles() {
     List<Node> relatedArticleNodes = readNodeList("//related-article");
-    List<ArticleRelationship> relatedArticles = Lists.newArrayListWithCapacity(relatedArticleNodes.size());
+    List<RelatedArticleLink> relatedArticles = Lists.newArrayListWithCapacity(relatedArticleNodes.size());
     for (Node relatedArticleNode : relatedArticleNodes) {
-      ArticleRelationship relatedArticle = new ArticleRelationship();
-      relatedArticle.setType(readString("attribute::related-article-type", relatedArticleNode));
-      relatedArticle.setOtherArticleDoi(readHrefAttribute(relatedArticleNode));
+      String type = readString("attribute::related-article-type", relatedArticleNode);
+      String href = readHrefAttribute(relatedArticleNode);
+      RelatedArticleLink relatedArticle = new RelatedArticleLink(type, href);
       relatedArticles.add(relatedArticle);
     }
     return relatedArticles;

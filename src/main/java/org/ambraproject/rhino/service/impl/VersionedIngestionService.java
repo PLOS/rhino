@@ -2,8 +2,6 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
@@ -16,6 +14,7 @@ import org.ambraproject.rhino.model.ArticleFile;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.PublicationState;
+import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.util.Archive;
@@ -100,8 +99,7 @@ class VersionedIngestionService {
     long ingestionId = persistIngestion(articlePk);
     persistRevision(articlePk, ingestionId, revision.orElseGet(parsedArticle::getRevisionNumber));
 
-    final Article articleMetadata = parsedArticle.build(new Article());
-    articleMetadata.setDoi(doi.getUri().toString());
+    final ArticleMetadata articleMetadata = parsedArticle.build();
 
     // TODO: Allow bucket name to be specified as an ingestion parameter
     String destinationBucketName = parentService.runtimeConfiguration.getCorpusStorage().getDefaultBucket();
@@ -110,8 +108,6 @@ class VersionedIngestionService {
         manuscriptAsset, manuscriptRepr, printableRepr).build();
     persistItem(articlePackage, ingestionId);
     persistJournal(articleMetadata, ingestionId);
-
-    stubAssociativeFields(articleMetadata);
 
     return articleMetadata;
   }
@@ -292,14 +288,6 @@ class VersionedIngestionService {
     });
   }
 
-  private void stubAssociativeFields(Article article) {
-    article.setID(-1L);
-    article.setAssets(ImmutableList.of());
-    article.setRelatedArticles(ImmutableList.of());
-    article.setJournals(ImmutableSet.of());
-    article.setCategories(ImmutableMap.of());
-  }
-
   private ManifestXml.Asset findManuscriptAsset(List<ManifestXml.Asset> assets) {
     for (ManifestXml.Asset asset : assets) {
       if (asset.getMainEntry().isPresent()) {
@@ -344,7 +332,7 @@ class VersionedIngestionService {
    * @deprecated method signature accommodates testing and will be changed
    */
   @Deprecated
-  Article getArticleMetadata(ArticleIngestionIdentifier ingestionId, ArticleMetadataSource source) {
+  ArticleMetadata getArticleMetadata(ArticleIngestionIdentifier ingestionId, ArticleMetadataSource source) {
     /*
      * *** Implementation notes ***
      *
@@ -381,12 +369,10 @@ class VersionedIngestionService {
       throw new RuntimeException(e);
     }
 
-    Article article;
     try {
-      article = new ArticleXml(document).build(new Article());
+      return new ArticleXml(document).build();
     } catch (XmlContentException e) {
       throw new RuntimeException(e);
     }
-    return article;
   }
 }

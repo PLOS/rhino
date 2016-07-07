@@ -21,6 +21,7 @@ package org.ambraproject.rhino.content.xml;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import org.ambraproject.rhino.identity.AssetIdentity;
+import org.ambraproject.rhino.model.article.AssetMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
@@ -28,7 +29,7 @@ import org.w3c.dom.Node;
 /**
  * Contains a whole article as an NLM-format XML document and extracts metadata for one asset.
  */
-public class AssetXml extends AbstractArticleXml<AssetBuilder> {
+public class AssetXml extends AbstractArticleXml<AssetMetadata> {
 
   private static final Logger log = LoggerFactory.getLogger(AssetXml.class);
 
@@ -47,7 +48,8 @@ public class AssetXml extends AbstractArticleXml<AssetBuilder> {
   }
 
   @Override
-  public AssetBuilder build(AssetBuilder asset) throws XmlContentException {
+  public AssetMetadata build() throws XmlContentException {
+    AssetMetadata asset = new AssetMetadata();
     asset.setDoi(assetId.getKey());
 
     Node contextNode = xml;
