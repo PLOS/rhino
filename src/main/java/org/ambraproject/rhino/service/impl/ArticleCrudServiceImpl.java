@@ -436,14 +436,27 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public List<VersionedArticleRelationship> getArticleRelationships(ArticleIdentifier articleId) {
+  public List<VersionedArticleRelationship> getArticleRelationshipsFrom(ArticleIdentifier sourceId) {
     return (List<VersionedArticleRelationship>) hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "SELECT ar " +
           "FROM VersionedArticleRelationship ar " +
           "WHERE ar.sourceArticle.doi = :doi ");
-      query.setParameter("doi", articleId.getDoiName());
-      return query.list();});
+      query.setParameter("doi", sourceId.getDoiName());
+      return query.list();
+    });
+  }
+
+  @Override
+  public List<VersionedArticleRelationship> getArticleRelationshipsTo(ArticleIdentifier targetId) {
+    return (List<VersionedArticleRelationship>) hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "SELECT ar " +
+          "FROM VersionedArticleRelationship ar " +
+          "WHERE ar.targetArticle.doi = :doi ");
+      query.setParameter("doi", targetId.getDoiName());
+      return query.list();
+    });
   }
 
   @Override
@@ -454,7 +467,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     // TODO: refactor parse code to populate VersionedArticleRelationship when legacy ingestion code not needed
     List<RelatedArticleLink> xmlRelationships = sourceArticleXml.parseRelatedArticles();
-    List<VersionedArticleRelationship> dbRelationships = getArticleRelationships(ArticleIdentifier.create(sourceArticle.getDoi()));
+    List<VersionedArticleRelationship> dbRelationships = getArticleRelationshipsFrom(ArticleIdentifier.create(sourceArticle.getDoi()));
     for (VersionedArticleRelationship ar: dbRelationships) {
       hibernateTemplate.delete(ar);
     }

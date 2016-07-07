@@ -156,7 +156,9 @@ public interface ArticleCrudService {
    */
   public abstract List<RelatedArticleView> getRelatedArticles(Article article);
 
-  List<VersionedArticleRelationship> getArticleRelationships(ArticleIdentifier articleId);
+  List<VersionedArticleRelationship> getArticleRelationshipsFrom(ArticleIdentifier sourceId);
+
+  List<VersionedArticleRelationship> getArticleRelationshipsTo(ArticleIdentifier targetId);
 
   void refreshArticleRelationships(ArticleRevisionIdentifier articleRevId) throws IOException;
 

@@ -1,25 +1,30 @@
 package org.ambraproject.rhino.view.article.versioned;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.rhino.model.ArticleIngestion;
-import org.ambraproject.rhino.model.VersionedArticleRelationship;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
+
+import java.util.Objects;
 
 public class ArticleIngestionView implements JsonOutputView {
 
   private final ArticleIngestion ingestion;
   private final ArticleMetadata metadata;
+  private final RelationshipSetView relationships;
 
-  ArticleIngestionView(ArticleIngestion ingestion, ArticleMetadata metadata) {
+  ArticleIngestionView(ArticleIngestion ingestion,
+                       ArticleMetadata metadata,
+                       RelationshipSetView relationships) {
     Preconditions.checkArgument(ingestion.getArticle().getDoi().equals(metadata.getDoi()));
     this.ingestion = ingestion;
     this.metadata = metadata;
+
+    this.relationships = Objects.requireNonNull(relationships);
   }
 
   @Override
@@ -29,6 +34,8 @@ public class ArticleIngestionView implements JsonOutputView {
     serialized.addProperty("ingestionNumber", ingestion.getIngestionNumber());
 
     JsonAdapterUtil.copyWithoutOverwriting(context.serialize(metadata).getAsJsonObject(), serialized);
+
+    serialized.add("relatedArticles", context.serialize(relationships));
 
     return serialized;
   }

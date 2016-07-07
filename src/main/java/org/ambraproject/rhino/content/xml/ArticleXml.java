@@ -246,6 +246,8 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
         "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/collab")));
 
     article.setUrl(buildUrl(readString("/article/front/article-meta/article-id[@pub-id-type = 'doi']")));
+
+    article.setRelatedArticles(parseRelatedArticles());
   }
 
   /**
