@@ -56,7 +56,7 @@ class VersionedIngestionService {
     return ((Number) session.createSQLQuery("SELECT LAST_INSERT_ID()").uniqueResult()).longValue();
   }
 
-  Article ingest(Archive archive, OptionalInt revision) throws IOException, XmlContentException {
+  ArticleMetadata ingest(Archive archive, OptionalInt revision) throws IOException, XmlContentException {
     String manifestEntry = null;
     for (String entryName : archive.getEntryNames()) {
       if (entryName.equalsIgnoreCase("manifest.xml")) {
@@ -275,8 +275,22 @@ class VersionedIngestionService {
     });
   }
 
-  private long persistJournal(Article article, long ingestionId) {
-    Journal publicationJournal = parentService.getPublicationJournal(article);
+  private long persistJournal(ArticleMetadata article, long ingestionId) {
+    Journal result;
+    String eissn = article.geteIssn();
+    if (eissn == null) {
+      String msg = "eIssn not set for article: " + article.getDoi();
+      throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
+    } else {
+      Journal journal = parentService.journalCrudService.findJournalByEissn(eissn);
+      if (journal == null) {
+        String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
+        throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
+      }
+      result = journal;
+    }
+    Journal publicationJournal = result;
+
     return parentService.hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
           "INSERT INTO articleJournalJoinTable (ingestionId, journalId) " +
@@ -287,6 +301,7 @@ class VersionedIngestionService {
       return getLastInsertId(session);
     });
   }
+
 
   private ManifestXml.Asset findManuscriptAsset(List<ManifestXml.Asset> assets) {
     for (ManifestXml.Asset asset : assets) {

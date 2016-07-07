@@ -43,6 +43,7 @@ import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.rest.ClientItemId;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -146,8 +147,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return article;
   }
 
-  @Override
-  public Article writeArchiveAsVersionedOnly(Archive archive) throws IOException {
+  private Article writeArchiveAsVersionedOnly(Archive archive) throws IOException {
     if (runtimeConfiguration.isUsingVersionedIngestion()) {
       try {
         return versionedIngestionService.ingest(archive, OptionalInt.empty());
@@ -213,22 +213,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     ArticleRevision revision = getLatestArticleRevision(article);
     Set<Journal> journals = revision.getIngestion().getJournals();
     return journals.iterator().next(); // TODO: Need original journal?
-  }
-
-  @Deprecated
-  public Journal getPublicationJournal(Article article) {
-    String eissn = article.geteIssn();
-    if (eissn == null) {
-      String msg = "eIssn not set for article: " + article.getDoi();
-      throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
-    } else {
-      Journal journal = journalCrudService.findJournalByEissn(eissn);
-      if (journal == null) {
-        String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
-        throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
-      }
-      return journal;
-    }
   }
 
   @Override

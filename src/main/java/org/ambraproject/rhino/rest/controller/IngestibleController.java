@@ -133,21 +133,4 @@ public class IngestibleController extends DoiBasedCrudController {
     }
   }
 
-  /**
-   * Read an article from the legacy data model and rewrite it as a versioned article. Does not reingest the article to
-   * legacy persistence.
-   *
-   * @deprecated This is a temporary kludge for data migration. It should be deleted when the legacy article model is no
-   * longer supported.
-   */
-  @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.POST, params = {"versionedReingestInPlace", "article"})
-  @Deprecated
-  public ResponseEntity<?> versionedReingestInPlace(@RequestParam("article") String articleId)
-      throws IOException {
-    Archive archive = articleCrudService.repack(ArticleIdentity.create(articleId));
-    articleCrudService.writeArchiveAsVersionedOnly(archive);
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
-
 }
