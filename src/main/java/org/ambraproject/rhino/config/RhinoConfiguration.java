@@ -60,6 +60,7 @@ import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyClassificationServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyServiceImpl;
 import org.ambraproject.rhino.util.GitInfo;
+import org.ambraproject.rhino.util.Java8TimeGsonAdapters;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
@@ -157,6 +158,7 @@ public class RhinoConfiguration extends BaseConfiguration {
     for (Map.Entry<Type, Object> entry : AdapterRegistry.getCustomAdapters().entrySet()) {
       builder.registerTypeAdapter(entry.getKey(), entry.getValue());
     }
+    Java8TimeGsonAdapters.register(builder);
     DoiBasedIdentitySerializer.INSTANCE.register(builder);
 
     return builder.create();
