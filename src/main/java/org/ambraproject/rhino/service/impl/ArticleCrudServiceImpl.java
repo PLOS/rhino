@@ -23,6 +23,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
+import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
@@ -43,6 +44,7 @@ import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.VersionedArticleRelationship;
 import org.ambraproject.rhino.rest.ClientItemId;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -538,6 +540,48 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           return new RelatedArticleView(relationship, relatedArticle);
         })
         .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<VersionedArticleRelationship> getArticleRelationships(ArticleIdentifier articleId) {
+    return (List<VersionedArticleRelationship>) hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "SELECT ar " +
+          "FROM VersionedArticleRelationship ar " +
+          "WHERE ar.sourceArticle.doi = :doi ");
+      query.setParameter("doi", articleId.getDoiName());
+      return query.list();});
+  }
+
+  @Override
+  public void refreshArticleRelationships(ArticleRevisionIdentifier articleRevId) throws IOException {
+    ArticleRevision sourceArticleRev = getArticleRevision(articleRevId);
+    ArticleXml sourceArticleXml = new ArticleXml(getManuscriptXml(sourceArticleRev));
+    ArticleTable sourceArticle = sourceArticleRev.getIngestion().getArticle();
+
+    // TODO: refactor parse code to populate VersionedArticleRelationship when legacy ingestion code not needed
+    List<ArticleRelationship> xmlRelationships = sourceArticleXml.parseRelatedArticles();
+    List<VersionedArticleRelationship> dbRelationships = getArticleRelationships(ArticleIdentifier.create(sourceArticle.getDoi()));
+    for (VersionedArticleRelationship ar: dbRelationships) {
+      hibernateTemplate.delete(ar);
+    }
+    for (ArticleRelationship ar : xmlRelationships) {
+      if (ar.getOtherArticleDoi() != null) {
+        ArticleTable targetArticle = null;
+        try {
+          targetArticle = getArticle(ArticleIdentifier.create(ar.getOtherArticleDoi()));
+        } catch (NoSuchArticleIdException e) {
+          // likely a reference to an article external to PLOS and so the relationship is not persisted
+        }
+        if (targetArticle != null) {
+          VersionedArticleRelationship newAr = new VersionedArticleRelationship();
+          newAr.setSourceArticle(sourceArticle);
+          newAr.setTargetArticle(targetArticle);
+          newAr.setType(ar.getType());
+          hibernateTemplate.save(newAr);
+        }
+      }
+    }
   }
 
   /**

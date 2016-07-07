@@ -31,6 +31,7 @@ import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.VersionedArticleRelationship;
 import org.ambraproject.rhino.rest.ClientItemId;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
@@ -201,6 +202,10 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * @return a set of views of the related articles
    */
   public abstract List<RelatedArticleView> getRelatedArticles(Article article);
+
+  List<VersionedArticleRelationship> getArticleRelationships(ArticleIdentifier articleId);
+
+  void refreshArticleRelationships(ArticleRevisionIdentifier articleRevId) throws IOException;
 
   /**
    * Read the metadata of a random article.
