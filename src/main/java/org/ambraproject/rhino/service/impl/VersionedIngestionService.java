@@ -378,9 +378,14 @@ public class VersionedIngestionService extends AmbraService {
    * @param ingestionId the ID of the article to serve
    * @return an object containing metadata that could be extracted from the manuscript, with other fields unfilled
    */
-  ArticleMetadata getArticleMetadata(ArticleIngestionIdentifier ingestionId) throws IOException {
+  public ArticleMetadata getArticleMetadata(ArticleIngestionIdentifier ingestionId) {
     ArticleRevision revision = articleCrudService.getArticleRevision(ingestionId);
-    Document document = articleCrudService.getManuscriptXml(revision);
+    Document document;
+    try {
+      document = articleCrudService.getManuscriptXml(revision);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
 
     try {
       return new ArticleXml(document).build();

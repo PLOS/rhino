@@ -41,6 +41,7 @@ import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.VersionedArticleRelationship;
+import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.ambraproject.rhino.rest.ClientItemId;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -57,6 +58,7 @@ import org.ambraproject.rhino.view.article.ArticleOutputView;
 import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
 import org.ambraproject.rhino.view.article.AuthorView;
 import org.ambraproject.rhino.view.article.RelatedArticleView;
+import org.ambraproject.rhino.view.article.versioned.ArticleIngestionViewFactory;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -110,6 +112,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private TaxonomyService taxonomyService;
   @Autowired
   private VersionedIngestionService versionedIngestionService;
+  @Autowired
+  private ArticleIngestionViewFactory articleIngestionViewFactory;
 
   @Override
   public void populateCategories(ArticleIdentifier articleId) throws IOException {
@@ -218,7 +222,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
       @Override
       protected Object getData() throws IOException {
-        return versionedIngestionService.getArticleMetadata(ingestionId);
+        return articleIngestionViewFactory.getView(ingestionId);
       }
     };
   }
