@@ -89,14 +89,15 @@ public class VersionedIngestionService extends AmbraService {
     try (InputStream manuscriptStream = new BufferedInputStream(archive.openFile(manuscriptEntry))) {
       parsedArticle = new ArticleXml(AmbraService.parseXml(manuscriptStream));
     }
-    ArticleIdentifier articleIdentifier = ArticleIdentifier.create(parsedArticle.readDoi().getIdentifier());
+    final ArticleMetadata articleMetadata = parsedArticle.build();
+    ArticleIdentifier articleIdentifier = ArticleIdentifier.create(articleMetadata.getDoi());
     Doi doi = articleIdentifier.getDoi();
 
     for (ManifestXml.Asset asset : assets) {
       validateAssetUniqueness(asset, doi);
     }
 
-    if (!manuscriptAsset.getUri().equals(doi.getUri().toString())) {
+    if (!doi.equals(Doi.create(manuscriptAsset.getUri()))) {
       String message = String.format("Article DOI is inconsistent. From manifest: \"%s\" From manuscript: \"%s\"",
           manuscriptAsset.getUri(), doi.getUri());
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
@@ -107,8 +108,6 @@ public class VersionedIngestionService extends AmbraService {
     long ingestionId = ingestionResult.pk;
 
     persistRevision(articlePk, ingestionId, revision.orElseGet(parsedArticle::getRevisionNumber));
-
-    final ArticleMetadata articleMetadata = parsedArticle.build();
 
     // TODO: Allow bucket name to be specified as an ingestion parameter
     String destinationBucketName = runtimeConfiguration.getCorpusStorage().getDefaultBucket();
@@ -263,7 +262,7 @@ public class VersionedIngestionService extends AmbraService {
           "INSERT INTO articleItem (ingestionId, doi, articleItemType) " +
           "  VALUES (:ingestionId, :doi, :articleItemType)");
       insertWork.setParameter("ingestionId", ingestionId);
-      insertWork.setParameter("doi", work.getDoi().getIdentifier());
+      insertWork.setParameter("doi", work.getDoi().getName());
       insertWork.setParameter("articleItemType", work.getType());
       insertWork.executeUpdate();
       long itemId = getLastInsertId(session);

@@ -28,6 +28,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.model.article.Citation;
 import org.ambraproject.rhino.model.article.RelatedArticleLink;
@@ -65,12 +66,12 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
    * @return
    * @throws XmlContentException if the DOI is not present
    */
-  public ArticleIdentity readDoi() throws XmlContentException {
+  public Doi readDoi() throws XmlContentException {
     String doi = readString("/article/front/article-meta/article-id[@pub-id-type=\"doi\"]");
     if (doi == null) {
       throw new XmlContentException("DOI not found");
     }
-    return ArticleIdentity.create(doi);
+    return Doi.create(doi);
   }
 
   public int getRevisionNumber() {
@@ -210,6 +211,8 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
   }
 
   private void setFromXml(final ArticleMetadata article) throws XmlContentException {
+    article.setDoi(readDoi().getName());
+
     article.setTitle(buildXmlExcerpt(readNode("/article/front/article-meta/title-group/article-title")));
     article.seteIssn(checkEissn(readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]")));
     article.setDescription(buildXmlExcerpt(findAbstractNode()));

@@ -9,9 +9,8 @@ import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
-import org.ambraproject.rhino.identity.AssetIdentity;
+import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.ContentTypeInference;
@@ -45,7 +44,7 @@ class ArticlePackageBuilder {
   private final ManifestXml.Asset manuscriptAsset;
   private final ManifestXml.Representation manuscriptRepr;
   private final ManifestXml.Representation printableRepr;
-  private final ArticleIdentity articleIdentity;
+  private final Doi articleIdentity;
 
   ArticlePackageBuilder(String destinationBucketName, Archive archive, ArticleXml article, ManifestXml manifest, String manifestEntry,
                         ManifestXml.Asset manuscriptAsset, ManifestXml.Representation manuscriptRepr, ManifestXml.Representation printableRepr) {
@@ -104,7 +103,7 @@ class ArticlePackageBuilder {
   private Map<String, RepoObjectInput> buildArticleObjects() {
     ImmutableMap.Builder<String, RepoObjectInput> articleObjects = ImmutableMap.builder();
     articleObjects.put("manifest",
-        RepoObjectInput.builder(destinationBucketName, "manifest/" + articleIdentity.getIdentifier())
+        RepoObjectInput.builder(destinationBucketName, "manifest/" + articleIdentity.getName())
             .setContentAccessor(archive.getContentAccessorFor(manifestEntry))
             .setDownloadName(manifestEntry)
             .setContentType(MediaType.APPLICATION_XML)
@@ -113,12 +112,12 @@ class ArticlePackageBuilder {
     articleObjects.put("printable", buildObjectFor(manuscriptAsset, printableRepr));
 
     articleObjects.put("front",
-        RepoObjectInput.builder(destinationBucketName, "front/" + articleIdentity.getIdentifier())
+        RepoObjectInput.builder(destinationBucketName, "front/" + articleIdentity.getName())
             .setByteContent(serializeXml(article.extractFrontMatter()))
             .setContentType(MediaType.APPLICATION_XML)
             .build());
     articleObjects.put("frontAndBack",
-        RepoObjectInput.builder(destinationBucketName, "frontAndBack/" + articleIdentity.getIdentifier())
+        RepoObjectInput.builder(destinationBucketName, "frontAndBack/" + articleIdentity.getName())
             .setByteContent(serializeXml(article.extractFrontAndBackMatter()))
             .setContentType(MediaType.APPLICATION_XML)
             .build());
@@ -149,7 +148,7 @@ class ArticlePackageBuilder {
       AssetType assetType = findAssetType(assetNodeMap, asset);
       if (assetType == AssetType.ARTICLE) continue;
       ImmutableMap.Builder<String, RepoObjectInput> assetObjects = ImmutableMap.builder();
-      AssetIdentity assetIdentity = AssetIdentity.create(asset.getUri());
+      Doi assetIdentity = Doi.create(asset.getUri());
       for (ManifestXml.Representation representation : asset.getRepresentations()) {
         FileType fileType = assetType.getFileType(representation.getName()); // TODO: Use representation.getType instead
         assetObjects.put(fileType.identifier, buildObjectFor(representation.getFile()));
@@ -163,8 +162,8 @@ class ArticlePackageBuilder {
     if (asset.getAssetTagName().equals(ManifestXml.AssetTagName.ARTICLE)) {
       return AssetType.ARTICLE;
     }
-    AssetIdentity assetIdentity = AssetIdentity.create(asset.getUri());
-    if (!assetNodeMap.getDois().contains(assetIdentity.getIdentifier())) {
+    Doi assetIdentity = Doi.create(asset.getUri());
+    if (!assetNodeMap.getDois().contains(assetIdentity.getName())) {
       if (asset.isStrikingImage()) {
         return AssetType.STANDALONE_STRIKING_IMAGE;
       } else {
@@ -172,7 +171,7 @@ class ArticlePackageBuilder {
       }
     }
 
-    List<Node> nodes = assetNodeMap.getNodes(assetIdentity.getIdentifier());
+    List<Node> nodes = assetNodeMap.getNodes(assetIdentity.getName());
     AssetType identifiedType = null;
     for (Node node : nodes) {
       String nodeName = node.getNodeName();

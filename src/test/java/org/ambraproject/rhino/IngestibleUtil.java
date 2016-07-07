@@ -106,7 +106,7 @@ public class IngestibleUtil {
     ArticleXml article = new ArticleXml(document);
     ArticleIdentity identity;
     try {
-      identity = article.readDoi();
+      identity = ArticleIdentity.create(article.readDoi().getName());
     } catch (XmlContentException e) {
       throw new RuntimeException(e);
     }
