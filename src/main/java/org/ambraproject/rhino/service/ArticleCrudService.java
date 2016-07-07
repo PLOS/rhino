@@ -50,22 +50,6 @@ import java.util.OptionalInt;
 public interface ArticleCrudService extends DoiBasedCrudService {
 
   /**
-   * Create or update an article from supplied ,zip archive data. If no article exists with the given identity, a new
-   * article entity is created; else, the article is re-ingested and the new data replaces the old data in the file
-   * store.
-   *
-   * @param archive    the local .zip file
-   * @param suppliedId the identifier supplied for the article, if any
-   * @param revision   the forced revision number if present (else, will be taken from manuscript)
-   * @return the created or update Article
-   * @throws org.ambraproject.rhino.rest.RestClientException if the DOI is already used
-   * @throws IOException
-   */
-  public abstract ArticleMetadata writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode,
-                                       OptionalInt revision)
-      throws IOException;
-
-  /**
    * Populates article category information by making a call to the taxonomy server.
    *
    * @param articleId the identifier of the article

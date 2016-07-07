@@ -34,6 +34,7 @@ import org.ambraproject.rhino.model.ArticleAuthor;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
+import org.ambraproject.rhino.service.impl.VersionedIngestionService;
 import org.ambraproject.rhino.service.taxonomy.DummyTaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
 import org.ambraproject.rhino.util.Archive;
@@ -76,6 +77,8 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
   private AssetCrudService assetCrudService;
   @Autowired
   private ContentRepoService contentRepoService;
+  @Autowired
+  private VersionedIngestionService versionedIngestionService;
 
   /**
    * In addition to checking the existence of the service, this will throw an exception under certain error conditions
@@ -136,7 +139,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
     List<ArticleAsset> referenceAssets = RhinoTestHelper.readReferenceCase(referenceLocation).getAssets();
     Archive mockIngestible = RhinoTestHelper.createMockIngestible(articleId, input, referenceAssets);
-    articleCrudService.writeArchive(mockIngestible, Optional.of(articleId), WriteMode.CREATE_ONLY, OptionalInt.empty());
+    versionedIngestionService.ingest(mockIngestible, OptionalInt.empty());
     assertArticleExistence(articleId, true);
     assertTrue(input.isClosed(), "Service didn't close stream");
 
@@ -183,7 +186,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     final byte[] updated = Bytes.concat(sampleData, "\n<!-- Appended -->".getBytes());
     input = RhinoTestHelper.TestInputStream.of(updated);
     mockIngestible = RhinoTestHelper.createMockIngestible(articleId, input, referenceAssets);
-    articleCrudService.writeArchive(mockIngestible, Optional.of(articleId), WriteMode.UPDATE_ONLY, OptionalInt.empty());
+    versionedIngestionService.ingest(mockIngestible, OptionalInt.empty());
     byte[] updatedData = IOUtils.toByteArray(articleCrudService.readXml(articleId));
     assertEquals(updatedData, updated);
     assertArticleExistence(articleId, true);

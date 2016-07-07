@@ -22,6 +22,7 @@ import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.IngestibleService;
+import org.ambraproject.rhino.service.impl.VersionedIngestionService;
 import org.ambraproject.rhino.util.Archive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,9 +54,10 @@ public class IngestibleController extends DoiBasedCrudController {
 
   @Autowired
   private ArticleCrudService articleCrudService;
-
   @Autowired
   private IngestibleService ingestibleService;
+  @Autowired
+  private VersionedIngestionService versionedIngestionService;
 
   @Override
   protected String getNamespacePrefix() {
@@ -111,7 +113,7 @@ public class IngestibleController extends DoiBasedCrudController {
 
     ArticleMetadata result;
     try (Archive archive = Archive.readZipFile(archiveFile)) {
-      result = articleCrudService.writeArchive(archive, expectedId, reingestMode, OptionalInt.empty());
+      result = versionedIngestionService.ingest(archive, OptionalInt.empty());
     }
     ingestibleService.archiveIngested(name);
     response.setStatus(HttpStatus.CREATED.value());

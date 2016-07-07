@@ -56,7 +56,7 @@ public class VersionedIngestionService extends AmbraService {
     return ((Number) session.createSQLQuery("SELECT LAST_INSERT_ID()").uniqueResult()).longValue();
   }
 
-  ArticleMetadata ingest(Archive archive, OptionalInt revision) throws IOException, XmlContentException {
+  public ArticleMetadata ingest(Archive archive, OptionalInt revision) throws IOException, XmlContentException {
     String manifestEntry = null;
     for (String entryName : archive.getEntryNames()) {
       if (entryName.equalsIgnoreCase("manifest.xml")) {

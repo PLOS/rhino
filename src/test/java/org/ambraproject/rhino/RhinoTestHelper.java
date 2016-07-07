@@ -26,6 +26,7 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService;
+import org.ambraproject.rhino.service.impl.VersionedIngestionService;
 import org.ambraproject.rhino.util.Archive;
 import org.apache.commons.io.IOUtils;
 import org.hibernate.criterion.DetachedCriteria;
@@ -215,15 +216,15 @@ public final class RhinoTestHelper {
     }
   }
 
-  public static Stream<ArticleMetadata> createTestArticles(ArticleCrudService articleCrudService) {
-    return SAMPLE_ARTICLES.stream().map(doiStub -> createTestArticle(articleCrudService, doiStub));
+  public static Stream<ArticleMetadata> createTestArticles(VersionedIngestionService versionedIngestionService) {
+    return SAMPLE_ARTICLES.stream().map(doiStub -> createTestArticle(versionedIngestionService, doiStub));
   }
 
-  public static ArticleMetadata createTestArticle(ArticleCrudService articleCrudService) {
-    return createTestArticle(articleCrudService, SAMPLE_ARTICLES.get(0));
+  public static ArticleMetadata createTestArticle(VersionedIngestionService versionedIngestionService) {
+    return createTestArticle(versionedIngestionService, SAMPLE_ARTICLES.get(0));
   }
 
-  public static ArticleMetadata createTestArticle(ArticleCrudService articleCrudService, String doiStub) {
+  public static ArticleMetadata createTestArticle(VersionedIngestionService versionedIngestionService, String doiStub) {
     ArticleIdentity articleId = ArticleIdentity.create(RhinoTestHelper.prefixed(doiStub));
     RhinoTestHelper.TestFile sampleFile = new RhinoTestHelper.TestFile(getXmlPath(doiStub));
     String doi = articleId.getIdentifier();
@@ -240,8 +241,7 @@ public final class RhinoTestHelper {
     RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
     Archive mockIngestible = createMockIngestible(articleId, input, reference.getAssets());
     try {
-      return articleCrudService.writeArchive(mockIngestible,
-          Optional.of(articleId), DoiBasedCrudService.WriteMode.CREATE_ONLY, OptionalInt.empty());
+      return versionedIngestionService.ingest(mockIngestible, OptionalInt.empty());
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

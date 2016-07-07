@@ -39,7 +39,6 @@ import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
-import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.rest.ClientItemId;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -83,8 +82,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -109,18 +106,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private TaxonomyService taxonomyService;
   @Autowired
   private VersionedIngestionService versionedIngestionService;
-
-  @Override
-  public ArticleMetadata writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode, OptionalInt revision) throws IOException {
-    ArticleMetadata article;
-
-      try {
-        article = versionedIngestionService.ingest(archive, revision);
-      } catch (XmlContentException e) {
-        throw new RuntimeException(e);
-      }
-    return article;
-  }
 
   @Override
   public void populateCategories(ArticleIdentifier articleId) throws IOException {
