@@ -22,6 +22,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -127,7 +128,12 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
       KeyedListView<ArticleIssue> articleIssuesView = ArticleIssueOutputView.wrapList(articleIssues);
       serialized.add("issues", context.serialize(articleIssuesView));
 
-      serialized.add("relatedArticles", context.serialize(relatedArticles));
+      // Because they will have different fields, separate the two major use cases for ArticleRelationship:
+      // pointers to articles within our own corpus, and citations of external DOIs.
+      Collection<RelatedArticleView> relatedArticlesWithFrontMatter = Collections2.filter(relatedArticles, RelatedArticleView::hasFrontMatter);
+      serialized.add("relatedArticles", context.serialize(relatedArticlesWithFrontMatter));
+      Collection<RelatedArticleView> relatedArticlesWithDoiOnly = Collections2.filter(relatedArticles, ra -> !ra.hasFrontMatter());
+      serialized.add("relatedExternalArticles", context.serialize(relatedArticlesWithDoiOnly));
 
       serialized.add(MemberNames.PINGBACKS, context.serialize(pingbacks));
     }
