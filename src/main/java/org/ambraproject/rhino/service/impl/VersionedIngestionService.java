@@ -10,13 +10,11 @@ import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
-import org.ambraproject.rhino.model.ArticleFile;
-import org.ambraproject.rhino.model.ArticleItem;
+import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.PublicationState;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.util.Archive;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -27,9 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -341,48 +337,12 @@ class VersionedIngestionService {
    * The legacy Hibernate model object {@link Article} is used as a data-holder for convenience and compatibility. This
    * method constructs it anew, not by accessing Hibnerate, and populates only a subset of its normal fields.
    *
-   * @param id     the ID of the article to serve
-   * @param source whether to parse the extracted front matter or the full, original manuscript
+   * @param ingestionId     the ID of the article to serve
    * @return an object containing metadata that could be extracted from the manuscript, with other fields unfilled
-   * @deprecated method signature accommodates testing and will be changed
    */
-  @Deprecated
-  ArticleMetadata getArticleMetadata(ArticleIngestionIdentifier ingestionId, ArticleMetadataSource source) {
-    /*
-     * *** Implementation notes ***
-     *
-     * The method signature accommodates the methods `ArticleCrudController.previewMetadataFromVersionedModel` and
-     * `ArticleCrudService.readVersionedMetadata`, which are temporary hacks to expose read-service functionality for
-     * testing. This method's signature will probably change when those methods are removed, though we expect to keep
-     * most of the business logic.
-     *
-     * The `source` argument ought to be replaced with something that doesn't expose so much detail. It gives the option
-     * to parse the full manuscript (including the body) for validation purposes, which should not be possible in the
-     * production implementation. We do currently plan to choose between the 'front' and 'frontAndBack' documents based
-     * on whether we need to serve cited articles, but the signature should talk about whether to include citations, not
-     * which file to read. In a future API version, we may wish to simplify further by splitting citations into a
-     * separate service.
-     *
-     * TODO: Improve as described above and delete this comment block
-     */
-
-    ArticleItem work = parentService.getArticleItem(ingestionId.getItemFor());
-
-    ArticleFile manuscriptVersion = work.getFile("manuscript").orElseThrow(() -> {
-      String message = String.format("Work exists but does not have a manuscript. DOI: %s. Revision: %s",
-          work.getDoi(), work.getIngestion().getIngestionNumber());
-      return new RestClientException(message, HttpStatus.BAD_REQUEST);
-    });
-
-    Document document;
-    try (InputStream manuscriptStream = parentService.contentRepoService.getRepoObject(manuscriptVersion.getCrepoVersion())) {
-      DocumentBuilder documentBuilder = AmbraService.newDocumentBuilder();
-      log.debug("In getArticleMetadata source={} documentBuilder.parse() called", source);
-      document = documentBuilder.parse(manuscriptStream);
-      log.debug("finish");
-    } catch (IOException | SAXException e) {
-      throw new RuntimeException(e);
-    }
+  ArticleMetadata getArticleMetadata(ArticleIngestionIdentifier ingestionId) throws IOException {
+    ArticleRevision revision = parentService.getArticleRevision(ingestionId);
+    Document document = parentService.getManuscriptXml(revision);
 
     try {
       return new ArticleXml(document).build();

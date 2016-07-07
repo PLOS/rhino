@@ -31,7 +31,6 @@ import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.rest.ClientItemId;
 import org.ambraproject.rhino.rest.ClientItemIdResolver;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
-import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.SyndicationCrudService;
@@ -132,46 +131,27 @@ public class ArticleCrudController extends ArticleSpaceController {
   }
 
   /**
-   * Retrieves metadata about an article.
+   * Read article metadata.
    *
-   * @param request          HttpServletRequest
-   * @param response         HttpServletResponse
-   * @param excludeCitations
+   * @param request TODO
+   * @param response
+   * @param revisionNumber
+   * @param ingestionNumber
    * @throws IOException
-   */
-  @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response,
-                   @RequestParam(value = "excludeCitations", required = false) boolean excludeCitations)
-      throws IOException {
-    ArticleIdentity id = parse(request);
-    articleCrudService.readMetadata(id, excludeCitations).respond(request, response, entityGson);
-  }
-
-  /**
-   * Replicates the behavior of {@link #read}, and forces the service to read from the versioned data model. For
-   * verification and debugging purposes only, while regular read services don't fully use the versioned data model.
-   *
-   * @deprecated <em>TEMPORARY.</em> To be removed when the versioned data model is fully supported.
    */
   @Deprecated
   @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "versionedPreview")
-  public void previewMetadataFromVersionedModel(
+  public void read(
       HttpServletRequest request, HttpServletResponse response,
       @RequestParam(value = "revision", required = false) Integer revisionNumber,
-      @RequestParam(value = "ingestion", required = false) Integer ingestionNumber,
-      @RequestParam(value = "excludeCitations", required = false) boolean excludeCitations,
-      @RequestParam(value = "parseFullManuscript", required = false) boolean parseFullManuscript)
+      @RequestParam(value = "ingestion", required = false) Integer ingestionNumber)
       throws IOException {
-    ArticleMetadataSource sourceObj = parseFullManuscript ? ArticleMetadataSource.FULL_MANUSCRIPT
-        : excludeCitations ? ArticleMetadataSource.FRONT_MATTER
-        : ArticleMetadataSource.FRONT_AND_BACK_MATTER;
 
     ClientItemId itemId = ClientItemIdResolver.resolve(getIdentifier(request), revisionNumber, ingestionNumber);
     ArticleIngestionIdentifier ingestionId = articleCrudService.resolveToIngestion(itemId);
 
-    articleCrudService.readVersionedMetadata(ingestionId, sourceObj).respond(request, response, entityGson);
+    articleCrudService.readArticleMetadata(ingestionId).respond(request, response, entityGson);
   }
 
   private ArticleRevisionIdentifier getArticleRevisionIdentifier(HttpServletRequest request, Integer revisionNumber) {

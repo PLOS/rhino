@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.rest.controller;
 
-import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
+import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService;
@@ -50,7 +51,7 @@ public class IngestibleZipController extends RestController {
       throws IOException {
 
     String archiveName = requestFile.getOriginalFilename();
-    Article result;
+    ArticleMetadata result;
     try (InputStream requestInputStream = requestFile.getInputStream();
          Archive archive = Archive.readZipFile(archiveName, requestInputStream)) {
       result = articleCrudService.writeArchive(archive,
@@ -65,7 +66,8 @@ public class IngestibleZipController extends RestController {
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
-    articleCrudService.readMetadata(result, false).respond(request, response, entityGson);
+    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(result.getDoi(), revision);
+    articleCrudService.readArticleMetadata(ingestionId).respond(request, response, entityGson);
   }
 
 }

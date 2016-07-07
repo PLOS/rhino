@@ -31,6 +31,7 @@ import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.rest.ClientItemId;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
@@ -60,7 +61,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * @throws org.ambraproject.rhino.rest.RestClientException if the DOI is already used
    * @throws IOException
    */
-  public abstract Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode,
+  public abstract ArticleMetadata writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode,
                                        OptionalInt revision)
       throws IOException;
 
@@ -207,12 +208,8 @@ public interface ArticleCrudService extends DoiBasedCrudService {
 
   /**
    * Replicates the behavior of {@link #readMetadata}, and forces the service to read from the versioned data model.
-   *
-   * @deprecated <em>TEMPORARY.</em> To be removed when the versioned data model is fully supported.
    */
-  @Deprecated
-  public abstract Transceiver readVersionedMetadata(ArticleIngestionIdentifier ingestionId,
-                                                    ArticleMetadataSource source);
+  public abstract Transceiver readArticleMetadata(ArticleIngestionIdentifier ingestionId);
 
   /**
    * Signifies which file to use when reading article metadata from a content repo collection. This exists for
@@ -235,6 +232,8 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   public abstract ArticleItem getArticleItem(ArticleItemIdentifier id);
 
   public abstract ArticleIngestion getArticleIngestion(ArticleIngestionIdentifier articleId);
+
+  public abstract ArticleRevision getArticleRevision(ArticleIngestionIdentifier articleIngestionId);
 
   public abstract ArticleRevision getArticleRevision(ArticleRevisionIdentifier revisionId);
 

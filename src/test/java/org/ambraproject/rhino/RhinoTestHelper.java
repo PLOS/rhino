@@ -23,6 +23,7 @@ import org.ambraproject.rhino.model.ArticleAsset;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService;
 import org.ambraproject.rhino.util.Archive;
@@ -214,15 +215,15 @@ public final class RhinoTestHelper {
     }
   }
 
-  public static Stream<Article> createTestArticles(ArticleCrudService articleCrudService) {
+  public static Stream<ArticleMetadata> createTestArticles(ArticleCrudService articleCrudService) {
     return SAMPLE_ARTICLES.stream().map(doiStub -> createTestArticle(articleCrudService, doiStub));
   }
 
-  public static Article createTestArticle(ArticleCrudService articleCrudService) {
+  public static ArticleMetadata createTestArticle(ArticleCrudService articleCrudService) {
     return createTestArticle(articleCrudService, SAMPLE_ARTICLES.get(0));
   }
 
-  public static Article createTestArticle(ArticleCrudService articleCrudService, String doiStub) {
+  public static ArticleMetadata createTestArticle(ArticleCrudService articleCrudService, String doiStub) {
     ArticleIdentity articleId = ArticleIdentity.create(RhinoTestHelper.prefixed(doiStub));
     RhinoTestHelper.TestFile sampleFile = new RhinoTestHelper.TestFile(getXmlPath(doiStub));
     String doi = articleId.getIdentifier();

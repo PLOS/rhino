@@ -14,8 +14,9 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.net.HttpHeaders;
-import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
+import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -24,7 +25,6 @@ import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.util.Archive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -91,8 +91,9 @@ public class IngestibleController extends DoiBasedCrudController {
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.POST)
   public void ingest(HttpServletRequest request, HttpServletResponse response,
-                     @RequestParam(value = "name") String name,
-                     @RequestParam(value = "force_reingest", required = false) String forceReingest)
+      @RequestParam(value = "name") String name,
+      @RequestParam(value = "force_reingest", required = false) String forceReingest,
+      @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
 
     File archiveFile;
@@ -108,7 +109,7 @@ public class IngestibleController extends DoiBasedCrudController {
     // TODO: Add user-specific (i.e., PLOS-vs-non-PLOS) way to infer expected ID from zip file naming convention.
     Optional<ArticleIdentity> expectedId = Optional.empty();
 
-    Article result;
+    ArticleMetadata result;
     try (Archive archive = Archive.readZipFile(archiveFile)) {
       result = articleCrudService.writeArchive(archive, expectedId, reingestMode, OptionalInt.empty());
     }
@@ -116,13 +117,14 @@ public class IngestibleController extends DoiBasedCrudController {
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
-    articleCrudService.readMetadata(result, false).respond(request, response, entityGson);
+    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(result.getDoi(), revisionNumber);
+    articleCrudService.readArticleMetadata(ingestionId).respond(request, response, entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.GET, params = "article")
   public void repack(HttpServletResponse response,
-                     @RequestParam("article") String articleId)
+      @RequestParam("article") String articleId)
       throws IOException {
     Archive archive = articleCrudService.repack(ArticleIdentity.create(articleId));
     response.setStatus(HttpStatus.OK.value());

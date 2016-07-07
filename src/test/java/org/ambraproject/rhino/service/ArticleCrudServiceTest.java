@@ -136,7 +136,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
     List<ArticleAsset> referenceAssets = RhinoTestHelper.readReferenceCase(referenceLocation).getAssets();
     Archive mockIngestible = RhinoTestHelper.createMockIngestible(articleId, input, referenceAssets);
-    Article article = articleCrudService.writeArchive(mockIngestible, Optional.of(articleId), WriteMode.CREATE_ONLY, OptionalInt.empty());
+    articleCrudService.writeArchive(mockIngestible, Optional.of(articleId), WriteMode.CREATE_ONLY, OptionalInt.empty());
     assertArticleExistence(articleId, true);
     assertTrue(input.isClosed(), "Service didn't close stream");
 
@@ -183,7 +183,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     final byte[] updated = Bytes.concat(sampleData, "\n<!-- Appended -->".getBytes());
     input = RhinoTestHelper.TestInputStream.of(updated);
     mockIngestible = RhinoTestHelper.createMockIngestible(articleId, input, referenceAssets);
-    article = articleCrudService.writeArchive(mockIngestible, Optional.of(articleId), WriteMode.UPDATE_ONLY, OptionalInt.empty());
+    articleCrudService.writeArchive(mockIngestible, Optional.of(articleId), WriteMode.UPDATE_ONLY, OptionalInt.empty());
     byte[] updatedData = IOUtils.toByteArray(articleCrudService.readXml(articleId));
     assertEquals(updatedData, updated);
     assertArticleExistence(articleId, true);
@@ -221,7 +221,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
   @Test(enabled = false)
   public void testArticleType() throws Exception {
-    Article article = RhinoTestHelper.createTestArticle(articleCrudService);
+    Article article = new Article();//RhinoTestHelper.createTestArticle(articleCrudService);
     ArticleIdentity articleId = ArticleIdentity.create(article);
 
     String json = articleCrudService.readMetadata(articleId, true).readJson(entityGson);
@@ -241,7 +241,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
   @Test(enabled = false)
   public void testArticleAuthors() throws Exception {
-    ArticleIdentity articleId = ArticleIdentity.create(RhinoTestHelper.createTestArticle(articleCrudService));
+    ArticleIdentity articleId = ArticleIdentity.create(""); //ArticleIdentity.create(RhinoTestHelper.createTestArticle(articleCrudService));
 
     String json = articleCrudService.readAuthors(articleId).readJson(entityGson);
     assertTrue(json.length() > 0);
@@ -272,7 +272,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
   @Test(enabled = false)
   public void testArticleCategories() throws Exception {
-    Article testArticle = RhinoTestHelper.createTestArticle(articleCrudService);
+    Article testArticle = new Article(); //RhinoTestHelper.createTestArticle(articleCrudService);
     ArticleIdentity articleId = ArticleIdentity.create(testArticle);
 
     String json = "";
@@ -290,7 +290,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
   @Test(enabled = false)
   public void testRepopulateArticleCategories() throws Exception {
-    Article article = RhinoTestHelper.createTestArticle(articleCrudService);
+    Article article = new Article(); //RhinoTestHelper.createTestArticle(articleCrudService);
     ArticleIdentity articleId = ArticleIdentity.create(article);
 
     article.setCategories(new HashMap<>());
@@ -303,7 +303,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
   @Test(enabled = false)
   public void testGetRawCategories() throws Exception {
-    ArticleIdentity articleId = ArticleIdentity.create(RhinoTestHelper.createTestArticle(articleCrudService));
+    ArticleIdentity articleId = ArticleIdentity.create(""); //ArticleIdentity.create(RhinoTestHelper.createTestArticle(articleCrudService));
 
     String json = "";
 //    String json = articleCrudService.getRawCategories(articleId).readJson(entityGson);
@@ -317,7 +317,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
   @Test(enabled = false)
   public void testGetRawCategoriesAndText() throws Exception {
-    ArticleIdentity articleId = ArticleIdentity.create(RhinoTestHelper.createTestArticle(articleCrudService));
+    ArticleIdentity articleId = ArticleIdentity.create(""); //ArticleIdentity.create(RhinoTestHelper.createTestArticle(articleCrudService));
 
 //    String response = articleCrudService.getRawCategoriesAndText(articleId);
 //    assertTrue(response.length() > 0);
@@ -326,7 +326,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
   @Test(enabled = false)
   public void testGetPublicationJournal() throws Exception {
-    Article article = RhinoTestHelper.createTestArticle(articleCrudService);
+    Article article = new Article(); //RhinoTestHelper.createTestArticle(articleCrudService);
     ArticleIdentity articleId = ArticleIdentity.create(article);
 
 //    Journal journal = articleCrudService.getPublicationJournal(article);

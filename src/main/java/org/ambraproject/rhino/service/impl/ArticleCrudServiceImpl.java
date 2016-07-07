@@ -21,7 +21,6 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
@@ -41,7 +40,6 @@ import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
-import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.rest.ClientItemId;
@@ -132,31 +130,15 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode, OptionalInt revision) throws IOException {
-    Article article;
-    if (!runtimeConfiguration.isUsingVersionedIngestion()) {
-      article = legacyIngestionService.writeArchive(archive, suppliedId, mode);
-    } else {
+  public ArticleMetadata writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode, OptionalInt revision) throws IOException {
+    ArticleMetadata article;
+
       try {
         article = versionedIngestionService.ingest(archive, revision);
       } catch (XmlContentException e) {
         throw new RuntimeException(e);
       }
-    }
-
     return article;
-  }
-
-  private Article writeArchiveAsVersionedOnly(Archive archive) throws IOException {
-    if (runtimeConfiguration.isUsingVersionedIngestion()) {
-      try {
-        return versionedIngestionService.ingest(archive, OptionalInt.empty());
-      } catch (XmlContentException e) {
-        throw new RuntimeException(e);
-      }
-    } else {
-      throw new RestClientException("Versioned ingestion is not enabled on this system", HttpStatus.BAD_REQUEST);
-    }
   }
 
   @Override
@@ -257,8 +239,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Deprecated
   @Override
-  public Transceiver readVersionedMetadata(final ArticleIngestionIdentifier ingestionId,
-                                           final ArticleMetadataSource source) {
+  public Transceiver readArticleMetadata(final ArticleIngestionIdentifier ingestionId) {
     return new Transceiver() {
       @Override
       protected Calendar getLastModifiedDate() throws IOException {
@@ -267,33 +248,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
       @Override
       protected Object getData() throws IOException {
-        return getView(versionedIngestionService.getArticleMetadata(ingestionId, source));
-      }
-
-      /**
-       * Populate fields required by {@link ArticleOutputView} with dummy values. This is a temporary kludge.
-       */
-      private void kludgeArticleFields(Article article) {
-        article.setDoi(ingestionId.getArticleIdentifier().getDoi().getUri().toString());
-
-        ArticleAsset articleXmlAsset = new ArticleAsset();
-        articleXmlAsset.setDoi(article.getDoi());
-        articleXmlAsset.setExtension("XML");
-        ArticleAsset articlePdfAsset = new ArticleAsset();
-        articlePdfAsset.setDoi(article.getDoi());
-        articlePdfAsset.setExtension("PDF");
-        article.setAssets(ImmutableList.of(articleXmlAsset, articlePdfAsset));
-
-        article.setID(-1L);
-        article.setRelatedArticles(ImmutableList.<ArticleRelationship>of());
-        article.setJournals(ImmutableSet.<Journal>of());
-        article.setCategories(ImmutableMap.<Category, Integer>of());
-      }
-
-      private ArticleOutputView getView(Article article) {
-        kludgeArticleFields(article);
-        boolean excludeCitations = (source == ArticleMetadataSource.FRONT_MATTER);
-        return articleOutputViewFactory.create(article, excludeCitations);
+        return versionedIngestionService.getArticleMetadata(ingestionId);
       }
     };
   }
@@ -608,6 +563,21 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
+  public ArticleRevision getArticleRevision(ArticleIngestionIdentifier articleIngestionId) {
+    ArticleRevision revision = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "FROM ArticleRevision " +
+          "WHERE ArticleIngestion = :articleIngestion");
+      query.setParameter("articleIngestion", getArticleIngestion(articleIngestionId));
+      return (ArticleRevision) query.uniqueResult();
+    });
+    if (revision == null) {
+      throw new NoSuchArticleIdException(articleIngestionId);
+    }
+    return revision;
+  }
+
+  @Override
   public ArticleRevision getLatestArticleRevision(ArticleTable article) {
     int latestRevision = getLatestRevision(Doi.create(article.getDoi()));
     ArticleRevision revision = hibernateTemplate.execute(session -> {
@@ -645,6 +615,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
 
     private NoSuchArticleIdException(ArticleIdentifier articleIdentifier) {
+      super("No such article: " + articleIdentifier);
+    }
+
+    private NoSuchArticleIdException(ArticleIngestionIdentifier articleIdentifier) {
       super("No such article: " + articleIdentifier);
     }
   }

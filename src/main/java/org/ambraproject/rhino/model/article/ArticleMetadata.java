@@ -1,10 +1,14 @@
 package org.ambraproject.rhino.model.article;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonSerializationContext;
+import org.ambraproject.rhino.view.JsonOutputView;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
-public class ArticleMetadata {
+public class ArticleMetadata implements JsonOutputView {
 
   private String doi;
 
@@ -242,5 +246,10 @@ public class ArticleMetadata {
 
   public void setEditors(List<NlmPerson> editors) {
     this.editors = editors;
+  }
+
+  @Override
+  public JsonElement serialize(JsonSerializationContext context) {
+    return context.serialize(this);
   }
 }
