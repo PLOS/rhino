@@ -27,7 +27,7 @@ import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import java.io.IOException;
 import java.io.InputStream;
 
-public interface AssetCrudService extends DoiBasedCrudService {
+public interface AssetCrudService {
 
   /**
    * Read the file associated with an asset.

@@ -56,7 +56,7 @@ public class VersionedIngestionService extends AmbraService {
     return ((Number) session.createSQLQuery("SELECT LAST_INSERT_ID()").uniqueResult()).longValue();
   }
 
-  public ArticleMetadata ingest(Archive archive, OptionalInt revision) throws IOException, XmlContentException {
+  public ArticleIngestionIdentifier ingest(Archive archive, OptionalInt revision) throws IOException, XmlContentException {
     String manifestEntry = null;
     for (String entryName : archive.getEntryNames()) {
       if (entryName.equalsIgnoreCase("manifest.xml")) {
@@ -96,7 +96,8 @@ public class VersionedIngestionService extends AmbraService {
     }
 
     long articlePk = persistArticlePk(articleIdentifier);
-    long ingestionId = persistIngestion(articlePk);
+    IngestionPersistenceResult ingestionResult = persistIngestion(articlePk);
+    long ingestionId = ingestionResult.pk;
     persistRevision(articlePk, ingestionId, revision.orElseGet(parsedArticle::getRevisionNumber));
 
     final ArticleMetadata articleMetadata = parsedArticle.build();
@@ -109,7 +110,7 @@ public class VersionedIngestionService extends AmbraService {
     persistItem(articlePackage, ingestionId);
     persistJournal(articleMetadata, ingestionId);
 
-    return articleMetadata;
+    return ArticleIngestionIdentifier.create(doi, ingestionResult.ingestionNumber);
   }
 
   /**
@@ -134,7 +135,17 @@ public class VersionedIngestionService extends AmbraService {
 
   private static final int FIRST_INGESTION_NUMBER = 1;
 
-  private long persistIngestion(long articlePk) {
+  private static class IngestionPersistenceResult {
+    private final long pk;
+    private final int ingestionNumber;
+
+    private IngestionPersistenceResult(long pk, int ingestionNumber) {
+      this.pk = pk;
+      this.ingestionNumber = ingestionNumber;
+    }
+  }
+
+  private IngestionPersistenceResult persistIngestion(long articlePk) {
     return hibernateTemplate.execute(session -> {
       SQLQuery findNextIngestionNumber = session.createSQLQuery(
           "SELECT MAX(ingestionNumber) FROM articleIngestion WHERE articleId = :articleId");
@@ -149,7 +160,9 @@ public class VersionedIngestionService extends AmbraService {
       insertEvent.setParameter("articleId", articlePk);
       insertEvent.setParameter("ingestionNumber", nextIngestionNumber);
       insertEvent.executeUpdate();
-      return getLastInsertId(session);
+      long pk = getLastInsertId(session);
+
+      return new IngestionPersistenceResult(pk, nextIngestionNumber);
     });
   }
 

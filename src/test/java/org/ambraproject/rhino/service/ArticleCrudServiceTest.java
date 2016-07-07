@@ -33,7 +33,6 @@ import org.ambraproject.rhino.model.ArticleAsset;
 import org.ambraproject.rhino.model.ArticleAuthor;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.impl.VersionedIngestionService;
 import org.ambraproject.rhino.service.taxonomy.DummyTaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
@@ -59,7 +58,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
 

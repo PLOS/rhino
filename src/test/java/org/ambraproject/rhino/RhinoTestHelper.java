@@ -18,14 +18,13 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
+import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleAsset;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Syndication;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
-import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.DoiBasedCrudService;
 import org.ambraproject.rhino.service.impl.VersionedIngestionService;
 import org.ambraproject.rhino.util.Archive;
 import org.apache.commons.io.IOUtils;
@@ -43,7 +42,6 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -240,11 +238,13 @@ public final class RhinoTestHelper {
 
     RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
     Archive mockIngestible = createMockIngestible(articleId, input, reference.getAssets());
+    ArticleIngestionIdentifier ingestionIdentifier;
     try {
-      return versionedIngestionService.ingest(mockIngestible, OptionalInt.empty());
+      ingestionIdentifier = versionedIngestionService.ingest(mockIngestible, OptionalInt.empty());
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
+    return null; // TODO: Recover ArticleMetadata from ArticleIngestionIdentifier
   }
 
   public static Article readReferenceCase(File jsonFile) {

@@ -49,16 +49,15 @@ public class IngestibleZipController extends RestController {
       throws IOException {
 
     String archiveName = requestFile.getOriginalFilename();
-    ArticleMetadata result;
+    ArticleIngestionIdentifier ingestionId;
     try (InputStream requestInputStream = requestFile.getInputStream();
          Archive archive = Archive.readZipFile(archiveName, requestInputStream)) {
       OptionalInt revisionObj = (revision != null) ? OptionalInt.of(revision) : OptionalInt.empty();
-      result = versionedIngestionService.ingest(archive, revisionObj);
+      ingestionId = versionedIngestionService.ingest(archive, revisionObj);
     }
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
-    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(result.getDoi(), revision);
     articleCrudService.readArticleMetadata(ingestionId).respond(request, response, entityGson);
   }
 

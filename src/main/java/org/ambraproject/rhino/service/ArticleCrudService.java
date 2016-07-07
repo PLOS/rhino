@@ -31,7 +31,6 @@ import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
-import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.rest.ClientItemId;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
@@ -44,10 +43,8 @@ import org.w3c.dom.Document;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.Optional;
-import java.util.OptionalInt;
 
-public interface ArticleCrudService extends DoiBasedCrudService {
+public interface ArticleCrudService {
 
   /**
    * Populates article category information by making a call to the taxonomy server.
