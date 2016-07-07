@@ -141,7 +141,7 @@ public class ArticleCrudController extends ArticleSpaceController {
    */
   @Deprecated
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "versionedPreview")
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
   public void read(
       HttpServletRequest request, HttpServletResponse response,
       @RequestParam(value = "revision", required = false) Integer revisionNumber,
@@ -161,7 +161,7 @@ public class ArticleCrudController extends ArticleSpaceController {
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = {"revisions", "versionedPreview"})
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = {"revisions"})
   public void getRevisions(HttpServletRequest request, HttpServletResponse response) throws IOException {
     ArticleIdentifier id = ArticleIdentifier.create(getIdentifier(request));
     articleCrudService.readRevisions(id).respond(request, response, entityGson);
