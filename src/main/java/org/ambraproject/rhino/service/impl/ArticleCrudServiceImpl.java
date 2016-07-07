@@ -41,7 +41,6 @@ import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.VersionedArticleRelationship;
-import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.ambraproject.rhino.rest.ClientItemId;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -119,14 +118,15 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public void populateCategories(ArticleIdentifier articleId) throws IOException {
     ArticleTable article = getArticle(articleId);
     ArticleRevision revision = getLatestArticleRevision(article);
-    Document manuscriptXml = getManuscriptXml(revision);
+    Document manuscriptXml = getManuscriptXml(revision.getIngestion());
     taxonomyService.populateCategories(article, manuscriptXml);
   }
 
   @Override
-  public Document getManuscriptXml(ArticleRevision revision) throws IOException {
-    Doi articleDoi = Doi.create(revision.getIngestion().getArticle().getDoi());
-    ArticleItemIdentifier articleItemId = resolveRevisionToItem(articleDoi, revision.getRevisionNumber());
+  public Document getManuscriptXml(ArticleIngestion ingestion) throws IOException {
+    Doi articleDoi = Doi.create(ingestion.getArticle().getDoi());
+    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(articleDoi, ingestion.getIngestionNumber());
+    ArticleItemIdentifier articleItemId = ingestionId.getItemFor();
     ArticleFileIdentifier manuscriptId = ArticleFileIdentifier.create(articleItemId, "manuscript");
     RepoObjectMetadata objectMetadata = assetCrudService.getArticleItemFile(manuscriptId);
     InputStream manuscriptInputStream = contentRepoService.getRepoObject(objectMetadata.getVersion());
@@ -347,7 +347,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       protected Object getData() throws IOException {
         ArticleTable article = getArticle(articleId);
         ArticleRevision revision = getLatestArticleRevision(article);
-        Document manuscriptXml = getManuscriptXml(revision);
+        Document manuscriptXml = getManuscriptXml(revision.getIngestion());
         List<String> rawTerms = taxonomyService.getRawTerms(manuscriptXml, article, false /*isTextRequired*/);
         List<String> cleanedTerms = new ArrayList<>();
         for (String term : rawTerms) {
@@ -367,7 +367,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public String getRawCategoriesAndText(final ArticleIdentifier articleId) throws IOException {
     ArticleTable article = getArticle(articleId);
     ArticleRevision revision = getLatestArticleRevision(article);
-    Document manuscriptXml = getManuscriptXml(revision);
+    Document manuscriptXml = getManuscriptXml(revision.getIngestion());
 
     List<String> rawTermsAndText = taxonomyService.getRawTerms(manuscriptXml, article, true /*isTextRequired*/);
     StringBuilder cleanedTermsAndText = new StringBuilder();
@@ -449,7 +449,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public void refreshArticleRelationships(ArticleRevisionIdentifier articleRevId) throws IOException {
     ArticleRevision sourceArticleRev = getArticleRevision(articleRevId);
-    ArticleXml sourceArticleXml = new ArticleXml(getManuscriptXml(sourceArticleRev));
+    ArticleXml sourceArticleXml = new ArticleXml(getManuscriptXml(sourceArticleRev.getIngestion()));
     ArticleTable sourceArticle = sourceArticleRev.getIngestion().getArticle();
 
     // TODO: refactor parse code to populate VersionedArticleRelationship when legacy ingestion code not needed
@@ -575,7 +575,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     ArticleRevision revision = hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "FROM ArticleRevision " +
-          "WHERE ArticleIngestion = :articleIngestion");
+          "WHERE ingestion = :articleIngestion");
       query.setParameter("articleIngestion", getArticleIngestion(articleIngestionId));
       return (ArticleRevision) query.uniqueResult();
     });

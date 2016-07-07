@@ -214,7 +214,7 @@ public interface ArticleCrudService {
 
   public abstract ArticleTable getArticle(ArticleIdentifier articleIdentifier);
 
-  public abstract Document getManuscriptXml(ArticleRevision articleRevision) throws IOException;
+  public abstract Document getManuscriptXml(ArticleIngestion articleIngestion) throws IOException;
 
   public abstract ArticleIngestionIdentifier resolveToIngestion(ClientItemId id);
 

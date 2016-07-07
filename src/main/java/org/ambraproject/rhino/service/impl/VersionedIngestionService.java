@@ -11,8 +11,8 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
-import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.PublicationState;
@@ -379,10 +379,11 @@ public class VersionedIngestionService extends AmbraService {
    * @return an object containing metadata that could be extracted from the manuscript, with other fields unfilled
    */
   public ArticleMetadata getArticleMetadata(ArticleIngestionIdentifier ingestionId) {
-    ArticleRevision revision = articleCrudService.getArticleRevision(ingestionId);
+    ArticleIngestion ingestion = articleCrudService.getArticleIngestion(ingestionId);
+
     Document document;
     try {
-      document = articleCrudService.getManuscriptXml(revision);
+      document = articleCrudService.getManuscriptXml(ingestion);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
