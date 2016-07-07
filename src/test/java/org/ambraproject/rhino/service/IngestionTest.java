@@ -28,6 +28,11 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
+import org.ambraproject.rhino.BaseRhinoTest;
+import org.ambraproject.rhino.IngestibleUtil;
+import org.ambraproject.rhino.RhinoTestHelper;
+import org.ambraproject.rhino.content.PersonName;
+import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.model.AmbraEntity;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleAsset;
@@ -38,12 +43,6 @@ import org.ambraproject.rhino.model.CitedArticle;
 import org.ambraproject.rhino.model.CitedArticlePerson;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Syndication;
-import org.ambraproject.rhino.BaseRhinoTest;
-import org.ambraproject.rhino.IngestibleUtil;
-import org.ambraproject.rhino.RhinoTestHelper;
-import org.ambraproject.rhino.content.PersonName;
-import org.ambraproject.rhino.identity.AssetFileIdentity;
-import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.test.AssertionCollector;
 import org.ambraproject.rhino.util.Archive;
@@ -231,12 +230,101 @@ public class IngestionTest extends BaseRhinoTest {
     }
   }
 
+//  @Test(dataProvider = "generatedIngestionData", enabled = false)
+//  public void testIngestion(File jsonFile, File xmlFile) throws Exception {
+//    final Article expected = RhinoTestHelper.readReferenceCase(jsonFile);
+//    createTestJournal(expected.geteIssn());
+//    final String caseDoi = expected.getDoi();
+//
+//    RhinoTestHelper.TestInputStream testInputStream = new RhinoTestHelper.TestFile(xmlFile).read();
+//    InputStream mockIngestible = IngestibleUtil.buildMockIngestible(testInputStream, expected.getAssets());
+//    Archive ingestible = Archive.readZipFileIntoMemory(xmlFile.getName() + ".zip", mockIngestible);
+//    Article actual = articleCrudService.writeArchive(ingestible,
+//        Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY, OptionalInt.empty());
+//    assertTrue(actual.getID() > 0, "Article doesn't have a database ID");
+//    assertTrue(actual.getCreated() != null, "Article doesn't have a creation date");
+//
+//    // Reload the article directly from hibernate, just to be sure.
+//    actual = (Article) DataAccessUtils.uniqueResult((List<?>)
+//        hibernateTemplate.findByCriteria(DetachedCriteria
+//            .forClass(Article.class)
+//            .setFetchMode("journals", FetchMode.JOIN)
+//            .setFetchMode("journals.volumes", FetchMode.JOIN)
+//            .setFetchMode("journals.articleList", FetchMode.JOIN)
+//            .add(Restrictions.eq("doi", caseDoi))));
+//    assertNotNull(actual, "Failed to create article with expected DOI");
+//
+//    AssertionCollector results = compareArticle(actual, expected);
+//    log.info("{} successes", results.getSuccessCount());
+//    Collection<AssertionCollector.Failure> failures = results.getFailures();
+//    for (AssertionCollector.Failure failure : failures) {
+//      log.error(failure.toString());
+//    }
+//    assertEquals(failures.size(), 0, "Mismatched Article fields for " + expected.getDoi());
+//    testReadMetadata(actual);
+//  }
+
   private void testReadMetadata(Article article) throws IOException {
     // Mostly we want to test that this method call doesn't crash or hang
     Transceiver response = articleCrudService.readMetadata(article, true);
 
     assertFalse(StringUtils.isBlank(response.readJson(entityGson)));
   }
+
+//  @Test(dataProvider = "generatedZipIngestionData", enabled = false)
+//  public void testZipIngestion(File jsonFile, File zipFile) throws Exception {
+//    final Article expected = RhinoTestHelper.readReferenceCase(jsonFile);
+//    createTestJournal(expected.geteIssn());
+//    Article actual = articleCrudService.writeArchive(Archive.readZipFileIntoMemory(zipFile),
+//        Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY, OptionalInt.empty());
+//    assertTrue(actual.getID() > 0, "Article doesn't have a database ID");
+//    assertTrue(actual.getCreated() != null, "Article doesn't have a creation date");
+//
+//    // Reload the article directly from hibernate, just to be sure.
+//    actual = (Article) DataAccessUtils.uniqueResult((List<?>)
+//        hibernateTemplate.findByCriteria(DetachedCriteria
+//            .forClass(Article.class)
+//            .setFetchMode("journals", FetchMode.JOIN)
+//            .add(Restrictions.eq("doi", expected.getDoi()))));
+//    assertNotNull(actual, "Failed to create article with expected DOI");
+//    AssertionCollector results = compareArticle(actual, expected);
+//    log.info("{} successes", results.getSuccessCount());
+//
+//    // Do some additional comparisons that only make sense for an article ingested from an archive.
+//    compareArchiveFields(results, actual, expected);
+//    Collection<AssertionCollector.Failure> failures = results.getFailures();
+//    for (AssertionCollector.Failure failure : failures) {
+//      log.error(failure.toString());
+//    }
+//    assertEquals(failures.size(), 0, "Mismatched Article fields for " + expected.getDoi());
+//  }
+
+//  @Test(enabled = false)
+//  public void testReingestion() throws Exception {
+//    createTestJournal("1932-6203");
+//    long start = System.currentTimeMillis();
+//    Archive zipPath = Archive.readZipFileIntoMemory(new File(
+//        ZIP_DATA_PATH.getCanonicalPath() + File.separator + "pone.0056489.zip"));
+//    Article first = articleCrudService.writeArchive(zipPath,
+//        Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY, OptionalInt.empty());
+//    assertTrue(first.getID() > 0, "Article doesn't have a database ID");
+//    assertTrue(first.getCreated().getTime() >= start);
+//
+//    try {
+//      Article second = articleCrudService.writeArchive(zipPath,
+//          Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY, OptionalInt.empty());
+//      fail("Article creation succeeded for second ingestion in CREATE_ONLY mode");
+//    } catch (RestClientException expected) {
+//      assertEquals(expected.getResponseStatus(), HttpStatus.METHOD_NOT_ALLOWED);
+//    }
+//
+//    Article second = articleCrudService.writeArchive(zipPath,
+//        Optional.empty(), DoiBasedCrudService.WriteMode.WRITE_ANY, OptionalInt.empty());
+//
+//    // TODO: figure out how to detect that second was re-ingested.  Don't want to
+//    // use modification time since the test might run in less than one clock tick.
+//    assertTrue(first.getID() > 0, "Article doesn't have a database ID");
+//  }
 
   private static boolean compare(AssertionCollector results, Class<?> objectType, String fieldName,
                                  @Nullable Object actual, @Nullable Object expected) {
