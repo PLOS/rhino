@@ -14,14 +14,12 @@ public class ArticleMetadata {
 
   private final String title;
   private final String eIssn;
-  private final String archiveName;
   private final String description;
   private final String rights;
   private final String language;
   private final String format;
   private final String pages;
   private final String eLocationId;
-  private final String strkImgURI;
 
   private final LocalDate publicationDate;
 
@@ -46,14 +44,12 @@ public class ArticleMetadata {
     this.doi = Objects.requireNonNull(builder.doi);
     this.title = builder.title;
     this.eIssn = builder.eIssn;
-    this.archiveName = builder.archiveName;
     this.description = builder.description;
     this.rights = builder.rights;
     this.language = builder.language;
     this.format = builder.format;
     this.pages = builder.pages;
     this.eLocationId = builder.eLocationId;
-    this.strkImgURI = builder.strkImgURI;
     this.publicationDate = builder.publicationDate;
     this.volume = builder.volume;
     this.issue = builder.issue;
@@ -82,10 +78,6 @@ public class ArticleMetadata {
     return eIssn;
   }
 
-  public String getArchiveName() {
-    return archiveName;
-  }
-
   public String getDescription() {
     return description;
   }
@@ -108,10 +100,6 @@ public class ArticleMetadata {
 
   public String geteLocationId() {
     return eLocationId;
-  }
-
-  public String getStrkImgURI() {
-    return strkImgURI;
   }
 
   public LocalDate getPublicationDate() {
@@ -183,14 +171,12 @@ public class ArticleMetadata {
 
     private String title;
     private String eIssn;
-    private String archiveName;
     private String description;
     private String rights;
     private String language;
     private String format;
     private String pages;
     private String eLocationId;
-    private String strkImgURI;
 
     private LocalDate publicationDate;
 
@@ -230,11 +216,6 @@ public class ArticleMetadata {
       return this;
     }
 
-    public Builder setArchiveName(String archiveName) {
-      this.archiveName = archiveName;
-      return this;
-    }
-
     public Builder setDescription(String description) {
       this.description = description;
       return this;
@@ -262,11 +243,6 @@ public class ArticleMetadata {
 
     public Builder seteLocationId(String eLocationId) {
       this.eLocationId = eLocationId;
-      return this;
-    }
-
-    public Builder setStrkImgURI(String strkImgURI) {
-      this.strkImgURI = strkImgURI;
       return this;
     }
 
@@ -351,14 +327,12 @@ public class ArticleMetadata {
     if (doi != null ? !doi.equals(that.doi) : that.doi != null) return false;
     if (title != null ? !title.equals(that.title) : that.title != null) return false;
     if (eIssn != null ? !eIssn.equals(that.eIssn) : that.eIssn != null) return false;
-    if (archiveName != null ? !archiveName.equals(that.archiveName) : that.archiveName != null) return false;
     if (description != null ? !description.equals(that.description) : that.description != null) return false;
     if (rights != null ? !rights.equals(that.rights) : that.rights != null) return false;
     if (language != null ? !language.equals(that.language) : that.language != null) return false;
     if (format != null ? !format.equals(that.format) : that.format != null) return false;
     if (pages != null ? !pages.equals(that.pages) : that.pages != null) return false;
     if (eLocationId != null ? !eLocationId.equals(that.eLocationId) : that.eLocationId != null) return false;
-    if (strkImgURI != null ? !strkImgURI.equals(that.strkImgURI) : that.strkImgURI != null) return false;
     if (publicationDate != null ? !publicationDate.equals(that.publicationDate) : that.publicationDate != null) {
       return false;
     }
@@ -389,14 +363,12 @@ public class ArticleMetadata {
     int result = doi != null ? doi.hashCode() : 0;
     result = 31 * result + (title != null ? title.hashCode() : 0);
     result = 31 * result + (eIssn != null ? eIssn.hashCode() : 0);
-    result = 31 * result + (archiveName != null ? archiveName.hashCode() : 0);
     result = 31 * result + (description != null ? description.hashCode() : 0);
     result = 31 * result + (rights != null ? rights.hashCode() : 0);
     result = 31 * result + (language != null ? language.hashCode() : 0);
     result = 31 * result + (format != null ? format.hashCode() : 0);
     result = 31 * result + (pages != null ? pages.hashCode() : 0);
     result = 31 * result + (eLocationId != null ? eLocationId.hashCode() : 0);
-    result = 31 * result + (strkImgURI != null ? strkImgURI.hashCode() : 0);
     result = 31 * result + (publicationDate != null ? publicationDate.hashCode() : 0);
     result = 31 * result + (volume != null ? volume.hashCode() : 0);
     result = 31 * result + (issue != null ? issue.hashCode() : 0);
