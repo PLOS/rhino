@@ -1,9 +1,5 @@
 package org.ambraproject.rhino.model.article;
 
-import org.ambraproject.rhino.content.PersonName;
-import org.ambraproject.rhino.model.ArticlePerson;
-import org.ambraproject.rhino.model.CitedArticlePerson;
-
 public class NlmPerson {
 
   private final String fullName;
@@ -17,33 +13,6 @@ public class NlmPerson {
     this.surname = surname;
     this.suffix = suffix;
   }
-
-
-//  public <P extends ArticlePerson> P copyTo(P articlePerson) {
-//    articlePerson.setFullName(fullName);
-//    articlePerson.setGivenNames(givenNames);
-//    articlePerson.setSurnames(surname);
-//    articlePerson.setSuffix(suffix);
-//    return articlePerson;
-//  }
-//
-//  public static PersonName from(ArticlePerson articlePerson) {
-//    return new PersonName(articlePerson.getFullName(), articlePerson.getGivenNames(),
-//        articlePerson.getSurnames(), articlePerson.getSuffix());
-//  }
-//
-//  public <P extends CitedArticlePerson> P copyTo(P citedArticlePerson) {
-//    citedArticlePerson.setFullName(fullName);
-//    citedArticlePerson.setGivenNames(givenNames);
-//    citedArticlePerson.setSurnames(surname);
-//    citedArticlePerson.setSuffix(suffix);
-//    return citedArticlePerson;
-//  }
-//
-//  public static PersonName from(CitedArticlePerson citedArticlePerson) {
-//    return new PersonName(citedArticlePerson.getFullName(), citedArticlePerson.getGivenNames(),
-//        citedArticlePerson.getSurnames(), citedArticlePerson.getSuffix());
-//  }
 
 
   public String getFullName() {
