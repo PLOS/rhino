@@ -59,7 +59,7 @@ public class TaxonomyController extends RestController {
                        @PathVariable("action") String action)
           throws Exception {
     // TODO: we might want to optimize this by directly retrieving an article category collection in place of article instantiation
-    Article article = articleCrudService.findArticleById(ArticleIdentity.create(articleDoi));
+    Article article = null; // TODO
 
     OptionalLong userIdObj = (userId == null) ? OptionalLong.empty() : OptionalLong.of(Long.parseLong(userId));
 

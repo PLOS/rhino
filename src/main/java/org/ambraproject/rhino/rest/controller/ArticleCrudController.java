@@ -308,14 +308,6 @@ public class ArticleCrudController extends ArticleSpaceController {
     articleListCrudService.readContainingLists(id).respond(request, response, entityGson);
   }
 
-  @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)
-  public ResponseEntity<?> delete(HttpServletRequest request) {
-    ArticleIdentity id = parse(request);
-    articleCrudService.delete(id);
-    return reportOk();
-  }
-
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.POST, params = "syndications")
   public ResponseEntity<Object> createSyndication(HttpServletRequest request,
       @RequestParam(value = "revision", required = false) Integer revisionNumber)

@@ -21,7 +21,6 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.gson.Gson;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
@@ -34,7 +33,6 @@ import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.Article;
-import org.ambraproject.rhino.model.ArticleAsset;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRelationship;
@@ -45,11 +43,8 @@ import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.rest.ClientItemId;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.AssetCrudService;
-import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
-import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
@@ -111,23 +106,9 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Autowired
   private XpathReader xpathReader;
   @Autowired
-  TaxonomyService taxonomyService;
+  private TaxonomyService taxonomyService;
   @Autowired
-  Gson crepoGson;
-  @Autowired
-  SyndicationCrudService syndicationService;
-  @Autowired
-  ArticleTypeService articleTypeService;
-  @Autowired
-  JournalCrudService journalCrudService;
-
-  private final LegacyIngestionService legacyIngestionService = new LegacyIngestionService(this);
-  private final VersionedIngestionService versionedIngestionService = new VersionedIngestionService(this);
-
-  @Override
-  public Article findArticleById(DoiBasedIdentity id) {
-    return legacyIngestionService.findArticleById(id);
-  }
+  private VersionedIngestionService versionedIngestionService;
 
   @Override
   public ArticleMetadata writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode, OptionalInt revision) throws IOException {
@@ -412,23 +393,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void delete(ArticleIdentity id) {
-    Article article = findArticleById(id);
-    if (article == null) {
-      throw reportNotFound(id);
-    }
-
-    for (ArticleAsset asset : article.getAssets()) {
-      AssetFileIdentity assetFileIdentity = AssetFileIdentity.from(asset);
-      deleteAssetFile(assetFileIdentity);
-    }
-    hibernateTemplate.delete(article);
-  }
-
   @Override
   public Transceiver listDois(final ArticleCriteria articleCriteria)
       throws IOException {
@@ -499,7 +463,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public Archive repack(ArticleIdentity articleIdentity) {
-    return legacyIngestionService.repack(articleIdentity);
+    return versionedIngestionService.repack(articleIdentity);
   }
 
   @Override
