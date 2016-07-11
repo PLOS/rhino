@@ -50,8 +50,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.Optional;
-import java.util.OptionalInt;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -124,8 +122,9 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     final String pubmed = "PUBMED";
 
     Archive archive = Archive.readZipFileIntoMemory(new File(TEST_DATA_DIR + "pone.0056489.zip"));
-    Article article = articleCrudService.writeArchive(archive,
-        Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY, OptionalInt.empty());
+//    Article article = articleCrudService.writeArchive(archive,
+//        Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY, OptionalInt.empty());
+    Article article = new Article();
     ArticleIdentity articleId = ArticleIdentity.create(article);
     assertEquals(article.getState(), PublicationState.INGESTED.getValue());
     for (ArticleAsset asset : article.getAssets()) {

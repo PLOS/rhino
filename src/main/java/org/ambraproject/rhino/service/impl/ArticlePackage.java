@@ -1,7 +1,7 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.collect.ImmutableList;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.identity.Doi;
 import org.plos.crepo.model.input.RepoObjectInput;
 
 import java.util.List;
@@ -20,7 +20,7 @@ class ArticlePackage {
     this.archivalFiles = ImmutableList.copyOf(archivalFiles);
   }
 
-  public DoiBasedIdentity getDoi() {
+  public Doi getDoi() {
     return articleWork.getDoi();
   }
 

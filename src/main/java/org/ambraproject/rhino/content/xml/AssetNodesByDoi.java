@@ -23,6 +23,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ListMultimap;
+import org.ambraproject.rhino.identity.Doi;
 import org.w3c.dom.Node;
 
 /**
@@ -30,9 +31,9 @@ import org.w3c.dom.Node;
  */
 public class AssetNodesByDoi {
 
-  private final ImmutableListMultimap<String, Node> nodeMap;
+  private final ImmutableListMultimap<Doi, Node> nodeMap;
 
-  public AssetNodesByDoi(ListMultimap<String, Node> nodeMap) {
+  AssetNodesByDoi(ListMultimap<Doi, Node> nodeMap) {
     this.nodeMap = ImmutableListMultimap.copyOf(nodeMap);
   }
 
@@ -51,7 +52,7 @@ public class AssetNodesByDoi {
    *
    * @return the asset DOIs
    */
-  public ImmutableSet<String> getDois() {
+  public ImmutableSet<Doi> getDois() {
     return nodeMap.keySet();
   }
 
@@ -66,7 +67,7 @@ public class AssetNodesByDoi {
    *                                  !this.getDois().contains(doi)})
    * @throws NullPointerException     if {@code doi == null}
    */
-  public ImmutableList<Node> getNodes(String doi) {
+  public ImmutableList<Node> getNodes(Doi doi) {
     Preconditions.checkNotNull(doi);
     ImmutableList<Node> nodes = nodeMap.get(doi);
     if (nodes.isEmpty()) {

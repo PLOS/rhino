@@ -45,39 +45,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
-import java.util.OptionalInt;
 
-public interface ArticleCrudService extends DoiBasedCrudService {
-
-  /**
-   * Create or update an article from supplied ,zip archive data. If no article exists with the given identity, a new
-   * article entity is created; else, the article is re-ingested and the new data replaces the old data in the file
-   * store.
-   *
-   * @param archive    the local .zip file
-   * @param suppliedId the identifier supplied for the article, if any
-   * @param revision   the forced revision number if present (else, will be taken from manuscript)
-   * @return the created or update Article
-   * @throws org.ambraproject.rhino.rest.RestClientException if the DOI is already used
-   * @throws IOException
-   */
-  public abstract Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode,
-                                       OptionalInt revision)
-      throws IOException;
-
-  /**
-   * Ingest an article under the versioned data model only. This should be used only for articles that were ingested
-   * normally, prior to the update to {@link #writeArchive} that made
-   *
-   * @param archive
-   * @return
-   * @throws IOException
-   * @deprecated This is a temporary kludge for data migration. It should be deleted when the legacy article model is no
-   * longer supported.
-   */
-  @Deprecated
-  public abstract Article writeArchiveAsVersionedOnly(Archive archive) throws IOException;
+public interface ArticleCrudService {
 
   /**
    * Populates article category information by making a call to the taxonomy server.
@@ -94,22 +63,6 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * @throws org.ambraproject.rhino.rest.RestClientException if the DOI does not belong to an article
    */
   public abstract InputStream readXml(ArticleIdentity id);
-
-  /**
-   * Delete an article. Both its database entry and the associated XML file in the file store are deleted.
-   *
-   * @param id the identifier of the article to delete
-   * @throws org.ambraproject.rhino.rest.RestClientException if the DOI does not belong to an article
-   */
-  public abstract void delete(ArticleIdentity id);
-
-  /**
-   * Loads and returns article metadata.
-   *
-   * @param id specifies the article
-   * @return Article object encapsulating metadata
-   */
-  public abstract Article findArticleById(DoiBasedIdentity id);
 
   /**
    * Retrieve an article's publication {@code journal} field based on the article's {@code eIssn}
@@ -203,7 +156,9 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    */
   public abstract List<RelatedArticleView> getRelatedArticles(Article article);
 
-  List<VersionedArticleRelationship> getArticleRelationships(ArticleIdentifier articleId);
+  List<VersionedArticleRelationship> getArticleRelationshipsFrom(ArticleIdentifier sourceId);
+
+  List<VersionedArticleRelationship> getArticleRelationshipsTo(ArticleIdentifier targetId);
 
   void refreshArticleRelationships(ArticleRevisionIdentifier articleRevId) throws IOException;
 
@@ -226,12 +181,8 @@ public interface ArticleCrudService extends DoiBasedCrudService {
 
   /**
    * Replicates the behavior of {@link #readMetadata}, and forces the service to read from the versioned data model.
-   *
-   * @deprecated <em>TEMPORARY.</em> To be removed when the versioned data model is fully supported.
    */
-  @Deprecated
-  public abstract Transceiver readVersionedMetadata(ArticleIngestionIdentifier ingestionId,
-                                                    ArticleMetadataSource source);
+  public abstract Transceiver readArticleMetadata(ArticleIngestionIdentifier ingestionId);
 
   /**
    * Signifies which file to use when reading article metadata from a content repo collection. This exists for
@@ -257,13 +208,15 @@ public interface ArticleCrudService extends DoiBasedCrudService {
 
   public abstract ArticleIngestion getArticleIngestion(ArticleIngestionIdentifier articleId);
 
+  public abstract ArticleRevision getArticleRevision(ArticleIngestionIdentifier articleIngestionId);
+
   public abstract ArticleRevision getArticleRevision(ArticleRevisionIdentifier revisionId);
 
   public abstract ArticleRevision getLatestArticleRevision(ArticleTable article);
 
   public abstract ArticleTable getArticle(ArticleIdentifier articleIdentifier);
 
-  public abstract Document getManuscriptXml(ArticleRevision articleRevision) throws IOException;
+  public abstract Document getManuscriptXml(ArticleIngestion articleIngestion) throws IOException;
 
   public abstract ArticleIngestionIdentifier resolveToIngestion(ClientItemId id);
 
