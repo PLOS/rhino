@@ -465,7 +465,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     ArticleXml sourceArticleXml = new ArticleXml(getManuscriptXml(sourceArticleRev.getIngestion()));
     ArticleTable sourceArticle = sourceArticleRev.getIngestion().getArticle();
 
-    // TODO: refactor parse code to populate VersionedArticleRelationship when legacy ingestion code not needed
     List<RelatedArticleLink> xmlRelationships = sourceArticleXml.parseRelatedArticles();
     List<VersionedArticleRelationship> dbRelationships = getArticleRelationshipsFrom(ArticleIdentifier.create(sourceArticle.getDoi()));
     for (VersionedArticleRelationship ar: dbRelationships) {
