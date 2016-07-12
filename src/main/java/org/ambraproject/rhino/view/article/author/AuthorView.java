@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.view.article;
+package org.ambraproject.rhino.view.article.author;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
@@ -26,6 +26,7 @@ public class AuthorView {
   private final ImmutableList<String> currentAddresses;
   private final ImmutableList<String> affiliations;
   private final ImmutableList<String> customFootnotes;
+  private final ImmutableList<AuthorRole> roles;
 
   private AuthorView(Builder builder) {
     this.givenNames = Strings.emptyToNull(builder.givenNames);
@@ -46,6 +47,9 @@ public class AuthorView {
     this.customFootnotes = (builder.customFootnotes == null)
         ? ImmutableList.of()
         : ImmutableList.copyOf(builder.customFootnotes);
+    this.roles = (builder.roles == null)
+        ? ImmutableList.of()
+        : ImmutableList.copyOf(builder.roles);
 
     this.fullName = buildFullName(givenNames, surnames, suffix);
   }
@@ -96,6 +100,10 @@ public class AuthorView {
 
   public ImmutableList<String> getCustomFootnotes() {
     return customFootnotes;
+  }
+
+  public ImmutableList<AuthorRole> getRoles() {
+    return roles;
   }
 
   public String getFullName() {
@@ -152,6 +160,7 @@ public class AuthorView {
     private List<String> currentAddresses;
     private List<String> affiliations;
     private List<String> customFootnotes;
+    private List<AuthorRole> roles;
 
     public Builder setGivenNames(String givenNames) {
       this.givenNames = givenNames;
@@ -210,6 +219,11 @@ public class AuthorView {
 
     public Builder setCustomFootnotes(List<String> customFootnotes) {
       this.customFootnotes = customFootnotes;
+      return this;
+    }
+
+    public Builder setRoles(List<AuthorRole> roles) {
+      this.roles = roles;
       return this;
     }
 
