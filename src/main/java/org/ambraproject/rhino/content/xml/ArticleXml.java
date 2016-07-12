@@ -392,19 +392,6 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     return LocalDate.of(year, month, day);
   }
 
-  private List<Citation> parseCitations(List<Node> refNodes) throws XmlContentException {
-    return refNodes.stream().map(refNode -> {
-      String key = readString("child::label", refNode);
-
-      Node citationNode = readNode("(child::element-citation|child::mixed-citation|child::nlm-citation)", refNode);
-      if (citationNode == null) {
-        throw new XmlContentException("All citation (<ref>) nodes expected to contain one of: "
-            + "element-citation, mixed-citation, nlm-citation");
-      }
-      return new CitedArticleXml(key, citationNode).build();
-    }).collect(Collectors.toList());
-  }
-
   /**
    * Convert each collab node to its text content, excluding any text that appears inside a nested "contrib-group"
    * element.
