@@ -238,7 +238,6 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     article.setPublicationDate(parseDate(readNode("/article/front/article-meta/pub-date[@pub-type=\"epub\"]")));
 
     article.setTypes(buildArticleTypes());
-    article.setCitedArticles(parseCitations(readNodeList("/article/back/ref-list/ref")));
     article.setAuthors(readPersons(readNodeList(
         "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/name")));
     article.setEditors(readPersons(readNodeList(
