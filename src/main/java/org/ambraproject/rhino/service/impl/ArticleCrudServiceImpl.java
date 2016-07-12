@@ -30,7 +30,6 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleItemIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
-import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.Article;
@@ -69,7 +68,6 @@ import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.ErrorType;
 import org.plos.crepo.model.identity.RepoId;
-import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -273,16 +271,17 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public Transceiver readAuthors(ArticleIngestionIdentifier ingestionId) {
+    ArticleIngestion articleIngestion = getArticleIngestion(ingestionId);
     return new Transceiver() {
 
       @Override
       protected Object getData() throws IOException {
-        return parseAuthors(getManuscriptXml(getArticleIngestion(ingestionId)));
+        return parseAuthors(getManuscriptXml(articleIngestion));
       }
 
       @Override
       protected Calendar getLastModifiedDate() throws IOException {
-        return null;
+        return copyToCalendar(articleIngestion.getLastModified());
       }
     };
   }
