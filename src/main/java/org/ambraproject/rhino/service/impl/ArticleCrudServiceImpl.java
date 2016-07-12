@@ -30,7 +30,6 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleItemIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
-import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.Article;
@@ -270,43 +269,37 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return articleOutputViewFactory.create(article, excludeCitations);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public Transceiver readAuthors(final ArticleIdentity id)
-      throws IOException {
+  public Transceiver readAuthors(ArticleIngestionIdentifier ingestionId) {
+    ArticleIngestion articleIngestion = getArticleIngestion(ingestionId);
     return new Transceiver() {
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        AssetFileIdentity xmlAssetIdentity = id.forXmlAsset();
-        Date lastModified = (Date) DataAccessUtils.uniqueResult(hibernateTemplate.find(
-            "select lastModified from ArticleAsset where doi = ? and extension = ?",
-            xmlAssetIdentity.getKey(), xmlAssetIdentity.getFileExtension()));
-        if (lastModified == null) {
-          throw reportNotFound(id);
-        }
-        return copyToCalendar(lastModified);
-      }
 
       @Override
       protected Object getData() throws IOException {
-        Document doc = parseXml(readXml(id));
-        List<AuthorView> authors;
-        List<String> authorContributions;
-        List<String> competingInterests;
-        List<String> correspondingAuthorList;
-        try {
-          authors = AuthorsXmlExtractor.getAuthors(doc, xpathReader);
-          authorContributions = AuthorsXmlExtractor.getAuthorContributions(doc, xpathReader);
-          competingInterests = AuthorsXmlExtractor.getCompetingInterests(doc, xpathReader);
-          correspondingAuthorList = AuthorsXmlExtractor.getCorrespondingAuthorList(doc, xpathReader);
-        } catch (XPathException e) {
-          throw new RuntimeException("Invalid XML when parsing authors from: " + id, e);
-        }
-        return new ArticleAllAuthorsView(authors, authorContributions, competingInterests, correspondingAuthorList);
+        return parseAuthors(getManuscriptXml(articleIngestion));
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return copyToCalendar(articleIngestion.getLastModified());
       }
     };
+  }
+
+  private ArticleAllAuthorsView parseAuthors(Document doc) throws IOException {
+    List<AuthorView> authors;
+    List<String> authorContributions;
+    List<String> competingInterests;
+    List<String> correspondingAuthorList;
+    try {
+      authors = AuthorsXmlExtractor.getAuthors(doc, xpathReader);
+      authorContributions = AuthorsXmlExtractor.getAuthorContributions(doc, xpathReader);
+      competingInterests = AuthorsXmlExtractor.getCompetingInterests(doc, xpathReader);
+      correspondingAuthorList = AuthorsXmlExtractor.getCorrespondingAuthorList(doc, xpathReader);
+    } catch (XPathException e) {
+      throw new RuntimeException("Invalid XML when parsing authors", e);
+    }
+    return new ArticleAllAuthorsView(authors, authorContributions, competingInterests, correspondingAuthorList);
   }
 
   /**
@@ -598,6 +591,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
+
   public ArticleRevision getLatestArticleRevision(ArticleTable article) {
     int latestRevision = getLatestRevision(Doi.create(article.getDoi()));
     ArticleRevision revision = hibernateTemplate.execute(session -> {

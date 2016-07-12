@@ -98,11 +98,11 @@ public interface ArticleCrudService {
   /**
    * Read information about the authors of an article.
    *
-   * @param id specifies the article
+   * @param ingestionId specifies the article
    * @throws IOException
    */
-  public abstract Transceiver readAuthors(ArticleIdentity id)
-      throws IOException;
+
+  public abstract Transceiver readAuthors(ArticleIngestionIdentifier ingestionId);
 
   /**
    * Read category information from the Ambra database.

@@ -21,7 +21,6 @@ package org.ambraproject.rhino.rest.controller;
 import com.wordnik.swagger.annotations.ApiOperation;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleItemIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
@@ -202,11 +201,16 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @throws IOException
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "authors")
-  public void readAuthors(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = {"authors"})
+  public void readAuthors(HttpServletRequest request, HttpServletResponse response,
+      @RequestParam(value = "revision", required = false) Integer revisionNumber,
+      @RequestParam(value = "ingestion", required = false) Integer ingestionNumber)
       throws IOException {
-    ArticleIdentity id = parse(request);
-    articleCrudService.readAuthors(id).respond(request, response, entityGson);
+
+    ClientItemId itemId = ClientItemIdResolver.resolve(getIdentifier(request), revisionNumber, ingestionNumber);
+    ArticleIngestionIdentifier ingestionId = articleCrudService.resolveToIngestion(itemId);
+
+    articleCrudService.readAuthors(ingestionId).respond(request, response, entityGson);
   }
 
   /**
