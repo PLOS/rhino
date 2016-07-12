@@ -1,9 +1,10 @@
 package org.ambraproject.rhino.rest.controller;
 
-import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
+import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.DoiBasedCrudService;
+import org.ambraproject.rhino.service.impl.VersionedIngestionService;
 import org.ambraproject.rhino.util.Archive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Optional;
 import java.util.OptionalInt;
 
 @Controller
@@ -28,6 +28,8 @@ public class IngestibleZipController extends RestController {
 
   @Autowired
   private ArticleCrudService articleCrudService;
+  @Autowired
+  private VersionedIngestionService versionedIngestionService;
 
   /**
    * Create an article based on a POST containing an article .zip archive file.
@@ -35,37 +37,28 @@ public class IngestibleZipController extends RestController {
    * TODO: this method may never be used in production, since we've decided, at least for now, that we will use the
    * ingest and ingested directories that the current admin app uses instead of posting zips directly.
    *
-   * @param response      response to the request
-   * @param requestFile   body of the archive param, with the encoded article .zip file
-   * @param forceReingest if present, re-ingestion of an existing article is allowed; otherwise, if the article already
-   *                      exists, it is an error
+   * @param response    response to the request
+   * @param requestFile body of the archive param, with the encoded article .zip file
    * @throws java.io.IOException
    */
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = ZIP_ROOT, method = RequestMethod.POST)
   public void zipUpload(HttpServletRequest request, HttpServletResponse response,
                         @RequestParam("archive") MultipartFile requestFile,
-                        @RequestParam(value = "force_reingest", required = false) String forceReingest,
                         @RequestParam(value = "revision", required = false) Integer revision)
       throws IOException {
 
     String archiveName = requestFile.getOriginalFilename();
-    Article result;
+    ArticleIngestionIdentifier ingestionId;
     try (InputStream requestInputStream = requestFile.getInputStream();
          Archive archive = Archive.readZipFile(archiveName, requestInputStream)) {
-      result = articleCrudService.writeArchive(archive,
-          Optional.empty(),
-
-          // If forceReingest is the empty string, the parameter was present.  Only
-          // treat null as false.
-          forceReingest == null ? DoiBasedCrudService.WriteMode.CREATE_ONLY : DoiBasedCrudService.WriteMode.WRITE_ANY,
-
-          (revision != null) ? OptionalInt.of(revision) : OptionalInt.empty());
+      OptionalInt revisionObj = (revision != null) ? OptionalInt.of(revision) : OptionalInt.empty();
+      ingestionId = versionedIngestionService.ingest(archive, revisionObj);
     }
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
-    articleCrudService.readMetadata(result, false).respond(request, response, entityGson);
+    articleCrudService.readArticleMetadata(ingestionId).respond(request, response, entityGson);
   }
 
 }

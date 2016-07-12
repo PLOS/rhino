@@ -25,13 +25,13 @@ import org.ambraproject.rhino.config.json.AdapterRegistry;
 import org.ambraproject.rhino.config.json.DoiBasedIdentitySerializer;
 import org.ambraproject.rhino.config.json.ExclusionSpecialCase;
 import org.ambraproject.rhino.content.xml.XpathReader;
-import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.CamelSender;
+import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.service.IssueCrudService;
@@ -40,36 +40,37 @@ import org.ambraproject.rhino.service.LegacyArticleTypeService;
 import org.ambraproject.rhino.service.LegacyConfiguration;
 import org.ambraproject.rhino.service.MessageSender;
 import org.ambraproject.rhino.service.PingbackReadService;
-import org.ambraproject.rhino.service.SyndicationService;
+import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
-import org.ambraproject.rhino.service.impl.AnnotationCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleListCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
+import org.ambraproject.rhino.service.impl.CommentCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
 import org.ambraproject.rhino.service.impl.IngestibleServiceImpl;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.JournalCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.PingbackReadServiceImpl;
-import org.ambraproject.rhino.service.impl.SyndicationServiceImpl;
+import org.ambraproject.rhino.service.impl.SyndicationCrudServiceImpl;
+import org.ambraproject.rhino.service.impl.VersionedIngestionService;
 import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyClassificationServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyServiceImpl;
 import org.ambraproject.rhino.util.GitInfo;
+import org.ambraproject.rhino.util.Java8TimeGsonAdapters;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
+import org.ambraproject.rhino.view.article.versioned.ArticleIngestionViewFactory;
 import org.apache.commons.configuration.ConfigurationException;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.hibernate.SessionFactory;
-import org.plos.crepo.config.ContentRepoAccessConfig;
+import org.plos.crepo.config.HttpClientFunction;
 import org.plos.crepo.service.ContentRepoService;
 import org.plos.crepo.service.ContentRepoServiceImpl;
 import org.springframework.context.annotation.Bean;
@@ -89,6 +90,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 
 /**
@@ -156,6 +158,7 @@ public class RhinoConfiguration extends BaseConfiguration {
     for (Map.Entry<Type, Object> entry : AdapterRegistry.getCustomAdapters().entrySet()) {
       builder.registerTypeAdapter(entry.getKey(), entry.getValue());
     }
+    Java8TimeGsonAdapters.register(builder);
     DoiBasedIdentitySerializer.INSTANCE.register(builder);
 
     return builder.create();
@@ -197,29 +200,11 @@ public class RhinoConfiguration extends BaseConfiguration {
   @Bean
   public ContentRepoService contentRepoService(RuntimeConfiguration runtimeConfiguration,
                                                final CloseableHttpClient httpClient) {
-    RuntimeConfiguration.ContentRepoEndpoint corpus = runtimeConfiguration.getCorpusBucket();
+    RuntimeConfiguration.ContentRepoEndpoint corpus = runtimeConfiguration.getCorpusStorage();
     final String repoServer = Preconditions.checkNotNull(corpus.getAddress().toString());
-    final String bucketName = Preconditions.checkNotNull(corpus.getBucket());
-    Preconditions.checkNotNull(httpClient);
+    Objects.requireNonNull(httpClient);
 
-    ContentRepoAccessConfig accessConfig = new ContentRepoAccessConfig() {
-      @Override
-      public String getRepoServer() {
-        return repoServer;
-      }
-
-      @Override
-      public String getBucketName() {
-        return bucketName;
-      }
-
-      @Override
-      public CloseableHttpResponse open(HttpUriRequest request) throws IOException {
-        return httpClient.execute(request);
-      }
-    };
-
-    return new ContentRepoServiceImpl(accessConfig);
+    return new ContentRepoServiceImpl(repoServer, HttpClientFunction.from(httpClient));
   }
 
 
@@ -269,8 +254,8 @@ public class RhinoConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public AnnotationCrudService annotationCrudService() {
-    return new AnnotationCrudServiceImpl();
+  public CommentCrudService annotationCrudService() {
+    return new CommentCrudServiceImpl();
   }
 
   @Bean
@@ -294,8 +279,13 @@ public class RhinoConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public SyndicationService syndicationService() {
-    return new SyndicationServiceImpl();
+  public SyndicationCrudService syndicationService() {
+    return new SyndicationCrudServiceImpl();
+  }
+
+  @Bean
+  public VersionedIngestionService versionedIngestionService() {
+    return new VersionedIngestionService();
   }
 
   @Bean
@@ -306,6 +296,11 @@ public class RhinoConfiguration extends BaseConfiguration {
   @Bean
   public ArticleOutputViewFactory articleOutputViewFactory() {
     return new ArticleOutputViewFactory();
+  }
+
+  @Bean
+  public ArticleIngestionViewFactory articleIngestionViewFactory() {
+    return new ArticleIngestionViewFactory();
   }
 
   @Bean

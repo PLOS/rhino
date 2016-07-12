@@ -20,17 +20,17 @@ package org.ambraproject.rhino.config;
 
 import com.google.common.io.Closeables;
 import org.ambraproject.rhino.content.xml.XpathReader;
-import org.ambraproject.rhino.service.AnnotationCrudService;
+import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.DummyMessageSender;
 import org.ambraproject.rhino.service.LegacyConfiguration;
 import org.ambraproject.rhino.service.MessageSender;
-import org.ambraproject.rhino.service.SyndicationService;
-import org.ambraproject.rhino.service.impl.AnnotationCrudServiceImpl;
+import org.ambraproject.rhino.service.SyndicationCrudService;
+import org.ambraproject.rhino.service.impl.CommentCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
-import org.ambraproject.rhino.service.impl.SyndicationServiceImpl;
+import org.ambraproject.rhino.service.impl.SyndicationCrudServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.DummyTaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
@@ -124,8 +124,8 @@ public class TestConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public SyndicationService syndicationService() throws Exception {
-    return new SyndicationServiceImpl();
+  public SyndicationCrudService syndicationService() throws Exception {
+    return new SyndicationCrudServiceImpl();
   }
 
   @Bean
@@ -134,8 +134,8 @@ public class TestConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public AnnotationCrudService annotationCrudService() {
-    return new AnnotationCrudServiceImpl();
+  public CommentCrudService annotationCrudService() {
+    return new CommentCrudServiceImpl();
   }
 
   @Bean

@@ -1,110 +1,123 @@
 package org.ambraproject.rhino.model;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.plos.crepo.model.RepoVersion;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
-import java.time.Instant;
-import java.util.EnumSet;
-import java.util.Map;
-import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import java.util.Collection;
+import java.util.Date;
 import java.util.Optional;
 
-public class ArticleItem {
+@Entity
+@Table(name = "articleItem")
+public class ArticleItem implements Timestamped {
 
-  public static enum PublicationState {
-    /**
-     * The article version has been ingested, but is not yet visible to end users.
-     */
-    INGESTED(0),
-    /**
-     * The article version is visible to end users.
-     */
-    PUBLISHED(1),
-    /**
-     * The article version was visible to end users, but has been taken down.
-     */
-    DISABLED(2),
-    /**
-     * The article version has been replaced by a more recently ingested version with the same revision number.
-     */
-    REPLACED(3);
+  @Id
+  @GeneratedValue
+  @Column
+  private long itemId;
 
-    private final String label;
-    private final int value;
+  @JoinColumn(name = "ingestionId")
+  @ManyToOne
+  private ArticleIngestion ingestion;
 
-    private PublicationState(int value) {
-      this.label = name().toLowerCase();
-      this.value = value;
-    }
+  @Column
+  private String doi;
 
-    public String getLabel() {
-      return label;
-    }
+  @Column(name = "articleItemType")
+  private String itemType;
 
-    public int getValue() {
-      return value;
-    }
+  @Cascade(CascadeType.SAVE_UPDATE)
+  @OneToMany(targetEntity = ArticleFile.class, mappedBy = "item")
+  private Collection<ArticleFile> files;
 
-    private static final ImmutableMap<Integer, PublicationState> BY_VALUE = Maps.uniqueIndex(
-        EnumSet.allOf(PublicationState.class), PublicationState::getValue);
+  @Column
+  private Date created;
 
-    public static PublicationState fromValue(int value) {
-      PublicationState state = BY_VALUE.get(value);
-      if (state == null) {
-        throw new IllegalArgumentException(
-            String.format("Received value: %d. Must be one of: %s", value, BY_VALUE.keySet()));
-      }
-      return state;
-    }
+
+  public long getItemId() {
+    return itemId;
   }
 
-
-  private final DoiBasedIdentity doi;
-  private final String type;
-  private final ImmutableMap<String, RepoVersion> files;
-  private final Optional<Integer> revisionNumber;
-  private final PublicationState state;
-  private final Instant timestamp;
-
-  public ArticleItem(DoiBasedIdentity doi,
-                     String type,
-                     Map<String, RepoVersion> files,
-                     Integer revisionNumber,
-                     PublicationState state,
-                     Instant timestamp) {
-    this.doi = Objects.requireNonNull(doi);
-    this.type = Objects.requireNonNull(type);
-    this.files = ImmutableMap.copyOf(files);
-    this.revisionNumber = Optional.ofNullable(revisionNumber);
-    this.state = Objects.requireNonNull(state);
-    this.timestamp = Objects.requireNonNull(timestamp);
+  public void setItemId(long itemId) {
+    this.itemId = itemId;
   }
 
-  public DoiBasedIdentity getDoi() {
+  public ArticleIngestion getIngestion() {
+    return ingestion;
+  }
+
+  public void setIngestion(ArticleIngestion ingestion) {
+    this.ingestion = ingestion;
+  }
+
+  public String getDoi() {
     return doi;
   }
 
-  public String getType() {
-    return type;
+  public void setDoi(String doi) {
+    this.doi = doi;
   }
 
-  public Optional<RepoVersion> getFile(String fileType) {
-    return Optional.ofNullable(files.get(fileType));
+  public String getItemType() {
+    return itemType;
   }
 
-  public Optional<Integer> getRevisionNumber() {
-    return revisionNumber;
+  public void setItemType(String itemType) {
+    this.itemType = itemType;
   }
 
-  public PublicationState getState() {
-    return state;
+  public Collection<ArticleFile> getFiles() {
+    return files;
   }
 
-  public Instant getTimestamp() {
-    return timestamp;
+  public void setFiles(Collection<ArticleFile> files) {
+    this.files = files;
   }
+
+  public Date getCreated() {
+    return created;
+  }
+
+  public void setCreated(Date created) {
+    this.created = created;
+  }
+
+  @Transient
+  @Override
+  public Date getLastModified() {
+    return getCreated();
+  }
+
+  private transient ImmutableMap<String, ArticleFile> fileMap;
+
+  @Transient
+  private ImmutableMap<String, ArticleFile> getFileMap() {
+    return (fileMap != null) ? fileMap :
+        (fileMap = Maps.uniqueIndex(getFiles(), ArticleFile::getFileType));
+  }
+
+  @Transient
+  public Optional<ArticleFile> getFile(String fileType) {
+    return Optional.ofNullable(getFileMap().get(fileType));
+  }
+
+  @Transient
+  public ImmutableSet<String> getFileTypes() {
+    return getFileMap().keySet();
+  }
+
 
   @Override
   public boolean equals(Object o) {
@@ -113,21 +126,15 @@ public class ArticleItem {
 
     ArticleItem that = (ArticleItem) o;
 
-    if (!doi.equals(that.doi)) return false;
-    if (!type.equals(that.type)) return false;
-    if (!files.equals(that.files)) return false;
-    if (!revisionNumber.equals(that.revisionNumber)) return false;
-    return timestamp.equals(that.timestamp);
+    if (ingestion != null ? !ingestion.equals(that.ingestion) : that.ingestion != null) return false;
+    return doi != null ? doi.equals(that.doi) : that.doi == null;
 
   }
 
   @Override
   public int hashCode() {
-    int result = doi.hashCode();
-    result = 31 * result + type.hashCode();
-    result = 31 * result + files.hashCode();
-    result = 31 * result + revisionNumber.hashCode();
-    result = 31 * result + timestamp.hashCode();
+    int result = ingestion != null ? ingestion.hashCode() : 0;
+    result = 31 * result + (doi != null ? doi.hashCode() : 0);
     return result;
   }
 }

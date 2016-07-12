@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.service.taxonomy.impl;
 
-import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.service.impl.AmbraService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
@@ -10,6 +11,7 @@ import org.w3c.dom.Document;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 import java.util.OptionalLong;
 
@@ -19,13 +21,23 @@ public class TaxonomyServiceImpl extends AmbraService implements TaxonomyService
   private TaxonomyClassificationService taxonomyClassificationService;
 
   @Override
-  public List<WeightedTerm> classifyArticle(Document articleXml, Article article) {
-    return taxonomyClassificationService.classifyArticle(articleXml, article);
+  public List<WeightedTerm> classifyArticle(ArticleTable article, Document articleXml) {
+    return taxonomyClassificationService.classifyArticle(article, articleXml);
   }
 
   @Override
-  public List<String> getRawTerms(Document articleXml, Article article, boolean isTextRequired) throws IOException {
+  public List<String> getRawTerms(Document articleXml, ArticleTable article, boolean isTextRequired) throws IOException {
     return taxonomyClassificationService.getRawTerms(articleXml, article, isTextRequired);
+  }
+
+  @Override
+  public void populateCategories(ArticleTable article, Document xml) {
+    taxonomyClassificationService.populateCategories(article, xml);
+  }
+
+  @Override
+  public Collection<Category> getCategoriesForArticle(ArticleTable article) {
+    return taxonomyClassificationService.getCategoriesForArticle(article);
   }
 
   // These methods are a direct copy of the Ambra code found in the TaxonomyServiceImpl

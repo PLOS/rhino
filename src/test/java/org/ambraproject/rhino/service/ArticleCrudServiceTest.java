@@ -32,9 +32,8 @@ import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleAsset;
 import org.ambraproject.rhino.model.ArticleAuthor;
 import org.ambraproject.rhino.model.Category;
-import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
+import org.ambraproject.rhino.service.impl.VersionedIngestionService;
 import org.ambraproject.rhino.service.taxonomy.DummyTaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
 import org.ambraproject.rhino.util.Archive;
@@ -59,7 +58,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
 
@@ -77,6 +75,8 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
   private AssetCrudService assetCrudService;
   @Autowired
   private ContentRepoService contentRepoService;
+  @Autowired
+  private VersionedIngestionService versionedIngestionService;
 
   /**
    * In addition to checking the existence of the service, this will throw an exception under certain error conditions
@@ -137,7 +137,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
     List<ArticleAsset> referenceAssets = RhinoTestHelper.readReferenceCase(referenceLocation).getAssets();
     Archive mockIngestible = RhinoTestHelper.createMockIngestible(articleId, input, referenceAssets);
-    Article article = articleCrudService.writeArchive(mockIngestible, Optional.of(articleId), WriteMode.CREATE_ONLY, OptionalInt.empty());
+    versionedIngestionService.ingest(mockIngestible, OptionalInt.empty());
     assertArticleExistence(articleId, true);
     assertTrue(input.isClosed(), "Service didn't close stream");
 
@@ -184,7 +184,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     final byte[] updated = Bytes.concat(sampleData, "\n<!-- Appended -->".getBytes());
     input = RhinoTestHelper.TestInputStream.of(updated);
     mockIngestible = RhinoTestHelper.createMockIngestible(articleId, input, referenceAssets);
-    article = articleCrudService.writeArchive(mockIngestible, Optional.of(articleId), WriteMode.UPDATE_ONLY, OptionalInt.empty());
+    versionedIngestionService.ingest(mockIngestible, OptionalInt.empty());
     byte[] updatedData = IOUtils.toByteArray(articleCrudService.readXml(articleId));
     assertEquals(updatedData, updated);
     assertArticleExistence(articleId, true);
@@ -222,7 +222,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
   @Test(enabled = false)
   public void testArticleType() throws Exception {
-    Article article = RhinoTestHelper.createTestArticle(articleCrudService);
+    Article article = new Article();//RhinoTestHelper.createTestArticle(articleCrudService);
     ArticleIdentity articleId = ArticleIdentity.create(article);
 
     String json = articleCrudService.readMetadata(articleId, true).readJson(entityGson);
@@ -242,9 +242,10 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
   @Test(enabled = false)
   public void testArticleAuthors() throws Exception {
-    ArticleIdentity articleId = ArticleIdentity.create(RhinoTestHelper.createTestArticle(articleCrudService));
+    ArticleIdentity articleId = ArticleIdentity.create(""); //ArticleIdentity.create(RhinoTestHelper.createTestArticle(articleCrudService));
 
-    String json = articleCrudService.readAuthors(articleId).readJson(entityGson);
+    //todo: fix or remove
+    String json = ""; //articleCrudService.readAuthors(articleId).readJson(entityGson);
     assertTrue(json.length() > 0);
     Gson gson = new Gson();
     Map<String, ?> authorMetadata = gson.fromJson(json, Map.class);
@@ -273,10 +274,12 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
   @Test(enabled = false)
   public void testArticleCategories() throws Exception {
-    Article testArticle = RhinoTestHelper.createTestArticle(articleCrudService);
+    Article testArticle = new Article(); //RhinoTestHelper.createTestArticle(articleCrudService);
     ArticleIdentity articleId = ArticleIdentity.create(testArticle);
 
-    String json = articleCrudService.readCategories(articleId).readJson(entityGson);
+    String json = "";
+    //todo: fix or remove along with similar lines below
+    //String json = articleCrudService.readCategories(articleId).readJson(entityGson);
     assertTrue(json.length() > 0);
     Gson gson = new Gson();
     Map<String, Double> categories = gson.fromJson(json, Map.class);
@@ -289,22 +292,23 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
   @Test(enabled = false)
   public void testRepopulateArticleCategories() throws Exception {
-    Article article = RhinoTestHelper.createTestArticle(articleCrudService);
+    Article article = new Article(); //RhinoTestHelper.createTestArticle(articleCrudService);
     ArticleIdentity articleId = ArticleIdentity.create(article);
 
     article.setCategories(new HashMap<>());
     assertEquals(article.getCategories().size(), 0);
 
-    articleCrudService.repopulateCategories(articleId);
+    //articleCrudService.populateCategories(articleId); //todo: fix or remove
 
     assertTrue(article.getCategories().size() > 0);
   }
 
   @Test(enabled = false)
   public void testGetRawCategories() throws Exception {
-    ArticleIdentity articleId = ArticleIdentity.create(RhinoTestHelper.createTestArticle(articleCrudService));
+    ArticleIdentity articleId = ArticleIdentity.create(""); //ArticleIdentity.create(RhinoTestHelper.createTestArticle(articleCrudService));
 
-    String json = articleCrudService.getRawCategories(articleId).readJson(entityGson);
+    String json = "";
+//    String json = articleCrudService.getRawCategories(articleId).readJson(entityGson);
     assertTrue(json.length() > 0);
     Gson gson = new Gson();
     List<String> categories = gson.fromJson(json, List.class);
@@ -315,19 +319,19 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
   @Test(enabled = false)
   public void testGetRawCategoriesAndText() throws Exception {
-    ArticleIdentity articleId = ArticleIdentity.create(RhinoTestHelper.createTestArticle(articleCrudService));
+    ArticleIdentity articleId = ArticleIdentity.create(""); //ArticleIdentity.create(RhinoTestHelper.createTestArticle(articleCrudService));
 
-    String response = articleCrudService.getRawCategoriesAndText(articleId);
-    assertTrue(response.length() > 0);
-    assertEquals(response, "<pre>dummy text sent to MAIstro\n\ndummy raw term</pre>");
+//    String response = articleCrudService.getRawCategoriesAndText(articleId);
+//    assertTrue(response.length() > 0);
+//    assertEquals(response, "<pre>dummy text sent to MAIstro\n\ndummy raw term</pre>");
   }
 
   @Test(enabled = false)
   public void testGetPublicationJournal() throws Exception {
-    Article article = RhinoTestHelper.createTestArticle(articleCrudService);
+    Article article = new Article(); //RhinoTestHelper.createTestArticle(articleCrudService);
     ArticleIdentity articleId = ArticleIdentity.create(article);
 
-    Journal journal = articleCrudService.getPublicationJournal(article);
-    assertEquals(journal.getTitle(), "Test Journal 1932-6203");
+//    Journal journal = articleCrudService.getPublicationJournal(article);
+//    assertEquals(journal.getTitle(), "Test Journal 1932-6203");
   }
 }

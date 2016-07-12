@@ -10,7 +10,7 @@ import org.ambraproject.rhino.service.ArticleType;
 import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
-import org.ambraproject.rhino.service.SyndicationService;
+import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class ArticleOutputViewFactory {
   @Autowired
   private ArticleCrudService articleCrudService;
   @Autowired
-  private SyndicationService syndicationService;
+  private SyndicationCrudService syndicationService;
   @Autowired
   private PingbackReadService pingbackReadService;
   @Autowired
@@ -47,7 +47,7 @@ public class ArticleOutputViewFactory {
     //Collection<Syndication> syndications = syndicationService.getSyndications(null); //todo: get articleIdentifier
     Collection<Syndication> syndications = null;
     if (syndications == null) {
-      log.warn("SyndicationService.getSyndications returned null; assuming no syndications");
+      log.warn("SyndicationCrudService.getSyndications returned null; assuming no syndications");
       syndications = ImmutableList.of();
     }
 

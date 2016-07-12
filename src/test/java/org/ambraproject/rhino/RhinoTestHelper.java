@@ -18,13 +18,14 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
+import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleAsset;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Syndication;
-import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.DoiBasedCrudService;
+import org.ambraproject.rhino.model.article.ArticleMetadata;
+import org.ambraproject.rhino.service.impl.VersionedIngestionService;
 import org.ambraproject.rhino.util.Archive;
 import org.apache.commons.io.IOUtils;
 import org.hibernate.criterion.DetachedCriteria;
@@ -41,7 +42,6 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -214,15 +214,15 @@ public final class RhinoTestHelper {
     }
   }
 
-  public static Stream<Article> createTestArticles(ArticleCrudService articleCrudService) {
-    return SAMPLE_ARTICLES.stream().map(doiStub -> createTestArticle(articleCrudService, doiStub));
+  public static Stream<ArticleMetadata> createTestArticles(VersionedIngestionService versionedIngestionService) {
+    return SAMPLE_ARTICLES.stream().map(doiStub -> createTestArticle(versionedIngestionService, doiStub));
   }
 
-  public static Article createTestArticle(ArticleCrudService articleCrudService) {
-    return createTestArticle(articleCrudService, SAMPLE_ARTICLES.get(0));
+  public static ArticleMetadata createTestArticle(VersionedIngestionService versionedIngestionService) {
+    return createTestArticle(versionedIngestionService, SAMPLE_ARTICLES.get(0));
   }
 
-  public static Article createTestArticle(ArticleCrudService articleCrudService, String doiStub) {
+  public static ArticleMetadata createTestArticle(VersionedIngestionService versionedIngestionService, String doiStub) {
     ArticleIdentity articleId = ArticleIdentity.create(RhinoTestHelper.prefixed(doiStub));
     RhinoTestHelper.TestFile sampleFile = new RhinoTestHelper.TestFile(getXmlPath(doiStub));
     String doi = articleId.getIdentifier();
@@ -238,12 +238,13 @@ public final class RhinoTestHelper {
 
     RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
     Archive mockIngestible = createMockIngestible(articleId, input, reference.getAssets());
+    ArticleIngestionIdentifier ingestionIdentifier;
     try {
-      return articleCrudService.writeArchive(mockIngestible,
-          Optional.of(articleId), DoiBasedCrudService.WriteMode.CREATE_ONLY, OptionalInt.empty());
+      ingestionIdentifier = versionedIngestionService.ingest(mockIngestible, OptionalInt.empty());
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
+    return null; // TODO: Recover ArticleMetadata from ArticleIngestionIdentifier
   }
 
   public static Article readReferenceCase(File jsonFile) {

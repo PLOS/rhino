@@ -62,7 +62,10 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
     if (endpoint == null) return null;
     Map<String, Object> map = new LinkedHashMap<>(4);
     map.put("address", endpoint.getAddress());
-    map.put("bucket", endpoint.getBucket());
+    map.put("bucket", endpoint.getDefaultBucket());
+    if (endpoint instanceof RuntimeConfiguration.MultiBucketContentRepoEndpoint) {
+      map.put("secondaryBuckets", ((RuntimeConfiguration.MultiBucketContentRepoEndpoint) endpoint).getAllBuckets());
+    }
     return map;
   }
 
@@ -72,8 +75,8 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
       @Override
       protected Object getData() throws IOException {
         Map<String, Object> cfgMap = new LinkedHashMap<>(4);
-        cfgMap.put("editorial", showEndpointAsMap(runtimeConfiguration.getEditorialBucket()));
-        cfgMap.put("corpus", showEndpointAsMap(runtimeConfiguration.getCorpusBucket()));
+        cfgMap.put("editorial", showEndpointAsMap(runtimeConfiguration.getEditorialStorage()));
+        cfgMap.put("corpus", showEndpointAsMap(runtimeConfiguration.getCorpusStorage()));
         return cfgMap;
       }
 

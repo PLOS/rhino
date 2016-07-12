@@ -24,9 +24,8 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
-import org.ambraproject.rhino.model.AmbraEntity;
-import org.ambraproject.rhino.content.PersonName;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.identity.Doi;
+import org.ambraproject.rhino.model.article.NlmPerson;
 import org.ambraproject.rhino.util.NodeListAdapter;
 import org.ambraproject.rhino.util.StringReplacer;
 import org.slf4j.Logger;
@@ -37,6 +36,7 @@ import org.w3c.dom.Node;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * A holder for a piece (node or document) of NLM-format XML, which can be built into an entity.
@@ -54,11 +54,9 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
   /**
    * Build an object from the XML supplied to this object.
    *
-   * @param obj the object to modify, typically empty or mostly empty
-   * @return the same object with values inserted
    * @throws XmlContentException if the supplied XML omits a required element or does not have the expected structure
    */
-  public abstract T build(T obj) throws XmlContentException;
+  public abstract T build() throws XmlContentException;
 
   protected static String standardizeWhitespace(CharSequence text) {
     return (text == null) ? null : CharMatcher.WHITESPACE.trimAndCollapseFrom(text, ' ');
@@ -91,7 +89,7 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
       })
   );
 
-  protected String getAssetDoi(Node assetNode) {
+  protected Doi getAssetDoi(Node assetNode) {
     String nodeName = assetNode.getNodeName();
     String doi;
     if (GRAPHIC_NODE_PARENTS.contains(nodeName)) {
@@ -107,7 +105,7 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
       log.warn("An asset node ({}) does not have DOI as expected", assetNode.getNodeName());
       return null;
     }
-    return DoiBasedIdentity.asIdentifier(doi);
+    return Doi.create(doi);
   }
 
   /**
@@ -141,6 +139,10 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
 
   private static final Joiner NAME_JOINER = Joiner.on(' ').skipNulls();
 
+  protected List<NlmPerson> readPersons(List<Node> personNodes) throws XmlContentException {
+    return personNodes.stream().map(this::parsePersonName).collect(Collectors.toList());
+  }
+
   /**
    * Parse a person's name from an article XML node. The returned object is useful for populating a {@link
    * org.ambraproject.models.ArticlePerson} or {@link org.ambraproject.models.CitedArticlePerson}.
@@ -152,8 +154,7 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
    * @return the name
    * @throws XmlContentException if an expected field is omitted
    */
-  protected PersonName parsePersonName(Node nameNode)
-      throws XmlContentException {
+  private NlmPerson parsePersonName(Node nameNode) throws XmlContentException {
     String nameStyle = readString("@name-style", nameNode);
     String surname = readString("surname", nameNode);
     String givenName = readString("given-names", nameNode);
@@ -175,7 +176,7 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
     String fullName = NAME_JOINER.join(fullNameParts);
     givenName = Strings.nullToEmpty(givenName);
     suffix = Strings.nullToEmpty(suffix);
-    return new PersonName(fullName, givenName, surname, suffix);
+    return new NlmPerson(fullName, givenName, surname, suffix);
   }
 
   /**

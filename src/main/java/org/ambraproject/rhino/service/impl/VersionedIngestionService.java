@@ -2,32 +2,36 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
+import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
-import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
+import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.PublicationState;
+import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
+import org.ambraproject.rhino.service.ArticleCrudService;
+import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.util.Archive;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.plos.crepo.model.RepoObject;
-import org.plos.crepo.model.RepoVersion;
+import org.plos.crepo.model.identity.RepoId;
+import org.plos.crepo.model.identity.RepoVersion;
+import org.plos.crepo.model.input.RepoObjectInput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,21 +44,21 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-class VersionedIngestionService {
+public class VersionedIngestionService extends AmbraService {
 
   private static final Logger log = LoggerFactory.getLogger(VersionedIngestionService.class);
 
-  private final ArticleCrudServiceImpl parentService;
+  @Autowired
+  private ArticleCrudService articleCrudService;
+  @Autowired
+  private JournalCrudService journalCrudService;
 
-  VersionedIngestionService(ArticleCrudServiceImpl parentService) {
-    this.parentService = Preconditions.checkNotNull(parentService);
-  }
 
   private static long getLastInsertId(Session session) {
     return ((Number) session.createSQLQuery("SELECT LAST_INSERT_ID()").uniqueResult()).longValue();
   }
 
-  Article ingest(Archive archive, OptionalInt revision) throws IOException, XmlContentException {
+  public ArticleIngestionIdentifier ingest(Archive archive, OptionalInt revision) throws IOException, XmlContentException {
     String manifestEntry = null;
     for (String entryName : archive.getEntryNames()) {
       if (entryName.equalsIgnoreCase("manifest.xml")) {
@@ -85,54 +89,45 @@ class VersionedIngestionService {
     try (InputStream manuscriptStream = new BufferedInputStream(archive.openFile(manuscriptEntry))) {
       parsedArticle = new ArticleXml(AmbraService.parseXml(manuscriptStream));
     }
-    ArticleIdentifier articleIdentifier = ArticleIdentifier.create(parsedArticle.readDoi().getIdentifier());
+    final ArticleMetadata articleMetadata = parsedArticle.build();
+    ArticleIdentifier articleIdentifier = ArticleIdentifier.create(articleMetadata.getDoi());
     Doi doi = articleIdentifier.getDoi();
-    if (!manuscriptAsset.getUri().equals(doi.getUri().toString())) {
+
+    for (ManifestXml.Asset asset : assets) {
+      validateAssetUniqueness(asset, doi);
+    }
+
+    if (!doi.equals(Doi.create(manuscriptAsset.getUri()))) {
       String message = String.format("Article DOI is inconsistent. From manifest: \"%s\" From manuscript: \"%s\"",
           manuscriptAsset.getUri(), doi.getUri());
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
 
     long articlePk = persistArticlePk(articleIdentifier);
-    long versionId = persistVersionId(articlePk, revision.orElseGet(parsedArticle::getRevisionNumber));
+    IngestionPersistenceResult ingestionResult = persistIngestion(articlePk);
+    long ingestionId = ingestionResult.pk;
 
-    final Article articleMetadata = parsedArticle.build(new Article());
-    articleMetadata.setDoi(doi.getUri().toString());
+    persistRevision(articlePk, ingestionId, revision.orElseGet(parsedArticle::getRevisionNumber));
 
-    ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml, manifestEntry,
+    // TODO: Allow bucket name to be specified as an ingestion parameter
+    String destinationBucketName = runtimeConfiguration.getCorpusStorage().getDefaultBucket();
+
+    ArticlePackage articlePackage = new ArticlePackageBuilder(destinationBucketName, archive, parsedArticle, manifestXml, manifestEntry,
         manuscriptAsset, manuscriptRepr, printableRepr).build();
-    persistItem(articlePackage, versionId);
-    persistJournal(articleMetadata, versionId);
+    persistItem(articlePackage, ingestionId);
+    persistJournal(articleMetadata, ingestionId);
 
-    stubAssociativeFields(articleMetadata);
-
-    ArticleVersionIdentifier versionIdentifier = ArticleVersionIdentifier.create(
-        articleIdentifier.getDoi(), parsedArticle.getRevisionNumber());
-
-    if (isSyndicatableType(articleMetadata.getTypes())) {
-      parentService.syndicationService.createSyndications(versionIdentifier);
-    }
-
-    return articleMetadata;
+    return ArticleIngestionIdentifier.create(doi, ingestionResult.ingestionNumber);
   }
-
-  /**
-   * @param articleTypes All the article types of the Article for which Syndication objects are being created
-   * @return Whether to create a Syndication object for this Article
-   */
-  private boolean isSyndicatableType(Set<String> articleTypes) {
-    String articleTypeDoNotCreateSyndication = "http://rdf.plos.org/RDF/articleType/Issue%20Image";
-    return !(articleTypes != null && articleTypes.contains(articleTypeDoNotCreateSyndication));
-  }
-
 
   /**
    * Get the PK of the "article" row for a DOI if it exists, and insert it if it doesn't.
+   *
    * @param articleIdentifier
    */
   private long persistArticlePk(ArticleIdentifier articleIdentifier) {
     String articleDoi = articleIdentifier.getDoiName();
-    return parentService.hibernateTemplate.execute(session -> {
+    return hibernateTemplate.execute(session -> {
       SQLQuery selectQuery = session.createSQLQuery("SELECT articleId FROM article WHERE doi = :doi");
       selectQuery.setParameter("doi", articleDoi);
       Number articlePk = (Number) selectQuery.uniqueResult();
@@ -145,25 +140,71 @@ class VersionedIngestionService {
     });
   }
 
-  private long persistVersionId(long articlePk, int revisionNumber) {
-    return parentService.hibernateTemplate.execute(session -> {
-      SQLQuery replaceOtherRevisions = session.createSQLQuery("" +
-          "UPDATE articleVersion SET publicationState = :replaced, lastModified = NOW() " +
-          "WHERE articleId = :articleId AND revisionNumber = :revisionNumber " +
-          "  AND publicationState != :replaced");
-      replaceOtherRevisions.setParameter("articleId", articlePk);
-      replaceOtherRevisions.setParameter("revisionNumber", revisionNumber);
-      replaceOtherRevisions.setParameter("replaced", ArticleItem.PublicationState.REPLACED.getValue());
-      replaceOtherRevisions.executeUpdate();
+  private static final int FIRST_INGESTION_NUMBER = 1;
+
+  private static class IngestionPersistenceResult {
+    private final long pk;
+    private final int ingestionNumber;
+
+    private IngestionPersistenceResult(long pk, int ingestionNumber) {
+      this.pk = pk;
+      this.ingestionNumber = ingestionNumber;
+    }
+  }
+
+  private IngestionPersistenceResult persistIngestion(long articlePk) {
+    return hibernateTemplate.execute(session -> {
+      SQLQuery findNextIngestionNumber = session.createSQLQuery(
+          "SELECT MAX(ingestionNumber) FROM articleIngestion WHERE articleId = :articleId");
+      findNextIngestionNumber.setParameter("articleId", articlePk);
+      Number maxIngestionNumber = (Number) findNextIngestionNumber.uniqueResult();
+      int nextIngestionNumber = (maxIngestionNumber == null) ? FIRST_INGESTION_NUMBER
+          : maxIngestionNumber.intValue() + 1;
 
       SQLQuery insertEvent = session.createSQLQuery("" +
-          "INSERT INTO articleVersion (articleId, revisionNumber, publicationState, lastModified) " +
-          "VALUES (:articleId, :revisionNumber, :publicationState, NOW())");
+          "INSERT INTO articleIngestion (articleId, ingestionNumber) " +
+          "VALUES (:articleId, :ingestionNumber)");
       insertEvent.setParameter("articleId", articlePk);
-      insertEvent.setParameter("revisionNumber", revisionNumber);
-      insertEvent.setParameter("publicationState", ArticleItem.PublicationState.INGESTED.getValue());
+      insertEvent.setParameter("ingestionNumber", nextIngestionNumber);
       insertEvent.executeUpdate();
-      return getLastInsertId(session);
+      long pk = getLastInsertId(session);
+
+      return new IngestionPersistenceResult(pk, nextIngestionNumber);
+    });
+  }
+
+  private void persistRevision(long articleId, long ingestionId, int revisionNumber) {
+    hibernateTemplate.execute(session -> {
+      // Find an articleRevision row (if it exists) that has the same revision number and belongs to the same article.
+      // Join articleRevision through articleIngestion to get to the "grandparent" article.
+      SQLQuery findExistingRevision = session.createSQLQuery("" +
+          "SELECT articleRevision.revisionId " +
+          "FROM articleRevision " +
+          "  INNER JOIN articleIngestion ON articleRevision.ingestionId = articleIngestion.ingestionId " +
+          "  INNER JOIN article ON articleIngestion.articleId = article.articleId " +
+          "WHERE articleRevision.revisionNumber = :revisionNumber " +
+          "  AND article.articleId = :articleId");
+      findExistingRevision.setParameter("revisionNumber", revisionNumber);
+      findExistingRevision.setParameter("articleId", articleId);
+      Number existingRevisionId = (Number) findExistingRevision.uniqueResult();
+
+      if (existingRevisionId != null) {
+        SQLQuery updateRevision = session.createSQLQuery("" +
+            "UPDATE articleRevision SET revisionNumber = :revisionNumber " +
+            "WHERE revisionId = :revisionId");
+        updateRevision.setParameter("revisionNumber", revisionNumber);
+        updateRevision.setParameter("revisionId", existingRevisionId);
+        return updateRevision.executeUpdate();
+      } else {
+        SQLQuery insertRevision = session.createSQLQuery("" +
+            "INSERT INTO articleRevision (ingestionId, revisionNumber, publicationState) " +
+            "VALUES (:ingestionId, :revisionNumber, :publicationState)");
+        insertRevision.setParameter("ingestionId", ingestionId);
+        insertRevision.setParameter("revisionNumber", revisionNumber);
+        insertRevision.setParameter("publicationState", PublicationState.INGESTED.getValue());
+        insertRevision.executeUpdate();
+        return getLastInsertId(session);
+      }
     });
   }
 
@@ -189,40 +230,55 @@ class VersionedIngestionService {
     }
   }
 
-  private void persistItem(ArticlePackage articlePackage, long versionId) {
-    for (ArticleItemInput work : articlePackage.getAllWorks()) {
-      persistItem(work, versionId);
+  private void validateAssetUniqueness(ManifestXml.Asset asset, Doi articleDoi) {
+    Doi assetDoi = Doi.create(asset.getUri());
+    for (ArticleItem existingItem : articleCrudService.getAllArticleItems(assetDoi)) {
+      ArticleTable existingParentArticle = existingItem.getIngestion().getArticle();
+      if (!Doi.create(existingParentArticle.getDoi()).equals(articleDoi)) {
+        String errorMessage = String.format("Incoming article ingestion (doi:%s) has a duplicate " +
+            "article asset (doi:%s). Duplicate asset belongs to article doi: %s.",
+            articleDoi.getName(), assetDoi, existingParentArticle.getDoi());
+        throw new RestClientException(errorMessage, HttpStatus.BAD_REQUEST);
+      }
     }
-    persistArchivalFiles(articlePackage, versionId);
   }
 
-  private long persistItem(ArticleItemInput work, long versionId) {
+  private void persistItem(ArticlePackage articlePackage, long ingestionId) {
+    for (ArticleItemInput work : articlePackage.getAllWorks()) {
+      persistItem(work, ingestionId);
+    }
+    persistArchivalFiles(articlePackage, ingestionId);
+  }
+
+  private long persistItem(ArticleItemInput work, long ingestionId) {
     Map<String, RepoVersion> crepoResults = new LinkedHashMap<>();
-    for (Map.Entry<String, RepoObject> entry : work.getObjects().entrySet()) {
-      RepoVersion result = parentService.contentRepoService.autoCreateRepoObject(entry.getValue()).getVersion();
+    for (Map.Entry<String, RepoObjectInput> entry : work.getObjects().entrySet()) {
+      RepoVersion result = contentRepoService.autoCreateRepoObject(entry.getValue()).getVersion();
       crepoResults.put(entry.getKey(), result);
     }
 
-    return parentService.hibernateTemplate.execute(session -> {
+    return hibernateTemplate.execute(session -> {
       SQLQuery insertWork = session.createSQLQuery("" +
-          "INSERT INTO articleItem (versionId, doi, articleItemType) " +
-          "  VALUES (:versionId, :doi, :articleItemType)");
-      insertWork.setParameter("versionId", versionId);
-      insertWork.setParameter("doi", work.getDoi().getIdentifier());
+          "INSERT INTO articleItem (ingestionId, doi, articleItemType) " +
+          "  VALUES (:ingestionId, :doi, :articleItemType)");
+      insertWork.setParameter("ingestionId", ingestionId);
+      insertWork.setParameter("doi", work.getDoi().getName());
       insertWork.setParameter("articleItemType", work.getType());
       insertWork.executeUpdate();
       long itemId = getLastInsertId(session);
 
       for (Map.Entry<String, RepoVersion> entry : crepoResults.entrySet()) {
         SQLQuery insertFile = session.createSQLQuery("" +
-            "INSERT INTO articleFile (versionId, itemId, fileType, crepoKey, crepoUuid) " +
-            "  VALUES (:versionId, :itemId, :fileType, :crepoKey, :crepoUuid)");
-        insertFile.setParameter("versionId", versionId);
+            "INSERT INTO articleFile (ingestionId, itemId, fileType, bucketName, crepoKey, crepoUuid) " +
+            "  VALUES (:ingestionId, :itemId, :fileType, :bucketName, :crepoKey, :crepoUuid)");
+        insertFile.setParameter("ingestionId", ingestionId);
         insertFile.setParameter("itemId", itemId);
         insertFile.setParameter("fileType", entry.getKey());
 
         RepoVersion repoVersion = entry.getValue();
-        insertFile.setParameter("crepoKey", repoVersion.getKey());
+        RepoId repoId = repoVersion.getId();
+        insertFile.setParameter("bucketName", repoId.getBucketName());
+        insertFile.setParameter("crepoKey", repoId.getKey());
         insertFile.setParameter("crepoUuid", repoVersion.getUuid().toString());
 
         insertFile.executeUpdate();
@@ -232,17 +288,19 @@ class VersionedIngestionService {
     });
   }
 
-  private void persistArchivalFiles(ArticlePackage articlePackage, long versionId) {
+  private void persistArchivalFiles(ArticlePackage articlePackage, long ingestionId) {
     List<RepoVersion> archivalFiles = articlePackage.getArchivalFiles().stream()
-        .map(archivalFile -> parentService.contentRepoService.autoCreateRepoObject(archivalFile).getVersion())
+        .map(archivalFile -> contentRepoService.autoCreateRepoObject(archivalFile).getVersion())
         .collect(Collectors.toList());
-    parentService.hibernateTemplate.execute(session -> {
+    hibernateTemplate.execute(session -> {
       for (RepoVersion archivalFile : archivalFiles) {
         SQLQuery insertFile = session.createSQLQuery("" +
-            "INSERT INTO articleFile (versionId, crepoKey, crepoUuid) " +
-            "  VALUES (:versionId, :crepoKey, :crepoUuid)");
-        insertFile.setParameter("versionId", versionId);
-        insertFile.setParameter("crepoKey", archivalFile.getKey());
+            "INSERT INTO articleFile (ingestionId, bucketName, crepoKey, crepoUuid) " +
+            "  VALUES (:ingestionId, :bucketName, :crepoKey, :crepoUuid)");
+        insertFile.setParameter("ingestionId", ingestionId);
+        RepoId repoId = archivalFile.getId();
+        insertFile.setParameter("bucketName", repoId.getBucketName());
+        insertFile.setParameter("crepoKey", repoId.getKey());
         insertFile.setParameter("crepoUuid", archivalFile.getUuid());
         insertFile.executeUpdate();
       }
@@ -250,26 +308,33 @@ class VersionedIngestionService {
     });
   }
 
-  private long persistJournal(Article article, long versionId) {
-    Journal publicationJournal = parentService.getPublicationJournal(article);
-    return parentService.hibernateTemplate.execute(session -> {
+  private long persistJournal(ArticleMetadata article, long ingestionId) {
+    Journal result;
+    String eissn = article.geteIssn();
+    if (eissn == null) {
+      String msg = "eIssn not set for article: " + article.getDoi();
+      throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
+    } else {
+      Journal journal = journalCrudService.findJournalByEissn(eissn);
+      if (journal == null) {
+        String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
+        throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
+      }
+      result = journal;
+    }
+    Journal publicationJournal = result;
+
+    return hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
-          "INSERT INTO articleJournalJoinTable (versionId, journalId) " +
-          "VALUES (:versionId, :journalId)");
-      query.setParameter("versionId", versionId);
+          "INSERT INTO articleJournalJoinTable (ingestionId, journalId) " +
+          "VALUES (:ingestionId, :journalId)");
+      query.setParameter("ingestionId", ingestionId);
       query.setParameter("journalId", publicationJournal.getJournalID());
       query.executeUpdate();
       return getLastInsertId(session);
     });
   }
 
-  private void stubAssociativeFields(Article article) {
-    article.setID(-1L);
-    article.setAssets(ImmutableList.of());
-    article.setRelatedArticles(ImmutableList.of());
-    article.setJournals(ImmutableSet.of());
-    article.setCategories(ImmutableMap.of());
-  }
 
   private ManifestXml.Asset findManuscriptAsset(List<ManifestXml.Asset> assets) {
     for (ManifestXml.Asset asset : assets) {
@@ -309,55 +374,27 @@ class VersionedIngestionService {
    * The legacy Hibernate model object {@link Article} is used as a data-holder for convenience and compatibility. This
    * method constructs it anew, not by accessing Hibnerate, and populates only a subset of its normal fields.
    *
-   * @param id     the ID of the article to serve
-   * @param source whether to parse the extracted front matter or the full, original manuscript
+   * @param ingestionId the ID of the article to serve
    * @return an object containing metadata that could be extracted from the manuscript, with other fields unfilled
-   * @deprecated method signature accommodates testing and will be changed
    */
-  @Deprecated
-  Article getArticleMetadata(ArticleVersionIdentifier versionId, ArticleMetadataSource source) {
-    /*
-     * *** Implementation notes ***
-     *
-     * The method signature accommodates the methods `ArticleCrudController.previewMetadataFromVersionedModel` and
-     * `ArticleCrudService.readVersionedMetadata`, which are temporary hacks to expose read-service functionality for
-     * testing. This method's signature will probably change when those methods are removed, though we expect to keep
-     * most of the business logic.
-     *
-     * The `source` argument ought to be replaced with something that doesn't expose so much detail. It gives the option
-     * to parse the full manuscript (including the body) for validation purposes, which should not be possible in the
-     * production implementation. We do currently plan to choose between the 'front' and 'frontAndBack' documents based
-     * on whether we need to serve cited articles, but the signature should talk about whether to include citations, not
-     * which file to read. In a future API version, we may wish to simplify further by splitting citations into a
-     * separate service.
-     *
-     * TODO: Improve as described above and delete this comment block
-     */
-
-    ArticleItem work = parentService.getArticleItem(versionId.getItemFor());
-
-    RepoVersion manuscriptVersion = work.getFile("manuscript").orElseThrow(() -> {
-      String message = String.format("Work exists but does not have a manuscript. DOI: %s. Revision: %s",
-          work.getDoi(), work.getRevisionNumber().map(Object::toString).orElse("(none)"));
-      return new RestClientException(message, HttpStatus.BAD_REQUEST);
-    });
+  public ArticleMetadata getArticleMetadata(ArticleIngestionIdentifier ingestionId) {
+    ArticleIngestion ingestion = articleCrudService.getArticleIngestion(ingestionId);
 
     Document document;
-    try (InputStream manuscriptStream = parentService.contentRepoService.getRepoObject(manuscriptVersion)) {
-      DocumentBuilder documentBuilder = AmbraService.newDocumentBuilder();
-      log.debug("In getArticleMetadata source={} documentBuilder.parse() called", source);
-      document = documentBuilder.parse(manuscriptStream);
-      log.debug("finish");
-    } catch (IOException | SAXException e) {
+    try {
+      document = articleCrudService.getManuscriptXml(ingestion);
+    } catch (IOException e) {
       throw new RuntimeException(e);
     }
 
-    Article article;
     try {
-      article = new ArticleXml(document).build(new Article());
+      return new ArticleXml(document).build();
     } catch (XmlContentException e) {
       throw new RuntimeException(e);
     }
-    return article;
+  }
+
+  public Archive repack(ArticleIdentity articleIdentity) {
+    throw new UnsupportedOperationException(); // TODO
   }
 }

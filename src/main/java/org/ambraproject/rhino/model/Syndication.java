@@ -1,5 +1,8 @@
 package org.ambraproject.rhino.model;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import java.util.Date;
 
 /**
@@ -17,35 +21,18 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "syndication")
-public class Syndication {
-  /**
-   * This Article has been published, but has not yet been submitted to this syndication target.
-   */
-  public static final String STATUS_PENDING = "PENDING";
-  /**
-   * This Article has been submitted to this syndication target, but the process is not yet complete.
-   */
-  public static final String STATUS_IN_PROGRESS = "IN_PROGRESS";
-  /**
-   * This Article has been successfully submitted to this syndication target.
-   */
-  public static final String STATUS_SUCCESS = "SUCCESS";
-  /**
-   * This Article was submitted to this syndication target, but the process failed. The reason for this failure should
-   * be written into the <i>errorMessage</i> variable.
-   */
-  public static final String STATUS_FAILURE = "FAILURE";
+public class Syndication implements Timestamped{
 
   @Id @GeneratedValue
   @Column
   private int syndicationId;
 
   @ManyToOne
-  @JoinColumn(name = "versionId")
-  private ArticleVersion articleVersion;
+  @JoinColumn(name = "revisionId")
+  private ArticleRevision articleRevision;
 
   @Column
-  private String target;
+  private String targetQueue;
 
   @Column
   private String status;
@@ -59,20 +46,24 @@ public class Syndication {
   @Column
   private Date lastSubmitTimestamp;
 
-  @Column
+  @Generated(value= GenerationTime.INSERT)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
   private Date created;
 
-  @Column //todo: pull this into a super class along with created
+  @Generated(value= GenerationTime.ALWAYS)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
   private Date lastModified;
 
   public Syndication() {
     super();
   }
 
-  public Syndication(ArticleVersion articleVersion, String target) {
+  public Syndication(ArticleRevision articleRevision, String targetQueue) {
     this();
-    this.target = target;
-    this.articleVersion = articleVersion;
+    this.targetQueue = targetQueue;
+    this.articleRevision = articleRevision;
   }
 
   public int getSyndicationId() {
@@ -83,20 +74,20 @@ public class Syndication {
     this.syndicationId = syndicationId;
   }
 
-  public ArticleVersion getArticleVersion() {
-    return articleVersion;
+  public ArticleRevision getArticleRevision() {
+    return articleRevision;
   }
 
-  public void setArticleVersion(ArticleVersion articleVersion) {
-    this.articleVersion = articleVersion;
+  public void setArticleRevision(ArticleRevision articleRevision) {
+    this.articleRevision = articleRevision;
   }
 
   public String getTarget() {
-    return target;
+    return targetQueue;
   }
 
   public void setTarget(String target) {
-    this.target = target;
+    this.targetQueue = target;
   }
 
   public String getStatus() {
@@ -156,33 +147,46 @@ public class Syndication {
 
     if (syndicationId != that.syndicationId) return false;
     if (submissionCount != that.submissionCount) return false;
-    if (!articleVersion.equals(that.articleVersion)) return false;
-    if (!target.equals(that.target)) return false;
-    if (!status.equals(that.status)) return false;
-    if (errorMessage != null ? !errorMessage.equals(that.errorMessage) : that.errorMessage != null)
+    if (articleRevision != null ? !articleRevision.equals(that.articleRevision) : that.articleRevision != null) {
       return false;
-    return lastSubmitTimestamp != null ? lastSubmitTimestamp.equals(that.lastSubmitTimestamp) : that.lastSubmitTimestamp == null;
+    }
+    if (targetQueue != null ? !targetQueue.equals(that.targetQueue) : that.targetQueue != null) return false;
+    if (status != null ? !status.equals(that.status) : that.status != null) return false;
+    if (errorMessage != null ? !errorMessage.equals(that.errorMessage) : that.errorMessage != null) return false;
+    if (lastSubmitTimestamp != null ? !lastSubmitTimestamp.equals(that.lastSubmitTimestamp) : that.lastSubmitTimestamp != null) {
+      return false;
+    }
+    if (created != null ? !created.equals(that.created) : that.created != null) return false;
+    return lastModified != null ? lastModified.equals(that.lastModified) : that.lastModified == null;
 
   }
 
   @Override
   public int hashCode() {
     int result = syndicationId;
-    result = 31 * result + articleVersion.hashCode();
-    result = 31 * result + target.hashCode();
-    result = 31 * result + status.hashCode();
+    result = 31 * result + (articleRevision != null ? articleRevision.hashCode() : 0);
+    result = 31 * result + (targetQueue != null ? targetQueue.hashCode() : 0);
+    result = 31 * result + (status != null ? status.hashCode() : 0);
     result = 31 * result + submissionCount;
     result = 31 * result + (errorMessage != null ? errorMessage.hashCode() : 0);
     result = 31 * result + (lastSubmitTimestamp != null ? lastSubmitTimestamp.hashCode() : 0);
+    result = 31 * result + (created != null ? created.hashCode() : 0);
+    result = 31 * result + (lastModified != null ? lastModified.hashCode() : 0);
     return result;
   }
 
   @Override
   public String toString() {
     return "Syndication{" +
-        "articleVersion='" + articleVersion + '\'' +
-        ", target='" + target + '\'' +
+        "syndicationId=" + syndicationId +
+        ", articleRevision=" + articleRevision +
+        ", targetQueue='" + targetQueue + '\'' +
         ", status='" + status + '\'' +
+        ", submissionCount=" + submissionCount +
+        ", errorMessage='" + errorMessage + '\'' +
+        ", lastSubmitTimestamp=" + lastSubmitTimestamp +
+        ", created=" + created +
+        ", lastModified=" + lastModified +
         '}';
   }
 }

@@ -22,30 +22,34 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
-import org.ambraproject.rhino.model.CitedArticle;
-import org.ambraproject.rhino.model.CitedArticleAuthor;
-import org.ambraproject.rhino.model.CitedArticleEditor;
+import org.ambraproject.rhino.model.article.Citation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * A holder for an NLM-format XML node that represents an article citation.
  */
-public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
+public class CitedArticleXml extends AbstractArticleXml<Citation> {
 
   private static final Logger log = LoggerFactory.getLogger(CitedArticleXml.class);
 
-  protected CitedArticleXml(Node xml) {
+  private final String key;
+
+  protected CitedArticleXml(String key, Node xml) {
     super(xml);
+    this.key = Objects.requireNonNull(key);
   }
 
   @Override
-  public CitedArticle build(CitedArticle citation) throws XmlContentException {
+  public Citation build() throws XmlContentException {
+    Citation.Builder citation = Citation.builder();
+    citation.setKey(key);
     setTypeAndJournal(citation);
     citation.setTitle(buildTitle());
     String volume = readString("child::volume");
@@ -76,11 +80,11 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
     if (authorNodes.isEmpty() && editorNodes.isEmpty()) {
       authorNodes = readNodeList("child::name");
     }
-    citation.setAuthors(readAuthors(authorNodes));
-    citation.setEditors(readEditors(editorNodes));
+    citation.setAuthors(readPersons(authorNodes));
+    citation.setEditors(readPersons(editorNodes));
     citation.setCollaborativeAuthors(Lists.newArrayList(readTextList("child::collab")));
 
-    return citation;
+    return citation.build();
   }
 
   /**
@@ -92,7 +96,7 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
   /**
    * Sets the citationType and journal properties of a CitedArticle appropriately based on the XML.
    */
-  private void setTypeAndJournal(CitedArticle citation) {
+  private void setTypeAndJournal(Citation.Builder citation) {
     String type = readString("attribute::publication-type");
     if (Strings.isNullOrEmpty(type)) {
       return;
@@ -217,23 +221,5 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
   }
 
   private static final Pattern YEAR_FALLBACK = Pattern.compile("\\d{4,}");
-
-  private List<CitedArticleAuthor> readAuthors(List<Node> authorNodes) throws XmlContentException {
-    List<CitedArticleAuthor> authors = Lists.newArrayListWithCapacity(authorNodes.size());
-    for (Node authorNode : authorNodes) {
-      CitedArticleAuthor author = parsePersonName(authorNode).copyTo(new CitedArticleAuthor());
-      authors.add(author);
-    }
-    return authors;
-  }
-
-  private List<CitedArticleEditor> readEditors(List<Node> editorNodes) throws XmlContentException {
-    List<CitedArticleEditor> editors = Lists.newArrayListWithCapacity(editorNodes.size());
-    for (Node editorNode : editorNodes) {
-      CitedArticleEditor editor = parsePersonName(editorNode).copyTo(new CitedArticleEditor());
-      editors.add(editor);
-    }
-    return editors;
-  }
 
 }

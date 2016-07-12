@@ -21,15 +21,13 @@ package org.ambraproject.rhino.service;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.util.response.Transceiver;
-import org.plos.crepo.model.RepoObjectMetadata;
+import org.plos.crepo.model.metadata.RepoObjectMetadata;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.OptionalInt;
 
-public interface AssetCrudService extends DoiBasedCrudService {
+public interface AssetCrudService {
 
   /**
    * Read the file associated with an asset.

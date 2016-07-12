@@ -21,32 +21,32 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import com.google.gson.Gson;
-import org.ambraproject.rhino.config.RuntimeConfiguration;
+import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
+import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleItemIdentifier;
-import org.ambraproject.rhino.identity.ArticleVersionIdentifier;
+import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.Article;
-import org.ambraproject.rhino.model.ArticleAsset;
+import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRelationship;
-import org.ambraproject.rhino.model.ArticleVersion;
-import org.ambraproject.rhino.model.Category;
+import org.ambraproject.rhino.model.ArticleRevision;
+import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.VersionedArticleRelationship;
+import org.ambraproject.rhino.model.article.RelatedArticleLink;
+import org.ambraproject.rhino.rest.ClientItemId;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.AssetCrudService;
-import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
-import org.ambraproject.rhino.service.SyndicationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
@@ -57,6 +57,7 @@ import org.ambraproject.rhino.view.article.ArticleOutputView;
 import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
 import org.ambraproject.rhino.view.article.AuthorView;
 import org.ambraproject.rhino.view.article.RelatedArticleView;
+import org.ambraproject.rhino.view.article.versioned.ArticleIngestionViewFactory;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -67,7 +68,9 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.ErrorType;
-import org.plos.crepo.model.RepoVersion;
+import org.plos.crepo.model.identity.RepoId;
+import org.plos.crepo.model.identity.RepoVersion;
+import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,12 +83,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -93,6 +95,7 @@ import java.util.stream.Collectors;
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
  */
+@SuppressWarnings("JpaQlInspection")
 public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudService {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudServiceImpl.class);
@@ -100,66 +103,35 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Autowired
   AssetCrudService assetCrudService;
   @Autowired
-  RuntimeConfiguration runtimeConfiguration;
-  @Autowired
   protected PingbackReadService pingbackReadService;
   @Autowired
   private ArticleOutputViewFactory articleOutputViewFactory;
   @Autowired
   private XpathReader xpathReader;
   @Autowired
-  TaxonomyService taxonomyService;
+  private TaxonomyService taxonomyService;
   @Autowired
-  Gson crepoGson;
+  private VersionedIngestionService versionedIngestionService;
   @Autowired
-  SyndicationService syndicationService;
-  @Autowired
-  ArticleTypeService articleTypeService;
-  @Autowired
-  JournalCrudService journalCrudService;
-
-  private final LegacyIngestionService legacyIngestionService = new LegacyIngestionService(this);
-  private final VersionedIngestionService versionedIngestionService = new VersionedIngestionService(this);
+  private ArticleIngestionViewFactory articleIngestionViewFactory;
 
   @Override
-  public Article findArticleById(DoiBasedIdentity id) {
-    return legacyIngestionService.findArticleById(id);
+  public void populateCategories(ArticleIdentifier articleId) throws IOException {
+    ArticleTable article = getArticle(articleId);
+    ArticleRevision revision = getLatestArticleRevision(article);
+    Document manuscriptXml = getManuscriptXml(revision.getIngestion());
+    taxonomyService.populateCategories(article, manuscriptXml);
   }
 
   @Override
-  public Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode, OptionalInt revision) throws IOException {
-    Article article;
-    if (!runtimeConfiguration.isUsingVersionedIngestion()) {
-      article = legacyIngestionService.writeArchive(archive, suppliedId, mode);
-    } else {
-      try {
-        article = versionedIngestionService.ingest(archive, revision);
-      } catch (XmlContentException e) {
-        throw new RuntimeException(e);
-      }
-    }
-
-    return article;
-  }
-
-  @Override
-  public Article writeArchiveAsVersionedOnly(Archive archive) throws IOException {
-    if (runtimeConfiguration.isUsingVersionedIngestion()) {
-      try {
-        return versionedIngestionService.ingest(archive, OptionalInt.empty());
-      } catch (XmlContentException e) {
-        throw new RuntimeException(e);
-      }
-    } else {
-      throw new RestClientException("Versioned ingestion is not enabled on this system", HttpStatus.BAD_REQUEST);
-    }
-  }
-
-  @Override
-  public void repopulateCategories(ArticleIdentity id) throws IOException {
-    Article article = findArticleById(id);
-    Document xml = parseXml(readXml(id));
-    legacyIngestionService.populateCategories(article, xml);
+  public Document getManuscriptXml(ArticleIngestion ingestion) throws IOException {
+    Doi articleDoi = Doi.create(ingestion.getArticle().getDoi());
+    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(articleDoi, ingestion.getIngestionNumber());
+    ArticleItemIdentifier articleItemId = ingestionId.getItemFor();
+    ArticleFileIdentifier manuscriptId = ArticleFileIdentifier.create(articleItemId, "manuscript");
+    RepoObjectMetadata objectMetadata = assetCrudService.getArticleItemFile(manuscriptId);
+    InputStream manuscriptInputStream = contentRepoService.getRepoObject(objectMetadata.getVersion());
+    return parseXml(manuscriptInputStream);
   }
 
   static RestClientException complainAboutXml(XmlContentException e) {
@@ -175,12 +147,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public InputStream readXml(ArticleIdentity id) {
+  public InputStream readXml(ArticleIdentity articleIdentity) {
+    RepoId repoId = RepoId.create(runtimeConfiguration.getCorpusStorage().getDefaultBucket(),
+        articleIdentity.forXmlAsset().getFilePath());
     try {
-      return contentRepoService.getLatestRepoObject(id.forXmlAsset().getFilePath());
+      return contentRepoService.getLatestRepoObject(repoId);
     } catch (ContentRepoException e) {
       if (e.getErrorType() == ErrorType.ErrorFetchingObject) {
-        throw reportNotFound(id);
+        throw reportNotFound(articleIdentity);
       } else {
         throw e;
       }
@@ -189,21 +163,13 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   /**
    * {@inheritDoc}
+   * @param article
    */
   @Override
-  public Journal getPublicationJournal(Article article) {
-    String eissn = article.geteIssn();
-    if (eissn == null) {
-      String msg = "eIssn not set for article: " + article.getDoi();
-      throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
-    } else {
-      Journal journal = journalCrudService.findJournalByEissn(eissn);
-      if (journal == null) {
-        String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
-        throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
-      }
-      return journal;
-    }
+  public Journal getPublicationJournal(ArticleTable article) {
+    ArticleRevision revision = getLatestArticleRevision(article);
+    Set<Journal> journals = revision.getIngestion().getJournals();
+    return journals.iterator().next(); // TODO: Need original journal?
   }
 
   @Override
@@ -223,15 +189,15 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       protected Article fetchEntity() {
         Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
             hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
-                    .add(Restrictions.eq("doi", id.getKey()))
-                    .setFetchMode("categories", FetchMode.SELECT)
-                    .setFetchMode("assets", FetchMode.SELECT)
-                    .setFetchMode("articleType", FetchMode.JOIN)
-                    .setFetchMode("journals", FetchMode.JOIN)
-                    .setFetchMode("journals.volumes", FetchMode.JOIN)
-                    .setFetchMode("journals.volumes.issues", FetchMode.JOIN)
-                    .setFetchMode("journals.articleList", FetchMode.JOIN)
-                    .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .add(Restrictions.eq("doi", id.getKey()))
+                .setFetchMode("categories", FetchMode.SELECT)
+                .setFetchMode("assets", FetchMode.SELECT)
+                .setFetchMode("articleType", FetchMode.JOIN)
+                .setFetchMode("journals", FetchMode.JOIN)
+                .setFetchMode("journals.volumes", FetchMode.JOIN)
+                .setFetchMode("journals.volumes.issues", FetchMode.JOIN)
+                .setFetchMode("journals.articleList", FetchMode.JOIN)
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
             ));
         if (article == null) {
           throw reportNotFound(id);
@@ -248,43 +214,16 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Deprecated
   @Override
-  public Transceiver readVersionedMetadata(final ArticleVersionIdentifier versionId,
-                                           final ArticleMetadataSource source) {
+  public Transceiver readArticleMetadata(final ArticleIngestionIdentifier ingestionId) {
     return new Transceiver() {
       @Override
       protected Calendar getLastModifiedDate() throws IOException {
-        return copyToCalendar(getArticleItem(versionId.getItemFor()).getTimestamp());
+        return copyToCalendar(getArticleItem(ingestionId.getItemFor()).getLastModified());
       }
 
       @Override
       protected Object getData() throws IOException {
-        return getView(versionedIngestionService.getArticleMetadata(versionId, source));
-      }
-
-      /**
-       * Populate fields required by {@link ArticleOutputView} with dummy values. This is a temporary kludge.
-       */
-      private void kludgeArticleFields(Article article) {
-        article.setDoi(versionId.getArticleIdentifier().getDoi().getUri().toString());
-
-        ArticleAsset articleXmlAsset = new ArticleAsset();
-        articleXmlAsset.setDoi(article.getDoi());
-        articleXmlAsset.setExtension("XML");
-        ArticleAsset articlePdfAsset = new ArticleAsset();
-        articlePdfAsset.setDoi(article.getDoi());
-        articlePdfAsset.setExtension("PDF");
-        article.setAssets(ImmutableList.of(articleXmlAsset, articlePdfAsset));
-
-        article.setID(-1L);
-        article.setRelatedArticles(ImmutableList.<ArticleRelationship>of());
-        article.setJournals(ImmutableSet.<Journal>of());
-        article.setCategories(ImmutableMap.<Category, Integer>of());
-      }
-
-      private ArticleOutputView getView(Article article) {
-        kludgeArticleFields(article);
-        boolean excludeCitations = (source == ArticleMetadataSource.FRONT_MATTER);
-        return articleOutputViewFactory.create(article, excludeCitations);
+        return articleIngestionViewFactory.getView(ingestionId);
       }
     };
   }
@@ -333,20 +272,12 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public Transceiver readVersionedAuthors(ArticleVersionIdentifier versionId) {
+  public Transceiver readAuthors(ArticleIngestionIdentifier ingestionId) {
     return new Transceiver() {
-      private InputStream openManuscriptStream() {
-        ArticleItem articleItem = getArticleItem(versionId.getItemFor());
-        RepoVersion manuscriptFile = articleItem.getFile("manuscript").orElseThrow(() ->
-            new RestClientException("Not an article item: " + versionId, HttpStatus.BAD_REQUEST));
-        return contentRepoService.getRepoObject(manuscriptFile);
-      }
 
       @Override
       protected Object getData() throws IOException {
-        try (InputStream manuscriptStream = openManuscriptStream()) {
-          return parseAuthors(manuscriptStream);
-        }
+        return parseAuthors(getManuscriptXml(getArticleIngestion(ingestionId)));
       }
 
       @Override
@@ -356,36 +287,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     };
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Transceiver readAuthors(final ArticleIdentity id)
-      throws IOException {
-    return new Transceiver() {
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        AssetFileIdentity xmlAssetIdentity = id.forXmlAsset();
-        Date lastModified = (Date) DataAccessUtils.uniqueResult(hibernateTemplate.find(
-            "select lastModified from ArticleAsset where doi = ? and extension = ?",
-            xmlAssetIdentity.getKey(), xmlAssetIdentity.getFileExtension()));
-        if (lastModified == null) {
-          throw reportNotFound(id);
-        }
-        return copyToCalendar(lastModified);
-      }
-
-      @Override
-      protected Object getData() throws IOException {
-        try (InputStream manuscriptStream = readXml(id)) {
-          return parseAuthors(manuscriptStream);
-        }
-      }
-    };
-  }
-
-  private ArticleAllAuthorsView parseAuthors(InputStream manuscriptStream) throws IOException {
-    Document doc = parseXml(manuscriptStream);
+  private ArticleAllAuthorsView parseAuthors(Document doc) throws IOException {
     List<AuthorView> authors;
     List<String> authorContributions;
     List<String> competingInterests;
@@ -403,41 +305,44 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   /**
    * {@inheritDoc}
+   * @param articleId
    */
   @Override
-  public Transceiver readCategories(final ArticleIdentity id) throws IOException {
+  public Transceiver readCategories(final ArticleIdentifier articleId) throws IOException {
 
-    return new EntityTransceiver<Article>() {
+    return new EntityTransceiver<ArticleTable>() {
 
       @Override
-      protected Article fetchEntity() {
-        return findArticleById(id);
+      protected ArticleTable fetchEntity() {
+        return getArticle(articleId);
       }
 
       @Override
-      protected Object getView(Article entity) {
-        return entity.getCategories();
+      protected Object getView(ArticleTable entity) {
+        return taxonomyService.getCategoriesForArticle(entity);
       }
     };
   }
+
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public Transceiver getRawCategories(final ArticleIdentity id)
-      throws IOException {
+  public Transceiver getRawCategories(final ArticleIdentifier articleId) throws IOException {
 
     return new Transceiver() {
       @Override
       protected Calendar getLastModifiedDate() {
-        return copyToCalendar(findArticleById(id).getLastModified());
+        return null;
       }
 
       @Override
       protected Object getData() throws IOException {
-        List<String> rawTerms = taxonomyService.getRawTerms(parseXml(readXml(id)),
-            findArticleById(id), false);
+        ArticleTable article = getArticle(articleId);
+        ArticleRevision revision = getLatestArticleRevision(article);
+        Document manuscriptXml = getManuscriptXml(revision.getIngestion());
+        List<String> rawTerms = taxonomyService.getRawTerms(manuscriptXml, article, false /*isTextRequired*/);
         List<String> cleanedTerms = new ArrayList<>();
         for (String term : rawTerms) {
           term = term.replaceAll("<TERM>", "").replaceAll("</TERM>", "");
@@ -450,11 +355,15 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   /**
    * {@inheritDoc}
+   * @param articleId
    */
   @Override
-  public String getRawCategoriesAndText(final ArticleIdentity id) throws IOException {
-    List<String> rawTermsAndText = taxonomyService.getRawTerms(parseXml(readXml(id)),
-        findArticleById(id), true);
+  public String getRawCategoriesAndText(final ArticleIdentifier articleId) throws IOException {
+    ArticleTable article = getArticle(articleId);
+    ArticleRevision revision = getLatestArticleRevision(article);
+    Document manuscriptXml = getManuscriptXml(revision.getIngestion());
+
+    List<String> rawTermsAndText = taxonomyService.getRawTerms(manuscriptXml, article, true /*isTextRequired*/);
     StringBuilder cleanedTermsAndText = new StringBuilder();
     cleanedTermsAndText.append("<pre>");
     // HTML-escape the text, which is in the first element of the result array
@@ -470,23 +379,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return cleanedTermsAndText.toString();
   }
 
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void delete(ArticleIdentity id) {
-    Article article = findArticleById(id);
-    if (article == null) {
-      throw reportNotFound(id);
-    }
-
-    for (ArticleAsset asset : article.getAssets()) {
-      AssetFileIdentity assetFileIdentity = AssetFileIdentity.from(asset);
-      deleteAssetFile(assetFileIdentity);
-    }
-    hibernateTemplate.delete(article);
-  }
 
   @Override
   public Transceiver listDois(final ArticleCriteria articleCriteria)
@@ -537,6 +429,60 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         .collect(Collectors.toList());
   }
 
+  @Override
+  public List<VersionedArticleRelationship> getArticleRelationshipsFrom(ArticleIdentifier sourceId) {
+    return (List<VersionedArticleRelationship>) hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "SELECT ar " +
+          "FROM VersionedArticleRelationship ar " +
+          "WHERE ar.sourceArticle.doi = :doi ");
+      query.setParameter("doi", sourceId.getDoiName());
+      return query.list();
+    });
+  }
+
+  @Override
+  public List<VersionedArticleRelationship> getArticleRelationshipsTo(ArticleIdentifier targetId) {
+    return (List<VersionedArticleRelationship>) hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "SELECT ar " +
+          "FROM VersionedArticleRelationship ar " +
+          "WHERE ar.targetArticle.doi = :doi ");
+      query.setParameter("doi", targetId.getDoiName());
+      return query.list();
+    });
+  }
+
+  @Override
+  public void refreshArticleRelationships(ArticleRevisionIdentifier articleRevId) throws IOException {
+    ArticleRevision sourceArticleRev = getArticleRevision(articleRevId);
+    ArticleXml sourceArticleXml = new ArticleXml(getManuscriptXml(sourceArticleRev.getIngestion()));
+    ArticleTable sourceArticle = sourceArticleRev.getIngestion().getArticle();
+
+    List<RelatedArticleLink> xmlRelationships = sourceArticleXml.parseRelatedArticles();
+    List<VersionedArticleRelationship> dbRelationships = getArticleRelationshipsFrom(ArticleIdentifier.create(sourceArticle.getDoi()));
+    for (VersionedArticleRelationship ar: dbRelationships) {
+      hibernateTemplate.delete(ar);
+    }
+    for (RelatedArticleLink ar : xmlRelationships) {
+      if (ar.getHref() != null) {
+        ArticleTable targetArticle = null;
+        try {
+          targetArticle = getArticle(ArticleIdentifier.create(ar.getHref()));
+        } catch (NoSuchArticleIdException e) {
+          // likely a reference to an article external to our system and so the relationship is not persisted
+        }
+        if (targetArticle != null) {
+          VersionedArticleRelationship newAr = new VersionedArticleRelationship();
+          newAr.setSourceArticle(sourceArticle);
+          newAr.setTargetArticle(targetArticle);
+          newAr.setType(ar.getType());
+          hibernateTemplate.save(newAr);
+        }
+      }
+    }
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -558,17 +504,17 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public Archive repack(ArticleIdentity articleIdentity) {
-    return legacyIngestionService.repack(articleIdentity);
+    return versionedIngestionService.repack(articleIdentity);
   }
 
   @Override
   public int getLatestRevision(Doi doi) {
     return hibernateTemplate.execute(session -> {
-      SQLQuery query = session.createSQLQuery("" +
-          "SELECT MAX(version.revisionNumber) " +
-          "FROM articleItem item " +
-          "INNER JOIN articleVersion version ON item.versionId = version.versionId " +
-          "WHERE item.doi = :doi");
+      Query query = session.createQuery("" +
+          "SELECT MAX(rev.revisionNumber) " +
+          "FROM ArticleRevision rev, ArticleItem item " +
+          "WHERE item.doi = :doi " +
+          "  AND rev.ingestion = item.ingestion");
       query.setParameter("doi", doi.getName());
       Integer maxRevision = (Integer) query.uniqueResult();
       if (maxRevision == null) {
@@ -580,63 +526,182 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public ArticleItem getArticleItem(ArticleItemIdentifier id) {
-    Object[] itemResult = hibernateTemplate.execute(session -> {
-      SQLQuery query = session.createSQLQuery("" +
-          "SELECT item.itemId, version.publicationState, item.articleItemType, version.lastModified " +
-          "FROM articleItem item " +
-          "INNER JOIN articleVersion version ON item.versionId = version.versionId " +
-          "WHERE item.doi = :doi AND version.revisionNumber = :revisionNumber " +
-          "  AND version.publicationState != :replaced");
+    return hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "FROM ArticleItem " +
+          "WHERE doi = :doi " +
+          "  AND ingestion.ingestionNumber = :ingestionNumber");
       query.setParameter("doi", id.getDoiName());
-      query.setParameter("revisionNumber", id.getRevision());
-      query.setParameter("replaced", ArticleItem.PublicationState.REPLACED.getValue());
-      return (Object[]) query.uniqueResult();
+      query.setParameter("ingestionNumber", id.getIngestionNumber());
+      return (ArticleItem) query.uniqueResult();
     });
-    if (itemResult == null) {
-      throw new RestClientException("DOI+revision not found: " + id, HttpStatus.NOT_FOUND);
-    }
-    long itemId = ((Number) itemResult[0]).longValue();
-    ArticleItem.PublicationState state = ArticleItem.PublicationState.fromValue((Integer) itemResult[1]);
-    String itemType = (String) itemResult[2];
-    Date timestamp = (Date) itemResult[3];
-
-    List<Object[]> fileResults = (List<Object[]>) hibernateTemplate.execute(session -> {
-      SQLQuery query = session.createSQLQuery("" +
-          "SELECT fileType, crepoKey, crepoUuid " +
-          "FROM articleFile " +
-          "WHERE itemId = :itemId");
-      query.setParameter("itemId", itemId);
-      return query.list();
-    });
-    Map<String, RepoVersion> fileMap = fileResults.stream().collect(Collectors.toMap(
-        (Object[] fileResult) -> (String) fileResult[0],
-        (Object[] fileResult) -> RepoVersion.create((String) fileResult[1], (String) fileResult[2])));
-
-    return new ArticleItem(DoiBasedIdentity.create(id.getDoiName()), itemType, fileMap, id.getRevision(), state, timestamp.toInstant());
   }
 
   @Override
-  public ArticleVersion getArticleVersion(ArticleVersionIdentifier articleIdentifier) {
-    ArticleVersion articleVersion = hibernateTemplate.execute(session -> {
+  public Collection <ArticleItem> getAllArticleItems(Doi doi) {
+    return hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM ArticleItem WHERE doi = :doi ");
+      query.setParameter("doi", doi.getName());
+      return (Collection<ArticleItem>) query.list();
+    });
+  }
+
+  @Override
+  public ArticleIngestion getArticleIngestion(ArticleIngestionIdentifier id) {
+    return hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "FROM ArticleIngestion " +
+          "WHERE article.doi = :doi " +
+          "  AND ingestionNumber = :ingestionNumber");
+      query.setParameter("doi", id.getDoiName());
+      query.setParameter("ingestionNumber", id.getIngestionNumber());
+      return (ArticleIngestion) query.uniqueResult();
+    });
+  }
+
+  @Override
+  public ArticleRevision getArticleRevision(ArticleRevisionIdentifier revisionId) {
+    ArticleRevision revision = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "FROM ArticleRevision " +
+          "WHERE revisionNumber = :revisionNumber " +
+          "AND ingestion.article.doi = :doi");
+      query.setParameter("revisionNumber", revisionId.getRevision());
+      query.setParameter("doi", revisionId.getDoiName());
+      return (ArticleRevision) query.uniqueResult();
+    });
+    if (revision == null) {
+      throw new NoSuchArticleIdException(revisionId);
+    }
+    return revision;
+  }
+
+  @Override
+  public ArticleRevision getArticleRevision(ArticleIngestionIdentifier articleIngestionId) {
+    ArticleRevision revision = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "FROM ArticleRevision " +
+          "WHERE ingestion = :articleIngestion");
+      query.setParameter("articleIngestion", getArticleIngestion(articleIngestionId));
+      return (ArticleRevision) query.uniqueResult();
+    });
+    if (revision == null) {
+      throw new NoSuchArticleIdException(articleIngestionId);
+    }
+    return revision;
+  }
+
+  @Override
+
+  public ArticleRevision getLatestArticleRevision(ArticleTable article) {
+    int latestRevision = getLatestRevision(Doi.create(article.getDoi()));
+    ArticleRevision revision = hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "FROM ArticleVersion as av " +
-          "WHERE av.revisionNumber = :revisionNumber " +
-          "AND av.article.doi = :doi " +
-          "AND av.publicationState != :replaced");
-      query.setParameter("revisionNumber", articleIdentifier.getRevision());
-      query.setParameter("doi", articleIdentifier.getDoiName());
-      query.setParameter("replaced", ArticleItem.PublicationState.REPLACED.getValue());
-      return (ArticleVersion) query.uniqueResult();
+          "WHERE av.article = :article " +
+          "AND av.revisionNumber = :latestRevision"
+      );
+      query.setParameter("article", article);
+      query.setParameter("latestRevision", latestRevision);
+      return (ArticleRevision) query.uniqueResult();
     });
-    if (articleVersion == null) {
+    if (revision == null) {
+      throw new NoSuchArticleIdException(ArticleIdentifier.create(article.getDoi()));
+    }
+    return revision;
+  }
+
+  @Override
+  public ArticleTable getArticle(ArticleIdentifier articleIdentifier) {
+    ArticleTable article = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM ArticleTable WHERE doi = :doi");
+      query.setParameter("doi", articleIdentifier.getDoiName());
+      return (ArticleTable) query.uniqueResult();
+    });
+    if (article == null) {
       throw new NoSuchArticleIdException(articleIdentifier);
     }
-    return articleVersion;
+    return article;
   }
 
   private class NoSuchArticleIdException extends RuntimeException {
-    private NoSuchArticleIdException(ArticleVersionIdentifier articleIdentifier) {
+    private NoSuchArticleIdException(ArticleRevisionIdentifier articleIdentifier) {
       super("No such article: " + articleIdentifier);
+    }
+
+    private NoSuchArticleIdException(ArticleIdentifier articleIdentifier) {
+      super("No such article: " + articleIdentifier);
+    }
+
+    private NoSuchArticleIdException(ArticleIngestionIdentifier articleIdentifier) {
+      super("No such article: " + articleIdentifier);
+    }
+  }
+  
+  private ArticleIngestionIdentifier resolveRevisionToIngestion(Doi doi, int revisionNumber) {
+    Integer ingestionNumber = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "SELECT ingestion.ingestionNumber " +
+          "FROM ArticleRevision " +
+          "WHERE revisionNumber = :revisionNumber " +
+          "  AND ingestion.article.doi = :doi");
+      query.setParameter("doi", doi.getName());
+      query.setParameter("revisionNumber", revisionNumber);
+      return (Integer) query.uniqueResult();
+    });
+    if (ingestionNumber == null) {
+      throw new RestClientException(String.format("Revision %d not found for: %s", revisionNumber, doi.getName()),
+          HttpStatus.NOT_FOUND);
+    }
+    return ArticleIngestionIdentifier.create(doi, ingestionNumber);
+  }
+
+  @Override
+  public ArticleIngestionIdentifier resolveToIngestion(ClientItemId id) {
+    Doi doi = id.getDoi();
+    ClientItemId.NumberType type = id.getNumberType();
+    if (type == null) {
+      return resolveRevisionToIngestion(doi, getLatestRevision(doi));
+    } else if (type == ClientItemId.NumberType.INGESTION) {
+      return ArticleIngestionIdentifier.create(doi, id.getNumber());
+    } else if (type == ClientItemId.NumberType.REVISION) {
+      return resolveRevisionToIngestion(doi, id.getNumber());
+    } else {
+      throw new AssertionError();
+    }
+  }
+
+  private ArticleItemIdentifier resolveRevisionToItem(Doi doi, int revisionNumber) {
+    Integer ingestionNumber = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "SELECT item.ingestion.ingestionNumber " +
+          "FROM ArticleItem item, ArticleRevision rev " +
+          "WHERE rev.revisionNumber = :revisionNumber " +
+          "  AND item.doi = :doi " +
+          "  AND item.ingestion = rev.ingestion");
+      query.setParameter("doi", doi.getName());
+      query.setParameter("revisionNumber", revisionNumber);
+      return (Integer) query.uniqueResult();
+    });
+    if (ingestionNumber == null) {
+      throw new RestClientException(String.format("Revision %d not found for: %s", revisionNumber, doi.getName()),
+          HttpStatus.NOT_FOUND);
+    }
+    return ArticleItemIdentifier.create(doi, ingestionNumber);
+  }
+
+  @Override
+  public ArticleItemIdentifier resolveToItem(ClientItemId id) {
+    Doi doi = id.getDoi();
+    ClientItemId.NumberType type = id.getNumberType();
+    if (type == null) {
+      return resolveRevisionToItem(doi, getLatestRevision(doi));
+    } else if (type == ClientItemId.NumberType.INGESTION) {
+      return ArticleItemIdentifier.create(doi, id.getNumber());
+    } else if (type == ClientItemId.NumberType.REVISION) {
+      return resolveRevisionToItem(doi, id.getNumber());
+    } else {
+      throw new AssertionError();
     }
   }
 
