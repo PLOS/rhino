@@ -30,7 +30,6 @@ import com.google.common.collect.Sets;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.model.article.AssetMetadata;
-import org.ambraproject.rhino.model.article.Citation;
 import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.ambraproject.rhino.util.NodeListAdapter;
 import org.ambraproject.rhino.util.StringReplacer;
