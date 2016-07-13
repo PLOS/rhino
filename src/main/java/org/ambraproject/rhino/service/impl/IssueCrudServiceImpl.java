@@ -90,6 +90,12 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
   }
 
   @Override
+  public List<ArticleTable> getArticles(Issue issue) {
+    List<IssueArticle> issueArticles = getIssueArticles(issue);
+    return issueArticles.stream().map(IssueArticle::getArticle).collect(Collectors.toList());
+  }
+
+  @Override
   public Transceiver read(final IssueIdentifier id) throws IOException {
     return new EntityTransceiver<Issue>() {
       @Override
@@ -99,7 +105,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
 
       @Override
       protected Object getView(Issue issue) {
-        return new IssueOutputView(issue, getParentVolumeView(issue));
+        return new IssueOutputView(issue, getParentVolumeView(issue), getArticles(issue));
       }
     };
   }
@@ -151,7 +157,6 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
         hibernateTemplate.save(issueArticle);
         sortOrder++;
       }
-      issue.setArticles(inputArticles);
     }
 
     return issue;

@@ -21,6 +21,7 @@ package org.ambraproject.rhino.service;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.identity.IssueIdentifier;
+import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.model.IssueArticle;
 import org.ambraproject.rhino.model.Volume;
@@ -49,6 +50,8 @@ public interface IssueCrudService {
   public abstract Issue getIssue(IssueIdentifier issueId);
 
   public abstract List<IssueArticle> getIssueArticles(Issue issue);
+
+  public abstract List<ArticleTable> getArticles(Issue issue);
 
   public abstract void delete(IssueIdentifier issueId);
 

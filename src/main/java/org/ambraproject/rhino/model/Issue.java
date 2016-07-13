@@ -18,9 +18,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.util.Date;
-import java.util.List;
 
 /**
  * model class containing issue information
@@ -58,9 +56,6 @@ public class Issue implements Timestamped {
 
   @Column
   private Date lastModified;
-
-  @Transient
-  private List<ArticleTable> articles;
 
   public Issue() {
     super();
@@ -119,14 +114,6 @@ public class Issue implements Timestamped {
     this.description = description;
   }
 
-  public List<ArticleTable> getArticles() {
-    return articles;
-  }
-
-  public void setArticles(List<ArticleTable> articles) {
-    this.articles = articles;
-  }
-
   public Long getIssueId() {
     return issueId;
   }
@@ -169,9 +156,7 @@ public class Issue implements Timestamped {
     if (description != null ? !description.equals(issue.description) : issue.description != null)
       return false;
     if (created != null ? !created.equals(issue.created) : issue.created != null) return false;
-    if (lastModified != null ? !lastModified.equals(issue.lastModified) : issue.lastModified != null)
-      return false;
-    return articles != null ? articles.equals(issue.articles) : issue.articles == null;
+    return lastModified != null ? !lastModified.equals(issue.lastModified) : issue.lastModified != null;
 
   }
 
@@ -186,7 +171,6 @@ public class Issue implements Timestamped {
     result = 31 * result + (description != null ? description.hashCode() : 0);
     result = 31 * result + (created != null ? created.hashCode() : 0);
     result = 31 * result + (lastModified != null ? lastModified.hashCode() : 0);
-    result = 31 * result + (articles != null ? articles.hashCode() : 0);
     return result;
   }
 }

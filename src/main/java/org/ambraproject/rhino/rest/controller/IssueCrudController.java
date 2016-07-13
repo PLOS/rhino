@@ -62,13 +62,12 @@ public class IssueCrudController extends DoiBasedCrudController {
 
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = ISSUE_TEMPLATE, method = RequestMethod.PATCH)
-  public void update(HttpServletRequest request, HttpServletResponse response)
+  public ResponseEntity<?> update(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     IssueIdentifier issueId = parseIssueId(request);
     IssueInputView input = readJsonFromRequest(request, IssueInputView.class);
     issueCrudService.update(issueId, input);
-
-    issueCrudService.read(issueId).respond(request, response, entityGson);
+    return reportOk(issueId.getIssueUri());
   }
 
   @Transactional(rollbackFor = {Throwable.class})

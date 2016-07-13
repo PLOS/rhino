@@ -126,7 +126,7 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
 
         VolumeNonAssocView parentVolumeView = issueCrudService.getParentVolumeView(issue);
 
-        return new IssueOutputView(issue, parentVolumeView);
+        return new IssueOutputView(issue, parentVolumeView, null);
       }
     };
   }
