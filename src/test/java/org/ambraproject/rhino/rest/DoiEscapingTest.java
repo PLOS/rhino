@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 public class DoiEscapingTest {
 
   // Unoptimized reference implementation. Should always return the same value as DoiEscaping.resolve
-  // (excluding cases that would throw IllegalArgumentException)
+  // (excluding cases that would throw EscapedDoiException)
   private static Doi easyResolve(String escapedDoi) {
     return Doi.create(escapedDoi.replace("++", "/").replace("+-", "+"));
   }
@@ -24,12 +24,13 @@ public class DoiEscapingTest {
     String[][] withoutUriPrefix = {
         {"", ""},
         {NON_ESCAPABLE, NON_ESCAPABLE},
-        {"/", "++"}, {"+", "+-"},
+        {"/", "++"}, {"+", "+-"}, {"++", "+-+-"}, {"+-", "+--"},
         {"//", "++++"}, {"++", "+-+-"}, {"/+", "+++-"}, {"+/", "+-++"},
         {"\u2603", "\u2603"}, {"\u2603/\u2603+\u2603", "\u2603++\u2603+-\u2603"},
         {"10.1371/journal.pone.0000000", "10.1371++journal.pone.0000000"},
         {"10.1371/annotation/877a3639-4318-4ff2-9578-28e3de88b176", "10.1371++annotation++877a3639-4318-4ff2-9578-28e3de88b176"},
         {"10.1371/journal+pone/+0000000", "10.1371++journal+-pone+++-0000000"},
+        {"10.1371++journal+-pone+++-0000000", "10.1371+-+-journal+--pone+-+-+--0000000"},
         {"10.1093/comjnl/bxv087", "10.1093++comjnl++bxv087"},
         {"10.1093/comjnl+bxv087", "10.1093++comjnl+-bxv087"},
     };
@@ -62,13 +63,13 @@ public class DoiEscapingTest {
   @DataProvider
   public Iterator<Object[]> invalidEscapedDois() {
     String[] invalidEscapedDois = new String[]{
-        "/", "+", "+++", "+a", "+++a", "a+a",
+        "/", "+", "+++", "+a", "+/", "+++a", "a+a",
         "10.1371/journal.pone.0000000", "10.1371+journal.pone.0000000", "10.1371++journal.pone.0000000+"
     };
     return Stream.of(invalidEscapedDois).map(s -> new Object[]{s}).iterator();
   }
 
-  @Test(dataProvider = "invalidEscapedDois", expectedExceptions = {IllegalArgumentException.class})
+  @Test(dataProvider = "invalidEscapedDois", expectedExceptions = {DoiEscaping.EscapedDoiException.class})
   public void testInvalidEscapedDoi(String escaped) {
     DoiEscaping.resolve(escaped);
   }

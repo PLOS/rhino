@@ -22,9 +22,24 @@ public class DoiEscaping {
   }
 
   /**
-   * @param escapedDoi
-   * @return
-   * @throws IllegalArgumentException if the input contains an ambiguous escape sequence
+   * Indicates that a string, which was expected to be an escaped DOI, contained invalid or ambiguous escaping syntax.
+   */
+  public static class EscapedDoiException extends RuntimeException {
+    private EscapedDoiException(String message) {
+      super(message);
+    }
+
+    private EscapedDoiException(String message, Throwable cause) {
+      super(message, cause);
+    }
+  }
+
+  /**
+   * Resolve an escaped DOI into its unescaped form.
+   *
+   * @param escapedDoi a DOI or DOI name encoded into a form for embedding in a URL
+   * @return the represented DOI value
+   * @throws EscapedDoiException if the input contains an ambiguous escape sequence
    */
   public static Doi resolve(String escapedDoi) {
     int length = escapedDoi.length();
@@ -32,7 +47,7 @@ public class DoiEscaping {
     for (int i = 0; i < length; i++) {
       char c = escapedDoi.charAt(i);
       if (c == '/') {
-        throw new IllegalArgumentException("Invalid character: /");
+        throw new EscapedDoiException("Invalid character: /");
       } else if (c != '+') {
         unescaped.append(c);
       } else {
@@ -40,7 +55,7 @@ public class DoiEscaping {
         try {
           next = escapedDoi.charAt(++i);
         } catch (IndexOutOfBoundsException e) {
-          throw new IllegalArgumentException("Escape sequence begins at end of string", e);
+          throw new EscapedDoiException("Escape sequence begins at end of string", e);
         }
 
         if (next == '+') {
@@ -48,7 +63,7 @@ public class DoiEscaping {
         } else if (next == '-') {
           unescaped.append('+');
         } else {
-          throw new IllegalArgumentException("Invalid escape: " + next);
+          throw new EscapedDoiException("Invalid escape: " + next);
         }
       }
     }
