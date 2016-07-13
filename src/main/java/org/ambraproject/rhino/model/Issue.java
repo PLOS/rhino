@@ -13,7 +13,13 @@
 
 package org.ambraproject.rhino.model;
 
-
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,16 +27,40 @@ import java.util.List;
  *
  * @author Juan Peralta
  */
-public class Issue extends AmbraEntity {
+@Entity
+@Table(name = "issue")
+public class Issue implements Timestamped {
 
+  @Id
+  @GeneratedValue
+  private Long issueId;
+
+  @Column
   private String issueUri;
+
+  @Column
   private String displayName;
-  private boolean respectOrder;
+
+  @Column
+  private Boolean respectOrder;
+
+  @Column
   private String imageUri;
+
+  @Column
   private String title;
+
+  @Column
   private String description;
 
-  private List<String> articleDois;
+  @Column
+  private Date created;
+
+  @Column
+  private Date lastModified;
+
+  @Transient
+  private List<ArticleTable> articles;
 
   public Issue() {
     super();
@@ -89,56 +119,74 @@ public class Issue extends AmbraEntity {
     this.description = description;
   }
 
-  public List<String> getArticleDois() {
-    return articleDois;
+  public List<ArticleTable> getArticles() {
+    return articles;
   }
 
-  public void setArticleDois(List<String> articleDois) {
-    this.articleDois = articleDois;
+  public void setArticles(List<ArticleTable> articles) {
+    this.articles = articles;
+  }
+
+  public Long getIssueId() {
+    return issueId;
+  }
+
+  public void setIssueId(Long issueId) {
+    this.issueId = issueId;
+  }
+
+  public Date getCreated() {
+    return created;
+  }
+
+  public void setCreated(Date created) {
+    this.created = created;
+  }
+
+  @Override
+  public Date getLastModified() {
+    return lastModified;
+  }
+
+  public void setLastModified(Date lastModified) {
+    this.lastModified = lastModified;
   }
 
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (!(o instanceof Issue)) return false;
+    if (o == null || getClass() != o.getClass()) return false;
 
     Issue issue = (Issue) o;
 
-    if (getID() != null ? !getID().equals(issue.getID()) : issue.getID() != null) return false;
     if (respectOrder != issue.respectOrder) return false;
-    if (articleDois != null ? !articleDois.equals(issue.articleDois) : issue.articleDois != null) return false;
-    if (description != null ? !description.equals(issue.description) : issue.description != null) return false;
-    if (displayName != null ? !displayName.equals(issue.displayName) : issue.displayName != null) return false;
-    if (imageUri != null ? !imageUri.equals(issue.imageUri) : issue.imageUri != null) return false;
+    if (issueId != null ? !issueId.equals(issue.issueId) : issue.issueId != null) return false;
     if (issueUri != null ? !issueUri.equals(issue.issueUri) : issue.issueUri != null) return false;
+    if (displayName != null ? !displayName.equals(issue.displayName) : issue.displayName != null)
+      return false;
+    if (imageUri != null ? !imageUri.equals(issue.imageUri) : issue.imageUri != null) return false;
     if (title != null ? !title.equals(issue.title) : issue.title != null) return false;
-    return true;
+    if (description != null ? !description.equals(issue.description) : issue.description != null)
+      return false;
+    if (created != null ? !created.equals(issue.created) : issue.created != null) return false;
+    if (lastModified != null ? !lastModified.equals(issue.lastModified) : issue.lastModified != null)
+      return false;
+    return articles != null ? articles.equals(issue.articles) : issue.articles == null;
+
   }
 
   @Override
   public int hashCode() {
-    int result = getID() != null ? getID().hashCode() : 0;
+    int result = issueId != null ? issueId.hashCode() : 0;
     result = 31 * result + (issueUri != null ? issueUri.hashCode() : 0);
     result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
     result = 31 * result + (respectOrder ? 1 : 0);
     result = 31 * result + (imageUri != null ? imageUri.hashCode() : 0);
     result = 31 * result + (title != null ? title.hashCode() : 0);
     result = 31 * result + (description != null ? description.hashCode() : 0);
-    result = 31 * result + (articleDois != null ? articleDois.hashCode() : 0);
+    result = 31 * result + (created != null ? created.hashCode() : 0);
+    result = 31 * result + (lastModified != null ? lastModified.hashCode() : 0);
+    result = 31 * result + (articles != null ? articles.hashCode() : 0);
     return result;
-  }
-
-  @Override
-  public String toString() {
-    return "Issue{" +
-        "id='" + getID() + '\'' +
-        ", issueUri='" + issueUri + '\'' +
-        ", displayName='" + displayName + '\'' +
-        ", respectOrder=" + respectOrder +
-        ", imageUri='" + imageUri + '\'' +
-        ", title='" + title + '\'' +
-        ", description='" + description + '\'' +
-        ", articleDois=" + articleDois +
-        '}';
   }
 }

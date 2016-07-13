@@ -2,7 +2,7 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
 import edu.emory.mathcs.backport.java.util.Collections;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.identity.IssueIdentifier;
 import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -141,7 +141,7 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
   private Journal applyInput(Journal journal, JournalInputView input) {
     String currentIssueUri = input.getCurrentIssueUri();
     if (currentIssueUri != null) {
-      Issue currentIssue = issueCrudService.findIssue(DoiBasedIdentity.create(currentIssueUri));
+      Issue currentIssue = issueCrudService.getIssue(IssueIdentifier.create(currentIssueUri));
       if (currentIssue == null) {
         throw new RestClientException("Issue not found for URI: " + currentIssueUri, HttpStatus.BAD_REQUEST);
       }
@@ -161,7 +161,7 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
           "and i in elements(v.issues)";
       Query query = session.createQuery(hql);
       query.setParameter("journalId", journal.getID());
-      query.setParameter("issueId", issue.getID());
+      query.setParameter("issueId", issue.getIssueId());
       return query.uniqueResult();
     });
     if (results != null){

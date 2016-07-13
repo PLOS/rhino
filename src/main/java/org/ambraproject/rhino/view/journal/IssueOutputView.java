@@ -5,11 +5,12 @@ import com.google.common.base.Preconditions;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
+import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Issue;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.view.JsonOutputView;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class IssueOutputView implements JsonOutputView {
 
@@ -29,9 +30,8 @@ public class IssueOutputView implements JsonOutputView {
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = context.serialize(issue).getAsJsonObject();
 
-    serialized.remove("articleDois");
-    List<String> articleDois = issue.getArticleDois();
-    articleDois = DoiBasedIdentity.asIdentifiers(articleDois);
+    List<String> articleDois = issue.getArticles().stream()
+        .map(ArticleTable::getDoi).collect(Collectors.toList());
     serialized.add("articleOrder", context.serialize(articleDois));
 
     if (parentVolumeView.isPresent()) {

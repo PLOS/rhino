@@ -20,7 +20,9 @@ package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.identity.IssueIdentifier;
 import org.ambraproject.rhino.model.Issue;
+import org.ambraproject.rhino.model.IssueArticle;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleIssue;
@@ -32,11 +34,11 @@ import java.util.List;
 
 public interface IssueCrudService {
 
-  public abstract Transceiver read(DoiBasedIdentity id) throws IOException;
+  public abstract Transceiver read(IssueIdentifier id) throws IOException;
 
   public abstract DoiBasedIdentity create(DoiBasedIdentity volumeId, IssueInputView input);
 
-  public abstract void update(DoiBasedIdentity issueId, IssueInputView input);
+  public abstract void update(IssueIdentifier issueId, IssueInputView input);
 
   public abstract List<ArticleIssue> getArticleIssues(ArticleIdentity articleIdentity);
 
@@ -44,8 +46,10 @@ public interface IssueCrudService {
 
   public abstract Volume getParentVolume(Issue issue);
 
-  public abstract Issue findIssue(DoiBasedIdentity issueId);
+  public abstract Issue getIssue(IssueIdentifier issueId);
 
-  public abstract void delete(DoiBasedIdentity issueId);
+  public abstract List<IssueArticle> getIssueArticles(Issue issue);
+
+  public abstract void delete(IssueIdentifier issueId);
 
 }

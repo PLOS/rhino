@@ -18,7 +18,7 @@
 
 package org.ambraproject.rhino.rest.controller;
 
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.identity.IssueIdentifier;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.view.journal.IssueInputView;
@@ -48,19 +48,23 @@ public class IssueCrudController extends DoiBasedCrudController {
   @Autowired
   private IssueCrudService issueCrudService;
 
+  protected final IssueIdentifier parseIssueId(HttpServletRequest request) {
+    return IssueIdentifier.create(getIdentifier(request));
+  }
+
   @Transactional(readOnly = true)
   @RequestMapping(value = ISSUE_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    DoiBasedIdentity id = parse(request);
-    issueCrudService.read(id).respond(request, response, entityGson);
+    IssueIdentifier issueId = parseIssueId(request);
+    issueCrudService.read(issueId).respond(request, response, entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = ISSUE_TEMPLATE, method = RequestMethod.PATCH)
   public void update(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    DoiBasedIdentity issueId = parse(request);
+    IssueIdentifier issueId = parseIssueId(request);
     IssueInputView input = readJsonFromRequest(request, IssueInputView.class);
     issueCrudService.update(issueId, input);
 
@@ -71,7 +75,7 @@ public class IssueCrudController extends DoiBasedCrudController {
   @RequestMapping(value = ISSUE_TEMPLATE, method = RequestMethod.DELETE)
   public ResponseEntity<Object> delete(HttpServletRequest request)
       throws IOException {
-    DoiBasedIdentity issueId = parse(request);
+    IssueIdentifier issueId = parseIssueId(request);
     issueCrudService.delete(issueId);
     return new ResponseEntity<>(HttpStatus.OK);
   }
