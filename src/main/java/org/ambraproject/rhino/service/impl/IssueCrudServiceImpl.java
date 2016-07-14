@@ -141,15 +141,14 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
 
     List<String> inputArticleDois = input.getArticleOrder();
     if (inputArticleDois != null) {
-
-      List<ArticleTable> inputArticles = inputArticleDois.stream()
-          .map(doi -> articleCrudService.getArticle(ArticleIdentifier.create(doi)))
-          .collect(Collectors.toList());
-
       List<IssueArticle> existingIssueArticles = getIssueArticles(issue);
       for (IssueArticle issueArticle : existingIssueArticles) {
         hibernateTemplate.delete(issueArticle);
       }
+
+      List<ArticleTable> inputArticles = inputArticleDois.stream()
+          .map(doi -> articleCrudService.getArticle(ArticleIdentifier.create(doi)))
+          .collect(Collectors.toList());
 
       int sortOrder = 0;
       for (ArticleTable article : inputArticles) {
