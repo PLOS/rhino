@@ -18,7 +18,8 @@
 
 package org.ambraproject.rhino.rest.controller;
 
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.identity.IssueIdentifier;
+import org.ambraproject.rhino.identity.VolumeIdentifier;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.IssueCrudService;
@@ -55,19 +56,23 @@ public class VolumeCrudController extends DoiBasedCrudController {
   @Autowired
   private IssueCrudService issueCrudService;
 
+  protected final VolumeIdentifier parseVolumeId(HttpServletRequest request) {
+    return VolumeIdentifier.create(getIdentifier(request));
+  }
+
   @Transactional(readOnly = true)
   @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    DoiBasedIdentity id = parse(request);
-    volumeCrudService.read(id).respond(request, response, entityGson);
+    VolumeIdentifier volumeId = parseVolumeId(request);
+    volumeCrudService.read(volumeId).respond(request, response, entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.PATCH)
   public void update(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    DoiBasedIdentity volumeId = parse(request);
+    VolumeIdentifier volumeId = parseVolumeId(request);
     VolumeInputView input = readJsonFromRequest(request, VolumeInputView.class);
     volumeCrudService.update(volumeId, input);
 
@@ -77,23 +82,23 @@ public class VolumeCrudController extends DoiBasedCrudController {
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.DELETE)
   public ResponseEntity<Object> delete(HttpServletRequest request) throws IOException {
-    DoiBasedIdentity id = parse(request);
-    volumeCrudService.delete(id);
-    return reportOk(id.getIdentifier());
+    VolumeIdentifier volumeId = parseVolumeId(request);
+    volumeCrudService.delete(volumeId);
+    return reportOk(volumeId.getVolumeUri());
   }
 
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.POST)
   public ResponseEntity<String> createIssue(HttpServletRequest request) throws IOException {
-    DoiBasedIdentity volumeId = parse(request);
+    VolumeIdentifier volumeId = parseVolumeId(request);
 
     IssueInputView input = readJsonFromRequest(request, IssueInputView.class);
     if (StringUtils.isBlank(input.getIssueUri())) {
       throw new RestClientException("issueUri required", HttpStatus.BAD_REQUEST);
     }
 
-    DoiBasedIdentity issueId = issueCrudService.create(volumeId, input);
-    return reportCreated(issueId.getIdentifier());
+    IssueIdentifier issueId = issueCrudService.create(volumeId, input);
+    return reportCreated(issueId.getIssueUri());
   }
 
 }

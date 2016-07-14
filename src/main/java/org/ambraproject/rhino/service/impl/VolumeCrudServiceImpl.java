@@ -21,27 +21,95 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Preconditions;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.identity.VolumeIdentifier;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.journal.VolumeInputView;
 import org.ambraproject.rhino.view.journal.VolumeOutputView;
-import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Restrictions;
-import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
 import java.util.List;
 
+@SuppressWarnings("JpaQlInspection")
 public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudService {
+
+  @Autowired
+  private JournalCrudService journalCrudService;
+
+  @Override
+  public Volume getVolume(VolumeIdentifier volumeId) {
+    Volume volume = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM Volume WHERE volumeUri = :volumeUri");
+      query.setParameter("volumeUri", volumeId.getVolumeUri());
+      return (Volume) query.uniqueResult();
+    });
+    if (volume == null) {
+      throw new RestClientException("Volume not found with URI: " + volumeId.getVolumeUri(),
+          HttpStatus.NOT_FOUND);
+    }
+    return volume;
+  }
+
+  @Override
+  public VolumeIdentifier create(String journalKey, VolumeInputView input) {
+    Preconditions.checkNotNull(journalKey);
+
+    VolumeIdentifier volumeId = VolumeIdentifier.create(input.getVolumeUri());
+    if (getVolume(volumeId) != null) {
+      throw new RestClientException("Volume already exists with volumeUri: "
+          + volumeId.getVolumeUri(), HttpStatus.BAD_REQUEST);
+    }
+
+    Journal journal = journalCrudService.findJournal(journalKey);
+    Volume volume = applyInput(new Volume(), input);
+
+    List<Volume> volumeList = journal.getVolumes();
+    volumeList.add(volume);
+    hibernateTemplate.update(journal);
+
+    return VolumeIdentifier.create(volume.getVolumeUri());
+  }
+
+  @Override
+  public void update(VolumeIdentifier volumeId, VolumeInputView input) {
+    Preconditions.checkNotNull(input);
+    Volume volume = getVolume(volumeId);
+    volume = applyInput(volume, input);
+    hibernateTemplate.update(volume);
+  }
+
+  @Override
+  public Transceiver read(final VolumeIdentifier id) throws IOException {
+    return new EntityTransceiver<Volume>() {
+      @Override
+      protected Volume fetchEntity() {
+        return getVolume(id);
+      }
+
+      @Override
+      protected Object getView(Volume volume) {
+        return new VolumeOutputView(volume);
+      }
+    };
+  }
+
+  @Override
+  public void delete(VolumeIdentifier id) throws IOException {
+    Volume volume = getVolume(id);
+    if (volume.getIssues().size() > 0) {
+      throw new RestClientException("Volume has issues and cannot be deleted until all issues have " +
+          "been deleted.", HttpStatus.BAD_REQUEST);
+    }
+    hibernateTemplate.delete(volume);
+  }
 
   private static Volume applyInput(Volume volume, VolumeInputView input) {
     String volumeUri = input.getVolumeUri();
@@ -64,106 +132,6 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
     } else if (volume.getImageUri() == null) {
       volume.setImageUri("");
     }
-
     return volume;
-  }
-
-  @Override
-  public Volume findVolume(DoiBasedIdentity volumeId) {
-    return (Volume) DataAccessUtils.uniqueResult(hibernateTemplate.findByCriteria(DetachedCriteria
-        .forClass(Volume.class)
-        .add(Restrictions.eq("volumeUri", volumeId.getKey()))
-        .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-    ));
-  }
-
-  @Override
-  public DoiBasedIdentity create(String journalKey, VolumeInputView input) {
-    Preconditions.checkNotNull(journalKey);
-
-    DoiBasedIdentity volumeId = DoiBasedIdentity.create(input.getVolumeUri());
-    if (findVolume(volumeId) != null) {
-      throw new RestClientException("Volume already exists with volumeUri: " + volumeId.getIdentifier(), HttpStatus.BAD_REQUEST);
-    }
-
-    // TODO Transaction safety
-    Journal journal = (Journal) DataAccessUtils.uniqueResult((List<?>)
-        hibernateTemplate.findByCriteria(journalCriteria()
-                .add(Restrictions.eq("journalKey", journalKey))
-        ));
-    if (journal == null) {
-      String message = "Journal not found for journal key: " + journalKey;
-      HttpStatus status = HttpStatus.BAD_REQUEST; // Not "NOT FOUND", because the URL wasn't wrong
-      throw new RestClientException(message, status);
-    }
-
-    Volume volume = applyInput(new Volume(), input);
-
-    List<Volume> volumeList = journal.getVolumes();
-    volumeList.add(volume);
-    hibernateTemplate.update(journal);
-
-    return DoiBasedIdentity.create(volume.getVolumeUri());
-  }
-
-  @Override
-  public void update(DoiBasedIdentity volumeId, VolumeInputView input) {
-    Preconditions.checkNotNull(input);
-    Volume volume = findVolume(volumeId);
-    if (volume == null) {
-      throw new RestClientException("Volume not found at URI=" + volumeId.getIdentifier(), HttpStatus.NOT_FOUND);
-    }
-    volume = applyInput(volume, input);
-    hibernateTemplate.update(volume);
-  }
-
-  @Override
-  public Transceiver read(final DoiBasedIdentity id) throws IOException {
-    return new EntityTransceiver<Volume>() {
-      @Override
-      protected Volume fetchEntity() {
-        Volume volume = (Volume) DataAccessUtils.uniqueResult((List<?>)
-            hibernateTemplate.findByCriteria(DetachedCriteria
-                    .forClass(Volume.class)
-                    .add(Restrictions.eq("volumeUri", id.getKey()))
-                    .setFetchMode("issues", FetchMode.JOIN)
-            ));
-        if (volume == null) {
-          throw new RestClientException("Volume not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
-        }
-        return volume;
-      }
-
-      @Override
-      protected Object getView(Volume volume) {
-        return new VolumeOutputView(volume);
-      }
-    };
-  }
-
-  private Journal getParentJournal(Volume volume) {
-    return hibernateTemplate.execute(session -> {
-      Query query = session.createQuery("from Journal where :volume in elements(volumes)");
-      query.setParameter("volume", volume);
-      return (Journal) query.uniqueResult();
-    });
-  }
-
-  @Override
-  public void delete(DoiBasedIdentity id) throws IOException {
-    Volume volume = findVolume(id);
-    if (volume == null) {
-      throw new RestClientException("Volume not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
-    }
-    //cannot delete a volume if there are related issues
-    if (volume.getIssues().size() > 0) {
-      throw new RestClientException("Volume has issues and cannot be deleted until all issues have " +
-          "been deleted.", HttpStatus.BAD_REQUEST);
-    }
-    Journal parentJournal = getParentJournal(volume);
-    List<Volume> volumes = parentJournal.getVolumes();
-    volumes.remove(volume);
-    hibernateTemplate.save(parentJournal);
-    hibernateTemplate.delete(volume);
   }
 }

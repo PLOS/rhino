@@ -1,6 +1,6 @@
 package org.ambraproject.rhino.rest.controller;
 
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.identity.VolumeIdentifier;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.CommentCrudService;
@@ -66,8 +66,8 @@ public class JournalCrudController extends RestController {
       throw new RestClientException("volumeUri required", HttpStatus.BAD_REQUEST);
     }
 
-    DoiBasedIdentity volumeId = volumeCrudService.create(journalKey, input);
-    return reportCreated(volumeId.getIdentifier());
+    VolumeIdentifier volumeId = volumeCrudService.create(journalKey, input);
+    return reportCreated(volumeId.getVolumeUri());
   }
 
   @Transactional(rollbackFor = {Throwable.class})

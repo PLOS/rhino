@@ -19,8 +19,8 @@
 package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.identity.IssueIdentifier;
+import org.ambraproject.rhino.identity.VolumeIdentifier;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.model.IssueArticle;
@@ -37,7 +37,7 @@ public interface IssueCrudService {
 
   public abstract Transceiver read(IssueIdentifier id) throws IOException;
 
-  public abstract DoiBasedIdentity create(DoiBasedIdentity volumeId, IssueInputView input);
+  public abstract IssueIdentifier create(VolumeIdentifier volumeId, IssueInputView input);
 
   public abstract void update(IssueIdentifier issueId, IssueInputView input);
 
@@ -47,7 +47,7 @@ public interface IssueCrudService {
 
   public abstract Volume getParentVolume(Issue issue);
 
-  public abstract Issue getIssue(IssueIdentifier issueId);
+  public abstract Issue getIssue(IssueIdentifier issueId, boolean isNullChecked);
 
   public abstract List<IssueArticle> getIssueArticles(Issue issue);
 

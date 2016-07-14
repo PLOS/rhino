@@ -13,6 +13,19 @@
 
 package org.ambraproject.rhino.model;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,13 +33,41 @@ import java.util.List;
  *
  * @author Juan Peralta
  */
-public class Volume extends AmbraEntity {
+@Entity
+@Table(name = "volume")
+public class Volume implements Timestamped {
+
+  @Id
+  @GeneratedValue
+  private Long volumeId;
+
+  @Column
   private String volumeUri;
+
+  @Column
   private String displayName;
+
+  @Column
   private String imageUri;
+
+  @Column
   private String title;
+
+  @Column
   private String description;
 
+  @Column
+  private Date created;
+
+  @Column
+  private Date lastModified;
+
+  @Cascade(CascadeType.SAVE_UPDATE)
+  @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+  @JoinTable(
+      name = "issue",
+      joinColumns = @JoinColumn(name = "volumeId"),
+      inverseJoinColumns = @JoinColumn(name = "issueId"))
   private List<Issue> issues;
 
   public Volume() {
@@ -38,20 +79,20 @@ public class Volume extends AmbraEntity {
     this.volumeUri = volumeUri;
   }
 
+  public Long getVolumeId() {
+    return volumeId;
+  }
+
+  public void setVolumeId(Long volumeId) {
+    this.volumeId = volumeId;
+  }
+
   public String getVolumeUri() {
     return volumeUri;
   }
 
   public void setVolumeUri(String volumeUri) {
     this.volumeUri = volumeUri;
-  }
-
-  public List<Issue> getIssues() {
-    return issues;
-  }
-
-  public void setIssues(List<Issue> issues) {
-    this.issues = issues;
   }
 
   public String getDisplayName() {
@@ -86,6 +127,31 @@ public class Volume extends AmbraEntity {
     this.description = description;
   }
 
+  public Date getCreated() {
+    return created;
+  }
+
+  public void setCreated(Date created) {
+    this.created = created;
+  }
+
+  @Override
+  public Date getLastModified() {
+    return lastModified;
+  }
+
+  public void setLastModified(Date lastModified) {
+    this.lastModified = lastModified;
+  }
+
+  public List<Issue> getIssues() {
+    return issues;
+  }
+
+  public void setIssues(List<Issue> issues) {
+    this.issues = issues;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -93,6 +159,8 @@ public class Volume extends AmbraEntity {
 
     Volume volume = (Volume) o;
 
+    if (volumeId != null ? !volumeId.equals(volume.volumeId) : volume.volumeId != null)
+      return false;
     if (volumeUri != null ? !volumeUri.equals(volume.volumeUri) : volume.volumeUri != null)
       return false;
     if (displayName != null ? !displayName.equals(volume.displayName) : volume.displayName != null)
@@ -102,30 +170,24 @@ public class Volume extends AmbraEntity {
     if (title != null ? !title.equals(volume.title) : volume.title != null) return false;
     if (description != null ? !description.equals(volume.description) : volume.description != null)
       return false;
+    if (created != null ? !created.equals(volume.created) : volume.created != null) return false;
+    if (lastModified != null ? !lastModified.equals(volume.lastModified) : volume.lastModified != null)
+      return false;
     return issues != null ? issues.equals(volume.issues) : volume.issues == null;
 
   }
 
   @Override
   public int hashCode() {
-    int result = volumeUri != null ? volumeUri.hashCode() : 0;
+    int result = volumeId != null ? volumeId.hashCode() : 0;
+    result = 31 * result + (volumeUri != null ? volumeUri.hashCode() : 0);
     result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
     result = 31 * result + (imageUri != null ? imageUri.hashCode() : 0);
     result = 31 * result + (title != null ? title.hashCode() : 0);
     result = 31 * result + (description != null ? description.hashCode() : 0);
+    result = 31 * result + (created != null ? created.hashCode() : 0);
+    result = 31 * result + (lastModified != null ? lastModified.hashCode() : 0);
     result = 31 * result + (issues != null ? issues.hashCode() : 0);
     return result;
-  }
-
-  @Override
-  public String toString() {
-    return "Volume{" +
-        "id='" + getID() + '\'' +
-        ", volumeUri='" + volumeUri + '\'' +
-        ", displayName='" + displayName + '\'' +
-        ", imageUri='" + imageUri + '\'' +
-        ", title='" + title + '\'' +
-        ", description='" + description + '\'' +
-        '}';
   }
 }
