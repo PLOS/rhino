@@ -35,7 +35,6 @@ public class ArticleMetadata {
   private final ImmutableSet<String> types;
 
   private final ImmutableList<AssetMetadata> assets;
-  private final ImmutableList<Citation> citedArticles;
   private final ImmutableList<RelatedArticleLink> relatedArticles;
   private final ImmutableList<NlmPerson> authors;
   private final ImmutableList<NlmPerson> editors;
@@ -60,7 +59,6 @@ public class ArticleMetadata {
     this.collaborativeAuthors = ImmutableList.copyOf(builder.collaborativeAuthors);
     this.types = ImmutableSet.copyOf(builder.types);
     this.assets = ImmutableList.copyOf(builder.assets);
-    this.citedArticles = ImmutableList.copyOf(builder.citedArticles);
     this.relatedArticles = ImmutableList.copyOf(builder.relatedArticles);
     this.authors = ImmutableList.copyOf(builder.authors);
     this.editors = ImmutableList.copyOf(builder.editors);
@@ -142,10 +140,6 @@ public class ArticleMetadata {
     return assets;
   }
 
-  public ImmutableList<Citation> getCitedArticles() {
-    return citedArticles;
-  }
-
   public ImmutableList<RelatedArticleLink> getRelatedArticles() {
     return relatedArticles;
   }
@@ -192,7 +186,6 @@ public class ArticleMetadata {
     private Set<String> types;
 
     private List<AssetMetadata> assets;
-    private List<Citation> citedArticles;
     private List<RelatedArticleLink> relatedArticles;
     private List<NlmPerson> authors;
     private List<NlmPerson> editors;
@@ -296,11 +289,6 @@ public class ArticleMetadata {
       return this;
     }
 
-    public Builder setCitedArticles(List<Citation> citedArticles) {
-      this.citedArticles = citedArticles;
-      return this;
-    }
-
     public Builder setRelatedArticles(List<RelatedArticleLink> relatedArticles) {
       this.relatedArticles = relatedArticles;
       return this;
@@ -349,7 +337,6 @@ public class ArticleMetadata {
     }
     if (types != null ? !types.equals(that.types) : that.types != null) return false;
     if (assets != null ? !assets.equals(that.assets) : that.assets != null) return false;
-    if (citedArticles != null ? !citedArticles.equals(that.citedArticles) : that.citedArticles != null) return false;
     if (relatedArticles != null ? !relatedArticles.equals(that.relatedArticles) : that.relatedArticles != null) {
       return false;
     }
@@ -379,7 +366,6 @@ public class ArticleMetadata {
     result = 31 * result + (collaborativeAuthors != null ? collaborativeAuthors.hashCode() : 0);
     result = 31 * result + (types != null ? types.hashCode() : 0);
     result = 31 * result + (assets != null ? assets.hashCode() : 0);
-    result = 31 * result + (citedArticles != null ? citedArticles.hashCode() : 0);
     result = 31 * result + (relatedArticles != null ? relatedArticles.hashCode() : 0);
     result = 31 * result + (authors != null ? authors.hashCode() : 0);
     result = 31 * result + (editors != null ? editors.hashCode() : 0);

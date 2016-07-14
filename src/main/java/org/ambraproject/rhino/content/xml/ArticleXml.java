@@ -30,7 +30,6 @@ import com.google.common.collect.Sets;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.model.article.AssetMetadata;
-import org.ambraproject.rhino.model.article.Citation;
 import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.ambraproject.rhino.util.NodeListAdapter;
 import org.ambraproject.rhino.util.StringReplacer;
@@ -238,7 +237,6 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     article.setPublicationDate(parseDate(readNode("/article/front/article-meta/pub-date[@pub-type=\"epub\"]")));
 
     article.setTypes(buildArticleTypes());
-    article.setCitedArticles(parseCitations(readNodeList("/article/back/ref-list/ref")));
     article.setAuthors(readPersons(readNodeList(
         "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/name")));
     article.setEditors(readPersons(readNodeList(
@@ -391,19 +389,6 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     }
 
     return LocalDate.of(year, month, day);
-  }
-
-  private List<Citation> parseCitations(List<Node> refNodes) throws XmlContentException {
-    return refNodes.stream().map(refNode -> {
-      String key = readString("child::label", refNode);
-
-      Node citationNode = readNode("(child::element-citation|child::mixed-citation|child::nlm-citation)", refNode);
-      if (citationNode == null) {
-        throw new XmlContentException("All citation (<ref>) nodes expected to contain one of: "
-            + "element-citation, mixed-citation, nlm-citation");
-      }
-      return new CitedArticleXml(key, citationNode).build();
-    }).collect(Collectors.toList());
   }
 
   /**
