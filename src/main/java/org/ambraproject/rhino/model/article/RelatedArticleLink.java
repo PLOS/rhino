@@ -1,23 +1,25 @@
 package org.ambraproject.rhino.model.article;
 
+import org.ambraproject.rhino.identity.Doi;
+
 import java.util.Objects;
 
 public class RelatedArticleLink {
 
   private final String type;
-  private final String href;
+  private final Doi doi;
 
   public RelatedArticleLink(String type, String href) {
     this.type = Objects.requireNonNull(type);
-    this.href = Objects.requireNonNull(href);
+    this.doi = Doi.create(Objects.requireNonNull(href));
   }
 
   public String getType() {
     return type;
   }
 
-  public String getHref() {
-    return href;
+  public Doi getDoi() {
+    return doi;
   }
 
   @Override
@@ -28,14 +30,14 @@ public class RelatedArticleLink {
     RelatedArticleLink that = (RelatedArticleLink) o;
 
     if (!type.equals(that.type)) return false;
-    return href.equals(that.href);
+    return doi.equals(that.doi);
+
   }
 
   @Override
   public int hashCode() {
     int result = type.hashCode();
-    result = 31 * result + href.hashCode();
+    result = 31 * result + doi.hashCode();
     return result;
   }
-
 }

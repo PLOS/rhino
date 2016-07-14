@@ -2,6 +2,7 @@ package org.ambraproject.rhino.view.article.versioned;
 
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
+import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.VersionedArticleRelationship;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
@@ -11,6 +12,8 @@ import org.ambraproject.rhino.service.impl.VersionedIngestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 
 public class ArticleIngestionViewFactory {
 
@@ -23,7 +26,8 @@ public class ArticleIngestionViewFactory {
     List<VersionedArticleRelationship> inbound = articleCrudService.getArticleRelationshipsTo(articleId);
     List<VersionedArticleRelationship> outbound = articleCrudService.getArticleRelationshipsFrom(articleId);
     List<RelatedArticleLink> declared = metadata.getRelatedArticles();
-    return new RelationshipSetView(outbound, inbound, declared);
+    Map<Doi, String> otherArticleTitles = Stream.concat(inbound.stream().flatMap())
+    return new RelationshipSetView(inbound, outbound, declared);
   }
 
   public ArticleIngestionView getView(ArticleIngestionIdentifier ingestionId) {
