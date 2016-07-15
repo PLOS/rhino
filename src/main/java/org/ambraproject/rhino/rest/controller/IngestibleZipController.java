@@ -1,7 +1,6 @@
 package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
-import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.impl.VersionedIngestionService;

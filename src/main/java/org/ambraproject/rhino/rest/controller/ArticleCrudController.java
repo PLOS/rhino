@@ -132,7 +132,7 @@ public class ArticleCrudController extends ArticleSpaceController {
   /**
    * Read article metadata.
    *
-   * @param request TODO
+   * @param request         TODO
    * @param response
    * @param revisionNumber
    * @param ingestionNumber
@@ -203,8 +203,8 @@ public class ArticleCrudController extends ArticleSpaceController {
   @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = {"authors"})
   public void readAuthors(HttpServletRequest request, HttpServletResponse response,
-      @RequestParam(value = "revision", required = false) Integer revisionNumber,
-      @RequestParam(value = "ingestion", required = false) Integer ingestionNumber)
+                          @RequestParam(value = "revision", required = false) Integer revisionNumber,
+                          @RequestParam(value = "ingestion", required = false) Integer ingestionNumber)
       throws IOException {
 
     ClientItemId itemId = ClientItemIdResolver.resolve(getIdentifier(request), revisionNumber, ingestionNumber);
@@ -235,8 +235,8 @@ public class ArticleCrudController extends ArticleSpaceController {
   /**
    * Populates article category information by making a call to the taxonomy server.
    *
-   * @param request          HttpServletRequest
-   * @param response         HttpServletResponse
+   * @param request  HttpServletRequest
+   * @param response HttpServletResponse
    * @throws IOException
    */
   @Transactional(rollbackFor = {Throwable.class})
@@ -267,8 +267,8 @@ public class ArticleCrudController extends ArticleSpaceController {
   }
 
   /**
-   * A temporary endpoint for testing the creation of article relationships
-   * This functionality should ultimately be subsumed under the publication and revision assignment workflow.
+   * A temporary endpoint for testing the creation of article relationships This functionality should ultimately be
+   * subsumed under the publication and revision assignment workflow.
    *
    * @param request
    * @param response
@@ -299,8 +299,8 @@ public class ArticleCrudController extends ArticleSpaceController {
   }
 
   /**
-   * Retrieves the raw taxonomy categories associated with the article along with the text that is sent to the
-   * taxonomy server for classification
+   * Retrieves the raw taxonomy categories associated with the article along with the text that is sent to the taxonomy
+   * server for classification
    *
    * @param request
    * @return a String containing the text and raw categories in the form of <text> \n\n <categories>
@@ -331,7 +331,7 @@ public class ArticleCrudController extends ArticleSpaceController {
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.POST, params = "syndications")
   public ResponseEntity<Object> createSyndication(HttpServletRequest request,
-      @RequestParam(value = "revision", required = false) Integer revisionNumber)
+                                                  @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
     ArticleRevisionIdentifier revisionId = getArticleRevisionIdentifier(request, revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
@@ -344,7 +344,7 @@ public class ArticleCrudController extends ArticleSpaceController {
   @ApiOperation(value = "syndicate", notes = "Send a syndication message to the queue for processing. " +
       "Will create and add a syndication to the database if none exist for current article and target.")
   public ResponseEntity<Object> syndicate(HttpServletRequest request,
-      @RequestParam(value = "revision", required = false) Integer revisionNumber)
+                                          @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
     ArticleRevisionIdentifier revisionId = getArticleRevisionIdentifier(request, revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
@@ -355,7 +355,7 @@ public class ArticleCrudController extends ArticleSpaceController {
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PATCH, params = "syndications")
   public ResponseEntity<Object> patchSyndication(HttpServletRequest request,
-      @RequestParam(value = "revision", required = false) Integer revisionNumber)
+                                                 @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
     ArticleRevisionIdentifier revisionId = getArticleRevisionIdentifier(request, revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
@@ -368,8 +368,8 @@ public class ArticleCrudController extends ArticleSpaceController {
   /**
    * Retrieves the metadata from a random article
    *
-   * @param request          HttpServletRequest
-   * @param response         HttpServletResponse
+   * @param request  HttpServletRequest
+   * @param response HttpServletResponse
    * @return a JSON representation of the random article
    * @throws IOException
    */

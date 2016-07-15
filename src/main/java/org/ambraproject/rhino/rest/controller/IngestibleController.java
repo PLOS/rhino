@@ -91,9 +91,9 @@ public class IngestibleController extends DoiBasedCrudController {
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.POST)
   public void ingest(HttpServletRequest request, HttpServletResponse response,
-      @RequestParam(value = "name") String name,
-      @RequestParam(value = "force_reingest", required = false) String forceReingest,
-      @RequestParam(value = "revision", required = false) Integer revisionNumber)
+                     @RequestParam(value = "name") String name,
+                     @RequestParam(value = "force_reingest", required = false) String forceReingest,
+                     @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
 
     File archiveFile;
@@ -121,7 +121,7 @@ public class IngestibleController extends DoiBasedCrudController {
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.GET, params = "article")
   public void repack(HttpServletResponse response,
-      @RequestParam("article") String articleId)
+                     @RequestParam("article") String articleId)
       throws IOException {
     Archive archive = articleCrudService.repack(ArticleIdentity.create(articleId));
     response.setStatus(HttpStatus.OK.value());
