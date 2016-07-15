@@ -139,7 +139,7 @@ public class ArticleCrudController extends RestController {
                            @PathVariable("doi") String doi)
       throws IOException {
     ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.resolve(doi));
-    articleCrudService.readRevisions(id).respond(request, response, entityGson);
+    articleCrudService.readArticleOverview(id).respond(request, response, entityGson);
   }
 
   /**
