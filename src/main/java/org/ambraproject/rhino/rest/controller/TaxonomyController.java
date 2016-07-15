@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.OptionalLong;
 
@@ -50,14 +51,12 @@ public class TaxonomyController extends RestController {
 
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = TAXONOMY_NAMESPACE + "flag/{action:add|remove}", method = RequestMethod.POST)
-  public
   @ResponseBody
-  Map<String, String> flagArticleCategory(
-      @RequestParam(value = "categoryTerm", required = true) String categoryTerm,
-      @RequestParam(value = "articleDoi", required = true) String articleDoi,
-      @RequestParam(value = "userId", required = false) String userId,
-      @PathVariable("action") String action)
-      throws Exception {
+  public Map<String, String> flagArticleCategory(@RequestParam(value = "categoryTerm", required = true) String categoryTerm,
+                                                 @RequestParam(value = "articleDoi", required = true) String articleDoi,
+                                                 @RequestParam(value = "userId", required = false) String userId,
+                                                 @PathVariable("action") String action)
+      throws IOException {
     // TODO: we might want to optimize this by directly retrieving an article category collection in place of article instantiation
     Article article = null; // TODO
 
