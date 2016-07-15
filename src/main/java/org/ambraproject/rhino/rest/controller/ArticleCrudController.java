@@ -80,7 +80,7 @@ public class ArticleCrudController extends RestController {
   private SyndicationCrudService syndicationCrudService;
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/versioned/articles", method = RequestMethod.GET)
+  @RequestMapping(value = "/articles", method = RequestMethod.GET)
   public void listDois(HttpServletRequest request, HttpServletResponse response,
                        @RequestParam(value = "date", required = false) String includeLastModifiedDate,
                        @RequestParam(value = "state", required = false) String[] pubStates,
@@ -99,7 +99,7 @@ public class ArticleCrudController extends RestController {
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/versioned/articles", params = {"since", "journal"}, method = RequestMethod.GET)
+  @RequestMapping(value = "/articles", params = {"since", "journal"}, method = RequestMethod.GET)
   public void listRecent(HttpServletRequest request, HttpServletResponse response,
                          @RequestParam(value = "since", required = true) String since,
                          @RequestParam(value = "journal", required = true) String journalKey,
@@ -124,7 +124,7 @@ public class ArticleCrudController extends RestController {
    */
   @Deprecated
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/versioned/articles/{doi}/ingestions/{number}", method = RequestMethod.GET)
+  @RequestMapping(value = "/articles/{doi}/ingestions/{number}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @PathVariable("doi") String doi,
                    @PathVariable("number") int ingestionNumber)
@@ -134,7 +134,7 @@ public class ArticleCrudController extends RestController {
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/versioned/articles/{doi}", method = RequestMethod.GET)
+  @RequestMapping(value = "/articles/{doi}", method = RequestMethod.GET)
   public void getRevisions(HttpServletRequest request, HttpServletResponse response,
                            @PathVariable("doi") String doi)
       throws IOException {
@@ -151,7 +151,7 @@ public class ArticleCrudController extends RestController {
    * @throws IOException
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/versioned/articles/{doi}/comments", method = RequestMethod.GET)
+  @RequestMapping(value = "/articles/{doi}/comments", method = RequestMethod.GET)
   public void readComments(HttpServletRequest request, HttpServletResponse response,
                            @PathVariable("doi") String doi)
       throws IOException {
@@ -161,7 +161,7 @@ public class ArticleCrudController extends RestController {
 
   // TODO: Get rid of this?
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/versioned/articles/{doi}", method = RequestMethod.GET, params = "commentCount")
+  @RequestMapping(value = "/articles/{doi}", method = RequestMethod.GET, params = "commentCount")
   public void getCommentCount(HttpServletRequest request, HttpServletResponse response,
                               @PathVariable("doi") String doi)
       throws IOException {
@@ -180,7 +180,7 @@ public class ArticleCrudController extends RestController {
    * @throws IOException
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/versioned/articles/{doi}/ingestions/{number}/authors", method = RequestMethod.GET, params = {"authors"})
+  @RequestMapping(value = "/articles/{doi}/ingestions/{number}/authors", method = RequestMethod.GET, params = {"authors"})
   public void readAuthors(HttpServletRequest request, HttpServletResponse response,
                           @PathVariable("doi") String doi,
                           @PathVariable("number") int ingestionNumber)
@@ -199,7 +199,7 @@ public class ArticleCrudController extends RestController {
    */
   // TODO: Get rid of this?
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/versioned/articles/{doi}/ingestions/{number}", method = RequestMethod.GET, params = "xml")
+  @RequestMapping(value = "/articles/{doi}/ingestions/{number}", method = RequestMethod.GET, params = "xml")
   public void readXml(HttpServletRequest request, HttpServletResponse response,
                       @PathVariable("doi") String doi,
                       @PathVariable("number") int ingestionNumber)
@@ -218,7 +218,7 @@ public class ArticleCrudController extends RestController {
    * @throws IOException
    */
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/versioned/articles/{doi}/categories", method = RequestMethod.POST)
+  @RequestMapping(value = "/articles/{doi}/categories", method = RequestMethod.POST)
   public void populateCategories(HttpServletRequest request, HttpServletResponse response,
                                  @PathVariable("doi") String doi)
       throws IOException {
@@ -237,7 +237,7 @@ public class ArticleCrudController extends RestController {
    * @throws IOException
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/versioned/articles/{doi}/categories", method = RequestMethod.GET)
+  @RequestMapping(value = "/articles/{doi}/categories", method = RequestMethod.GET)
   public void readCategories(HttpServletRequest request, HttpServletResponse response,
                              @PathVariable("doi") String doi)
       throws IOException {
@@ -255,7 +255,7 @@ public class ArticleCrudController extends RestController {
    */
   @Deprecated
   @Transactional(readOnly = false)
-  @RequestMapping(value = "/versioned/articles/{doi}/ingestions/{number}/relationships", method = RequestMethod.POST)
+  @RequestMapping(value = "/articles/{doi}/ingestions/{number}/relationships", method = RequestMethod.POST)
   public void refreshArticleRelationships(HttpServletRequest request, HttpServletResponse response,
                                           @PathVariable("doi") String doi,
                                           @PathVariable("number") int ingestionNumber)
@@ -274,7 +274,7 @@ public class ArticleCrudController extends RestController {
    */
   // TODO: Get rid of this?
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/versioned/articles/{doi}/categories", method = RequestMethod.GET, params = "raw")
+  @RequestMapping(value = "/articles/{doi}/categories", method = RequestMethod.GET, params = "raw")
   public void getRawCategories(HttpServletRequest request, HttpServletResponse response,
                                @PathVariable("doi") String doi)
       throws IOException {
@@ -292,7 +292,7 @@ public class ArticleCrudController extends RestController {
    */
   // TODO: Get rid of this?
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/versioned/articles/{doi}/categories", method = RequestMethod.GET, params = "rawCategoriesAndText")
+  @RequestMapping(value = "/articles/{doi}/categories", method = RequestMethod.GET, params = "rawCategoriesAndText")
   public ResponseEntity<String> getRawCategoriesAndText(HttpServletRequest request,
                                                         @PathVariable("doi") String doi)
       throws IOException {
@@ -309,8 +309,8 @@ public class ArticleCrudController extends RestController {
    */
   @Transactional(readOnly = true)
   @RequestMapping(
-      // Not "/versioned/articles/{doi}/lists" because a list isn't a child object of the article. This is kind of a search query.
-      value = "/versioned/articles/{doi}", method = RequestMethod.GET, params = "lists")
+      // Not "/articles/{doi}/lists" because a list isn't a child object of the article. This is kind of a search query.
+      value = "/articles/{doi}", method = RequestMethod.GET, params = "lists")
   public void getContainingLists(HttpServletRequest request, HttpServletResponse response,
                                  @PathVariable("doi") String doi)
       throws IOException {
@@ -318,7 +318,7 @@ public class ArticleCrudController extends RestController {
     articleListCrudService.readContainingLists(id).respond(request, response, entityGson);
   }
 
-  @RequestMapping(value = "/versioned/articles/{doi}/revisions/{number}/syndications", method = RequestMethod.POST)
+  @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications", method = RequestMethod.POST)
   public ResponseEntity<Object> createSyndication(HttpServletRequest request,
                                                   @PathVariable("doi") String doi,
                                                   @PathVariable("number") int revisionNumber)
@@ -330,7 +330,7 @@ public class ArticleCrudController extends RestController {
     return reportCreated();
   }
 
-  @RequestMapping(value = "/versioned/articles/{doi}/revisions/{number}/syndications",
+  @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications",
       // Fold into PATCH operation so we can get rid of "?syndicate"?
       method = RequestMethod.POST, params = "syndicate")
   @ApiOperation(value = "syndicate", notes = "Send a syndication message to the queue for processing. " +
@@ -346,7 +346,7 @@ public class ArticleCrudController extends RestController {
     return reportOk(created.toString());
   }
 
-  @RequestMapping(value = "/versioned/articles/{doi}/revisions/{number}/syndications", method = RequestMethod.PATCH)
+  @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications", method = RequestMethod.PATCH)
   public ResponseEntity<Object> patchSyndication(HttpServletRequest request,
                                                  @PathVariable("doi") String doi,
                                                  @PathVariable("number") int revisionNumber)
@@ -368,7 +368,7 @@ public class ArticleCrudController extends RestController {
    * @throws IOException
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/versioned/articles", method = RequestMethod.GET, params = "random")
+  @RequestMapping(value = "/articles", method = RequestMethod.GET, params = "random")
   public void readRandom(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     articleCrudService.readRandom().respond(request, response, entityGson);

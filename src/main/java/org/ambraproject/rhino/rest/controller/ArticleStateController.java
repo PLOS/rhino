@@ -55,7 +55,7 @@ public class ArticleStateController extends RestController {
    * @throws IOException
    */
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/versioned/articles/{doi}/revisions/{number}", method = RequestMethod.PATCH)
+  @RequestMapping(value = "/articles/{doi}/revisions/{number}", method = RequestMethod.PATCH)
   public void write(HttpServletRequest request, HttpServletResponse response,
                     @PathVariable("doi") String doi,
                     @PathVariable("number") int revisionNumber)

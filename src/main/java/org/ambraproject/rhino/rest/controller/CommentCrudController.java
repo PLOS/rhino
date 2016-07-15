@@ -26,7 +26,7 @@ public class CommentCrudController extends RestController {
   @Autowired
   private CommentCrudService commentCrudService;
 
-  @RequestMapping(value = "/versioned/comments/{commentDoi}", method = RequestMethod.GET)
+  @RequestMapping(value = "/comments/{commentDoi}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @PathVariable("commentDoi") String commentDoi)
       throws IOException {
@@ -36,7 +36,7 @@ public class CommentCrudController extends RestController {
     // TODO: Equivalent aliases for other methods?
   }
 
-  @RequestMapping(value = "/versioned/articles/{articleDoi}/revisions/{number}/comments/{commentDoi}", method = RequestMethod.GET)
+  @RequestMapping(value = "/articles/{articleDoi}/revisions/{number}/comments/{commentDoi}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @PathVariable("articleDoi") String articleDoi,
                    @PathVariable("number") int revisionNumber,
@@ -50,19 +50,19 @@ public class CommentCrudController extends RestController {
     commentCrudService.readComment(commentId).respond(request, response, entityGson);
   }
 
-  @RequestMapping(value = "/versioned/comments/", method = RequestMethod.GET, params = {"flagged"})
+  @RequestMapping(value = "/comments/", method = RequestMethod.GET, params = {"flagged"})
   public void readAllFlaggedComments(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     commentCrudService.readFlaggedComments().respond(request, response, entityGson);
   }
 
-  @RequestMapping(value = "/versioned/commentFlags/", method = RequestMethod.GET)
+  @RequestMapping(value = "/commentFlags/", method = RequestMethod.GET)
   public void readAllFlags(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     commentCrudService.readAllCommentFlags().respond(request, response, entityGson);
   }
 
-  @RequestMapping(value = "/versioned/articles/{articleDoi}/revisions/{number}", method = RequestMethod.POST)
+  @RequestMapping(value = "/articles/{articleDoi}/revisions/{number}", method = RequestMethod.POST)
   public ResponseEntity<?> create(HttpServletRequest request,
                                   @PathVariable("articleDoi") String articleDoi,
                                   @PathVariable("number") int revisionNumber)
@@ -74,7 +74,7 @@ public class CommentCrudController extends RestController {
     return reportCreated(created.getCommentUri());
   }
 
-  @RequestMapping(value = "/versioned/articles/{articleDoi}/revisions/{number}/comments/{commentDoi}/flags", method = RequestMethod.DELETE)
+  @RequestMapping(value = "/articles/{articleDoi}/revisions/{number}/comments/{commentDoi}/flags", method = RequestMethod.DELETE)
   public ResponseEntity<?> removeAllFlags(HttpServletRequest request,
                                           @PathVariable("articleDoi") String articleDoi,
                                           @PathVariable("number") int revisionNumber,
@@ -89,7 +89,7 @@ public class CommentCrudController extends RestController {
     return reportOk(commentId.toString());
   }
 
-  @RequestMapping(value = "/versioned/articles/{articleDoi}/revisions/{number}/comments/{commentDoi}", method = RequestMethod.PATCH)
+  @RequestMapping(value = "/articles/{articleDoi}/revisions/{number}/comments/{commentDoi}", method = RequestMethod.PATCH)
   public ResponseEntity<?> patch(HttpServletRequest request,
                                  @PathVariable("articleDoi") String articleDoi,
                                  @PathVariable("number") int revisionNumber,
@@ -105,7 +105,7 @@ public class CommentCrudController extends RestController {
     return reportOk(patched.getCommentUri());
   }
 
-  @RequestMapping(value = "/versioned/articles/{articleDoi}/revisions/{number}/comments/{commentDoi}", method = RequestMethod.DELETE)
+  @RequestMapping(value = "/articles/{articleDoi}/revisions/{number}/comments/{commentDoi}", method = RequestMethod.DELETE)
   @ApiOperation(value = "delete", notes = "Performs a hard delete operation in the database. " +
       "NOTE: fails loudly if attempting to delete a comment that has any replies. All replies must " +
       "be deleted first.")
@@ -123,7 +123,7 @@ public class CommentCrudController extends RestController {
     return reportOk(deletedCommentUri);
   }
 
-  @RequestMapping(value = "/versioned/articles/{articleDoi}/revisions/{number}/comments/{commentDoi}/flags", method = RequestMethod.POST)
+  @RequestMapping(value = "/articles/{articleDoi}/revisions/{number}/comments/{commentDoi}/flags", method = RequestMethod.POST)
   public ResponseEntity<String> createFlag(HttpServletRequest request,
                                            @PathVariable("articleDoi") String articleDoi,
                                            @PathVariable("number") int revisionNumber,
@@ -139,7 +139,7 @@ public class CommentCrudController extends RestController {
     return reportCreated(commentFlag.getCommentFlagId().toString());
   }
 
-  @RequestMapping(value = "/versioned/articles/{articleDoi}/revisions/{number}/comments/{commentDoi}/flags", method = RequestMethod.GET)
+  @RequestMapping(value = "/articles/{articleDoi}/revisions/{number}/comments/{commentDoi}/flags", method = RequestMethod.GET)
   public void readFlagsOnComment(HttpServletRequest request, HttpServletResponse response,
                                  @PathVariable("articleDoi") String articleDoi,
                                  @PathVariable("number") int revisionNumber,
@@ -153,7 +153,7 @@ public class CommentCrudController extends RestController {
     commentCrudService.readCommentFlagsOn(commentId).respond(request, response, entityGson);
   }
 
-  @RequestMapping(value = "/versioned/articles/{articleDoi}/revisions/{number}/comments/{commentDoi}/flags/{flagId}", method = RequestMethod.GET)
+  @RequestMapping(value = "/articles/{articleDoi}/revisions/{number}/comments/{commentDoi}/flags/{flagId}", method = RequestMethod.GET)
   public void readFlag(HttpServletRequest request, HttpServletResponse response,
                        @PathVariable("articleDoi") String articleDoi,
                        @PathVariable("number") int revisionNumber,
@@ -168,7 +168,7 @@ public class CommentCrudController extends RestController {
     commentCrudService.readCommentFlag(flagId).respond(request, response, entityGson);
   }
 
-  @RequestMapping(value = "/versioned/articles/{articleDoi}/revisions/{number}/comments/{commentDoi}/flags/{flagId}", method = RequestMethod.DELETE)
+  @RequestMapping(value = "/articles/{articleDoi}/revisions/{number}/comments/{commentDoi}/flags/{flagId}", method = RequestMethod.DELETE)
   public ResponseEntity<Object> removeFlag(@PathVariable("articleDoi") String articleDoi,
                                            @PathVariable("number") int revisionNumber,
                                            @PathVariable("commentDoi") String commentDoi,

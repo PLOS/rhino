@@ -109,7 +109,7 @@ public class IngestibleController extends RestController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/versioned/articles/{doi}/ingestions/{number}/ingestible", method = RequestMethod.GET)
+  @RequestMapping(value = "/articles/{doi}/ingestions/{number}/ingestible", method = RequestMethod.GET)
   public void repack(HttpServletResponse response,
                      @PathVariable("doi") String doi,
                      @PathVariable("number") int ingestionNumber)

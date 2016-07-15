@@ -49,7 +49,7 @@ public class VolumeCrudController extends RestController {
   private IssueCrudService issueCrudService;
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/versioned/volumes/{volumeDoi}", method = RequestMethod.GET)
+  @RequestMapping(value = "/volumes/{volumeDoi}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @PathVariable("volumeDoi") String volumeDoi)
       throws IOException {
@@ -60,7 +60,7 @@ public class VolumeCrudController extends RestController {
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/versioned/journals/{journalKey}/volumes/{volumeDoi}", method = RequestMethod.GET)
+  @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @PathVariable("journalKey") String journalKey,
                    @PathVariable("volumeDoi") String volumeDoi)
@@ -73,7 +73,7 @@ public class VolumeCrudController extends RestController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/versioned/journals/{journalKey}/volumes/{volumeDoi}", method = RequestMethod.PATCH)
+  @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi}", method = RequestMethod.PATCH)
   public void update(HttpServletRequest request, HttpServletResponse response,
                      @PathVariable("journalKey") String journalKey,
                      @PathVariable("volumeDoi") String volumeDoi)
@@ -89,7 +89,7 @@ public class VolumeCrudController extends RestController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/versioned/journals/{journalKey}/volumes/{volumeDoi}", method = RequestMethod.DELETE)
+  @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi}", method = RequestMethod.DELETE)
   public ResponseEntity<Object> delete(HttpServletRequest request,
                                        @PathVariable("journalKey") String journalKey,
                                        @PathVariable("volumeDoi") String volumeDoi)
@@ -103,7 +103,7 @@ public class VolumeCrudController extends RestController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/versioned/journals/{journalKey}/volumes/{volumeDoi}/issues", method = RequestMethod.POST)
+  @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi}/issues", method = RequestMethod.POST)
   public ResponseEntity<String> createIssue(HttpServletRequest request,
                                             @PathVariable("journalKey") String journalKey,
                                             @PathVariable("volumeDoi") String volumeDoi)

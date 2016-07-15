@@ -34,7 +34,7 @@ public class IngestibleZipController extends RestController {
    * @throws java.io.IOException
    */
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/versioned/articles", method = RequestMethod.POST)
+  @RequestMapping(value = "/articles", method = RequestMethod.POST)
   public void zipUpload(HttpServletRequest request, HttpServletResponse response,
                         @RequestParam("archive") MultipartFile requestFile)
       throws IOException {

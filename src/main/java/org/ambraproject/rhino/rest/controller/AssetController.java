@@ -40,7 +40,7 @@ public class AssetController extends RestController {
   private AssetCrudService assetCrudService;
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/versioned/articles/{doi}/ingestions/{number}/files", method = RequestMethod.GET)
+  @RequestMapping(value = "/articles/{doi}/ingestions/{number}/files", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @PathVariable("doi") String doi,
                    @PathVariable("number") int ingestionNumber)

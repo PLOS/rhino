@@ -136,7 +136,7 @@ public class AssetFileCrudController extends RestController {
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/versioned/articles/{doi}/ingestions/{number}/files/{filetype}", method = RequestMethod.GET)
+  @RequestMapping(value = "/articles/{doi}/ingestions/{number}/files/{filetype}", method = RequestMethod.GET)
   public void readMetadata(HttpServletRequest request, HttpServletResponse response,
                            @PathVariable("doi") String doi,
                            @PathVariable("number") int ingestionNumber,
@@ -148,7 +148,7 @@ public class AssetFileCrudController extends RestController {
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/versioned/articles/{doi}/ingestions/{number}/files/{filetype}", method = RequestMethod.GET,
+  @RequestMapping(value = "/articles/{doi}/ingestions/{number}/files/{filetype}", method = RequestMethod.GET,
       // TODO: Do we even want to support this, as opposed to sending the client to the CRepo?
       params = "versionedPreview")
   public void previewFileFromVersionedModel(HttpServletRequest request, HttpServletResponse response,
