@@ -93,12 +93,12 @@ public class VolumeCrudController extends DoiBasedCrudController {
     VolumeIdentifier volumeId = parseVolumeId(request);
 
     IssueInputView input = readJsonFromRequest(request, IssueInputView.class);
-    if (StringUtils.isBlank(input.getIssueUri())) {
+    if (StringUtils.isBlank(input.getDoi())) {
       throw new RestClientException("issueUri required", HttpStatus.BAD_REQUEST);
     }
 
     IssueIdentifier issueId = issueCrudService.create(volumeId, input);
-    return reportCreated(issueId.getIssueUri());
+    return reportCreated(issueId.getDoi().getName());
   }
 
 }

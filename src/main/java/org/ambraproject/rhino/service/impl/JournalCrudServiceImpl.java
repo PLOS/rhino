@@ -126,7 +126,7 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
 
         VolumeNonAssocView parentVolumeView = issueCrudService.getParentVolumeView(issue);
 
-        return new IssueOutputView(issue, parentVolumeView, null);
+        return new IssueOutputView(issue, parentVolumeView);
       }
     };
   }
@@ -167,7 +167,7 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
     if (results != null){
       return issue;
     } else {
-      throw new RestClientException("Issue with URI " + issue.getIssueUri() +
+      throw new RestClientException("Issue with DOI " + issue.getDoi() +
           " not found in journal with key " + journal.getJournalKey(), HttpStatus.BAD_REQUEST);
     }
   }

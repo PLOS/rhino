@@ -2,20 +2,18 @@ RENAME TABLE `issue` TO `oldIssue`;
 
 CREATE TABLE `issue` (
   `issueId` bigint(20) NOT NULL AUTO_INCREMENT,
-  `issueUri` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `doi` varchar(150) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `volumeId` bigint(20) DEFAULT NULL,
   `volumeSortOrder` int(11) DEFAULT NULL,
   `displayName` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `respectOrder` bit(1) DEFAULT NULL,
-  `imageUri` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `title` varchar(500) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `description` text CHARACTER SET utf8 COLLATE utf8_bin,
+  `imageArticleId` bigint(20) DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `lastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`issueId`),
-  UNIQUE KEY `issueUri` (`issueUri`),
+  UNIQUE KEY `doi` (`doi`),
   KEY `volumeId` (`volumeId`),
-  CONSTRAINT `fk_issue_1` FOREIGN KEY (`volumeId`) REFERENCES `volume` (`volumeId`)
+  CONSTRAINT `fk_issue_1` FOREIGN KEY (`volumeId`) REFERENCES `volume` (`volumeId`),
+  CONSTRAINT `fk_issue_2` FOREIGN KEY (`imageRevisionId`) REFERENCES `articleRevision` (`revisionId`)
 );
 
 RENAME TABLE `issueArticleList` TO `oldIssueArticleList`;

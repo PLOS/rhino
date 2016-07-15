@@ -7,7 +7,6 @@ import com.google.gson.JsonSerializationContext;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedListView;
-import org.ambraproject.rhino.view.article.ArticleIssue;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.ambraproject.rhino.view.journal.VolumeNonAssocView;
 
@@ -24,8 +23,8 @@ public class ArticleIssueOutputView implements JsonOutputView {
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = new JsonObject();
-    serialized.add("issueUri", context.serialize(articleIssue.getIssue().getIssueUri()));
-    serialized.add("title", context.serialize(articleIssue.getIssue().getTitle()));
+    serialized.add("issueUri", context.serialize(articleIssue.getIssue().getDoi()));
+    serialized.add("title", context.serialize("title")); //todo: getActiveArticle & title
     serialized.add("displayName", context.serialize(articleIssue.getIssue().getDisplayName()));
     serialized.add("created", context.serialize(articleIssue.getIssue().getCreated()));
     serialized.add("lastModified", context.serialize(articleIssue.getIssue().getLastModified()));
@@ -42,7 +41,7 @@ public class ArticleIssueOutputView implements JsonOutputView {
 
     @Override
     protected String getKey(ArticleIssue value) {
-      return DoiBasedIdentity.asIdentifier(value.getIssue().getIssueUri());
+      return DoiBasedIdentity.asIdentifier(value.getIssue().getDoi());
     }
 
     @Override

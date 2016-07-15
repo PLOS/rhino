@@ -22,11 +22,6 @@ public final class IssueIdentifier {
     return doi;
   }
 
-  // Convenience method for unpacking into persistent form
-  public String getIssueUri() {
-    return doi.getUri().toString();
-  }
-
   @Override
   public String toString() {
     return "issueIdentifier{" +

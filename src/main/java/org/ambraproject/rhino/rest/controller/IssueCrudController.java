@@ -67,7 +67,7 @@ public class IssueCrudController extends DoiBasedCrudController {
     IssueIdentifier issueId = parseIssueId(request);
     IssueInputView input = readJsonFromRequest(request, IssueInputView.class);
     issueCrudService.update(issueId, input);
-    return reportOk(issueId.getIssueUri());
+    return reportOk(issueId.getDoi().getName());
   }
 
   @Transactional(rollbackFor = {Throwable.class})

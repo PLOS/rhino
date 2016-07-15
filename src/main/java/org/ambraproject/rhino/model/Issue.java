@@ -13,16 +13,25 @@
 
 package org.ambraproject.rhino.model;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.IndexColumn;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * model class containing issue information
@@ -38,22 +47,14 @@ public class Issue implements Timestamped {
   private Long issueId;
 
   @Column
-  private String issueUri;
+  private String doi;
 
   @Column
   private String displayName;
 
-  @Column
-  private Boolean respectOrder;
-
-  @Column
-  private String imageUri;
-
-  @Column
-  private String title;
-
-  @Column
-  private String description;
+  @OneToOne
+  @JoinColumn(name = "imageArticleId")
+  private ArticleTable imageArticle;
 
   @Generated(value= GenerationTime.INSERT)
   @Temporal(javax.persistence.TemporalType.TIMESTAMP)
@@ -65,21 +66,39 @@ public class Issue implements Timestamped {
   @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
   private Date lastModified;
 
+  @Cascade(CascadeType.SAVE_UPDATE)
+  @OneToMany(fetch = FetchType.LAZY)
+  @IndexColumn(name="sortOrder", base=0, nullable=false)
+  @JoinTable(
+      name = "issueArticleList",
+      joinColumns = @JoinColumn(name = "issueId"),
+      inverseJoinColumns = @JoinColumn(name = "articleId")
+  )
+  private Set<ArticleTable> articles;
+
   public Issue() {
     super();
   }
 
-  public Issue(String issueUri) {
+  public Issue(String doi) {
     super();
-    this.issueUri = issueUri;
+    this.doi = doi;
   }
 
-  public String getIssueUri() {
-    return issueUri;
+  public Long getIssueId() {
+    return issueId;
   }
 
-  public void setIssueUri(String issueUri) {
-    this.issueUri = issueUri;
+  public void setIssueId(Long issueId) {
+    this.issueId = issueId;
+  }
+
+  public String getDoi() {
+    return doi;
+  }
+
+  public void setDoi(String doi) {
+    this.doi = doi;
   }
 
   public String getDisplayName() {
@@ -90,44 +109,12 @@ public class Issue implements Timestamped {
     this.displayName = displayName;
   }
 
-  public boolean isRespectOrder() {
-    return respectOrder;
+  public ArticleTable getImageArticle() {
+    return imageArticle;
   }
 
-  public void setRespectOrder(boolean respectOrder) {
-    this.respectOrder = respectOrder;
-  }
-
-  public String getImageUri() {
-    return imageUri;
-  }
-
-  public void setImageUri(String imageUri) {
-    this.imageUri = imageUri;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public Long getIssueId() {
-    return issueId;
-  }
-
-  public void setIssueId(Long issueId) {
-    this.issueId = issueId;
+  public void setImageArticle(ArticleTable imageArticle) {
+    this.imageArticle = imageArticle;
   }
 
   public Date getCreated() {
@@ -147,38 +134,11 @@ public class Issue implements Timestamped {
     this.lastModified = lastModified;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    Issue issue = (Issue) o;
-
-    if (respectOrder != issue.respectOrder) return false;
-    if (issueId != null ? !issueId.equals(issue.issueId) : issue.issueId != null) return false;
-    if (issueUri != null ? !issueUri.equals(issue.issueUri) : issue.issueUri != null) return false;
-    if (displayName != null ? !displayName.equals(issue.displayName) : issue.displayName != null)
-      return false;
-    if (imageUri != null ? !imageUri.equals(issue.imageUri) : issue.imageUri != null) return false;
-    if (title != null ? !title.equals(issue.title) : issue.title != null) return false;
-    if (description != null ? !description.equals(issue.description) : issue.description != null)
-      return false;
-    if (created != null ? !created.equals(issue.created) : issue.created != null) return false;
-    return lastModified != null ? !lastModified.equals(issue.lastModified) : issue.lastModified != null;
-
+  public Set<ArticleTable> getArticles() {
+    return articles;
   }
 
-  @Override
-  public int hashCode() {
-    int result = issueId != null ? issueId.hashCode() : 0;
-    result = 31 * result + (issueUri != null ? issueUri.hashCode() : 0);
-    result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
-    result = 31 * result + (respectOrder ? 1 : 0);
-    result = 31 * result + (imageUri != null ? imageUri.hashCode() : 0);
-    result = 31 * result + (title != null ? title.hashCode() : 0);
-    result = 31 * result + (description != null ? description.hashCode() : 0);
-    result = 31 * result + (created != null ? created.hashCode() : 0);
-    result = 31 * result + (lastModified != null ? lastModified.hashCode() : 0);
-    return result;
+  public void setArticles(Set<ArticleTable> articles) {
+    this.articles = articles;
   }
 }

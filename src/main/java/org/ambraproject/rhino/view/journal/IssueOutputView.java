@@ -15,25 +15,23 @@ import java.util.stream.Collectors;
 public class IssueOutputView implements JsonOutputView {
 
   private final Issue issue;
-  private final List<ArticleTable> issueArticles;
   private final Optional<VolumeNonAssocView> parentVolumeView;
 
   public IssueOutputView(Issue issue) {
-    this(issue, null, null);
+    this(issue, null);
   }
 
-  public IssueOutputView(Issue issue, VolumeNonAssocView parentVolumeView, List<ArticleTable> issueArticles) {
+  public IssueOutputView(Issue issue, VolumeNonAssocView parentVolumeView) {
     this.issue = Preconditions.checkNotNull(issue);
     this.parentVolumeView = Optional.fromNullable(parentVolumeView);
-    this.issueArticles = issueArticles;
   }
 
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = context.serialize(issue).getAsJsonObject();
 
-    if (issueArticles != null) {
-      List<String> articleDois = issueArticles.stream()
+    if (issue.getArticles() != null) {
+      List<String> articleDois = issue.getArticles().stream()
           .map(ArticleTable::getDoi).collect(Collectors.toList());
       serialized.add("articleOrder", context.serialize(articleDois));
     }
