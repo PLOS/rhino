@@ -21,15 +21,10 @@ package org.ambraproject.rhino.rest.controller;
 import com.google.common.base.Joiner;
 import com.google.common.io.ByteStreams;
 import com.google.common.net.HttpHeaders;
-import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.DoiEscaping;
-import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
-import org.plos.crepo.exceptions.ContentRepoException;
-import org.plos.crepo.exceptions.ErrorType;
-import org.plos.crepo.model.identity.RepoId;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,45 +45,19 @@ import java.sql.Timestamp;
 import java.util.Enumeration;
 import java.util.List;
 
-import static org.ambraproject.rhino.service.impl.AmbraService.reportNotFound;
-
 @Controller
 public class AssetFileCrudController extends RestController {
 
   @Autowired
-  private ArticleCrudService articleCrudService;
-  @Autowired
   private AssetCrudService assetCrudService;
   @Autowired
   private ContentRepoService contentRepoService;
-  @Autowired
-  private RuntimeConfiguration runtimeConfiguration;
 
-
-  private static final String METADATA_PARAM = "metadata";
 
   private static final Joiner REPROXY_URL_JOINER = Joiner.on(' ');
   private static final int REPROXY_CACHE_FOR_VALUE = 6 * 60 * 60; // TODO: Make configurable
   private static final String REPROXY_CACHE_FOR_HEADER =
       REPROXY_CACHE_FOR_VALUE + "; Last-Modified Content-Type Content-Disposition";
-
-  void read(HttpServletRequest request, HttpServletResponse response, AssetFileIdentity assetFileIdentity)
-      throws IOException {
-    RepoId repoId = RepoId.create(runtimeConfiguration.getCorpusStorage().getDefaultBucket(),
-        assetFileIdentity.toString());
-    RepoObjectMetadata objMeta;
-    try {
-      objMeta = contentRepoService.getLatestRepoObjectMetadata(repoId);
-    } catch (ContentRepoException e) {
-      if (e.getErrorType() == ErrorType.ErrorFetchingObjectMeta) {
-        throw reportNotFound(assetFileIdentity);
-      } else {
-        throw e;
-      }
-    }
-
-    serve(request, response, assetFileIdentity, objMeta);
-  }
 
   private void serve(HttpServletRequest request, HttpServletResponse response,
                      AssetFileIdentity id, RepoObjectMetadata objMeta)
