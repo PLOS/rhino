@@ -22,7 +22,6 @@ import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import org.ambraproject.rhino.model.ArticleAsset;
-import org.ambraproject.rhino.rest.controller.RestController;
 import org.ambraproject.rhino.util.ContentTypeInference;
 import org.springframework.http.MediaType;
 
@@ -39,24 +38,6 @@ public class AssetFileIdentity extends DoiBasedIdentity {
     super(identifier);
     Preconditions.checkArgument(!extension.isEmpty());
     this.extension = extension;
-  }
-
-  /**
-   * Parse the identifier from a path. The input is from URL that a REST client would use to identify an entity.
-   *
-   * @param path the full path variable from the URL that identifies the entity
-   * @return an identifier object for the entity
-   * @see RestController#getFullPathVariable
-   */
-  public static AssetFileIdentity parse(String path) {
-    int dotIndex = path.lastIndexOf('.');
-    if (dotIndex < 0 || dotIndex + 1 >= path.length()) {
-      throw new IllegalArgumentException("Request URI does not have file extension");
-    }
-    String identifier = path.substring(0, dotIndex);
-    String extension = path.substring(dotIndex + 1);
-
-    return new AssetFileIdentity(identifier, extension);
   }
 
   public static AssetFileIdentity create(String identifier, String extension) {
