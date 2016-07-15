@@ -150,18 +150,18 @@ public class AssetFileCrudController extends RestController {
   @Transactional(readOnly = true)
   @RequestMapping(value = "/articles/{doi}/ingestions/{number}/files/{filetype}", method = RequestMethod.GET,
       // TODO: Do we even want to support this, as opposed to sending the client to the CRepo?
-      params = "versionedPreview")
-  public void previewFileFromVersionedModel(HttpServletRequest request, HttpServletResponse response,
-                                            @PathVariable("doi") String doi,
-                                            @PathVariable("number") int ingestionNumber,
-                                            @PathVariable("filetype") String fileType)
+      params = "download")
+  public void serveFile(HttpServletRequest request, HttpServletResponse response,
+                        @PathVariable("doi") String doi,
+                        @PathVariable("number") int ingestionNumber,
+                        @PathVariable("filetype") String fileType)
       throws IOException {
     ArticleFileIdentifier fileId = ArticleFileIdentifier.create(DoiEscaping.resolve(doi), ingestionNumber, fileType);
-    previewFileFromVersionedModel(request, response, fileId);
+    serveFile(request, response, fileId);
   }
 
-  void previewFileFromVersionedModel(HttpServletRequest request, HttpServletResponse response,
-                                     ArticleFileIdentifier fileId)
+  void serveFile(HttpServletRequest request, HttpServletResponse response,
+                 ArticleFileIdentifier fileId)
       throws IOException {
     RepoObjectMetadata objectMetadata = assetCrudService.getArticleItemFile(fileId);
 

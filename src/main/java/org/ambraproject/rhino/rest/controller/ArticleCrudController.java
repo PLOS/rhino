@@ -207,7 +207,7 @@ public class ArticleCrudController extends RestController {
     ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.resolve(doi), ingestionNumber);
     ArticleItemIdentifier itemId = ingestionId.getItemFor();
     ArticleFileIdentifier fileId = ArticleFileIdentifier.create(itemId, "manuscript");
-    assetFileCrudController.previewFileFromVersionedModel(request, response, fileId);
+    assetFileCrudController.serveFile(request, response, fileId);
   }
 
   /**
