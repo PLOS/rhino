@@ -1,6 +1,5 @@
 package org.ambraproject.rhino.rest.controller;
 
-import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

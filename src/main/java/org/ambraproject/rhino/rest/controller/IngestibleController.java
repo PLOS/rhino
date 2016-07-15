@@ -18,7 +18,6 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.service.impl.VersionedIngestionService;

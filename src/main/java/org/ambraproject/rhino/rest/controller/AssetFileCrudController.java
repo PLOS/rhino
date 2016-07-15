@@ -25,7 +25,6 @@ import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.DoiEscaping;
-import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.plos.crepo.exceptions.ContentRepoException;

@@ -27,7 +27,6 @@ import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.rest.DoiEscaping;
-import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;

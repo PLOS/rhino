@@ -16,7 +16,6 @@ package org.ambraproject.rhino.rest.controller;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.rest.DoiEscaping;
-import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.view.article.ArticleInputView;

@@ -21,7 +21,6 @@ package org.ambraproject.rhino.rest.controller;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.DoiEscaping;
-import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

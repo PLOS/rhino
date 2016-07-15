@@ -2,7 +2,6 @@ package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.springframework.beans.factory.annotation.Autowired;

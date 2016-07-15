@@ -22,7 +22,6 @@ import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.view.journal.IssueInputView;

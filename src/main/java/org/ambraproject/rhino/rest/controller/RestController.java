@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.ambraproject.rhino.rest.controller.abstr;
+package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;

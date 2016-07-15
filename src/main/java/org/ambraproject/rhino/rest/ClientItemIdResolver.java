@@ -2,7 +2,7 @@ package org.ambraproject.rhino.rest;
 
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.rest.ClientItemId.NumberType;
-import org.ambraproject.rhino.rest.controller.abstr.RestController;
+import org.ambraproject.rhino.rest.controller.RestController;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.support.WebDataBinderFactory;

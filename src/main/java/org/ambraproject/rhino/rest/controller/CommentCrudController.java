@@ -6,7 +6,6 @@ import org.ambraproject.rhino.identity.CommentIdentifier;
 import org.ambraproject.rhino.model.Comment;
 import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.rest.DoiEscaping;
-import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;

@@ -18,7 +18,6 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Category;
-import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.springframework.beans.factory.annotation.Autowired;

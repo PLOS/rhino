@@ -22,6 +22,7 @@ import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import org.ambraproject.rhino.model.ArticleAsset;
+import org.ambraproject.rhino.rest.controller.RestController;
 import org.ambraproject.rhino.util.ContentTypeInference;
 import org.springframework.http.MediaType;
 
@@ -45,7 +46,7 @@ public class AssetFileIdentity extends DoiBasedIdentity {
    *
    * @param path the full path variable from the URL that identifies the entity
    * @return an identifier object for the entity
-   * @see org.ambraproject.rhino.rest.controller.abstr.RestController#getFullPathVariable
+   * @see RestController#getFullPathVariable
    */
   public static AssetFileIdentity parse(String path) {
     int dotIndex = path.lastIndexOf('.');

@@ -6,7 +6,6 @@ import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.rest.ClientItemId;
 import org.ambraproject.rhino.rest.DoiEscaping;
-import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.ArticleItemView;
