@@ -14,6 +14,7 @@
 package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.identity.ArticleIdentifier;
+import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.CommentIdentifier;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Comment;
@@ -58,7 +59,7 @@ public interface CommentCrudService {
   public Transceiver readFlaggedComments()
       throws IOException;
 
-  public Comment createComment(CommentInputView input);
+  public Comment createComment(ArticleRevisionIdentifier articleRevisionId, CommentInputView input);
 
   public Comment patchComment(CommentIdentifier commentId, CommentInputView input);
 

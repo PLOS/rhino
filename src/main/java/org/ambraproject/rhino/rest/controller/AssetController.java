@@ -18,12 +18,15 @@
 
 package org.ambraproject.rhino.rest.controller;
 
+import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.AssetIdentity;
-import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
+import org.ambraproject.rhino.rest.DoiEscaping;
+import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -32,38 +35,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Controller
-public class AssetController extends DoiBasedCrudController {
-
-  private static final String ASSET_META_NAMESPACE = "/assets/";
-  private static final String ASSET_META_TEMPLATE = ASSET_META_NAMESPACE + "**";
-
-  @Override
-  protected String getNamespacePrefix() {
-    return ASSET_META_NAMESPACE;
-  }
-
-  @Override
-  protected AssetIdentity parse(HttpServletRequest request) {
-    return AssetIdentity.create(getIdentifier(request));
-  }
+public class AssetController extends RestController {
 
   @Autowired
   private AssetCrudService assetCrudService;
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = ASSET_META_TEMPLATE, method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = "/versioned/articles/{doi}/ingestions/{number}/files", method = RequestMethod.GET)
+  public void read(HttpServletRequest request, HttpServletResponse response,
+                   @PathVariable("doi") String doi,
+                   @PathVariable("number") int ingestionNumber)
       throws IOException {
-    AssetIdentity id = parse(request);
+    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.resolve(doi), ingestionNumber);
+    AssetIdentity id = null; // TODO: Implement AssetCrudService.readMetadata for ArticleIngestionIdentifier
     assetCrudService.readMetadata(id).respond(request, response, entityGson);
-  }
-
-  @Transactional(readOnly = true)
-  @RequestMapping(value = ASSET_META_TEMPLATE, params = {"figure"}, method = RequestMethod.GET)
-  public void readAsFigure(HttpServletRequest request, HttpServletResponse response)
-      throws IOException {
-    AssetIdentity id = parse(request);
-    assetCrudService.readFigureMetadata(id).respond(request, response, entityGson);
   }
 
 }

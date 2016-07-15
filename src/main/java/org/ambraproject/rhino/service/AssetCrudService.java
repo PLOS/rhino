@@ -47,15 +47,6 @@ public interface AssetCrudService {
       throws IOException;
 
   /**
-   * Read the metadata of a figure asset. The output contains the figure metadata, as defined by the "original" asset
-   * file, plus the individual asset file objects.
-   *
-   * @param id the identity of the asset to read
-   */
-  public abstract Transceiver readFigureMetadata(AssetIdentity id)
-      throws IOException;
-
-  /**
    * Read the metadata of a single asset file.
    *
    * @param id the identity of the asset file to read

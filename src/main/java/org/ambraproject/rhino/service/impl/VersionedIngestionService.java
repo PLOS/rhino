@@ -58,7 +58,7 @@ public class VersionedIngestionService extends AmbraService {
     return ((Number) session.createSQLQuery("SELECT LAST_INSERT_ID()").uniqueResult()).longValue();
   }
 
-  public ArticleIngestionIdentifier ingest(Archive archive, OptionalInt revision) throws IOException, XmlContentException {
+  public ArticleIngestionIdentifier ingest(Archive archive) throws IOException, XmlContentException {
     String manifestEntry = null;
     for (String entryName : archive.getEntryNames()) {
       if (entryName.equalsIgnoreCase("manifest.xml")) {
@@ -107,7 +107,7 @@ public class VersionedIngestionService extends AmbraService {
     IngestionPersistenceResult ingestionResult = persistIngestion(articlePk);
     long ingestionId = ingestionResult.pk;
 
-    persistRevision(articlePk, ingestionId, revision.orElseGet(parsedArticle::getRevisionNumber));
+    persistRevision(articlePk, ingestionId, parsedArticle.getRevisionNumber());
 
     // TODO: Allow bucket name to be specified as an ingestion parameter
     String destinationBucketName = runtimeConfiguration.getCorpusStorage().getDefaultBucket();
