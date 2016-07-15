@@ -2,6 +2,7 @@ package org.ambraproject.rhino.view.article.versioned;
 
 import com.google.common.collect.ImmutableList;
 import org.ambraproject.rhino.identity.Doi;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -11,9 +12,9 @@ public class RelationshipSetView {
   private final ImmutableList<RelationshipView> outbound;
   private final ImmutableList<RelationshipView> declared;
 
-  RelationshipSetView(List<RelationshipView> inbound,
-                      List<RelationshipView> outbound,
-                      List<RelationshipView> declared) {
+  public RelationshipSetView(List<RelationshipView> inbound,
+                             List<RelationshipView> outbound,
+                             List<RelationshipView> declared) {
     this.inbound = ImmutableList.copyOf(inbound);
     this.outbound = ImmutableList.copyOf(outbound);
     this.declared = ImmutableList.copyOf(declared);
@@ -29,6 +30,7 @@ public class RelationshipSetView {
       this.doi = Objects.requireNonNull(doi).getName();
       this.title = title;
     }
+
   }
 
 }

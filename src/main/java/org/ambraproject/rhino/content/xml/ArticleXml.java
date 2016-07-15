@@ -213,7 +213,7 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
   private void setFromXml(final ArticleMetadata.Builder article) throws XmlContentException {
     article.setDoi(readDoi().getName());
 
-    article.setTitle(buildXmlExcerpt(readNode("/article/front/article-meta/title-group/article-title")));
+    article.setTitle(parseTitle());
     article.seteIssn(checkEissn(readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]")));
     article.setDescription(buildXmlExcerpt(findAbstractNode()));
 
@@ -449,6 +449,10 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
       }
       return assetMetadataList.get(0);
     }).collect(Collectors.toList());
+  }
+
+  public String parseTitle() {
+    return buildXmlExcerpt(readNode("/article/front/article-meta/title-group/article-title"));
   }
 
 }

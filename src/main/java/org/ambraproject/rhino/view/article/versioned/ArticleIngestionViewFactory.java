@@ -1,19 +1,11 @@
 package org.ambraproject.rhino.view.article.versioned;
 
-import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
-import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.ArticleIngestion;
-import org.ambraproject.rhino.model.VersionedArticleRelationship;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
-import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.impl.VersionedIngestionService;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
 
 public class ArticleIngestionViewFactory {
 
@@ -21,21 +13,13 @@ public class ArticleIngestionViewFactory {
   private ArticleCrudService articleCrudService;
   @Autowired
   private VersionedIngestionService versionedIngestionService;
-
-  private RelationshipSetView getRelationships(ArticleIdentifier articleId, ArticleMetadata metadata) {
-    List<VersionedArticleRelationship> inbound = articleCrudService.getArticleRelationshipsTo(articleId);
-    List<VersionedArticleRelationship> outbound = articleCrudService.getArticleRelationshipsFrom(articleId);
-    List<RelatedArticleLink> declared = metadata.getRelatedArticles();
-    Map<Doi, String> otherArticleTitles = Stream.concat(inbound.stream().flatMap())
-    return new RelationshipSetView(inbound, outbound, declared);
-  }
+  @Autowired
+  private RelationshipSetViewFactory relationshipSetViewFactory;
 
   public ArticleIngestionView getView(ArticleIngestionIdentifier ingestionId) {
     ArticleIngestion ingestion = articleCrudService.getArticleIngestion(ingestionId);
     ArticleMetadata metadata = versionedIngestionService.getArticleMetadata(ingestionId);
-
-    ArticleIdentifier articleId = ArticleIdentifier.create(ingestion.getArticle().getDoi());
-    RelationshipSetView relationships = getRelationships(articleId, metadata);
+    RelationshipSetView relationships = relationshipSetViewFactory.getView(metadata);
 
     return new ArticleIngestionView(ingestion, metadata, relationships);
   }

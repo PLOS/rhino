@@ -45,6 +45,7 @@ import org.ambraproject.rhino.rest.ClientItemId;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
+import org.ambraproject.rhino.service.NoSuchArticleIdException;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.util.Archive;
@@ -596,8 +597,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     int latestRevision = getLatestRevision(Doi.create(article.getDoi()));
     ArticleRevision revision = hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
-          "FROM ArticleVersion as av " +
-          "WHERE av.article = :article " +
+          "FROM ArticleRevision as av " +
+          "WHERE av.ingestion.article = :article " +
           "AND av.revisionNumber = :latestRevision"
       );
       query.setParameter("article", article);
@@ -621,20 +622,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       throw new NoSuchArticleIdException(articleIdentifier);
     }
     return article;
-  }
-
-  private class NoSuchArticleIdException extends RuntimeException {
-    private NoSuchArticleIdException(ArticleRevisionIdentifier articleIdentifier) {
-      super("No such article: " + articleIdentifier);
-    }
-
-    private NoSuchArticleIdException(ArticleIdentifier articleIdentifier) {
-      super("No such article: " + articleIdentifier);
-    }
-
-    private NoSuchArticleIdException(ArticleIngestionIdentifier articleIdentifier) {
-      super("No such article: " + articleIdentifier);
-    }
   }
   
   private ArticleIngestionIdentifier resolveRevisionToIngestion(Doi doi, int revisionNumber) {
