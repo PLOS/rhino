@@ -30,7 +30,7 @@ public class ArticleItemReadController extends RestController {
   private Gson entityGson;
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/works/{doi}", method = RequestMethod.GET)
+  @RequestMapping(value = "/works/{doi:.+}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @PathVariable("doi") String doi)
       throws IOException {

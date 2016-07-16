@@ -134,7 +134,7 @@ public class ArticleCrudController extends RestController {
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/articles/{doi}", method = RequestMethod.GET)
+  @RequestMapping(value = "/articles/{doi:.+}", method = RequestMethod.GET)
   public void getRevisions(HttpServletRequest request, HttpServletResponse response,
                            @PathVariable("doi") String doi)
       throws IOException {
@@ -161,7 +161,7 @@ public class ArticleCrudController extends RestController {
 
   // TODO: Get rid of this?
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/articles/{doi}", method = RequestMethod.GET, params = "commentCount")
+  @RequestMapping(value = "/articles/{doi:.+}", method = RequestMethod.GET, params = "commentCount")
   public void getCommentCount(HttpServletRequest request, HttpServletResponse response,
                               @PathVariable("doi") String doi)
       throws IOException {
@@ -310,7 +310,7 @@ public class ArticleCrudController extends RestController {
   @Transactional(readOnly = true)
   @RequestMapping(
       // Not "/articles/{doi}/lists" because a list isn't a child object of the article. This is kind of a search query.
-      value = "/articles/{doi}", method = RequestMethod.GET, params = "lists")
+      value = "/articles/{doi:.+}", method = RequestMethod.GET, params = "lists")
   public void getContainingLists(HttpServletRequest request, HttpServletResponse response,
                                  @PathVariable("doi") String doi)
       throws IOException {

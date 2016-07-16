@@ -43,7 +43,7 @@ public class IssueCrudController extends RestController {
   private IssueCrudService issueCrudService;
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/issues/{issueDoi}", method = RequestMethod.GET)
+  @RequestMapping(value = "/issues/{issueDoi:.+}", method = RequestMethod.GET)
   public void read(@PathVariable("issueDoi") String issueDoi)
       throws IOException {
     Doi issueDoiObj = DoiEscaping.resolve(issueDoi);
@@ -53,7 +53,7 @@ public class IssueCrudController extends RestController {
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi}/issues/{issueDoi}", method = RequestMethod.GET)
+  @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi}/issues/{issueDoi:.+}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @PathVariable("journalKey") String journalKey,
                    @PathVariable("volumeDoi") String volumeDoi,
@@ -68,7 +68,7 @@ public class IssueCrudController extends RestController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi}/issues/{issueDoi}", method = RequestMethod.PATCH)
+  @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi}/issues/{issueDoi:.+}", method = RequestMethod.PATCH)
   public void update(HttpServletRequest request, HttpServletResponse response,
                      @PathVariable("journalKey") String journalKey,
                      @PathVariable("volumeDoi") String volumeDoi,
@@ -87,7 +87,7 @@ public class IssueCrudController extends RestController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi}/issues/{issueDoi}", method = RequestMethod.DELETE)
+  @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi}/issues/{issueDoi:.+}", method = RequestMethod.DELETE)
   public ResponseEntity<Object> delete(HttpServletRequest request,
                                        @PathVariable("journalKey") String journalKey,
                                        @PathVariable("volumeDoi") String volumeDoi,

@@ -26,7 +26,7 @@ public class CommentCrudController extends RestController {
   @Autowired
   private CommentCrudService commentCrudService;
 
-  @RequestMapping(value = "/comments/{commentDoi}", method = RequestMethod.GET)
+  @RequestMapping(value = "/comments/{commentDoi:.+}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @PathVariable("commentDoi") String commentDoi)
       throws IOException {
@@ -36,7 +36,7 @@ public class CommentCrudController extends RestController {
     // TODO: Equivalent aliases for other methods?
   }
 
-  @RequestMapping(value = "/articles/{articleDoi}/revisions/{number}/comments/{commentDoi}", method = RequestMethod.GET)
+  @RequestMapping(value = "/articles/{articleDoi}/revisions/{number}/comments/{commentDoi:.+}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @PathVariable("articleDoi") String articleDoi,
                    @PathVariable("number") int revisionNumber,
@@ -89,7 +89,7 @@ public class CommentCrudController extends RestController {
     return reportOk(commentId.toString());
   }
 
-  @RequestMapping(value = "/articles/{articleDoi}/revisions/{number}/comments/{commentDoi}", method = RequestMethod.PATCH)
+  @RequestMapping(value = "/articles/{articleDoi}/revisions/{number}/comments/{commentDoi:.+}", method = RequestMethod.PATCH)
   public ResponseEntity<?> patch(HttpServletRequest request,
                                  @PathVariable("articleDoi") String articleDoi,
                                  @PathVariable("number") int revisionNumber,
@@ -105,7 +105,7 @@ public class CommentCrudController extends RestController {
     return reportOk(patched.getCommentUri());
   }
 
-  @RequestMapping(value = "/articles/{articleDoi}/revisions/{number}/comments/{commentDoi}", method = RequestMethod.DELETE)
+  @RequestMapping(value = "/articles/{articleDoi}/revisions/{number}/comments/{commentDoi:.+}", method = RequestMethod.DELETE)
   @ApiOperation(value = "delete", notes = "Performs a hard delete operation in the database. " +
       "NOTE: fails loudly if attempting to delete a comment that has any replies. All replies must " +
       "be deleted first.")
