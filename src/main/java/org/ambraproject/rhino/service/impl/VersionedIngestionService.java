@@ -99,7 +99,7 @@ public class VersionedIngestionService extends AmbraService {
 
     if (!doi.equals(Doi.create(manuscriptAsset.getUri()))) {
       String message = String.format("Article DOI is inconsistent. From manifest: \"%s\" From manuscript: \"%s\"",
-          manuscriptAsset.getUri(), doi.getUri());
+          manuscriptAsset.getUri(), doi.getName());
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
 

@@ -1,9 +1,14 @@
 package org.ambraproject.rhino.identity;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableSet;
 
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.EnumSet;
+import java.util.stream.Collectors;
 
 /**
  * A Digital Object Identifier.
@@ -14,6 +19,50 @@ import java.net.URISyntaxException;
  */
 public final class Doi {
 
+  public static enum UriStyle {
+    INFO_DOI("info:doi/") {
+      @Override
+      protected URI convert(String doiName) throws URISyntaxException {
+        return new URI("info", "doi/" + doiName, null);
+      }
+    },
+    DOI_SCHEME("doi:") {
+      @Override
+      protected URI convert(String doiName) throws URISyntaxException {
+        return new URI("doi", doiName, null);
+      }
+    },
+    HTTP_RESOLVER("http://dx.doi.org/") {
+      @Override
+      protected URI convert(String doiName) throws URISyntaxException, MalformedURLException {
+        return new URL("http", "dx.doi.org/", doiName).toURI();
+      }
+    },
+    HTTPS_RESOLVER("https://dx.doi.org/") {
+      @Override
+      protected URI convert(String doiName) throws URISyntaxException, MalformedURLException {
+        return new URL("https", "dx.doi.org/", doiName).toURI();
+      }
+    };
+
+    private final String prefix;
+
+    private UriStyle(String prefix) {
+      this.prefix = prefix;
+    }
+
+    @VisibleForTesting
+    String getPrefix() {
+      return prefix;
+    }
+
+    protected abstract URI convert(String doiName) throws URISyntaxException, MalformedURLException;
+  }
+
+  private static final ImmutableSet<String> PREFIXES = ImmutableSet.copyOf(
+      EnumSet.allOf(UriStyle.class).stream().map(s -> s.prefix).collect(Collectors.toList()));
+
+
   private final String doiName;
 
   private Doi(String doiName) {
@@ -23,8 +72,6 @@ public final class Doi {
   public static Doi create(String doiName) {
     return new Doi(doiName);
   }
-
-  private static final ImmutableSet<String> PREFIXES = ImmutableSet.of("info:doi/", "doi:");
 
   private static String sanitize(String doiName) {
     for (String prefix : PREFIXES) {
@@ -39,10 +86,10 @@ public final class Doi {
     return doiName;
   }
 
-  public URI getUri() {
+  public URI asUri(UriStyle style) {
     try {
-      return new URI("info", "doi/" + doiName, null);
-    } catch (URISyntaxException e) {
+      return style.convert(doiName);
+    } catch (URISyntaxException | MalformedURLException e) {
       throw new RuntimeException(e);
     }
   }
