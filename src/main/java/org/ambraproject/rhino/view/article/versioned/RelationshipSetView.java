@@ -27,10 +27,9 @@ public class RelationshipSetView {
 
     public RelationshipView(String type, Doi doi, String title) {
       this.type = Objects.requireNonNull(type);
-      this.doi = Objects.requireNonNull(doi).getName();
+      this.doi = doi.getName();
       this.title = title;
     }
-
   }
 
 }
