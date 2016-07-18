@@ -28,6 +28,7 @@ public class RelationshipSetViewFactory {
   private static final Logger log = LoggerFactory.getLogger(RelationshipSetViewFactory.class);
 
   // used to store titles for DOIs to prevent redundant fetching/parsing of manuscripts
+  // TODO: create a proper cache for titles and other XML-derived data
   private Map<Doi, String> articleTitles = new HashMap<>();
 
     public RelationshipSetView getView(ArticleMetadata metadata) {
