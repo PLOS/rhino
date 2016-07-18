@@ -114,7 +114,7 @@ public class IngestibleController extends RestController {
                      @PathVariable("doi") String doi,
                      @PathVariable("number") int ingestionNumber)
       throws IOException {
-    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.resolve(doi), ingestionNumber);
+    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
 
     String articleId = null; // TODO: Implement ArticleCrudService.repack for ArticleIngestionIdentifier
     Archive archive = articleCrudService.repack(ArticleIdentity.create(articleId));

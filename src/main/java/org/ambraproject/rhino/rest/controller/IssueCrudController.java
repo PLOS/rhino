@@ -46,7 +46,7 @@ public class IssueCrudController extends RestController {
   @RequestMapping(value = "/issues/{issueDoi:.+}", method = RequestMethod.GET)
   public void read(@PathVariable("issueDoi") String issueDoi)
       throws IOException {
-    Doi issueDoiObj = DoiEscaping.resolve(issueDoi);
+    Doi issueDoiObj = DoiEscaping.unescape(issueDoi);
 
     // TODO: Look up journal and volume; redirect to main service
     // TODO: Equivalent alias methods for other HTTP methods?
@@ -59,8 +59,8 @@ public class IssueCrudController extends RestController {
                    @PathVariable("volumeDoi") String volumeDoi,
                    @PathVariable("issueDoi") String issueDoi)
       throws IOException {
-    Doi volumeDoiObj = DoiEscaping.resolve(volumeDoi);
-    Doi issueDoiObj = DoiEscaping.resolve(issueDoi);
+    Doi volumeDoiObj = DoiEscaping.unescape(volumeDoi);
+    Doi issueDoiObj = DoiEscaping.unescape(issueDoi);
     // TODO: Validate journalKey and volumeDoiObj
 
     DoiBasedIdentity id = null; // TODO: Implement IssueCrudService.read for identifier class
@@ -74,8 +74,8 @@ public class IssueCrudController extends RestController {
                      @PathVariable("volumeDoi") String volumeDoi,
                      @PathVariable("issueDoi") String issueDoi)
       throws IOException {
-    Doi volumeDoiObj = DoiEscaping.resolve(volumeDoi);
-    Doi issueDoiObj = DoiEscaping.resolve(issueDoi);
+    Doi volumeDoiObj = DoiEscaping.unescape(volumeDoi);
+    Doi issueDoiObj = DoiEscaping.unescape(issueDoi);
     // TODO: Validate journalKey and volumeDoiObj
 
     DoiBasedIdentity issueId = null; // TODO: Implement services for identifier class
@@ -93,8 +93,8 @@ public class IssueCrudController extends RestController {
                                        @PathVariable("volumeDoi") String volumeDoi,
                                        @PathVariable("issueDoi") String issueDoi)
       throws IOException {
-    Doi volumeDoiObj = DoiEscaping.resolve(volumeDoi);
-    Doi issueDoiObj = DoiEscaping.resolve(issueDoi);
+    Doi volumeDoiObj = DoiEscaping.unescape(volumeDoi);
+    Doi issueDoiObj = DoiEscaping.unescape(issueDoi);
     // TODO: Validate journalKey and volumeDoiObj
 
     DoiBasedIdentity issueId = null; // TODO: Implement IssueCrudService.delete for identifier class

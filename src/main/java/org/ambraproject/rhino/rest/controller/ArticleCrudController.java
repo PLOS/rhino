@@ -129,7 +129,7 @@ public class ArticleCrudController extends RestController {
                    @PathVariable("doi") String doi,
                    @PathVariable("number") int ingestionNumber)
       throws IOException {
-    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.resolve(doi), ingestionNumber);
+    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
     articleCrudService.readArticleMetadata(ingestionId).respond(request, response, entityGson);
   }
 
@@ -138,7 +138,7 @@ public class ArticleCrudController extends RestController {
   public void getRevisions(HttpServletRequest request, HttpServletResponse response,
                            @PathVariable("doi") String doi)
       throws IOException {
-    ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.resolve(doi));
+    ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     articleCrudService.readArticleOverview(id).respond(request, response, entityGson);
   }
 
@@ -155,7 +155,7 @@ public class ArticleCrudController extends RestController {
   public void readComments(HttpServletRequest request, HttpServletResponse response,
                            @PathVariable("doi") String doi)
       throws IOException {
-    ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.resolve(doi));
+    ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     commentCrudService.readComments(id).respond(request, response, entityGson);
   }
 
@@ -165,7 +165,7 @@ public class ArticleCrudController extends RestController {
   public void getCommentCount(HttpServletRequest request, HttpServletResponse response,
                               @PathVariable("doi") String doi)
       throws IOException {
-    ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.resolve(doi));
+    ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     ArticleTable article = articleCrudService.getArticle(id);
     commentCrudService.getCommentCount(article).respond(request, response, entityGson);
   }
@@ -186,7 +186,7 @@ public class ArticleCrudController extends RestController {
                           @PathVariable("number") int ingestionNumber)
       throws IOException {
 
-    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.resolve(doi), ingestionNumber);
+    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
     articleCrudService.readAuthors(ingestionId).respond(request, response, entityGson);
   }
 
@@ -204,7 +204,7 @@ public class ArticleCrudController extends RestController {
                       @PathVariable("doi") String doi,
                       @PathVariable("number") int ingestionNumber)
       throws IOException {
-    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.resolve(doi), ingestionNumber);
+    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
     ArticleItemIdentifier itemId = ingestionId.getItemFor();
     ArticleFileIdentifier fileId = ArticleFileIdentifier.create(itemId, "manuscript");
     assetFileCrudController.serveFile(request, response, fileId);
@@ -222,7 +222,7 @@ public class ArticleCrudController extends RestController {
   public void populateCategories(HttpServletRequest request, HttpServletResponse response,
                                  @PathVariable("doi") String doi)
       throws IOException {
-    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.resolve(doi));
+    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     articleCrudService.populateCategories(articleId);
 
     // Report the current categories
@@ -241,7 +241,7 @@ public class ArticleCrudController extends RestController {
   public void readCategories(HttpServletRequest request, HttpServletResponse response,
                              @PathVariable("doi") String doi)
       throws IOException {
-    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.resolve(doi));
+    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     articleCrudService.readCategories(articleId).respond(request, response, entityGson);
   }
 
@@ -260,7 +260,7 @@ public class ArticleCrudController extends RestController {
                                           @PathVariable("doi") String doi,
                                           @PathVariable("number") int ingestionNumber)
       throws IOException {
-    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.resolve(doi), ingestionNumber);
+    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
     ArticleRevisionIdentifier articleRevId = null; // TODO: Refactor ArticleCrudService.refreshArticleRelationships to take ArticleIngestionIdentifier
     articleCrudService.refreshArticleRelationships(articleRevId);
   }
@@ -278,7 +278,7 @@ public class ArticleCrudController extends RestController {
   public void getRawCategories(HttpServletRequest request, HttpServletResponse response,
                                @PathVariable("doi") String doi)
       throws IOException {
-    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.resolve(doi));
+    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     articleCrudService.getRawCategories(articleId).respond(request, response, entityGson);
   }
 
@@ -296,7 +296,7 @@ public class ArticleCrudController extends RestController {
   public ResponseEntity<String> getRawCategoriesAndText(HttpServletRequest request,
                                                         @PathVariable("doi") String doi)
       throws IOException {
-    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.resolve(doi));
+    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(doi));
 
     String categoriesAndText = articleCrudService.getRawCategoriesAndText(articleId);
     HttpHeaders responseHeader = new HttpHeaders();
@@ -314,7 +314,7 @@ public class ArticleCrudController extends RestController {
   public void getContainingLists(HttpServletRequest request, HttpServletResponse response,
                                  @PathVariable("doi") String doi)
       throws IOException {
-    ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.resolve(doi));
+    ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     articleListCrudService.readContainingLists(id).respond(request, response, entityGson);
   }
 
@@ -323,7 +323,7 @@ public class ArticleCrudController extends RestController {
                                                   @PathVariable("doi") String doi,
                                                   @PathVariable("number") int revisionNumber)
       throws IOException {
-    ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.resolve(doi), revisionNumber);
+    ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
 
     syndicationCrudService.createSyndication(revisionId, input.getTargetQueue());
@@ -339,7 +339,7 @@ public class ArticleCrudController extends RestController {
                                           @PathVariable("doi") String doi,
                                           @PathVariable("number") int revisionNumber)
       throws IOException {
-    ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.resolve(doi), revisionNumber);
+    ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
 
     Syndication created = syndicationCrudService.syndicate(revisionId, input.getTargetQueue());
@@ -351,7 +351,7 @@ public class ArticleCrudController extends RestController {
                                                  @PathVariable("doi") String doi,
                                                  @PathVariable("number") int revisionNumber)
       throws IOException {
-    ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.resolve(doi), revisionNumber);
+    ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
 
     Syndication patched = syndicationCrudService.updateSyndication(revisionId,

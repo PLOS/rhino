@@ -49,7 +49,7 @@ public class DoiEscapingTest {
 
   @Test(dataProvider = "doiEscapingCases")
   public void testDoiUnescaping(String expectedUnescape, String escapedDoi, boolean hasUriPrefix) {
-    Doi actualUnescape = DoiEscaping.resolve(escapedDoi);
+    Doi actualUnescape = DoiEscaping.unescape(escapedDoi);
     Assert.assertEquals(actualUnescape, easyResolve(escapedDoi));
     Assert.assertEquals(actualUnescape.getName(), expectedUnescape);
 
@@ -71,7 +71,7 @@ public class DoiEscapingTest {
 
   @Test(dataProvider = "invalidEscapedDois", expectedExceptions = {DoiEscaping.EscapedDoiException.class})
   public void testInvalidEscapedDoi(String escaped) {
-    DoiEscaping.resolve(escaped);
+    DoiEscaping.unescape(escaped);
   }
 
 }

@@ -53,7 +53,7 @@ public class VolumeCrudController extends RestController {
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @PathVariable("volumeDoi") String volumeDoi)
       throws IOException {
-    Doi volumeDoiObj = DoiEscaping.resolve(volumeDoi);
+    Doi volumeDoiObj = DoiEscaping.unescape(volumeDoi);
 
     // TODO: Look up journal; redirect to main service
     // TODO: Equivalent alias methods for other HTTP methods?
@@ -65,7 +65,7 @@ public class VolumeCrudController extends RestController {
                    @PathVariable("journalKey") String journalKey,
                    @PathVariable("volumeDoi") String volumeDoi)
       throws IOException {
-    Doi volumeDoiObj = DoiEscaping.resolve(volumeDoi);
+    Doi volumeDoiObj = DoiEscaping.unescape(volumeDoi);
     // TODO: Validate journalKey
 
     DoiBasedIdentity id = null; // TODO: Implement VolumeCrudService.read for identifier class
@@ -78,7 +78,7 @@ public class VolumeCrudController extends RestController {
                      @PathVariable("journalKey") String journalKey,
                      @PathVariable("volumeDoi") String volumeDoi)
       throws IOException {
-    Doi volumeDoiObj = DoiEscaping.resolve(volumeDoi);
+    Doi volumeDoiObj = DoiEscaping.unescape(volumeDoi);
     // TODO: Validate journalKey
 
     DoiBasedIdentity volumeId = null; // TODO: Implement services for identifier class
@@ -94,7 +94,7 @@ public class VolumeCrudController extends RestController {
                                        @PathVariable("journalKey") String journalKey,
                                        @PathVariable("volumeDoi") String volumeDoi)
       throws IOException {
-    Doi volumeDoiObj = DoiEscaping.resolve(volumeDoi);
+    Doi volumeDoiObj = DoiEscaping.unescape(volumeDoi);
     // TODO: Validate journalKey
 
     DoiBasedIdentity id = null; // TODO: Implement VolumeCrudService.delete for identifier class
@@ -108,7 +108,7 @@ public class VolumeCrudController extends RestController {
                                             @PathVariable("journalKey") String journalKey,
                                             @PathVariable("volumeDoi") String volumeDoi)
       throws IOException {
-    Doi volumeDoiObj = DoiEscaping.resolve(volumeDoi);
+    Doi volumeDoiObj = DoiEscaping.unescape(volumeDoi);
     // TODO: Validate journalKey
 
     DoiBasedIdentity volumeId = null; // TODO: Implement IssueCrudService.create for identifier class

@@ -30,7 +30,7 @@ public class CommentCrudController extends RestController {
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @PathVariable("commentDoi") String commentDoi)
       throws IOException {
-    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.resolve(commentDoi));
+    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
 
     // TODO: Look up article revision; redirect to main service
     // TODO: Equivalent aliases for other methods?
@@ -43,8 +43,8 @@ public class CommentCrudController extends RestController {
                    @PathVariable("commentDoi") String commentDoi)
       throws IOException {
     ArticleRevisionIdentifier articleRevisionId = ArticleRevisionIdentifier.create(
-        DoiEscaping.resolve(articleDoi), revisionNumber);
-    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.resolve(commentDoi));
+        DoiEscaping.unescape(articleDoi), revisionNumber);
+    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
     // TODO: Validate articleRevisionId
 
     commentCrudService.readComment(commentId).respond(request, response, entityGson);
@@ -68,7 +68,7 @@ public class CommentCrudController extends RestController {
                                   @PathVariable("number") int revisionNumber)
       throws IOException {
     ArticleRevisionIdentifier articleRevisionId = ArticleRevisionIdentifier.create(
-        DoiEscaping.resolve(articleDoi), revisionNumber);
+        DoiEscaping.unescape(articleDoi), revisionNumber);
     CommentInputView input = readJsonFromRequest(request, CommentInputView.class);
     Comment created = commentCrudService.createComment(articleRevisionId, input);
     return reportCreated(created.getCommentUri());
@@ -81,8 +81,8 @@ public class CommentCrudController extends RestController {
                                           @PathVariable("commentDoi") String commentDoi)
       throws IOException {
     ArticleRevisionIdentifier articleRevisionId = ArticleRevisionIdentifier.create(
-        DoiEscaping.resolve(articleDoi), revisionNumber);
-    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.resolve(commentDoi));
+        DoiEscaping.unescape(articleDoi), revisionNumber);
+    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
     // TODO: Validate articleRevisionId
 
     commentCrudService.removeFlagsFromComment(commentId);
@@ -96,8 +96,8 @@ public class CommentCrudController extends RestController {
                                  @PathVariable("commentDoi") String commentDoi)
       throws IOException {
     ArticleRevisionIdentifier articleRevisionId = ArticleRevisionIdentifier.create(
-        DoiEscaping.resolve(articleDoi), revisionNumber);
-    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.resolve(commentDoi));
+        DoiEscaping.unescape(articleDoi), revisionNumber);
+    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
     // TODO: Validate articleRevisionId
 
     CommentInputView input = readJsonFromRequest(request, CommentInputView.class);
@@ -115,8 +115,8 @@ public class CommentCrudController extends RestController {
                                   @PathVariable("commentDoi") String commentDoi)
       throws IOException {
     ArticleRevisionIdentifier articleRevisionId = ArticleRevisionIdentifier.create(
-        DoiEscaping.resolve(articleDoi), revisionNumber);
-    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.resolve(commentDoi));
+        DoiEscaping.unescape(articleDoi), revisionNumber);
+    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
     // TODO: Validate articleRevisionId
 
     String deletedCommentUri = commentCrudService.deleteComment(commentId);
@@ -130,8 +130,8 @@ public class CommentCrudController extends RestController {
                                            @PathVariable("commentDoi") String commentDoi)
       throws IOException {
     ArticleRevisionIdentifier articleRevisionId = ArticleRevisionIdentifier.create(
-        DoiEscaping.resolve(articleDoi), revisionNumber);
-    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.resolve(commentDoi));
+        DoiEscaping.unescape(articleDoi), revisionNumber);
+    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
     // TODO: Validate articleRevisionId
 
     CommentFlagInputView input = readJsonFromRequest(request, CommentFlagInputView.class);
@@ -146,8 +146,8 @@ public class CommentCrudController extends RestController {
                                  @PathVariable("commentDoi") String commentDoi)
       throws IOException {
     ArticleRevisionIdentifier articleRevisionId = ArticleRevisionIdentifier.create(
-        DoiEscaping.resolve(articleDoi), revisionNumber);
-    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.resolve(commentDoi));
+        DoiEscaping.unescape(articleDoi), revisionNumber);
+    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
     // TODO: Validate articleRevisionId
 
     commentCrudService.readCommentFlagsOn(commentId).respond(request, response, entityGson);
@@ -161,8 +161,8 @@ public class CommentCrudController extends RestController {
                        @PathVariable("flagId") long flagId)
       throws IOException {
     ArticleRevisionIdentifier articleRevisionId = ArticleRevisionIdentifier.create(
-        DoiEscaping.resolve(articleDoi), revisionNumber);
-    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.resolve(commentDoi));
+        DoiEscaping.unescape(articleDoi), revisionNumber);
+    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
     // TODO: Validate articleRevisionId and commentId
 
     commentCrudService.readCommentFlag(flagId).respond(request, response, entityGson);
@@ -175,8 +175,8 @@ public class CommentCrudController extends RestController {
                                            @PathVariable("flagId") long flagId)
       throws IOException {
     ArticleRevisionIdentifier articleRevisionId = ArticleRevisionIdentifier.create(
-        DoiEscaping.resolve(articleDoi), revisionNumber);
-    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.resolve(commentDoi));
+        DoiEscaping.unescape(articleDoi), revisionNumber);
+    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
     // TODO: Validate articleRevisionId and commentId
 
     commentCrudService.deleteCommentFlag(flagId);
