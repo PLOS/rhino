@@ -9,9 +9,9 @@ public class RelatedArticleLink {
   private final String type;
   private final Doi doi;
 
-  public RelatedArticleLink(String type, String href) {
+  public RelatedArticleLink(String type, String doi) {
     this.type = Objects.requireNonNull(type);
-    this.doi = Doi.create(Objects.requireNonNull(href));
+    this.doi = Doi.create(Objects.requireNonNull(doi));
   }
 
   public String getType() {

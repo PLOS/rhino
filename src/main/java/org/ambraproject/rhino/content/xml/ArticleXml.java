@@ -428,8 +428,8 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     List<RelatedArticleLink> relatedArticles = Lists.newArrayListWithCapacity(relatedArticleNodes.size());
     for (Node relatedArticleNode : relatedArticleNodes) {
       String type = readString("attribute::related-article-type", relatedArticleNode);
-      String href = readHrefAttribute(relatedArticleNode);
-      RelatedArticleLink relatedArticle = new RelatedArticleLink(type, href);
+      String doi = readHrefAttribute(relatedArticleNode);
+      RelatedArticleLink relatedArticle = new RelatedArticleLink(type, doi);
       relatedArticles.add(relatedArticle);
     }
     return relatedArticles;
