@@ -13,12 +13,12 @@ public class ArticleIngestionViewFactory {
   private ArticleCrudService articleCrudService;
   @Autowired
   private VersionedIngestionService versionedIngestionService;
+  @Autowired
+  private RelationshipSetViewFactory relationshipSetViewFactory;
 
   public ArticleIngestionView getView(ArticleIngestionIdentifier ingestionId) {
     ArticleIngestion ingestion = articleCrudService.getArticleIngestion(ingestionId);
     ArticleMetadata metadata = versionedIngestionService.getArticleMetadata(ingestionId);
-    // TODO: register RelationshipSetViewFactory as a bean when it no longer uses the articleTitles lookup map
-    RelationshipSetViewFactory relationshipSetViewFactory = new RelationshipSetViewFactory();
     RelationshipSetView relationships = relationshipSetViewFactory.getView(metadata);
 
     return new ArticleIngestionView(ingestion, metadata, relationships);

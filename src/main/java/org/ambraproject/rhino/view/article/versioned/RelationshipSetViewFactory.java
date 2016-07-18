@@ -27,37 +27,38 @@ public class RelationshipSetViewFactory {
 
   private static final Logger log = LoggerFactory.getLogger(RelationshipSetViewFactory.class);
 
-  // used to store titles for DOIs to prevent redundant fetching/parsing of manuscripts
-  // TODO: create a proper cache for titles and other XML-derived data
-  private Map<Doi, String> articleTitles = new HashMap<>();
+  public RelationshipSetView getView(ArticleMetadata metadata) {
 
-    public RelationshipSetView getView(ArticleMetadata metadata) {
-      ArticleIdentifier articleId = ArticleIdentifier.create(metadata.getDoi());
-      List<VersionedArticleRelationship> inbound = articleCrudService.getArticleRelationshipsTo(articleId);
-      List<VersionedArticleRelationship> outbound = articleCrudService.getArticleRelationshipsFrom(articleId);
-      List<RelatedArticleLink> declared = metadata.getRelatedArticles();
+    // used to store titles for DOIs to prevent redundant fetching/parsing of manuscripts
+    // TODO: create a proper cache for titles and other XML-derived data
+    Map<Doi, String> articleTitles = new HashMap<>();
 
-      List<RelationshipSetView.RelationshipView> inboundViews = inbound
-          .stream().map(var -> new RelationshipSetView.RelationshipView(var.getType(),
-              Doi.create(var.getSourceArticle().getDoi()),
-              getArticleTitle(Doi.create(var.getSourceArticle().getDoi()))))
-          .collect(Collectors.toList());
-      List<RelationshipSetView.RelationshipView> outboundViews = outbound
-          .stream().map(var -> new RelationshipSetView.RelationshipView(var.getType(),
-              Doi.create(var.getTargetArticle().getDoi()),
-              getArticleTitle(Doi.create(var.getTargetArticle().getDoi()))))
-          .collect(Collectors.toList());
-      List<RelationshipSetView.RelationshipView> declaredViews = declared
-          .stream().map(ral -> new RelationshipSetView.RelationshipView(ral.getType(),
-              ral.getDoi(),
-              getArticleTitle(ral.getDoi())))
-          .collect(Collectors.toList());
+    ArticleIdentifier articleId = ArticleIdentifier.create(metadata.getDoi());
+    List<VersionedArticleRelationship> inbound = articleCrudService.getArticleRelationshipsTo(articleId);
+    List<VersionedArticleRelationship> outbound = articleCrudService.getArticleRelationshipsFrom(articleId);
+    List<RelatedArticleLink> declared = metadata.getRelatedArticles();
 
-      return new RelationshipSetView(inboundViews, outboundViews, declaredViews);
+    List<RelationshipSetView.RelationshipView> inboundViews = inbound
+        .stream().map(var -> new RelationshipSetView.RelationshipView(var.getType(),
+            Doi.create(var.getSourceArticle().getDoi()),
+            getArticleTitle(articleTitles, Doi.create(var.getSourceArticle().getDoi()))))
+        .collect(Collectors.toList());
+    List<RelationshipSetView.RelationshipView> outboundViews = outbound
+        .stream().map(var -> new RelationshipSetView.RelationshipView(var.getType(),
+            Doi.create(var.getTargetArticle().getDoi()),
+            getArticleTitle(articleTitles, Doi.create(var.getTargetArticle().getDoi()))))
+        .collect(Collectors.toList());
+    List<RelationshipSetView.RelationshipView> declaredViews = declared
+        .stream().map(ral -> new RelationshipSetView.RelationshipView(ral.getType(),
+            ral.getDoi(),
+            getArticleTitle(articleTitles, ral.getDoi())))
+        .collect(Collectors.toList());
+
+    return new RelationshipSetView(inboundViews, outboundViews, declaredViews);
 
   }
 
-  private String getArticleTitle(Doi doi) {
+  private String getArticleTitle(Map<Doi, String> articleTitles, Doi doi) {
     String articleTitle;
     if (articleTitles.containsKey(doi)) { // null is a valid value so can't assume a null value on get() is a miss
       articleTitle = articleTitles.get(doi);
