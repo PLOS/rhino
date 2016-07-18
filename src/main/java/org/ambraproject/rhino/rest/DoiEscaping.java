@@ -36,6 +36,10 @@ public class DoiEscaping {
 
   /**
    * Resolve an escaped DOI into its unescaped form.
+   * <p>
+   * The substring {@code "++"} represents {@code '/'}, and the substring {@code "+-"} represents a true {@code '+'}
+   * character. A {@code '+'} character that is not part of one of these two escape sequences is invalid, as is the
+   * {@code '/'} character.
    *
    * @param escapedDoi a DOI or DOI name encoded into a form for embedding in a URL
    * @return the represented DOI value
