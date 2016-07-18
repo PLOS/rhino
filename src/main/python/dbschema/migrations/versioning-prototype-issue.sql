@@ -13,7 +13,7 @@ CREATE TABLE `issue` (
   UNIQUE KEY `doi` (`doi`),
   KEY `volumeId` (`volumeId`),
   CONSTRAINT `fk_issue_1` FOREIGN KEY (`volumeId`) REFERENCES `volume` (`volumeId`),
-  CONSTRAINT `fk_issue_2` FOREIGN KEY (`imageRevisionId`) REFERENCES `articleRevision` (`revisionId`)
+  CONSTRAINT `fk_issue_2` FOREIGN KEY (`imageArticleId`) REFERENCES `article` (`articleId`)
 );
 
 RENAME TABLE `issueArticleList` TO `oldIssueArticleList`;
