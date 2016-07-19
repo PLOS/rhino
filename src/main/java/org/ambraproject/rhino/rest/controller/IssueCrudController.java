@@ -19,7 +19,7 @@
 package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.identity.IssueIdentifier;
-import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
+import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.view.journal.IssueInputView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +27,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -35,46 +36,63 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Controller
-public class IssueCrudController extends DoiBasedCrudController {
-
-  private static final String ISSUE_NAMESPACE = "/issues/";
-  private static final String ISSUE_TEMPLATE = ISSUE_NAMESPACE + "**";
-
-  @Override
-  protected String getNamespacePrefix() {
-    return ISSUE_NAMESPACE;
-  }
+public class IssueCrudController extends RestController {
 
   @Autowired
   private IssueCrudService issueCrudService;
 
-  protected final IssueIdentifier parseIssueId(HttpServletRequest request) {
-    return IssueIdentifier.create(getIdentifier(request));
+  private IssueIdentifier getIssueId(String issueDoi) {
+    return IssueIdentifier.create(DoiEscaping.resolve(issueDoi));
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = ISSUE_TEMPLATE, method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = "/issues/{issueDoi:.+}", method = RequestMethod.GET)
+  public void read(@PathVariable("issueDoi") String issueDoi)
       throws IOException {
-    IssueIdentifier issueId = parseIssueId(request);
+    IssueIdentifier issueId = getIssueId(issueDoi);
+
+    // TODO: Look up journal and volume; redirect to main service
+    // TODO: Equivalent alias methods for other HTTP methods?
+  }
+
+  @Transactional(readOnly = true)
+  @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi}/issues/{issueDoi:.+}", method = RequestMethod.GET)
+  public void read(HttpServletRequest request, HttpServletResponse response,
+                   @PathVariable("journalKey") String journalKey,
+                   @PathVariable("volumeDoi") String volumeDoi,
+                   @PathVariable("issueDoi") String issueDoi)
+      throws IOException {
+    // TODO: Validate journalKey and volumeDoiObj
+
+    IssueIdentifier issueId = getIssueId(issueDoi);
     issueCrudService.read(issueId).respond(request, response, entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = ISSUE_TEMPLATE, method = RequestMethod.PATCH)
-  public ResponseEntity<?> update(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi}/issues/{issueDoi:.+}", method = RequestMethod.PATCH)
+  public void update(HttpServletRequest request, HttpServletResponse response,
+                     @PathVariable("journalKey") String journalKey,
+                     @PathVariable("volumeDoi") String volumeDoi,
+                     @PathVariable("issueDoi") String issueDoi)
       throws IOException {
-    IssueIdentifier issueId = parseIssueId(request);
+    // TODO: Validate journalKey and volumeDoiObj
+
+    IssueIdentifier issueId = getIssueId(issueDoi);
     IssueInputView input = readJsonFromRequest(request, IssueInputView.class);
     issueCrudService.update(issueId, input);
-    return reportOk(issueId.getDoi().getName());
+
+    issueCrudService.read(issueId);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = ISSUE_TEMPLATE, method = RequestMethod.DELETE)
-  public ResponseEntity<Object> delete(HttpServletRequest request)
+  @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi}/issues/{issueDoi:.+}", method = RequestMethod.DELETE)
+  public ResponseEntity<Object> delete(HttpServletRequest request,
+                                       @PathVariable("journalKey") String journalKey,
+                                       @PathVariable("volumeDoi") String volumeDoi,
+                                       @PathVariable("issueDoi") String issueDoi)
       throws IOException {
-    IssueIdentifier issueId = parseIssueId(request);
+    // TODO: Validate journalKey and volumeDoiObj
+    IssueIdentifier issueId = getIssueId(issueDoi);
     issueCrudService.delete(issueId);
     return new ResponseEntity<>(HttpStatus.OK);
   }

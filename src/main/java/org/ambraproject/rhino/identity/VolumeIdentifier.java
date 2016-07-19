@@ -22,11 +22,6 @@ public final class VolumeIdentifier {
     return doi;
   }
 
-  // Convenience method for unpacking into persistent form
-  public String getVolumeUri() {
-    return doi.getUri().toString();
-  }
-
   @Override
   public String toString() {
     return "volumeIdentifier{" +

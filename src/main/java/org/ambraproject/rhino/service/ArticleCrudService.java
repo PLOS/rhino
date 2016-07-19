@@ -196,7 +196,7 @@ public interface ArticleCrudService {
     FULL_MANUSCRIPT, FRONT_MATTER, FRONT_AND_BACK_MATTER
   }
 
-  public abstract Transceiver readRevisions(ArticleIdentifier id);
+  public abstract Transceiver readArticleOverview(ArticleIdentifier id);
 
 
   public abstract int getLatestRevision(Doi doi);

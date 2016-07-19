@@ -58,7 +58,7 @@ public class VersionedIngestionService extends AmbraService {
     return ((Number) session.createSQLQuery("SELECT LAST_INSERT_ID()").uniqueResult()).longValue();
   }
 
-  public ArticleIngestionIdentifier ingest(Archive archive, OptionalInt revision) throws IOException, XmlContentException {
+  public ArticleIngestionIdentifier ingest(Archive archive) throws IOException, XmlContentException {
     String manifestEntry = null;
     for (String entryName : archive.getEntryNames()) {
       if (entryName.equalsIgnoreCase("manifest.xml")) {
@@ -99,7 +99,7 @@ public class VersionedIngestionService extends AmbraService {
 
     if (!doi.equals(Doi.create(manuscriptAsset.getUri()))) {
       String message = String.format("Article DOI is inconsistent. From manifest: \"%s\" From manuscript: \"%s\"",
-          manuscriptAsset.getUri(), doi.getUri());
+          manuscriptAsset.getUri(), doi.getName());
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
 
@@ -107,7 +107,7 @@ public class VersionedIngestionService extends AmbraService {
     IngestionPersistenceResult ingestionResult = persistIngestion(articlePk);
     long ingestionId = ingestionResult.pk;
 
-    persistRevision(articlePk, ingestionId, revision.orElseGet(parsedArticle::getRevisionNumber));
+    persistRevision(articlePk, ingestionId, parsedArticle.getRevisionNumber());
 
     // TODO: Allow bucket name to be specified as an ingestion parameter
     String destinationBucketName = runtimeConfiguration.getCorpusStorage().getDefaultBucket();

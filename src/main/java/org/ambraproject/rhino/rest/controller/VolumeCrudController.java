@@ -20,8 +20,8 @@ package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.identity.IssueIdentifier;
 import org.ambraproject.rhino.identity.VolumeIdentifier;
+import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.view.journal.IssueInputView;
@@ -32,6 +32,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -40,58 +41,77 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Controller
-public class VolumeCrudController extends DoiBasedCrudController {
-
-  private static final String VOLUME_ROOT = "/volumes";
-  private static final String VOLUME_NAMESPACE = VOLUME_ROOT + '/';
-  private static final String VOLUME_TEMPLATE = VOLUME_NAMESPACE + "**";
-
-  @Override
-  protected String getNamespacePrefix() {
-    return VOLUME_NAMESPACE;
-  }
+public class VolumeCrudController extends RestController {
 
   @Autowired
   private VolumeCrudService volumeCrudService;
   @Autowired
   private IssueCrudService issueCrudService;
 
-  protected final VolumeIdentifier parseVolumeId(HttpServletRequest request) {
-    return VolumeIdentifier.create(getIdentifier(request));
+  private VolumeIdentifier getVolumeId(String volumeDoi) {
+    return VolumeIdentifier.create(DoiEscaping.resolve(volumeDoi));
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = "/volumes/{volumeDoi:.+}", method = RequestMethod.GET)
+  public void read(HttpServletRequest request, HttpServletResponse response,
+      @PathVariable("volumeDoi") String volumeDoi)
       throws IOException {
-    VolumeIdentifier volumeId = parseVolumeId(request);
+    VolumeIdentifier volumeId = getVolumeId(volumeDoi);
+
+    // TODO: Look up journal; redirect to main service
+    // TODO: Equivalent alias methods for other HTTP methods?
+  }
+
+  @Transactional(readOnly = true)
+  @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi:.+}", method = RequestMethod.GET)
+  public void read(HttpServletRequest request, HttpServletResponse response,
+      @PathVariable("journalKey") String journalKey,
+      @PathVariable("volumeDoi") String volumeDoi)
+      throws IOException {
+
+    VolumeIdentifier volumeId = getVolumeId(volumeDoi);
+    // TODO: Validate journalKey
     volumeCrudService.read(volumeId).respond(request, response, entityGson);
+
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.PATCH)
-  public void update(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi:.+}", method = RequestMethod.PATCH)
+  public void update(HttpServletRequest request, HttpServletResponse response,
+      @PathVariable("journalKey") String journalKey,
+      @PathVariable("volumeDoi") String volumeDoi)
       throws IOException {
-    VolumeIdentifier volumeId = parseVolumeId(request);
+    // TODO: Validate journalKey
+    VolumeIdentifier volumeId = getVolumeId(volumeDoi);
     VolumeInputView input = readJsonFromRequest(request, VolumeInputView.class);
     volumeCrudService.update(volumeId, input);
 
     volumeCrudService.read(volumeId).respond(request, response, entityGson);
   }
 
-  @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.DELETE)
-  public ResponseEntity<Object> delete(HttpServletRequest request) throws IOException {
-    VolumeIdentifier volumeId = parseVolumeId(request);
+  @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi:.+}", method = RequestMethod.DELETE)
+  public ResponseEntity<Object> delete(HttpServletRequest request,
+      @PathVariable("journalKey") String journalKey,
+      @PathVariable("volumeDoi") String volumeDoi)
+      throws IOException {
+
+    // TODO: Validate journalKey
+
+    VolumeIdentifier volumeId = getVolumeId(volumeDoi);
     volumeCrudService.delete(volumeId);
-    return reportOk(volumeId.getVolumeUri());
+    return reportOk(volumeId.getDoi().getName());
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.POST)
-  public ResponseEntity<String> createIssue(HttpServletRequest request) throws IOException {
-    VolumeIdentifier volumeId = parseVolumeId(request);
+  @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi}/issues", method = RequestMethod.POST)
+  public ResponseEntity<String> createIssue(HttpServletRequest request,
+      @PathVariable("journalKey") String journalKey,
+      @PathVariable("volumeDoi") String volumeDoi)
+      throws IOException {
 
+    // TODO: Validate journalKey
+    VolumeIdentifier volumeId = getVolumeId(volumeDoi);
     IssueInputView input = readJsonFromRequest(request, IssueInputView.class);
     if (StringUtils.isBlank(input.getDoi())) {
       throw new RestClientException("issueUri required", HttpStatus.BAD_REQUEST);

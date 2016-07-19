@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableSet;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleListIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.view.article.ListInputView;
 import org.springframework.beans.factory.annotation.Autowired;

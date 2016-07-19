@@ -24,6 +24,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Date;
 import java.util.List;
@@ -42,19 +43,14 @@ public class Volume implements Timestamped {
   private Long volumeId;
 
   @Column
-  private String volumeUri;
+  private String doi;
 
   @Column
   private String displayName;
 
-  @Column
-  private String imageUri;
-
-  @Column
-  private String title;
-
-  @Column
-  private String description;
+  @OneToOne
+  @JoinColumn(name = "imageArticleId")
+  private ArticleTable imageArticle;
 
   @Column
   private Date created;
@@ -74,9 +70,9 @@ public class Volume implements Timestamped {
     super();
   }
 
-  public Volume(String volumeUri) {
+  public Volume(String doi) {
     super();
-    this.volumeUri = volumeUri;
+    this.doi = doi;
   }
 
   public Long getVolumeId() {
@@ -87,12 +83,12 @@ public class Volume implements Timestamped {
     this.volumeId = volumeId;
   }
 
-  public String getVolumeUri() {
-    return volumeUri;
+  public String getDoi() {
+    return doi;
   }
 
-  public void setVolumeUri(String volumeUri) {
-    this.volumeUri = volumeUri;
+  public void setDoi(String doi) {
+    this.doi = doi;
   }
 
   public String getDisplayName() {
@@ -103,28 +99,12 @@ public class Volume implements Timestamped {
     this.displayName = displayName;
   }
 
-  public String getImageUri() {
-    return imageUri;
+  public ArticleTable getImageArticle() {
+    return imageArticle;
   }
 
-  public void setImageUri(String imageUri) {
-    this.imageUri = imageUri;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
+  public void setImageArticle(ArticleTable imageArticle) {
+    this.imageArticle = imageArticle;
   }
 
   public Date getCreated() {
@@ -161,14 +141,10 @@ public class Volume implements Timestamped {
 
     if (volumeId != null ? !volumeId.equals(volume.volumeId) : volume.volumeId != null)
       return false;
-    if (volumeUri != null ? !volumeUri.equals(volume.volumeUri) : volume.volumeUri != null)
-      return false;
+    if (doi != null ? !doi.equals(volume.doi) : volume.doi != null) return false;
     if (displayName != null ? !displayName.equals(volume.displayName) : volume.displayName != null)
       return false;
-    if (imageUri != null ? !imageUri.equals(volume.imageUri) : volume.imageUri != null)
-      return false;
-    if (title != null ? !title.equals(volume.title) : volume.title != null) return false;
-    if (description != null ? !description.equals(volume.description) : volume.description != null)
+    if (imageArticle != null ? !imageArticle.equals(volume.imageArticle) : volume.imageArticle != null)
       return false;
     if (created != null ? !created.equals(volume.created) : volume.created != null) return false;
     if (lastModified != null ? !lastModified.equals(volume.lastModified) : volume.lastModified != null)
@@ -180,11 +156,9 @@ public class Volume implements Timestamped {
   @Override
   public int hashCode() {
     int result = volumeId != null ? volumeId.hashCode() : 0;
-    result = 31 * result + (volumeUri != null ? volumeUri.hashCode() : 0);
+    result = 31 * result + (doi != null ? doi.hashCode() : 0);
     result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
-    result = 31 * result + (imageUri != null ? imageUri.hashCode() : 0);
-    result = 31 * result + (title != null ? title.hashCode() : 0);
-    result = 31 * result + (description != null ? description.hashCode() : 0);
+    result = 31 * result + (imageArticle != null ? imageArticle.hashCode() : 0);
     result = 31 * result + (created != null ? created.hashCode() : 0);
     result = 31 * result + (lastModified != null ? lastModified.hashCode() : 0);
     result = 31 * result + (issues != null ? issues.hashCode() : 0);

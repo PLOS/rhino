@@ -14,7 +14,6 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.mangofactory.swagger.annotations.ApiIgnore;
-import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;

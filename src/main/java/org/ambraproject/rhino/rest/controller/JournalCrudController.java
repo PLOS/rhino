@@ -2,7 +2,6 @@ package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.identity.VolumeIdentifier;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
@@ -62,12 +61,12 @@ public class JournalCrudController extends RestController {
   public ResponseEntity<String> createVolume(HttpServletRequest request, @PathVariable String journalKey)
       throws IOException {
     VolumeInputView input = readJsonFromRequest(request, VolumeInputView.class);
-    if (StringUtils.isBlank(input.getVolumeUri())) {
+    if (StringUtils.isBlank(input.getDoi())) {
       throw new RestClientException("volumeUri required", HttpStatus.BAD_REQUEST);
     }
 
     VolumeIdentifier volumeId = volumeCrudService.create(journalKey, input);
-    return reportCreated(volumeId.getVolumeUri());
+    return reportCreated(volumeId.getDoi().getName());
   }
 
   @Transactional(rollbackFor = {Throwable.class})

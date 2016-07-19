@@ -1,8 +1,6 @@
 package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
-import org.ambraproject.rhino.model.article.ArticleMetadata;
-import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.impl.VersionedIngestionService;
 import org.ambraproject.rhino.util.Archive;
@@ -19,12 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.OptionalInt;
 
 @Controller
 public class IngestibleZipController extends RestController {
-
-  private static final String ZIP_ROOT = "/zips";
 
   @Autowired
   private ArticleCrudService articleCrudService;
@@ -33,27 +28,22 @@ public class IngestibleZipController extends RestController {
 
   /**
    * Create an article based on a POST containing an article .zip archive file.
-   * <p/>
-   * TODO: this method may never be used in production, since we've decided, at least for now, that we will use the
-   * ingest and ingested directories that the current admin app uses instead of posting zips directly.
    *
    * @param response    response to the request
    * @param requestFile body of the archive param, with the encoded article .zip file
    * @throws java.io.IOException
    */
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = ZIP_ROOT, method = RequestMethod.POST)
+  @RequestMapping(value = "/articles", method = RequestMethod.POST)
   public void zipUpload(HttpServletRequest request, HttpServletResponse response,
-                        @RequestParam("archive") MultipartFile requestFile,
-                        @RequestParam(value = "revision", required = false) Integer revision)
+                        @RequestParam("archive") MultipartFile requestFile)
       throws IOException {
 
     String archiveName = requestFile.getOriginalFilename();
     ArticleIngestionIdentifier ingestionId;
     try (InputStream requestInputStream = requestFile.getInputStream();
          Archive archive = Archive.readZipFile(archiveName, requestInputStream)) {
-      OptionalInt revisionObj = (revision != null) ? OptionalInt.of(revision) : OptionalInt.empty();
-      ingestionId = versionedIngestionService.ingest(archive, revisionObj);
+      ingestionId = versionedIngestionService.ingest(archive);
     }
     response.setStatus(HttpStatus.CREATED.value());
 
