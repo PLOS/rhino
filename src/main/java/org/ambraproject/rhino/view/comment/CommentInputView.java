@@ -2,7 +2,6 @@ package org.ambraproject.rhino.view.comment;
 
 public class CommentInputView {
 
-  private String articleDoi;
   private String annotationUri;
   private String creatorUserId;
   private String parentCommentId;
@@ -17,18 +16,6 @@ public class CommentInputView {
    */
   @Deprecated
   public CommentInputView() {
-  }
-
-  public String getArticleDoi() {
-    return articleDoi;
-  }
-
-  /**
-   * @deprecated For deserializer only
-   */
-  @Deprecated
-  public void setArticleDoi(String articleDoi) {
-    this.articleDoi = articleDoi;
   }
 
   public String getCreatorUserId() {

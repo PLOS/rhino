@@ -58,7 +58,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.OptionalInt;
 import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
@@ -137,7 +136,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
     List<ArticleAsset> referenceAssets = RhinoTestHelper.readReferenceCase(referenceLocation).getAssets();
     Archive mockIngestible = RhinoTestHelper.createMockIngestible(articleId, input, referenceAssets);
-    versionedIngestionService.ingest(mockIngestible, OptionalInt.empty());
+    versionedIngestionService.ingest(mockIngestible);
     assertArticleExistence(articleId, true);
     assertTrue(input.isClosed(), "Service didn't close stream");
 
@@ -184,7 +183,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     final byte[] updated = Bytes.concat(sampleData, "\n<!-- Appended -->".getBytes());
     input = RhinoTestHelper.TestInputStream.of(updated);
     mockIngestible = RhinoTestHelper.createMockIngestible(articleId, input, referenceAssets);
-    versionedIngestionService.ingest(mockIngestible, OptionalInt.empty());
+    versionedIngestionService.ingest(mockIngestible);
     byte[] updatedData = IOUtils.toByteArray(articleCrudService.readXml(articleId));
     assertEquals(updatedData, updated);
     assertArticleExistence(articleId, true);

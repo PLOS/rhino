@@ -14,7 +14,9 @@
 package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
+import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
+import org.ambraproject.rhino.rest.DoiEscaping;
+import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.view.article.ArticleInputView;
 import org.slf4j.Logger;
@@ -22,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -34,10 +37,12 @@ import java.io.IOException;
  * Controller class used for reading and writing an article's state after its creation.
  */
 @Controller
-public class ArticleStateController extends ArticleSpaceController {
+public class ArticleStateController extends RestController {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleStateController.class);
 
+  @Autowired
+  private ArticleCrudService articleCrudService;
   @Autowired
   private ArticleStateService articleStateService;
 
@@ -50,10 +55,14 @@ public class ArticleStateController extends ArticleSpaceController {
    * @throws IOException
    */
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PATCH)
-  public void write(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = "/articles/{doi}/revisions/{number}", method = RequestMethod.PATCH)
+  public void write(HttpServletRequest request, HttpServletResponse response,
+                    @PathVariable("doi") String doi,
+                    @PathVariable("number") int revisionNumber)
       throws IOException {
-    ArticleIdentity id = parse(request);
+    ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
+
+    ArticleIdentity id = null; // TODO: Reimplement for ArticleRevision
     ArticleInputView input = readJsonFromRequest(request, ArticleInputView.class);
     articleStateService.update(id, input);
     articleCrudService.readMetadata(id, false).respond(request, response, entityGson);

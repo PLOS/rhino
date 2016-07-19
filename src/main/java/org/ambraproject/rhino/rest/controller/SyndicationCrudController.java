@@ -1,6 +1,5 @@
 package org.ambraproject.rhino.rest.controller;
 
-import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

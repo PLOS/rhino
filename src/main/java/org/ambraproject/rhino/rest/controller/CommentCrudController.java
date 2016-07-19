@@ -1,10 +1,11 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.wordnik.swagger.annotations.ApiOperation;
+import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.CommentIdentifier;
 import org.ambraproject.rhino.model.Comment;
 import org.ambraproject.rhino.model.Flag;
-import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
+import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
@@ -18,114 +19,155 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 @Controller
-public class CommentCrudController extends DoiBasedCrudController {
-
-  private static final String COMMENT_META_ROOT = "/comments";
-  private static final String COMMENT_META_NAMESPACE = COMMENT_META_ROOT + "/";
-  private static final String COMMENT_META_TEMPLATE = COMMENT_META_NAMESPACE + "/**";
-
-  private static final String FLAGS_META_ROOT = "/flags";
-  private static final String FLAGS_META_TEMPLATE = FLAGS_META_ROOT + "/{flagId}";
+public class CommentCrudController extends RestController {
 
   @Autowired
-  protected CommentCrudService commentCrudService;
+  private CommentCrudService commentCrudService;
 
-  @Override
-  protected final String getNamespacePrefix() {
-    return COMMENT_META_NAMESPACE;
-  }
-
-  protected final CommentIdentifier parseCommentId(HttpServletRequest request) {
-    return CommentIdentifier.create(getIdentifier(request));
-  }
-
-  private static final String FLAGS_PARAMETER = "flags";
-  private static final String FLAGGED_PARAMETER = "flagged";
-
-  @RequestMapping(value = COMMENT_META_TEMPLATE, method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = "/comments/{commentDoi:.+}", method = RequestMethod.GET)
+  public void read(HttpServletRequest request, HttpServletResponse response,
+                   @PathVariable("commentDoi") String commentDoi)
       throws IOException {
-    CommentIdentifier commentId = parseCommentId(request);
+    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
+
+    // TODO: Look up article; redirect to main service
+    // TODO: Equivalent aliases for other methods?
+  }
+
+  @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi:.+}", method = RequestMethod.GET)
+  public void read(HttpServletRequest request, HttpServletResponse response,
+                   @PathVariable("articleDoi") String articleDoi,
+                   @PathVariable("commentDoi") String commentDoi)
+      throws IOException {
+    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(articleDoi));
+    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
+    // TODO: Validate articleId
+
     commentCrudService.readComment(commentId).respond(request, response, entityGson);
   }
 
-  @RequestMapping(value = COMMENT_META_ROOT, method = RequestMethod.GET, params = {FLAGGED_PARAMETER})
+  @RequestMapping(value = "/comments", method = RequestMethod.GET, params = {"flagged"})
   public void readAllFlaggedComments(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     commentCrudService.readFlaggedComments().respond(request, response, entityGson);
   }
 
-  @RequestMapping(value = FLAGS_META_ROOT, method = RequestMethod.GET)
+  @RequestMapping(value = "/commentFlags", method = RequestMethod.GET)
   public void readAllFlags(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     commentCrudService.readAllCommentFlags().respond(request, response, entityGson);
   }
 
-  @RequestMapping(value = COMMENT_META_ROOT, method = RequestMethod.POST)
-  public ResponseEntity<?> create(HttpServletRequest request)
+  @RequestMapping(value = "/articles/{articleDoi}/comments", method = RequestMethod.POST)
+  public ResponseEntity<?> create(HttpServletRequest request,
+                                  @PathVariable("articleDoi") String articleDoi)
       throws IOException {
+    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(articleDoi));
     CommentInputView input = readJsonFromRequest(request, CommentInputView.class);
-    Comment created = commentCrudService.createComment(input);
+
+    // TODO: Pass Optional.empty() if client POSTed to "/comments"?
+    Optional<ArticleIdentifier> articleIdObj = Optional.of(articleId);
+
+    Comment created = commentCrudService.createComment(articleIdObj, input);
     return reportCreated(created.getCommentUri());
   }
 
-  @RequestMapping(value = COMMENT_META_TEMPLATE, method = RequestMethod.DELETE, params = FLAGS_PARAMETER)
-  public ResponseEntity<?> removeAllFlags(HttpServletRequest request)
+  @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi}/flags", method = RequestMethod.DELETE)
+  public ResponseEntity<?> removeAllFlags(HttpServletRequest request,
+                                          @PathVariable("articleDoi") String articleDoi,
+                                          @PathVariable("commentDoi") String commentDoi)
       throws IOException {
-    CommentIdentifier commentId = parseCommentId(request);
+    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(articleDoi));
+    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
+    // TODO: Validate articleId
+
     commentCrudService.removeFlagsFromComment(commentId);
     return reportOk(commentId.toString());
   }
 
-  @RequestMapping(value = COMMENT_META_TEMPLATE, method = RequestMethod.PATCH)
-  public ResponseEntity<?> patch(HttpServletRequest request)
+  @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi:.+}", method = RequestMethod.PATCH)
+  public ResponseEntity<?> patch(HttpServletRequest request,
+                                 @PathVariable("articleDoi") String articleDoi,
+                                 @PathVariable("commentDoi") String commentDoi)
       throws IOException {
-    CommentIdentifier commentId = parseCommentId(request);
+    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(articleDoi));
+    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
+    // TODO: Validate articleId
+
     CommentInputView input = readJsonFromRequest(request, CommentInputView.class);
     Comment patched = commentCrudService.patchComment(commentId, input);
     return reportOk(patched.getCommentUri());
   }
 
-  @RequestMapping(value = COMMENT_META_TEMPLATE, method = RequestMethod.DELETE)
+  @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi:.+}", method = RequestMethod.DELETE)
   @ApiOperation(value = "delete", notes = "Performs a hard delete operation in the database. " +
       "NOTE: fails loudly if attempting to delete a comment that has any replies. All replies must " +
       "be deleted first.")
-  public ResponseEntity<?> delete(HttpServletRequest request)
+  public ResponseEntity<?> delete(HttpServletRequest request,
+                                  @PathVariable("articleDoi") String articleDoi,
+                                  @PathVariable("commentDoi") String commentDoi)
       throws IOException {
-    CommentIdentifier commentId = parseCommentId(request);
+    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(articleDoi));
+    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
+    // TODO: Validate articleId
+
     String deletedCommentUri = commentCrudService.deleteComment(commentId);
     return reportOk(deletedCommentUri);
   }
 
-  @RequestMapping(value = COMMENT_META_TEMPLATE, method = RequestMethod.POST, params = {FLAGS_PARAMETER})
-  public ResponseEntity<String> createFlag(HttpServletRequest request) throws IOException {
-    CommentIdentifier commentId = parseCommentId(request);
+  @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi}/flags", method = RequestMethod.POST)
+  public ResponseEntity<String> createFlag(HttpServletRequest request,
+                                           @PathVariable("articleDoi") String articleDoi,
+                                           @PathVariable("commentDoi") String commentDoi)
+      throws IOException {
+    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(articleDoi));
+    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
+    // TODO: Validate articleId
+
     CommentFlagInputView input = readJsonFromRequest(request, CommentFlagInputView.class);
     Flag commentFlag = commentCrudService.createCommentFlag(commentId, input);
     return reportCreated(commentFlag.getCommentFlagId().toString());
   }
 
-  @RequestMapping(value = COMMENT_META_TEMPLATE, method = RequestMethod.GET, params = {FLAGS_PARAMETER})
-  public void readFlagsOnComment(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi}/flags", method = RequestMethod.GET)
+  public void readFlagsOnComment(HttpServletRequest request, HttpServletResponse response,
+                                 @PathVariable("articleDoi") String articleDoi,
+                                 @PathVariable("commentDoi") String commentDoi)
       throws IOException {
-    CommentIdentifier commentId = parseCommentId(request);
+    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(articleDoi));
+    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
+    // TODO: Validate articleId
+
     commentCrudService.readCommentFlagsOn(commentId).respond(request, response, entityGson);
   }
 
-  @RequestMapping(value = FLAGS_META_TEMPLATE, method = RequestMethod.GET)
+  @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi}/flags/{flagId}", method = RequestMethod.GET)
   public void readFlag(HttpServletRequest request, HttpServletResponse response,
-                       @PathVariable("flagId") Long flagId)
+                       @PathVariable("articleDoi") String articleDoi,
+                       @PathVariable("commentDoi") String commentDoi,
+                       @PathVariable("flagId") long flagId)
       throws IOException {
+    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(articleDoi));
+    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
+    // TODO: Validate articleId and commentId
+
     commentCrudService.readCommentFlag(flagId).respond(request, response, entityGson);
   }
 
-  @RequestMapping(value = FLAGS_META_TEMPLATE, method = RequestMethod.DELETE)
-  public ResponseEntity<Object> removeFlag(@PathVariable("flagId") Long flagId)
+  @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi}/flags/{flagId}", method = RequestMethod.DELETE)
+  public ResponseEntity<Object> removeFlag(@PathVariable("articleDoi") String articleDoi,
+                                           @PathVariable("commentDoi") String commentDoi,
+                                           @PathVariable("flagId") long flagId)
       throws IOException {
+    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(articleDoi));
+    CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
+    // TODO: Validate articleId and commentId
+
     commentCrudService.deleteCommentFlag(flagId);
-    return reportOk(flagId.toString());
+    return reportOk(Long.toString(flagId));
   }
 
 }

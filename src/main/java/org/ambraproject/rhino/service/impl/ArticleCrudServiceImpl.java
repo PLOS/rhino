@@ -57,11 +57,11 @@ import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
 import org.ambraproject.rhino.view.article.AuthorView;
 import org.ambraproject.rhino.view.article.RelatedArticleView;
 import org.ambraproject.rhino.view.article.versioned.ArticleIngestionViewFactory;
+import org.ambraproject.rhino.view.article.versioned.ArticleOverview;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Query;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -161,6 +161,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   /**
    * {@inheritDoc}
+   *
    * @param article
    */
   @Override
@@ -227,19 +228,23 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public Transceiver readRevisions(ArticleIdentifier id) {
+  public Transceiver readArticleOverview(ArticleIdentifier id) {
     return new Transceiver() {
       @Override
-      protected List<Integer> getData() throws IOException {
-        return (List<Integer>) hibernateTemplate.execute(session -> {
-          SQLQuery query = session.createSQLQuery("" +
-              "SELECT DISTINCT version.revisionNumber " +
-              "FROM articleItem item " +
-              "INNER JOIN articleVersion version ON item.versionId = version.versionId " +
-              "WHERE item.doi = :doi " +
-              "ORDER BY version.revisionNumber ASC");
-          query.setParameter("doi", id.getDoiName());
-          return query.list();
+      protected ArticleOverview getData() throws IOException {
+        ArticleTable article = getArticle(id);
+        return hibernateTemplate.execute(session -> {
+          Query ingestionQuery = session.createQuery("FROM ArticleIngestion WHERE article = :article");
+          ingestionQuery.setParameter("article", article);
+          List<ArticleIngestion> ingestions = ingestionQuery.list();
+
+          Query revisionQuery = session.createQuery("" +
+              "FROM ArticleRevision WHERE ingestion IN " +
+              "  (FROM ArticleIngestion WHERE article = :article)");
+          revisionQuery.setParameter("article", article);
+          List<ArticleRevision> revisions = revisionQuery.list();
+
+          return ArticleOverview.build(article, ingestions, revisions);
         });
       }
 
@@ -304,6 +309,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   /**
    * {@inheritDoc}
+   *
    * @param articleId
    */
   @Override
@@ -354,6 +360,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   /**
    * {@inheritDoc}
+   *
    * @param articleId
    */
   @Override
@@ -460,7 +467,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     List<RelatedArticleLink> xmlRelationships = sourceArticleXml.parseRelatedArticles();
     List<VersionedArticleRelationship> dbRelationships = getArticleRelationshipsFrom(ArticleIdentifier.create(sourceArticle.getDoi()));
-    for (VersionedArticleRelationship ar: dbRelationships) {
+    for (VersionedArticleRelationship ar : dbRelationships) {
       hibernateTemplate.delete(ar);
     }
     for (RelatedArticleLink ar : xmlRelationships) {
@@ -537,7 +544,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public Collection <ArticleItem> getAllArticleItems(Doi doi) {
+  public Collection<ArticleItem> getAllArticleItems(Doi doi) {
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("FROM ArticleItem WHERE doi = :doi ");
       query.setParameter("doi", doi.getName());
@@ -625,18 +632,18 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   private class NoSuchArticleIdException extends RuntimeException {
     private NoSuchArticleIdException(ArticleRevisionIdentifier articleIdentifier) {
-      super("No such article: " + articleIdentifier);
+      super("No such article: " + articleIdentifier.getDoiName());
     }
 
     private NoSuchArticleIdException(ArticleIdentifier articleIdentifier) {
-      super("No such article: " + articleIdentifier);
+      super("No such article: " + articleIdentifier.getDoiName());
     }
 
     private NoSuchArticleIdException(ArticleIngestionIdentifier articleIdentifier) {
-      super("No such article: " + articleIdentifier);
+      super("No such article: " + articleIdentifier.getDoiName());
     }
   }
-  
+
   private ArticleIngestionIdentifier resolveRevisionToIngestion(Doi doi, int revisionNumber) {
     Integer ingestionNumber = hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +

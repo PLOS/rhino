@@ -23,6 +23,7 @@ import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.OptionalInt;
 
 /**
@@ -58,7 +59,7 @@ public interface CommentCrudService {
   public Transceiver readFlaggedComments()
       throws IOException;
 
-  public Comment createComment(CommentInputView input);
+  public Comment createComment(Optional<ArticleIdentifier> articleId, CommentInputView input);
 
   public Comment patchComment(CommentIdentifier commentId, CommentInputView input);
 
