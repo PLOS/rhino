@@ -10,25 +10,22 @@ public class RelationshipSetView {
 
   private final ImmutableList<RelationshipView> inbound;
   private final ImmutableList<RelationshipView> outbound;
-  private final ImmutableList<RelationshipView> declared;
 
   public RelationshipSetView(List<RelationshipView> inbound,
-                             List<RelationshipView> outbound,
-                             List<RelationshipView> declared) {
+                             List<RelationshipView> outbound) {
     this.inbound = ImmutableList.copyOf(inbound);
     this.outbound = ImmutableList.copyOf(outbound);
-    this.declared = ImmutableList.copyOf(declared);
   }
 
   public static class RelationshipView {
     private final String type;
     private final String doi;
-    private final String title; // nullable
+    private final String title;
 
     public RelationshipView(String type, Doi doi, String title) {
       this.type = Objects.requireNonNull(type);
       this.doi = doi.getName();
-      this.title = title;
+      this.title = Objects.requireNonNull(title);
     }
   }
 
