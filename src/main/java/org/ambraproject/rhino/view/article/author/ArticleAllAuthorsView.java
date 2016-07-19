@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.view.article;
+package org.ambraproject.rhino.view.article.author;
 
 import com.google.common.collect.ImmutableList;
 

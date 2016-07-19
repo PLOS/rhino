@@ -9,6 +9,7 @@ API_BASE_URL = os.getenv('API_BASE_URL', 'http://devstack04.sfo.plos.org:8006/v1
 INGESTION_HOST = os.getenv('INGESTION_HOST', 'devstack04.sfo.plos.org')
 INGEST_USER = os.getenv('INGEST_USER', 'rinotest')
 RHINO_INGEST_PATH = os.getenv('RHINO_INGEST_PATH', '/var/spool/ambra/ingestion-queue')
+SSH_PASSWORD = os.getenv('SSH_PASSWORD', 'Shoh1yar')
 
 
 PRINT_DEBUG = False
