@@ -50,19 +50,19 @@ public class CommentCrudController extends RestController {
     commentCrudService.readComment(commentId).respond(request, response, entityGson);
   }
 
-  @RequestMapping(value = "/comments/", method = RequestMethod.GET, params = {"flagged"})
+  @RequestMapping(value = "/comments", method = RequestMethod.GET, params = {"flagged"})
   public void readAllFlaggedComments(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     commentCrudService.readFlaggedComments().respond(request, response, entityGson);
   }
 
-  @RequestMapping(value = "/commentFlags/", method = RequestMethod.GET)
+  @RequestMapping(value = "/commentFlags", method = RequestMethod.GET)
   public void readAllFlags(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     commentCrudService.readAllCommentFlags().respond(request, response, entityGson);
   }
 
-  @RequestMapping(value = "/articles/{articleDoi}/revisions/{number}", method = RequestMethod.POST)
+  @RequestMapping(value = "/articles/{articleDoi}/revisions/{number}/comments", method = RequestMethod.POST)
   public ResponseEntity<?> create(HttpServletRequest request,
                                   @PathVariable("articleDoi") String articleDoi,
                                   @PathVariable("number") int revisionNumber)
