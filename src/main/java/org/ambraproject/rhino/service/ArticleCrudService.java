@@ -65,12 +65,12 @@ public interface ArticleCrudService {
   public abstract InputStream readXml(ArticleIdentity id);
 
   /**
-   * Retrieve an article's publication {@code journal} field based on the article's {@code eIssn}
-   * field. Always expects {@code eIssn} to match to a journal in the system.
+   * Retrieve an article's publication {@code journal} field based on the article's {@code eIssn} field. Always expects
+   * {@code eIssn} to match to a journal in the system.
    *
    * @param article the article to modify
-   * @throws RestClientException if {@code article.eIssn} is null or the {@code article.eIssn}
-   *                         isn't matched to a journal in the database
+   * @throws RestClientException if {@code article.eIssn} is null or the {@code article.eIssn} isn't matched to a
+   *                             journal in the database
    */
 
   public abstract Journal getPublicationJournal(ArticleTable article) throws RestClientException;
@@ -164,7 +164,7 @@ public interface ArticleCrudService {
 
   /**
    * Read the metadata of a random article.
-   *
+   * <p>
    * <em>WARNING</em> random retrieval of records is not performant and should be used only for testing
    */
   public abstract Transceiver readRandom() throws IOException;
@@ -179,10 +179,9 @@ public interface ArticleCrudService {
   public abstract Archive repack(ArticleIdentity articleIdentity);
 
 
-  /**
-   * Replicates the behavior of {@link #readMetadata}, and forces the service to read from the versioned data model.
-   */
   public abstract Transceiver readArticleMetadata(ArticleIngestionIdentifier ingestionId);
+
+  public abstract Transceiver readArticleItems(ArticleIngestionIdentifier ingestionId);
 
   /**
    * Signifies which file to use when reading article metadata from a content repo collection. This exists for
