@@ -20,36 +20,26 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.IssueIdentifier;
 import org.ambraproject.rhino.identity.VolumeIdentifier;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Issue;
-import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.IssueCrudService;
-import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
-import org.ambraproject.rhino.view.article.ArticleIssue;
 import org.ambraproject.rhino.view.journal.IssueInputView;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.ambraproject.rhino.view.journal.VolumeNonAssocView;
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.orm.hibernate3.HibernateCallback;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("JpaQlInspection")
@@ -115,52 +105,12 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
 
     List<String> inputArticleDois = input.getArticleOrder();
     if (inputArticleDois != null) {
-      Set<ArticleTable> inputArticles = inputArticleDois.stream()
+      List<ArticleTable> inputArticles = inputArticleDois.stream()
           .map(doi -> articleCrudService.getArticle(ArticleIdentifier.create(doi)))
-          .collect(Collectors.toSet());
+          .collect(Collectors.toList());
       issue.setArticles(inputArticles);
     }
-
     return issue;
-  }
-
-  /**
-   * Get a list of issues for a given article with associated journal and volume objects
-   *
-   * @param articleIdentity Article DOI that is contained in the Journal/Volume/Issue combinations which will be returned
-   * @return a list of ArticleIssue objects that wrap each issue with its associated journal and volume objects
-   */
-  //todo: remove when replacing article output view
-  @Transactional(readOnly = true)
-  @Override
-  public List<ArticleIssue> getArticleIssues(final ArticleIdentity articleIdentity) {
-    return (List<ArticleIssue>) hibernateTemplate.execute(new HibernateCallback() {
-      public Object doInHibernate(Session session) throws HibernateException, SQLException {
-        List<Object[]> queryResults = session.createSQLQuery(
-                "select {j.*}, {v.*}, {i.*} " +
-                        "from issueArticleList ial " +
-                        "join issue i on ial.issueID = i.issueID " +
-                        "join volume v on i.volumeID = v.volumeID " +
-                        "join journal j on v.journalID = j.journalID " +
-                        "where ial.doi = :articleURI " +
-                        "order by i.created desc ")
-                .addEntity("j", Journal.class)
-                .addEntity("v", Volume.class)
-                .addEntity("i", Issue.class)
-                .setString("articleURI", articleIdentity.getKey())
-                .list();
-
-        List<ArticleIssue> articleIssues = new ArrayList<>(queryResults.size());
-        for (Object[] row : queryResults) {
-          Journal journal = (Journal) row[0];
-          Volume volume = (Volume) row[1];
-          Issue issue = (Issue) row[2];
-          articleIssues.add(new ArticleIssue(issue, volume, journal));
-        }
-
-        return articleIssues;
-      }
-    });
   }
 
   @Override

@@ -18,17 +18,14 @@
 
 package org.ambraproject.rhino.service;
 
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.IssueIdentifier;
 import org.ambraproject.rhino.identity.VolumeIdentifier;
 import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.util.response.Transceiver;
-import org.ambraproject.rhino.view.article.ArticleIssue;
 import org.ambraproject.rhino.view.journal.IssueInputView;
 import org.ambraproject.rhino.view.journal.VolumeNonAssocView;
 
 import java.io.IOException;
-import java.util.List;
 
 public interface IssueCrudService {
 
@@ -37,8 +34,6 @@ public interface IssueCrudService {
   public abstract IssueIdentifier create(VolumeIdentifier volumeId, IssueInputView input);
 
   public abstract void update(IssueIdentifier issueId, IssueInputView input);
-
-  public abstract List<ArticleIssue> getArticleIssues(ArticleIdentity articleIdentity);
 
   public abstract VolumeNonAssocView getParentVolumeView(Issue issue);
 

@@ -17,7 +17,6 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
-import org.hibernate.annotations.IndexColumn;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,12 +25,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 /**
  * model class containing issue information
@@ -68,14 +68,14 @@ public class Issue implements Timestamped {
   private Date lastModified;
 
   @Cascade(CascadeType.SAVE_UPDATE)
-  @OneToMany(fetch = FetchType.LAZY)
-  @IndexColumn(name="sortOrder", base=1, nullable=false)
+  @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(
       name = "issueArticleList",
       joinColumns = @JoinColumn(name = "issueId"),
       inverseJoinColumns = @JoinColumn(name = "articleId")
   )
-  private Set<ArticleTable> articles;
+  @OrderColumn(name="sortOrder", nullable=false)
+  private List<ArticleTable> articles;
 
   public Issue() {
     super();
@@ -135,11 +135,11 @@ public class Issue implements Timestamped {
     this.lastModified = lastModified;
   }
 
-  public Set<ArticleTable> getArticles() {
+  public List<ArticleTable> getArticles() {
     return articles;
   }
 
-  public void setArticles(Set<ArticleTable> articles) {
+  public void setArticles(List<ArticleTable> articles) {
     this.articles = articles;
   }
 }
