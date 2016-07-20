@@ -27,6 +27,7 @@ import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
+import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.model.article.AssetMetadata;
@@ -213,7 +214,7 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
   private void setFromXml(final ArticleMetadata.Builder article) throws XmlContentException {
     article.setDoi(readDoi().getName());
 
-    article.setTitle(buildXmlExcerpt(readNode("/article/front/article-meta/title-group/article-title")));
+    article.setTitle(parseTitle());
     article.seteIssn(checkEissn(readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]")));
     article.setDescription(buildXmlExcerpt(findAbstractNode()));
 
@@ -428,8 +429,8 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     List<RelatedArticleLink> relatedArticles = Lists.newArrayListWithCapacity(relatedArticleNodes.size());
     for (Node relatedArticleNode : relatedArticleNodes) {
       String type = readString("attribute::related-article-type", relatedArticleNode);
-      String href = readHrefAttribute(relatedArticleNode);
-      RelatedArticleLink relatedArticle = new RelatedArticleLink(type, href);
+      String doi = readHrefAttribute(relatedArticleNode);
+      RelatedArticleLink relatedArticle = new RelatedArticleLink(type, ArticleIdentifier.create(doi));
       relatedArticles.add(relatedArticle);
     }
     return relatedArticles;
@@ -449,6 +450,10 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
       }
       return assetMetadataList.get(0);
     }).collect(Collectors.toList());
+  }
+
+  public String parseTitle() {
+    return buildXmlExcerpt(readNode("/article/front/article-meta/title-group/article-title"));
   }
 
 }
