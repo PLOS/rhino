@@ -27,6 +27,7 @@ import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
+import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.model.article.AssetMetadata;
@@ -429,7 +430,7 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     for (Node relatedArticleNode : relatedArticleNodes) {
       String type = readString("attribute::related-article-type", relatedArticleNode);
       String doi = readHrefAttribute(relatedArticleNode);
-      RelatedArticleLink relatedArticle = new RelatedArticleLink(type, doi);
+      RelatedArticleLink relatedArticle = new RelatedArticleLink(type, ArticleIdentifier.create(doi));
       relatedArticles.add(relatedArticle);
     }
     return relatedArticles;
