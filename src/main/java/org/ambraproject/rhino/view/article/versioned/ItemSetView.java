@@ -22,22 +22,19 @@ public class ItemSetView {
     private HibernateTemplate hibernateTemplate;
 
     public ItemSetView getView(ArticleIngestion ingestion) {
-      Collection<ArticleItem> items = (List<ArticleItem>) hibernateTemplate.find("FROM ArticleItem WHERE ingestion = ?", ingestion);
       Collection<ArticleFile> files = (List<ArticleFile>) hibernateTemplate.find("FROM ArticleFile WHERE ingestion = ?", ingestion);
-      return new ItemSetView(items, files);
+      return new ItemSetView(ingestion, files);
     }
   }
 
   private final ImmutableMap<String, ItemView> items;
   private final ImmutableCollection<FileView> archival;
 
-  private ItemSetView(Collection<ArticleItem> items, Collection<ArticleFile> files) {
+  private ItemSetView(ArticleIngestion ingestion, Collection<ArticleFile> files) {
     Map<ArticleItem, List<ArticleFile>> itemFileGroups = files.stream()
         .filter(file -> file.getItem() != null)
         .collect(Collectors.groupingBy(ArticleFile::getItem));
-    if (!items.containsAll(itemFileGroups.keySet())) {
-      throw new RuntimeException("Data integrity violation: files and items have inconsistent ingestions");
-    }
+    validateItemParentage(ingestion, itemFileGroups.keySet());
     this.items = ImmutableMap.copyOf(itemFileGroups.entrySet().stream()
         .collect(Collectors.toMap(
             entry -> entry.getKey().getDoi(),
@@ -47,6 +44,21 @@ public class ItemSetView {
         .filter(file -> file.getItem() == null)
         .map(FileView::new)
         .collect(Collectors.toList()));
+  }
+
+  /**
+   * Validate that all items (belonging to a set of files) have the expected parent ingestion.
+   */
+  private static void validateItemParentage(ArticleIngestion ingestion, Collection<ArticleItem> items) {
+    for (ArticleItem item : items) {
+      ArticleIngestion itemIngestion = item.getIngestion();
+      if (!itemIngestion.equals(ingestion)) {
+        String message = String.format("Data integrity violation: item %s has ingestion (%s, %d); expected (%s, %d)", item.getDoi(),
+            itemIngestion.getArticle().getDoi(), itemIngestion.getIngestionNumber(),
+            ingestion.getArticle().getDoi(), ingestion.getIngestionNumber());
+        throw new RuntimeException(message);
+      }
+    }
   }
 
   private static class ItemView {
