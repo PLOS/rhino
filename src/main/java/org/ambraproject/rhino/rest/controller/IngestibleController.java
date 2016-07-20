@@ -16,8 +16,8 @@ package org.ambraproject.rhino.rest.controller;
 import com.google.common.net.HttpHeaders;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
+import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.service.impl.VersionedIngestionService;
@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,18 +38,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Optional;
-import java.util.OptionalInt;
 
 /**
  * Controller enabling access to the ambra ingest directory (whose location is defined by the
  * ambra.services.documentManagement.ingestSourceDir property of ambra.xml).
  */
 @Controller
-public class IngestibleController extends DoiBasedCrudController {
+public class IngestibleController extends RestController {
 
   private static final String INGESTIBLE_ROOT = "/ingestibles";
-  private static final String INGESTIBLE_NAMESPACE = INGESTIBLE_ROOT + "/";
-  private static final String INGESTIBLE_TEMPLATE = INGESTIBLE_NAMESPACE + "**";
 
   @Autowired
   private ArticleCrudService articleCrudService;
@@ -57,22 +55,13 @@ public class IngestibleController extends DoiBasedCrudController {
   @Autowired
   private VersionedIngestionService versionedIngestionService;
 
-  @Override
-  protected String getNamespacePrefix() {
-    return INGESTIBLE_NAMESPACE;
-  }
-
-  @Override
-  protected ArticleIdentity parse(HttpServletRequest request) {
-    return ArticleIdentity.create(getIdentifier(request));
-  }
-
   /**
    * Method that lists all ingestible archives in the ingest source directory.
    *
    * @param response HttpServletResponse
    * @throws IOException
    */
+  // TODO: Remove method if possible
   @Transactional(readOnly = true)
   @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response)
@@ -88,12 +77,13 @@ public class IngestibleController extends DoiBasedCrudController {
    * @param forceReingest if present, we will reingest the article if it already exists
    * @throws IOException
    */
+  // TODO: Remove method if possible
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.POST)
   public void ingest(HttpServletRequest request, HttpServletResponse response,
-      @RequestParam(value = "name") String name,
-      @RequestParam(value = "force_reingest", required = false) String forceReingest,
-      @RequestParam(value = "revision", required = false) Integer revisionNumber)
+                     @RequestParam(value = "name") String name,
+                     @RequestParam(value = "force_reingest", required = false) String forceReingest,
+                     @RequestParam(value = "revision", required = false) Integer revisionNumber)
       throws IOException {
 
     File archiveFile;
@@ -109,7 +99,7 @@ public class IngestibleController extends DoiBasedCrudController {
 
     ArticleIngestionIdentifier ingestionId;
     try (Archive archive = Archive.readZipFile(archiveFile)) {
-      ingestionId = versionedIngestionService.ingest(archive, OptionalInt.empty());
+      ingestionId = versionedIngestionService.ingest(archive);
     }
     ingestibleService.archiveIngested(name);
     response.setStatus(HttpStatus.CREATED.value());
@@ -119,10 +109,14 @@ public class IngestibleController extends DoiBasedCrudController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.GET, params = "article")
+  @RequestMapping(value = "/articles/{doi}/ingestions/{number}/ingestible", method = RequestMethod.GET)
   public void repack(HttpServletResponse response,
-      @RequestParam("article") String articleId)
+                     @PathVariable("doi") String doi,
+                     @PathVariable("number") int ingestionNumber)
       throws IOException {
+    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
+
+    String articleId = null; // TODO: Implement ArticleCrudService.repack for ArticleIngestionIdentifier
     Archive archive = articleCrudService.repack(ArticleIdentity.create(articleId));
     response.setStatus(HttpStatus.OK.value());
     response.setContentType("application/zip");

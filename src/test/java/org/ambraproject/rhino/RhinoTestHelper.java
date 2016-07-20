@@ -42,7 +42,6 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.util.Collection;
 import java.util.List;
-import java.util.OptionalInt;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -240,7 +239,7 @@ public final class RhinoTestHelper {
     Archive mockIngestible = createMockIngestible(articleId, input, reference.getAssets());
     ArticleIngestionIdentifier ingestionIdentifier;
     try {
-      ingestionIdentifier = versionedIngestionService.ingest(mockIngestible, OptionalInt.empty());
+      ingestionIdentifier = versionedIngestionService.ingest(mockIngestible);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

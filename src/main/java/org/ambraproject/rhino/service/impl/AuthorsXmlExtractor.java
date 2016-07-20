@@ -4,9 +4,11 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.ambraproject.rhino.content.xml.XpathReader;
+import org.ambraproject.rhino.util.NodeListAdapter;
 import org.ambraproject.rhino.util.StringReplacer;
-import org.ambraproject.rhino.view.article.AuthorView;
-import org.ambraproject.rhino.view.article.Orcid;
+import org.ambraproject.rhino.view.article.author.AuthorRole;
+import org.ambraproject.rhino.view.article.author.AuthorView;
+import org.ambraproject.rhino.view.article.author.Orcid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -28,6 +30,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Contains logic for extracting author information from article XML.
@@ -112,7 +115,6 @@ public final class AuthorsXmlExtractor {
 
       Node surNameNode = xpath.selectNode(authorDoc, "./contrib/name/surname");
       Node givenNameNode = xpath.selectNode(authorDoc, "./contrib/name/given-names");
-      Node orcidNode = xpath.selectNode(authorDoc, "./contrib/contrib-id[@contrib-id-type='orcid']");
       Node collabNameNode = xpath.selectNode(authorDoc, "//collab");
       Node behalfOfNode = xpath.selectNode(authorDoc, "//on-behalf-of");
       NodeList otherFootnotesNodeList = xpath.selectNodes(authorDoc, "//xref[@ref-type='fn']");
@@ -170,7 +172,7 @@ public final class AuthorsXmlExtractor {
         continue;
       }
 
-      AuthorView author = getAuthorView(authorDoc, surNameNode, givenNameNode, behalfOfNode, otherFootnotesNodeList, orcidNode);
+      AuthorView author = getAuthorView(authorDoc, surNameNode, givenNameNode, behalfOfNode, otherFootnotesNodeList);
       list.add(author);
     }
 
@@ -181,8 +183,7 @@ public final class AuthorsXmlExtractor {
                                    Node surNameNode,
                                    Node givenNameNode,
                                    Node behalfOfNode,
-                                   NodeList otherFootnotesNodeList,
-                                   Node orcidNode)
+                                   NodeList otherFootnotesNodeList)
       throws XPathException {
     Node suffixNode = xpath.selectNode(authorDoc, "//name/suffix");
     Node equalContribNode = xpath.selectNode(authorDoc, "//@equal-contrib");
@@ -190,6 +191,8 @@ public final class AuthorsXmlExtractor {
     Node corresAuthorNode = xpath.selectNode(authorDoc, "//xref[@ref-type='corresp']");
     NodeList addressList = xpath.selectNodes(authorDoc, "//xref[@ref-type='fn']/sup[contains(text()[1],'¤')]/..");
     NodeList affList = xpath.selectNodes(authorDoc, "//xref[@ref-type='aff']");
+    Node orcidNode = xpath.selectNode(authorDoc, "./contrib/contrib-id[@contrib-id-type='orcid']");
+    NodeList roleNodes = xpath.selectNodes(authorDoc, "//role");
 
     // Either surname or givenName can be blank
     String surname = (surNameNode == null) ? null : surNameNode.getTextContent();
@@ -289,6 +292,7 @@ public final class AuthorsXmlExtractor {
     }
 
     Orcid orcid = (orcidNode != null) ? buildOrcid(orcidNode) : null;
+    List<AuthorRole> roles = (roleNodes != null) ? buildRoles(roleNodes) : null;
 
     return AuthorView.builder()
         .setGivenNames(givenName)
@@ -296,6 +300,7 @@ public final class AuthorsXmlExtractor {
         .setSuffix(suffix)
         .setOnBehalfOf(onBehalfOf)
         .setOrcid(orcid)
+        .setRoles(roles)
         .setEqualContrib(equalContrib)
         .setDeceased(deceased)
         .setRelatedFootnote(relatedFootnote)
@@ -312,6 +317,15 @@ public final class AuthorsXmlExtractor {
     boolean authenticated = (authenticatedNode != null) &&
         Boolean.TRUE.toString().equalsIgnoreCase(authenticatedNode.getNodeValue());
     return new Orcid(value, authenticated);
+  }
+
+  private List<AuthorRole> buildRoles(NodeList roleNodes) {
+    return NodeListAdapter.wrap(roleNodes).stream().map((Node roleNode) -> {
+      String content = roleNode.getTextContent();
+      Node contentTypeNode = roleNode.getAttributes().getNamedItem("content-type");
+      String contentType = (contentTypeNode == null) ? null : contentTypeNode.getNodeValue();
+      return new AuthorRole(content, contentType);
+    }).collect(Collectors.toList());
   }
 
   /**

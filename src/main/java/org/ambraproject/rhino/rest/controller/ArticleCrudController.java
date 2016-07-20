@@ -24,12 +24,10 @@ import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleItemIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
-import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Syndication;
-import org.ambraproject.rhino.rest.ClientItemId;
-import org.ambraproject.rhino.rest.ClientItemIdResolver;
-import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
+import org.ambraproject.rhino.rest.DoiEscaping;
+import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.SyndicationCrudService;
@@ -46,6 +44,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -60,24 +59,13 @@ import java.util.List;
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
  */
 @Controller
-public class ArticleCrudController extends ArticleSpaceController {
+public class ArticleCrudController extends RestController {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudController.class);
 
-  /**
-   * The request parameter whose value is the XML file being uploaded for a create operation.
-   */
-  private static final String ARTICLE_XML_FIELD = "xml";
 
-  private static final String DATE_PARAM = "date";
-  private static final String PUB_STATE_PARAM = "state";
-  private static final String SYND_STATUS_PARAM = "syndication";
-
-  private static final String RECENT_PARAM = "since";
-  private static final String JOURNAL_PARAM = "journal";
-  private static final String MINIMUM_PARAM = "min";
-  private static final String TYPE_PARAM = "type";
-  private static final String EXCLUDE_PARAM = "exclude";
+  @Autowired
+  private ArticleCrudService articleCrudService;
 
   @Autowired
   private CommentCrudService commentCrudService;
@@ -92,11 +80,11 @@ public class ArticleCrudController extends ArticleSpaceController {
   private SyndicationCrudService syndicationCrudService;
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET)
+  @RequestMapping(value = "/articles", method = RequestMethod.GET)
   public void listDois(HttpServletRequest request, HttpServletResponse response,
-                       @RequestParam(value = DATE_PARAM, required = false) String includeLastModifiedDate,
-                       @RequestParam(value = PUB_STATE_PARAM, required = false) String[] pubStates,
-                       @RequestParam(value = SYND_STATUS_PARAM, required = false) String[] syndStatuses)
+                       @RequestParam(value = "date", required = false) String includeLastModifiedDate,
+                       @RequestParam(value = "state", required = false) String[] pubStates,
+                       @RequestParam(value = "syndication", required = false) String[] syndStatuses)
       throws IOException {
     ArticleCriteria articleCriteria = ArticleCriteria.create(asList(pubStates), asList(syndStatuses),
         booleanParameter(includeLastModifiedDate));
@@ -111,13 +99,13 @@ public class ArticleCrudController extends ArticleSpaceController {
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_ROOT, params = {RECENT_PARAM, JOURNAL_PARAM}, method = RequestMethod.GET)
+  @RequestMapping(value = "/articles", params = {"since", "journal"}, method = RequestMethod.GET)
   public void listRecent(HttpServletRequest request, HttpServletResponse response,
-                         @RequestParam(value = RECENT_PARAM, required = true) String since,
-                         @RequestParam(value = JOURNAL_PARAM, required = true) String journalKey,
-                         @RequestParam(value = MINIMUM_PARAM, required = false) Integer minimum,
-                         @RequestParam(value = TYPE_PARAM, required = false) String[] articleTypes,
-                         @RequestParam(value = EXCLUDE_PARAM, required = false) String[] typesToExclude)
+                         @RequestParam(value = "since", required = true) String since,
+                         @RequestParam(value = "journal", required = true) String journalKey,
+                         @RequestParam(value = "min", required = false) Integer minimum,
+                         @RequestParam(value = "type", required = false) String[] articleTypes,
+                         @RequestParam(value = "exclude", required = false) String[] typesToExclude)
       throws IOException {
     RecentArticleQuery query = RecentArticleQuery.builder()
         .setJournalKey(journalKey)
@@ -132,38 +120,26 @@ public class ArticleCrudController extends ArticleSpaceController {
   /**
    * Read article metadata.
    *
-   * @param request TODO
-   * @param response
-   * @param revisionNumber
-   * @param ingestionNumber
    * @throws IOException
    */
   @Deprecated
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
-  public void read(
-      HttpServletRequest request, HttpServletResponse response,
-      @RequestParam(value = "revision", required = false) Integer revisionNumber,
-      @RequestParam(value = "ingestion", required = false) Integer ingestionNumber)
+  @RequestMapping(value = "/articles/{doi}/ingestions/{number}", method = RequestMethod.GET)
+  public void read(HttpServletRequest request, HttpServletResponse response,
+                   @PathVariable("doi") String doi,
+                   @PathVariable("number") int ingestionNumber)
       throws IOException {
-
-    ClientItemId itemId = ClientItemIdResolver.resolve(getIdentifier(request), revisionNumber, ingestionNumber);
-    ArticleIngestionIdentifier ingestionId = articleCrudService.resolveToIngestion(itemId);
-
+    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
     articleCrudService.readArticleMetadata(ingestionId).respond(request, response, entityGson);
   }
 
-  private ArticleRevisionIdentifier getArticleRevisionIdentifier(HttpServletRequest request, Integer revisionNumber) {
-    Doi id = Doi.create(getIdentifier(request));
-    int revisionNumberValue = (revisionNumber == null) ? articleCrudService.getLatestRevision(id) : revisionNumber;
-    return ArticleRevisionIdentifier.create(id, revisionNumberValue);
-  }
-
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = {"revisions"})
-  public void getRevisions(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    ArticleIdentifier id = ArticleIdentifier.create(getIdentifier(request));
-    articleCrudService.readRevisions(id).respond(request, response, entityGson);
+  @RequestMapping(value = "/articles/{doi:.+}", method = RequestMethod.GET)
+  public void getRevisions(HttpServletRequest request, HttpServletResponse response,
+                           @PathVariable("doi") String doi)
+      throws IOException {
+    ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
+    articleCrudService.readArticleOverview(id).respond(request, response, entityGson);
   }
 
   /**
@@ -175,18 +151,21 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @throws IOException
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "comments")
-  public void readComments(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = "/articles/{doi}/comments", method = RequestMethod.GET)
+  public void readComments(HttpServletRequest request, HttpServletResponse response,
+                           @PathVariable("doi") String doi)
       throws IOException {
-    ArticleIdentifier id = ArticleIdentifier.create(getIdentifier(request));
+    ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     commentCrudService.readComments(id).respond(request, response, entityGson);
   }
 
+  // TODO: Get rid of this?
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "commentCount")
-  public void getCommentCount(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = "/articles/{doi:.+}", method = RequestMethod.GET, params = "commentCount")
+  public void getCommentCount(HttpServletRequest request, HttpServletResponse response,
+                              @PathVariable("doi") String doi)
       throws IOException {
-    ArticleIdentifier id = ArticleIdentifier.create(getIdentifier(request));
+    ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     ArticleTable article = articleCrudService.getArticle(id);
     commentCrudService.getCommentCount(article).respond(request, response, entityGson);
   }
@@ -201,15 +180,13 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @throws IOException
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = {"authors"})
+  @RequestMapping(value = "/articles/{doi}/ingestions/{number}/authors", method = RequestMethod.GET, params = {"authors"})
   public void readAuthors(HttpServletRequest request, HttpServletResponse response,
-      @RequestParam(value = "revision", required = false) Integer revisionNumber,
-      @RequestParam(value = "ingestion", required = false) Integer ingestionNumber)
+                          @PathVariable("doi") String doi,
+                          @PathVariable("number") int ingestionNumber)
       throws IOException {
 
-    ClientItemId itemId = ClientItemIdResolver.resolve(getIdentifier(request), revisionNumber, ingestionNumber);
-    ArticleIngestionIdentifier ingestionId = articleCrudService.resolveToIngestion(itemId);
-
+    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
     articleCrudService.readAuthors(ingestionId).respond(request, response, entityGson);
   }
 
@@ -220,31 +197,32 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @param response
    * @throws IOException
    */
+  // TODO: Get rid of this?
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "xml")
+  @RequestMapping(value = "/articles/{doi}/ingestions/{number}", method = RequestMethod.GET, params = "xml")
   public void readXml(HttpServletRequest request, HttpServletResponse response,
-                      @RequestParam(value = "revision", required = false) Integer revisionNumber,
-                      @RequestParam(value = "ingestion", required = false) Integer ingestionNumber)
+                      @PathVariable("doi") String doi,
+                      @PathVariable("number") int ingestionNumber)
       throws IOException {
-    ClientItemId id = ClientItemIdResolver.resolve(getIdentifier(request), revisionNumber, ingestionNumber);
-    ArticleItemIdentifier itemId = articleCrudService.resolveToItem(id);
+    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
+    ArticleItemIdentifier itemId = ingestionId.getItemFor();
     ArticleFileIdentifier fileId = ArticleFileIdentifier.create(itemId, "manuscript");
-    assetFileCrudController.previewFileFromVersionedModel(request, response, fileId);
+    assetFileCrudController.serveFile(request, response, fileId);
   }
 
   /**
    * Populates article category information by making a call to the taxonomy server.
    *
-   * @param request          HttpServletRequest
-   * @param response         HttpServletResponse
+   * @param request  HttpServletRequest
+   * @param response HttpServletResponse
    * @throws IOException
    */
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.POST,
-      params = "populateCategories")
-  public void populateCategories(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = "/articles/{doi}/categories", method = RequestMethod.POST)
+  public void populateCategories(HttpServletRequest request, HttpServletResponse response,
+                                 @PathVariable("doi") String doi)
       throws IOException {
-    ArticleIdentifier articleId = ArticleIdentifier.create(getIdentifier(request));
+    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     articleCrudService.populateCategories(articleId);
 
     // Report the current categories
@@ -259,16 +237,17 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @throws IOException
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "categories")
-  public void readCategories(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = "/articles/{doi}/categories", method = RequestMethod.GET)
+  public void readCategories(HttpServletRequest request, HttpServletResponse response,
+                             @PathVariable("doi") String doi)
       throws IOException {
-    ArticleIdentifier articleId = ArticleIdentifier.create(getIdentifier(request));
+    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     articleCrudService.readCategories(articleId).respond(request, response, entityGson);
   }
 
   /**
-   * A temporary endpoint for testing the creation of article relationships
-   * This functionality should ultimately be subsumed under the publication and revision assignment workflow.
+   * A temporary endpoint for testing the creation of article relationships This functionality should ultimately be
+   * subsumed under the publication and revision assignment workflow.
    *
    * @param request
    * @param response
@@ -276,10 +255,13 @@ public class ArticleCrudController extends ArticleSpaceController {
    */
   @Deprecated
   @Transactional(readOnly = false)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "relationships")
-  public void refreshArticleRelationships(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = "/articles/{doi}/ingestions/{number}/relationships", method = RequestMethod.POST)
+  public void refreshArticleRelationships(HttpServletRequest request, HttpServletResponse response,
+                                          @PathVariable("doi") String doi,
+                                          @PathVariable("number") int ingestionNumber)
       throws IOException {
-    ArticleRevisionIdentifier articleRevId = getArticleRevisionIdentifier(request, null);
+    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
+    ArticleRevisionIdentifier articleRevId = null; // TODO: Refactor ArticleCrudService.refreshArticleRelationships to take ArticleIngestionIdentifier
     articleCrudService.refreshArticleRelationships(articleRevId);
   }
 
@@ -290,27 +272,31 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @param response
    * @throws IOException
    */
+  // TODO: Get rid of this?
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "rawCategories")
-  public void getRawCategories(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = "/articles/{doi}/categories", method = RequestMethod.GET, params = "raw")
+  public void getRawCategories(HttpServletRequest request, HttpServletResponse response,
+                               @PathVariable("doi") String doi)
       throws IOException {
-    ArticleIdentifier articleId = ArticleIdentifier.create(getIdentifier(request));
+    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     articleCrudService.getRawCategories(articleId).respond(request, response, entityGson);
   }
 
   /**
-   * Retrieves the raw taxonomy categories associated with the article along with the text that is sent to the
-   * taxonomy server for classification
+   * Retrieves the raw taxonomy categories associated with the article along with the text that is sent to the taxonomy
+   * server for classification
    *
    * @param request
    * @return a String containing the text and raw categories in the form of <text> \n\n <categories>
    * @throws IOException
    */
+  // TODO: Get rid of this?
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "rawCategoriesAndText")
-  public ResponseEntity<String> getRawCategoriesAndText(HttpServletRequest request)
+  @RequestMapping(value = "/articles/{doi}/categories", method = RequestMethod.GET, params = "rawCategoriesAndText")
+  public ResponseEntity<String> getRawCategoriesAndText(HttpServletRequest request,
+                                                        @PathVariable("doi") String doi)
       throws IOException {
-    ArticleIdentifier articleId = ArticleIdentifier.create(getIdentifier(request));
+    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(doi));
 
     String categoriesAndText = articleCrudService.getRawCategoriesAndText(articleId);
     HttpHeaders responseHeader = new HttpHeaders();
@@ -322,42 +308,50 @@ public class ArticleCrudController extends ArticleSpaceController {
    * Retrieves a collection of article lists that contain an article.
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "lists")
-  public void getContainingLists(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(
+      // Not "/articles/{doi}/lists" because a list isn't a child object of the article. This is kind of a search query.
+      value = "/articles/{doi:.+}", method = RequestMethod.GET, params = "lists")
+  public void getContainingLists(HttpServletRequest request, HttpServletResponse response,
+                                 @PathVariable("doi") String doi)
       throws IOException {
-    ArticleIdentifier id = ArticleIdentifier.create(getIdentifier(request));
+    ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     articleListCrudService.readContainingLists(id).respond(request, response, entityGson);
   }
 
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.POST, params = "syndications")
+  @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications", method = RequestMethod.POST)
   public ResponseEntity<Object> createSyndication(HttpServletRequest request,
-      @RequestParam(value = "revision", required = false) Integer revisionNumber)
+                                                  @PathVariable("doi") String doi,
+                                                  @PathVariable("number") int revisionNumber)
       throws IOException {
-    ArticleRevisionIdentifier revisionId = getArticleRevisionIdentifier(request, revisionNumber);
+    ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
 
     syndicationCrudService.createSyndication(revisionId, input.getTargetQueue());
     return reportCreated();
   }
 
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.POST, params = "syndicate")
+  @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications",
+      // Fold into PATCH operation so we can get rid of "?syndicate"?
+      method = RequestMethod.POST, params = "syndicate")
   @ApiOperation(value = "syndicate", notes = "Send a syndication message to the queue for processing. " +
       "Will create and add a syndication to the database if none exist for current article and target.")
   public ResponseEntity<Object> syndicate(HttpServletRequest request,
-      @RequestParam(value = "revision", required = false) Integer revisionNumber)
+                                          @PathVariable("doi") String doi,
+                                          @PathVariable("number") int revisionNumber)
       throws IOException {
-    ArticleRevisionIdentifier revisionId = getArticleRevisionIdentifier(request, revisionNumber);
+    ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
 
     Syndication created = syndicationCrudService.syndicate(revisionId, input.getTargetQueue());
     return reportOk(created.toString());
   }
 
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PATCH, params = "syndications")
+  @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications", method = RequestMethod.PATCH)
   public ResponseEntity<Object> patchSyndication(HttpServletRequest request,
-      @RequestParam(value = "revision", required = false) Integer revisionNumber)
+                                                 @PathVariable("doi") String doi,
+                                                 @PathVariable("number") int revisionNumber)
       throws IOException {
-    ArticleRevisionIdentifier revisionId = getArticleRevisionIdentifier(request, revisionNumber);
+    ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
 
     Syndication patched = syndicationCrudService.updateSyndication(revisionId,
@@ -368,16 +362,15 @@ public class ArticleCrudController extends ArticleSpaceController {
   /**
    * Retrieves the metadata from a random article
    *
-   * @param request          HttpServletRequest
-   * @param response         HttpServletResponse
+   * @param request  HttpServletRequest
+   * @param response HttpServletResponse
    * @return a JSON representation of the random article
    * @throws IOException
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "random")
+  @RequestMapping(value = "/articles", method = RequestMethod.GET, params = "random")
   public void readRandom(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-
     articleCrudService.readRandom().respond(request, response, entityGson);
   }
 

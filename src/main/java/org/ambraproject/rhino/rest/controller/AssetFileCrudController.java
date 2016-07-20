@@ -21,27 +21,19 @@ package org.ambraproject.rhino.rest.controller;
 import com.google.common.base.Joiner;
 import com.google.common.io.ByteStreams;
 import com.google.common.net.HttpHeaders;
-import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
-import org.ambraproject.rhino.identity.ArticleItemIdentifier;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
-import org.ambraproject.rhino.rest.ClientItemId;
-import org.ambraproject.rhino.rest.ClientItemIdResolver;
-import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
-import org.ambraproject.rhino.service.ArticleCrudService;
+import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.service.AssetCrudService;
-import org.plos.crepo.exceptions.ContentRepoException;
-import org.plos.crepo.exceptions.ErrorType;
-import org.plos.crepo.model.identity.RepoId;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -53,69 +45,19 @@ import java.sql.Timestamp;
 import java.util.Enumeration;
 import java.util.List;
 
-import static org.ambraproject.rhino.service.impl.AmbraService.reportNotFound;
-
 @Controller
-public class AssetFileCrudController extends DoiBasedCrudController {
+public class AssetFileCrudController extends RestController {
 
-  private static final String ASSET_ROOT = "/assetfiles";
-  private static final String ASSET_NAMESPACE = ASSET_ROOT + "/";
-  private static final String ASSET_TEMPLATE = ASSET_NAMESPACE + "**";
-
-  @Autowired
-  private ArticleCrudService articleCrudService;
   @Autowired
   private AssetCrudService assetCrudService;
   @Autowired
   private ContentRepoService contentRepoService;
-  @Autowired
-  private RuntimeConfiguration runtimeConfiguration;
 
-  @Override
-  protected String getNamespacePrefix() {
-    return ASSET_NAMESPACE;
-  }
-
-  @Override
-  protected AssetFileIdentity parse(HttpServletRequest request) {
-    return AssetFileIdentity.parse(getIdentifier(request));
-  }
-
-
-  private static final String METADATA_PARAM = "metadata";
 
   private static final Joiner REPROXY_URL_JOINER = Joiner.on(' ');
   private static final int REPROXY_CACHE_FOR_VALUE = 6 * 60 * 60; // TODO: Make configurable
   private static final String REPROXY_CACHE_FOR_HEADER =
       REPROXY_CACHE_FOR_VALUE + "; Last-Modified Content-Type Content-Disposition";
-
-  /**
-   * Serve an identified asset file.
-   */
-  @Transactional(readOnly = true)
-  @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response)
-      throws IOException {
-    read(request, response, parse(request));
-  }
-
-  void read(HttpServletRequest request, HttpServletResponse response, AssetFileIdentity assetFileIdentity)
-      throws IOException {
-    RepoId repoId = RepoId.create(runtimeConfiguration.getCorpusStorage().getDefaultBucket(),
-        assetFileIdentity.toString());
-    RepoObjectMetadata objMeta;
-    try {
-      objMeta = contentRepoService.getLatestRepoObjectMetadata(repoId);
-    } catch (ContentRepoException e) {
-      if (e.getErrorType() == ErrorType.ErrorFetchingObjectMeta) {
-        throw reportNotFound(assetFileIdentity);
-      } else {
-        throw e;
-      }
-    }
-
-    serve(request, response, assetFileIdentity, objMeta);
-  }
 
   private void serve(HttpServletRequest request, HttpServletResponse response,
                      AssetFileIdentity id, RepoObjectMetadata objMeta)
@@ -163,33 +105,32 @@ public class AssetFileCrudController extends DoiBasedCrudController {
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET, params = {METADATA_PARAM})
-  public void readMetadata(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = "/articles/{doi}/ingestions/{number}/files/{filetype}", method = RequestMethod.GET)
+  public void readMetadata(HttpServletRequest request, HttpServletResponse response,
+                           @PathVariable("doi") String doi,
+                           @PathVariable("number") int ingestionNumber,
+                           @PathVariable("filetype") String fileType)
       throws IOException {
-    AssetFileIdentity id = parse(request);
+    ArticleFileIdentifier fileId = ArticleFileIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber, fileType);
+    AssetFileIdentity id = null; // TODO: Reimplement AssetCrudService.readFileMetadata for ArticleFileIdentifier
     assetCrudService.readFileMetadata(id).respond(request, response, entityGson);
   }
 
-  /**
-   * @deprecated <em>TEMPORARY.</em> To be removed when the versioned data model is fully supported.
-   */
-  @Deprecated
   @Transactional(readOnly = true)
-  @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET, params = "versionedPreview")
-  public void previewFileFromVersionedModel(HttpServletRequest request, HttpServletResponse response,
-                                            @RequestParam(value = "type", required = true) String fileType,
-                                            @RequestParam(value = "revision", required = false) Integer revisionNumber,
-                                            @RequestParam(value = "ingestion", required = false) Integer ingestionNumber)
+  @RequestMapping(value = "/articles/{doi}/ingestions/{number}/files/{filetype}", method = RequestMethod.GET,
+      // TODO: Do we even want to support this, as opposed to sending the client to the CRepo?
+      params = "download")
+  public void serveFile(HttpServletRequest request, HttpServletResponse response,
+                        @PathVariable("doi") String doi,
+                        @PathVariable("number") int ingestionNumber,
+                        @PathVariable("filetype") String fileType)
       throws IOException {
-    ClientItemId id = ClientItemIdResolver.resolve(getIdentifier(request), revisionNumber, ingestionNumber);
-    ArticleItemIdentifier itemId = articleCrudService.resolveToItem(id);
-
-    ArticleFileIdentifier fileId = ArticleFileIdentifier.create(itemId, fileType);
-    previewFileFromVersionedModel(request, response, fileId);
+    ArticleFileIdentifier fileId = ArticleFileIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber, fileType);
+    serveFile(request, response, fileId);
   }
 
-  void previewFileFromVersionedModel(HttpServletRequest request, HttpServletResponse response,
-                                     ArticleFileIdentifier fileId)
+  void serveFile(HttpServletRequest request, HttpServletResponse response,
+                 ArticleFileIdentifier fileId)
       throws IOException {
     RepoObjectMetadata objectMetadata = assetCrudService.getArticleItemFile(fileId);
 

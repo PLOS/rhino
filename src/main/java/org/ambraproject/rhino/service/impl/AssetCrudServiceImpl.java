@@ -33,8 +33,6 @@ import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleVisibility;
-import org.ambraproject.rhino.view.asset.groomed.GroomedImageView;
-import org.ambraproject.rhino.view.asset.groomed.UncategorizedAssetException;
 import org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView;
 import org.ambraproject.rhino.view.asset.raw.RawAssetFileView;
 import org.hibernate.Criteria;
@@ -123,25 +121,6 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
       protected Object getView(Collection<? extends ArticleAsset> assets) {
         ArticleVisibility parentArticle = findArticleFor(id);
         return new RawAssetFileCollectionView(assets, parentArticle);
-      }
-    };
-  }
-
-  @Override
-  public Transceiver readFigureMetadata(final AssetIdentity id)
-      throws IOException {
-    return new ArticleAssetsRetriever(id) {
-      @Override
-      protected Object getView(Collection<? extends ArticleAsset> assets) {
-        GroomedImageView figureView;
-        try {
-          figureView = GroomedImageView.create(assets);
-        } catch (UncategorizedAssetException e) {
-          String message = "Not a figure asset: " + id.getIdentifier();
-          throw new RestClientException(message, HttpStatus.BAD_REQUEST, e);
-        }
-        figureView.setParentArticle(findArticleFor(figureView.getIdentity()));
-        return figureView;
       }
     };
   }

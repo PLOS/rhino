@@ -2,7 +2,6 @@ package org.ambraproject.rhino.rest;
 
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.rest.ClientItemId.NumberType;
-import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -10,45 +9,20 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import javax.servlet.http.HttpServletRequest;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
 /*
  * TODO: Wire as a Spring resolver
  */
-public enum ClientItemIdResolver implements HandlerMethodArgumentResolver {
-  INSTANCE;
-
-  /**
-   * Provides the string that is expected to precede an embedded URI variable in the servlet path.
-   *
-   * @see RestController#getFullPathVariable
-   */
-  @Retention(RetentionPolicy.RUNTIME)
-  @Target(ElementType.PARAMETER)
-  public static @interface NamespacePrefix {
-    String value();
-  }
-
+public abstract class ClientItemIdResolver implements HandlerMethodArgumentResolver {
 
   @Override
   public boolean supportsParameter(MethodParameter parameter) {
     return parameter.getParameterType() == ClientItemId.class;
   }
 
-  private static Doi extractDoi(MethodParameter parameter, NativeWebRequest webRequest) {
-    NamespacePrefix prefix = parameter.getParameterAnnotation(NamespacePrefix.class);
-    if (prefix == null) {
-      throw new RuntimeException("@NamespacePrefix is required on all ClientItemId parameters");
-    }
-
-    HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
-    String doi = RestController.getFullPathVariable(request, false, prefix.value());
-    return Doi.create(doi);
-  }
+  /*
+   * TODO: Assuming we keep this, figure out how to consistently extract DOIs from various request mappings.
+   */
+  protected abstract Doi extractDoi(MethodParameter parameter, NativeWebRequest webRequest);
 
   private static Integer parseIntParameter(NativeWebRequest webRequest, String parameterName) {
     String[] values = webRequest.getParameterValues(parameterName);

@@ -144,9 +144,8 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   }
 
   @Override
-  public Comment createComment(CommentInputView input) {
+  public Comment createComment(Optional<ArticleIdentifier> articleId, CommentInputView input) {
     final Optional<String> parentCommentUri = Optional.ofNullable(input.getParentCommentId());
-    Optional<ArticleIdentifier> articleId = Optional.ofNullable(input.getArticleDoi()).map(ArticleIdentifier::create);
 
     final ArticleTable article;
     final Comment parentComment;
