@@ -65,6 +65,7 @@ import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
 import org.ambraproject.rhino.view.article.versioned.ArticleIngestionViewFactory;
+import org.ambraproject.rhino.view.article.versioned.RelationshipSetViewFactory;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -301,6 +302,11 @@ public class RhinoConfiguration extends BaseConfiguration {
   @Bean
   public ArticleIngestionViewFactory articleIngestionViewFactory() {
     return new ArticleIngestionViewFactory();
+  }
+
+  @Bean
+  public RelationshipSetViewFactory relationshipSetViewFactory() {
+    return new RelationshipSetViewFactory();
   }
 
   @Bean

@@ -42,7 +42,7 @@ public class IssueCrudController extends RestController {
   private IssueCrudService issueCrudService;
 
   private IssueIdentifier getIssueId(String issueDoi) {
-    return IssueIdentifier.create(DoiEscaping.resolve(issueDoi));
+    return IssueIdentifier.create(DoiEscaping.unescape(issueDoi));
   }
 
   @Transactional(readOnly = true)
@@ -50,7 +50,6 @@ public class IssueCrudController extends RestController {
   public void read(@PathVariable("issueDoi") String issueDoi)
       throws IOException {
     IssueIdentifier issueId = getIssueId(issueDoi);
-
     // TODO: Look up journal and volume; redirect to main service
     // TODO: Equivalent alias methods for other HTTP methods?
   }
@@ -63,7 +62,6 @@ public class IssueCrudController extends RestController {
                    @PathVariable("issueDoi") String issueDoi)
       throws IOException {
     // TODO: Validate journalKey and volumeDoiObj
-
     IssueIdentifier issueId = getIssueId(issueDoi);
     issueCrudService.read(issueId).respond(request, response, entityGson);
   }
@@ -76,7 +74,6 @@ public class IssueCrudController extends RestController {
                      @PathVariable("issueDoi") String issueDoi)
       throws IOException {
     // TODO: Validate journalKey and volumeDoiObj
-
     IssueIdentifier issueId = getIssueId(issueDoi);
     IssueInputView input = readJsonFromRequest(request, IssueInputView.class);
     issueCrudService.update(issueId, input);

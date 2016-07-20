@@ -49,7 +49,7 @@ public class VolumeCrudController extends RestController {
   private IssueCrudService issueCrudService;
 
   private VolumeIdentifier getVolumeId(String volumeDoi) {
-    return VolumeIdentifier.create(DoiEscaping.resolve(volumeDoi));
+    return VolumeIdentifier.create(DoiEscaping.unescape(volumeDoi));
   }
 
   @Transactional(readOnly = true)
@@ -58,7 +58,6 @@ public class VolumeCrudController extends RestController {
       @PathVariable("volumeDoi") String volumeDoi)
       throws IOException {
     VolumeIdentifier volumeId = getVolumeId(volumeDoi);
-
     // TODO: Look up journal; redirect to main service
     // TODO: Equivalent alias methods for other HTTP methods?
   }
@@ -69,11 +68,9 @@ public class VolumeCrudController extends RestController {
       @PathVariable("journalKey") String journalKey,
       @PathVariable("volumeDoi") String volumeDoi)
       throws IOException {
-
-    VolumeIdentifier volumeId = getVolumeId(volumeDoi);
     // TODO: Validate journalKey
+    VolumeIdentifier volumeId = getVolumeId(volumeDoi);
     volumeCrudService.read(volumeId).respond(request, response, entityGson);
-
   }
 
   @Transactional(rollbackFor = {Throwable.class})
@@ -86,7 +83,6 @@ public class VolumeCrudController extends RestController {
     VolumeIdentifier volumeId = getVolumeId(volumeDoi);
     VolumeInputView input = readJsonFromRequest(request, VolumeInputView.class);
     volumeCrudService.update(volumeId, input);
-
     return reportOk(volumeId.getDoi().getName());
   }
 
@@ -95,9 +91,7 @@ public class VolumeCrudController extends RestController {
       @PathVariable("journalKey") String journalKey,
       @PathVariable("volumeDoi") String volumeDoi)
       throws IOException {
-
     // TODO: Validate journalKey
-
     VolumeIdentifier volumeId = getVolumeId(volumeDoi);
     volumeCrudService.delete(volumeId);
     return reportOk(volumeId.getDoi().getName());
@@ -109,7 +103,6 @@ public class VolumeCrudController extends RestController {
       @PathVariable("journalKey") String journalKey,
       @PathVariable("volumeDoi") String volumeDoi)
       throws IOException {
-
     // TODO: Validate journalKey
     VolumeIdentifier volumeId = getVolumeId(volumeDoi);
     IssueInputView input = readJsonFromRequest(request, IssueInputView.class);

@@ -60,7 +60,7 @@ public class ArticleStateController extends RestController {
                     @PathVariable("doi") String doi,
                     @PathVariable("number") int revisionNumber)
       throws IOException {
-    ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.resolve(doi), revisionNumber);
+    ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
 
     ArticleIdentity id = null; // TODO: Reimplement for ArticleRevision
     ArticleInputView input = readJsonFromRequest(request, ArticleInputView.class);

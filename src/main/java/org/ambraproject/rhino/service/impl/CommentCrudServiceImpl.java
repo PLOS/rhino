@@ -17,7 +17,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
-import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.CommentIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.ArticleTable;
@@ -145,12 +144,8 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   }
 
   @Override
-  public Comment createComment(ArticleRevisionIdentifier articleRevisionId, CommentInputView input) {
+  public Comment createComment(Optional<ArticleIdentifier> articleId, CommentInputView input) {
     final Optional<String> parentCommentUri = Optional.ofNullable(input.getParentCommentId());
-
-    // TODO: Comment should have ArticleRevision as parent instead of Article?
-    // TODO: Want to support calling with an optional ID?
-    Optional<ArticleIdentifier> articleId = Optional.of(articleRevisionId.getArticleIdentifier());
 
     final ArticleTable article;
     final Comment parentComment;

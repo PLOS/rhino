@@ -34,7 +34,7 @@ public class ArticleItemReadController extends RestController {
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @PathVariable("doi") String doi)
       throws IOException {
-    Doi doiObj = DoiEscaping.resolve(doi);
+    Doi doiObj = DoiEscaping.unescape(doi);
 
     // TODO: What do we want to do here? Given a DOI, resolve to an object type? Do ingestion/revision number matter?
     ClientItemId id = null;

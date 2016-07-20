@@ -45,16 +45,17 @@ import org.ambraproject.rhino.rest.ClientItemId;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
+import org.ambraproject.rhino.service.NoSuchArticleIdException;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
-import org.ambraproject.rhino.view.article.ArticleAllAuthorsView;
+import org.ambraproject.rhino.view.article.author.ArticleAllAuthorsView;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
 import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
-import org.ambraproject.rhino.view.article.AuthorView;
+import org.ambraproject.rhino.view.article.author.AuthorView;
 import org.ambraproject.rhino.view.article.RelatedArticleView;
 import org.ambraproject.rhino.view.article.versioned.ArticleIngestionViewFactory;
 import org.ambraproject.rhino.view.article.versioned.ArticleOverview;
@@ -471,10 +472,9 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       hibernateTemplate.delete(ar);
     }
     for (RelatedArticleLink ar : xmlRelationships) {
-      if (ar.getHref() != null) {
         ArticleTable targetArticle = null;
         try {
-          targetArticle = getArticle(ArticleIdentifier.create(ar.getHref()));
+          targetArticle = getArticle(ar.getArticleId());
         } catch (NoSuchArticleIdException e) {
           // likely a reference to an article external to our system and so the relationship is not persisted
         }
@@ -485,7 +485,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           newAr.setType(ar.getType());
           hibernateTemplate.save(newAr);
         }
-      }
     }
   }
 
@@ -603,8 +602,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     int latestRevision = getLatestRevision(Doi.create(article.getDoi()));
     ArticleRevision revision = hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
-          "FROM ArticleVersion as av " +
-          "WHERE av.article = :article " +
+          "FROM ArticleRevision as av " +
+          "WHERE av.ingestion.article = :article " +
           "AND av.revisionNumber = :latestRevision"
       );
       query.setParameter("article", article);
@@ -628,20 +627,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       throw new NoSuchArticleIdException(articleIdentifier);
     }
     return article;
-  }
-
-  private class NoSuchArticleIdException extends RuntimeException {
-    private NoSuchArticleIdException(ArticleRevisionIdentifier articleIdentifier) {
-      super("No such article: " + articleIdentifier.getDoiName());
-    }
-
-    private NoSuchArticleIdException(ArticleIdentifier articleIdentifier) {
-      super("No such article: " + articleIdentifier.getDoiName());
-    }
-
-    private NoSuchArticleIdException(ArticleIngestionIdentifier articleIdentifier) {
-      super("No such article: " + articleIdentifier.getDoiName());
-    }
   }
 
   private ArticleIngestionIdentifier resolveRevisionToIngestion(Doi doi, int revisionNumber) {

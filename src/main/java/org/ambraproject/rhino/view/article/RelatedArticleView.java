@@ -26,6 +26,10 @@ public class RelatedArticleView implements JsonOutputView, ArticleView {
     this.relatedArticle = Optional.ofNullable(relatedArticle);
   }
 
+  public boolean hasFrontMatter() {
+    return relatedArticle.isPresent();
+  }
+
   @Override
   public String getDoi() {
     return raw.getOtherArticleDoi();

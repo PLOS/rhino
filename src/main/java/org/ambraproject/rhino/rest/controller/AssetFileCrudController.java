@@ -111,7 +111,7 @@ public class AssetFileCrudController extends RestController {
                            @PathVariable("number") int ingestionNumber,
                            @PathVariable("filetype") String fileType)
       throws IOException {
-    ArticleFileIdentifier fileId = ArticleFileIdentifier.create(DoiEscaping.resolve(doi), ingestionNumber, fileType);
+    ArticleFileIdentifier fileId = ArticleFileIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber, fileType);
     AssetFileIdentity id = null; // TODO: Reimplement AssetCrudService.readFileMetadata for ArticleFileIdentifier
     assetCrudService.readFileMetadata(id).respond(request, response, entityGson);
   }
@@ -125,7 +125,7 @@ public class AssetFileCrudController extends RestController {
                         @PathVariable("number") int ingestionNumber,
                         @PathVariable("filetype") String fileType)
       throws IOException {
-    ArticleFileIdentifier fileId = ArticleFileIdentifier.create(DoiEscaping.resolve(doi), ingestionNumber, fileType);
+    ArticleFileIdentifier fileId = ArticleFileIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber, fileType);
     serveFile(request, response, fileId);
   }
 

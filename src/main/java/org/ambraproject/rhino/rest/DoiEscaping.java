@@ -45,7 +45,7 @@ public class DoiEscaping {
    * @return the represented DOI value
    * @throws EscapedDoiException if the input contains an ambiguous escape sequence
    */
-  public static Doi resolve(String escapedDoi) {
+  public static Doi unescape(String escapedDoi) {
     int length = escapedDoi.length();
     StringBuilder unescaped = new StringBuilder(length);
     for (int i = 0; i < length; i++) {
