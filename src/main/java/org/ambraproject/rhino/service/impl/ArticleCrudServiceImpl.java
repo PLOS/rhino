@@ -465,10 +465,9 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       hibernateTemplate.delete(ar);
     }
     for (RelatedArticleLink ar : xmlRelationships) {
-      if (ar.getDoi() != null) {
         ArticleTable targetArticle = null;
         try {
-          targetArticle = getArticle(ArticleIdentifier.create(ar.getDoi()));
+          targetArticle = getArticle(ar.getArticleId());
         } catch (NoSuchArticleIdException e) {
           // likely a reference to an article external to our system and so the relationship is not persisted
         }
@@ -479,7 +478,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           newAr.setType(ar.getType());
           hibernateTemplate.save(newAr);
         }
-      }
     }
   }
 
