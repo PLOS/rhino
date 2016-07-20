@@ -180,7 +180,7 @@ public class ArticleCrudController extends RestController {
    * @throws IOException
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/articles/{doi}/ingestions/{number}/authors", method = RequestMethod.GET, params = {"authors"})
+  @RequestMapping(value = "/articles/{doi}/ingestions/{number}/authors", method = RequestMethod.GET)
   public void readAuthors(HttpServletRequest request, HttpServletResponse response,
                           @PathVariable("doi") String doi,
                           @PathVariable("number") int ingestionNumber)
