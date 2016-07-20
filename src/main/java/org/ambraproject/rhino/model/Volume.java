@@ -15,6 +15,8 @@ package org.ambraproject.rhino.model;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,9 +25,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import java.util.Date;
 import java.util.List;
 
@@ -40,10 +44,15 @@ public class Volume implements Timestamped {
 
   @Id
   @GeneratedValue
+  @Column
   private Long volumeId;
 
   @Column
   private String doi;
+
+  @ManyToOne
+  @JoinColumn(name = "journalId")
+  private Journal journal;
 
   @Column
   private String displayName;
@@ -52,14 +61,18 @@ public class Volume implements Timestamped {
   @JoinColumn(name = "imageArticleId")
   private ArticleTable imageArticle;
 
-  @Column
+  @Generated(value= GenerationTime.INSERT)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
   private Date created;
 
-  @Column
+  @Generated(value= GenerationTime.ALWAYS)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
   private Date lastModified;
 
   @Cascade(CascadeType.SAVE_UPDATE)
-  @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
   @JoinTable(
       name = "issue",
       joinColumns = @JoinColumn(name = "volumeId"),
@@ -89,6 +102,14 @@ public class Volume implements Timestamped {
 
   public void setDoi(String doi) {
     this.doi = doi;
+  }
+
+  public Journal getJournal() {
+    return journal;
+  }
+
+  public void setJournal(Journal journal) {
+    this.journal = journal;
   }
 
   public String getDisplayName() {
@@ -142,6 +163,7 @@ public class Volume implements Timestamped {
     if (volumeId != null ? !volumeId.equals(volume.volumeId) : volume.volumeId != null)
       return false;
     if (doi != null ? !doi.equals(volume.doi) : volume.doi != null) return false;
+    if (journal != null ? !journal.equals(volume.journal) : volume.journal != null) return false;
     if (displayName != null ? !displayName.equals(volume.displayName) : volume.displayName != null)
       return false;
     if (imageArticle != null ? !imageArticle.equals(volume.imageArticle) : volume.imageArticle != null)
@@ -157,6 +179,7 @@ public class Volume implements Timestamped {
   public int hashCode() {
     int result = volumeId != null ? volumeId.hashCode() : 0;
     result = 31 * result + (doi != null ? doi.hashCode() : 0);
+    result = 31 * result + (journal != null ? journal.hashCode() : 0);
     result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
     result = 31 * result + (imageArticle != null ? imageArticle.hashCode() : 0);
     result = 31 * result + (created != null ? created.hashCode() : 0);

@@ -78,7 +78,7 @@ public class VolumeCrudController extends RestController {
 
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi:.+}", method = RequestMethod.PATCH)
-  public void update(HttpServletRequest request, HttpServletResponse response,
+  public ResponseEntity<Object> update(HttpServletRequest request, HttpServletResponse response,
       @PathVariable("journalKey") String journalKey,
       @PathVariable("volumeDoi") String volumeDoi)
       throws IOException {
@@ -87,7 +87,7 @@ public class VolumeCrudController extends RestController {
     VolumeInputView input = readJsonFromRequest(request, VolumeInputView.class);
     volumeCrudService.update(volumeId, input);
 
-    volumeCrudService.read(volumeId).respond(request, response, entityGson);
+    return reportOk(volumeId.getDoi().getName());
   }
 
   @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi:.+}", method = RequestMethod.DELETE)

@@ -9,7 +9,7 @@ public class IssueInputView {
   // Immutable by convention, but non-final to allow Gson's reflection magic
   private String doi;
   private String displayName;
-  private String imageDoi;
+  private String imageArticleDoi;
   private List<String> articleOrder;
 
   public String getDoi() {
@@ -20,8 +20,8 @@ public class IssueInputView {
     return displayName;
   }
 
-  public String getImageDoi() {
-    return imageDoi;
+  public String getImageArticleDoi() {
+    return imageArticleDoi;
   }
 
   public List<String> getArticleOrder() {

@@ -44,6 +44,7 @@ public class Issue implements Timestamped {
 
   @Id
   @GeneratedValue
+  @Column
   private Long issueId;
 
   @Column
@@ -68,7 +69,7 @@ public class Issue implements Timestamped {
 
   @Cascade(CascadeType.SAVE_UPDATE)
   @OneToMany(fetch = FetchType.LAZY)
-  @IndexColumn(name="sortOrder", base=0, nullable=false)
+  @IndexColumn(name="sortOrder", base=1, nullable=false)
   @JoinTable(
       name = "issueArticleList",
       joinColumns = @JoinColumn(name = "issueId"),

@@ -141,11 +141,7 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
   private Journal applyInput(Journal journal, JournalInputView input) {
     String currentIssueUri = input.getCurrentIssueUri();
     if (currentIssueUri != null) {
-      Issue currentIssue = issueCrudService.getIssue(IssueIdentifier.create(currentIssueUri), true);
-      if (currentIssue == null) {
-        throw new RestClientException("Issue not found for URI: " + currentIssueUri, HttpStatus.BAD_REQUEST);
-      }
-
+      Issue currentIssue = issueCrudService.getIssue(IssueIdentifier.create(currentIssueUri));
       journal.setCurrentIssue(validateIssueInJournal(currentIssue, journal));
     }
     return journal;

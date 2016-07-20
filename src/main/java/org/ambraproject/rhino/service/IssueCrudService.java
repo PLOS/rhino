@@ -22,7 +22,6 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.IssueIdentifier;
 import org.ambraproject.rhino.identity.VolumeIdentifier;
 import org.ambraproject.rhino.model.Issue;
-import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleIssue;
 import org.ambraproject.rhino.view.journal.IssueInputView;
@@ -43,9 +42,7 @@ public interface IssueCrudService {
 
   public abstract VolumeNonAssocView getParentVolumeView(Issue issue);
 
-  public abstract Volume getParentVolume(Issue issue);
-
-  public abstract Issue getIssue(IssueIdentifier issueId, boolean isNullChecked);
+  public abstract Issue getIssue(IssueIdentifier issueId);
 
   public abstract void delete(IssueIdentifier issueId);
 

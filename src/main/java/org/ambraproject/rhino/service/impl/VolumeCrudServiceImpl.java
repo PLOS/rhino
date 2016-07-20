@@ -20,7 +20,6 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.identity.VolumeIdentifier;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
@@ -38,7 +37,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
-import java.util.List;
 
 @SuppressWarnings("JpaQlInspection")
 public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudService {
@@ -51,11 +49,7 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
 
   @Override
   public Volume getVolume(VolumeIdentifier volumeId) {
-    Volume volume = hibernateTemplate.execute(session -> {
-      Query query = session.createQuery("FROM Volume WHERE doi = :doi");
-      query.setParameter("doi", volumeId.getDoi().getName());
-      return (Volume) query.uniqueResult();
-    });
+    Volume volume = getVolumeFromDatabase(volumeId);
     if (volume == null) {
       throw new RestClientException("Volume not found with DOI: " + volumeId.getDoi(),
           HttpStatus.NOT_FOUND);
@@ -63,22 +57,29 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
     return volume;
   }
 
+  private Volume getVolumeFromDatabase(VolumeIdentifier volumeId) {
+    return hibernateTemplate.execute(session -> {
+        Query query = session.createQuery("FROM Volume WHERE doi = :doi");
+        query.setParameter("doi", volumeId.getDoi().getName());
+        return (Volume) query.uniqueResult();
+      });
+  }
+
   @Override
   public VolumeIdentifier create(String journalKey, VolumeInputView input) {
     Preconditions.checkNotNull(journalKey);
 
     VolumeIdentifier volumeId = VolumeIdentifier.create(input.getDoi());
-    if (getVolume(volumeId) != null) {
+    if (getVolumeFromDatabase(volumeId) != null) {
       throw new RestClientException("Volume already exists with DOI: "
           + volumeId.getDoi(), HttpStatus.BAD_REQUEST);
     }
 
-    Journal journal = journalCrudService.findJournal(journalKey);
     Volume volume = applyInput(new Volume(), input);
+    Journal journal = journalCrudService.findJournal(journalKey);
+    volume.setJournal(journal);
 
-    List<Volume> volumeList = journal.getVolumes();
-    volumeList.add(volume);
-    hibernateTemplate.update(journal);
+    hibernateTemplate.save(volume);
 
     return VolumeIdentifier.create(volume.getDoi());
   }
@@ -119,8 +120,8 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
   private Volume applyInput(Volume volume, VolumeInputView input) {
     String doi = input.getDoi();
     if (doi != null) {
-      DoiBasedIdentity volumeId = DoiBasedIdentity.create(doi);
-      volume.setDoi(volumeId.getKey());
+      VolumeIdentifier volumeId = VolumeIdentifier.create(doi);
+      volume.setDoi(volumeId.getDoi().getName());
     }
 
     String displayName = input.getDisplayName();

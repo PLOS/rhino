@@ -56,22 +56,23 @@ import java.util.stream.Collectors;
 public class IssueCrudServiceImpl extends AmbraService implements IssueCrudService {
 
   @Autowired
-  private VolumeCrudService volumeCrudService;
-
-  @Autowired
   private ArticleCrudService articleCrudService;
 
   @Override
-  public Issue getIssue(IssueIdentifier issueId, boolean isNullChecked) {
-    Issue issue = hibernateTemplate.execute(session -> {
-      Query query = session.createQuery("FROM Issue WHERE issueUri = :issueUri");
-      query.setParameter("issueUri", issueId.getDoi().getName());
-      return (Issue) query.uniqueResult();
-    });
-    if (issue == null && isNullChecked) {
-      throw new RestClientException("Issue not found with URI: " + issueId, HttpStatus.NOT_FOUND);
+  public Issue getIssue(IssueIdentifier issueId) {
+    Issue issue = getIssueFromDatabase(issueId);
+    if (issue == null) {
+      throw new RestClientException("Issue not found with DOI: " + issueId, HttpStatus.NOT_FOUND);
     }
     return issue;
+  }
+
+  private Issue getIssueFromDatabase(IssueIdentifier issueId) {
+    return hibernateTemplate.execute(session -> {
+        Query query = session.createQuery("FROM Issue WHERE doi = :doi");
+        query.setParameter("doi", issueId.getDoi().getName());
+        return (Issue) query.uniqueResult();
+      });
   }
 
   @Override
@@ -79,7 +80,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
     return new EntityTransceiver<Issue>() {
       @Override
       protected Issue fetchEntity() {
-        return getIssue(id, true);
+        return getIssue(id);
       }
 
       @Override
@@ -103,28 +104,24 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
       issue.setDisplayName("");
     }
 
-    String imageDoi = input.getImageDoi();
+    String imageDoi = input.getImageArticleDoi();
     if (imageDoi != null) {
       ArticleIdentifier imageArticleId = ArticleIdentifier.create(imageDoi);
       ArticleTable imageArticle = articleCrudService.getArticle(imageArticleId);
       issue.setImageArticle(imageArticle);
-
     } else {
       issue.setImageArticle(null);
     }
 
-    return issue;
-  }
-
-  private void applyArticleInput(Issue issue, IssueInputView input) {
     List<String> inputArticleDois = input.getArticleOrder();
     if (inputArticleDois != null) {
-
       Set<ArticleTable> inputArticles = inputArticleDois.stream()
           .map(doi -> articleCrudService.getArticle(ArticleIdentifier.create(doi)))
           .collect(Collectors.toSet());
       issue.setArticles(inputArticles);
     }
+
+    return issue;
   }
 
   /**
@@ -133,6 +130,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
    * @param articleIdentity Article DOI that is contained in the Journal/Volume/Issue combinations which will be returned
    * @return a list of ArticleIssue objects that wrap each issue with its associated journal and volume objects
    */
+  //todo: remove when replacing article output view
   @Transactional(readOnly = true)
   @Override
   public List<ArticleIssue> getArticleIssues(final ArticleIdentity articleIdentity) {
@@ -170,63 +168,43 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
     Preconditions.checkNotNull(volumeId);
 
     IssueIdentifier issueId = IssueIdentifier.create(input.getDoi());
-    if (getIssue(issueId, false) != null) {
-      throw new RestClientException("Issue already exists with issueUri: " + issueId, HttpStatus.BAD_REQUEST);
+    if (getIssueFromDatabase(issueId) != null) {
+      throw new RestClientException("Issue already exists with DOI: "
+          + issueId, HttpStatus.BAD_REQUEST);
     }
-
-    Volume volume = volumeCrudService.getVolume(volumeId);
-
     Issue issue = applyInput(new Issue(), input);
     hibernateTemplate.save(issue);
-    applyArticleInput(issue, input);
-    List<Issue> volumeIssues = volume.getIssues();
-    volumeIssues.add(issue);
-    hibernateTemplate.update(volume);
-
     return IssueIdentifier.create(issue.getDoi());
   }
 
   @Override
   public void update(IssueIdentifier issueId, IssueInputView input) {
     Preconditions.checkNotNull(input);
-    Issue issue = getIssue(issueId, true);
+    Issue issue = getIssue(issueId);
     issue = applyInput(issue, input);
-    applyArticleInput(issue, input);
     hibernateTemplate.update(issue);
   }
 
   @Override
   public VolumeNonAssocView getParentVolumeView(Issue issue) {
-    Object[] parentVolumeResults = getParentVolumeByIssue(issue);
-    if (parentVolumeResults == null) return null;
-    return new VolumeNonAssocView(
-        (String) parentVolumeResults[0], (String) parentVolumeResults[1], (String) parentVolumeResults[2]);
+    Volume parentVolume = getParentVolumeByIssue(issue);
+    if (parentVolume == null) return null;
+    return new VolumeNonAssocView(parentVolume.getDoi(), parentVolume.getDisplayName(),
+        parentVolume.getImageArticle().getDoi());
   }
 
-  @Override
-  public Volume getParentVolume(Issue issue) {
-    Object[] parentVolumeResults = getParentVolumeByIssue(issue);
-    if (parentVolumeResults == null) return null;
-    String volumeUri = (String) parentVolumeResults[0];
-    return volumeCrudService.getVolume(VolumeIdentifier.create(volumeUri));
-  }
-
-  private Object[] getParentVolumeByIssue(Issue issue) {
+  private Volume getParentVolumeByIssue(Issue issue) {
     return hibernateTemplate.execute((Session session) -> {
-        String hql = "select volumeUri, displayName, imageUri, title, description " +
-            "from Volume where :issue in elements(issues)";
-        Query query = session.createQuery(hql);
+        Query query = session.createQuery("from Volume where :issue in elements(issues)");
         query.setParameter("issue", issue);
-        return (Object[]) query.uniqueResult();
+        return (Volume) query.uniqueResult();
       });
   }
 
   @Override
   public void delete(IssueIdentifier issueId) {
-    Issue issue = getIssue(issueId, true);
-    if (issue == null) {
-      throw new RestClientException("Issue does not exist: " + issueId, HttpStatus.NOT_FOUND);
-    }
+    Issue issue = getIssue(issueId);
+
     List<String> currentIssueJournalKeys = hibernateTemplate.execute((Session session) -> {
       Query query = session.createQuery("select journalKey from Journal where currentIssue = :issue");
       query.setParameter("issue", issue);
@@ -237,13 +215,6 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
           issueId, currentIssueJournalKeys);
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
-
-    Volume parentVolume = getParentVolume(issue);
-    List<Issue> issues = parentVolume.getIssues();
-    issues.remove(issue);
-    parentVolume.setIssues(issues);
-    hibernateTemplate.save(parentVolume);
-    issue.setArticles(null);
     hibernateTemplate.delete(issue);
   }
 

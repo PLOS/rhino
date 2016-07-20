@@ -62,7 +62,7 @@ public class JournalCrudController extends RestController {
       throws IOException {
     VolumeInputView input = readJsonFromRequest(request, VolumeInputView.class);
     if (StringUtils.isBlank(input.getDoi())) {
-      throw new RestClientException("volumeUri required", HttpStatus.BAD_REQUEST);
+      throw new RestClientException("Volume DOI required", HttpStatus.BAD_REQUEST);
     }
 
     VolumeIdentifier volumeId = volumeCrudService.create(journalKey, input);
