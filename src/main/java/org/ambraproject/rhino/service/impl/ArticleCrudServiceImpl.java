@@ -57,7 +57,7 @@ import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
 import org.ambraproject.rhino.view.article.RelatedArticleView;
 import org.ambraproject.rhino.view.article.author.ArticleAllAuthorsView;
 import org.ambraproject.rhino.view.article.author.AuthorView;
-import org.ambraproject.rhino.view.article.versioned.ArticleIngestionViewFactory;
+import org.ambraproject.rhino.view.article.versioned.ArticleIngestionView;
 import org.ambraproject.rhino.view.article.versioned.ArticleOverview;
 import org.ambraproject.rhino.view.article.versioned.ItemSetView;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -113,7 +113,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Autowired
   private VersionedIngestionService versionedIngestionService;
   @Autowired
-  private ArticleIngestionViewFactory articleIngestionViewFactory;
+  private ArticleIngestionView.Factory articleIngestionViewFactory;
   @Autowired
   private ItemSetView.Factory itemSetViewFactory;
 

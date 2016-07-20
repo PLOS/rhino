@@ -4,22 +4,45 @@ import com.google.common.base.Preconditions;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
+import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
+import org.ambraproject.rhino.service.ArticleCrudService;
+import org.ambraproject.rhino.service.impl.VersionedIngestionService;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Objects;
 
 public class ArticleIngestionView implements JsonOutputView {
 
+  public static class Factory {
+
+    @Autowired
+    private ArticleCrudService articleCrudService;
+    @Autowired
+    private VersionedIngestionService versionedIngestionService;
+    @Autowired
+    private RelationshipSetView.Factory relationshipSetViewFactory;
+
+    public ArticleIngestionView getView(ArticleIngestionIdentifier ingestionId) {
+      ArticleIngestion ingestion = articleCrudService.getArticleIngestion(ingestionId);
+      ArticleMetadata metadata = versionedIngestionService.getArticleMetadata(ingestionId);
+      RelationshipSetView relationships = relationshipSetViewFactory.getView(metadata);
+
+      return new ArticleIngestionView(ingestion, metadata, relationships);
+    }
+
+  }
+
   private final ArticleIngestion ingestion;
   private final ArticleMetadata metadata;
   private final RelationshipSetView relationships;
 
-  ArticleIngestionView(ArticleIngestion ingestion,
-                       ArticleMetadata metadata,
-                       RelationshipSetView relationships) {
+  private ArticleIngestionView(ArticleIngestion ingestion,
+                               ArticleMetadata metadata,
+                               RelationshipSetView relationships) {
     Preconditions.checkArgument(ingestion.getArticle().getDoi().equals(metadata.getDoi()));
     this.ingestion = ingestion;
     this.metadata = metadata;
