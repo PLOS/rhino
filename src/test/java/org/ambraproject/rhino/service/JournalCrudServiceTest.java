@@ -14,6 +14,7 @@
 package org.ambraproject.rhino.service;
 
 import com.google.common.collect.ImmutableSet;
+import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.BaseRhinoTest;
@@ -63,7 +64,7 @@ public class JournalCrudServiceTest extends BaseRhinoTest {
 
     Issue issue = new Issue();
     String testIssueUri = "testIssue";
-    issue.setIssueUri(testIssueUri);
+    issue.setImageArticle(new ArticleTable()); //todo: fix
     journal.setCurrentIssue(issue);
     hibernateTemplate.update(journal);
 

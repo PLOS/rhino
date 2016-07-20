@@ -13,6 +13,24 @@
 
 package org.ambraproject.rhino.model;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,38 +38,78 @@ import java.util.List;
  *
  * @author Juan Peralta
  */
-public class Volume extends AmbraEntity {
-  private String volumeUri;
-  private String displayName;
-  private String imageUri;
-  private String title;
-  private String description;
+@Entity
+@Table(name = "volume")
+public class Volume implements Timestamped {
 
+  @Id
+  @GeneratedValue
+  @Column
+  private Long volumeId;
+
+  @Column
+  private String doi;
+
+  @ManyToOne
+  @JoinColumn(name = "journalId")
+  private Journal journal;
+
+  @Column
+  private String displayName;
+
+  @OneToOne
+  @JoinColumn(name = "imageArticleId")
+  private ArticleTable imageArticle;
+
+  @Generated(value= GenerationTime.INSERT)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
+  private Date created;
+
+  @Generated(value= GenerationTime.ALWAYS)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
+  private Date lastModified;
+
+  @Cascade(CascadeType.SAVE_UPDATE)
+  @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
+  @JoinTable(
+      name = "issue",
+      joinColumns = @JoinColumn(name = "volumeId"),
+      inverseJoinColumns = @JoinColumn(name = "issueId"))
   private List<Issue> issues;
 
   public Volume() {
     super();
   }
 
-  public Volume(String volumeUri) {
+  public Volume(String doi) {
     super();
-    this.volumeUri = volumeUri;
+    this.doi = doi;
   }
 
-  public String getVolumeUri() {
-    return volumeUri;
+  public Long getVolumeId() {
+    return volumeId;
   }
 
-  public void setVolumeUri(String volumeUri) {
-    this.volumeUri = volumeUri;
+  public void setVolumeId(Long volumeId) {
+    this.volumeId = volumeId;
   }
 
-  public List<Issue> getIssues() {
-    return issues;
+  public String getDoi() {
+    return doi;
   }
 
-  public void setIssues(List<Issue> issues) {
-    this.issues = issues;
+  public void setDoi(String doi) {
+    this.doi = doi;
+  }
+
+  public Journal getJournal() {
+    return journal;
+  }
+
+  public void setJournal(Journal journal) {
+    this.journal = journal;
   }
 
   public String getDisplayName() {
@@ -62,28 +120,37 @@ public class Volume extends AmbraEntity {
     this.displayName = displayName;
   }
 
-  public String getImageUri() {
-    return imageUri;
+  public ArticleTable getImageArticle() {
+    return imageArticle;
   }
 
-  public void setImageUri(String imageUri) {
-    this.imageUri = imageUri;
+  public void setImageArticle(ArticleTable imageArticle) {
+    this.imageArticle = imageArticle;
   }
 
-  public String getTitle() {
-    return title;
+  public Date getCreated() {
+    return created;
   }
 
-  public void setTitle(String title) {
-    this.title = title;
+  public void setCreated(Date created) {
+    this.created = created;
   }
 
-  public String getDescription() {
-    return description;
+  @Override
+  public Date getLastModified() {
+    return lastModified;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
+  public void setLastModified(Date lastModified) {
+    this.lastModified = lastModified;
+  }
+
+  public List<Issue> getIssues() {
+    return issues;
+  }
+
+  public void setIssues(List<Issue> issues) {
+    this.issues = issues;
   }
 
   @Override
@@ -93,14 +160,16 @@ public class Volume extends AmbraEntity {
 
     Volume volume = (Volume) o;
 
-    if (volumeUri != null ? !volumeUri.equals(volume.volumeUri) : volume.volumeUri != null)
+    if (volumeId != null ? !volumeId.equals(volume.volumeId) : volume.volumeId != null)
       return false;
+    if (doi != null ? !doi.equals(volume.doi) : volume.doi != null) return false;
+    if (journal != null ? !journal.equals(volume.journal) : volume.journal != null) return false;
     if (displayName != null ? !displayName.equals(volume.displayName) : volume.displayName != null)
       return false;
-    if (imageUri != null ? !imageUri.equals(volume.imageUri) : volume.imageUri != null)
+    if (imageArticle != null ? !imageArticle.equals(volume.imageArticle) : volume.imageArticle != null)
       return false;
-    if (title != null ? !title.equals(volume.title) : volume.title != null) return false;
-    if (description != null ? !description.equals(volume.description) : volume.description != null)
+    if (created != null ? !created.equals(volume.created) : volume.created != null) return false;
+    if (lastModified != null ? !lastModified.equals(volume.lastModified) : volume.lastModified != null)
       return false;
     return issues != null ? issues.equals(volume.issues) : volume.issues == null;
 
@@ -108,24 +177,14 @@ public class Volume extends AmbraEntity {
 
   @Override
   public int hashCode() {
-    int result = volumeUri != null ? volumeUri.hashCode() : 0;
+    int result = volumeId != null ? volumeId.hashCode() : 0;
+    result = 31 * result + (doi != null ? doi.hashCode() : 0);
+    result = 31 * result + (journal != null ? journal.hashCode() : 0);
     result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
-    result = 31 * result + (imageUri != null ? imageUri.hashCode() : 0);
-    result = 31 * result + (title != null ? title.hashCode() : 0);
-    result = 31 * result + (description != null ? description.hashCode() : 0);
+    result = 31 * result + (imageArticle != null ? imageArticle.hashCode() : 0);
+    result = 31 * result + (created != null ? created.hashCode() : 0);
+    result = 31 * result + (lastModified != null ? lastModified.hashCode() : 0);
     result = 31 * result + (issues != null ? issues.hashCode() : 0);
     return result;
-  }
-
-  @Override
-  public String toString() {
-    return "Volume{" +
-        "id='" + getID() + '\'' +
-        ", volumeUri='" + volumeUri + '\'' +
-        ", displayName='" + displayName + '\'' +
-        ", imageUri='" + imageUri + '\'' +
-        ", title='" + title + '\'' +
-        ", description='" + description + '\'' +
-        '}';
   }
 }

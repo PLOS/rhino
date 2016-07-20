@@ -19,119 +19,85 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
-import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.identity.ArticleIdentifier;
+import org.ambraproject.rhino.identity.VolumeIdentifier;
+import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.service.ArticleCrudService;
+import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.journal.VolumeInputView;
 import org.ambraproject.rhino.view.journal.VolumeOutputView;
-import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Restrictions;
-import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
-import java.util.List;
 
+@SuppressWarnings("JpaQlInspection")
 public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudService {
 
-  private static Volume applyInput(Volume volume, VolumeInputView input) {
-    String volumeUri = input.getVolumeUri();
-    if (volumeUri != null) {
-      DoiBasedIdentity volumeId = DoiBasedIdentity.create(volumeUri);
-      volume.setVolumeUri(volumeId.getKey());
-    }
+  @Autowired
+  private JournalCrudService journalCrudService;
 
-    String displayName = input.getDisplayName();
-    if (displayName != null) {
-      volume.setDisplayName(displayName);
-    } else if (volume.getDisplayName() == null) {
-      volume.setDisplayName("");
-    }
+  @Autowired
+  private ArticleCrudService articleCrudService;
 
-    String imageUri = input.getImageUri();
-    if (imageUri != null) {
-      ArticleIdentity imageArticleId = ArticleIdentity.create(imageUri);
-      volume.setImageUri(imageArticleId.getKey());
-    } else if (volume.getImageUri() == null) {
-      volume.setImageUri("");
+  @Override
+  public Volume getVolume(VolumeIdentifier volumeId) {
+    Volume volume = getVolumeFromDatabase(volumeId);
+    if (volume == null) {
+      throw new RestClientException("Volume not found with DOI: " + volumeId.getDoi(),
+          HttpStatus.NOT_FOUND);
     }
-
     return volume;
   }
 
-  @Override
-  public Volume findVolume(DoiBasedIdentity volumeId) {
-    return (Volume) DataAccessUtils.uniqueResult(hibernateTemplate.findByCriteria(DetachedCriteria
-        .forClass(Volume.class)
-        .add(Restrictions.eq("volumeUri", volumeId.getKey()))
-        .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-    ));
+  private Volume getVolumeFromDatabase(VolumeIdentifier volumeId) {
+    return hibernateTemplate.execute(session -> {
+        Query query = session.createQuery("FROM Volume WHERE doi = :doi");
+        query.setParameter("doi", volumeId.getDoi().getName());
+        return (Volume) query.uniqueResult();
+      });
   }
 
   @Override
-  public DoiBasedIdentity create(String journalKey, VolumeInputView input) {
+  public VolumeIdentifier create(String journalKey, VolumeInputView input) {
     Preconditions.checkNotNull(journalKey);
 
-    DoiBasedIdentity volumeId = DoiBasedIdentity.create(input.getVolumeUri());
-    if (findVolume(volumeId) != null) {
-      throw new RestClientException("Volume already exists with volumeUri: " + volumeId.getIdentifier(), HttpStatus.BAD_REQUEST);
-    }
-
-    // TODO Transaction safety
-    Journal journal = (Journal) DataAccessUtils.uniqueResult((List<?>)
-        hibernateTemplate.findByCriteria(journalCriteria()
-                .add(Restrictions.eq("journalKey", journalKey))
-        ));
-    if (journal == null) {
-      String message = "Journal not found for journal key: " + journalKey;
-      HttpStatus status = HttpStatus.BAD_REQUEST; // Not "NOT FOUND", because the URL wasn't wrong
-      throw new RestClientException(message, status);
+    VolumeIdentifier volumeId = VolumeIdentifier.create(input.getDoi());
+    if (getVolumeFromDatabase(volumeId) != null) {
+      throw new RestClientException("Volume already exists with DOI: "
+          + volumeId.getDoi(), HttpStatus.BAD_REQUEST);
     }
 
     Volume volume = applyInput(new Volume(), input);
+    Journal journal = journalCrudService.findJournal(journalKey);
+    volume.setJournal(journal);
 
-    List<Volume> volumeList = journal.getVolumes();
-    volumeList.add(volume);
-    hibernateTemplate.update(journal);
+    hibernateTemplate.save(volume);
 
-    return DoiBasedIdentity.create(volume.getVolumeUri());
+    return VolumeIdentifier.create(volume.getDoi());
   }
 
   @Override
-  public void update(DoiBasedIdentity volumeId, VolumeInputView input) {
+  public void update(VolumeIdentifier volumeId, VolumeInputView input) {
     Preconditions.checkNotNull(input);
-    Volume volume = findVolume(volumeId);
-    if (volume == null) {
-      throw new RestClientException("Volume not found at URI=" + volumeId.getIdentifier(), HttpStatus.NOT_FOUND);
-    }
+    Volume volume = getVolume(volumeId);
     volume = applyInput(volume, input);
     hibernateTemplate.update(volume);
   }
 
   @Override
-  public Transceiver read(final DoiBasedIdentity id) throws IOException {
+  public Transceiver read(final VolumeIdentifier id) throws IOException {
     return new EntityTransceiver<Volume>() {
       @Override
       protected Volume fetchEntity() {
-        Volume volume = (Volume) DataAccessUtils.uniqueResult((List<?>)
-            hibernateTemplate.findByCriteria(DetachedCriteria
-                    .forClass(Volume.class)
-                    .add(Restrictions.eq("volumeUri", id.getKey()))
-                    .setFetchMode("issues", FetchMode.JOIN)
-            ));
-        if (volume == null) {
-          throw new RestClientException("Volume not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
-        }
-        return volume;
+        return getVolume(id);
       }
 
       @Override
@@ -141,29 +107,38 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
     };
   }
 
-  private Journal getParentJournal(Volume volume) {
-    return hibernateTemplate.execute(session -> {
-      Query query = session.createQuery("from Journal where :volume in elements(volumes)");
-      query.setParameter("volume", volume);
-      return (Journal) query.uniqueResult();
-    });
-  }
-
   @Override
-  public void delete(DoiBasedIdentity id) throws IOException {
-    Volume volume = findVolume(id);
-    if (volume == null) {
-      throw new RestClientException("Volume not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
-    }
-    //cannot delete a volume if there are related issues
+  public void delete(VolumeIdentifier id) throws IOException {
+    Volume volume = getVolume(id);
     if (volume.getIssues().size() > 0) {
       throw new RestClientException("Volume has issues and cannot be deleted until all issues have " +
           "been deleted.", HttpStatus.BAD_REQUEST);
     }
-    Journal parentJournal = getParentJournal(volume);
-    List<Volume> volumes = parentJournal.getVolumes();
-    volumes.remove(volume);
-    hibernateTemplate.save(parentJournal);
     hibernateTemplate.delete(volume);
+  }
+
+  private Volume applyInput(Volume volume, VolumeInputView input) {
+    String doi = input.getDoi();
+    if (doi != null) {
+      VolumeIdentifier volumeId = VolumeIdentifier.create(doi);
+      volume.setDoi(volumeId.getDoi().getName());
+    }
+
+    String displayName = input.getDisplayName();
+    if (displayName != null) {
+      volume.setDisplayName(displayName);
+    } else if (volume.getDisplayName() == null) {
+      volume.setDisplayName("");
+    }
+
+    String imageUri = input.getImageArticleDoi();
+    if (imageUri != null) {
+      ArticleIdentifier imageArticleId = ArticleIdentifier.create(imageUri);
+      ArticleTable imageArticle = articleCrudService.getArticle(imageArticleId);
+      volume.setImageArticle(imageArticle);
+    } else {
+      volume.setImageArticle(null);
+    }
+    return volume;
   }
 }

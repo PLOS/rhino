@@ -18,8 +18,7 @@
 
 package org.ambraproject.rhino.rest.controller;
 
-import org.ambraproject.rhino.identity.Doi;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.identity.IssueIdentifier;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.view.journal.IssueInputView;
@@ -42,12 +41,15 @@ public class IssueCrudController extends RestController {
   @Autowired
   private IssueCrudService issueCrudService;
 
+  private IssueIdentifier getIssueId(String issueDoi) {
+    return IssueIdentifier.create(DoiEscaping.unescape(issueDoi));
+  }
+
   @Transactional(readOnly = true)
   @RequestMapping(value = "/issues/{issueDoi:.+}", method = RequestMethod.GET)
   public void read(@PathVariable("issueDoi") String issueDoi)
       throws IOException {
-    Doi issueDoiObj = DoiEscaping.unescape(issueDoi);
-
+    IssueIdentifier issueId = getIssueId(issueDoi);
     // TODO: Look up journal and volume; redirect to main service
     // TODO: Equivalent alias methods for other HTTP methods?
   }
@@ -59,12 +61,9 @@ public class IssueCrudController extends RestController {
                    @PathVariable("volumeDoi") String volumeDoi,
                    @PathVariable("issueDoi") String issueDoi)
       throws IOException {
-    Doi volumeDoiObj = DoiEscaping.unescape(volumeDoi);
-    Doi issueDoiObj = DoiEscaping.unescape(issueDoi);
     // TODO: Validate journalKey and volumeDoiObj
-
-    DoiBasedIdentity id = null; // TODO: Implement IssueCrudService.read for identifier class
-    issueCrudService.read(id).respond(request, response, entityGson);
+    IssueIdentifier issueId = getIssueId(issueDoi);
+    issueCrudService.read(issueId).respond(request, response, entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
@@ -74,16 +73,12 @@ public class IssueCrudController extends RestController {
                      @PathVariable("volumeDoi") String volumeDoi,
                      @PathVariable("issueDoi") String issueDoi)
       throws IOException {
-    Doi volumeDoiObj = DoiEscaping.unescape(volumeDoi);
-    Doi issueDoiObj = DoiEscaping.unescape(issueDoi);
     // TODO: Validate journalKey and volumeDoiObj
-
-    DoiBasedIdentity issueId = null; // TODO: Implement services for identifier class
-
+    IssueIdentifier issueId = getIssueId(issueDoi);
     IssueInputView input = readJsonFromRequest(request, IssueInputView.class);
     issueCrudService.update(issueId, input);
 
-    issueCrudService.read(issueId).respond(request, response, entityGson);
+    issueCrudService.read(issueId);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
@@ -93,11 +88,8 @@ public class IssueCrudController extends RestController {
                                        @PathVariable("volumeDoi") String volumeDoi,
                                        @PathVariable("issueDoi") String issueDoi)
       throws IOException {
-    Doi volumeDoiObj = DoiEscaping.unescape(volumeDoi);
-    Doi issueDoiObj = DoiEscaping.unescape(issueDoi);
     // TODO: Validate journalKey and volumeDoiObj
-
-    DoiBasedIdentity issueId = null; // TODO: Implement IssueCrudService.delete for identifier class
+    IssueIdentifier issueId = getIssueId(issueDoi);
     issueCrudService.delete(issueId);
     return new ResponseEntity<>(HttpStatus.OK);
   }
