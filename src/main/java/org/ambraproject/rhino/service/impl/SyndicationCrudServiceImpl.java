@@ -140,7 +140,7 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
     LocalDate startDate = LocalDate.now().minus(numDaysInPast, ChronoUnit.DAYS);
     Instant startTime = startDate.atStartOfDay(ZoneId.systemDefault()).toInstant();
 
-    final Journal journal = journalService.findJournal(journalKey);
+    final Journal journal = journalService.readJournal(journalKey);
 
     if (journal == null) {
       throw new RuntimeException("Could not find journal for journal key: " + journalKey);

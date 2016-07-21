@@ -39,7 +39,7 @@ public interface CommentCrudService {
    * @param articleId identifies the article
    * @throws IOException
    */
-  public Transceiver readComments(ArticleIdentifier articleId)
+  public Transceiver serveComments(ArticleIdentifier articleId)
       throws IOException;
 
   /**
@@ -48,7 +48,7 @@ public interface CommentCrudService {
    * @param commentId identifies the comment
    * @throws IOException
    */
-  public Transceiver readComment(CommentIdentifier commentId)
+  public Transceiver serveComment(CommentIdentifier commentId)
       throws IOException;
 
   /**
@@ -56,8 +56,10 @@ public interface CommentCrudService {
    *
    * @throws IOException
    */
-  public Transceiver readFlaggedComments()
+  public Transceiver serveFlaggedComments()
       throws IOException;
+
+  public Optional<Comment> getComment(CommentIdentifier commentId);
 
   public Comment createComment(Optional<ArticleIdentifier> articleId, CommentInputView input);
 

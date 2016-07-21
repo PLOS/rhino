@@ -37,6 +37,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @SuppressWarnings("JpaQlInspection")
 public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudService {
@@ -48,21 +49,18 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
   private ArticleCrudService articleCrudService;
 
   @Override
-  public Volume getVolume(VolumeIdentifier volumeId) {
-    Volume volume = getVolumeFromDatabase(volumeId);
-    if (volume == null) {
-      throw new RestClientException("Volume not found with DOI: " + volumeId.getDoi(),
-          HttpStatus.NOT_FOUND);
-    }
-    return volume;
+  public Volume readVolume(VolumeIdentifier volumeId) {
+    return getVolume(volumeId).orElseThrow(() ->
+        new RestClientException("Volume not found with DOI: " + volumeId.getDoi(), HttpStatus.NOT_FOUND));
   }
 
-  private Volume getVolumeFromDatabase(VolumeIdentifier volumeId) {
-    return hibernateTemplate.execute(session -> {
-        Query query = session.createQuery("FROM Volume WHERE doi = :doi");
-        query.setParameter("doi", volumeId.getDoi().getName());
-        return (Volume) query.uniqueResult();
-      });
+  @Override
+  public Optional<Volume> getVolume(VolumeIdentifier volumeId) {
+    return Optional.ofNullable(hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM Volume WHERE doi = :doi");
+      query.setParameter("doi", volumeId.getDoi().getName());
+      return (Volume) query.uniqueResult();
+    }));
   }
 
   @Override
@@ -70,13 +68,13 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
     Preconditions.checkNotNull(journalKey);
 
     VolumeIdentifier volumeId = VolumeIdentifier.create(input.getDoi());
-    if (getVolumeFromDatabase(volumeId) != null) {
+    if (getVolume(volumeId).isPresent()) {
       throw new RestClientException("Volume already exists with DOI: "
           + volumeId.getDoi(), HttpStatus.BAD_REQUEST);
     }
 
     Volume volume = applyInput(new Volume(), input);
-    Journal journal = journalCrudService.findJournal(journalKey);
+    Journal journal = journalCrudService.readJournal(journalKey);
     volume.setJournal(journal);
 
     hibernateTemplate.save(volume);
@@ -87,17 +85,17 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
   @Override
   public void update(VolumeIdentifier volumeId, VolumeInputView input) {
     Preconditions.checkNotNull(input);
-    Volume volume = getVolume(volumeId);
+    Volume volume = readVolume(volumeId);
     volume = applyInput(volume, input);
     hibernateTemplate.update(volume);
   }
 
   @Override
-  public Transceiver read(final VolumeIdentifier id) throws IOException {
+  public Transceiver serveVolume(final VolumeIdentifier id) throws IOException {
     return new EntityTransceiver<Volume>() {
       @Override
       protected Volume fetchEntity() {
-        return getVolume(id);
+        return readVolume(id);
       }
 
       @Override
@@ -109,7 +107,7 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
 
   @Override
   public void delete(VolumeIdentifier id) throws IOException {
-    Volume volume = getVolume(id);
+    Volume volume = readVolume(id);
     if (volume.getIssues().size() > 0) {
       throw new RestClientException("Volume has issues and cannot be deleted until all issues have " +
           "been deleted.", HttpStatus.BAD_REQUEST);

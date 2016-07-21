@@ -56,7 +56,7 @@ public class JournalCrudServiceTest extends BaseRhinoTest {
   public void testReadCurrentIssue() throws IOException {
     Journal journal = (Journal) hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Journal.class)).get(0);
     try {
-      journalCrudService.readCurrentIssue(journal.getJournalKey()).readJson(entityGson);
+      journalCrudService.serveCurrentIssue(journal.getJournalKey()).readJson(entityGson);
       fail("Expected RestClientException");
     } catch (RestClientException e) {
       // expected
@@ -69,7 +69,7 @@ public class JournalCrudServiceTest extends BaseRhinoTest {
     hibernateTemplate.update(journal);
 
     Map<?, ?> currentIssueResult = entityGson.fromJson(
-        journalCrudService.readCurrentIssue(journal.getJournalKey()).readJson(entityGson),
+        journalCrudService.serveCurrentIssue(journal.getJournalKey()).readJson(entityGson),
         Map.class);
     assertEquals(currentIssueResult.get("issueUri"), testIssueUri);
   }

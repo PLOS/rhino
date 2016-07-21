@@ -314,7 +314,7 @@ public class VersionedIngestionService extends AmbraService {
       String msg = "eIssn not set for article: " + article.getDoi();
       throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
     } else {
-      Journal journal = journalCrudService.findJournalByEissn(eissn);
+      Journal journal = journalCrudService.readJournalByEissn(eissn);
       if (journal == null) {
         String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
         throw new RestClientException(msg, HttpStatus.BAD_REQUEST);

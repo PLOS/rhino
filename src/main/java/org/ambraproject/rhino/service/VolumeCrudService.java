@@ -20,20 +20,33 @@ package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.identity.VolumeIdentifier;
 import org.ambraproject.rhino.model.Volume;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.journal.VolumeInputView;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public interface VolumeCrudService {
 
-  public abstract Volume getVolume(VolumeIdentifier volumeId);
+  /**
+   * Serve volume metadata to a client.
+   */
+  public abstract Transceiver serveVolume(VolumeIdentifier id) throws IOException;
+
+  /**
+   * Read a volume requested by the client, throwing {@link RestClientException} if the volume does not exist.
+   */
+  public abstract Volume readVolume(VolumeIdentifier volumeId);
+
+  /**
+   * Get a volume if it exists.
+   */
+  public abstract Optional<Volume> getVolume(VolumeIdentifier volumeId);
 
   public abstract VolumeIdentifier create(String journalKey, VolumeInputView input);
 
   public abstract void update(VolumeIdentifier volumeId, VolumeInputView input);
-
-  public abstract Transceiver read(VolumeIdentifier id) throws IOException;
 
   public abstract void delete(VolumeIdentifier id) throws IOException;
 

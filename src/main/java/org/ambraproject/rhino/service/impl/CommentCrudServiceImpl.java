@@ -71,7 +71,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   }
 
   @Override
-  public Transceiver readComments(ArticleIdentifier articleId) throws IOException {
+  public Transceiver serveComments(ArticleIdentifier articleId) throws IOException {
     return new Transceiver() {
       @Override
       protected Collection<CommentOutputView> getData() throws IOException {
@@ -94,11 +94,11 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   }
 
   @Override
-  public Transceiver readComment(CommentIdentifier commentId) throws IOException {
+  public Transceiver serveComment(CommentIdentifier commentId) throws IOException {
     return new Transceiver() {
       @Override
       protected CommentOutputView getData() throws IOException {
-        Comment comment = getComment(commentId);
+        Comment comment = readComment(commentId);
         return new CommentOutputView.Factory(runtimeConfiguration,
             fetchAllComments(comment.getArticle()), comment.getArticle()).buildView(comment);
       }
@@ -110,16 +110,18 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     };
   }
 
-  private Comment getComment(CommentIdentifier commentId) {
-    Comment comment = hibernateTemplate.execute(session -> {
+  @Override
+  public Optional<Comment> getComment(CommentIdentifier commentId) {
+    return Optional.ofNullable(hibernateTemplate.execute(session -> {
       Query query = session.createQuery("FROM Comment WHERE commentUri = :commentUri");
       query.setParameter("commentUri", commentId.getDoiName());
       return (Comment) query.uniqueResult();
-    });
-    if (comment == null) {
-      throw new RestClientException("comment not found with URI: " + commentId, HttpStatus.NOT_FOUND);
-    }
-    return comment;
+    }));
+  }
+
+  private Comment readComment(CommentIdentifier commentId) {
+    return getComment(commentId).orElseThrow(() ->
+        new RestClientException("comment not found with URI: " + commentId, HttpStatus.NOT_FOUND));
   }
 
   private Flag getFlag(Long commentFlagId) {
@@ -150,7 +152,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     final ArticleTable article;
     final Comment parentComment;
     if (parentCommentUri.isPresent()) {
-      parentComment = getComment(CommentIdentifier.create(parentCommentUri.get()));
+      parentComment = readComment(CommentIdentifier.create(parentCommentUri.get()));
       if (parentComment == null) {
         throw new RestClientException("Parent comment not found: " + parentCommentUri, HttpStatus.BAD_REQUEST);
       }
@@ -196,7 +198,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
 
   @Override
   public Comment patchComment(CommentIdentifier commentId, CommentInputView input) {
-    Comment comment = getComment(commentId);
+    Comment comment = readComment(commentId);
 
     String declaredUri = input.getAnnotationUri();
     if (declaredUri != null && !CommentIdentifier.create(declaredUri).equals(commentId)) {
@@ -239,7 +241,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
 
   @Override
   public String deleteComment(CommentIdentifier commentId) {
-    Comment comment = getComment(commentId);
+    Comment comment = readComment(commentId);
     hibernateTemplate.delete(comment);
     return commentId.getDoiName();
   }
@@ -254,7 +256,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
 
   @Override
   public String removeFlagsFromComment(CommentIdentifier commentId) {
-    Comment comment = getComment(commentId);
+    Comment comment = readComment(commentId);
     List<Flag> flags = getCommentFlagsOn(comment);
     hibernateTemplate.deleteAll(flags);
     return commentId.getDoiName();
@@ -262,7 +264,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
 
   @Override
   public Flag createCommentFlag(CommentIdentifier commentId, CommentFlagInputView input) {
-    Comment comment = getComment(commentId);
+    Comment comment = readComment(commentId);
     Long flagCreator = Long.valueOf(input.getCreatorUserId());
 
     Flag flag = new Flag();
@@ -317,7 +319,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     return new Transceiver() {
       @Override
       protected Object getData() throws IOException {
-        List<Flag> flags = getCommentFlagsOn(getComment(commentId));
+        List<Flag> flags = getCommentFlagsOn(readComment(commentId));
         CommentNodeView.Factory viewFactory = new CommentNodeView.Factory(runtimeConfiguration);
         return flags.stream().map(viewFactory::createFlagView).collect(Collectors.toList());
       }
@@ -337,7 +339,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   }
 
   @Override
-  public Transceiver readFlaggedComments() throws IOException {
+  public Transceiver serveFlaggedComments() throws IOException {
     return new Transceiver() {
       @Override
       protected Set<CommentNodeView> getData() throws IOException {
