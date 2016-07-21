@@ -12,6 +12,6 @@ CREATE TABLE `volume` (
   PRIMARY KEY (`volumeId`),
   UNIQUE KEY `doi` (`doi`),
   KEY `journalID` (`journalId`),
-  CONSTRAINT `fk_volume_1` FOREIGN KEY (`journalId`) REFERENCES `journal` (`journalID`),
+  CONSTRAINT `fk_volume_1` FOREIGN KEY (`journalId`) REFERENCES `journal` (`journalId`),
   CONSTRAINT `fk_volume_2` FOREIGN KEY (`imageArticleId`) REFERENCES `article` (`articleId`)
 );
