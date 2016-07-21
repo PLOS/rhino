@@ -300,7 +300,7 @@ public class VersionedIngestionService extends AmbraService {
         RepoId repoId = archivalFile.getId();
         insertFile.setParameter("bucketName", repoId.getBucketName());
         insertFile.setParameter("crepoKey", repoId.getKey());
-        insertFile.setParameter("crepoUuid", archivalFile.getUuid());
+        insertFile.setParameter("crepoUuid", archivalFile.getUuid().toString());
         insertFile.executeUpdate();
       }
       return null;
