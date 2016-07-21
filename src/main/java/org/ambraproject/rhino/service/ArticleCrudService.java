@@ -37,6 +37,7 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.view.ResolvedDoiView;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.RelatedArticleView;
 import org.w3c.dom.Document;
@@ -45,6 +46,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public interface ArticleCrudService {
 
@@ -204,6 +206,8 @@ public interface ArticleCrudService {
   public abstract ArticleItem getArticleItem(ArticleItemIdentifier id);
 
   public abstract Collection<ArticleItem> getAllArticleItems(Doi doi);
+
+  Optional<ResolvedDoiView> getItemOverview(Doi doi);
 
   public abstract ArticleIngestion getArticleIngestion(ArticleIngestionIdentifier articleId);
 

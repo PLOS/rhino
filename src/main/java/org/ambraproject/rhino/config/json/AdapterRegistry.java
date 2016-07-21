@@ -43,7 +43,6 @@ public class AdapterRegistry {
 
       .add(org.ambraproject.rhino.service.ArticleType.class)
 
-      .add(org.ambraproject.rhino.view.ArticleItemView.class)
       .add(org.ambraproject.rhino.view.JsonWrapper.class)
 
       .add(org.ambraproject.rhino.view.article.ArticleIssueOutputView.ListView.class)
