@@ -358,16 +358,17 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   @Override
   public Transceiver readRecentComments(String journalKey, OptionalInt limit) {
     return new Transceiver() {
+      //todo: include article title?
       @Override
       protected List<CommentNodeView> getData() throws IOException {
         List<Object[]> results = (List<Object[]>) hibernateTemplate.execute(session -> {
           Query query = session.createQuery("" +
-              "SELECT ann, art.doi, art.title " +
-              "FROM Annotation ann, Article art, Journal j " +
-              "WHERE ann.articleID = art.ID " +
+              "SELECT com, art.doi " +
+              "FROM Comment com, Article art, Journal j " +
+              "WHERE com.article = art " +
               "  AND j IN ELEMENTS(art.journals) " +
               "  AND j.journalKey = :journalKey " +
-              "ORDER BY ann.created DESC");
+              "ORDER BY com.created DESC");
           query.setParameter("journalKey", journalKey);
           limit.ifPresent(query::setMaxResults);
           return query.list();
@@ -377,8 +378,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
             .map((Object[] result) -> {
               Comment comment = (Comment) result[0];
               String articleDoi = (String) result[1];
-              String articleTitle = (String) result[2];
-              return viewFactory.create(comment, journalKey, articleDoi, articleTitle);
+              return viewFactory.create(comment, journalKey, articleDoi);
             })
             .collect(Collectors.toList());
       }

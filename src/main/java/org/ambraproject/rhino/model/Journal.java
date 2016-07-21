@@ -16,6 +16,8 @@ package org.ambraproject.rhino.model;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,8 +28,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,12 +42,12 @@ import java.util.List;
  */
 @Entity
 @Table(name = "journal")
-public class Journal extends AmbraEntity{
+public class Journal implements Timestamped {
 
   @Id
   @GeneratedValue
   @Column
-  private Long journalID;
+  private Long journalId;
 
   @Column
   private String journalKey;
@@ -50,14 +55,12 @@ public class Journal extends AmbraEntity{
   @Column
   private String eIssn;
 
-  @Column
-  private String imageUri;
+  @OneToOne
+  @JoinColumn(name = "imageArticleId")
+  private ArticleTable imageArticle;
 
   @Column
   private String title;
-
-  @Column
-  private String description;
 
   @JoinColumn(name = "currentIssueID")
   @ManyToOne
@@ -67,7 +70,7 @@ public class Journal extends AmbraEntity{
   @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
   @JoinTable(
       name = "volume",
-      joinColumns = @JoinColumn(name = "journalID"),
+      joinColumns = @JoinColumn(name = "journalId"),
       inverseJoinColumns = @JoinColumn(name = "volumeID"))
   private List<Volume> volumes;
 
@@ -75,9 +78,19 @@ public class Journal extends AmbraEntity{
   @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
   @JoinTable(
       name = "articleList",
-      joinColumns = @JoinColumn(name = "journalID"),
+      joinColumns = @JoinColumn(name = "journalId"),
       inverseJoinColumns = @JoinColumn(name = "articleListId"))
   private Collection<ArticleList> articleLists;
+
+  @Generated(value= GenerationTime.INSERT)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
+  private Date created;
+
+  @Generated(value= GenerationTime.ALWAYS)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
+  private Date lastModified;
 
   public Journal() {
     super();
@@ -88,12 +101,12 @@ public class Journal extends AmbraEntity{
     this.journalKey = journalKey;
   }
 
-  public Long getJournalID() {
-    return journalID;
+  public Long getJournalId() {
+    return journalId;
   }
 
-  public void setJournalID(Long journalID) {
-    this.journalID = journalID;
+  public void setJournalId(Long journalId) {
+    this.journalId = journalId;
   }
 
   public String getJournalKey() {
@@ -112,12 +125,12 @@ public class Journal extends AmbraEntity{
     this.eIssn = eIssn;
   }
 
-  public String getImageUri() {
-    return imageUri;
+  public ArticleTable getImageArticle() {
+    return imageArticle;
   }
 
-  public void setImageUri(String imageUri) {
-    this.imageUri = imageUri;
+  public void setImageArticle(ArticleTable imageArticle) {
+    this.imageArticle = imageArticle;
   }
 
   public String getTitle() {
@@ -126,14 +139,6 @@ public class Journal extends AmbraEntity{
 
   public void setTitle(String title) {
     this.title = title;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
   }
 
   public Issue getCurrentIssue() {
@@ -160,43 +165,45 @@ public class Journal extends AmbraEntity{
     this.articleLists = articleLists;
   }
 
+  public Date getCreated() {
+    return created;
+  }
+
+  public void setCreated(Date created) {
+    this.created = created;
+  }
+
+  @Override
+  public Date getLastModified() {
+    return lastModified;
+  }
+
+  public void setLastModified(Date lastModified) {
+    this.lastModified = lastModified;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (!(o instanceof Journal)) return false;
+    if (o == null || getClass() != o.getClass()) return false;
 
     Journal journal = (Journal) o;
-
-    if (getJournalID() != null ? !getJournalID().equals(journal.getJournalID()) : journal.getJournalID() != null) return false;
-    if (description != null ? !description.equals(journal.description) : journal.description != null) return false;
-    if (eIssn != null ? !eIssn.equals(journal.eIssn) : journal.eIssn != null) return false;
-    if (imageUri != null ? !imageUri.equals(journal.imageUri) : journal.imageUri != null) return false;
-    if (journalKey != null ? !journalKey.equals(journal.journalKey) : journal.journalKey != null) return false;
-    if (title != null ? !title.equals(journal.title) : journal.title != null) return false;
-
-    return true;
+    return journalKey != null ? journalKey.equals(journal.journalKey) : journal.journalKey == null;
   }
 
   @Override
   public int hashCode() {
-    int result = getJournalID() != null ? getJournalID().hashCode() : 0;
-    result = 31 * result + (journalKey != null ? journalKey.hashCode() : 0);
-    result = 31 * result + (eIssn != null ? eIssn.hashCode() : 0);
-    result = 31 * result + (imageUri != null ? imageUri.hashCode() : 0);
-    result = 31 * result + (title != null ? title.hashCode() : 0);
-    result = 31 * result + (description != null ? description.hashCode() : 0);
-    return result;
+    return journalKey != null ? journalKey.hashCode() : 0;
   }
 
   @Override
   public String toString() {
     return "Journal{" +
-        "id='" + getJournalID() + '\'' +
+        "id='" + journalId + '\'' +
         ", journalKey='" + journalKey + '\'' +
         ", eIssn='" + eIssn + '\'' +
-        ", imageUri='" + imageUri + '\'' +
+        ", imageArticle='" + imageArticle + '\'' +
         ", title='" + title + '\'' +
-        ", description='" + description + '\'' +
         '}';
   }
 }

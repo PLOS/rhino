@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;
 import java.util.List;
-
+//todo: remove this class
 public class ArticleOutputViewFactory {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleOutputViewFactory.class);
@@ -56,14 +56,13 @@ public class ArticleOutputViewFactory {
 
     List<Pingback> pingbacks = pingbackReadService.loadPingbacks(article);
 
-    List<ArticleIssue> articleIssues = issueCrudService.getArticleIssues(articleIdentity);
 
     return new ArticleOutputView.AugmentedView(
         article,
         nlmArticleType,
         articleType,
         relatedArticles,
-        articleIssues,
+        null,
         syndications,
         pingbacks,
         excludeCitations);

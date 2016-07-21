@@ -2,7 +2,7 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
 import edu.emory.mathcs.backport.java.util.Collections;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.identity.IssueIdentifier;
 import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -51,9 +51,7 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
     return new EntityCollectionTransceiver<Journal>() {
       @Override
       protected Collection<? extends Journal> fetchEntities() {
-        return (Collection<? extends Journal>) hibernateTemplate.findByCriteria(
-            DetachedCriteria.forClass(Journal.class)
-                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY));
+        return getAllJournals();
       }
 
       @Override
@@ -61,6 +59,11 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
         return JournalNonAssocView.wrapList(journals);
       }
     };
+  }
+
+  private Collection<? extends Journal> getAllJournals() {
+    return (List<Journal>) hibernateTemplate
+        .execute(session -> session.createCriteria(Journal.class).list());
   }
 
   @Override
@@ -104,6 +107,7 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
         });
       }
 
+      //todo: replace DetachedCriteria with HQL calls
       private Object queryJournalProjection(Projection projection) {
         return DataAccessUtils.singleResult((List<?>) hibernateTemplate.findByCriteria(
             DetachedCriteria.forClass(Journal.class)
@@ -139,14 +143,11 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
   }
 
   private Journal applyInput(Journal journal, JournalInputView input) {
-    String currentIssueUri = input.getCurrentIssueUri();
-    if (currentIssueUri != null) {
-      Issue currentIssue = issueCrudService.findIssue(DoiBasedIdentity.create(currentIssueUri));
-      if (currentIssue == null) {
-        throw new RestClientException("Issue not found for URI: " + currentIssueUri, HttpStatus.BAD_REQUEST);
-      }
-
-      journal.setCurrentIssue(validateIssueInJournal(currentIssue, journal));
+    String currentIssueDoi = input.getCurrentIssueDoi();
+    if (currentIssueDoi != null) {
+      Issue currentIssue = issueCrudService.getIssue(IssueIdentifier.create(currentIssueDoi));
+      validateIssueInJournal(currentIssue, journal);
+      journal.setCurrentIssue(currentIssue);
     }
     return journal;
   }
@@ -155,19 +156,19 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
 
     Object results = hibernateTemplate.execute((Session session) -> {
       String hql = "from Journal j, Issue i, Volume v " +
-          "where j.ID = :journalId " +
-          "and i.ID = :issueId " +
+          "where j.journalId = :journalId " +
+          "and i.issueId = :issueId " +
           "and v in elements(j.volumes) " +
           "and i in elements(v.issues)";
       Query query = session.createQuery(hql);
-      query.setParameter("journalId", journal.getID());
-      query.setParameter("issueId", issue.getID());
+      query.setParameter("journalId", journal.getJournalId());
+      query.setParameter("issueId", issue.getIssueId());
       return query.uniqueResult();
     });
     if (results != null){
       return issue;
     } else {
-      throw new RestClientException("Issue with URI " + issue.getIssueUri() +
+      throw new RestClientException("Issue with DOI " + issue.getDoi() +
           " not found in journal with key " + journal.getJournalKey(), HttpStatus.BAD_REQUEST);
     }
   }
@@ -175,7 +176,6 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
   private static String journalNotFoundMessage(String journalKey) {
     return "No journal found with key: " + journalKey;
   }
-
 
   @Override
   public Journal findJournal(String journalKey) {

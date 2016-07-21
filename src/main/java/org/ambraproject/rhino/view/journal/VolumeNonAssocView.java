@@ -7,30 +7,22 @@ import org.ambraproject.rhino.model.Volume;
  */
 public class VolumeNonAssocView {
 
-  private final String volumeUri;
+  private final String doi;
   private final String displayName;
-  private final String imageUri;
-  private final String title;
-  private final String description;
+  private final String imageArticleDoi;
 
-  public VolumeNonAssocView(String volumeUri,
+  public VolumeNonAssocView(String doi,
                             String displayName,
-                            String imageUri,
-                            String title,
-                            String description) {
-    this.volumeUri = volumeUri;
+                            String imageArticleDoi) {
+    this.doi = doi;
     this.displayName = displayName;
-    this.imageUri = imageUri;
-    this.title = title;
-    this.description = description;
+    this.imageArticleDoi = imageArticleDoi;
   }
 
   public VolumeNonAssocView(Volume volume){
-    this(volume.getVolumeUri(),
+    this(volume.getDoi(),
          volume.getDisplayName(),
-         volume.getImageUri(),
-         volume.getTitle(),
-         volume.getDescription());
+         volume.getImageArticle().getDoi());
   }
 
 }

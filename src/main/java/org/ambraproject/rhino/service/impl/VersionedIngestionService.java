@@ -328,7 +328,7 @@ public class VersionedIngestionService extends AmbraService {
           "INSERT INTO articleJournalJoinTable (ingestionId, journalId) " +
           "VALUES (:ingestionId, :journalId)");
       query.setParameter("ingestionId", ingestionId);
-      query.setParameter("journalId", publicationJournal.getJournalID());
+      query.setParameter("journalId", publicationJournal.getJournalId());
       query.executeUpdate();
       return getLastInsertId(session);
     });
