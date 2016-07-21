@@ -16,17 +16,8 @@ import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.ContentTypeInference;
 import org.plos.crepo.model.input.RepoObjectInput;
 import org.springframework.http.HttpStatus;
-import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import javax.ws.rs.core.MediaType;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -40,19 +31,17 @@ class ArticlePackageBuilder {
   private final Archive archive;
   private final ArticleXml article;
   private final ManifestXml manifest;
-  private final String manifestEntry;
   private final ManifestXml.Asset manuscriptAsset;
   private final ManifestXml.Representation manuscriptRepr;
   private final ManifestXml.Representation printableRepr;
   private final Doi articleIdentity;
 
-  ArticlePackageBuilder(String destinationBucketName, Archive archive, ArticleXml article, ManifestXml manifest, String manifestEntry,
+  ArticlePackageBuilder(String destinationBucketName, Archive archive, ArticleXml article, ManifestXml manifest,
                         ManifestXml.Asset manuscriptAsset, ManifestXml.Representation manuscriptRepr, ManifestXml.Representation printableRepr) {
     this.destinationBucketName = Objects.requireNonNull(destinationBucketName);
     this.archive = Objects.requireNonNull(archive);
     this.article = Objects.requireNonNull(article);
     this.manifest = Objects.requireNonNull(manifest);
-    this.manifestEntry = Objects.requireNonNull(manifestEntry);
 
     this.manuscriptAsset = Objects.requireNonNull(manuscriptAsset);
     this.manuscriptRepr = Objects.requireNonNull(manuscriptRepr);
@@ -101,39 +90,10 @@ class ArticlePackageBuilder {
   }
 
   private Map<String, RepoObjectInput> buildArticleObjects() {
-    ImmutableMap.Builder<String, RepoObjectInput> articleObjects = ImmutableMap.builder();
-    articleObjects.put("manifest",
-        RepoObjectInput.builder(destinationBucketName, "manifest/" + articleIdentity.getName())
-            .setContentAccessor(archive.getContentAccessorFor(manifestEntry))
-            .setDownloadName(manifestEntry)
-            .setContentType(MediaType.APPLICATION_XML)
-            .build());
-    articleObjects.put("manuscript", buildObjectFor(manuscriptAsset, manuscriptRepr));
-    articleObjects.put("printable", buildObjectFor(manuscriptAsset, printableRepr));
-
-    articleObjects.put("front",
-        RepoObjectInput.builder(destinationBucketName, "front/" + articleIdentity.getName())
-            .setByteContent(serializeXml(article.extractFrontMatter()))
-            .setContentType(MediaType.APPLICATION_XML)
-            .build());
-    articleObjects.put("frontAndBack",
-        RepoObjectInput.builder(destinationBucketName, "frontAndBack/" + articleIdentity.getName())
-            .setByteContent(serializeXml(article.extractFrontAndBackMatter()))
-            .setContentType(MediaType.APPLICATION_XML)
-            .build());
-    return articleObjects.build();
-  }
-
-  private static byte[] serializeXml(Document document) {
-    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    try {
-      Transformer transformer = TransformerFactory.newInstance().newTransformer();
-      transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-      transformer.transform(new DOMSource(document), new StreamResult(outputStream));
-    } catch (TransformerException e) {
-      throw new RuntimeException(e);
-    }
-    return outputStream.toByteArray();
+    return ImmutableMap.<String, RepoObjectInput>builder()
+        .put("manuscript", buildObjectFor(manuscriptAsset, manuscriptRepr))
+        .put("printable", buildObjectFor(manuscriptAsset, printableRepr))
+        .build();
   }
 
   /**
