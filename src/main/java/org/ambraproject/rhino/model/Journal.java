@@ -183,6 +183,20 @@ public class Journal implements Timestamped {
   }
 
   @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Journal journal = (Journal) o;
+    return journalKey != null ? journalKey.equals(journal.journalKey) : journal.journalKey == null;
+  }
+
+  @Override
+  public int hashCode() {
+    return journalKey != null ? journalKey.hashCode() : 0;
+  }
+
+  @Override
   public String toString() {
     return "Journal{" +
         "id='" + journalId + '\'' +

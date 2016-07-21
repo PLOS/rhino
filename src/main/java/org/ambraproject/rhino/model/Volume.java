@@ -159,32 +159,11 @@ public class Volume implements Timestamped {
     if (o == null || getClass() != o.getClass()) return false;
 
     Volume volume = (Volume) o;
-
-    if (volumeId != null ? !volumeId.equals(volume.volumeId) : volume.volumeId != null)
-      return false;
-    if (doi != null ? !doi.equals(volume.doi) : volume.doi != null) return false;
-    if (journal != null ? !journal.equals(volume.journal) : volume.journal != null) return false;
-    if (displayName != null ? !displayName.equals(volume.displayName) : volume.displayName != null)
-      return false;
-    if (imageArticle != null ? !imageArticle.equals(volume.imageArticle) : volume.imageArticle != null)
-      return false;
-    if (created != null ? !created.equals(volume.created) : volume.created != null) return false;
-    if (lastModified != null ? !lastModified.equals(volume.lastModified) : volume.lastModified != null)
-      return false;
-    return issues != null ? issues.equals(volume.issues) : volume.issues == null;
-
+    return doi != null ? doi.equals(volume.doi) : volume.doi == null;
   }
 
   @Override
   public int hashCode() {
-    int result = volumeId != null ? volumeId.hashCode() : 0;
-    result = 31 * result + (doi != null ? doi.hashCode() : 0);
-    result = 31 * result + (journal != null ? journal.hashCode() : 0);
-    result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
-    result = 31 * result + (imageArticle != null ? imageArticle.hashCode() : 0);
-    result = 31 * result + (created != null ? created.hashCode() : 0);
-    result = 31 * result + (lastModified != null ? lastModified.hashCode() : 0);
-    result = 31 * result + (issues != null ? issues.hashCode() : 0);
-    return result;
+    return doi != null ? doi.hashCode() : 0;
   }
 }

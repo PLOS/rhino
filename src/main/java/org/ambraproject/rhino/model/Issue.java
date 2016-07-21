@@ -142,4 +142,18 @@ public class Issue implements Timestamped {
   public void setArticles(List<ArticleTable> articles) {
     this.articles = articles;
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Issue issue = (Issue) o;
+    return doi != null ? doi.equals(issue.doi) : issue.doi == null;
+  }
+
+  @Override
+  public int hashCode() {
+    return doi != null ? doi.hashCode() : 0;
+  }
 }
