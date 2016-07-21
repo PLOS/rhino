@@ -18,12 +18,10 @@ public class CommentNodeView implements JsonOutputView {
   // Slightly different from org.ambraproject.rhino.view.article.ArticleVisibility, which might be a bad thing
   public static class ArticleReference {
     private final String doi;
-    private final String title;
     private final String journal;
 
-    private ArticleReference(String doi, String title, String journal) {
+    private ArticleReference(String doi, String journal) {
       this.doi = Objects.requireNonNull(doi);
-      this.title = Objects.requireNonNull(title);
       this.journal = Objects.requireNonNull(journal);
     }
   }
@@ -52,11 +50,10 @@ public class CommentNodeView implements JsonOutputView {
       this.competingInterestPolicy = new CompetingInterestPolicy(runtimeConfiguration);
     }
 
-    public CommentNodeView create(Comment comment, String journalKey, String articleDoi,
-        String articleTitle) {
+    public CommentNodeView create(Comment comment, String journalKey, String articleDoi) {
       return new CommentNodeView(comment,
           competingInterestPolicy.createStatement(comment),
-          new ArticleReference(articleDoi, articleTitle, journalKey));
+          new ArticleReference(articleDoi, journalKey));
     }
 
     public CommentNodeView create(Comment comment) {
