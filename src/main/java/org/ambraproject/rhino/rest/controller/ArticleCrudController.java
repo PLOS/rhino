@@ -142,6 +142,15 @@ public class ArticleCrudController extends RestController {
     articleCrudService.readArticleOverview(id).respond(request, response, entityGson);
   }
 
+  @RequestMapping(value = "/articles/{doi}/ingestions/{number}/items", method = RequestMethod.GET)
+  public void readItems(HttpServletRequest request, HttpServletResponse response,
+                        @PathVariable("doi") String doi,
+                        @PathVariable("number") int ingestionNumber)
+      throws IOException {
+    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
+    articleCrudService.readArticleItems(ingestionId).respond(request, response, entityGson);
+  }
+
   /**
    * Retrieves a list of objects representing comments associated with the article. Each comment has a "replies" list
    * that contains any replies (recursively).
@@ -180,7 +189,7 @@ public class ArticleCrudController extends RestController {
    * @throws IOException
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/articles/{doi}/ingestions/{number}/authors", method = RequestMethod.GET, params = {"authors"})
+  @RequestMapping(value = "/articles/{doi}/ingestions/{number}/authors", method = RequestMethod.GET)
   public void readAuthors(HttpServletRequest request, HttpServletResponse response,
                           @PathVariable("doi") String doi,
                           @PathVariable("number") int ingestionNumber)

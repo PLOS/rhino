@@ -51,14 +51,15 @@ import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
-import org.ambraproject.rhino.view.article.author.ArticleAllAuthorsView;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
 import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
-import org.ambraproject.rhino.view.article.author.AuthorView;
 import org.ambraproject.rhino.view.article.RelatedArticleView;
-import org.ambraproject.rhino.view.article.versioned.ArticleIngestionViewFactory;
+import org.ambraproject.rhino.view.article.author.ArticleAllAuthorsView;
+import org.ambraproject.rhino.view.article.author.AuthorView;
+import org.ambraproject.rhino.view.article.versioned.ArticleIngestionView;
 import org.ambraproject.rhino.view.article.versioned.ArticleOverview;
+import org.ambraproject.rhino.view.article.versioned.ItemSetView;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -112,7 +113,9 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Autowired
   private VersionedIngestionService versionedIngestionService;
   @Autowired
-  private ArticleIngestionViewFactory articleIngestionViewFactory;
+  private ArticleIngestionView.Factory articleIngestionViewFactory;
+  @Autowired
+  private ItemSetView.Factory itemSetViewFactory;
 
   @Override
   public void populateCategories(ArticleIdentifier articleId) throws IOException {
@@ -218,12 +221,27 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return new Transceiver() {
       @Override
       protected Calendar getLastModifiedDate() throws IOException {
-        return copyToCalendar(getArticleItem(ingestionId.getItemFor()).getLastModified());
+        return copyToCalendar(getArticleIngestion(ingestionId).getLastModified());
       }
 
       @Override
       protected Object getData() throws IOException {
         return articleIngestionViewFactory.getView(ingestionId);
+      }
+    };
+  }
+
+  @Override
+  public Transceiver readArticleItems(ArticleIngestionIdentifier ingestionId) {
+    return new Transceiver() {
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return copyToCalendar(getArticleIngestion(ingestionId).getLastModified());
+      }
+
+      @Override
+      protected Object getData() throws IOException {
+        return itemSetViewFactory.getView(getArticleIngestion(ingestionId));
       }
     };
   }

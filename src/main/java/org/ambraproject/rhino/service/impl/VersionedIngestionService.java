@@ -111,7 +111,7 @@ public class VersionedIngestionService extends AmbraService {
     // TODO: Allow bucket name to be specified as an ingestion parameter
     String destinationBucketName = runtimeConfiguration.getCorpusStorage().getDefaultBucket();
 
-    ArticlePackage articlePackage = new ArticlePackageBuilder(destinationBucketName, archive, parsedArticle, manifestXml, manifestEntry,
+    ArticlePackage articlePackage = new ArticlePackageBuilder(destinationBucketName, archive, parsedArticle, manifestXml,
         manuscriptAsset, manuscriptRepr, printableRepr).build();
     persistItem(articlePackage, ingestionId);
     persistJournal(articleMetadata, ingestionId);
@@ -300,7 +300,7 @@ public class VersionedIngestionService extends AmbraService {
         RepoId repoId = archivalFile.getId();
         insertFile.setParameter("bucketName", repoId.getBucketName());
         insertFile.setParameter("crepoKey", repoId.getKey());
-        insertFile.setParameter("crepoUuid", archivalFile.getUuid());
+        insertFile.setParameter("crepoUuid", archivalFile.getUuid().toString());
         insertFile.executeUpdate();
       }
       return null;

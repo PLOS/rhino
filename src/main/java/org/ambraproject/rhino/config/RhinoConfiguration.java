@@ -64,8 +64,9 @@ import org.ambraproject.rhino.util.Java8TimeGsonAdapters;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
-import org.ambraproject.rhino.view.article.versioned.ArticleIngestionViewFactory;
-import org.ambraproject.rhino.view.article.versioned.RelationshipSetViewFactory;
+import org.ambraproject.rhino.view.article.versioned.ArticleIngestionView;
+import org.ambraproject.rhino.view.article.versioned.ItemSetView;
+import org.ambraproject.rhino.view.article.versioned.RelationshipSetView;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -300,13 +301,18 @@ public class RhinoConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public ArticleIngestionViewFactory articleIngestionViewFactory() {
-    return new ArticleIngestionViewFactory();
+  public ArticleIngestionView.Factory articleIngestionViewFactory() {
+    return new ArticleIngestionView.Factory();
   }
 
   @Bean
-  public RelationshipSetViewFactory relationshipSetViewFactory() {
-    return new RelationshipSetViewFactory();
+  public RelationshipSetView.Factory relationshipSetViewFactory() {
+    return new RelationshipSetView.Factory();
+  }
+
+  @Bean
+  public ItemSetView.Factory itemSetViewFactory() {
+    return new ItemSetView.Factory();
   }
 
   @Bean
