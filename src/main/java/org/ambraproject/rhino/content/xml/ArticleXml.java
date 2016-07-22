@@ -184,7 +184,7 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     }
     article.setRights(rights);
 
-    article.setPages(buildPages(readString("/article/front/article-meta/counts/page-count/@count")));
+    article.setPageCount(parsePageCount(readString("/article/front/article-meta/counts/page-count/@count")));
     article.seteLocationId(readString("/article/front/article-meta/elocation-id"));
     article.setVolume(readString("/article/front/article-meta/volume"));
     article.setIssue(readString("/article/front/article-meta/issue"));
@@ -255,11 +255,14 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
   /**
    * @return the appropriate value for the pages property of {@link ArticleMetadata}, based on the article XML.
    */
-  private static String buildPages(String pageCount) {
+  private static Integer parsePageCount(String pageCount) {
     if (Strings.isNullOrEmpty(pageCount)) {
       return null;
-    } else {
-      return "1-" + pageCount;
+    }
+    try {
+      return Integer.parseInt(pageCount);
+    } catch (NumberFormatException e) {
+      throw new XmlContentException("Expected number for page count", e);
     }
   }
 
