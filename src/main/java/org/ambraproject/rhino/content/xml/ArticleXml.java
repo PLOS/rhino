@@ -174,7 +174,7 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
 
     article.setTitle(parseTitle());
     article.seteIssn(checkEissn(readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]")));
-    article.setDescription(buildXmlExcerpt(findAbstractNode()));
+    article.setDescription(getXmlFromNode(findAbstractNode()));
 
     String rights = readString("/article/front/article-meta/copyright-statement");
     if (rights == null) {
@@ -316,18 +316,6 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
       .replaceExact("/", String.format("%%%H", '/'))
       .build();
 
-  /**
-   * Build a field of XML text by partially reconstructing the node's content. The output is text content between the
-   * node's two tags, including nested XML tags but not this node's outer tags. Nested tags show only the node name;
-   * their attributes are deleted. Text nodes containing only whitespace are deleted.
-   *
-   * @param node the description node
-   * @return the marked-up description
-   */
-  private static String buildXmlExcerpt(Node node) {
-    return (node == null) ? null : buildTextWithMarkup(node);
-  }
-
 
   private static String parseLanguage(String language) {
     if (language == null) {
@@ -411,7 +399,7 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
   }
 
   public String parseTitle() {
-    return buildXmlExcerpt(readNode("/article/front/article-meta/title-group/article-title"));
+    return getXmlFromNode(readNode("/article/front/article-meta/title-group/article-title"));
   }
 
 }

@@ -27,7 +27,6 @@ import com.google.common.collect.Iterables;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.article.NlmPerson;
 import org.ambraproject.rhino.util.NodeListAdapter;
-import org.ambraproject.rhino.util.StringReplacer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.util.UriUtils;
@@ -182,7 +181,7 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
   /**
    * Encodes a string according to the URI escaping rules as described in section 2 of RFC 3986.
    */
-  public static String uriEncode(String s) {
+  protected static String uriEncode(String s) {
 
     // This is surprisingly difficult in Java.  You would think that java.net.URLEncoder would
     // do the trick, but it doesn't--it uses HTML form encoding, which is different.  For
@@ -193,73 +192,6 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
     } catch (UnsupportedEncodingException uee) {
       throw new RuntimeException(uee);
     }
-  }
-
-  /**
-   * Build a text field by partially reconstructing the node's content as XML. The output is text content between the
-   * node's two tags, including nested XML tags with attributes, but not this node's outer tags. Continuous substrings
-   * of whitespace may be substituted with other whitespace. Markup characters are escaped.
-   * <p/>
-   * This method is used instead of an appropriate XML library in order to match the behavior of legacy code, for now.
-   *
-   * @param node the node containing the text we are retrieving
-   * @return the marked-up node contents
-   */
-  protected static String buildTextWithMarkup(Node node) {
-    String text = buildTextWithMarkup(new StringBuilder(), node).toString();
-    return standardizeWhitespace(text);
-  }
-
-  private static StringBuilder buildTextWithMarkup(StringBuilder nodeContent, Node node) {
-    List<Node> children = NodeListAdapter.wrap(node.getChildNodes());
-    for (Node child : children) {
-      switch (child.getNodeType()) {
-        case Node.TEXT_NODE:
-          appendTextNode(nodeContent, child);
-          break;
-        case Node.ELEMENT_NODE:
-          appendElementNode(nodeContent, child);
-          break;
-        default:
-          log.warn("Skipping node (name={}, type={})", child.getNodeName(), child.getNodeType());
-      }
-    }
-    return nodeContent;
-  }
-
-  private static final StringReplacer XML_CHAR_ESCAPES = StringReplacer.builder()
-      .replaceExact("&", "&amp;")
-      .replaceExact("<", "&lt;")
-      .replaceExact(">", "&gt;")
-      .build();
-
-  private static void appendTextNode(StringBuilder nodeContent, Node child) {
-    String text = child.getNodeValue();
-    text = XML_CHAR_ESCAPES.replace(text);
-    nodeContent.append(text);
-  }
-
-  private static void appendElementNode(StringBuilder nodeContent, Node child) {
-    String nodeName = child.getNodeName();
-    nodeContent.append('<').append(nodeName);
-    List<Node> attributes = NodeListAdapter.wrap(child.getAttributes());
-
-    // Search for xlink attributes and declare the xlink namespace if found
-    // TODO Better way? This is probably a symptom of needing to use a proper XML library here in the first place.
-    for (Node attribute : attributes) {
-      if (attribute.getNodeName().startsWith("xlink:")) {
-        nodeContent.append(" xmlns:xlink=\"http://www.w3.org/1999/xlink\"");
-        break;
-      }
-    }
-
-    for (Node attribute : attributes) {
-      nodeContent.append(' ').append(attribute.toString());
-    }
-
-    nodeContent.append('>');
-    buildTextWithMarkup(nodeContent, child);
-    nodeContent.append("</").append(nodeName).append('>');
   }
 
 }
