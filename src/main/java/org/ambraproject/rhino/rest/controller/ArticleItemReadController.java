@@ -76,7 +76,7 @@ public class ArticleItemReadController extends RestController {
     return EnumSet.allOf(DoiLookup.class).stream()
         .filter(lookup -> lookup.exists(this, doi))
         .findAny()
-        .map(matchedLookup -> ResolvedDoiView.create(matchedLookup.getType()))
+        .map(matchedLookup -> ResolvedDoiView.create(doi, matchedLookup.getType()))
         .orElseThrow(() -> new RestClientException("DOI not found: " + doi.getName(), HttpStatus.NOT_FOUND));
   }
 

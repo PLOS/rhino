@@ -598,7 +598,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
       Collection<ArticleIngestion> ingestions = Collections2.transform(items, ArticleItem::getIngestion);
       ArticleOverview articleOverview = ArticleOverview.build(articleId, ingestions, revisions);
-      return Optional.of(ResolvedDoiView.createForArticle(type, articleOverview));
+      return Optional.of(ResolvedDoiView.createForArticle(doi, type, articleOverview));
     });
   }
 
