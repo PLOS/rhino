@@ -347,7 +347,7 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
    * @param collabNodes XML nodes representing "collab" elements
    * @return a list of their text content
    */
-  private static List<String> parseCollaborativeAuthors(List<Node> collabNodes) {
+  private List<String> parseCollaborativeAuthors(List<Node> collabNodes) {
     List<String> collabStrings = Lists.newArrayListWithCapacity(collabNodes.size());
     for (Node collabNode : collabNodes) {
       StringBuilder text = new StringBuilder();
@@ -356,7 +356,7 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
           text.append(child.getTextContent());
         }
       }
-      String result = standardizeWhitespace(text.toString());
+      String result = sanitize(text.toString());
       collabStrings.add(result);
     }
     return collabStrings;

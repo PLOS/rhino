@@ -78,17 +78,24 @@ public abstract class AbstractXpathReader {
   }
 
   /**
+   * Define default text formatting for this object.
+   */
+  protected String sanitize(String text) {
+    return text;
+  }
+
+  /**
    * Define default text formatting for this object. By default, just calls {@link org.w3c.dom.Node#getTextContent()}.
    * Override for something different. Returns null on null input.
    *
    * @param node an XML node
    * @return the node's text content with optional formatting
    */
-  protected String getTextFromNode(Node node) {
-    return (node == null) ? null : node.getTextContent();
+  protected final String getTextFromNode(Node node) {
+    return (node == null) ? null : sanitize(node.getTextContent());
   }
 
-  protected String getXmlFromNode(Node node) {
+  protected final String getXmlFromNode(Node node) {
     if (node == null) return null;
     StringWriter writer = new StringWriter();
     try {
@@ -96,7 +103,7 @@ public abstract class AbstractXpathReader {
     } catch (TransformerException e) {
       throw new RuntimeException(e);
     }
-    return writer.toString();
+    return sanitize(writer.toString());
   }
 
   protected String readString(String query) {

@@ -57,13 +57,9 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
    */
   public abstract T build() throws XmlContentException;
 
-  protected static String standardizeWhitespace(CharSequence text) {
-    return (text == null) ? null : CharMatcher.WHITESPACE.trimAndCollapseFrom(text, ' ');
-  }
-
   @Override
-  protected String getTextFromNode(Node node) {
-    return standardizeWhitespace(super.getTextFromNode(node));
+  protected String sanitize(String text) {
+    return (text == null) ? null : CharMatcher.WHITESPACE.trimAndCollapseFrom(text, ' ');
   }
 
   // Node names that get special handling
