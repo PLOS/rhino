@@ -8,6 +8,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.EnumSet;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 /**
@@ -16,6 +17,8 @@ import java.util.stream.Collectors;
  * This class does not validate that the DOI has a valid prefix. A server operated by a publisher who does not have a
  * registered DOI prefix is free to use any string in place of resolvable DOIs (in which case it's up to their front end
  * to avoid presenting them as such).
+ * <p>
+ * DOIs are <a href="https://www.doi.org/doi_handbook/2_Numbering.html#2.4">case-insensitive by specification.</a>
  */
 public final class Doi {
 
@@ -101,14 +104,23 @@ public final class Doi {
         '}';
   }
 
+  /**
+   * Two DOIs are equal if their DOI names are <em>case-insensitively</em> equal.
+   */
   @Override
   public boolean equals(Object o) {
-    return this == o || o != null && getClass() == o.getClass() && doiName.equals(((Doi) o).doiName);
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    // Technically the spec says that only ASCII characters should be compared case-insensitively,
+    // but this is close enough and consistent with the equality definition at the database layer.
+    return doiName.equalsIgnoreCase(((Doi) o).doiName);
   }
 
   @Override
   public int hashCode() {
-    return doiName.hashCode();
+    // Must produce equal hashes for case-insensitively equal names
+    return doiName.toLowerCase(Locale.ROOT).hashCode();
   }
 
 }
