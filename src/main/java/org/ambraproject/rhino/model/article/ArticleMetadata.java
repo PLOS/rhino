@@ -18,7 +18,7 @@ public class ArticleMetadata {
   private final String rights;
   private final String language;
   private final String format;
-  private final String pages;
+  private final Integer pageCount;
   private final String eLocationId;
 
   private final LocalDate publicationDate;
@@ -47,7 +47,7 @@ public class ArticleMetadata {
     this.rights = builder.rights;
     this.language = builder.language;
     this.format = builder.format;
-    this.pages = builder.pages;
+    this.pageCount = builder.pageCount;
     this.eLocationId = builder.eLocationId;
     this.publicationDate = builder.publicationDate;
     this.volume = builder.volume;
@@ -92,8 +92,8 @@ public class ArticleMetadata {
     return format;
   }
 
-  public String getPages() {
-    return pages;
+  public Integer getPageCount() {
+    return pageCount;
   }
 
   public String geteLocationId() {
@@ -169,7 +169,7 @@ public class ArticleMetadata {
     private String rights;
     private String language;
     private String format;
-    private String pages;
+    private Integer pageCount;
     private String eLocationId;
 
     private LocalDate publicationDate;
@@ -229,8 +229,8 @@ public class ArticleMetadata {
       return this;
     }
 
-    public Builder setPages(String pages) {
-      this.pages = pages;
+    public Builder setPageCount(Integer pageCount) {
+      this.pageCount = pageCount;
       return this;
     }
 
@@ -319,7 +319,7 @@ public class ArticleMetadata {
     if (rights != null ? !rights.equals(that.rights) : that.rights != null) return false;
     if (language != null ? !language.equals(that.language) : that.language != null) return false;
     if (format != null ? !format.equals(that.format) : that.format != null) return false;
-    if (pages != null ? !pages.equals(that.pages) : that.pages != null) return false;
+    if (pageCount != null ? !pageCount.equals(that.pageCount) : that.pageCount != null) return false;
     if (eLocationId != null ? !eLocationId.equals(that.eLocationId) : that.eLocationId != null) return false;
     if (publicationDate != null ? !publicationDate.equals(that.publicationDate) : that.publicationDate != null) {
       return false;
@@ -354,7 +354,7 @@ public class ArticleMetadata {
     result = 31 * result + (rights != null ? rights.hashCode() : 0);
     result = 31 * result + (language != null ? language.hashCode() : 0);
     result = 31 * result + (format != null ? format.hashCode() : 0);
-    result = 31 * result + (pages != null ? pages.hashCode() : 0);
+    result = 31 * result + (pageCount != null ? pageCount.hashCode() : 0);
     result = 31 * result + (eLocationId != null ? eLocationId.hashCode() : 0);
     result = 31 * result + (publicationDate != null ? publicationDate.hashCode() : 0);
     result = 31 * result + (volume != null ? volume.hashCode() : 0);

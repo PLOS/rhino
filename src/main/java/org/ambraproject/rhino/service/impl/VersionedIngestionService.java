@@ -308,27 +308,22 @@ public class VersionedIngestionService extends AmbraService {
   }
 
   private long persistJournal(ArticleMetadata article, long ingestionId) {
-    Journal result;
     String eissn = article.geteIssn();
     if (eissn == null) {
       String msg = "eIssn not set for article: " + article.getDoi();
       throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
-    } else {
-      Journal journal = journalCrudService.readJournalByEissn(eissn);
-      if (journal == null) {
-        String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
-        throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
-      }
-      result = journal;
     }
-    Journal publicationJournal = result;
+    Journal journal = journalCrudService.getJournalByEissn(eissn).orElseThrow(() -> {
+      String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
+      return new RestClientException(msg, HttpStatus.BAD_REQUEST);
+    });
 
     return hibernateTemplate.execute(session -> {
       SQLQuery query = session.createSQLQuery("" +
           "INSERT INTO articleJournalJoinTable (ingestionId, journalId) " +
           "VALUES (:ingestionId, :journalId)");
       query.setParameter("ingestionId", ingestionId);
-      query.setParameter("journalId", publicationJournal.getJournalId());
+      query.setParameter("journalId", journal.getJournalId());
       query.executeUpdate();
       return getLastInsertId(session);
     });
