@@ -20,7 +20,7 @@ RENAME TABLE `issueArticleList` TO `oldIssueArticleList`;
 
 CREATE TABLE `issueArticleList` (
   `issueId` bigint(20) NOT NULL DEFAULT '0',
-  `sortOrder` int(11) NOT NULL '0',
+  `sortOrder` int(11) NOT NULL DEFAULT '0',
   `articleId` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`issueId`,`articleId`),
   CONSTRAINT `fk_issueArticleList_1` FOREIGN KEY (`issueId`) REFERENCES `issue` (`issueId`),
