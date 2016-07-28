@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.EnumSet;
 import java.util.Optional;
 
 @Controller
@@ -73,44 +72,15 @@ public class ArticleItemReadController extends RestController {
     }
 
     // Not found as an Article or ArticleItem. Check other object types that use DOIs.
-    return EnumSet.allOf(DoiLookup.class).stream()
-        .filter(lookup -> lookup.exists(this, doi))
-        .findAny()
-        .map(matchedLookup -> ResolvedDoiView.create(doi, matchedLookup.getType()))
-        .orElseThrow(() -> new RestClientException("DOI not found: " + doi.getName(), HttpStatus.NOT_FOUND));
-  }
-
-  private static enum DoiLookup {
-    VOLUME(ResolvedDoiView.DoiWorkType.VOLUME) {
-      @Override
-      public boolean exists(ArticleItemReadController controller, Doi doi) {
-        return controller.volumeCrudService.getVolume(VolumeIdentifier.create(doi)).isPresent();
-      }
-    },
-    ISSUE(ResolvedDoiView.DoiWorkType.ISSUE) {
-      @Override
-      public boolean exists(ArticleItemReadController controller, Doi doi) {
-        return controller.issueCrudService.getIssue(IssueIdentifier.create(doi)).isPresent();
-      }
-    },
-    COMMENT(ResolvedDoiView.DoiWorkType.COMMENT) {
-      @Override
-      public boolean exists(ArticleItemReadController controller, Doi doi) {
-        return controller.commentCrudService.getComment(CommentIdentifier.create(doi)).isPresent();
-      }
-    };
-
-    private final ResolvedDoiView.DoiWorkType type;
-
-    private DoiLookup(ResolvedDoiView.DoiWorkType type) {
-      this.type = type;
+    if (commentCrudService.getComment(CommentIdentifier.create(doi)).isPresent()) {
+      return ResolvedDoiView.create(doi, ResolvedDoiView.DoiWorkType.COMMENT);
+    } else if (issueCrudService.getIssue(IssueIdentifier.create(doi)).isPresent()) {
+      return ResolvedDoiView.create(doi, ResolvedDoiView.DoiWorkType.ISSUE);
+    } else if (volumeCrudService.getVolume(VolumeIdentifier.create(doi)).isPresent()) {
+      return ResolvedDoiView.create(doi, ResolvedDoiView.DoiWorkType.VOLUME);
+    } else {
+      throw new RestClientException("DOI not found: " + doi.getName(), HttpStatus.NOT_FOUND);
     }
-
-    public ResolvedDoiView.DoiWorkType getType() {
-      return type;
-    }
-
-    public abstract boolean exists(ArticleItemReadController controller, Doi doi);
   }
 
 }
