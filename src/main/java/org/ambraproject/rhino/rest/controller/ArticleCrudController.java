@@ -264,13 +264,12 @@ public class ArticleCrudController extends RestController {
    */
   @Deprecated
   @Transactional(readOnly = false)
-  @RequestMapping(value = "/articles/{doi}/ingestions/{number}/relationships", method = RequestMethod.POST)
+  @RequestMapping(value = "/articles/{doi}/revisions/{number}/relationships", method = RequestMethod.POST)
   public void refreshArticleRelationships(HttpServletRequest request, HttpServletResponse response,
                                           @PathVariable("doi") String doi,
-                                          @PathVariable("number") int ingestionNumber)
+                                          @PathVariable("number") int revisionNumber)
       throws IOException {
-    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
-    ArticleRevisionIdentifier articleRevId = null; // TODO: Refactor ArticleCrudService.refreshArticleRelationships to take ArticleIngestionIdentifier
+    ArticleRevisionIdentifier articleRevId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
     articleCrudService.refreshArticleRelationships(articleRevId);
   }
 
