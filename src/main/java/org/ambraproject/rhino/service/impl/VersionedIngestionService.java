@@ -77,7 +77,7 @@ public class VersionedIngestionService extends AmbraService {
     ImmutableList<ManifestXml.Asset> assets = manifestXml.getAssets();
     ManifestXml.Asset manuscriptAsset = findManuscriptAsset(assets);
     ManifestXml.Representation manuscriptRepr = findManuscriptRepr(manuscriptAsset);
-    ManifestXml.Representation printableRepr = findPrintableRepr(manuscriptAsset);
+    Optional<ManifestXml.Representation> printableRepr = findPrintableRepr(manuscriptAsset);
 
     String manuscriptEntry = manuscriptRepr.getFile().getEntry();
     if (!archive.getEntryNames().contains(manifestEntry)) {
@@ -227,7 +227,7 @@ public class VersionedIngestionService extends AmbraService {
       String message = "Manifest is not consistent with files in archive."
           + (missingFromArchive.isEmpty() ? "" : (" Files in manifest not included in archive: " + missingFromArchive))
           + (missingFromManifest.isEmpty() ? "" : (" Files in archive not described in manifest: " + missingFromManifest));
-      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+//      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -341,15 +341,11 @@ public class VersionedIngestionService extends AmbraService {
     throw new RestClientException("main-entry not found", HttpStatus.BAD_REQUEST);
   }
 
-  private ManifestXml.Representation findPrintableRepr(ManifestXml.Asset manuscriptAsset) {
-    Optional<String> mainEntry = manuscriptAsset.getMainEntry();
-    Preconditions.checkArgument(mainEntry.isPresent(), "manuscriptAsset must have main-entry");
-    for (ManifestXml.Representation representation : manuscriptAsset.getRepresentations()) {
-      if (representation.getName().equals("PDF")) {
-        return representation;
-      }
-    }
-    throw new RestClientException("main-entry not matched to asset", HttpStatus.BAD_REQUEST);
+  private Optional<ManifestXml.Representation> findPrintableRepr(ManifestXml.Asset manuscriptAsset) {
+    Preconditions.checkArgument(manuscriptAsset.getMainEntry().isPresent(), "manuscriptAsset must have main-entry");
+    return manuscriptAsset.getRepresentations().stream()
+        .filter(representation -> representation.getName().equals("PDF"))
+        .findAny();
   }
 
   private ManifestXml.Representation findManuscriptRepr(ManifestXml.Asset manuscriptAsset) {
