@@ -37,29 +37,23 @@ public class RelationshipSetView {
       List<RelationshipSetView.RelationshipView> inboundViews = inbound
           .stream().map(var -> new RelationshipSetView.RelationshipView(var.getType(),
               Doi.create(var.getSourceArticle().getDoi()),
-                      getArticleTitle(Doi.create(var.getSourceArticle().getDoi()))))
+                      getArticleTitle(var.getSourceArticle())))
           .collect(Collectors.toList());
       List<RelationshipSetView.RelationshipView> outboundViews = outbound
           .stream().map(var -> new RelationshipSetView.RelationshipView(var.getType(),
               Doi.create(var.getTargetArticle().getDoi()),
-              getArticleTitle(Doi.create(var.getTargetArticle().getDoi()))))
+              getArticleTitle(var.getTargetArticle())))
           .collect(Collectors.toList());
 
       return new RelationshipSetView(inboundViews, outboundViews);
 
     }
 
-    private String getArticleTitle(Doi doi) {
+    private String getArticleTitle(ArticleTable article) {
 
-      ArticleTable article;
-      try {
-        article = articleCrudService.getArticle(ArticleIdentifier.create(doi));
-      } catch (NoSuchArticleIdException e) {
-        log.error("Could not retrieve article for " + doi, e);
-        throw new RuntimeException(e);
-      }
       ArticleIngestion ingestion;
       try {
+        //TODO: think through what happens in QC case when no revision yet exists
         ingestion = articleCrudService.getLatestArticleRevision(article).getIngestion();
       } catch (NoSuchArticleIdException e) {
         log.error("Could not retrieve latest revision for " + article.getDoi(), e);
