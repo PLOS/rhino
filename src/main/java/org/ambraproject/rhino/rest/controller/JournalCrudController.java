@@ -50,9 +50,9 @@ public class JournalCrudController extends RestController {
                    @RequestParam(value = "currentIssue", required = false) String currentIssue)
       throws IOException {
     if (booleanParameter(currentIssue)) {
-      journalCrudService.readCurrentIssue(journalKey).respond(request, response, entityGson);
+      journalCrudService.serveCurrentIssue(journalKey).respond(request, response, entityGson);
     } else {
-      journalCrudService.read(journalKey).respond(request, response, entityGson);
+      journalCrudService.serve(journalKey).respond(request, response, entityGson);
     }
   }
 
@@ -76,7 +76,7 @@ public class JournalCrudController extends RestController {
     JournalInputView input = readJsonFromRequest(request, JournalInputView.class);
     journalCrudService.update(journalKey, input);
 
-    journalCrudService.read(journalKey).respond(request, response, entityGson);
+    journalCrudService.serve(journalKey).respond(request, response, entityGson);
   }
 
   @Transactional(readOnly = true)

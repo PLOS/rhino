@@ -21,23 +21,37 @@ package org.ambraproject.rhino.service;
 import org.ambraproject.rhino.identity.IssueIdentifier;
 import org.ambraproject.rhino.identity.VolumeIdentifier;
 import org.ambraproject.rhino.model.Issue;
+import org.ambraproject.rhino.model.Volume;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.journal.IssueInputView;
 import org.ambraproject.rhino.view.journal.VolumeNonAssocView;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public interface IssueCrudService {
 
-  public abstract Transceiver read(IssueIdentifier id) throws IOException;
+  /**
+   * Serve issue metadata to a client.
+   */
+  public abstract Transceiver serveIssue(IssueIdentifier id) throws IOException;
+
+  /**
+   * Read a issue requested by the client, throwing {@link RestClientException} if the issue does not exist.
+   */
+  public abstract Issue readIssue(IssueIdentifier issueId);
+
+  /**
+   * Get a issue if it exists.
+   */
+  public abstract Optional<Issue> getIssue(IssueIdentifier issueId);
 
   public abstract IssueIdentifier create(VolumeIdentifier volumeId, IssueInputView input);
 
   public abstract void update(IssueIdentifier issueId, IssueInputView input);
 
   public abstract VolumeNonAssocView getParentVolumeView(Issue issue);
-
-  public abstract Issue getIssue(IssueIdentifier issueId);
 
   public abstract void delete(IssueIdentifier issueId);
 

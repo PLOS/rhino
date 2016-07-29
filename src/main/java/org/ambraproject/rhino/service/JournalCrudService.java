@@ -11,17 +11,17 @@ public interface JournalCrudService {
 
   public abstract Transceiver listJournals() throws IOException;
 
-  public abstract Transceiver read(String journalKey) throws IOException;
+  public abstract Transceiver serve(String journalKey) throws IOException;
 
   public abstract void update(String journalKey, JournalInputView input);
 
-  public abstract Transceiver readCurrentIssue(String journalKey);
+  public abstract Transceiver serveCurrentIssue(String journalKey);
 
   public abstract Optional<Journal> getJournal(String journalKey);
 
-  public abstract Journal findJournal(String journalKey);
+  public abstract Journal readJournal(String journalKey);
 
   public abstract Optional<Journal> getJournalByEissn(String eIssn);
 
-  public abstract Journal findJournalByEissn(String eIssn);
+  public abstract Journal readJournalByEissn(String eIssn);
 }

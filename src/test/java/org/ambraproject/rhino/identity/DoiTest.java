@@ -58,4 +58,12 @@ public class DoiTest {
     Assert.assertEquals(converted, fromRawName);
   }
 
+  @Test
+  public void testCaseInsensitivity() {
+    Doi lowercase = Doi.create("10.1371/foo/bar");
+    Doi uppercase = Doi.create("10.1371/FOO/bar");
+    Assert.assertTrue(lowercase.equals(uppercase));
+    Assert.assertTrue(lowercase.hashCode() == uppercase.hashCode());
+  }
+
 }

@@ -40,6 +40,7 @@ import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("JpaQlInspection")
@@ -49,28 +50,26 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
   private ArticleCrudService articleCrudService;
 
   @Override
-  public Issue getIssue(IssueIdentifier issueId) {
-    Issue issue = getIssueFromDatabase(issueId);
-    if (issue == null) {
-      throw new RestClientException("Issue not found with DOI: " + issueId, HttpStatus.NOT_FOUND);
-    }
-    return issue;
-  }
-
-  private Issue getIssueFromDatabase(IssueIdentifier issueId) {
-    return hibernateTemplate.execute(session -> {
-        Query query = session.createQuery("FROM Issue WHERE doi = :doi");
-        query.setParameter("doi", issueId.getDoi().getName());
-        return (Issue) query.uniqueResult();
-      });
+  public Issue readIssue(IssueIdentifier issueId) {
+    return getIssue(issueId).orElseThrow(() ->
+        new RestClientException("Issue not found with DOI: " + issueId, HttpStatus.NOT_FOUND));
   }
 
   @Override
-  public Transceiver read(final IssueIdentifier id) throws IOException {
+  public Optional<Issue> getIssue(IssueIdentifier issueId) {
+    return Optional.ofNullable(hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM Issue WHERE doi = :doi");
+      query.setParameter("doi", issueId.getDoi().getName());
+      return (Issue) query.uniqueResult();
+    }));
+  }
+
+  @Override
+  public Transceiver serveIssue(final IssueIdentifier id) throws IOException {
     return new EntityTransceiver<Issue>() {
       @Override
       protected Issue fetchEntity() {
-        return getIssue(id);
+        return readIssue(id);
       }
 
       @Override
@@ -118,7 +117,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
     Preconditions.checkNotNull(volumeId);
 
     IssueIdentifier issueId = IssueIdentifier.create(input.getDoi());
-    if (getIssueFromDatabase(issueId) != null) {
+    if (getIssue(issueId).isPresent()) {
       throw new RestClientException("Issue already exists with DOI: "
           + issueId, HttpStatus.BAD_REQUEST);
     }
@@ -130,7 +129,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
   @Override
   public void update(IssueIdentifier issueId, IssueInputView input) {
     Preconditions.checkNotNull(input);
-    Issue issue = getIssue(issueId);
+    Issue issue = readIssue(issueId);
     issue = applyInput(issue, input);
     hibernateTemplate.update(issue);
   }
@@ -153,7 +152,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
 
   @Override
   public void delete(IssueIdentifier issueId) {
-    Issue issue = getIssue(issueId);
+    Issue issue = readIssue(issueId);
 
     List<String> currentIssueJournalKeys = hibernateTemplate.execute((Session session) -> {
       Query query = session.createQuery("select journalKey from Journal where currentIssue = :issue");

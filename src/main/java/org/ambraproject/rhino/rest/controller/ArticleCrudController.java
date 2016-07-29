@@ -165,7 +165,7 @@ public class ArticleCrudController extends RestController {
                            @PathVariable("doi") String doi)
       throws IOException {
     ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
-    commentCrudService.readComments(id).respond(request, response, entityGson);
+    commentCrudService.serveComments(id).respond(request, response, entityGson);
   }
 
   // TODO: Get rid of this?

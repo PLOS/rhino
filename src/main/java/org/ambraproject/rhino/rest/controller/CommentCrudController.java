@@ -46,13 +46,13 @@ public class CommentCrudController extends RestController {
     CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
     // TODO: Validate articleId
 
-    commentCrudService.readComment(commentId).respond(request, response, entityGson);
+    commentCrudService.serveComment(commentId).respond(request, response, entityGson);
   }
 
   @RequestMapping(value = "/comments", method = RequestMethod.GET, params = {"flagged"})
   public void readAllFlaggedComments(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    commentCrudService.readFlaggedComments().respond(request, response, entityGson);
+    commentCrudService.serveFlaggedComments().respond(request, response, entityGson);
   }
 
   @RequestMapping(value = "/commentFlags", method = RequestMethod.GET)

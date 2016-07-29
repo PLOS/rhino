@@ -19,13 +19,29 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Iterables;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
-import org.ambraproject.rhino.identity.*;
-import org.ambraproject.rhino.model.*;
+import org.ambraproject.rhino.identity.ArticleFileIdentifier;
+import org.ambraproject.rhino.identity.ArticleIdentifier;
+import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
+import org.ambraproject.rhino.identity.ArticleItemIdentifier;
+import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
+import org.ambraproject.rhino.identity.Doi;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleIngestion;
+import org.ambraproject.rhino.model.ArticleItem;
+import org.ambraproject.rhino.model.ArticleRelationship;
+import org.ambraproject.rhino.model.ArticleRevision;
+import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.VersionedArticleRelationship;
 import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.ambraproject.rhino.rest.ClientItemId;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -37,6 +53,7 @@ import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.view.ResolvedDoiView;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
 import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
@@ -67,7 +84,15 @@ import org.w3c.dom.Document;
 import javax.xml.xpath.XPathException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -230,19 +255,18 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return new Transceiver() {
       @Override
       protected ArticleOverview getData() throws IOException {
-        ArticleTable article = getArticle(id);
         return hibernateTemplate.execute(session -> {
-          Query ingestionQuery = session.createQuery("FROM ArticleIngestion WHERE article = :article");
-          ingestionQuery.setParameter("article", article);
+          Query ingestionQuery = session.createQuery("FROM ArticleIngestion WHERE article.doi = :doi");
+          ingestionQuery.setParameter("doi", id.getDoiName());
           List<ArticleIngestion> ingestions = ingestionQuery.list();
 
           Query revisionQuery = session.createQuery("" +
               "FROM ArticleRevision WHERE ingestion IN " +
-              "  (FROM ArticleIngestion WHERE article = :article)");
-          revisionQuery.setParameter("article", article);
+              "  (FROM ArticleIngestion WHERE article.doi = :doi)");
+          revisionQuery.setParameter("doi", id.getDoiName());
           List<ArticleRevision> revisions = revisionQuery.list();
 
-          return ArticleOverview.build(article, ingestions, revisions);
+          return ArticleOverview.build(id, ingestions, revisions);
         });
       }
 
@@ -493,19 +517,19 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       hibernateTemplate.delete(ar);
     }
     for (RelatedArticleLink ar : xmlRelationships) {
-        ArticleTable targetArticle = null;
-        try {
-          targetArticle = getArticle(ar.getArticleId());
-        } catch (NoSuchArticleIdException e) {
-          // likely a reference to an article external to our system and so the relationship is not persisted
-        }
-        if (targetArticle != null) {
-          VersionedArticleRelationship newAr = new VersionedArticleRelationship();
-          newAr.setSourceArticle(sourceArticle);
-          newAr.setTargetArticle(targetArticle);
-          newAr.setType(ar.getType());
-          hibernateTemplate.save(newAr);
-        }
+      ArticleTable targetArticle = null;
+      try {
+        targetArticle = getArticle(ar.getArticleId());
+      } catch (NoSuchArticleIdException e) {
+        // likely a reference to an article external to our system and so the relationship is not persisted
+      }
+      if (targetArticle != null) {
+        VersionedArticleRelationship newAr = new VersionedArticleRelationship();
+        newAr.setSourceArticle(sourceArticle);
+        newAr.setTargetArticle(targetArticle);
+        newAr.setType(ar.getType());
+        hibernateTemplate.save(newAr);
+      }
     }
   }
 
@@ -569,6 +593,36 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       Query query = session.createQuery("FROM ArticleItem WHERE doi = :doi ");
       query.setParameter("doi", doi.getName());
       return (Collection<ArticleItem>) query.list();
+    });
+  }
+
+  private static boolean isMainArticleItem(ArticleItem item) {
+    return item.getDoi().equals(item.getIngestion().getArticle().getDoi());
+  }
+
+  @Override
+  public Optional<ResolvedDoiView> getItemOverview(Doi doi) {
+    return hibernateTemplate.execute(session -> {
+      Query ingestionQuery = session.createQuery("FROM ArticleItem WHERE doi = :doi");
+      ingestionQuery.setParameter("doi", doi.getName());
+      List<ArticleItem> items = ingestionQuery.list();
+      if (items.isEmpty()) return Optional.empty();
+
+      ResolvedDoiView.DoiWorkType type = items.stream().allMatch(ArticleCrudServiceImpl::isMainArticleItem)
+          ? ResolvedDoiView.DoiWorkType.ARTICLE : ResolvedDoiView.DoiWorkType.ASSET;
+      ArticleIdentifier articleId = Iterables.getOnlyElement(items.stream()
+          .map(item -> ArticleIdentifier.create(item.getIngestion().getArticle().getDoi()))
+          .collect(Collectors.toSet()));
+
+      Query revisionQuery = session.createQuery("" +
+          "FROM ArticleRevision WHERE ingestion IN " +
+          "  (SELECT ingestion FROM ArticleItem WHERE doi = :doi)");
+      revisionQuery.setParameter("doi", doi.getName());
+      List<ArticleRevision> revisions = revisionQuery.list();
+
+      Collection<ArticleIngestion> ingestions = Collections2.transform(items, ArticleItem::getIngestion);
+      ArticleOverview articleOverview = ArticleOverview.build(articleId, ingestions, revisions);
+      return Optional.of(ResolvedDoiView.createForArticle(doi, type, articleOverview));
     });
   }
 

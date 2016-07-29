@@ -6,7 +6,7 @@ CREATE TABLE `articleList` (
   `articleListId` bigint(20) NOT NULL AUTO_INCREMENT,
   `listKey` varchar(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `displayName` varchar(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL,
-  `journalId` bigint(20) DEFAULT NULL,
+  `journalId` bigint(20) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `lastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `listType` varchar(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,

@@ -44,11 +44,9 @@ public class ArticleOverview {
     this.revisions = ImmutableSortedMap.copyOf(revisionTable);
   }
 
-  public static ArticleOverview build(ArticleTable article,
+  public static ArticleOverview build(ArticleIdentifier articleId,
                                       Collection<ArticleIngestion> ingestions,
                                       Collection<ArticleRevision> revisions) {
-    ArticleIdentifier articleId = ArticleIdentifier.create(article.getDoi());
-
     // Initialize every ingestion number with an empty list of revisions, then fill in revisions.
     Map<Integer, Collection<Integer>> ingestionTable = ingestions.stream().collect(Collectors.toMap(
         ArticleIngestion::getIngestionNumber,
