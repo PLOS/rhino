@@ -68,11 +68,11 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
   }
 
   @Override
-  public Transceiver read(final String journalKey) throws IOException {
+  public Transceiver serve(final String journalKey) throws IOException {
     return new EntityTransceiver<Journal>() {
       @Override
       protected Journal fetchEntity() {
-        return findJournal(journalKey);
+        return readJournal(journalKey);
       }
 
       @Override
@@ -83,7 +83,7 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
   }
 
   @Override
-  public Transceiver readCurrentIssue(final String journalKey) {
+  public Transceiver serveCurrentIssue(final String journalKey) {
     Preconditions.checkNotNull(journalKey);
     return new Transceiver() {
       @Override
@@ -139,14 +139,14 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
   @Override
   public void update(String journalKey, JournalInputView input) {
     Preconditions.checkNotNull(input);
-    Journal journal = findJournal(journalKey);
+    Journal journal = readJournal(journalKey);
     hibernateTemplate.update(applyInput(journal, input));
   }
 
   private Journal applyInput(Journal journal, JournalInputView input) {
     String currentIssueDoi = input.getCurrentIssueDoi();
     if (currentIssueDoi != null) {
-      Issue currentIssue = issueCrudService.getIssue(IssueIdentifier.create(currentIssueDoi));
+      Issue currentIssue = issueCrudService.readIssue(IssueIdentifier.create(currentIssueDoi));
       validateIssueInJournal(currentIssue, journal);
       journal.setCurrentIssue(currentIssue);
     }
@@ -188,7 +188,7 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
   }
 
   @Override
-  public Journal findJournal(String journalKey) {
+  public Journal readJournal(String journalKey) {
     return getJournal(journalKey).orElseThrow(() ->
         new RestClientException(journalNotFoundMessage(journalKey), HttpStatus.NOT_FOUND));
   }
@@ -203,7 +203,7 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
   }
 
   @Override
-  public Journal findJournalByEissn(String eIssn) {
+  public Journal readJournalByEissn(String eIssn) {
     return getJournalByEissn(eIssn).orElseThrow(() ->
         new RestClientException("No journal found with eIssn: " + eIssn, HttpStatus.NOT_FOUND));
   }

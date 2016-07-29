@@ -70,7 +70,7 @@ public class VolumeCrudController extends RestController {
       throws IOException {
     // TODO: Validate journalKey
     VolumeIdentifier volumeId = getVolumeId(volumeDoi);
-    volumeCrudService.read(volumeId).respond(request, response, entityGson);
+    volumeCrudService.serveVolume(volumeId).respond(request, response, entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})

@@ -63,7 +63,7 @@ public class IssueCrudController extends RestController {
       throws IOException {
     // TODO: Validate journalKey and volumeDoiObj
     IssueIdentifier issueId = getIssueId(issueDoi);
-    issueCrudService.read(issueId).respond(request, response, entityGson);
+    issueCrudService.serveIssue(issueId).respond(request, response, entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
@@ -78,7 +78,7 @@ public class IssueCrudController extends RestController {
     IssueInputView input = readJsonFromRequest(request, IssueInputView.class);
     issueCrudService.update(issueId, input);
 
-    issueCrudService.read(issueId);
+    issueCrudService.serveIssue(issueId);
   }
 
   @Transactional(rollbackFor = {Throwable.class})

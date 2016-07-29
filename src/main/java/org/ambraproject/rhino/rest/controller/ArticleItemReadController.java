@@ -1,15 +1,20 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.gson.Gson;
-import org.ambraproject.rhino.identity.ArticleItemIdentifier;
+import org.ambraproject.rhino.identity.CommentIdentifier;
 import org.ambraproject.rhino.identity.Doi;
-import org.ambraproject.rhino.model.ArticleItem;
-import org.ambraproject.rhino.rest.ClientItemId;
+import org.ambraproject.rhino.identity.IssueIdentifier;
+import org.ambraproject.rhino.identity.VolumeIdentifier;
 import org.ambraproject.rhino.rest.DoiEscaping;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
+import org.ambraproject.rhino.service.CommentCrudService;
+import org.ambraproject.rhino.service.IssueCrudService;
+import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.util.response.Transceiver;
-import org.ambraproject.rhino.view.ArticleItemView;
+import org.ambraproject.rhino.view.ResolvedDoiView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Optional;
 
 @Controller
 public class ArticleItemReadController extends RestController {
@@ -27,28 +33,28 @@ public class ArticleItemReadController extends RestController {
   @Autowired
   private ArticleCrudService articleCrudService;
   @Autowired
+  private VolumeCrudService volumeCrudService;
+  @Autowired
+  private IssueCrudService issueCrudService;
+  @Autowired
+  private CommentCrudService commentCrudService;
+  @Autowired
   private Gson entityGson;
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/works/{doi:.+}", method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response,
-                   @PathVariable("doi") String doi)
+  @RequestMapping(value = "/dois/{doi:.+}", method = RequestMethod.GET)
+  public void resolve(HttpServletRequest request, HttpServletResponse response,
+                      @PathVariable("doi") String escapedDoi)
       throws IOException {
-    Doi doiObj = DoiEscaping.unescape(doi);
-
-    // TODO: What do we want to do here? Given a DOI, resolve to an object type? Do ingestion/revision number matter?
-    ClientItemId id = null;
-    ArticleItemIdentifier itemId = articleCrudService.resolveToItem(id);
-    ArticleItem work = articleCrudService.getArticleItem(itemId);
-    asTransceiver(work).respond(request, response, entityGson);
+    Doi doi = DoiEscaping.unescape(escapedDoi);
+    asTransceiver(findDoiTarget(doi)).respond(request, response, entityGson);
   }
 
-  // TODO: Extract to service class
-  private Transceiver asTransceiver(ArticleItem work) {
+  private Transceiver asTransceiver(ResolvedDoiView view) {
     return new Transceiver() {
       @Override
       protected Object getData() throws IOException {
-        return new ArticleItemView(work);
+        return view;
       }
 
       @Override
@@ -56,6 +62,25 @@ public class ArticleItemReadController extends RestController {
         return null;
       }
     };
+  }
+
+  private ResolvedDoiView findDoiTarget(Doi doi) throws IOException {
+    // Look for the DOI in the corpus of articles
+    Optional<ResolvedDoiView> itemOverview = articleCrudService.getItemOverview(doi);
+    if (itemOverview.isPresent()) {
+      return itemOverview.get();
+    }
+
+    // Not found as an Article or ArticleItem. Check other object types that use DOIs.
+    if (commentCrudService.getComment(CommentIdentifier.create(doi)).isPresent()) {
+      return ResolvedDoiView.create(doi, ResolvedDoiView.DoiWorkType.COMMENT);
+    } else if (issueCrudService.getIssue(IssueIdentifier.create(doi)).isPresent()) {
+      return ResolvedDoiView.create(doi, ResolvedDoiView.DoiWorkType.ISSUE);
+    } else if (volumeCrudService.getVolume(VolumeIdentifier.create(doi)).isPresent()) {
+      return ResolvedDoiView.create(doi, ResolvedDoiView.DoiWorkType.VOLUME);
+    } else {
+      throw new RestClientException("DOI not found: " + doi.getName(), HttpStatus.NOT_FOUND);
+    }
   }
 
 }
