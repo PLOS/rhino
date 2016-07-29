@@ -37,7 +37,7 @@ public class RelationshipSetView {
       List<RelationshipSetView.RelationshipView> inboundViews = inbound
           .stream().map(var -> new RelationshipSetView.RelationshipView(var.getType(),
               Doi.create(var.getSourceArticle().getDoi()),
-              getArticleTitle(Doi.create(var.getSourceArticle().getDoi()))))
+                      getArticleTitle(Doi.create(var.getSourceArticle().getDoi()))))
           .collect(Collectors.toList());
       List<RelationshipSetView.RelationshipView> outboundViews = outbound
           .stream().map(var -> new RelationshipSetView.RelationshipView(var.getType(),
@@ -49,11 +49,9 @@ public class RelationshipSetView {
 
     }
 
-    // TODO: this will be superseded when the ingestion table is modified to carry title XML fragments
     private String getArticleTitle(Doi doi) {
 
       ArticleTable article;
-      // fetch and parse XML manuscript
       try {
         article = articleCrudService.getArticle(ArticleIdentifier.create(doi));
       } catch (NoSuchArticleIdException e) {
@@ -67,14 +65,7 @@ public class RelationshipSetView {
         log.error("Could not retrieve latest revision for " + article.getDoi(), e);
         throw new RuntimeException(e);
       }
-      ArticleXml targetArticleXml;
-      try {
-        targetArticleXml = new ArticleXml(articleCrudService.getManuscriptXml(ingestion));
-      } catch (IOException e) {
-        log.error("Could not retrieve manuscript for " + ingestion, e);
-        throw new RuntimeException(e);
-      }
-      return targetArticleXml.parseTitle();
+      return ingestion.getArticleTitle();
     }
   }
 

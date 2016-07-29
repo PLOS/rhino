@@ -44,6 +44,7 @@ import org.w3c.dom.Document;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 public interface ArticleCrudService {
@@ -155,6 +156,10 @@ public interface ArticleCrudService {
    * @return a set of views of the related articles
    */
   public abstract List<RelatedArticleView> getRelatedArticles(Article article);
+
+  public abstract String getArticleTitle(ArticleIngestionIdentifier articleIngestionId);
+
+  public Date getArticlePubDate(ArticleIngestionIdentifier articleIngestionId);
 
   List<VersionedArticleRelationship> getArticleRelationshipsFrom(ArticleIdentifier sourceId);
 

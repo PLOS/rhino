@@ -30,6 +30,12 @@ public class ArticleIngestion implements Timestamped {
   private ArticleTable article;
 
   @Column
+  private String articleTitle;
+
+  @Column
+  private Date publicationDate;
+
+  @Column
   private int ingestionNumber;
 
   @Cascade(CascadeType.SAVE_UPDATE)
@@ -75,6 +81,22 @@ public class ArticleIngestion implements Timestamped {
 
   public void setJournals(Set<Journal> journals) {
     this.journals = journals;
+  }
+
+  public String getArticleTitle() {
+    return articleTitle;
+  }
+
+  public void setArticleTitle(String articleTitle) {
+    this.articleTitle = articleTitle;
+  }
+
+  public Date getPublicationDate() {
+    return publicationDate;
+  }
+
+  public void setPublicationDate(Date publicationDate) {
+    this.publicationDate = publicationDate;
   }
 
   @Override

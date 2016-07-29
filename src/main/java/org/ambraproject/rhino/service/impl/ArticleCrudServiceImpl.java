@@ -24,22 +24,8 @@ import com.google.common.collect.ImmutableMap;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
-import org.ambraproject.rhino.identity.ArticleFileIdentifier;
-import org.ambraproject.rhino.identity.ArticleIdentifier;
-import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
-import org.ambraproject.rhino.identity.ArticleItemIdentifier;
-import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
-import org.ambraproject.rhino.identity.Doi;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.model.Article;
-import org.ambraproject.rhino.model.ArticleIngestion;
-import org.ambraproject.rhino.model.ArticleItem;
-import org.ambraproject.rhino.model.ArticleRelationship;
-import org.ambraproject.rhino.model.ArticleRevision;
-import org.ambraproject.rhino.model.ArticleTable;
-import org.ambraproject.rhino.model.Journal;
-import org.ambraproject.rhino.model.VersionedArticleRelationship;
+import org.ambraproject.rhino.identity.*;
+import org.ambraproject.rhino.model.*;
 import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.ambraproject.rhino.rest.ClientItemId;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -81,14 +67,7 @@ import org.w3c.dom.Document;
 import javax.xml.xpath.XPathException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -452,6 +431,30 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           return new RelatedArticleView(relationship, relatedArticle);
         })
         .collect(Collectors.toList());
+  }
+
+  @Override
+  public String getArticleTitle(ArticleIngestionIdentifier articleIngestionId) {
+    return (String) hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+              "SELECT articleTitle " +
+              "FROM ArticleIngestion ai " +
+              "WHERE ai = :ingestion ");
+      query.setParameter("ingestion", articleIngestionId);
+      return query.uniqueResult();
+    });
+  }
+
+  @Override
+  public Date getArticlePubDate(ArticleIngestionIdentifier articleIngestionId) {
+    return (Date) hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+              "SELECT articlePublicationDate " +
+              "FROM ArticleIngestion ai " +
+              "WHERE ai = :ingestion ");
+      query.setParameter("ingestion", articleIngestionId);
+      return query.uniqueResult();
+    });
   }
 
   @Override

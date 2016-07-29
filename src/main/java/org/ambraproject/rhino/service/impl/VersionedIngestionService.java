@@ -103,7 +103,7 @@ public class VersionedIngestionService extends AmbraService {
     }
 
     long articlePk = persistArticlePk(articleIdentifier);
-    IngestionPersistenceResult ingestionResult = persistIngestion(articlePk);
+    IngestionPersistenceResult ingestionResult = persistIngestion(articlePk, articleMetadata);
     long ingestionId = ingestionResult.pk;
 
     persistRevision(articlePk, ingestionId, parsedArticle.getRevisionNumber());
@@ -151,7 +151,7 @@ public class VersionedIngestionService extends AmbraService {
     }
   }
 
-  private IngestionPersistenceResult persistIngestion(long articlePk) {
+  private IngestionPersistenceResult persistIngestion(long articlePk, ArticleMetadata articleMetadata) {
     return hibernateTemplate.execute(session -> {
       SQLQuery findNextIngestionNumber = session.createSQLQuery(
           "SELECT MAX(ingestionNumber) FROM articleIngestion WHERE articleId = :articleId");
@@ -161,10 +161,12 @@ public class VersionedIngestionService extends AmbraService {
           : maxIngestionNumber.intValue() + 1;
 
       SQLQuery insertEvent = session.createSQLQuery("" +
-          "INSERT INTO articleIngestion (articleId, ingestionNumber) " +
-          "VALUES (:articleId, :ingestionNumber)");
+          "INSERT INTO articleIngestion (articleId, ingestionNumber, articleTitle, articlePublicationDate) " +
+          "VALUES (:articleId, :ingestionNumber, :articleTitle, :publicationDate)");
       insertEvent.setParameter("articleId", articlePk);
       insertEvent.setParameter("ingestionNumber", nextIngestionNumber);
+      insertEvent.setParameter("articleTitle", articleMetadata.getTitle());
+      insertEvent.setParameter("publicationDate", articleMetadata.getPublicationDate());
       insertEvent.executeUpdate();
       long pk = getLastInsertId(session);
 
