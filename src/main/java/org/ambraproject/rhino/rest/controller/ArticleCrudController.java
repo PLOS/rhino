@@ -175,7 +175,7 @@ public class ArticleCrudController extends RestController {
                               @PathVariable("doi") String doi)
       throws IOException {
     ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
-    ArticleTable article = articleCrudService.getArticle(id);
+    ArticleTable article = articleCrudService.readArticle(id);
     commentCrudService.getCommentCount(article).respond(request, response, entityGson);
   }
 

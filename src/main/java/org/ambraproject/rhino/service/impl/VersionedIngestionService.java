@@ -370,7 +370,7 @@ public class VersionedIngestionService extends AmbraService {
    * @return an object containing metadata that could be extracted from the manuscript, with other fields unfilled
    */
   public ArticleMetadata getArticleMetadata(ArticleIngestionIdentifier ingestionId) {
-    ArticleIngestion ingestion = articleCrudService.getIngestion(ingestionId);
+    ArticleIngestion ingestion = articleCrudService.readIngestion(ingestionId);
 
     Document document;
     try {

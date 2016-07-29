@@ -8,7 +8,6 @@ import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.VersionedArticleRelationship;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.NoSuchArticleIdException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,7 @@ public class RelationshipSetView {
       List<RelationshipSetView.RelationshipView> inboundViews = inbound
           .stream().map(var -> new RelationshipSetView.RelationshipView(var.getType(),
               Doi.create(var.getSourceArticle().getDoi()),
-                      getArticleTitle(var.getSourceArticle())))
+              getArticleTitle(var.getSourceArticle())))
           .collect(Collectors.toList());
       List<RelationshipSetView.RelationshipView> outboundViews = outbound
           .stream().map(var -> new RelationshipSetView.RelationshipView(var.getType(),
@@ -48,15 +47,9 @@ public class RelationshipSetView {
     }
 
     private String getArticleTitle(ArticleTable article) {
-
-      ArticleIngestion ingestion;
-      try {
-        //TODO: think through what happens in QC case when no revision yet exists
-        ingestion = articleCrudService.getLatestRevision(article).getIngestion();
-      } catch (NoSuchArticleIdException e) {
-        log.error("Could not retrieve latest revision for " + article.getDoi(), e);
-        throw new RuntimeException(e);
-      }
+      ArticleIngestion ingestion = articleCrudService.getLatestRevision(article)
+          .map(revision -> revision.getIngestion())
+          .orElseThrow(RuntimeException::new); //TODO: think through what happens in QC case when no revision yet exists
       return ingestion.getTitle();
     }
   }

@@ -191,13 +191,45 @@ public interface ArticleCrudService {
 
   Optional<ResolvedDoiView> getItemOverview(Doi doi);
 
-  public abstract ArticleIngestion getIngestion(ArticleIngestionIdentifier articleId);
+  /**
+   * Get an ingestion if it exists.
+   */
+  public abstract Optional<ArticleIngestion> getIngestion(ArticleIngestionIdentifier ingestionId);
+  /**
+   * Read an ingestion requested by the client, throwing {@link RestClientException} if it is not found.
+   */
+  public abstract ArticleIngestion readIngestion(ArticleIngestionIdentifier ingestionId);
 
-  public abstract ArticleRevision getRevision(ArticleRevisionIdentifier revisionId);
+  /**
+   * Get a revision if it exists.
+   */
+  public abstract Optional<ArticleRevision> getRevision(ArticleRevisionIdentifier revisionId);
 
-  public abstract ArticleRevision getLatestRevision(ArticleTable article);
+  /**
+   * Read a revision requested by the client, throwing {@link RestClientException} if it is not found.
+   */
+  public abstract ArticleRevision readRevision(ArticleRevisionIdentifier revisionId);
 
-  public abstract ArticleTable getArticle(ArticleIdentifier articleIdentifier);
+  /**
+   * Get an article's latest revision, if it has any revisions.
+   */
+  public abstract Optional<ArticleRevision> getLatestRevision(ArticleTable article);
+
+  /**
+   * Get the latest revision of an article requested by the client, throwing {@link RestClientException} if the article
+   * has no revisions.
+   */
+  public abstract ArticleRevision readLatestRevision(ArticleTable article);
+
+  /**
+   * Get an article if it exists.
+   */
+  public abstract Optional<ArticleTable> getArticle(ArticleIdentifier articleIdentifier);
+
+  /**
+   * Read an article requested by the client, throwing {@link RestClientException} if it is not found.
+   */
+  public abstract ArticleTable readArticle(ArticleIdentifier articleIdentifier);
 
   public abstract Document getManuscriptXml(ArticleIngestion articleIngestion) throws IOException;
 

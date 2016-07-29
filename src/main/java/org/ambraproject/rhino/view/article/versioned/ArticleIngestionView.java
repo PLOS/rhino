@@ -27,7 +27,7 @@ public class ArticleIngestionView implements JsonOutputView {
     private RelationshipSetView.Factory relationshipSetViewFactory;
 
     public ArticleIngestionView getView(ArticleIngestionIdentifier ingestionId) {
-      ArticleIngestion ingestion = articleCrudService.getIngestion(ingestionId);
+      ArticleIngestion ingestion = articleCrudService.readIngestion(ingestionId);
       ArticleMetadata metadata = versionedIngestionService.getArticleMetadata(ingestionId);
       RelationshipSetView relationships = relationshipSetViewFactory.getView(metadata);
 
