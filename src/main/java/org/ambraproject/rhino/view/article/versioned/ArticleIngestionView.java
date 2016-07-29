@@ -13,8 +13,6 @@ import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Objects;
-
 public class ArticleIngestionView implements JsonOutputView {
 
   public static class Factory {
@@ -23,31 +21,24 @@ public class ArticleIngestionView implements JsonOutputView {
     private ArticleCrudService articleCrudService;
     @Autowired
     private VersionedIngestionService versionedIngestionService;
-    @Autowired
-    private RelationshipSetView.Factory relationshipSetViewFactory;
 
     public ArticleIngestionView getView(ArticleIngestionIdentifier ingestionId) {
       ArticleIngestion ingestion = articleCrudService.readIngestion(ingestionId);
       ArticleMetadata metadata = versionedIngestionService.getArticleMetadata(ingestionId);
-      RelationshipSetView relationships = relationshipSetViewFactory.getView(metadata);
 
-      return new ArticleIngestionView(ingestion, metadata, relationships);
+      return new ArticleIngestionView(ingestion, metadata);
     }
 
   }
 
   private final ArticleIngestion ingestion;
   private final ArticleMetadata metadata;
-  private final RelationshipSetView relationships;
 
   private ArticleIngestionView(ArticleIngestion ingestion,
-                               ArticleMetadata metadata,
-                               RelationshipSetView relationships) {
+                               ArticleMetadata metadata) {
     Preconditions.checkArgument(ingestion.getArticle().getDoi().equals(metadata.getDoi()));
     this.ingestion = ingestion;
     this.metadata = metadata;
-
-    this.relationships = Objects.requireNonNull(relationships);
   }
 
   @Override
@@ -60,8 +51,6 @@ public class ArticleIngestionView implements JsonOutputView {
     serialized.remove("assets"); // TODO: Create groomed view for ArticleItem/ArticleFile objects
     serialized.remove("authors");
     serialized.remove("collaborativeAuthors");
-
-    serialized.add("relatedArticles", context.serialize(relationships));
 
     return serialized;
   }

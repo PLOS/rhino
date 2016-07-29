@@ -32,8 +32,10 @@ import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.SyndicationInputView;
+import org.ambraproject.rhino.view.article.versioned.RelationshipSetView;
 import org.ambraproject.rhombat.HttpDateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +55,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -66,18 +69,16 @@ public class ArticleCrudController extends RestController {
 
   @Autowired
   private ArticleCrudService articleCrudService;
-
   @Autowired
   private CommentCrudService commentCrudService;
-
   @Autowired
   private AssetFileCrudController assetFileCrudController;
-
   @Autowired
   private ArticleListCrudService articleListCrudService;
-
   @Autowired
   private SyndicationCrudService syndicationCrudService;
+  @Autowired
+  private RelationshipSetView.Factory relationshipSetViewFactory;
 
   @Transactional(readOnly = true)
   @RequestMapping(value = "/articles", method = RequestMethod.GET)
@@ -177,6 +178,25 @@ public class ArticleCrudController extends RestController {
     ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     ArticleTable article = articleCrudService.readArticle(id);
     commentCrudService.getCommentCount(article).respond(request, response, entityGson);
+  }
+
+  @Transactional(readOnly = true)
+  @RequestMapping(value = "/articles/{doi}/relationships", method = RequestMethod.GET)
+  public void readRelationships(HttpServletRequest request, HttpServletResponse response,
+                                @PathVariable("doi") String doi)
+      throws IOException {
+    new Transceiver() {
+      @Override
+      protected RelationshipSetView getData() throws IOException {
+        ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
+        return relationshipSetViewFactory.getView(id);
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    }.respond(request, response, entityGson);
   }
 
   /**

@@ -27,9 +27,7 @@ public class RelationshipSetView {
     @Autowired
     private ArticleCrudService articleCrudService;
 
-    public RelationshipSetView getView(ArticleMetadata metadata) {
-
-      ArticleIdentifier articleId = ArticleIdentifier.create(metadata.getDoi());
+    public RelationshipSetView getView(ArticleIdentifier articleId) {
       List<VersionedArticleRelationship> inbound = articleCrudService.getRelationshipsTo(articleId);
       List<VersionedArticleRelationship> outbound = articleCrudService.getRelationshipsFrom(articleId);
 
@@ -47,7 +45,6 @@ public class RelationshipSetView {
           .collect(Collectors.toList());
 
       return new RelationshipSetView(inboundViews, outboundViews);
-
     }
 
     private ArticleIngestion getCurrentVersion(ArticleTable article) {
