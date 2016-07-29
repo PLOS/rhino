@@ -130,7 +130,7 @@ public class ArticleCrudController extends RestController {
                    @PathVariable("number") int ingestionNumber)
       throws IOException {
     ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
-    articleCrudService.readArticleMetadata(ingestionId).respond(request, response, entityGson);
+    articleCrudService.serveMetadata(ingestionId).respond(request, response, entityGson);
   }
 
   @Transactional(readOnly = true)
@@ -139,7 +139,7 @@ public class ArticleCrudController extends RestController {
                            @PathVariable("doi") String doi)
       throws IOException {
     ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
-    articleCrudService.readArticleOverview(id).respond(request, response, entityGson);
+    articleCrudService.serveOverview(id).respond(request, response, entityGson);
   }
 
   @RequestMapping(value = "/articles/{doi}/ingestions/{number}/items", method = RequestMethod.GET)
@@ -148,7 +148,7 @@ public class ArticleCrudController extends RestController {
                         @PathVariable("number") int ingestionNumber)
       throws IOException {
     ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
-    articleCrudService.readArticleItems(ingestionId).respond(request, response, entityGson);
+    articleCrudService.serveItems(ingestionId).respond(request, response, entityGson);
   }
 
   /**
@@ -196,7 +196,7 @@ public class ArticleCrudController extends RestController {
       throws IOException {
 
     ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
-    articleCrudService.readAuthors(ingestionId).respond(request, response, entityGson);
+    articleCrudService.serveAuthors(ingestionId).respond(request, response, entityGson);
   }
 
   /**
@@ -235,7 +235,7 @@ public class ArticleCrudController extends RestController {
     articleCrudService.populateCategories(articleId);
 
     // Report the current categories
-    articleCrudService.readCategories(articleId).respond(request, response, entityGson);
+    articleCrudService.serveCategories(articleId).respond(request, response, entityGson);
   }
 
   /**
@@ -251,7 +251,7 @@ public class ArticleCrudController extends RestController {
                              @PathVariable("doi") String doi)
       throws IOException {
     ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(doi));
-    articleCrudService.readCategories(articleId).respond(request, response, entityGson);
+    articleCrudService.serveCategories(articleId).respond(request, response, entityGson);
   }
 
   /**
@@ -287,7 +287,7 @@ public class ArticleCrudController extends RestController {
                                @PathVariable("doi") String doi)
       throws IOException {
     ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(doi));
-    articleCrudService.getRawCategories(articleId).respond(request, response, entityGson);
+    articleCrudService.serveRawCategories(articleId).respond(request, response, entityGson);
   }
 
   /**

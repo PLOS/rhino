@@ -65,6 +65,6 @@ public class ArticleStateController extends RestController {
     ArticleIdentity id = null; // TODO: Reimplement for ArticleRevision
     ArticleInputView input = readJsonFromRequest(request, ArticleInputView.class);
     articleStateService.update(id, input);
-    articleCrudService.readMetadata(id, false).respond(request, response, entityGson);
+    articleCrudService.serveMetadata(id, false).respond(request, response, entityGson);
   }
 }

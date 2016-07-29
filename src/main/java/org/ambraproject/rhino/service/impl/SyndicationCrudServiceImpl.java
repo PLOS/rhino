@@ -79,7 +79,7 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
   @SuppressWarnings("unchecked")
   public Syndication getSyndication(final ArticleRevisionIdentifier revisionId,
                                     final String syndicationTargetQueue) {
-    ArticleRevision articleRevision = articleCrudService.getArticleRevision(revisionId);
+    ArticleRevision articleRevision = articleCrudService.getRevision(revisionId);
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "FROM Syndication s " +
@@ -95,7 +95,7 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
   @SuppressWarnings("unchecked")
   @Override
   public List<Syndication> getSyndications(ArticleRevisionIdentifier revisionId) {
-    ArticleRevision articleVersion = articleCrudService.getArticleRevision(revisionId);
+    ArticleRevision articleVersion = articleCrudService.getRevision(revisionId);
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "FROM Syndication s " +
@@ -123,7 +123,7 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
 
   @Override
   public Syndication createSyndication(ArticleRevisionIdentifier revisionId, String syndicationTargetQueue) {
-    ArticleRevision articleVersion = articleCrudService.getArticleRevision(revisionId);
+    ArticleRevision articleVersion = articleCrudService.getRevision(revisionId);
     Syndication syndication = new Syndication(articleVersion, syndicationTargetQueue);
     syndication.setStatus(SyndicationStatus.PENDING.getLabel());
     syndication.setSubmissionCount(0);
@@ -188,7 +188,7 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
   @Transactional(rollbackFor = {Throwable.class})
   @Override
   public Syndication syndicate(ArticleRevisionIdentifier revisionId, String syndicationTargetQueue) {
-      ArticleRevision articleVersion = articleCrudService.getArticleRevision(revisionId);
+      ArticleRevision articleVersion = articleCrudService.getRevision(revisionId);
 
     Syndication syndication = getSyndication(revisionId, syndicationTargetQueue);
     if (syndication == null) {

@@ -29,8 +29,8 @@ public class RelationshipSetView {
     public RelationshipSetView getView(ArticleMetadata metadata) {
 
       ArticleIdentifier articleId = ArticleIdentifier.create(metadata.getDoi());
-      List<VersionedArticleRelationship> inbound = articleCrudService.getArticleRelationshipsTo(articleId);
-      List<VersionedArticleRelationship> outbound = articleCrudService.getArticleRelationshipsFrom(articleId);
+      List<VersionedArticleRelationship> inbound = articleCrudService.getRelationshipsTo(articleId);
+      List<VersionedArticleRelationship> outbound = articleCrudService.getRelationshipsFrom(articleId);
 
       List<RelationshipSetView.RelationshipView> inboundViews = inbound
           .stream().map(var -> new RelationshipSetView.RelationshipView(var.getType(),
@@ -52,7 +52,7 @@ public class RelationshipSetView {
       ArticleIngestion ingestion;
       try {
         //TODO: think through what happens in QC case when no revision yet exists
-        ingestion = articleCrudService.getLatestArticleRevision(article).getIngestion();
+        ingestion = articleCrudService.getLatestRevision(article).getIngestion();
       } catch (NoSuchArticleIdException e) {
         log.error("Could not retrieve latest revision for " + article.getDoi(), e);
         throw new RuntimeException(e);
