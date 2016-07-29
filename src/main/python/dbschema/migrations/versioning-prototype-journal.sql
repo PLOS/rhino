@@ -2,7 +2,7 @@ RENAME TABLE `journal` TO `oldJournal`;
 
 CREATE TABLE `journal` (
   `journalId` bigint(20) NOT NULL AUTO_INCREMENT,
-  `currentIssueId` bigint(20) NOT NULL,
+  `currentIssueId` bigint(20) DEFAULT NULL,
   `journalKey` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `eIssn` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `imageArticleId` bigint(20) DEFAULT NULL,
