@@ -195,6 +195,7 @@ public interface ArticleCrudService {
    * Get an ingestion if it exists.
    */
   public abstract Optional<ArticleIngestion> getIngestion(ArticleIngestionIdentifier ingestionId);
+
   /**
    * Read an ingestion requested by the client, throwing {@link RestClientException} if it is not found.
    */
@@ -214,6 +215,12 @@ public interface ArticleCrudService {
    * Get an article's latest revision, if it has any revisions.
    */
   public abstract Optional<ArticleRevision> getLatestRevision(ArticleTable article);
+
+  /**
+   * Get an article's latest ingestion. (As a data integrity condition, at least one must exist if {@code article}
+   * exists.)
+   */
+  public abstract ArticleIngestion getLatestIngestion(ArticleTable article);
 
   /**
    * Get the latest revision of an article requested by the client, throwing {@link RestClientException} if the article
