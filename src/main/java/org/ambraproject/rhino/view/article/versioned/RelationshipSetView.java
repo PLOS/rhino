@@ -1,7 +1,6 @@
 package org.ambraproject.rhino.view.article.versioned;
 
 import com.google.common.collect.ImmutableList;
-import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.ArticleIngestion;
@@ -14,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -59,7 +57,7 @@ public class RelationshipSetView {
         log.error("Could not retrieve latest revision for " + article.getDoi(), e);
         throw new RuntimeException(e);
       }
-      return ingestion.getArticleTitle();
+      return ingestion.getTitle();
     }
   }
 
