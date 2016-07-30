@@ -189,7 +189,7 @@ public class ArticleCrudController extends RestController {
       @Override
       protected RelationshipSetView getData() throws IOException {
         ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
-        return relationshipSetViewFactory.getView(id);
+        return relationshipSetViewFactory.getSetView(id);
       }
 
       @Override

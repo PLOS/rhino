@@ -7,7 +7,6 @@ import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.VersionedArticleRelationship;
-import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class RelationshipSetView {
@@ -27,22 +27,24 @@ public class RelationshipSetView {
     @Autowired
     private ArticleCrudService articleCrudService;
 
-    public RelationshipSetView getView(ArticleIdentifier articleId) {
-      List<VersionedArticleRelationship> inbound = articleCrudService.getRelationshipsTo(articleId);
-      List<VersionedArticleRelationship> outbound = articleCrudService.getRelationshipsFrom(articleId);
+    private List<RelationshipSetView.RelationshipView> getRelationshipViews(
+        List<VersionedArticleRelationship> relationships,
+        Function<VersionedArticleRelationship, ArticleTable> direction) {
+      Objects.requireNonNull(direction);
+      return relationships.stream()
+          .map((VersionedArticleRelationship var) -> new RelationshipSetView.RelationshipView(
+              var.getType(),
+              Doi.create(direction.apply(var).getDoi()),
+              getCurrentVersion(direction.apply(var))))
+          .collect(Collectors.toList());
+    }
 
-      List<RelationshipSetView.RelationshipView> inboundViews = inbound.stream()
-          .map((VersionedArticleRelationship var) -> new RelationshipSetView.RelationshipView(
-              var.getType(),
-              Doi.create(var.getSourceArticle().getDoi()),
-              getCurrentVersion(var.getSourceArticle())))
-          .collect(Collectors.toList());
-      List<RelationshipSetView.RelationshipView> outboundViews = outbound.stream()
-          .map((VersionedArticleRelationship var) -> new RelationshipSetView.RelationshipView(
-              var.getType(),
-              Doi.create(var.getTargetArticle().getDoi()),
-              getCurrentVersion(var.getTargetArticle())))
-          .collect(Collectors.toList());
+    public RelationshipSetView getSetView(ArticleIdentifier articleId) {
+      List<VersionedArticleRelationship> inbound = articleCrudService.getRelationshipsTo(articleId);
+      List<RelationshipSetView.RelationshipView> inboundViews = getRelationshipViews(inbound, VersionedArticleRelationship::getSourceArticle);
+
+      List<VersionedArticleRelationship> outbound = articleCrudService.getRelationshipsFrom(articleId);
+      List<RelationshipSetView.RelationshipView> outboundViews = getRelationshipViews(outbound, VersionedArticleRelationship::getTargetArticle);
 
       return new RelationshipSetView(inboundViews, outboundViews);
     }
