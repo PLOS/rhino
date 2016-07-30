@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -32,10 +33,19 @@ public class RelationshipSetView {
         Function<VersionedArticleRelationship, ArticleTable> direction) {
       Objects.requireNonNull(direction);
       return relationships.stream()
-          .map((VersionedArticleRelationship var) -> new RelationshipSetView.RelationshipView(
-              var.getType(),
-              Doi.create(direction.apply(var).getDoi()),
-              getCurrentVersion(direction.apply(var))))
+          .map((VersionedArticleRelationship var) -> {
+            // The view will display title and publication date from the most recent revision.
+            // If the article has no revisions, suppress it from the RelationshipSetView entirely
+            // (so that, e.g., unpublished amendment notices don't show up while being QC'ed).
+            Optional<ArticleRevision> revision = articleCrudService.getLatestRevision(direction.apply(var));
+            return revision.map((ArticleRevision rev) -> {
+              String type = var.getType();
+              Doi doi = Doi.create(direction.apply(var).getDoi());
+              ArticleIngestion ingestion = rev.getIngestion();
+              return new RelationshipView(type, doi, ingestion);
+            });
+          })
+          .filter(Optional::isPresent).map(Optional::get)
           .collect(Collectors.toList());
     }
 
