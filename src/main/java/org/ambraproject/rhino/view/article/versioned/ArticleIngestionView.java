@@ -50,7 +50,6 @@ public class ArticleIngestionView implements JsonOutputView {
     JsonAdapterUtil.copyWithoutOverwriting(context.serialize(metadata).getAsJsonObject(), serialized);
     serialized.remove("assets"); // TODO: Create groomed view for ArticleItem/ArticleFile objects
     serialized.remove("authors");
-    serialized.remove("collaborativeAuthors");
 
     return serialized;
   }
