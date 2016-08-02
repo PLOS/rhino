@@ -1,5 +1,6 @@
 package org.ambraproject.rhino.view.article.versioned;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.Doi;
@@ -8,8 +9,6 @@ import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.VersionedArticleRelationship;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
@@ -21,10 +20,7 @@ import java.util.stream.Collectors;
 
 public class RelationshipSetView {
 
-  private static final Logger log = LoggerFactory.getLogger(RelationshipSetView.class);
-
   public static class Factory {
-
     @Autowired
     private ArticleCrudService articleCrudService;
 
@@ -34,18 +30,11 @@ public class RelationshipSetView {
       Objects.requireNonNull(direction);
       return relationships.stream()
           .map((VersionedArticleRelationship var) -> {
-            // The view will display title and publication date from the most recent revision.
-            // If the article has no revisions, suppress it from the RelationshipSetView entirely
-            // (so that, e.g., unpublished amendment notices don't show up while being QC'ed).
+            String type = var.getType();
+            Doi doi = Doi.create(direction.apply(var).getDoi());
             Optional<ArticleRevision> revision = articleCrudService.getLatestRevision(direction.apply(var));
-            return revision.map((ArticleRevision rev) -> {
-              String type = var.getType();
-              Doi doi = Doi.create(direction.apply(var).getDoi());
-              ArticleIngestion ingestion = rev.getIngestion();
-              return new RelationshipView(type, doi, ingestion);
-            });
+            return new RelationshipView(type, doi, revision);
           })
-          .filter(Optional::isPresent).map(Optional::get)
           .collect(Collectors.toList());
     }
 
@@ -57,12 +46,6 @@ public class RelationshipSetView {
       List<RelationshipSetView.RelationshipView> outboundViews = getRelationshipViews(outbound, VersionedArticleRelationship::getTargetArticle);
 
       return new RelationshipSetView(inboundViews, outboundViews);
-    }
-
-    private ArticleIngestion getCurrentVersion(ArticleTable article) {
-      return articleCrudService.getLatestRevision(article)
-          .map(ArticleRevision::getIngestion)
-          .orElseGet(() -> articleCrudService.getLatestIngestion(article));
     }
   }
 
@@ -78,14 +61,28 @@ public class RelationshipSetView {
   public static class RelationshipView {
     private final String type;
     private final String doi;
+
+    // These may be null if the related article is unpublished
+    private final Integer revisionNumber;
     private final String title;
     private final LocalDate publicationDate;
 
-    private RelationshipView(String type, Doi doi, ArticleIngestion otherArticle) {
+    private RelationshipView(String type, Doi doi, Optional<ArticleRevision> otherArticle) {
       this.type = Objects.requireNonNull(type);
       this.doi = doi.getName();
-      this.title = otherArticle.getTitle();
-      this.publicationDate = otherArticle.getPublicationDate().toLocalDate();
+
+      if (otherArticle.isPresent()) {
+        ArticleRevision revision = otherArticle.get();
+        ArticleIngestion ingestion = revision.getIngestion();
+        Preconditions.checkArgument(doi.equals(Doi.create(ingestion.getArticle().getDoi())));
+        this.revisionNumber = revision.getRevisionNumber();
+        this.title = ingestion.getTitle();
+        this.publicationDate = ingestion.getPublicationDate().toLocalDate();
+      } else {
+        this.revisionNumber = null;
+        this.title = null;
+        this.publicationDate = null;
+      }
     }
   }
 
