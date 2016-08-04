@@ -55,7 +55,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -185,18 +184,9 @@ public class ArticleCrudController extends RestController {
   public void readRelationships(HttpServletRequest request, HttpServletResponse response,
                                 @PathVariable("doi") String doi)
       throws IOException {
-    new Transceiver() {
-      @Override
-      protected RelationshipSetView getData() throws IOException {
-        ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
-        return relationshipSetViewFactory.getSetView(id);
-      }
-
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return null;
-      }
-    }.respond(request, response, entityGson);
+    ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
+    Transceiver.serveUntimestampedView(() -> relationshipSetViewFactory.getSetView(id))
+        .respond(request, response, entityGson);
   }
 
   /**

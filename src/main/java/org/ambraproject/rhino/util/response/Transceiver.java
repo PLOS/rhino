@@ -17,6 +17,7 @@ import java.io.StringWriter;
 import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 import java.util.TimeZone;
 
 /**
@@ -56,6 +57,28 @@ public abstract class Transceiver {
    * @throws IOException
    */
   protected abstract Calendar getLastModifiedDate() throws IOException;
+
+
+  @FunctionalInterface
+  public static interface ViewSupplier<T> {
+    T get() throws IOException;
+  }
+
+  public static Transceiver serveUntimestampedView(ViewSupplier<?> supplier) {
+    Objects.requireNonNull(supplier);
+    return new Transceiver() {
+      @Override
+      protected Object getData() throws IOException {
+        return supplier.get();
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    };
+  }
+
 
   private static final TimeZone GMT = TimeZone.getTimeZone("GMT");
 
