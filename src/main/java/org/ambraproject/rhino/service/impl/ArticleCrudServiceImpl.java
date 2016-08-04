@@ -643,11 +643,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public ArticleIngestion getLatestIngestion(ArticleTable article) {
-    return null;
-  }
-
-  @Override
   public ArticleRevision readLatestRevision(ArticleTable article) {
     return getLatestRevision(article).orElseThrow(() ->
         new RestClientException("No revisions found for " + article.getDoi(), HttpStatus.NOT_FOUND));
