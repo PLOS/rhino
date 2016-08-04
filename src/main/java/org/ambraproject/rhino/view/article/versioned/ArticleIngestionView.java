@@ -81,7 +81,7 @@ public class ArticleIngestionView implements JsonOutputView {
       this.doi = assetMetadata.getDoi();
       this.title = assetMetadata.getTitle();
       this.description = assetMetadata.getDescription();
-      // Hide contextElement
+      // Do not include assetMetadata.contextElement
     }
   }
 
