@@ -32,8 +32,10 @@ import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.SyndicationInputView;
+import org.ambraproject.rhino.view.article.versioned.RelationshipSetView;
 import org.ambraproject.rhombat.HttpDateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,18 +68,16 @@ public class ArticleCrudController extends RestController {
 
   @Autowired
   private ArticleCrudService articleCrudService;
-
   @Autowired
   private CommentCrudService commentCrudService;
-
   @Autowired
   private AssetFileCrudController assetFileCrudController;
-
   @Autowired
   private ArticleListCrudService articleListCrudService;
-
   @Autowired
   private SyndicationCrudService syndicationCrudService;
+  @Autowired
+  private RelationshipSetView.Factory relationshipSetViewFactory;
 
   @Transactional(readOnly = true)
   @RequestMapping(value = "/articles", method = RequestMethod.GET)
@@ -130,7 +130,7 @@ public class ArticleCrudController extends RestController {
                    @PathVariable("number") int ingestionNumber)
       throws IOException {
     ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
-    articleCrudService.readArticleMetadata(ingestionId).respond(request, response, entityGson);
+    articleCrudService.serveMetadata(ingestionId).respond(request, response, entityGson);
   }
 
   @Transactional(readOnly = true)
@@ -139,7 +139,7 @@ public class ArticleCrudController extends RestController {
                            @PathVariable("doi") String doi)
       throws IOException {
     ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
-    articleCrudService.readArticleOverview(id).respond(request, response, entityGson);
+    articleCrudService.serveOverview(id).respond(request, response, entityGson);
   }
 
   @RequestMapping(value = "/articles/{doi}/ingestions/{number}/items", method = RequestMethod.GET)
@@ -148,7 +148,7 @@ public class ArticleCrudController extends RestController {
                         @PathVariable("number") int ingestionNumber)
       throws IOException {
     ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
-    articleCrudService.readArticleItems(ingestionId).respond(request, response, entityGson);
+    articleCrudService.serveItems(ingestionId).respond(request, response, entityGson);
   }
 
   /**
@@ -175,8 +175,18 @@ public class ArticleCrudController extends RestController {
                               @PathVariable("doi") String doi)
       throws IOException {
     ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
-    ArticleTable article = articleCrudService.getArticle(id);
+    ArticleTable article = articleCrudService.readArticle(id);
     commentCrudService.getCommentCount(article).respond(request, response, entityGson);
+  }
+
+  @Transactional(readOnly = true)
+  @RequestMapping(value = "/articles/{doi}/relationships", method = RequestMethod.GET)
+  public void readRelationships(HttpServletRequest request, HttpServletResponse response,
+                                @PathVariable("doi") String doi)
+      throws IOException {
+    ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
+    Transceiver.serveUntimestampedView(() -> relationshipSetViewFactory.getSetView(id))
+        .respond(request, response, entityGson);
   }
 
   /**
@@ -196,7 +206,7 @@ public class ArticleCrudController extends RestController {
       throws IOException {
 
     ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
-    articleCrudService.readAuthors(ingestionId).respond(request, response, entityGson);
+    articleCrudService.serveAuthors(ingestionId).respond(request, response, entityGson);
   }
 
   /**
@@ -235,7 +245,7 @@ public class ArticleCrudController extends RestController {
     articleCrudService.populateCategories(articleId);
 
     // Report the current categories
-    articleCrudService.readCategories(articleId).respond(request, response, entityGson);
+    articleCrudService.serveCategories(articleId).respond(request, response, entityGson);
   }
 
   /**
@@ -251,7 +261,7 @@ public class ArticleCrudController extends RestController {
                              @PathVariable("doi") String doi)
       throws IOException {
     ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(doi));
-    articleCrudService.readCategories(articleId).respond(request, response, entityGson);
+    articleCrudService.serveCategories(articleId).respond(request, response, entityGson);
   }
 
   /**
@@ -264,13 +274,12 @@ public class ArticleCrudController extends RestController {
    */
   @Deprecated
   @Transactional(readOnly = false)
-  @RequestMapping(value = "/articles/{doi}/ingestions/{number}/relationships", method = RequestMethod.POST)
+  @RequestMapping(value = "/articles/{doi}/revisions/{number}/relationships", method = RequestMethod.POST)
   public void refreshArticleRelationships(HttpServletRequest request, HttpServletResponse response,
                                           @PathVariable("doi") String doi,
-                                          @PathVariable("number") int ingestionNumber)
+                                          @PathVariable("number") int revisionNumber)
       throws IOException {
-    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
-    ArticleRevisionIdentifier articleRevId = null; // TODO: Refactor ArticleCrudService.refreshArticleRelationships to take ArticleIngestionIdentifier
+    ArticleRevisionIdentifier articleRevId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
     articleCrudService.refreshArticleRelationships(articleRevId);
   }
 
@@ -288,7 +297,7 @@ public class ArticleCrudController extends RestController {
                                @PathVariable("doi") String doi)
       throws IOException {
     ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(doi));
-    articleCrudService.getRawCategories(articleId).respond(request, response, entityGson);
+    articleCrudService.serveRawCategories(articleId).respond(request, response, entityGson);
   }
 
   /**

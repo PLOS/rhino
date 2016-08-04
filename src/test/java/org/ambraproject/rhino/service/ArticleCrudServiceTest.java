@@ -224,7 +224,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     Article article = new Article();//RhinoTestHelper.createTestArticle(articleCrudService);
     ArticleIdentity articleId = ArticleIdentity.create(article);
 
-    String json = articleCrudService.readMetadata(articleId, true).readJson(entityGson);
+    String json = articleCrudService.serveMetadata(articleId, true).readJson(entityGson);
     assertTrue(json.length() > 0);
     Gson gson = new Gson();
     Map<?, ?> articleMap = gson.fromJson(json, Map.class);

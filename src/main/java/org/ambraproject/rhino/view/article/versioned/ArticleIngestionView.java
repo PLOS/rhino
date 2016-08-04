@@ -15,7 +15,6 @@ import org.ambraproject.rhino.view.JsonOutputView;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ArticleIngestionView implements JsonOutputView {
@@ -26,31 +25,24 @@ public class ArticleIngestionView implements JsonOutputView {
     private ArticleCrudService articleCrudService;
     @Autowired
     private VersionedIngestionService versionedIngestionService;
-    @Autowired
-    private RelationshipSetView.Factory relationshipSetViewFactory;
 
     public ArticleIngestionView getView(ArticleIngestionIdentifier ingestionId) {
-      ArticleIngestion ingestion = articleCrudService.getArticleIngestion(ingestionId);
+      ArticleIngestion ingestion = articleCrudService.readIngestion(ingestionId);
       ArticleMetadata metadata = versionedIngestionService.getArticleMetadata(ingestionId);
-      RelationshipSetView relationships = relationshipSetViewFactory.getView(metadata);
 
-      return new ArticleIngestionView(ingestion, metadata, relationships);
+      return new ArticleIngestionView(ingestion, metadata);
     }
 
   }
 
   private final ArticleIngestion ingestion;
   private final ArticleMetadata metadata;
-  private final RelationshipSetView relationships;
 
   private ArticleIngestionView(ArticleIngestion ingestion,
-                               ArticleMetadata metadata,
-                               RelationshipSetView relationships) {
+                               ArticleMetadata metadata) {
     Preconditions.checkArgument(ingestion.getArticle().getDoi().equals(metadata.getDoi()));
     this.ingestion = ingestion;
     this.metadata = metadata;
-
-    this.relationships = Objects.requireNonNull(relationships);
   }
 
   @Override
@@ -61,9 +53,6 @@ public class ArticleIngestionView implements JsonOutputView {
 
     JsonAdapterUtil.copyWithoutOverwriting(context.serialize(metadata).getAsJsonObject(), serialized);
     serialized.remove("authors");
-    serialized.remove("collaborativeAuthors");
-
-    serialized.add("relatedArticles", context.serialize(relationships));
 
     serialized.remove("assets");
     List<AssetMetadataView> assetViews = metadata.getAssets().stream().map(AssetMetadataView::new).collect(Collectors.toList());

@@ -172,9 +172,9 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
   private void setFromXml(final ArticleMetadata.Builder article) throws XmlContentException {
     article.setDoi(readDoi().getName());
 
-    article.setTitle(parseTitle());
+    article.setTitle(getXmlFromNode(readNode("/article/front/article-meta/title-group/article-title")));
     article.seteIssn(checkEissn(readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]")));
-    article.setDescription(buildXmlExcerpt(findAbstractNode()));
+    article.setDescription(getXmlFromNode(findAbstractNode()));
 
     String rights = readString("/article/front/article-meta/copyright-statement");
     if (rights == null) {
@@ -319,18 +319,6 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
       .replaceExact("/", String.format("%%%H", '/'))
       .build();
 
-  /**
-   * Build a field of XML text by partially reconstructing the node's content. The output is text content between the
-   * node's two tags, including nested XML tags but not this node's outer tags. Nested tags show only the node name;
-   * their attributes are deleted. Text nodes containing only whitespace are deleted.
-   *
-   * @param node the description node
-   * @return the marked-up description
-   */
-  private static String buildXmlExcerpt(Node node) {
-    return (node == null) ? null : buildTextWithMarkup(node);
-  }
-
 
   private static String parseLanguage(String language) {
     if (language == null) {
@@ -362,7 +350,7 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
    * @param collabNodes XML nodes representing "collab" elements
    * @return a list of their text content
    */
-  private static List<String> parseCollaborativeAuthors(List<Node> collabNodes) {
+  private List<String> parseCollaborativeAuthors(List<Node> collabNodes) {
     List<String> collabStrings = Lists.newArrayListWithCapacity(collabNodes.size());
     for (Node collabNode : collabNodes) {
       StringBuilder text = new StringBuilder();
@@ -371,7 +359,7 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
           text.append(child.getTextContent());
         }
       }
-      String result = standardizeWhitespace(text.toString());
+      String result = sanitize(text.toString());
       collabStrings.add(result);
     }
     return collabStrings;
@@ -411,10 +399,6 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
       }
       return assetMetadataList.get(0);
     }).collect(Collectors.toList());
-  }
-
-  public String parseTitle() {
-    return buildXmlExcerpt(readNode("/article/front/article-meta/title-group/article-title"));
   }
 
 }

@@ -62,7 +62,7 @@ public class AssetXml extends AbstractArticleXml<AssetMetadata> {
 
     String title = Strings.nullToEmpty(readString("child::label"));
     Node captionNode = readNode("child::caption");
-    String description = (captionNode != null) ? buildTextWithMarkup(captionNode) : "";
+    String description = Strings.nullToEmpty(getXmlFromNode(captionNode));
 
     return new AssetMetadata(doi, contextElement, title, description);
   }

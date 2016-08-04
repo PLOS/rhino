@@ -75,7 +75,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     return new Transceiver() {
       @Override
       protected Collection<CommentOutputView> getData() throws IOException {
-        ArticleTable article = articleCrudService.getArticle(articleId);
+        ArticleTable article = articleCrudService.readArticle(articleId);
         List<Comment> comments = fetchAllComments(article);
         CommentOutputView.Factory factory = new CommentOutputView.Factory(runtimeConfiguration,
             comments, article);
@@ -173,7 +173,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
         throw new RestClientException("Must provide articleId or parentCommentUri", HttpStatus.BAD_REQUEST);
       }
 
-      article = articleCrudService.getArticle(articleId.get());
+      article = articleCrudService.readArticle(articleId.get());
       parentComment = null;
     }
 

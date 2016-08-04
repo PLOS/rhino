@@ -32,7 +32,6 @@ import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.VersionedArticleRelationship;
-import org.ambraproject.rhino.rest.ClientItemId;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.util.Archive;
@@ -85,7 +84,7 @@ public interface ArticleCrudService {
    *                         reasons, since this is a lot of data)
    * @throws org.ambraproject.rhino.rest.RestClientException if the DOI does not belong to an article
    */
-  public abstract Transceiver readMetadata(DoiBasedIdentity id, boolean excludeCitations) throws IOException;
+  public abstract Transceiver serveMetadata(DoiBasedIdentity id, boolean excludeCitations) throws IOException;
 
   /**
    * Read the metadata of an article.
@@ -95,7 +94,7 @@ public interface ArticleCrudService {
    *                         reasons, since this is a lot of data)
    * @throws org.ambraproject.rhino.rest.RestClientException if the DOI does not belong to an article
    */
-  public abstract Transceiver readMetadata(Article article, boolean excludeCitations) throws IOException;
+  public abstract Transceiver serveMetadata(Article article, boolean excludeCitations) throws IOException;
 
   /**
    * Read information about the authors of an article.
@@ -104,7 +103,7 @@ public interface ArticleCrudService {
    * @throws IOException
    */
 
-  public abstract Transceiver readAuthors(ArticleIngestionIdentifier ingestionId);
+  public abstract Transceiver serveAuthors(ArticleIngestionIdentifier ingestionId);
 
   /**
    * Read category information from the Ambra database.
@@ -112,7 +111,7 @@ public interface ArticleCrudService {
    * @param articleId specifies the article
    * @throws IOException
    */
-  public abstract Transceiver readCategories(ArticleIdentifier articleId)
+  public abstract Transceiver serveCategories(ArticleIdentifier articleId)
       throws IOException;
 
   /**
@@ -121,7 +120,7 @@ public interface ArticleCrudService {
    * @param articleId specifies the article
    * @throws IOException
    */
-  public abstract Transceiver getRawCategories(ArticleIdentifier articleId)
+  public abstract Transceiver serveRawCategories(ArticleIdentifier articleId)
       throws IOException;
 
   /**
@@ -158,9 +157,9 @@ public interface ArticleCrudService {
    */
   public abstract List<RelatedArticleView> getRelatedArticles(Article article);
 
-  List<VersionedArticleRelationship> getArticleRelationshipsFrom(ArticleIdentifier sourceId);
+  List<VersionedArticleRelationship> getRelationshipsFrom(ArticleIdentifier sourceId);
 
-  List<VersionedArticleRelationship> getArticleRelationshipsTo(ArticleIdentifier targetId);
+  List<VersionedArticleRelationship> getRelationshipsTo(ArticleIdentifier targetId);
 
   void refreshArticleRelationships(ArticleRevisionIdentifier articleRevId) throws IOException;
 
@@ -180,28 +179,11 @@ public interface ArticleCrudService {
    */
   public abstract Archive repack(ArticleIdentity articleIdentity);
 
+  public abstract Transceiver serveMetadata(ArticleIngestionIdentifier ingestionId);
 
-  public abstract Transceiver readArticleMetadata(ArticleIngestionIdentifier ingestionId);
+  public abstract Transceiver serveItems(ArticleIngestionIdentifier ingestionId);
 
-  public abstract Transceiver readArticleItems(ArticleIngestionIdentifier ingestionId);
-
-  /**
-   * Signifies which file to use when reading article metadata from a content repo collection. This exists for
-   * verification purposes only; when the versioned data model is stable, the service will use only one data source as
-   * an implementation choice.
-   *
-   * @deprecated <em>TEMPORARY.</em> To be removed when regular services fully use the versioned data model.
-   */
-  @Deprecated
-  public static enum ArticleMetadataSource {
-    FULL_MANUSCRIPT, FRONT_MATTER, FRONT_AND_BACK_MATTER
-  }
-
-  public abstract Transceiver readArticleOverview(ArticleIdentifier id);
-
-
-  public abstract int getLatestRevision(Doi doi);
-
+  public abstract Transceiver serveOverview(ArticleIdentifier id);
 
   public abstract ArticleItem getArticleItem(ArticleItemIdentifier id);
 
@@ -209,20 +191,47 @@ public interface ArticleCrudService {
 
   Optional<ResolvedDoiView> getItemOverview(Doi doi);
 
-  public abstract ArticleIngestion getArticleIngestion(ArticleIngestionIdentifier articleId);
+  /**
+   * Get an ingestion if it exists.
+   */
+  public abstract Optional<ArticleIngestion> getIngestion(ArticleIngestionIdentifier ingestionId);
 
-  public abstract ArticleRevision getArticleRevision(ArticleIngestionIdentifier articleIngestionId);
+  /**
+   * Read an ingestion requested by the client, throwing {@link RestClientException} if it is not found.
+   */
+  public abstract ArticleIngestion readIngestion(ArticleIngestionIdentifier ingestionId);
 
-  public abstract ArticleRevision getArticleRevision(ArticleRevisionIdentifier revisionId);
+  /**
+   * Get a revision if it exists.
+   */
+  public abstract Optional<ArticleRevision> getRevision(ArticleRevisionIdentifier revisionId);
 
-  public abstract ArticleRevision getLatestArticleRevision(ArticleTable article);
+  /**
+   * Read a revision requested by the client, throwing {@link RestClientException} if it is not found.
+   */
+  public abstract ArticleRevision readRevision(ArticleRevisionIdentifier revisionId);
 
-  public abstract ArticleTable getArticle(ArticleIdentifier articleIdentifier);
+  /**
+   * Get an article's latest revision, if it has any revisions.
+   */
+  public abstract Optional<ArticleRevision> getLatestRevision(ArticleTable article);
+
+  /**
+   * Get the latest revision of an article requested by the client, throwing {@link RestClientException} if the article
+   * has no revisions.
+   */
+  public abstract ArticleRevision readLatestRevision(ArticleTable article);
+
+  /**
+   * Get an article if it exists.
+   */
+  public abstract Optional<ArticleTable> getArticle(ArticleIdentifier articleIdentifier);
+
+  /**
+   * Read an article requested by the client, throwing {@link RestClientException} if it is not found.
+   */
+  public abstract ArticleTable readArticle(ArticleIdentifier articleIdentifier);
 
   public abstract Document getManuscriptXml(ArticleIngestion articleIngestion) throws IOException;
-
-  public abstract ArticleIngestionIdentifier resolveToIngestion(ClientItemId id);
-
-  public abstract ArticleItemIdentifier resolveToItem(ClientItemId id);
 
 }

@@ -29,7 +29,6 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import org.ambraproject.rhino.BaseRhinoTest;
-import org.ambraproject.rhino.IngestibleUtil;
 import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.content.PersonName;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
@@ -43,14 +42,11 @@ import org.ambraproject.rhino.model.CitedArticle;
 import org.ambraproject.rhino.model.CitedArticlePerson;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Syndication;
-import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.test.AssertionCollector;
-import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.StringReplacer;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -58,15 +54,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
-import org.springframework.http.HttpStatus;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
 
 import javax.annotation.Nullable;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -74,8 +67,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -266,7 +257,7 @@ public class IngestionTest extends BaseRhinoTest {
 
   private void testReadMetadata(Article article) throws IOException {
     // Mostly we want to test that this method call doesn't crash or hang
-    Transceiver response = articleCrudService.readMetadata(article, true);
+    Transceiver response = articleCrudService.serveMetadata(article, true);
 
     assertFalse(StringUtils.isBlank(response.readJson(entityGson)));
   }
