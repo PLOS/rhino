@@ -13,7 +13,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Set;
 
 @Entity
@@ -28,6 +28,12 @@ public class ArticleIngestion implements Timestamped {
   @JoinColumn(name = "articleId")
   @ManyToOne
   private ArticleTable article;
+
+  @Column
+  private String title;
+
+  @Column
+  private Date publicationDate;
 
   @Column
   private int ingestionNumber;
@@ -75,6 +81,22 @@ public class ArticleIngestion implements Timestamped {
 
   public void setJournals(Set<Journal> journals) {
     this.journals = journals;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public Date getPublicationDate() {
+    return publicationDate;
+  }
+
+  public void setPublicationDate(Date publicationDate) {
+    this.publicationDate = publicationDate;
   }
 
   @Override

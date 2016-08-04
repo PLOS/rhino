@@ -77,7 +77,7 @@ public class VersionedIngestionService extends AmbraService {
     ImmutableList<ManifestXml.Asset> assets = manifestXml.getAssets();
     ManifestXml.Asset manuscriptAsset = findManuscriptAsset(assets);
     ManifestXml.Representation manuscriptRepr = findManuscriptRepr(manuscriptAsset);
-    ManifestXml.Representation printableRepr = findPrintableRepr(manuscriptAsset);
+    Optional<ManifestXml.Representation> printableRepr = findPrintableRepr(manuscriptAsset);
 
     String manuscriptEntry = manuscriptRepr.getFile().getEntry();
     if (!archive.getEntryNames().contains(manifestEntry)) {
@@ -103,7 +103,7 @@ public class VersionedIngestionService extends AmbraService {
     }
 
     long articlePk = persistArticlePk(articleIdentifier);
-    IngestionPersistenceResult ingestionResult = persistIngestion(articlePk);
+    IngestionPersistenceResult ingestionResult = persistIngestion(articlePk, articleMetadata);
     long ingestionId = ingestionResult.pk;
 
     persistRevision(articlePk, ingestionId, parsedArticle.getRevisionNumber());
@@ -151,7 +151,7 @@ public class VersionedIngestionService extends AmbraService {
     }
   }
 
-  private IngestionPersistenceResult persistIngestion(long articlePk) {
+  private IngestionPersistenceResult persistIngestion(long articlePk, ArticleMetadata articleMetadata) {
     return hibernateTemplate.execute(session -> {
       SQLQuery findNextIngestionNumber = session.createSQLQuery(
           "SELECT MAX(ingestionNumber) FROM articleIngestion WHERE articleId = :articleId");
@@ -161,10 +161,12 @@ public class VersionedIngestionService extends AmbraService {
           : maxIngestionNumber.intValue() + 1;
 
       SQLQuery insertEvent = session.createSQLQuery("" +
-          "INSERT INTO articleIngestion (articleId, ingestionNumber) " +
-          "VALUES (:articleId, :ingestionNumber)");
+          "INSERT INTO articleIngestion (articleId, ingestionNumber, title, publicationDate) " +
+      "VALUES (:articleId, :ingestionNumber, :title, :publicationDate)");
       insertEvent.setParameter("articleId", articlePk);
       insertEvent.setParameter("ingestionNumber", nextIngestionNumber);
+      insertEvent.setParameter("title", articleMetadata.getTitle());
+      insertEvent.setParameter("publicationDate", java.sql.Date.valueOf(articleMetadata.getPublicationDate()));
       insertEvent.executeUpdate();
       long pk = getLastInsertId(session);
 
@@ -339,15 +341,11 @@ public class VersionedIngestionService extends AmbraService {
     throw new RestClientException("main-entry not found", HttpStatus.BAD_REQUEST);
   }
 
-  private ManifestXml.Representation findPrintableRepr(ManifestXml.Asset manuscriptAsset) {
-    Optional<String> mainEntry = manuscriptAsset.getMainEntry();
-    Preconditions.checkArgument(mainEntry.isPresent(), "manuscriptAsset must have main-entry");
-    for (ManifestXml.Representation representation : manuscriptAsset.getRepresentations()) {
-      if (representation.getName().equals("PDF")) {
-        return representation;
-      }
-    }
-    throw new RestClientException("main-entry not matched to asset", HttpStatus.BAD_REQUEST);
+  private Optional<ManifestXml.Representation> findPrintableRepr(ManifestXml.Asset manuscriptAsset) {
+    Preconditions.checkArgument(manuscriptAsset.getMainEntry().isPresent(), "manuscriptAsset must have main-entry");
+    return manuscriptAsset.getRepresentations().stream()
+        .filter(representation -> representation.getName().equals("PDF"))
+        .findAny();
   }
 
   private ManifestXml.Representation findManuscriptRepr(ManifestXml.Asset manuscriptAsset) {
@@ -372,7 +370,7 @@ public class VersionedIngestionService extends AmbraService {
    * @return an object containing metadata that could be extracted from the manuscript, with other fields unfilled
    */
   public ArticleMetadata getArticleMetadata(ArticleIngestionIdentifier ingestionId) {
-    ArticleIngestion ingestion = articleCrudService.getArticleIngestion(ingestionId);
+    ArticleIngestion ingestion = articleCrudService.readIngestion(ingestionId);
 
     Document document;
     try {

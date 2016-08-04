@@ -23,6 +23,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 class ArticlePackageBuilder {
@@ -33,11 +34,12 @@ class ArticlePackageBuilder {
   private final ManifestXml manifest;
   private final ManifestXml.Asset manuscriptAsset;
   private final ManifestXml.Representation manuscriptRepr;
-  private final ManifestXml.Representation printableRepr;
+  private final Optional<ManifestXml.Representation> printableRepr;
   private final Doi articleIdentity;
 
-  ArticlePackageBuilder(String destinationBucketName, Archive archive, ArticleXml article, ManifestXml manifest,
-                        ManifestXml.Asset manuscriptAsset, ManifestXml.Representation manuscriptRepr, ManifestXml.Representation printableRepr) {
+  ArticlePackageBuilder(String destinationBucketName, Archive archive,
+                        ArticleXml article, ManifestXml manifest, ManifestXml.Asset manuscriptAsset,
+                        ManifestXml.Representation manuscriptRepr, Optional<ManifestXml.Representation> printableRepr) {
     this.destinationBucketName = Objects.requireNonNull(destinationBucketName);
     this.archive = Objects.requireNonNull(archive);
     this.article = Objects.requireNonNull(article);
@@ -90,10 +92,12 @@ class ArticlePackageBuilder {
   }
 
   private Map<String, RepoObjectInput> buildArticleObjects() {
-    return ImmutableMap.<String, RepoObjectInput>builder()
-        .put("manuscript", buildObjectFor(manuscriptAsset, manuscriptRepr))
-        .put("printable", buildObjectFor(manuscriptAsset, printableRepr))
-        .build();
+    ImmutableMap.Builder<String, RepoObjectInput> articleObjects = ImmutableMap.builder();
+    articleObjects.put("manuscript", buildObjectFor(manuscriptAsset, manuscriptRepr));
+    if (printableRepr.isPresent()) {
+      articleObjects.put("printable", buildObjectFor(manuscriptAsset, printableRepr.get()));
+    }
+    return articleObjects.build();
   }
 
   /**

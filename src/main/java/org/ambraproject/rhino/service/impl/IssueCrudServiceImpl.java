@@ -96,7 +96,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
     String imageDoi = input.getImageArticleDoi();
     if (imageDoi != null) {
       ArticleIdentifier imageArticleId = ArticleIdentifier.create(imageDoi);
-      ArticleTable imageArticle = articleCrudService.getArticle(imageArticleId);
+      ArticleTable imageArticle = articleCrudService.readArticle(imageArticleId);
       issue.setImageArticle(imageArticle);
     } else {
       issue.setImageArticle(null);
@@ -105,7 +105,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
     List<String> inputArticleDois = input.getArticleOrder();
     if (inputArticleDois != null) {
       List<ArticleTable> inputArticles = inputArticleDois.stream()
-          .map(doi -> articleCrudService.getArticle(ArticleIdentifier.create(doi)))
+          .map(doi -> articleCrudService.readArticle(ArticleIdentifier.create(doi)))
           .collect(Collectors.toList());
       issue.setArticles(inputArticles);
     }

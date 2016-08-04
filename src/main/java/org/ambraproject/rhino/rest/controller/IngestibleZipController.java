@@ -48,7 +48,7 @@ public class IngestibleZipController extends RestController {
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
-    articleCrudService.readArticleMetadata(ingestionId).respond(request, response, entityGson);
+    articleCrudService.serveMetadata(ingestionId).respond(request, response, entityGson);
   }
 
 }
