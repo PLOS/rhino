@@ -227,7 +227,7 @@ public class VersionedIngestionService extends AmbraService {
       String message = "Manifest is not consistent with files in archive."
           + (missingFromArchive.isEmpty() ? "" : (" Files in manifest not included in archive: " + missingFromArchive))
           + (missingFromManifest.isEmpty() ? "" : (" Files in archive not described in manifest: " + missingFromManifest));
-//      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
   }
 
