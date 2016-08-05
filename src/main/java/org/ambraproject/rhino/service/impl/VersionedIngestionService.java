@@ -72,7 +72,10 @@ public class VersionedIngestionService extends AmbraService {
     try (InputStream manifestStream = new BufferedInputStream(archive.openFile(manifestEntry))) {
       manifestXml = new ManifestXml(AmbraService.parseXml(manifestStream));
     }
-    validateManifestCompleteness(manifestXml, archive);
+
+    // TODO: reinstate the validation check when AccMan friendly zip files become more readily available
+    // validateManifestCompleteness(manifestXml, archive);
+    log.warn("*** Skipping validation of manifest to accommodate ingestion of legacy zip files ***");
 
     ImmutableList<ManifestXml.Asset> assets = manifestXml.getAssets();
     ManifestXml.Asset manuscriptAsset = findManuscriptAsset(assets);

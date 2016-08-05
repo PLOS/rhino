@@ -1,5 +1,20 @@
 [
   {
+    "number": 1100,
+    "scripts": [
+      "versioning-prototype.sql",
+      "versioning-prototype-article-list.sql",
+      "versioning-prototype-article-relationship.sql",
+      "versioning-prototype-category.sql",
+      "versioning-prototype-comments.sql",
+      "versioning-prototype-issue.sql",
+      "versioning-prototype-journal.sql",
+      "versioning-prototype-syndication.sql",
+      "versioning-prototype-volume.sql",
+      "plos_seed_data.sql"
+    ]
+  },
+  {
     "number": 1010,
     "scripts": [
       "migrate_ambra_1010.sql"
