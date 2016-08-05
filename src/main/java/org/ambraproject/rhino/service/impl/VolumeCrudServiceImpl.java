@@ -75,9 +75,8 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
 
     Volume volume = applyInput(new Volume(), input);
     Journal journal = journalCrudService.readJournal(journalKey);
-    volume.setJournal(journal);
-
-    hibernateTemplate.save(volume);
+    journal.getVolumes().add(volume);
+    hibernateTemplate.save(journal);
 
     return VolumeIdentifier.create(volume.getDoi());
   }

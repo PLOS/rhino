@@ -24,10 +24,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import java.util.Date;
@@ -50,10 +49,6 @@ public class Volume implements Timestamped {
   @Column
   private String doi;
 
-  @ManyToOne
-  @JoinColumn(name = "journalId")
-  private Journal journal;
-
   @Column
   private String displayName;
 
@@ -72,11 +67,9 @@ public class Volume implements Timestamped {
   private Date lastModified;
 
   @Cascade(CascadeType.SAVE_UPDATE)
-  @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
-  @JoinTable(
-      name = "issue",
-      joinColumns = @JoinColumn(name = "volumeId"),
-      inverseJoinColumns = @JoinColumn(name = "issueId"))
+  @OneToMany(fetch = FetchType.LAZY)
+  @JoinColumn(name = "volumeId")
+  @OrderColumn(name="volumeSortOrder")
   private List<Issue> issues;
 
   public Volume() {
@@ -102,14 +95,6 @@ public class Volume implements Timestamped {
 
   public void setDoi(String doi) {
     this.doi = doi;
-  }
-
-  public Journal getJournal() {
-    return journal;
-  }
-
-  public void setJournal(Journal journal) {
-    this.journal = journal;
   }
 
   public String getDisplayName() {

@@ -28,6 +28,7 @@ import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.IssueCrudService;
+import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.journal.IssueInputView;
@@ -48,6 +49,9 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
 
   @Autowired
   private ArticleCrudService articleCrudService;
+
+  @Autowired
+  private VolumeCrudService volumeCrudService;
 
   @Override
   public Issue readIssue(IssueIdentifier issueId) {
@@ -122,7 +126,9 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
           + issueId, HttpStatus.BAD_REQUEST);
     }
     Issue issue = applyInput(new Issue(), input);
-    hibernateTemplate.save(issue);
+    Volume volume = volumeCrudService.readVolume(volumeId);
+    volume.getIssues().add(issue);
+    hibernateTemplate.save(volume);
     return IssueIdentifier.create(issue.getDoi());
   }
 
