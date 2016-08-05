@@ -10,7 +10,8 @@
       "versioning-prototype-issue.sql",
       "versioning-prototype-journal.sql",
       "versioning-prototype-syndication.sql",
-      "versioning-prototype-volume.sql"
+      "versioning-prototype-volume.sql",
+      "plos_seed_data.sql"
     ]
   },
   {
