@@ -1,5 +1,3 @@
-DROP TABLE `articleRevision`;
-
 DROP TABLE `doiAssociation`;
 
 RENAME TABLE `article` TO `oldArticle`;
