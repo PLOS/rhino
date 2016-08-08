@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,6 +50,13 @@ public class CommentCrudController extends DoiBasedCrudController {
   public void readAllFlaggedComments(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     annotationCrudService.readFlaggedComments().respond(request, response, entityGson);
+  }
+
+  @RequestMapping(value = COMMENT_META_ROOT, method = RequestMethod.GET, params = {FLAGGED_PARAMETER, "journal"})
+  public void readFlaggedComments(HttpServletRequest request, HttpServletResponse response,
+                                  @RequestParam("journal") String journalKey)
+      throws IOException {
+    annotationCrudService.readFlaggedComments(journalKey).respond(request, response, entityGson);
   }
 
   @RequestMapping(value = FLAGS_META_ROOT, method = RequestMethod.GET)
