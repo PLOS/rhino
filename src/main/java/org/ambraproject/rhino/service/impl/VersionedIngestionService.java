@@ -194,9 +194,9 @@ public class VersionedIngestionService extends AmbraService {
 
       if (existingRevisionId != null) {
         SQLQuery updateRevision = session.createSQLQuery("" +
-            "UPDATE articleRevision SET revisionNumber = :revisionNumber " +
+            "UPDATE articleRevision SET ingestionId = :ingestionId " +
             "WHERE revisionId = :revisionId");
-        updateRevision.setParameter("revisionNumber", revisionNumber);
+        updateRevision.setParameter("ingestionId", ingestionId);
         updateRevision.setParameter("revisionId", existingRevisionId);
         return updateRevision.executeUpdate();
       } else {
