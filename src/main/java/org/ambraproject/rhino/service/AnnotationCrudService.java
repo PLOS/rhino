@@ -55,8 +55,9 @@ public interface AnnotationCrudService {
    *
    * @throws IOException
    */
-  public Transceiver readFlaggedComments()
-      throws IOException;
+  public Transceiver readFlaggedComments() throws IOException;
+
+  public Transceiver readFlaggedComments(String journalKey) throws IOException;
 
   public Annotation createComment(CommentInputView input);
 

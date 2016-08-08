@@ -23,8 +23,10 @@ import org.ambraproject.rhino.model.AnnotationType;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.model.FlagReasonCode;
+import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AnnotationCrudService;
+import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
@@ -39,9 +41,9 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.orm.hibernate3.HibernateCallback;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
@@ -57,6 +59,8 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
 
   @Autowired
   private RuntimeConfiguration runtimeConfiguration;
+  @Autowired
+  private JournalCrudService journalCrudService;
 
   /**
    * Fetch all annotations that belong to an article.
@@ -358,16 +362,45 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
     return flagId;
   }
 
+  private List<CommentNodeView> readFlaggedComments(HibernateCallback<List<Annotation>> hibernateCallback) {
+    CommentNodeView.Factory viewFactory = new CommentNodeView.Factory(runtimeConfiguration);
+    List<Annotation> flaggedComments = hibernateTemplate.execute(hibernateCallback);
+    return flaggedComments.stream()
+        .map(viewFactory::create)
+        .collect(Collectors.toList());
+  }
+
   @Override
   public Transceiver readFlaggedComments() throws IOException {
     return new Transceiver() {
       @Override
       protected List<CommentNodeView> getData() throws IOException {
-        CommentNodeView.Factory viewFactory = new CommentNodeView.Factory(runtimeConfiguration);
-        return getAllFlags().stream()
-            .map(Flag::getFlaggedAnnotation)
-            .map(viewFactory::create)
-            .collect(Collectors.toCollection(ArrayList::new));
+        return readFlaggedComments(session ->
+            session.createQuery("SELECT DISTINCT flaggedAnnotation FROM Flag").list());
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    };
+  }
+
+  @Override
+  public Transceiver readFlaggedComments(String journalKey) throws IOException {
+    return new Transceiver() {
+      @Override
+      protected List<CommentNodeView> getData() throws IOException {
+        Journal journal = journalCrudService.findJournal(journalKey);
+        return readFlaggedComments(session -> {
+          Query query = session.createQuery("" +
+              "SELECT DISTINCT f.flaggedAnnotation " +
+              "FROM Flag f, Article a " +
+              "WHERE f.flaggedAnnotation.articleID = a.ID " +
+              "  AND :journal IN ELEMENTS(a.journals)");
+          query.setParameter("journal", journal);
+          return query.list();
+        });
       }
 
       @Override
