@@ -109,7 +109,10 @@ public class VersionedIngestionService extends AmbraService {
     IngestionPersistenceResult ingestionResult = persistIngestion(articlePk, articleMetadata);
     long ingestionId = ingestionResult.pk;
 
-    persistRevision(articlePk, ingestionId, parsedArticle.getRevisionNumber());
+    // As placeholder code for development, automatically set this as revision 1.
+    // In the released system, we will not set a revision number here at all (waiting instead for a separate POST request).
+    // TODO: Delete this
+    persistRevision(articlePk, ingestionId, 1);
 
     // TODO: Allow bucket name to be specified as an ingestion parameter
     String destinationBucketName = runtimeConfiguration.getCorpusStorage().getDefaultBucket();
