@@ -73,10 +73,6 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     return Doi.create(doi);
   }
 
-  public int getRevisionNumber() {
-    return 1; // Placeholder value. TODO: Definition TBD
-  }
-
   /**
    * Find each node within this object's XML whose name is expected to be associated with an asset entity.
    *
