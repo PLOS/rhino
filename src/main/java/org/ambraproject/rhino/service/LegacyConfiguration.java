@@ -31,12 +31,10 @@ import org.apache.commons.configuration.tree.UnionCombiner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Collection;
 import java.util.Enumeration;
 
 /**
@@ -76,25 +74,7 @@ public class LegacyConfiguration {
    */
   private static final String DEFAULT_CONFIG_URL = "file:///etc/ambra/ambra.xml";
 
-  /**
-   * <p>Name of resource(s) that contain defaults in a given journal</p> <p> <p>There is one per journal.</p>
-   */
-  private static final String JOURNAL_DIRECTORY = "/configuration/journal.xml";
   private static final String DEFAULTS_RESOURCE = "ambra/configuration/defaults.xml";
-
-  /**
-   * The name of the global defaults that exist in this library.<p>
-   * <p>
-   * It is assumed there is only one of these in the classpath. If somebody defines a second copy of this, the results
-   * are undefined. (TODO: Detect this.)
-   */
-  private static final String GLOBAL_DEFAULTS_RESOURCE = "/ambra/configuration/global-defaults.xml";
-
-  /**
-   * Location of journal templates
-   */
-  private static final String JOURNAL_TEMPLATE_DIR = "ambra.virtualJournals.templateDir";
-  private static final String JOURNALS = "ambra.virtualJournals.journals";
 
   private LegacyConfiguration() {
     throw new AssertionError("Not instantiable");
@@ -141,7 +121,6 @@ public class LegacyConfiguration {
     // Add defaults.xml from classpath
     addResources(defaults, DEFAULTS_RESOURCE);
     // Add journal.xml from journals/journal-name/configuration/journal.xml
-    addJournalResources(root, defaults, JOURNAL_DIRECTORY);
     root.addConfiguration(defaults);
 
     if (log.isDebugEnabled()) {
@@ -213,24 +192,4 @@ public class LegacyConfiguration {
     }
   }
 
-  private static void addJournalResources(CombinedConfiguration root, CombinedConfiguration defaults, String path)
-      throws ConfigurationException {
-
-    Collection<String> journals = root.getList(JOURNALS);
-    String journalTemplatePath = root.getString(JOURNAL_TEMPLATE_DIR, "/");
-
-    for (String journal : journals) {
-
-      String resourcePath = journalTemplatePath
-          + (journalTemplatePath.endsWith("/") ? "journals/" : "/journals/")
-          + journal
-          + path;
-
-      File defaultsXmlFile = new File(resourcePath);
-      if (defaultsXmlFile.isFile() && defaultsXmlFile.canRead()) {
-        defaults.addConfiguration(new XMLConfiguration(defaultsXmlFile));
-        log.info("Added resource '" + resourcePath + "' to configuration");
-      }
-    }
-  }
 }
