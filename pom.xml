@@ -476,8 +476,11 @@
         <version>2.1</version>
         <configuration>
           <path>/</path>
+          <contextFile>${rhino.configDir}/context.xml</contextFile>
+          <additionalConfigFilesDir>${rhino.configDir}/</additionalConfigFilesDir>
           <systemProperties>
             <java.util.logging.manager>org.apache.juli.ClassLoaderLogManager</java.util.logging.manager>
+            <log4j.configuration>file://${rhino.configDir}/log4j.xml</log4j.configuration>
             <org.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH>true
             </org.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH>
             <java.net.preferIPv4Stack>true</java.net.preferIPv4Stack>

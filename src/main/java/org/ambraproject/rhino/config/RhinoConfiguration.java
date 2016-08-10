@@ -322,23 +322,14 @@ public class RhinoConfiguration extends BaseConfiguration {
 
 
   private static final String CONFIG_DIR_PROPERTY_NAME = "rhino.configDir";
-  private static final String CONFIG_DIR_ENVIRONMENT_NAME = "RHINO_CONFIG_DIR";
 
   static File getConfigDirectory() {
     String property = System.getProperty(CONFIG_DIR_PROPERTY_NAME);
     if (!Strings.isNullOrEmpty(property)) {
       return new File(property);
+    } else {
+      throw new RuntimeException("Config directory not found. " + CONFIG_DIR_PROPERTY_NAME + " must be defined.");
     }
-
-    String environmentVar = System.getenv(CONFIG_DIR_ENVIRONMENT_NAME);
-    if (!Strings.isNullOrEmpty(environmentVar)) {
-      return new File(environmentVar);
-    }
-
-    // TODO: Default to new File("/etc", applicationContext.getApplicationName()) ?
-
-    throw new RuntimeException("Config directory not found. " +
-        CONFIG_DIR_PROPERTY_NAME + " or " + CONFIG_DIR_ENVIRONMENT_NAME + " must be defined.");
   }
 
   @Bean
