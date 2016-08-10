@@ -49,9 +49,10 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
 
   @Autowired
   private ArticleCrudService articleCrudService;
-
   @Autowired
   private VolumeCrudService volumeCrudService;
+  @Autowired
+  private IssueOutputView.Factory issueOutputViewFactory;
 
   @Override
   public Issue readIssue(IssueIdentifier issueId) {
@@ -78,7 +79,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
 
       @Override
       protected Object getView(Issue issue) {
-        return new IssueOutputView(issue, getParentVolumeView(issue));
+        return issueOutputViewFactory.getView(issue);
       }
     };
   }

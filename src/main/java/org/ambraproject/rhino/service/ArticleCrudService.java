@@ -189,6 +189,8 @@ public interface ArticleCrudService {
 
   public abstract Collection<ArticleItem> getAllArticleItems(Doi doi);
 
+  public abstract Collection<ArticleItem> getAllArticleItems(ArticleIngestion ingestion);
+
   Optional<ResolvedDoiView> getItemOverview(Doi doi);
 
   /**
