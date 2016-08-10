@@ -73,7 +73,6 @@ import org.hibernate.SessionFactory;
 import org.plos.crepo.config.ContentRepoAccessConfig;
 import org.plos.crepo.service.ContentRepoService;
 import org.plos.crepo.service.ContentRepoServiceImpl;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -172,10 +171,11 @@ public class RhinoConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public org.apache.commons.configuration.Configuration ambraConfiguration() {
+  public org.apache.commons.configuration.Configuration ambraConfiguration()
+      throws IOException {
     // Fetch from Ambra's custom container
     try {
-      return LegacyConfiguration.loadDefaultConfiguration();
+      return new LegacyConfiguration(getConfigDirectory()).loadDefaultConfiguration();
     } catch (ConfigurationException e) {
       throw new RuntimeException(e);
     }
@@ -324,7 +324,7 @@ public class RhinoConfiguration extends BaseConfiguration {
   private static final String CONFIG_DIR_PROPERTY_NAME = "rhino.configDir";
   private static final String CONFIG_DIR_ENVIRONMENT_NAME = "RHINO_CONFIG_DIR";
 
-  private static File getConfigDirectory(ApplicationContext applicationContext) {
+  static File getConfigDirectory() {
     String property = System.getProperty(CONFIG_DIR_PROPERTY_NAME);
     if (!Strings.isNullOrEmpty(property)) {
       return new File(property);
@@ -335,21 +335,16 @@ public class RhinoConfiguration extends BaseConfiguration {
       return new File(environmentVar);
     }
 
-    String applicationName = applicationContext.getApplicationName();
-    if (!Strings.isNullOrEmpty(applicationName)) {
-      return new File("/etc", applicationName);
-    }
+    // TODO: Default to new File("/etc", applicationContext.getApplicationName()) ?
 
     throw new RuntimeException("Config directory not found. " +
-        "(If application name is empty, " + CONFIG_DIR_PROPERTY_NAME + " or "
-        + CONFIG_DIR_ENVIRONMENT_NAME + " must be defined.)");
+        CONFIG_DIR_PROPERTY_NAME + " or " + CONFIG_DIR_ENVIRONMENT_NAME + " must be defined.");
   }
 
   @Bean
-  public RuntimeConfiguration runtimeConfiguration(ApplicationContext applicationContext,
-                                                   Yaml yaml)
+  public RuntimeConfiguration runtimeConfiguration(Yaml yaml)
       throws IOException {
-    File configDir = getConfigDirectory(applicationContext);
+    File configDir = getConfigDirectory();
     File configPath = new File(configDir, "rhino.yaml");
     if (!configPath.exists()) {
       throw new RuntimeConfigurationException(configPath.getAbsolutePath() + " not found");

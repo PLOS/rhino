@@ -31,6 +31,7 @@ import org.apache.commons.configuration.tree.UnionCombiner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -69,15 +70,13 @@ public class LegacyConfiguration {
    */
   private static final String OVERRIDES_URL = "ambra.configuration.overrides";
 
-  /**
-   * Default configuration overrides in /etc
-   */
-  private static final String DEFAULT_CONFIG_URL = "file:///etc/ambra/ambra.xml";
-
   private static final String DEFAULTS_RESOURCE = "ambra/configuration/defaults.xml";
 
-  private LegacyConfiguration() {
-    throw new AssertionError("Not instantiable");
+  private final File configDir;
+
+  public LegacyConfiguration(File configDir) throws FileNotFoundException {
+    if (!configDir.exists()) throw new FileNotFoundException();
+    this.configDir = configDir;
   }
 
   /**
@@ -136,19 +135,28 @@ public class LegacyConfiguration {
    *
    * @throws ConfigurationException when the configuration can't be found.
    */
-  public static CombinedConfiguration loadDefaultConfiguration() throws ConfigurationException {
+  public CombinedConfiguration loadDefaultConfiguration() throws ConfigurationException {
+    final URL configUrl;
+
     // Allow JVM level property to override everything else
     String name = System.getProperty(CONFIG_URL);
-    if (name == null) {
-      name = DEFAULT_CONFIG_URL;
+    if (name != null) {
+      try {
+        configUrl = new URL(name);
+      } catch (MalformedURLException e) {
+        throw new ConfigurationException("Invalid value of '" + name + "' for '" + CONFIG_URL +
+            "'. Must be a valid URL.");
+      }
+    } else {
+      File configFile = new File(configDir, "ambra.xml");
+      try {
+        configUrl = configFile.toURI().toURL();
+      } catch (MalformedURLException e) {
+        throw new RuntimeException(e);
+      }
     }
 
-    try {
-      return loadConfiguration(new URL(name));
-    } catch (MalformedURLException e) {
-      throw new ConfigurationException("Invalid value of '" + name + "' for '" + CONFIG_URL +
-          "'. Must be a valid URL.");
-    }
+    return loadConfiguration(configUrl);
   }
 
   /**
