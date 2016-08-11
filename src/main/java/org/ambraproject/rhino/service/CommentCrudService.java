@@ -56,8 +56,9 @@ public interface CommentCrudService {
    *
    * @throws IOException
    */
-  public Transceiver serveFlaggedComments()
-      throws IOException;
+  public Transceiver serveFlaggedComments() throws IOException;
+
+  public Transceiver serveFlaggedComments(String journalKey) throws IOException;
 
   public Optional<Comment> getComment(CommentIdentifier commentId);
 

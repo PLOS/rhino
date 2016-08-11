@@ -23,9 +23,11 @@ import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Comment;
 import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.model.FlagReasonCode;
+import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;
+import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
@@ -36,16 +38,15 @@ import org.ambraproject.rhino.view.comment.CommentOutputView;
 import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.orm.hibernate3.HibernateCallback;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
-import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -56,6 +57,8 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
 
   @Autowired
   private RuntimeConfiguration runtimeConfiguration;
+  @Autowired
+  private JournalCrudService journalCrudService;
 
   @Autowired
   private ArticleCrudService articleCrudService;
@@ -67,7 +70,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
    * @return the collection of annotations
    */
   private List<Comment> fetchAllComments(ArticleTable article) {
-    return (ArrayList<Comment>) hibernateTemplate.find("FROM Comment WHERE articleId = ?", article.getArticleId());
+    return (List<Comment>) hibernateTemplate.find("FROM Comment WHERE articleId = ?", article.getArticleId());
   }
 
   @Override
@@ -338,16 +341,45 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     return flagId;
   }
 
+  private List<CommentNodeView> readFlaggedComments(HibernateCallback<List<Comment>> hibernateCallback) {
+    CommentNodeView.Factory viewFactory = new CommentNodeView.Factory(runtimeConfiguration);
+    List<Comment> flaggedComments = hibernateTemplate.execute(hibernateCallback);
+    return flaggedComments.stream()
+        .map(viewFactory::create)
+        .collect(Collectors.toList());
+  }
+
   @Override
   public Transceiver serveFlaggedComments() throws IOException {
     return new Transceiver() {
       @Override
-      protected Set<CommentNodeView> getData() throws IOException {
-        CommentNodeView.Factory viewFactory = new CommentNodeView.Factory(runtimeConfiguration);
-        return getAllFlags().stream()
-            .map(Flag::getFlaggedComment)
-            .map(viewFactory::create)
-            .collect(Collectors.toSet());
+      protected List<CommentNodeView> getData() throws IOException {
+        return readFlaggedComments(session ->
+            session.createQuery("SELECT DISTINCT flaggedAnnotation FROM Flag").list());
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    };
+  }
+
+  @Override
+  public Transceiver serveFlaggedComments(String journalKey) throws IOException {
+    return new Transceiver() {
+      @Override
+      protected List<CommentNodeView> getData() throws IOException {
+        Journal journal = journalCrudService.readJournal(journalKey);
+        return readFlaggedComments(session -> {
+          Query query = session.createQuery("" +
+              "SELECT DISTINCT f.flaggedAnnotation " +
+              "FROM Flag f, Article a " +
+              "WHERE f.flaggedAnnotation.articleID = a.ID " +
+              "  AND :journal IN ELEMENTS(a.journals)");
+          query.setParameter("journal", journal);
+          return query.list();
+        });
       }
 
       @Override
