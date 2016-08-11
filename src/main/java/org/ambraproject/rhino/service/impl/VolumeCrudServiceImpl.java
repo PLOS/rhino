@@ -22,6 +22,7 @@ import com.google.common.base.Preconditions;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.VolumeIdentifier;
 import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -44,9 +45,10 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
 
   @Autowired
   private JournalCrudService journalCrudService;
-
   @Autowired
   private ArticleCrudService articleCrudService;
+  @Autowired
+  private VolumeOutputView.Factory volumeOutputViewFactory;
 
   @Override
   public Volume readVolume(VolumeIdentifier volumeId) {
@@ -64,6 +66,15 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
   }
 
   @Override
+  public Volume readVolumeByIssue(Issue issue) {
+    return hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM Volume WHERE :issue IN ELEMENTS(issues)");
+      query.setParameter("issue", issue);
+      return (Volume) query.uniqueResult();
+    });
+  }
+
+  @Override
   public VolumeIdentifier create(String journalKey, VolumeInputView input) {
     Preconditions.checkNotNull(journalKey);
 
@@ -75,9 +86,8 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
 
     Volume volume = applyInput(new Volume(), input);
     Journal journal = journalCrudService.readJournal(journalKey);
-    volume.setJournal(journal);
-
-    hibernateTemplate.save(volume);
+    journal.getVolumes().add(volume);
+    hibernateTemplate.save(journal);
 
     return VolumeIdentifier.create(volume.getDoi());
   }
@@ -100,7 +110,7 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
 
       @Override
       protected Object getView(Volume volume) {
-        return new VolumeOutputView(volume);
+        return volumeOutputViewFactory.getView(volume);
       }
     };
   }

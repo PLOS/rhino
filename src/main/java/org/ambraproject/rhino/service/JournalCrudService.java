@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.journal.JournalInputView;
 
@@ -24,4 +25,6 @@ public interface JournalCrudService {
   public abstract Optional<Journal> getJournalByEissn(String eIssn);
 
   public abstract Journal readJournalByEissn(String eIssn);
+
+  public abstract Journal readJournalByVolume(Volume volume);
 }

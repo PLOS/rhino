@@ -1,11 +1,16 @@
 package org.ambraproject.rhino.view.journal;
 
-import com.google.common.base.Preconditions;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.view.JsonOutputView;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * A view of a {@link Journal} object that shows all nested volume and issue lists as JSON objects keyed by their
@@ -13,33 +18,43 @@ import org.ambraproject.rhino.view.JsonOutputView;
  */
 public class JournalOutputView implements JsonOutputView {
 
-  private final Journal journal;
+  public static class Factory {
+    @Autowired
+    private IssueOutputView.Factory issueOutputViewFactory;
+    @Autowired
+    private VolumeOutputView.Factory volumeOutputViewFactory;
 
-  public JournalOutputView(Journal journal) {
-    this.journal = Preconditions.checkNotNull(journal);
+    public JournalOutputView getView(Journal journal) {
+      return new JournalOutputView(issueOutputViewFactory, volumeOutputViewFactory, journal);
+    }
+  }
+
+  private final Journal journal;
+  private IssueOutputView.Factory issueOutputViewFactory;
+  private VolumeOutputView.Factory volumeOutputViewFactory;
+
+  public JournalOutputView(IssueOutputView.Factory issueOutputViewFactory,
+                           VolumeOutputView.Factory volumeOutputViewFactory, Journal journal) {
+    this.journal = Objects.requireNonNull(journal);
+    this.issueOutputViewFactory = Objects.requireNonNull(issueOutputViewFactory);
+    this.volumeOutputViewFactory = Objects.requireNonNull(volumeOutputViewFactory);
   }
 
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
-    JsonObject serialized = new JsonObject();
+    JsonObject serialized = context.serialize(journal).getAsJsonObject();
+    serialized.remove("currentIssue");
+    IssueOutputView currentIssueView = issueOutputViewFactory.getView(journal.getCurrentIssue());
+    serialized.add("currentIssue", currentIssueView.serialize(context));
+    serialized.remove("volumes");
 
-    //todo: fix the stack overflow caused by the following line
-    //JsonObject serialized = context.serialize(journal).getAsJsonObject();
-
-    serialized.add("journalKey", context.serialize(journal.getJournalKey()));
-    serialized.add("eIssn", context.serialize(journal.getJournalKey()));
-    serialized.add("title", context.serialize(journal.getTitle()));
-    serialized.add("created", context.serialize(journal.getCreated()));
-    serialized.add("lastModified", context.serialize(journal.getLastModified()));
-
-    if (journal.getImageArticle() != null) {
-      serialized.add("imageArticleDoi", context.serialize(journal.getImageArticle().getDoi()));
+    List<VolumeOutputView> volumeOutputViews = new ArrayList<>();
+    for (Volume volume : journal.getVolumes()) {
+      VolumeOutputView volumeOutputView = volumeOutputViewFactory.getView(volume);
+      volumeOutputViews.add(volumeOutputView);
     }
 
-    if (journal.getCurrentIssue() != null) {
-      serialized.add("currentIssueDoi", context.serialize(journal.getCurrentIssue().getDoi()));
-    }
-
+    serialized.add("volumes", context.serialize(volumeOutputViews));
     return serialized;
   }
 

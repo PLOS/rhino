@@ -555,6 +555,15 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
+  public Collection<ArticleItem> getAllArticleItems(ArticleIngestion ingestion) {
+    return hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM ArticleItem WHERE ingestion = :ingestion");
+      query.setParameter("ingestion", ingestion);
+      return (Collection<ArticleItem>) query.list();
+    });
+  }
+
+  @Override
   public Optional<ResolvedDoiView> getItemOverview(Doi doi) {
     return hibernateTemplate.execute(session -> {
       Query ingestionQuery = session.createQuery("FROM ArticleItem WHERE doi = :doi");

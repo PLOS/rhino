@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.identity.VolumeIdentifier;
+import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.response.Transceiver;
@@ -43,6 +44,8 @@ public interface VolumeCrudService {
    * Get a volume if it exists.
    */
   public abstract Optional<Volume> getVolume(VolumeIdentifier volumeId);
+
+  public abstract Volume readVolumeByIssue(Issue issueId);
 
   public abstract VolumeIdentifier create(String journalKey, VolumeInputView input);
 

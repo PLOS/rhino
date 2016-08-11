@@ -19,8 +19,13 @@
 package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.identity.IssueIdentifier;
+import org.ambraproject.rhino.model.Issue;
+import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.service.IssueCrudService;
+import org.ambraproject.rhino.service.JournalCrudService;
+import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.view.journal.IssueInputView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,6 +45,10 @@ public class IssueCrudController extends RestController {
 
   @Autowired
   private IssueCrudService issueCrudService;
+  @Autowired
+  private VolumeCrudService volumeCrudService;
+  @Autowired
+  private JournalCrudService journalCrudService;
 
   private IssueIdentifier getIssueId(String issueDoi) {
     return IssueIdentifier.create(DoiEscaping.unescape(issueDoi));
@@ -47,10 +56,15 @@ public class IssueCrudController extends RestController {
 
   @Transactional(readOnly = true)
   @RequestMapping(value = "/issues/{issueDoi:.+}", method = RequestMethod.GET)
-  public void read(@PathVariable("issueDoi") String issueDoi)
+  public void read(HttpServletRequest request, HttpServletResponse response,
+                   @PathVariable("issueDoi") String issueDoi)
       throws IOException {
     IssueIdentifier issueId = getIssueId(issueDoi);
-    // TODO: Look up journal and volume; redirect to main service
+    Issue issue = issueCrudService.readIssue(issueId);
+    Volume volume = volumeCrudService.readVolumeByIssue(issue);
+    Journal journal = journalCrudService.readJournalByVolume(volume);
+    read(request, response, journal.getJournalKey(), volume.getDoi(), issueDoi);
+
     // TODO: Equivalent alias methods for other HTTP methods?
   }
 

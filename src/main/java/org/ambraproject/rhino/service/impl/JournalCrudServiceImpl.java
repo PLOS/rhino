@@ -5,6 +5,7 @@ import edu.emory.mathcs.backport.java.util.Collections;
 import org.ambraproject.rhino.identity.IssueIdentifier;
 import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
@@ -15,7 +16,6 @@ import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.ambraproject.rhino.view.journal.JournalInputView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
-import org.ambraproject.rhino.view.journal.VolumeNonAssocView;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -46,6 +46,10 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
   private HibernateTemplate hibernateTemplate;
   @Autowired
   private IssueCrudService issueCrudService;
+  @Autowired
+  private IssueOutputView.Factory issueOutputViewFactory;
+  @Autowired
+  private JournalOutputView.Factory journalOutputViewFactory;
 
   @Override
   public Transceiver listJournals() throws IOException {
@@ -77,7 +81,7 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
 
       @Override
       protected Object getView(Journal journal) {
-        return new JournalOutputView(journal);
+        return journalOutputViewFactory.getView(journal);
       }
     };
   }
@@ -129,9 +133,7 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
           throw new RestClientException(message, HttpStatus.BAD_REQUEST);
         }
 
-        VolumeNonAssocView parentVolumeView = issueCrudService.getParentVolumeView(issue);
-
-        return new IssueOutputView(issue, parentVolumeView);
+        return issueOutputViewFactory.getView(issue);
       }
     };
   }
@@ -206,5 +208,14 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
   public Journal readJournalByEissn(String eIssn) {
     return getJournalByEissn(eIssn).orElseThrow(() ->
         new RestClientException("No journal found with eIssn: " + eIssn, HttpStatus.NOT_FOUND));
+  }
+
+  @Override
+  public Journal readJournalByVolume(Volume volume) {
+    return hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM Journal j WHERE :volume IN ELEMENTS(volumes)");
+      query.setParameter("volume", volume);
+      return (Journal) query.uniqueResult();
+    });
   }
 }

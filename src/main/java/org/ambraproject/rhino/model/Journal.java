@@ -29,6 +29,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import java.util.Collection;
@@ -62,16 +63,14 @@ public class Journal implements Timestamped {
   @Column
   private String title;
 
-  @JoinColumn(name = "currentIssueID")
+  @JoinColumn(name = "currentIssueId")
   @ManyToOne
   private Issue currentIssue;
 
   @Cascade(CascadeType.SAVE_UPDATE)
-  @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
-  @JoinTable(
-      name = "volume",
-      joinColumns = @JoinColumn(name = "journalId"),
-      inverseJoinColumns = @JoinColumn(name = "volumeID"))
+  @OneToMany(fetch = FetchType.LAZY)
+  @JoinColumn(name = "journalId")
+  @OrderColumn(name="journalSortOrder")
   private List<Volume> volumes;
 
   @Cascade(CascadeType.SAVE_UPDATE)
