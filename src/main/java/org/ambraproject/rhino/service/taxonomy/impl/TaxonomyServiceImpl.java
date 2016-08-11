@@ -1,5 +1,6 @@
 package org.ambraproject.rhino.service.taxonomy.impl;
 
+import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.service.impl.AmbraService;
@@ -31,8 +32,8 @@ public class TaxonomyServiceImpl extends AmbraService implements TaxonomyService
   }
 
   @Override
-  public void populateCategories(ArticleTable article, Document xml) {
-    taxonomyClassificationService.populateCategories(article, xml);
+  public void populateCategories(ArticleRevision revision) {
+    taxonomyClassificationService.populateCategories(revision);
   }
 
   @Override

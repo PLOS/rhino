@@ -8,6 +8,7 @@ import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleRevisionWriteService;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
@@ -17,6 +18,7 @@ public class ArticleRevisionWriteServiceImpl implements ArticleRevisionWriteServ
 
   @Autowired
   private ArticleCrudService articleCrudService;
+  @Autowired private TaxonomyClassificationService taxonomyClassificationService;
   @Autowired
   private HibernateTemplate hibernateTemplate;
 
@@ -64,6 +66,7 @@ public class ArticleRevisionWriteServiceImpl implements ArticleRevisionWriteServ
 
   private void refreshForLatestRevision(ArticleRevision newlyLatestRevision) {
     articleCrudService.refreshArticleRelationships(newlyLatestRevision);
+    taxonomyClassificationService.populateCategories(newlyLatestRevision);
   }
 
 }

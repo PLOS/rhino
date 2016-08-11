@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.service.taxonomy;
 
 import com.google.common.collect.ImmutableList;
+import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Category;
 import org.w3c.dom.Document;
@@ -31,7 +32,7 @@ public class DummyTaxonomyClassificationService implements TaxonomyClassificatio
   }
 
   @Override
-  public void populateCategories(ArticleTable article, Document xml) {
+  public void populateCategories(ArticleRevision revision) {
 
   }
 

@@ -1,5 +1,6 @@
 package org.ambraproject.rhino.service.taxonomy;
 
+import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Category;
 import org.w3c.dom.Document;
@@ -45,10 +46,9 @@ public interface TaxonomyClassificationService {
    * an exception if we cannot communicate or get results from the taxonomy server. Will not
    * request categories for amendments.
    *
-   * @param article the Article model instance
-   * @param xml     Document representing the article XML
+   * @param revision the article revision model instance
    */
-  public void populateCategories(ArticleTable article, Document xml);
+  public void populateCategories(ArticleRevision revision);
 
   public Collection<Category> getCategoriesForArticle(ArticleTable article);
 

@@ -123,19 +123,21 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public void populateCategories(ArticleIdentifier articleId) throws IOException {
     ArticleTable article = readArticle(articleId);
     ArticleRevision revision = readLatestRevision(article);
-    Document manuscriptXml = getManuscriptXml(revision.getIngestion());
-    taxonomyService.populateCategories(article, manuscriptXml);
+    taxonomyService.populateCategories(revision);
   }
 
   @Override
-  public Document getManuscriptXml(ArticleIngestion ingestion) throws IOException {
+  public Document getManuscriptXml(ArticleIngestion ingestion) {
     Doi articleDoi = Doi.create(ingestion.getArticle().getDoi());
     ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(articleDoi, ingestion.getIngestionNumber());
     ArticleItemIdentifier articleItemId = ingestionId.getItemFor();
     ArticleFileIdentifier manuscriptId = ArticleFileIdentifier.create(articleItemId, "manuscript");
     RepoObjectMetadata objectMetadata = assetCrudService.getArticleItemFile(manuscriptId);
-    InputStream manuscriptInputStream = contentRepoService.getRepoObject(objectMetadata.getVersion());
-    return parseXml(manuscriptInputStream);
+    try (InputStream manuscriptInputStream = contentRepoService.getRepoObject(objectMetadata.getVersion())) {
+      return parseXml(manuscriptInputStream);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   static RestClientException complainAboutXml(XmlContentException e) {
@@ -483,12 +485,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public void refreshArticleRelationships(ArticleRevision sourceArticleRev) {
-    ArticleXml sourceArticleXml;
-    try {
-      sourceArticleXml = new ArticleXml(getManuscriptXml(sourceArticleRev.getIngestion()));
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
+    ArticleXml sourceArticleXml = new ArticleXml(getManuscriptXml(sourceArticleRev.getIngestion()));
     ArticleTable sourceArticle = sourceArticleRev.getIngestion().getArticle();
 
     List<RelatedArticleLink> xmlRelationships = sourceArticleXml.parseRelatedArticles();

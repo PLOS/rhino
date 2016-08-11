@@ -337,12 +337,7 @@ public class VersionedIngestionService extends AmbraService {
   public ArticleMetadata getArticleMetadata(ArticleIngestionIdentifier ingestionId) {
     ArticleIngestion ingestion = articleCrudService.readIngestion(ingestionId);
 
-    Document document;
-    try {
-      document = articleCrudService.getManuscriptXml(ingestion);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
+    Document document = articleCrudService.getManuscriptXml(ingestion);
 
     try {
       return new ArticleXml(document).build();
