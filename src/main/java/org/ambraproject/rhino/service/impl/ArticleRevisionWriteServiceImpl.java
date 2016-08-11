@@ -29,18 +29,13 @@ public class ArticleRevisionWriteServiceImpl implements ArticleRevisionWriteServ
     Optional<ArticleRevision> previousLatest = articleCrudService.getLatestRevision(article);
 
     ArticleRevision newRevision = articleCrudService.getRevision(revisionId)
-        .map((ArticleRevision revision) -> {
-          revision.setIngestion(ingestion);
-          hibernateTemplate.update(revision);
-          return revision;
-        })
         .orElseGet(() -> {
           ArticleRevision revision = new ArticleRevision();
-          revision.setIngestion(ingestion);
           revision.setRevisionNumber(revisionId.getRevision());
-          hibernateTemplate.save(revision);
           return revision;
         });
+    newRevision.setIngestion(ingestion);
+    hibernateTemplate.saveOrUpdate(newRevision);
 
     if (!previousLatest.isPresent() || previousLatest.get().getRevisionNumber() <= newRevision.getRevisionNumber()) {
       refreshForLatestRevision(newRevision);
