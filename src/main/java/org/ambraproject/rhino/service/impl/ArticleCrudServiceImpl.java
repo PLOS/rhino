@@ -482,9 +482,13 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public void refreshArticleRelationships(ArticleRevisionIdentifier articleRevId) throws IOException {
-    ArticleRevision sourceArticleRev = readRevision(articleRevId);
-    ArticleXml sourceArticleXml = new ArticleXml(getManuscriptXml(sourceArticleRev.getIngestion()));
+  public void refreshArticleRelationships(ArticleRevision sourceArticleRev) {
+    ArticleXml sourceArticleXml;
+    try {
+      sourceArticleXml = new ArticleXml(getManuscriptXml(sourceArticleRev.getIngestion()));
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
     ArticleTable sourceArticle = sourceArticleRev.getIngestion().getArticle();
 
     List<RelatedArticleLink> xmlRelationships = sourceArticleXml.parseRelatedArticles();

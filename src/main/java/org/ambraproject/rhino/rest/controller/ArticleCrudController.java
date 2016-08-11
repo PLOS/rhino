@@ -289,25 +289,6 @@ public class ArticleCrudController extends RestController {
   }
 
   /**
-   * A temporary endpoint for testing the creation of article relationships This functionality should ultimately be
-   * subsumed under the publication and revision assignment workflow.
-   *
-   * @param request
-   * @param response
-   * @throws IOException
-   */
-  @Deprecated
-  @Transactional(readOnly = false)
-  @RequestMapping(value = "/articles/{doi}/revisions/{number}/relationships", method = RequestMethod.POST)
-  public void refreshArticleRelationships(HttpServletRequest request, HttpServletResponse response,
-                                          @PathVariable("doi") String doi,
-                                          @PathVariable("number") int revisionNumber)
-      throws IOException {
-    ArticleRevisionIdentifier articleRevId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
-    articleCrudService.refreshArticleRelationships(articleRevId);
-  }
-
-  /**
    * Retrieves a list of objects representing raw taxonomy categories associated with the article.
    *
    * @param request

@@ -63,7 +63,7 @@ public class ArticleRevisionWriteServiceImpl implements ArticleRevisionWriteServ
   }
 
   private void refreshForLatestRevision(ArticleRevision newlyLatestRevision) {
-    // TODO: Implement
+    articleCrudService.refreshArticleRelationships(newlyLatestRevision);
   }
 
 }

@@ -161,7 +161,7 @@ public interface ArticleCrudService {
 
   List<VersionedArticleRelationship> getRelationshipsTo(ArticleIdentifier targetId);
 
-  void refreshArticleRelationships(ArticleRevisionIdentifier articleRevId) throws IOException;
+  void refreshArticleRelationships(ArticleRevision sourceArticleRev);
 
   /**
    * Read the metadata of a random article.
