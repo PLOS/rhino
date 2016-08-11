@@ -62,7 +62,7 @@ public class LegacyConfiguration {
    * A property used to define the location of the master set of configuration overrides. This is usually a xml or
    * properties file in /etc somewhere. Note that this must be a URL. (For example: file:///etc/ambra/ambra.xml.)
    */
-  private static final String CONFIG_URL = "ambra.configuration";
+  private static final String CONFIG_URL_PROPERTY_NAME = "ambra.configuration";
 
   /**
    * A property used to define overrides. This is primarily to support something like a development mode. If a valid
@@ -139,12 +139,12 @@ public class LegacyConfiguration {
     final URL configUrl;
 
     // Allow JVM level property to override everything else
-    String name = System.getProperty(CONFIG_URL);
-    if (name != null) {
+    String configUrlProperty = System.getProperty(CONFIG_URL_PROPERTY_NAME);
+    if (configUrlProperty != null) {
       try {
-        configUrl = new URL(name);
+        configUrl = new URL(configUrlProperty);
       } catch (MalformedURLException e) {
-        throw new ConfigurationException("Invalid value of '" + name + "' for '" + CONFIG_URL +
+        throw new ConfigurationException("Invalid value of '" + configUrlProperty + "' for '" + CONFIG_URL_PROPERTY_NAME +
             "'. Must be a valid URL.");
       }
     } else {
