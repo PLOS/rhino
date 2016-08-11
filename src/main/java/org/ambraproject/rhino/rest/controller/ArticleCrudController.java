@@ -29,6 +29,7 @@ import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleListCrudService;
+import org.ambraproject.rhino.service.ArticleRevisionWriteService;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
@@ -68,6 +69,8 @@ public class ArticleCrudController extends RestController {
 
   @Autowired
   private ArticleCrudService articleCrudService;
+  @Autowired
+  private ArticleRevisionWriteService articleRevisionWriteService;
   @Autowired
   private CommentCrudService commentCrudService;
   @Autowired
@@ -140,6 +143,39 @@ public class ArticleCrudController extends RestController {
       throws IOException {
     ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     articleCrudService.serveOverview(id).respond(request, response, entityGson);
+  }
+
+  @Transactional(readOnly = false)
+  @RequestMapping(value = "/articles/{doi}/revisions/{revision}", method = RequestMethod.POST)
+  public ResponseEntity<?> createRevision(@PathVariable("doi") String doi,
+                                          @PathVariable("revision") int revisionNumber,
+                                          @RequestParam("ingestion") int ingestionNumber) {
+    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(doi));
+    ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(articleId, revisionNumber);
+    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(articleId, ingestionNumber);
+    articleRevisionWriteService.createRevision(revisionId, ingestionId);
+    return new ResponseEntity<>(HttpStatus.CREATED);
+  }
+
+  @Transactional(readOnly = false)
+  @RequestMapping(value = "/articles/{doi}/revisions/{revision}", method = RequestMethod.PATCH)
+  public ResponseEntity<?> updateRevision(@PathVariable("doi") String doi,
+                                          @PathVariable("revision") int revisionNumber,
+                                          @RequestParam("ingestion") int ingestionNumber) {
+    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(doi));
+    ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(articleId, revisionNumber);
+    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(articleId, ingestionNumber);
+    articleRevisionWriteService.updateRevision(revisionId, ingestionId);
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
+
+  @Transactional(readOnly = false)
+  @RequestMapping(value = "/articles/{doi}/revisions/{revision}", method = RequestMethod.DELETE)
+  public ResponseEntity<?> deleteRevision(@PathVariable("doi") String doi,
+                                          @PathVariable("revision") int revisionNumber) {
+    ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
+    articleRevisionWriteService.deleteRevision(revisionId);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
   @RequestMapping(value = "/articles/{doi}/ingestions/{number}/items", method = RequestMethod.GET)

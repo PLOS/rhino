@@ -15,7 +15,6 @@ import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
-import org.ambraproject.rhino.model.PublicationState;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -109,11 +108,6 @@ public class VersionedIngestionService extends AmbraService {
     IngestionPersistenceResult ingestionResult = persistIngestion(articlePk, articleMetadata);
     long ingestionId = ingestionResult.pk;
 
-    // As placeholder code for development, automatically set this as revision 1.
-    // In the released system, we will not set a revision number here at all (waiting instead for a separate POST request).
-    // TODO: Delete this
-    persistRevision(articlePk, ingestionId, 1);
-
     // TODO: Allow bucket name to be specified as an ingestion parameter
     String destinationBucketName = runtimeConfiguration.getCorpusStorage().getDefaultBucket();
 
@@ -177,41 +171,6 @@ public class VersionedIngestionService extends AmbraService {
       long pk = getLastInsertId(session);
 
       return new IngestionPersistenceResult(pk, nextIngestionNumber);
-    });
-  }
-
-  private void persistRevision(long articleId, long ingestionId, int revisionNumber) {
-    hibernateTemplate.execute(session -> {
-      // Find an articleRevision row (if it exists) that has the same revision number and belongs to the same article.
-      // Join articleRevision through articleIngestion to get to the "grandparent" article.
-      SQLQuery findExistingRevision = session.createSQLQuery("" +
-          "SELECT articleRevision.revisionId " +
-          "FROM articleRevision " +
-          "  INNER JOIN articleIngestion ON articleRevision.ingestionId = articleIngestion.ingestionId " +
-          "  INNER JOIN article ON articleIngestion.articleId = article.articleId " +
-          "WHERE articleRevision.revisionNumber = :revisionNumber " +
-          "  AND article.articleId = :articleId");
-      findExistingRevision.setParameter("revisionNumber", revisionNumber);
-      findExistingRevision.setParameter("articleId", articleId);
-      Number existingRevisionId = (Number) findExistingRevision.uniqueResult();
-
-      if (existingRevisionId != null) {
-        SQLQuery updateRevision = session.createSQLQuery("" +
-            "UPDATE articleRevision SET ingestionId = :ingestionId " +
-            "WHERE revisionId = :revisionId");
-        updateRevision.setParameter("ingestionId", ingestionId);
-        updateRevision.setParameter("revisionId", existingRevisionId);
-        return updateRevision.executeUpdate();
-      } else {
-        SQLQuery insertRevision = session.createSQLQuery("" +
-            "INSERT INTO articleRevision (ingestionId, revisionNumber, publicationState) " +
-            "VALUES (:ingestionId, :revisionNumber, :publicationState)");
-        insertRevision.setParameter("ingestionId", ingestionId);
-        insertRevision.setParameter("revisionNumber", revisionNumber);
-        insertRevision.setParameter("publicationState", PublicationState.INGESTED.getValue());
-        insertRevision.executeUpdate();
-        return getLastInsertId(session);
-      }
     });
   }
 
