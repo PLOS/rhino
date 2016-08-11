@@ -153,20 +153,8 @@ public class ArticleCrudController extends RestController {
     ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(articleId, revisionNumber);
     ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(articleId, ingestionNumber);
-    articleRevisionWriteService.createRevision(revisionId, ingestionId);
+    articleRevisionWriteService.writeRevision(revisionId, ingestionId);
     return new ResponseEntity<>(HttpStatus.CREATED);
-  }
-
-  @Transactional(readOnly = false)
-  @RequestMapping(value = "/articles/{doi}/revisions/{revision}", method = RequestMethod.PATCH)
-  public ResponseEntity<?> updateRevision(@PathVariable("doi") String doi,
-                                          @PathVariable("revision") int revisionNumber,
-                                          @RequestParam("ingestion") int ingestionNumber) {
-    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(doi));
-    ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(articleId, revisionNumber);
-    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(articleId, ingestionNumber);
-    articleRevisionWriteService.updateRevision(revisionId, ingestionId);
-    return new ResponseEntity<>(HttpStatus.OK);
   }
 
   @Transactional(readOnly = false)
