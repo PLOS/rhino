@@ -24,6 +24,7 @@ import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleItemIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
+import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.rest.DoiEscaping;
@@ -147,13 +148,20 @@ public class ArticleCrudController extends RestController {
 
   @Transactional(readOnly = false)
   @RequestMapping(value = "/articles/{doi}/revisions", method = RequestMethod.POST)
-  public ResponseEntity<?> createRevision(@PathVariable("doi") String doi,
-                                          @RequestParam("revision") int revisionNumber,
-                                          @RequestParam("ingestion") int ingestionNumber) {
+  public ResponseEntity<?> writeRevision(@PathVariable("doi") String doi,
+                                         @RequestParam(value = "revision", required = false) Integer revisionNumber,
+                                         @RequestParam(value = "ingestion", required = true) Integer ingestionNumber) {
     ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(doi));
-    ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(articleId, revisionNumber);
     ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(articleId, ingestionNumber);
-    articleRevisionWriteService.writeRevision(revisionId, ingestionId);
+
+    final ArticleRevision revision;
+    if (revisionNumber == null) {
+      revision = articleRevisionWriteService.createRevision(ingestionId);
+    } else {
+      ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(articleId, revisionNumber);
+      revision = articleRevisionWriteService.writeRevision(revisionId, ingestionId);
+    }
+
     return new ResponseEntity<>(HttpStatus.CREATED);
   }
 

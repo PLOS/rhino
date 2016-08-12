@@ -24,6 +24,22 @@ public class ArticleRevisionWriteServiceImpl implements ArticleRevisionWriteServ
   private HibernateTemplate hibernateTemplate;
 
   @Override
+  public ArticleRevision createRevision(ArticleIngestionIdentifier ingestionId) {
+    ArticleIngestion ingestion = articleCrudService.readIngestion(ingestionId);
+    Optional<ArticleRevision> previousLatest = articleCrudService.getLatestRevision(ingestion.getArticle());
+    int newRevisionNumber = 1 + previousLatest.map(ArticleRevision::getRevisionNumber).orElse(0);
+
+    ArticleRevision revision = new ArticleRevision();
+    revision.setIngestion(ingestion);
+    revision.setRevisionNumber(newRevisionNumber);
+    hibernateTemplate.save(revision);
+
+    refreshForLatestRevision(revision);
+
+    return revision;
+  }
+
+  @Override
   public ArticleRevision writeRevision(ArticleRevisionIdentifier revisionId, ArticleIngestionIdentifier ingestionId) {
     Preconditions.checkArgument(revisionId.getArticleIdentifier().equals(ingestionId.getArticleIdentifier()));
     ArticleIngestion ingestion = articleCrudService.readIngestion(ingestionId);
