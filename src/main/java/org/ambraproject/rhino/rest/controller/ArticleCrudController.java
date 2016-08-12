@@ -146,9 +146,9 @@ public class ArticleCrudController extends RestController {
   }
 
   @Transactional(readOnly = false)
-  @RequestMapping(value = "/articles/{doi}/revisions/{revision}", method = RequestMethod.POST)
+  @RequestMapping(value = "/articles/{doi}/revisions", method = RequestMethod.POST)
   public ResponseEntity<?> createRevision(@PathVariable("doi") String doi,
-                                          @PathVariable("revision") int revisionNumber,
+                                          @RequestParam("revision") int revisionNumber,
                                           @RequestParam("ingestion") int ingestionNumber) {
     ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(articleId, revisionNumber);
