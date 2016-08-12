@@ -1,5 +1,3 @@
-RENAME TABLE `journal` TO `oldJournal`;
-
 CREATE TABLE `journal` (
   `journalId` bigint(20) NOT NULL AUTO_INCREMENT,
   `currentIssueId` bigint(20) DEFAULT NULL,

@@ -2,6 +2,7 @@
   {
     "number": 1100,
     "scripts": [
+      "versioning-prototype-old-renames.sql",
       "versioning-prototype.sql",
       "versioning-prototype-article-list.sql",
       "versioning-prototype-article-relationship.sql",

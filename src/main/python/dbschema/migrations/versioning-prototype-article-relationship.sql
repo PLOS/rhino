@@ -1,5 +1,3 @@
-RENAME TABLE `articleRelationship` TO `oldArticleRelationship`;
-
 CREATE TABLE `articleRelationship` (
   `articleRelationshipId` bigint(20) NOT NULL AUTO_INCREMENT,
   `sourceArticleId` bigint(20) NOT NULL,

@@ -1,5 +1,3 @@
-RENAME TABLE `syndication` TO `oldSyndication`;
-
 CREATE TABLE `syndication` (
   `syndicationId` bigint(20) NOT NULL AUTO_INCREMENT,
   `revisionId` BIGINT(20) NOT NULL,

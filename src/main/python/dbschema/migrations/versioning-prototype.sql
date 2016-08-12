@@ -1,7 +1,5 @@
 DROP TABLE `doiAssociation`;
 
-RENAME TABLE `article` TO `oldArticle`;
-
 CREATE TABLE `ambra`.`article` (
   `articleId` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `doi` VARCHAR(150) NOT NULL,
