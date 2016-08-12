@@ -1,5 +1,3 @@
-RENAME TABLE `volume` TO `oldVolume`;
-
 CREATE TABLE `volume` (
   `volumeId` bigint(20) NOT NULL AUTO_INCREMENT,
   `doi` varchar(150) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
