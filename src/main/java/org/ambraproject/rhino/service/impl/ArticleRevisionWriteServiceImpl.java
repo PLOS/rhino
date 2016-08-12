@@ -18,7 +18,8 @@ public class ArticleRevisionWriteServiceImpl implements ArticleRevisionWriteServ
 
   @Autowired
   private ArticleCrudService articleCrudService;
-  @Autowired private TaxonomyClassificationService taxonomyClassificationService;
+  @Autowired
+  private TaxonomyClassificationService taxonomyClassificationService;
   @Autowired
   private HibernateTemplate hibernateTemplate;
 
