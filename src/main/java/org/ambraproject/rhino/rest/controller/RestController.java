@@ -159,6 +159,21 @@ public abstract class RestController {
   }
 
   /**
+   * Report that a RESTful operation to create an entity succeeded. The returned object (if returned from a {@link
+   * RequestMapping}) will cause the REST response to indicate a "Created" HTTP status and have a response body
+   * containing the serialized object.
+   *
+   * @param created the created entity or a serializable view of it
+   * @return a response indicating that the object was created
+   */
+  protected ResponseEntity<String> reportCreated(Object created) {
+    HttpHeaders headers = new HttpHeaders();
+    headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+    String jsonContent = entityGson.toJson(created);
+    return new ResponseEntity<>(jsonContent, headers, HttpStatus.CREATED);
+  }
+
+  /**
    * Report an error condition to the REST client. The brief error message is sent as the response body, with the
    * response code specified when the exception object was created. The stack trace is not included because we generally
    * expect the client to fix the error with a simple change to input.

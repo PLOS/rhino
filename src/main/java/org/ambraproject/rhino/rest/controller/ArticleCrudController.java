@@ -37,6 +37,7 @@ import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.SyndicationInputView;
+import org.ambraproject.rhino.view.article.versioned.ArticleRevisionView;
 import org.ambraproject.rhino.view.article.versioned.RelationshipSetView;
 import org.ambraproject.rhombat.HttpDateUtil;
 import org.slf4j.Logger;
@@ -162,7 +163,7 @@ public class ArticleCrudController extends RestController {
       revision = articleRevisionWriteService.writeRevision(revisionId, ingestionId);
     }
 
-    return new ResponseEntity<>(HttpStatus.CREATED);
+    return reportCreated(new ArticleRevisionView(revision));
   }
 
   @Transactional(readOnly = false)
