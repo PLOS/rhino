@@ -75,7 +75,7 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
   }
 
   @Override
-  public VolumeIdentifier create(String journalKey, VolumeInputView input) {
+  public Volume create(String journalKey, VolumeInputView input) {
     Preconditions.checkNotNull(journalKey);
 
     VolumeIdentifier volumeId = VolumeIdentifier.create(input.getDoi());
@@ -89,15 +89,16 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
     journal.getVolumes().add(volume);
     hibernateTemplate.save(journal);
 
-    return VolumeIdentifier.create(volume.getDoi());
+    return volume;
   }
 
   @Override
-  public void update(VolumeIdentifier volumeId, VolumeInputView input) {
+  public Volume update(VolumeIdentifier volumeId, VolumeInputView input) {
     Preconditions.checkNotNull(input);
     Volume volume = readVolume(volumeId);
     volume = applyInput(volume, input);
     hibernateTemplate.update(volume);
+    return volume;
   }
 
   @Override

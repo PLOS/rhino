@@ -29,6 +29,7 @@ import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.view.journal.IssueInputView;
+import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,6 +53,8 @@ public class IssueCrudController extends RestController {
   private VolumeCrudService volumeCrudService;
   @Autowired
   private JournalCrudService journalCrudService;
+  @Autowired
+  private IssueOutputView.Factory issueOutputViewFactory;
 
   private IssueIdentifier getIssueId(String issueDoi) {
     return IssueIdentifier.create(DoiEscaping.unescape(issueDoi));
@@ -96,8 +99,8 @@ public class IssueCrudController extends RestController {
       throw new RestClientException("issueUri required", HttpStatus.BAD_REQUEST);
     }
 
-    IssueIdentifier issueId = issueCrudService.create(volumeId, input);
-    return reportCreated(issueId.getDoi().getName());
+    Issue issue = issueCrudService.create(volumeId, input);
+    return reportCreated(issueOutputViewFactory.getView(issue));
   }
 
   @Transactional(rollbackFor = {Throwable.class})

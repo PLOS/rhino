@@ -94,68 +94,47 @@ public abstract class RestController {
   }
 
   /**
-   * Return a plain-text HTTP response with an "OK" status code.
-   *
-   * @param text the response body
-   * @return the response object
+   * @deprecated Pass a serializable entity, not a string
    */
-  protected static ResponseEntity<String> respondWithPlainText(CharSequence text) {
-    return respondWithPlainText(text, HttpStatus.OK);
+  @Deprecated
+  protected ResponseEntity<String> reportUpdated(String updatedId) {
+    log.warn("reportUpdated should receive an entity, not a string.");
+    return reportUpdated((Object) updatedId);
   }
 
   /**
-   * Return a JSON response with an "OK" status code. This should be used only for small objects; arbitrarily long JSON
-   * responses should be streamed.
+   * Report that a RESTful operation to update an entity succeeded. The returned object (if returned from a {@link
+   * RequestMapping}) will cause the REST response to indicate an "OK" HTTP status and have a response body containing
+   * the serialized object.
    *
-   * @param value the object to serialize into the response body
-   * @return the response object
+   * @param updated the updated entity or a serializable view of it
+   * @return a response indicating that the object was updated
    */
-  protected ResponseEntity<String> respondWithJson(Object value) {
-    String json = entityGson.toJson(value);
-    HttpHeaders headers = makeContentTypeHeader(MediaType.APPLICATION_JSON);
-    return new ResponseEntity<>(json, headers, HttpStatus.OK);
+  protected ResponseEntity<String> reportUpdated(Object updated) {
+    HttpHeaders headers = new HttpHeaders();
+    headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+    String jsonContent = entityGson.toJson(updated);
+    return new ResponseEntity<>(jsonContent, headers, HttpStatus.OK);
   }
 
   /**
-   * Report that a RESTful operation succeeded. The returned object (if returned from a {@link RequestMapping}) will
-   * cause the REST response to indicate an "OK" HTTP status and have an empty response body.
+   * Report that a RESTful operation to delete an object succeeded. The returned object (if returned from a {@link
+   * RequestMapping}) will cause the REST response to indicate an "OK" HTTP status and have a response body identifying
+   * the deleted object.
    *
    * @return a response indicating "OK"
    */
-  protected ResponseEntity<Object> reportOk() {
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
-
-  /**
-   * Report that a RESTful operation succeeded. The returned object (if returned from a {@link RequestMapping}) will
-   * cause the REST response to indicate an "OK" HTTP status and have an empty response body.
-   *
-   * @return a response indicating "OK"
-   */
-  protected ResponseEntity<Object> reportOk(String identifier) {
+  protected ResponseEntity<Object> reportDeleted(String identifier) {
     return new ResponseEntity<>(identifier, HttpStatus.OK);
   }
 
   /**
-   * Report that a RESTful operation to create an entity succeeded. The returned object (if returned from a {@link
-   * RequestMapping}) will cause the REST response to indicate a "Created" HTTP status and have an empty response body.
-   *
-   * @return a response indicating "Created"
+   * @deprecated Pass a serializable entity, not a string
    */
-  protected ResponseEntity<Object> reportCreated() {
-    return new ResponseEntity<>(HttpStatus.CREATED);
-  }
-
-  /**
-   * Report that a RESTful operation to create an entity succeeded. The returned object (if returned from a {@link
-   * RequestMapping}) will cause the REST response to indicate a "Created" HTTP status and provide the identifier of the
-   * created object to the client.
-   *
-   * @param identifier the identifier of the created object
-   * @return a response indicating "Created"
-   */
-  protected ResponseEntity<String> reportCreated(String identifier) {
-    return new ResponseEntity<>(identifier, HttpStatus.CREATED);
+  @Deprecated
+  protected ResponseEntity<String> reportCreated(String createdId) {
+    log.warn("reportUpdated should receive an entity, not a string.");
+    return reportCreated((Object) createdId);
   }
 
   /**

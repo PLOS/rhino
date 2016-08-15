@@ -118,7 +118,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
   }
 
   @Override
-  public IssueIdentifier create(VolumeIdentifier volumeId, IssueInputView input) {
+  public Issue create(VolumeIdentifier volumeId, IssueInputView input) {
     Preconditions.checkNotNull(volumeId);
 
     IssueIdentifier issueId = IssueIdentifier.create(input.getDoi());
@@ -130,7 +130,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
     Volume volume = volumeCrudService.readVolume(volumeId);
     volume.getIssues().add(issue);
     hibernateTemplate.save(volume);
-    return IssueIdentifier.create(issue.getDoi());
+    return issue;
   }
 
   @Override

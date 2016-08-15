@@ -376,15 +376,15 @@ public class ArticleCrudController extends RestController {
   }
 
   @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications", method = RequestMethod.POST)
-  public ResponseEntity<Object> createSyndication(HttpServletRequest request,
+  public ResponseEntity<String> createSyndication(HttpServletRequest request,
                                                   @PathVariable("doi") String doi,
                                                   @PathVariable("number") int revisionNumber)
       throws IOException {
     ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
 
-    syndicationCrudService.createSyndication(revisionId, input.getTargetQueue());
-    return reportCreated();
+    Syndication syndication = syndicationCrudService.createSyndication(revisionId, input.getTargetQueue());
+    return reportCreated(new SyndicationView(syndication));
   }
 
   @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications",
@@ -392,28 +392,28 @@ public class ArticleCrudController extends RestController {
       method = RequestMethod.POST, params = "syndicate")
   @ApiOperation(value = "syndicate", notes = "Send a syndication message to the queue for processing. " +
       "Will create and add a syndication to the database if none exist for current article and target.")
-  public ResponseEntity<Object> syndicate(HttpServletRequest request,
-                                          @PathVariable("doi") String doi,
-                                          @PathVariable("number") int revisionNumber)
+  public ResponseEntity<?> syndicate(HttpServletRequest request,
+                                     @PathVariable("doi") String doi,
+                                     @PathVariable("number") int revisionNumber)
       throws IOException {
     ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
 
     Syndication created = syndicationCrudService.syndicate(revisionId, input.getTargetQueue());
-    return reportOk(created.toString());
+    return reportCreated(new SyndicationView(created));
   }
 
   @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications", method = RequestMethod.PATCH)
-  public ResponseEntity<Object> patchSyndication(HttpServletRequest request,
-                                                 @PathVariable("doi") String doi,
-                                                 @PathVariable("number") int revisionNumber)
+  public ResponseEntity<?> patchSyndication(HttpServletRequest request,
+                                            @PathVariable("doi") String doi,
+                                            @PathVariable("number") int revisionNumber)
       throws IOException {
     ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
 
     Syndication patched = syndicationCrudService.updateSyndication(revisionId,
         input.getTargetQueue(), input.getStatus(), input.getErrorMessage());
-    return reportOk(patched.toString());
+    return reportUpdated(new SyndicationView(patched));
   }
 
   /**

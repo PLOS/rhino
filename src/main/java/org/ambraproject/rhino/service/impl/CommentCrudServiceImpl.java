@@ -15,6 +15,7 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableList;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.CommentIdentifier;
@@ -149,7 +150,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   }
 
   @Override
-  public Comment createComment(Optional<ArticleIdentifier> articleId, CommentInputView input) {
+  public CommentOutputView createComment(Optional<ArticleIdentifier> articleId, CommentInputView input) {
     final Optional<String> parentCommentUri = Optional.ofNullable(input.getParentCommentId());
 
     final ArticleTable article;
@@ -196,11 +197,14 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     created.setIsRemoved(Boolean.valueOf(Strings.nullToEmpty(input.getIsRemoved())));
 
     hibernateTemplate.save(created);
-    return created;
+
+    List<Comment> childComments = ImmutableList.of(); // the new comment can't have any children yet
+    CommentOutputView.Factory viewFactory = new CommentOutputView.Factory(runtimeConfiguration, childComments, article);
+    return viewFactory.buildView(created);
   }
 
   @Override
-  public Comment patchComment(CommentIdentifier commentId, CommentInputView input) {
+  public CommentOutputView patchComment(CommentIdentifier commentId, CommentInputView input) {
     Comment comment = readComment(commentId);
 
     String declaredUri = input.getAnnotationUri();
@@ -239,7 +243,9 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     }
 
     hibernateTemplate.update(comment);
-    return comment;
+
+    return new CommentOutputView.Factory(runtimeConfiguration,
+        fetchAllComments(comment.getArticle()), comment.getArticle()).buildView(comment);
   }
 
   @Override

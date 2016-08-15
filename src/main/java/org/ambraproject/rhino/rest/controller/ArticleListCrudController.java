@@ -7,6 +7,7 @@ import org.ambraproject.rhino.identity.ArticleListIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.view.article.ListInputView;
+import org.ambraproject.rhino.view.journal.ArticleListView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,8 +54,8 @@ public class ArticleListCrudController extends RestController {
       throw new RestClientException("articleDois required", HttpStatus.BAD_REQUEST);
     }
 
-    articleListCrudService.create(identity.get(), title.get(), articleDois.get());
-    return new ResponseEntity<>(HttpStatus.CREATED);
+    ArticleListView listView = articleListCrudService.create(identity.get(), title.get(), articleDois.get());
+    return reportCreated(listView);
   }
 
   private static RestClientException complainAboutListIdentityOnPatch(Exception cause) {
