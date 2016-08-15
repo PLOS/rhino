@@ -26,9 +26,6 @@ import java.util.OptionalInt;
 @Controller
 public class JournalCrudController extends RestController {
 
-  private static final String JOURNAL_ROOT = "/journals";
-  private static final String JOURNAL_TEMPLATE = JOURNAL_ROOT + "/{journalKey}";
-
   @Autowired
   private JournalCrudService journalCrudService;
   @Autowired
@@ -37,14 +34,14 @@ public class JournalCrudController extends RestController {
   private CommentCrudService commentCrudService;
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = JOURNAL_ROOT, method = RequestMethod.GET)
+  @RequestMapping(value = "/journals", method = RequestMethod.GET)
   public void listJournals(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     journalCrudService.listJournals().respond(request, response, entityGson);
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = JOURNAL_TEMPLATE, method = RequestMethod.GET)
+  @RequestMapping(value = "/journals/{journalKey}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @PathVariable String journalKey,
                    @RequestParam(value = "currentIssue", required = false) String currentIssue)
@@ -57,7 +54,7 @@ public class JournalCrudController extends RestController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = JOURNAL_TEMPLATE, method = RequestMethod.POST)
+  @RequestMapping(value = "/journals/{journalKey}/volumes", method = RequestMethod.POST)
   public ResponseEntity<String> createVolume(HttpServletRequest request, @PathVariable String journalKey)
       throws IOException {
     VolumeInputView input = readJsonFromRequest(request, VolumeInputView.class);
@@ -70,7 +67,7 @@ public class JournalCrudController extends RestController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = JOURNAL_TEMPLATE, method = RequestMethod.PATCH)
+  @RequestMapping(value = "/journals/{journalKey}", method = RequestMethod.PATCH)
   public void update(HttpServletRequest request, HttpServletResponse response, @PathVariable String journalKey)
       throws IOException {
     JournalInputView input = readJsonFromRequest(request, JournalInputView.class);
@@ -80,7 +77,7 @@ public class JournalCrudController extends RestController {
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = JOURNAL_TEMPLATE, method = RequestMethod.GET, params = "comments")
+  @RequestMapping(value = "/journals/{journalKey}", method = RequestMethod.GET, params = "comments")
   public void getRecentComments(HttpServletRequest request, HttpServletResponse response,
                                 @PathVariable String journalKey,
                                 @RequestParam(value = "limit", required = false) Integer limit)
