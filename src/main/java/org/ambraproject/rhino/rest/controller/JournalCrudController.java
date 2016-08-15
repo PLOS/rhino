@@ -1,16 +1,9 @@
 package org.ambraproject.rhino.rest.controller;
 
-import org.ambraproject.rhino.identity.VolumeIdentifier;
-import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
-import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.view.journal.JournalInputView;
-import org.ambraproject.rhino.view.journal.VolumeInputView;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,8 +21,6 @@ public class JournalCrudController extends RestController {
 
   @Autowired
   private JournalCrudService journalCrudService;
-  @Autowired
-  private VolumeCrudService volumeCrudService;
   @Autowired
   private CommentCrudService commentCrudService;
 
@@ -51,19 +42,6 @@ public class JournalCrudController extends RestController {
     } else {
       journalCrudService.serve(journalKey).respond(request, response, entityGson);
     }
-  }
-
-  @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/journals/{journalKey}/volumes", method = RequestMethod.POST)
-  public ResponseEntity<String> createVolume(HttpServletRequest request, @PathVariable String journalKey)
-      throws IOException {
-    VolumeInputView input = readJsonFromRequest(request, VolumeInputView.class);
-    if (StringUtils.isBlank(input.getDoi())) {
-      throw new RestClientException("Volume DOI required", HttpStatus.BAD_REQUEST);
-    }
-
-    VolumeIdentifier volumeId = volumeCrudService.create(journalKey, input);
-    return reportCreated(volumeId.getDoi().getName());
   }
 
   @Transactional(rollbackFor = {Throwable.class})

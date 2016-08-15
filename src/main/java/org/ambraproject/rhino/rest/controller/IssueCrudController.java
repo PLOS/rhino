@@ -19,14 +19,17 @@
 package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.identity.IssueIdentifier;
+import org.ambraproject.rhino.identity.VolumeIdentifier;
 import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.DoiEscaping;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.view.journal.IssueInputView;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -78,6 +81,23 @@ public class IssueCrudController extends RestController {
     // TODO: Validate journalKey and volumeDoiObj
     IssueIdentifier issueId = getIssueId(issueDoi);
     issueCrudService.serveIssue(issueId).respond(request, response, entityGson);
+  }
+
+  @Transactional(rollbackFor = {Throwable.class})
+  @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi}/issues", method = RequestMethod.POST)
+  public ResponseEntity<String> create(HttpServletRequest request,
+                                       @PathVariable("journalKey") String journalKey,
+                                       @PathVariable("volumeDoi") String volumeDoi)
+      throws IOException {
+    // TODO: Validate journalKey
+    VolumeIdentifier volumeId = VolumeIdentifier.create(DoiEscaping.unescape(volumeDoi));
+    IssueInputView input = readJsonFromRequest(request, IssueInputView.class);
+    if (StringUtils.isBlank(input.getDoi())) {
+      throw new RestClientException("issueUri required", HttpStatus.BAD_REQUEST);
+    }
+
+    IssueIdentifier issueId = issueCrudService.create(volumeId, input);
+    return reportCreated(issueId.getDoi().getName());
   }
 
   @Transactional(rollbackFor = {Throwable.class})

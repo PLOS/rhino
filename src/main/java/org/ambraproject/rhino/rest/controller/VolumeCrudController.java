@@ -18,13 +18,10 @@
 
 package org.ambraproject.rhino.rest.controller;
 
-import org.ambraproject.rhino.identity.IssueIdentifier;
 import org.ambraproject.rhino.identity.VolumeIdentifier;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
-import org.ambraproject.rhino.view.journal.IssueInputView;
 import org.ambraproject.rhino.view.journal.VolumeInputView;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +42,8 @@ public class VolumeCrudController extends RestController {
 
   @Autowired
   private VolumeCrudService volumeCrudService;
-  @Autowired
-  private IssueCrudService issueCrudService;
 
-  private VolumeIdentifier getVolumeId(String volumeDoi) {
+  private static VolumeIdentifier getVolumeId(String volumeDoi) {
     return VolumeIdentifier.create(DoiEscaping.unescape(volumeDoi));
   }
 
@@ -74,6 +69,19 @@ public class VolumeCrudController extends RestController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
+  @RequestMapping(value = "/journals/{journalKey}/volumes", method = RequestMethod.POST)
+  public ResponseEntity<String> create(HttpServletRequest request, @PathVariable String journalKey)
+      throws IOException {
+    VolumeInputView input = readJsonFromRequest(request, VolumeInputView.class);
+    if (StringUtils.isBlank(input.getDoi())) {
+      throw new RestClientException("Volume DOI required", HttpStatus.BAD_REQUEST);
+    }
+
+    VolumeIdentifier volumeId = volumeCrudService.create(journalKey, input);
+    return reportCreated(volumeId.getDoi().getName());
+  }
+
+  @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi:.+}", method = RequestMethod.PATCH)
   public ResponseEntity<Object> update(HttpServletRequest request, HttpServletResponse response,
       @PathVariable("journalKey") String journalKey,
@@ -95,23 +103,6 @@ public class VolumeCrudController extends RestController {
     VolumeIdentifier volumeId = getVolumeId(volumeDoi);
     volumeCrudService.delete(volumeId);
     return reportOk(volumeId.getDoi().getName());
-  }
-
-  @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi}/issues", method = RequestMethod.POST)
-  public ResponseEntity<String> createIssue(HttpServletRequest request,
-      @PathVariable("journalKey") String journalKey,
-      @PathVariable("volumeDoi") String volumeDoi)
-      throws IOException {
-    // TODO: Validate journalKey
-    VolumeIdentifier volumeId = getVolumeId(volumeDoi);
-    IssueInputView input = readJsonFromRequest(request, IssueInputView.class);
-    if (StringUtils.isBlank(input.getDoi())) {
-      throw new RestClientException("issueUri required", HttpStatus.BAD_REQUEST);
-    }
-
-    IssueIdentifier issueId = issueCrudService.create(volumeId, input);
-    return reportCreated(issueId.getDoi().getName());
   }
 
 }
