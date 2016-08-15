@@ -1,16 +1,9 @@
 package org.ambraproject.rhino.rest.controller;
 
-import org.ambraproject.rhino.identity.VolumeIdentifier;
-import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
-import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.view.journal.JournalInputView;
-import org.ambraproject.rhino.view.journal.VolumeInputView;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,25 +19,20 @@ import java.util.OptionalInt;
 @Controller
 public class JournalCrudController extends RestController {
 
-  private static final String JOURNAL_ROOT = "/journals";
-  private static final String JOURNAL_TEMPLATE = JOURNAL_ROOT + "/{journalKey}";
-
   @Autowired
   private JournalCrudService journalCrudService;
-  @Autowired
-  private VolumeCrudService volumeCrudService;
   @Autowired
   private CommentCrudService commentCrudService;
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = JOURNAL_ROOT, method = RequestMethod.GET)
+  @RequestMapping(value = "/journals", method = RequestMethod.GET)
   public void listJournals(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     journalCrudService.listJournals().respond(request, response, entityGson);
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = JOURNAL_TEMPLATE, method = RequestMethod.GET)
+  @RequestMapping(value = "/journals/{journalKey}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @PathVariable String journalKey,
                    @RequestParam(value = "currentIssue", required = false) String currentIssue)
@@ -57,20 +45,7 @@ public class JournalCrudController extends RestController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = JOURNAL_TEMPLATE, method = RequestMethod.POST)
-  public ResponseEntity<String> createVolume(HttpServletRequest request, @PathVariable String journalKey)
-      throws IOException {
-    VolumeInputView input = readJsonFromRequest(request, VolumeInputView.class);
-    if (StringUtils.isBlank(input.getDoi())) {
-      throw new RestClientException("Volume DOI required", HttpStatus.BAD_REQUEST);
-    }
-
-    VolumeIdentifier volumeId = volumeCrudService.create(journalKey, input);
-    return reportCreated(volumeId.getDoi().getName());
-  }
-
-  @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = JOURNAL_TEMPLATE, method = RequestMethod.PATCH)
+  @RequestMapping(value = "/journals/{journalKey}", method = RequestMethod.PATCH)
   public void update(HttpServletRequest request, HttpServletResponse response, @PathVariable String journalKey)
       throws IOException {
     JournalInputView input = readJsonFromRequest(request, JournalInputView.class);
@@ -80,7 +55,7 @@ public class JournalCrudController extends RestController {
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = JOURNAL_TEMPLATE, method = RequestMethod.GET, params = "comments")
+  @RequestMapping(value = "/journals/{journalKey}", method = RequestMethod.GET, params = "comments")
   public void getRecentComments(HttpServletRequest request, HttpServletResponse response,
                                 @PathVariable String journalKey,
                                 @RequestParam(value = "limit", required = false) Integer limit)
