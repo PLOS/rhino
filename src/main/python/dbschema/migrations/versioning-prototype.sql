@@ -62,7 +62,6 @@ CREATE TABLE `ambra`.`articleRevision` (
   `revisionId` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `ingestionId` BIGINT(20) NOT NULL,
   `revisionNumber` INT NOT NULL,
-  `publicationState` INT NOT NULL,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`revisionId`),
   CONSTRAINT `fk_articleRevision_1`
