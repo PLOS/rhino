@@ -144,34 +144,16 @@ public class Syndication implements Timestamped{
     if (o == null || getClass() != o.getClass()) return false;
 
     Syndication that = (Syndication) o;
-
-    if (syndicationId != that.syndicationId) return false;
-    if (submissionCount != that.submissionCount) return false;
     if (articleRevision != null ? !articleRevision.equals(that.articleRevision) : that.articleRevision != null) {
       return false;
     }
-    if (targetQueue != null ? !targetQueue.equals(that.targetQueue) : that.targetQueue != null) return false;
-    if (status != null ? !status.equals(that.status) : that.status != null) return false;
-    if (errorMessage != null ? !errorMessage.equals(that.errorMessage) : that.errorMessage != null) return false;
-    if (lastSubmitTimestamp != null ? !lastSubmitTimestamp.equals(that.lastSubmitTimestamp) : that.lastSubmitTimestamp != null) {
-      return false;
-    }
-    if (created != null ? !created.equals(that.created) : that.created != null) return false;
-    return lastModified != null ? lastModified.equals(that.lastModified) : that.lastModified == null;
-
+    return targetQueue != null ? targetQueue.equals(that.targetQueue) : that.targetQueue == null;
   }
 
   @Override
   public int hashCode() {
-    int result = syndicationId;
-    result = 31 * result + (articleRevision != null ? articleRevision.hashCode() : 0);
+    int result = articleRevision != null ? articleRevision.hashCode() : 0;
     result = 31 * result + (targetQueue != null ? targetQueue.hashCode() : 0);
-    result = 31 * result + (status != null ? status.hashCode() : 0);
-    result = 31 * result + submissionCount;
-    result = 31 * result + (errorMessage != null ? errorMessage.hashCode() : 0);
-    result = 31 * result + (lastSubmitTimestamp != null ? lastSubmitTimestamp.hashCode() : 0);
-    result = 31 * result + (created != null ? created.hashCode() : 0);
-    result = 31 * result + (lastModified != null ? lastModified.hashCode() : 0);
     return result;
   }
 

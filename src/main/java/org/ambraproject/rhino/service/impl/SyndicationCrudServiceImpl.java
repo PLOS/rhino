@@ -95,12 +95,12 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
   @SuppressWarnings("unchecked")
   @Override
   public List<Syndication> getSyndications(ArticleRevisionIdentifier revisionId) {
-    ArticleRevision articleVersion = articleCrudService.readRevision(revisionId);
+    ArticleRevision articleRevision = articleCrudService.readRevision(revisionId);
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "FROM Syndication s " +
-          "WHERE s.articleVersion = :articleVersion");
-      query.setParameter("articleVersion", articleVersion);
+          "WHERE s.articleRevision = :articleRevision");
+      query.setParameter("articleRevision", articleRevision);
       return (List<Syndication>) query.list();
     });
   }

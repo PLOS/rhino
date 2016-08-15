@@ -39,6 +39,7 @@ import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.SyndicationInputView;
 import org.ambraproject.rhino.view.article.versioned.ArticleRevisionView;
 import org.ambraproject.rhino.view.article.versioned.RelationshipSetView;
+import org.ambraproject.rhino.view.article.versioned.SyndicationView;
 import org.ambraproject.rhombat.HttpDateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,6 +60,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -358,6 +360,19 @@ public class ArticleCrudController extends RestController {
       throws IOException {
     ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     articleListCrudService.readContainingLists(id).respond(request, response, entityGson);
+  }
+
+  @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications", method = RequestMethod.GET)
+  public void readSyndications(HttpServletRequest request, HttpServletResponse response,
+                               @PathVariable("doi") String doi,
+                               @PathVariable("number") int revisionNumber)
+      throws IOException {
+    Transceiver.serveUntimestampedView(() -> {
+      ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
+      List<Syndication> syndications = syndicationCrudService.getSyndications(revisionId);
+      // TODO: If revision does not exist, need to respond with 404 instead of empty list?
+      return syndications.stream().map(SyndicationView::new).collect(Collectors.toList());
+    }).respond(request, response, entityGson);
   }
 
   @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications", method = RequestMethod.POST)
