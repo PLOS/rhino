@@ -1,5 +1,3 @@
-RENAME TABLE `issue` TO `oldIssue`;
-
 CREATE TABLE `issue` (
   `issueId` bigint(20) NOT NULL AUTO_INCREMENT,
   `doi` varchar(150) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
@@ -15,8 +13,6 @@ CREATE TABLE `issue` (
   CONSTRAINT `fk_issue_1` FOREIGN KEY (`volumeId`) REFERENCES `volume` (`volumeId`),
   CONSTRAINT `fk_issue_2` FOREIGN KEY (`imageArticleId`) REFERENCES `article` (`articleId`)
 );
-
-RENAME TABLE `issueArticleList` TO `oldIssueArticleList`;
 
 CREATE TABLE `issueArticleList` (
   `issueId` bigint(20) NOT NULL,

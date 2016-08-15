@@ -1,7 +1,3 @@
-RENAME TABLE `articleList` TO `oldArticleList`;
-
-RENAME TABLE `articleListJoinTable` TO `oldArticleListJoinTable`;
-
 CREATE TABLE `articleList` (
   `articleListId` bigint(20) NOT NULL AUTO_INCREMENT,
   `listKey` varchar(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
