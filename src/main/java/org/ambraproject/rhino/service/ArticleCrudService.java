@@ -185,6 +185,8 @@ public interface ArticleCrudService {
 
   public abstract Transceiver serveOverview(ArticleIdentifier id);
 
+  Transceiver serveRevision(ArticleRevisionIdentifier revisionId);
+
   public abstract ArticleItem getArticleItem(ArticleItemIdentifier id);
 
   public abstract Collection<ArticleItem> getAllArticleItems(Doi doi);
