@@ -12,7 +12,7 @@ CREATE TABLE `syndication` (
   UNIQUE KEY `revisionId` (`revisionId`,`targetQueue`),
   CONSTRAINT `fk_syndication_1`
   FOREIGN KEY (`revisionId`)
-  REFERENCES `ambra`.`articleRevision` (`revisionId`)
+  REFERENCES `articleRevision` (`revisionId`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION
 );

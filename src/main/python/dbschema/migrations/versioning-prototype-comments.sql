@@ -14,8 +14,8 @@ CREATE TABLE `comment` (
   `isRemoved` bit(1) DEFAULT b'0',
   PRIMARY KEY (`commentId`),
   UNIQUE KEY `commentURI` (`commentURI`),
-  CONSTRAINT `fk_comment_1` FOREIGN KEY (`articleId`) REFERENCES `ambra`.`article` (`articleId`),
-  CONSTRAINT `fk_comment_2` FOREIGN KEY (`parentId`)  REFERENCES `ambra`.`comment` (`commentId`),
+  CONSTRAINT `fk_comment_1` FOREIGN KEY (`articleId`) REFERENCES `article` (`articleId`),
+  CONSTRAINT `fk_comment_2` FOREIGN KEY (`parentId`)  REFERENCES `comment` (`commentId`),
   KEY `userProfileID` (`userProfileID`)
 );
 

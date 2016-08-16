@@ -1,12 +1,12 @@
 DROP TABLE `doiAssociation`;
 
-CREATE TABLE `ambra`.`article` (
+CREATE TABLE `article` (
   `articleId` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `doi` VARCHAR(150) NOT NULL,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`articleId`));
 
-CREATE TABLE `ambra`.`articleIngestion` (
+CREATE TABLE `articleIngestion` (
   `ingestionId` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `articleId` BIGINT(20) NOT NULL,
   `ingestionNumber` INT NOT NULL,
@@ -17,11 +17,11 @@ CREATE TABLE `ambra`.`articleIngestion` (
   PRIMARY KEY (`ingestionId`),
   CONSTRAINT `fk_articleIngestion_1`
     FOREIGN KEY (`articleId`)
-    REFERENCES `ambra`.`article` (`articleId`)
+    REFERENCES `article` (`articleId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-CREATE TABLE `ambra`.`articleItem` (
+CREATE TABLE `articleItem` (
   `itemId` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `ingestionId` BIGINT(20) NOT NULL,
   `doi` VARCHAR(150) NOT NULL,
@@ -30,11 +30,11 @@ CREATE TABLE `ambra`.`articleItem` (
   PRIMARY KEY (`itemId`),
   CONSTRAINT `fk_articleItem_1`
     FOREIGN KEY (`ingestionId`)
-    REFERENCES `ambra`.`articleIngestion` (`ingestionId`)
+    REFERENCES `articleIngestion` (`ingestionId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-CREATE TABLE `ambra`.`articleFile` (
+CREATE TABLE `articleFile` (
   `fileId` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `ingestionId` BIGINT(20) NOT NULL,
   `itemId` BIGINT(20) NULL,
@@ -46,17 +46,17 @@ CREATE TABLE `ambra`.`articleFile` (
   PRIMARY KEY (`fileId`),
   CONSTRAINT `fk_articleFile_1`
     FOREIGN KEY (`ingestionId`)
-    REFERENCES `ambra`.`articleIngestion` (`ingestionId`)
+    REFERENCES `articleIngestion` (`ingestionId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_articleFile_2`
     FOREIGN KEY (`itemId`)
-    REFERENCES `ambra`.`articleItem` (`itemId`)
+    REFERENCES `articleItem` (`itemId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   UNIQUE KEY `crepoUuid_UNIQUE` (`crepoUuid`));
   
-CREATE TABLE `ambra`.`articleRevision` (
+CREATE TABLE `articleRevision` (
   `revisionId` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `ingestionId` BIGINT(20) NOT NULL,
   `revisionNumber` INT NOT NULL,
@@ -64,22 +64,22 @@ CREATE TABLE `ambra`.`articleRevision` (
   PRIMARY KEY (`revisionId`),
   CONSTRAINT `fk_articleRevision_1`
     FOREIGN KEY (`ingestionId`)
-    REFERENCES `ambra`.`articleIngestion` (`ingestionId`)
+    REFERENCES `articleIngestion` (`ingestionId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-CREATE TABLE `ambra`.`articleJournalJoinTable` (
+CREATE TABLE `articleJournalJoinTable` (
   `ingestionId` BIGINT(20) NOT NULL,
   `journalId` BIGINT(20) NOT NULL,
   INDEX `fk_articleJournalJoinTable_1_idx` (`ingestionId` ASC),
   INDEX `fk_articleJournalJoinTable_2_idx` (`journalID` ASC),
   CONSTRAINT `fk_articleJournalJoinTable_1`
     FOREIGN KEY (`ingestionId`)
-    REFERENCES `ambra`.`articleIngestion` (`ingestionId`)
+    REFERENCES `articleIngestion` (`ingestionId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_articleJournalJoinTable_2`
     FOREIGN KEY (`journalId`)
-    REFERENCES `ambra`.`journal` (`journalID`)
+    REFERENCES `journal` (`journalID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
