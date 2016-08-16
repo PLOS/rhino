@@ -1,7 +1,6 @@
 package org.ambraproject.rhino.model.article;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,8 +30,10 @@ public class ArticleMetadata {
   private final String publisherName;
   private final String url;
 
+  private final String articleType;
+  private final String articleHeading;
+
   private final ImmutableList<String> collaborativeAuthors;
-  private final ImmutableSet<String> types;
 
   private final ImmutableList<AssetMetadata> assets;
   private final ImmutableList<RelatedArticleLink> relatedArticles;
@@ -56,8 +57,9 @@ public class ArticleMetadata {
     this.publisherLocation = builder.publisherLocation;
     this.publisherName = builder.publisherName;
     this.url = builder.url;
+    this.articleType = builder.articleType;
+    this.articleHeading = builder.articleHeading;
     this.collaborativeAuthors = ImmutableList.copyOf(builder.collaborativeAuthors);
-    this.types = ImmutableSet.copyOf(builder.types);
     this.assets = ImmutableList.copyOf(builder.assets);
     this.relatedArticles = ImmutableList.copyOf(builder.relatedArticles);
     this.authors = ImmutableList.copyOf(builder.authors);
@@ -128,12 +130,16 @@ public class ArticleMetadata {
     return url;
   }
 
-  public ImmutableList<String> getCollaborativeAuthors() {
-    return collaborativeAuthors;
+  public String getArticleType() {
+    return articleType;
   }
 
-  public ImmutableSet<String> getTypes() {
-    return types;
+  public String getArticleHeading() {
+    return articleHeading;
+  }
+
+  public ImmutableList<String> getCollaborativeAuthors() {
+    return collaborativeAuthors;
   }
 
   public ImmutableList<AssetMetadata> getAssets() {
@@ -182,8 +188,10 @@ public class ArticleMetadata {
     private String publisherName;
     private String url;
 
+    private String articleType;
+    private String articleHeading;
+
     private List<String> collaborativeAuthors;
-    private Set<String> types;
 
     private List<AssetMetadata> assets;
     private List<RelatedArticleLink> relatedArticles;
@@ -274,13 +282,18 @@ public class ArticleMetadata {
       return this;
     }
 
-    public Builder setCollaborativeAuthors(List<String> collaborativeAuthors) {
-      this.collaborativeAuthors = collaborativeAuthors;
+    public Builder setArticleType(String articleType) {
+      this.articleType = articleType;
       return this;
     }
 
-    public Builder setTypes(Set<String> types) {
-      this.types = types;
+    public Builder setArticleHeading(String articleHeading) {
+      this.articleHeading = articleHeading;
+      return this;
+    }
+
+    public Builder setCollaborativeAuthors(List<String> collaborativeAuthors) {
+      this.collaborativeAuthors = collaborativeAuthors;
       return this;
     }
 
@@ -332,10 +345,12 @@ public class ArticleMetadata {
     }
     if (publisherName != null ? !publisherName.equals(that.publisherName) : that.publisherName != null) return false;
     if (url != null ? !url.equals(that.url) : that.url != null) return false;
+    if (articleType != null ? !articleType.equals(that.articleType) : that.articleType != null) return false;
+    if (articleHeading != null ? !articleHeading.equals(that.articleHeading) : that.articleHeading != null)
+      return false;
     if (collaborativeAuthors != null ? !collaborativeAuthors.equals(that.collaborativeAuthors) : that.collaborativeAuthors != null) {
       return false;
     }
-    if (types != null ? !types.equals(that.types) : that.types != null) return false;
     if (assets != null ? !assets.equals(that.assets) : that.assets != null) return false;
     if (relatedArticles != null ? !relatedArticles.equals(that.relatedArticles) : that.relatedArticles != null) {
       return false;
@@ -363,8 +378,9 @@ public class ArticleMetadata {
     result = 31 * result + (publisherLocation != null ? publisherLocation.hashCode() : 0);
     result = 31 * result + (publisherName != null ? publisherName.hashCode() : 0);
     result = 31 * result + (url != null ? url.hashCode() : 0);
+    result = 31 * result + (articleType != null ? articleType.hashCode() : 0);
+    result = 31 * result + (articleHeading != null ? articleHeading.hashCode() : 0);
     result = 31 * result + (collaborativeAuthors != null ? collaborativeAuthors.hashCode() : 0);
-    result = 31 * result + (types != null ? types.hashCode() : 0);
     result = 31 * result + (assets != null ? assets.hashCode() : 0);
     result = 31 * result + (relatedArticles != null ? relatedArticles.hashCode() : 0);
     result = 31 * result + (authors != null ? authors.hashCode() : 0);
