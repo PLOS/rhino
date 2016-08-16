@@ -53,7 +53,7 @@ public class Volume implements Timestamped {
   private String displayName;
 
   @OneToOne
-  @JoinColumn(name = "imageArticleId")
+  @JoinColumn(name = "imageArticleId", nullable = false)
   private ArticleTable imageArticle;
 
   @Generated(value= GenerationTime.INSERT)
@@ -68,7 +68,7 @@ public class Volume implements Timestamped {
 
   @Cascade(CascadeType.SAVE_UPDATE)
   @OneToMany(fetch = FetchType.LAZY)
-  @JoinColumn(name = "volumeId")
+  @JoinColumn(name = "volumeId", nullable = false)
   @OrderColumn(name="volumeSortOrder")
   private List<Issue> issues;
 

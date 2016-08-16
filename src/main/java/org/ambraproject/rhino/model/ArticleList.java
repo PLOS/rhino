@@ -56,8 +56,8 @@ public class ArticleList implements Timestamped {
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(
       name = "articleListJoinTable",
-      joinColumns = @JoinColumn(name = "articleListId"),
-      inverseJoinColumns = @JoinColumn(name = "articleId")
+      joinColumns = @JoinColumn(name = "articleListId", nullable = false),
+      inverseJoinColumns = @JoinColumn(name = "articleId", nullable = false)
   )
   private List<ArticleTable> articles;
 

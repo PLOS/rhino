@@ -19,7 +19,7 @@ public class ArticleRevision implements Timestamped {
   @Column
   private long revisionId;
 
-  @JoinColumn(name = "ingestionId")
+  @JoinColumn(name = "ingestionId", nullable = false)
   @OneToOne
   private ArticleIngestion ingestion;
 

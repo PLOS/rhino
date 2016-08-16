@@ -54,7 +54,7 @@ public class Issue implements Timestamped {
   private String displayName;
 
   @OneToOne
-  @JoinColumn(name = "imageArticleId")
+  @JoinColumn(name = "imageArticleId", nullable = false)
   private ArticleTable imageArticle;
 
   @Generated(value= GenerationTime.INSERT)
@@ -71,8 +71,8 @@ public class Issue implements Timestamped {
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(
       name = "issueArticleList",
-      joinColumns = @JoinColumn(name = "issueId"),
-      inverseJoinColumns = @JoinColumn(name = "articleId")
+      joinColumns = @JoinColumn(name = "issueId", nullable = false),
+      inverseJoinColumns = @JoinColumn(name = "articleId", nullable = false)
   )
   @OrderColumn(name="sortOrder", nullable=false)
   private List<ArticleTable> articles;

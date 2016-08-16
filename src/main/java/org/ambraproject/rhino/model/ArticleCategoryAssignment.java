@@ -13,11 +13,11 @@ import java.io.Serializable;
 public class ArticleCategoryAssignment implements Serializable {
 
   @Id
-  @JoinColumn(name = "categoryId")
+  @JoinColumn(name = "categoryId", nullable = false)
   @ManyToOne
   private Category category;
   @Id
-  @JoinColumn(name = "articleId")
+  @JoinColumn(name = "articleId", nullable = false)
   @ManyToOne
   private ArticleTable article;
 

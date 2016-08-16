@@ -53,7 +53,7 @@ public class Flag implements Timestamped {
   private FlagReasonCode reason;
 
   @ManyToOne
-  @JoinColumn(name = "commentId")
+  @JoinColumn(name = "commentId", nullable = false)
   private Comment flaggedComment;
 
   @Generated(value= GenerationTime.INSERT)

@@ -25,7 +25,7 @@ public class ArticleIngestion implements Timestamped {
   @Column
   private long ingestionId;
 
-  @JoinColumn(name = "articleId")
+  @JoinColumn(name = "articleId", nullable = false)
   @ManyToOne
   private ArticleTable article;
 
@@ -42,8 +42,8 @@ public class ArticleIngestion implements Timestamped {
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(
       name = "articleJournalJoinTable",
-      joinColumns = @JoinColumn(name = "ingestionId"),
-      inverseJoinColumns = @JoinColumn(name = "journalId")
+      joinColumns = @JoinColumn(name = "ingestionId", nullable = false),
+      inverseJoinColumns = @JoinColumn(name = "journalId", nullable = false)
   )
   private Set<Journal> journals;
 

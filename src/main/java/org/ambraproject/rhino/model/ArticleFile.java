@@ -21,11 +21,11 @@ public class ArticleFile implements Timestamped {
   @Column
   private long fileId;
 
-  @JoinColumn(name = "ingestionId")
+  @JoinColumn(name = "ingestionId", nullable = false)
   @ManyToOne
   private ArticleIngestion ingestion;
 
-  @JoinColumn(name = "itemId")
+  @JoinColumn(name = "itemId", nullable = false)
   @ManyToOne
   private ArticleItem item;
 
