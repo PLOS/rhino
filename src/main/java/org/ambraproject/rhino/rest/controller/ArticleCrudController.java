@@ -150,10 +150,10 @@ public class ArticleCrudController extends RestController {
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/articles/{doi}/revisions", method = RequestMethod.GET)
+  @RequestMapping(value = "/articles/{doi}/revisions/{revision}", method = RequestMethod.GET)
   public void readRevision(HttpServletRequest request, HttpServletResponse response,
                            @PathVariable("doi") String doi,
-                           @RequestParam(value = "revision", required = false) Integer revisionNumber)
+                           @PathVariable(value = "revision") Integer revisionNumber)
       throws IOException {
     ArticleRevisionIdentifier id = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
     articleCrudService.serveRevision(id).respond(request, response, entityGson);
