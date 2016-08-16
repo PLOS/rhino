@@ -47,9 +47,9 @@ public interface VolumeCrudService {
 
   public abstract Volume readVolumeByIssue(Issue issueId);
 
-  public abstract VolumeIdentifier create(String journalKey, VolumeInputView input);
+  public abstract Volume create(String journalKey, VolumeInputView input);
 
-  public abstract void update(VolumeIdentifier volumeId, VolumeInputView input);
+  public abstract Volume update(VolumeIdentifier volumeId, VolumeInputView input);
 
   public abstract void delete(VolumeIdentifier id) throws IOException;
 

@@ -27,9 +27,6 @@ public class ArticleRevision implements Timestamped {
   private int revisionNumber;
 
   @Column
-  private int publicationState; // TODO: Change type to PublicationState, with adapter?
-
-  @Column
   private Date created;
 
   public long getRevisionId() {
@@ -54,14 +51,6 @@ public class ArticleRevision implements Timestamped {
 
   public void setRevisionNumber(int revisionNumber) {
     this.revisionNumber = revisionNumber;
-  }
-
-  public int getPublicationState() {
-    return publicationState;
-  }
-
-  public void setPublicationState(int publicationState) {
-    this.publicationState = publicationState;
   }
 
   public Date getCreated() {

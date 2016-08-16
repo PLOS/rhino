@@ -24,18 +24,22 @@ import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleItemIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
+import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleListCrudService;
+import org.ambraproject.rhino.service.ArticleRevisionWriteService;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.SyndicationInputView;
+import org.ambraproject.rhino.view.article.versioned.ArticleRevisionView;
 import org.ambraproject.rhino.view.article.versioned.RelationshipSetView;
+import org.ambraproject.rhino.view.article.versioned.SyndicationView;
 import org.ambraproject.rhombat.HttpDateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,6 +60,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -68,6 +73,8 @@ public class ArticleCrudController extends RestController {
 
   @Autowired
   private ArticleCrudService articleCrudService;
+  @Autowired
+  private ArticleRevisionWriteService articleRevisionWriteService;
   @Autowired
   private CommentCrudService commentCrudService;
   @Autowired
@@ -140,6 +147,44 @@ public class ArticleCrudController extends RestController {
       throws IOException {
     ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     articleCrudService.serveOverview(id).respond(request, response, entityGson);
+  }
+
+  @Transactional(readOnly = true)
+  @RequestMapping(value = "/articles/{doi}/revisions", method = RequestMethod.GET)
+  public void readRevision(HttpServletRequest request, HttpServletResponse response,
+                           @PathVariable("doi") String doi,
+                           @RequestParam(value = "revision", required = false) Integer revisionNumber)
+      throws IOException {
+    ArticleRevisionIdentifier id = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
+    articleCrudService.serveRevision(id).respond(request, response, entityGson);
+  }
+
+  @Transactional(readOnly = false)
+  @RequestMapping(value = "/articles/{doi}/revisions", method = RequestMethod.POST)
+  public ResponseEntity<?> writeRevision(@PathVariable("doi") String doi,
+                                         @RequestParam(value = "revision", required = false) Integer revisionNumber,
+                                         @RequestParam(value = "ingestion", required = true) Integer ingestionNumber) {
+    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(doi));
+    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(articleId, ingestionNumber);
+
+    final ArticleRevision revision;
+    if (revisionNumber == null) {
+      revision = articleRevisionWriteService.createRevision(ingestionId);
+    } else {
+      ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(articleId, revisionNumber);
+      revision = articleRevisionWriteService.writeRevision(revisionId, ingestionId);
+    }
+
+    return reportCreated(new ArticleRevisionView(revision));
+  }
+
+  @Transactional(readOnly = false)
+  @RequestMapping(value = "/articles/{doi}/revisions/{revision}", method = RequestMethod.DELETE)
+  public ResponseEntity<?> deleteRevision(@PathVariable("doi") String doi,
+                                          @PathVariable("revision") int revisionNumber) {
+    ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
+    articleRevisionWriteService.deleteRevision(revisionId);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
   @RequestMapping(value = "/articles/{doi}/ingestions/{number}/items", method = RequestMethod.GET)
@@ -265,25 +310,6 @@ public class ArticleCrudController extends RestController {
   }
 
   /**
-   * A temporary endpoint for testing the creation of article relationships This functionality should ultimately be
-   * subsumed under the publication and revision assignment workflow.
-   *
-   * @param request
-   * @param response
-   * @throws IOException
-   */
-  @Deprecated
-  @Transactional(readOnly = false)
-  @RequestMapping(value = "/articles/{doi}/revisions/{number}/relationships", method = RequestMethod.POST)
-  public void refreshArticleRelationships(HttpServletRequest request, HttpServletResponse response,
-                                          @PathVariable("doi") String doi,
-                                          @PathVariable("number") int revisionNumber)
-      throws IOException {
-    ArticleRevisionIdentifier articleRevId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
-    articleCrudService.refreshArticleRelationships(articleRevId);
-  }
-
-  /**
    * Retrieves a list of objects representing raw taxonomy categories associated with the article.
    *
    * @param request
@@ -336,16 +362,29 @@ public class ArticleCrudController extends RestController {
     articleListCrudService.readContainingLists(id).respond(request, response, entityGson);
   }
 
+  @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications", method = RequestMethod.GET)
+  public void readSyndications(HttpServletRequest request, HttpServletResponse response,
+                               @PathVariable("doi") String doi,
+                               @PathVariable("number") int revisionNumber)
+      throws IOException {
+    Transceiver.serveUntimestampedView(() -> {
+      ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
+      List<Syndication> syndications = syndicationCrudService.getSyndications(revisionId);
+      // TODO: If revision does not exist, need to respond with 404 instead of empty list?
+      return syndications.stream().map(SyndicationView::new).collect(Collectors.toList());
+    }).respond(request, response, entityGson);
+  }
+
   @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications", method = RequestMethod.POST)
-  public ResponseEntity<Object> createSyndication(HttpServletRequest request,
+  public ResponseEntity<String> createSyndication(HttpServletRequest request,
                                                   @PathVariable("doi") String doi,
                                                   @PathVariable("number") int revisionNumber)
       throws IOException {
     ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
 
-    syndicationCrudService.createSyndication(revisionId, input.getTargetQueue());
-    return reportCreated();
+    Syndication syndication = syndicationCrudService.createSyndication(revisionId, input.getTargetQueue());
+    return reportCreated(new SyndicationView(syndication));
   }
 
   @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications",
@@ -353,28 +392,28 @@ public class ArticleCrudController extends RestController {
       method = RequestMethod.POST, params = "syndicate")
   @ApiOperation(value = "syndicate", notes = "Send a syndication message to the queue for processing. " +
       "Will create and add a syndication to the database if none exist for current article and target.")
-  public ResponseEntity<Object> syndicate(HttpServletRequest request,
-                                          @PathVariable("doi") String doi,
-                                          @PathVariable("number") int revisionNumber)
+  public ResponseEntity<?> syndicate(HttpServletRequest request,
+                                     @PathVariable("doi") String doi,
+                                     @PathVariable("number") int revisionNumber)
       throws IOException {
     ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
 
     Syndication created = syndicationCrudService.syndicate(revisionId, input.getTargetQueue());
-    return reportOk(created.toString());
+    return reportCreated(new SyndicationView(created));
   }
 
   @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications", method = RequestMethod.PATCH)
-  public ResponseEntity<Object> patchSyndication(HttpServletRequest request,
-                                                 @PathVariable("doi") String doi,
-                                                 @PathVariable("number") int revisionNumber)
+  public ResponseEntity<?> patchSyndication(HttpServletRequest request,
+                                            @PathVariable("doi") String doi,
+                                            @PathVariable("number") int revisionNumber)
       throws IOException {
     ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
 
     Syndication patched = syndicationCrudService.updateSyndication(revisionId,
         input.getTargetQueue(), input.getStatus(), input.getErrorMessage());
-    return reportOk(patched.toString());
+    return reportUpdated(new SyndicationView(patched));
   }
 
   /**

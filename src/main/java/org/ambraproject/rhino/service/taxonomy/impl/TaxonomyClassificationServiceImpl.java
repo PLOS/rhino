@@ -4,6 +4,8 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Maps;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
+import org.ambraproject.rhino.model.ArticleIngestion;
+import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.model.ArticleCategoryAssignment;
@@ -193,6 +195,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     return results;
   }
 
+  @Override
   public Collection<Category> getCategoriesForArticle(ArticleTable article) {
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
@@ -217,14 +220,14 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   }
 
   /**
-   * Populates article category information by making a call to the taxonomy server. Will not throw
-   * an exception if we cannot communicate or get results from the taxonomy server. Will not
-   * request weightedTerms for amendments.
-   *
-   * @param article the Article model instance
-   * @param xml     Document representing the article XML
+   * {@inheritDoc}
    */
-  public void populateCategories(ArticleTable article, Document xml) {
+  @Override
+  public void populateCategories(ArticleRevision revision) {
+    ArticleIngestion ingestion = revision.getIngestion();
+    ArticleTable article = ingestion.getArticle();
+    Document xml = articleCrudService.getManuscriptXml(ingestion);
+
     List<WeightedTerm> terms;
     String doi = article.getDoi();
 

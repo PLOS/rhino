@@ -21,7 +21,6 @@ package org.ambraproject.rhino.service;
 import org.ambraproject.rhino.identity.IssueIdentifier;
 import org.ambraproject.rhino.identity.VolumeIdentifier;
 import org.ambraproject.rhino.model.Issue;
-import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.journal.IssueInputView;
@@ -47,7 +46,7 @@ public interface IssueCrudService {
    */
   public abstract Optional<Issue> getIssue(IssueIdentifier issueId);
 
-  public abstract IssueIdentifier create(VolumeIdentifier volumeId, IssueInputView input);
+  public abstract Issue create(VolumeIdentifier volumeId, IssueInputView input);
 
   public abstract void update(IssueIdentifier issueId, IssueInputView input);
 

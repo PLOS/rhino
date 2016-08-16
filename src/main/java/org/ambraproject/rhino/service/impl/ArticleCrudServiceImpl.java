@@ -60,6 +60,7 @@ import org.ambraproject.rhino.view.article.author.ArticleAllAuthorsView;
 import org.ambraproject.rhino.view.article.author.AuthorView;
 import org.ambraproject.rhino.view.article.versioned.ArticleIngestionView;
 import org.ambraproject.rhino.view.article.versioned.ArticleOverview;
+import org.ambraproject.rhino.view.article.versioned.ArticleRevisionView;
 import org.ambraproject.rhino.view.article.versioned.ItemSetView;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.hibernate.Criteria;
@@ -123,19 +124,21 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public void populateCategories(ArticleIdentifier articleId) throws IOException {
     ArticleTable article = readArticle(articleId);
     ArticleRevision revision = readLatestRevision(article);
-    Document manuscriptXml = getManuscriptXml(revision.getIngestion());
-    taxonomyService.populateCategories(article, manuscriptXml);
+    taxonomyService.populateCategories(revision);
   }
 
   @Override
-  public Document getManuscriptXml(ArticleIngestion ingestion) throws IOException {
+  public Document getManuscriptXml(ArticleIngestion ingestion) {
     Doi articleDoi = Doi.create(ingestion.getArticle().getDoi());
     ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(articleDoi, ingestion.getIngestionNumber());
     ArticleItemIdentifier articleItemId = ingestionId.getItemFor();
     ArticleFileIdentifier manuscriptId = ArticleFileIdentifier.create(articleItemId, "manuscript");
     RepoObjectMetadata objectMetadata = assetCrudService.getArticleItemFile(manuscriptId);
-    InputStream manuscriptInputStream = contentRepoService.getRepoObject(objectMetadata.getVersion());
-    return parseXml(manuscriptInputStream);
+    try (InputStream manuscriptInputStream = contentRepoService.getRepoObject(objectMetadata.getVersion())) {
+      return parseXml(manuscriptInputStream);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   static RestClientException complainAboutXml(XmlContentException e) {
@@ -273,6 +276,21 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       @Override
       protected Calendar getLastModifiedDate() throws IOException {
         return null;
+      }
+    };
+  }
+
+  @Override
+  public Transceiver serveRevision(ArticleRevisionIdentifier revisionId) {
+    return new EntityTransceiver<ArticleRevision>() {
+      @Override
+      protected ArticleRevision fetchEntity() {
+        return readRevision(revisionId);
+      }
+
+      @Override
+      protected Object getView(ArticleRevision entity) {
+        return new ArticleRevisionView(entity);
       }
     };
   }
@@ -482,8 +500,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public void refreshArticleRelationships(ArticleRevisionIdentifier articleRevId) throws IOException {
-    ArticleRevision sourceArticleRev = readRevision(articleRevId);
+  public void refreshArticleRelationships(ArticleRevision sourceArticleRev) {
     ArticleXml sourceArticleXml = new ArticleXml(getManuscriptXml(sourceArticleRev.getIngestion()));
     ArticleTable sourceArticle = sourceArticleRev.getIngestion().getArticle();
 

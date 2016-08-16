@@ -19,10 +19,12 @@
 package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.identity.VolumeIdentifier;
+import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.view.journal.VolumeInputView;
+import org.ambraproject.rhino.view.journal.VolumeOutputView;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,6 +44,8 @@ public class VolumeCrudController extends RestController {
 
   @Autowired
   private VolumeCrudService volumeCrudService;
+  @Autowired
+  private VolumeOutputView.Factory volumeOutputViewFactory;
 
   private static VolumeIdentifier getVolumeId(String volumeDoi) {
     return VolumeIdentifier.create(DoiEscaping.unescape(volumeDoi));
@@ -77,32 +81,32 @@ public class VolumeCrudController extends RestController {
       throw new RestClientException("Volume DOI required", HttpStatus.BAD_REQUEST);
     }
 
-    VolumeIdentifier volumeId = volumeCrudService.create(journalKey, input);
-    return reportCreated(volumeId.getDoi().getName());
+    Volume volume = volumeCrudService.create(journalKey, input);
+    return reportCreated(volumeOutputViewFactory.getView(volume));
   }
 
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi:.+}", method = RequestMethod.PATCH)
-  public ResponseEntity<Object> update(HttpServletRequest request, HttpServletResponse response,
-      @PathVariable("journalKey") String journalKey,
-      @PathVariable("volumeDoi") String volumeDoi)
+  public ResponseEntity<?> update(HttpServletRequest request, HttpServletResponse response,
+                                  @PathVariable("journalKey") String journalKey,
+                                  @PathVariable("volumeDoi") String volumeDoi)
       throws IOException {
     // TODO: Validate journalKey
     VolumeIdentifier volumeId = getVolumeId(volumeDoi);
     VolumeInputView input = readJsonFromRequest(request, VolumeInputView.class);
-    volumeCrudService.update(volumeId, input);
-    return reportOk(volumeId.getDoi().getName());
+    Volume updated = volumeCrudService.update(volumeId, input);
+    return reportUpdated(volumeOutputViewFactory.getView(updated));
   }
 
   @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi:.+}", method = RequestMethod.DELETE)
-  public ResponseEntity<Object> delete(HttpServletRequest request,
-      @PathVariable("journalKey") String journalKey,
-      @PathVariable("volumeDoi") String volumeDoi)
+  public ResponseEntity<?> delete(HttpServletRequest request,
+                                  @PathVariable("journalKey") String journalKey,
+                                  @PathVariable("volumeDoi") String volumeDoi)
       throws IOException {
     // TODO: Validate journalKey
     VolumeIdentifier volumeId = getVolumeId(volumeDoi);
     volumeCrudService.delete(volumeId);
-    return reportOk(volumeId.getDoi().getName());
+    return reportDeleted(volumeId.getDoi().getName());
   }
 
 }

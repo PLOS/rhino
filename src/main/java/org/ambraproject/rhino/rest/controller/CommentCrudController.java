@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.wordnik.swagger.annotations.ApiOperation;
+import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.CommentIdentifier;
 import org.ambraproject.rhino.model.Comment;
@@ -9,6 +10,8 @@ import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
+import org.ambraproject.rhino.view.comment.CommentNodeView;
+import org.ambraproject.rhino.view.comment.CommentOutputView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,6 +28,8 @@ import java.util.Optional;
 @Controller
 public class CommentCrudController extends RestController {
 
+  @Autowired
+  private RuntimeConfiguration runtimeConfiguration;
   @Autowired
   private CommentCrudService commentCrudService;
 
@@ -79,8 +84,8 @@ public class CommentCrudController extends RestController {
     // TODO: Pass Optional.empty() if client POSTed to "/comments"?
     Optional<ArticleIdentifier> articleIdObj = Optional.of(articleId);
 
-    Comment created = commentCrudService.createComment(articleIdObj, input);
-    return reportCreated(created.getCommentUri());
+    CommentOutputView created = commentCrudService.createComment(articleIdObj, input);
+    return reportCreated(created);
   }
 
   @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi}/flags", method = RequestMethod.DELETE)
@@ -93,7 +98,7 @@ public class CommentCrudController extends RestController {
     // TODO: Validate articleId
 
     commentCrudService.removeFlagsFromComment(commentId);
-    return reportOk(commentId.toString());
+    return reportDeleted(commentId.toString());
   }
 
   @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi:.+}", method = RequestMethod.PATCH)
@@ -106,8 +111,8 @@ public class CommentCrudController extends RestController {
     // TODO: Validate articleId
 
     CommentInputView input = readJsonFromRequest(request, CommentInputView.class);
-    Comment patched = commentCrudService.patchComment(commentId, input);
-    return reportOk(patched.getCommentUri());
+    CommentOutputView patched = commentCrudService.patchComment(commentId, input);
+    return reportUpdated(patched);
   }
 
   @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi:.+}", method = RequestMethod.DELETE)
@@ -123,7 +128,7 @@ public class CommentCrudController extends RestController {
     // TODO: Validate articleId
 
     String deletedCommentUri = commentCrudService.deleteComment(commentId);
-    return reportOk(deletedCommentUri);
+    return reportDeleted(deletedCommentUri);
   }
 
   @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi}/flags", method = RequestMethod.POST)
@@ -137,7 +142,7 @@ public class CommentCrudController extends RestController {
 
     CommentFlagInputView input = readJsonFromRequest(request, CommentFlagInputView.class);
     Flag commentFlag = commentCrudService.createCommentFlag(commentId, input);
-    return reportCreated(commentFlag.getCommentFlagId().toString());
+    return reportCreated(new CommentNodeView.Factory(runtimeConfiguration).createFlagView(commentFlag));
   }
 
   @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi}/flags", method = RequestMethod.GET)
@@ -175,7 +180,7 @@ public class CommentCrudController extends RestController {
     // TODO: Validate articleId and commentId
 
     commentCrudService.deleteCommentFlag(flagId);
-    return reportOk(Long.toString(flagId));
+    return reportDeleted(Long.toString(flagId));
   }
 
 }

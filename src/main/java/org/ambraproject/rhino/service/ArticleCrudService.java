@@ -161,7 +161,7 @@ public interface ArticleCrudService {
 
   List<VersionedArticleRelationship> getRelationshipsTo(ArticleIdentifier targetId);
 
-  void refreshArticleRelationships(ArticleRevisionIdentifier articleRevId) throws IOException;
+  void refreshArticleRelationships(ArticleRevision sourceArticleRev);
 
   /**
    * Read the metadata of a random article.
@@ -184,6 +184,8 @@ public interface ArticleCrudService {
   public abstract Transceiver serveItems(ArticleIngestionIdentifier ingestionId);
 
   public abstract Transceiver serveOverview(ArticleIdentifier id);
+
+  Transceiver serveRevision(ArticleRevisionIdentifier revisionId);
 
   public abstract ArticleItem getArticleItem(ArticleItemIdentifier id);
 
@@ -234,6 +236,6 @@ public interface ArticleCrudService {
    */
   public abstract ArticleTable readArticle(ArticleIdentifier articleIdentifier);
 
-  public abstract Document getManuscriptXml(ArticleIngestion articleIngestion) throws IOException;
+  public abstract Document getManuscriptXml(ArticleIngestion articleIngestion);
 
 }

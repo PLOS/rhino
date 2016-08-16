@@ -21,6 +21,7 @@ import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
+import org.ambraproject.rhino.view.comment.CommentOutputView;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -62,9 +63,9 @@ public interface CommentCrudService {
 
   public Optional<Comment> getComment(CommentIdentifier commentId);
 
-  public Comment createComment(Optional<ArticleIdentifier> articleId, CommentInputView input);
+  public CommentOutputView createComment(Optional<ArticleIdentifier> articleId, CommentInputView input);
 
-  public Comment patchComment(CommentIdentifier commentId, CommentInputView input);
+  public CommentOutputView patchComment(CommentIdentifier commentId, CommentInputView input);
 
   public String deleteComment(CommentIdentifier commentId);
 
