@@ -37,6 +37,7 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -148,8 +149,9 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
 
     String toCategorize = getCategorizationContent(articleXml);
 
+    Date date = article.getCreated(); // TODO: Get publication date of latest revision
     String header = String.format(MESSAGE_HEADER,
-        new SimpleDateFormat("yyyy-MM-dd").format(article.getPublicationDate()),
+        new SimpleDateFormat("yyyy-MM-dd").format(date),
         articleCrudService.getPublicationJournal(article).getTitle(),
         "TODO",//articleTypeService.getArticleType(article).getHeading(), //todo: add article type here
         article.getDoi());

@@ -27,7 +27,7 @@ public class ArticleTable implements Timestamped, Serializable { //todo: rename 
   @Generated(value = GenerationTime.INSERT)
   @Temporal(javax.persistence.TemporalType.TIMESTAMP)
   @Column(name = "created", insertable = false, updatable = false, columnDefinition = "timestamp default current_timestamp")
-  private Date publicationDate;
+  private Date created;
 
   public Long getArticleId() {
     return articleId;
@@ -45,17 +45,13 @@ public class ArticleTable implements Timestamped, Serializable { //todo: rename 
     this.doi = doi;
   }
 
-  public Date getPublicationDate() {
-    return publicationDate;
-  }
-
-  public void setPublicationDate(Date publicationDate) {
-    this.publicationDate = publicationDate;
+  public Date getCreated() {
+    return created;
   }
 
   @Override
   public Date getLastModified() {
-    return publicationDate; //todo: get latest revision modified date?
+    return created;
   }
 
 
