@@ -241,3 +241,6 @@ CREATE TABLE `articleJournalJoinTable` (
     REFERENCES `journal` (`journalID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
+ALTER TABLE `articleIngestion`
+ADD COLUMN `articleTypeKey` VARCHAR(100) NOT NULL AFTER `publicationDate`;
