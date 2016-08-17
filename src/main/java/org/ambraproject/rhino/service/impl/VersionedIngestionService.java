@@ -114,7 +114,6 @@ public class VersionedIngestionService extends AmbraService {
     ArticlePackage articlePackage = new ArticlePackageBuilder(destinationBucketName, archive, parsedArticle, manifestXml,
         manuscriptAsset, manuscriptRepr, printableRepr).build();
     persistItem(articlePackage, ingestionId);
-    persistJournal(articleMetadata, ingestionId);
 
     return ArticleIngestionIdentifier.create(doi, ingestionResult.ingestionNumber);
   }
@@ -152,6 +151,8 @@ public class VersionedIngestionService extends AmbraService {
   }
 
   private IngestionPersistenceResult persistIngestion(long articlePk, ArticleMetadata articleMetadata) {
+    Journal journal = fetchJournal(articleMetadata);
+
     return hibernateTemplate.execute(session -> {
       SQLQuery findNextIngestionNumber = session.createSQLQuery(
           "SELECT MAX(ingestionNumber) FROM articleIngestion WHERE articleId = :articleId");
@@ -161,13 +162,14 @@ public class VersionedIngestionService extends AmbraService {
           : maxIngestionNumber.intValue() + 1;
 
       SQLQuery insertEvent = session.createSQLQuery("" +
-          "INSERT INTO articleIngestion (articleId, ingestionNumber, title, publicationDate, articleType) " +
-      "VALUES (:articleId, :ingestionNumber, :title, :publicationDate, :articleType)");
+          "INSERT INTO articleIngestion (articleId, ingestionNumber, title, publicationDate, articleType, journalId) " +
+          "VALUES (:articleId, :ingestionNumber, :title, :publicationDate, :articleType, :journalId)");
       insertEvent.setParameter("articleId", articlePk);
       insertEvent.setParameter("ingestionNumber", nextIngestionNumber);
       insertEvent.setParameter("title", articleMetadata.getTitle());
       insertEvent.setParameter("publicationDate", java.sql.Date.valueOf(articleMetadata.getPublicationDate()));
       insertEvent.setParameter("articleType", articleMetadata.getArticleType());
+      insertEvent.setParameter("journalId", journal.getJournalId());
       insertEvent.executeUpdate();
       long pk = getLastInsertId(session);
 
@@ -275,25 +277,15 @@ public class VersionedIngestionService extends AmbraService {
     });
   }
 
-  private long persistJournal(ArticleMetadata article, long ingestionId) {
+  private Journal fetchJournal(ArticleMetadata article) {
     String eissn = article.geteIssn();
     if (eissn == null) {
       String msg = "eIssn not set for article: " + article.getDoi();
       throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
     }
-    Journal journal = journalCrudService.getJournalByEissn(eissn).orElseThrow(() -> {
+    return journalCrudService.getJournalByEissn(eissn).orElseThrow(() -> {
       String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
       return new RestClientException(msg, HttpStatus.BAD_REQUEST);
-    });
-
-    return hibernateTemplate.execute(session -> {
-      SQLQuery query = session.createSQLQuery("" +
-          "INSERT INTO articleJournalJoinTable (ingestionId, journalId) " +
-          "VALUES (:ingestionId, :journalId)");
-      query.setParameter("ingestionId", ingestionId);
-      query.setParameter("journalId", journal.getJournalId());
-      query.executeUpdate();
-      return getLastInsertId(session);
     });
   }
 
