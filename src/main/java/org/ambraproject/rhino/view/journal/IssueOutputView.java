@@ -1,5 +1,6 @@
 package org.ambraproject.rhino.view.journal;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -13,6 +14,7 @@ import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.view.JsonOutputView;
+import org.ambraproject.rhino.view.article.versioned.PersistentArticleView;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;
@@ -27,37 +29,44 @@ public class IssueOutputView implements JsonOutputView {
     private ArticleCrudService articleCrudService;
     @Autowired
     private IssueCrudService issueCrudService;
+    @Autowired
+    private PersistentArticleView.Factory persistentArticleViewFactory;
+
+    private List<PersistentArticleView> getIssueArticles(Issue issue) {
+      List<ArticleTable> articles = issue.getArticles();
+      if (articles == null) return ImmutableList.of();
+      return articles.stream()
+          .map(persistentArticleViewFactory::getView)
+          .collect(Collectors.toList());
+    }
 
     public IssueOutputView getView(Issue issue) {
-      return new IssueOutputView(this, issue, issueCrudService.getParentVolumeView(issue));
+      return new IssueOutputView(this, issue, issueCrudService.getParentVolumeView(issue), getIssueArticles(issue));
     }
 
     public IssueOutputView getView(Issue issue, Volume parentVolume) {
-      return new IssueOutputView(this, issue, new VolumeNonAssocView(parentVolume));
+      return new IssueOutputView(this, issue, new VolumeNonAssocView(parentVolume), getIssueArticles(issue));
     }
   }
 
   private final Issue issue;
   private final VolumeNonAssocView parentVolumeView;
   private final IssueOutputView.Factory factory;
+  private final ImmutableList<PersistentArticleView> articles;
 
-  private IssueOutputView(Factory factory, Issue issue, VolumeNonAssocView parentVolumeView) {
+  private IssueOutputView(Factory factory, Issue issue, VolumeNonAssocView parentVolumeView, List<PersistentArticleView> articles) {
     this.issue = Objects.requireNonNull(issue);
     this.parentVolumeView = Objects.requireNonNull(parentVolumeView);
-    this.factory= Objects.requireNonNull(factory);
+    this.factory = Objects.requireNonNull(factory);
+    this.articles = ImmutableList.copyOf(articles);
   }
 
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = context.serialize(issue).getAsJsonObject();
-
-    if (issue.getArticles() != null) {
-      List<String> articleDois = issue.getArticles().stream()
-          .map(ArticleTable::getDoi).collect(Collectors.toList());
-      serialized.add("articleOrder", context.serialize(articleDois));
-    }
-
+    serialized.add("articles", context.serialize(articles));
     serialized.add("parentVolume", context.serialize(parentVolumeView));
+
     JsonElement imageArticle = serialized.get("imageArticle");
     if (imageArticle != null) {
       imageArticle.getAsJsonObject().addProperty("figureImageDoi", getIssueImageFigureDoi());

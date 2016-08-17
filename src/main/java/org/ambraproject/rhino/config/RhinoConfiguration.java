@@ -29,7 +29,6 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.ArticleRevisionWriteService;
 import org.ambraproject.rhino.service.ArticleStateService;
-import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.CamelSender;
 import org.ambraproject.rhino.service.CommentCrudService;
@@ -37,7 +36,6 @@ import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
-import org.ambraproject.rhino.service.LegacyArticleTypeService;
 import org.ambraproject.rhino.service.LegacyConfiguration;
 import org.ambraproject.rhino.service.MessageSender;
 import org.ambraproject.rhino.service.PingbackReadService;
@@ -68,6 +66,7 @@ import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
 import org.ambraproject.rhino.view.article.versioned.ArticleIngestionView;
 import org.ambraproject.rhino.view.article.versioned.ItemSetView;
+import org.ambraproject.rhino.view.article.versioned.PersistentArticleView;
 import org.ambraproject.rhino.view.article.versioned.RelationshipSetView;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
@@ -276,11 +275,6 @@ public class RhinoConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public ArticleTypeService articleTypeService(org.apache.commons.configuration.Configuration ambraConfiguration) {
-    return new LegacyArticleTypeService(ambraConfiguration);
-  }
-
-  @Bean
   public ArticleListCrudService collectionCrudService() {
     return new ArticleListCrudServiceImpl();
   }
@@ -338,6 +332,11 @@ public class RhinoConfiguration extends BaseConfiguration {
   @Bean
   public ItemSetView.Factory itemSetViewFactory() {
     return new ItemSetView.Factory();
+  }
+
+  @Bean
+  public PersistentArticleView.Factory persistentArticleViewFactory() {
+    return new PersistentArticleView.Factory();
   }
 
   @Bean

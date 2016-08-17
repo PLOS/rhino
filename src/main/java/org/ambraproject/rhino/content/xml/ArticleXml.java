@@ -25,14 +25,12 @@ import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.model.article.AssetMetadata;
 import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.ambraproject.rhino.util.NodeListAdapter;
-import org.ambraproject.rhino.util.StringReplacer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -42,7 +40,6 @@ import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -191,7 +188,9 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     article.setLanguage(parseLanguage(readString("/article/@xml:lang")));
     article.setPublicationDate(parseDate(readNode("/article/front/article-meta/pub-date[@pub-type=\"epub\"]")));
 
-    article.setTypes(buildArticleTypes());
+    article.setNlmArticleType(readString("/article/@article-type"));
+    article.setArticleType(parseArticleHeading());
+
     article.setAuthors(readPersons(readNodeList(
         "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/name")));
     article.setEditors(readPersons(readNodeList(
@@ -286,34 +285,14 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     return "http://dx.doi.org/" + URLEncoder.encode(doi);
   }
 
-  private static String buildArticleTypeUri(String articleType) {
-    // Represent a article type token as a URI, as required by legacy article type model.
-    // TODO: Either refactor URI-based data model, or allow base URI to be configured (no hard-coded "plos.org").
-    // This also ensures that we throw a NullPointerException rather than return "http://rdf.plos.org/RDF/articleType/null"
-    return "http://rdf.plos.org/RDF/articleType/" + Preconditions.checkNotNull(articleType);
-  }
-
-  /**
-   * @return set of article type strings for the article
-   */
-  private Set<String> buildArticleTypes() {
-
-    // pmc2obj-v3.xslt lines 93-96
-    Set<String> articleTypes = Sets.newHashSet();
-    articleTypes.add(buildArticleTypeUri(readString("/article/@article-type")));
-    List<String> otherTypes = readTextList("/article/front/article-meta/article-categories/"
+  private String parseArticleHeading() {
+    List<String> headings = readTextList("/article/front/article-meta/article-categories/"
         + "subj-group[@subj-group-type = 'heading']/subject");
-    for (String otherType : otherTypes) {
-      otherType = uriEncode(otherType);
-      otherType = SLASH_ESCAPE.replace(otherType); // uriEncode leaves slashes alone, but we actually want them escaped
-      articleTypes.add(buildArticleTypeUri(otherType));
+    if (headings.size() != 1) {
+      throw new XmlContentException("Must contain exactly one subject group with subj-group-type=\"heading\"");
     }
-    return articleTypes;
+    return headings.get(0);
   }
-
-  private static final StringReplacer SLASH_ESCAPE = StringReplacer.builder()
-      .replaceExact("/", String.format("%%%H", '/'))
-      .build();
 
 
   private static String parseLanguage(String language) {

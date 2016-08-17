@@ -38,6 +38,9 @@ public class ArticleIngestion implements Timestamped {
   @Column
   private int ingestionNumber;
 
+  @Column
+  private String articleType;
+
   @Cascade(CascadeType.SAVE_UPDATE)
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(
@@ -97,6 +100,14 @@ public class ArticleIngestion implements Timestamped {
 
   public void setPublicationDate(Date publicationDate) {
     this.publicationDate = publicationDate;
+  }
+
+  public String getArticleType() {
+    return articleType;
+  }
+
+  public void setArticleType(String articleType) {
+    this.articleType = articleType;
   }
 
   @Override

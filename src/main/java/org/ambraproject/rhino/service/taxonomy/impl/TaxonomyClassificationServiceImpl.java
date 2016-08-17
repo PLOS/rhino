@@ -4,13 +4,12 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Maps;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
+import org.ambraproject.rhino.model.ArticleCategoryAssignment;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Category;
-import org.ambraproject.rhino.model.ArticleCategoryAssignment;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyRemoteServiceInvalidBehaviorException;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyRemoteServiceNotAvailableException;
@@ -93,8 +92,6 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   private CloseableHttpClient httpClient;
   @Autowired
   private RuntimeConfiguration runtimeConfiguration;
-  @Autowired
-  private ArticleTypeService articleTypeService;
   @Autowired
   private ArticleCrudService articleCrudService;
   @Autowired
