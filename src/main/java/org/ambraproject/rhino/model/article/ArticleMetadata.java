@@ -30,8 +30,8 @@ public class ArticleMetadata {
   private final String publisherName;
   private final String url;
 
+  private final String nlmArticleType;
   private final String articleType;
-  private final String articleHeading;
 
   private final ImmutableList<String> collaborativeAuthors;
 
@@ -57,8 +57,8 @@ public class ArticleMetadata {
     this.publisherLocation = builder.publisherLocation;
     this.publisherName = builder.publisherName;
     this.url = builder.url;
+    this.nlmArticleType = builder.nlmArticleType;
     this.articleType = builder.articleType;
-    this.articleHeading = builder.articleHeading;
     this.collaborativeAuthors = ImmutableList.copyOf(builder.collaborativeAuthors);
     this.assets = ImmutableList.copyOf(builder.assets);
     this.relatedArticles = ImmutableList.copyOf(builder.relatedArticles);
@@ -130,12 +130,12 @@ public class ArticleMetadata {
     return url;
   }
 
-  public String getArticleType() {
-    return articleType;
+  public String getNlmArticleType() {
+    return nlmArticleType;
   }
 
-  public String getArticleHeading() {
-    return articleHeading;
+  public String getArticleType() {
+    return articleType;
   }
 
   public ImmutableList<String> getCollaborativeAuthors() {
@@ -188,8 +188,8 @@ public class ArticleMetadata {
     private String publisherName;
     private String url;
 
+    private String nlmArticleType;
     private String articleType;
-    private String articleHeading;
 
     private List<String> collaborativeAuthors;
 
@@ -282,13 +282,13 @@ public class ArticleMetadata {
       return this;
     }
 
-    public Builder setArticleType(String articleType) {
-      this.articleType = articleType;
+    public Builder setNlmArticleType(String nlmArticleType) {
+      this.nlmArticleType = nlmArticleType;
       return this;
     }
 
-    public Builder setArticleHeading(String articleHeading) {
-      this.articleHeading = articleHeading;
+    public Builder setArticleType(String articleType) {
+      this.articleType = articleType;
       return this;
     }
 
@@ -345,8 +345,8 @@ public class ArticleMetadata {
     }
     if (publisherName != null ? !publisherName.equals(that.publisherName) : that.publisherName != null) return false;
     if (url != null ? !url.equals(that.url) : that.url != null) return false;
-    if (articleType != null ? !articleType.equals(that.articleType) : that.articleType != null) return false;
-    if (articleHeading != null ? !articleHeading.equals(that.articleHeading) : that.articleHeading != null)
+    if (nlmArticleType != null ? !nlmArticleType.equals(that.nlmArticleType) : that.nlmArticleType != null) return false;
+    if (articleType != null ? !articleType.equals(that.articleType) : that.articleType != null)
       return false;
     if (collaborativeAuthors != null ? !collaborativeAuthors.equals(that.collaborativeAuthors) : that.collaborativeAuthors != null) {
       return false;
@@ -378,8 +378,8 @@ public class ArticleMetadata {
     result = 31 * result + (publisherLocation != null ? publisherLocation.hashCode() : 0);
     result = 31 * result + (publisherName != null ? publisherName.hashCode() : 0);
     result = 31 * result + (url != null ? url.hashCode() : 0);
+    result = 31 * result + (nlmArticleType != null ? nlmArticleType.hashCode() : 0);
     result = 31 * result + (articleType != null ? articleType.hashCode() : 0);
-    result = 31 * result + (articleHeading != null ? articleHeading.hashCode() : 0);
     result = 31 * result + (collaborativeAuthors != null ? collaborativeAuthors.hashCode() : 0);
     result = 31 * result + (assets != null ? assets.hashCode() : 0);
     result = 31 * result + (relatedArticles != null ? relatedArticles.hashCode() : 0);

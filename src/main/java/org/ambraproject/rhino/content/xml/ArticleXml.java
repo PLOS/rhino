@@ -188,8 +188,8 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     article.setLanguage(parseLanguage(readString("/article/@xml:lang")));
     article.setPublicationDate(parseDate(readNode("/article/front/article-meta/pub-date[@pub-type=\"epub\"]")));
 
-    article.setArticleType(readString("/article/@article-type"));
-    article.setArticleHeading(parseArticleHeading());
+    article.setNlmArticleType(readString("/article/@article-type"));
+    article.setArticleType(parseArticleHeading());
 
     article.setAuthors(readPersons(readNodeList(
         "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/name")));
