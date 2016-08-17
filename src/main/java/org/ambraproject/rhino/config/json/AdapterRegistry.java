@@ -41,8 +41,6 @@ public class AdapterRegistry {
        * including the varargs that would be used in a large ImmutableList.of(...) expression.
        */
 
-      .add(org.ambraproject.rhino.service.ArticleType.class)
-
       .add(org.ambraproject.rhino.view.JsonWrapper.class)
 
       .add(org.ambraproject.rhino.view.article.ArticleIssueOutputView.ListView.class)

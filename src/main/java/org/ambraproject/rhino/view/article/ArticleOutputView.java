@@ -19,7 +19,6 @@
 package org.ambraproject.rhino.view.article;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.Collections2;
@@ -36,7 +35,6 @@ import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Pingback;
 import org.ambraproject.rhino.model.PublicationState;
 import org.ambraproject.rhino.model.Syndication;
-import org.ambraproject.rhino.service.ArticleType;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedListView;
@@ -77,8 +75,6 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
    * Data in addition to the Article object that can be provided by an {@link org.ambraproject.rhino.view.article.ArticleOutputViewFactory}.
    */
   public static class AugmentedView extends ArticleOutputView {
-    private final Optional<String> nlmArticleType;
-    private final Optional<ArticleType> articleType;
     private final ImmutableList<RelatedArticleView> relatedArticles;
     private final ImmutableList<ArticleIssue> articleIssues;
     private final ImmutableMap<String, Syndication> syndications;
@@ -86,16 +82,12 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
 
     // Package-private; should be called only by ArticleOutputViewFactory
     AugmentedView(Article article,
-                  String nlmArticleType,
-                  ArticleType articleType,
                   Collection<RelatedArticleView> relatedArticles,
                   Collection<ArticleIssue> articleIssues,
                   Collection<Syndication> syndications,
                   Collection<Pingback> pingbacks,
                   boolean excludeCitations) {
       super(article, excludeCitations);
-      this.nlmArticleType = Optional.fromNullable(nlmArticleType);
-      this.articleType = Optional.fromNullable(articleType);
       this.relatedArticles = ImmutableList.copyOf(relatedArticles);
       this.articleIssues = ImmutableList.copyOf(articleIssues);
       this.syndications = Maps.uniqueIndex(syndications, Syndication::getTarget);
@@ -109,13 +101,6 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
 
     @Override
     protected void augment(JsonSerializationContext context, JsonObject serialized) {
-      if (nlmArticleType.isPresent()) {
-        serialized.addProperty("nlmArticleType", nlmArticleType.get());
-      }
-      if (articleType.isPresent()) {
-        serialized.add(ArticleJsonNames.ARTICLE_TYPE, context.serialize(articleType.get()));
-      }
-
       JsonElement syndications = serializeSyndications(this.syndications.values(), context);
       if (syndications != null) {
         serialized.add(ArticleJsonNames.SYNDICATIONS, syndications);

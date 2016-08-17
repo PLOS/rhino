@@ -29,7 +29,6 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.ArticleRevisionWriteService;
 import org.ambraproject.rhino.service.ArticleStateService;
-import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.CamelSender;
 import org.ambraproject.rhino.service.CommentCrudService;
@@ -37,7 +36,6 @@ import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
-import org.ambraproject.rhino.service.LegacyArticleTypeService;
 import org.ambraproject.rhino.service.LegacyConfiguration;
 import org.ambraproject.rhino.service.MessageSender;
 import org.ambraproject.rhino.service.PingbackReadService;
@@ -274,11 +272,6 @@ public class RhinoConfiguration extends BaseConfiguration {
   @Bean
   public TaxonomyClassificationService taxonomyClassificationService() {
     return new TaxonomyClassificationServiceImpl();
-  }
-
-  @Bean
-  public ArticleTypeService articleTypeService(org.apache.commons.configuration.Configuration ambraConfiguration) {
-    return new LegacyArticleTypeService(ambraConfiguration);
   }
 
   @Bean

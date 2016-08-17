@@ -6,8 +6,6 @@ import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Pingback;
 import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.ArticleType;
-import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.service.SyndicationCrudService;
@@ -29,8 +27,6 @@ public class ArticleOutputViewFactory {
   @Autowired
   private PingbackReadService pingbackReadService;
   @Autowired
-  private ArticleTypeService articleTypeService;
-  @Autowired
   private IssueCrudService issueCrudService;
 
   /**
@@ -51,16 +47,11 @@ public class ArticleOutputViewFactory {
       syndications = ImmutableList.of();
     }
 
-    String nlmArticleType = articleTypeService.getNlmArticleType(article);
-    ArticleType articleType = articleTypeService.getArticleType(article);
-
     List<Pingback> pingbacks = pingbackReadService.loadPingbacks(article);
 
 
     return new ArticleOutputView.AugmentedView(
         article,
-        nlmArticleType,
-        articleType,
         relatedArticles,
         null,
         syndications,
