@@ -28,7 +28,7 @@ public class ArticleItem implements Timestamped {
   @Column
   private long itemId;
 
-  @JoinColumn(name = "ingestionId")
+  @JoinColumn(name = "ingestionId", nullable = false)
   @ManyToOne
   private ArticleIngestion ingestion;
 

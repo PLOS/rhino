@@ -68,7 +68,7 @@ public class Volume implements Timestamped {
 
   @Cascade(CascadeType.SAVE_UPDATE)
   @OneToMany(fetch = FetchType.LAZY)
-  @JoinColumn(name = "volumeId")
+  @JoinColumn(name = "volumeId", nullable = false)
   @OrderColumn(name="volumeSortOrder")
   private List<Issue> issues;
 

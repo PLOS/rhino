@@ -28,7 +28,7 @@ public class Syndication implements Timestamped{
   private int syndicationId;
 
   @ManyToOne
-  @JoinColumn(name = "revisionId")
+  @JoinColumn(name = "revisionId", nullable = false)
   private ArticleRevision articleRevision;
 
   @Column

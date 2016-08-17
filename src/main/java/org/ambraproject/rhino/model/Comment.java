@@ -42,11 +42,11 @@ public class Comment {
   private Long userProfileID;
 
   @ManyToOne
-  @JoinColumn(name = "articleId")
+  @JoinColumn(name = "articleId", nullable = false)
   private ArticleTable article;
 
   @ManyToOne
-  @JoinColumn(name = "parentId")
+  @JoinColumn(name = "parentId", nullable = false)
   private Comment parent;
 
   @Column

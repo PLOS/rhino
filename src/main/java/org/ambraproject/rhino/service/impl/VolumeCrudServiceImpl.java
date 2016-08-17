@@ -38,6 +38,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @SuppressWarnings("JpaQlInspection")
@@ -84,7 +85,9 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
           + volumeId.getDoi(), HttpStatus.BAD_REQUEST);
     }
 
-    Volume volume = applyInput(new Volume(), input);
+    Volume volume = new Volume();
+    volume.setIssues(new ArrayList<>(0));
+    volume = applyInput(volume, input);
     Journal journal = journalCrudService.readJournal(journalKey);
     journal.getVolumes().add(volume);
     hibernateTemplate.save(journal);

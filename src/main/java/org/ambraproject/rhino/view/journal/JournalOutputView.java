@@ -3,6 +3,7 @@ package org.ambraproject.rhino.view.journal;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
+import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.view.JsonOutputView;
@@ -43,18 +44,22 @@ public class JournalOutputView implements JsonOutputView {
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = context.serialize(journal).getAsJsonObject();
-    serialized.remove("currentIssue");
-    IssueOutputView currentIssueView = issueOutputViewFactory.getView(journal.getCurrentIssue());
-    serialized.add("currentIssue", currentIssueView.serialize(context));
-    serialized.remove("volumes");
 
+    serialized.remove("currentIssue");
+    Issue currentIssue = journal.getCurrentIssue();
+    if (currentIssue != null) {
+      IssueOutputView currentIssueView = issueOutputViewFactory.getView(currentIssue);
+      serialized.add("currentIssue", currentIssueView.serialize(context));
+    }
+
+    serialized.remove("volumes");
     List<VolumeOutputView> volumeOutputViews = new ArrayList<>();
     for (Volume volume : journal.getVolumes()) {
       VolumeOutputView volumeOutputView = volumeOutputViewFactory.getView(volume);
       volumeOutputViews.add(volumeOutputView);
     }
-
     serialized.add("volumes", context.serialize(volumeOutputViews));
+
     return serialized;
   }
 

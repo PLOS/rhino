@@ -47,11 +47,11 @@ public class VersionedArticleRelationship implements Timestamped {
   private int articleRelationshipId;
 
   @ManyToOne
-  @JoinColumn(name = "sourceArticleId")
+  @JoinColumn(name = "sourceArticleId", nullable = false)
   private ArticleTable sourceArticle;
 
   @ManyToOne
-  @JoinColumn(name = "targetArticleId")
+  @JoinColumn(name = "targetArticleId", nullable = false)
   private ArticleTable targetArticle;
 
   @Column

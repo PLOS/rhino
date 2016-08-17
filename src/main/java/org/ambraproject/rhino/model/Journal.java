@@ -63,13 +63,13 @@ public class Journal implements Timestamped {
   @Column
   private String title;
 
-  @JoinColumn(name = "currentIssueId")
+  @JoinColumn(name = "currentIssueId", nullable = false)
   @ManyToOne
   private Issue currentIssue;
 
   @Cascade(CascadeType.SAVE_UPDATE)
   @OneToMany(fetch = FetchType.LAZY)
-  @JoinColumn(name = "journalId")
+  @JoinColumn(name = "journalId", nullable = false)
   @OrderColumn(name="journalSortOrder")
   private List<Volume> volumes;
 
@@ -77,8 +77,8 @@ public class Journal implements Timestamped {
   @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
   @JoinTable(
       name = "articleList",
-      joinColumns = @JoinColumn(name = "journalId"),
-      inverseJoinColumns = @JoinColumn(name = "articleListId"))
+      joinColumns = @JoinColumn(name = "journalId", nullable = false),
+      inverseJoinColumns = @JoinColumn(name = "articleListId", nullable = false))
   private Collection<ArticleList> articleLists;
 
   @Generated(value= GenerationTime.INSERT)
