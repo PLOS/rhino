@@ -57,7 +57,7 @@ public class Journal implements Timestamped {
   private String eIssn;
 
   @OneToOne
-  @JoinColumn(name = "imageArticleId", nullable = false)
+  @JoinColumn(name = "imageArticleId")
   private ArticleTable imageArticle;
 
   @Column

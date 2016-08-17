@@ -53,7 +53,7 @@ public class Volume implements Timestamped {
   private String displayName;
 
   @OneToOne
-  @JoinColumn(name = "imageArticleId", nullable = false)
+  @JoinColumn(name = "imageArticleId")
   private ArticleTable imageArticle;
 
   @Generated(value= GenerationTime.INSERT)
