@@ -56,14 +56,10 @@ public class Journal implements Timestamped {
   @Column
   private String eIssn;
 
-  @OneToOne
-  @JoinColumn(name = "imageArticleId")
-  private ArticleTable imageArticle;
-
   @Column
   private String title;
 
-  @JoinColumn(name = "currentIssueId", nullable = false)
+  @JoinColumn(name = "currentIssueId")
   @ManyToOne
   private Issue currentIssue;
 
@@ -122,14 +118,6 @@ public class Journal implements Timestamped {
 
   public void seteIssn(String eIssn) {
     this.eIssn = eIssn;
-  }
-
-  public ArticleTable getImageArticle() {
-    return imageArticle;
-  }
-
-  public void setImageArticle(ArticleTable imageArticle) {
-    this.imageArticle = imageArticle;
   }
 
   public String getTitle() {
@@ -201,7 +189,6 @@ public class Journal implements Timestamped {
         "id='" + journalId + '\'' +
         ", journalKey='" + journalKey + '\'' +
         ", eIssn='" + eIssn + '\'' +
-        ", imageArticle='" + imageArticle + '\'' +
         ", title='" + title + '\'' +
         '}';
   }

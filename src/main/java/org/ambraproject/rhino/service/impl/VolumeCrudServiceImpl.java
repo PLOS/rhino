@@ -143,14 +143,6 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
       volume.setDisplayName("");
     }
 
-    String imageUri = input.getImageArticleDoi();
-    if (imageUri != null) {
-      ArticleIdentifier imageArticleId = ArticleIdentifier.create(imageUri);
-      ArticleTable imageArticle = articleCrudService.readArticle(imageArticleId);
-      volume.setImageArticle(imageArticle);
-    } else {
-      volume.setImageArticle(null);
-    }
     return volume;
   }
 }
