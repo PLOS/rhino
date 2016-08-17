@@ -150,9 +150,11 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     String toCategorize = getCategorizationContent(articleXml);
 
     Date date = article.getCreated(); // TODO: Get publication date of latest revision
+    // String journalTitle = articleCrudService.getPublicationJournal(article).getTitle();
+    String journalTitle = ""; // TODO: Get title from single journal of publication
     String header = String.format(MESSAGE_HEADER,
         new SimpleDateFormat("yyyy-MM-dd").format(date),
-        articleCrudService.getPublicationJournal(article).getTitle(),
+        journalTitle,
         "TODO",//articleTypeService.getArticleType(article).getHeading(), //todo: add article type here
         article.getDoi());
 
