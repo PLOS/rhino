@@ -181,7 +181,6 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     article.seteLocationId(readString("/article/front/article-meta/elocation-id"));
     article.setVolume(readString("/article/front/article-meta/volume"));
     article.setIssue(readString("/article/front/article-meta/issue"));
-    article.setJournal(buildJournal());
     article.setPublisherName(readString("/article/front/journal-meta/publisher/publisher-name"));
     article.setPublisherLocation(readString("/article/front/journal-meta/publisher/publisher-loc"));
 
@@ -259,23 +258,6 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     } catch (NumberFormatException e) {
       throw new XmlContentException("Expected number for page count", e);
     }
-  }
-
-  /**
-   * @return the name of the journal the article was published in
-   */
-  private String buildJournal() {
-
-    // pmc2obj-v3.xslt lines 308-311
-    String result;
-    String journalId = readString(
-        "/article/front/journal-meta/journal-id[@journal-id-type='nlm-ta']");
-    if (!Strings.isNullOrEmpty(journalId)) {
-      result = journalId;
-    } else {
-      result = readString("/article/front/journal-meta/journal-title-group/journal-title");
-    }
-    return result == null ? "" : result;
   }
 
   /**
