@@ -21,6 +21,7 @@
 
 package org.ambraproject.rhino.service;
 
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Syndication;
 
 import java.util.List;
@@ -75,20 +76,19 @@ public interface SyndicationService {
   public Syndication updateSyndication(String articleDoi, String syndicationTarget, String status, String errorMessage);
 
   /**
-   * For the Article indicated by <code>articleDoi</code>, create a new Syndication object for each possible syndication
-   * target which does not already have a Syndication object. Return the complete list of Syndication objects for this
-   * Article.
+   * For the Article, create a new Syndication object for each possible syndication target which does not already have a
+   * Syndication object. Return the complete list of Syndication objects for this Article.
    * <p/>
    * If a Syndication object for a given syndication target already exists for this Article, then the datastore will not
    * be updated for that Syndication object. This silent failure mode is useful during the re-ingestion of any Article
    * which was previously published and syndicated.
    * <p/>
    *
-   * @param articleDoi The unique identifier for the Article which was (or is to be) syndicated
+   * @param article The Article which was (or is to be) syndicated
    * @return The complete list of Syndication objects for this Article
    * @throws org.ambraproject.service.article.NoSuchArticleIdException if the article doesn't exist
    */
-  public List<Syndication> createSyndications(String articleDoi);
+  public List<Syndication> createSyndications(Article article);
 
   /**
    * Get Syndications (from the current journal) that each have a <code>status</code> of either <i>failed</i> or <i>in

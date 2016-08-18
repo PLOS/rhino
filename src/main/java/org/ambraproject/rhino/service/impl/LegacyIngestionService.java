@@ -173,12 +173,11 @@ class LegacyIngestionService {
    */
   private void persistArticle(Article article) {
     saveArticleToHibernate(article);
-    String doi = article.getDoi();
 
     createReciprocalRelationships(article);
 
     // This method needs the article to have already been persisted to the DB.
-    parentService.syndicationService.createSyndications(doi);
+    parentService.syndicationService.createSyndications(article);
   }
 
   /**

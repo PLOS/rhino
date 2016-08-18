@@ -109,13 +109,8 @@ public class SyndicationServiceImpl extends AmbraService implements SyndicationS
   @Transactional(rollbackFor = {Throwable.class})
   @Override
   @SuppressWarnings("unchecked")
-  public List<Syndication> createSyndications(String articleDoi) {
-    Article article = (Article) DataAccessUtils.uniqueResult(hibernateTemplate.findByCriteria(
-        DetachedCriteria.forClass(Article.class)
-            .add(Restrictions.eq("doi", articleDoi))));
-    if (article == null) {
-      throw new NoSuchArticleIdException(articleDoi);
-    }
+  public List<Syndication> createSyndications(Article article) {
+    String articleDoi = article.getDoi();
     if (!isSyndicatableType(article.getTypes())) {
       //don't syndicate
       return new ArrayList<>();
