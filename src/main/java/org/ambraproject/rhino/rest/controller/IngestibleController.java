@@ -14,14 +14,16 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.net.HttpHeaders;
-import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.util.Archive;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +47,7 @@ import java.util.Optional;
  */
 @Controller
 public class IngestibleController extends DoiBasedCrudController {
+  private static final Logger log = LoggerFactory.getLogger(IngestibleController.class);
 
   private static final String INGESTIBLE_ROOT = "/ingestibles";
   private static final String INGESTIBLE_NAMESPACE = INGESTIBLE_ROOT + "/";
@@ -114,8 +117,13 @@ public class IngestibleController extends DoiBasedCrudController {
     ingestibleService.archiveIngested(name);
     response.setStatus(HttpStatus.CREATED.value());
 
-    // Report the written data, as JSON, in the response.
-    articleCrudService.readMetadata(result, false).respond(request, response, entityGson);
+    try {
+      // Report the written data, as JSON, in the response.
+      articleCrudService.readMetadata(result, false).respond(request, response, entityGson);
+    } catch (Exception e) {
+      // Throwing an exception could cause a rollback. It's preferable to let the response body be broken.
+      log.error("Error writing response body after ingesting article", e);
+    }
   }
 
   @Transactional(rollbackFor = {Throwable.class})
