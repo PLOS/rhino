@@ -10,7 +10,7 @@ CREATE TABLE `journal` (
   `journalId` bigint(20) NOT NULL AUTO_INCREMENT,
   `currentIssueId` bigint(20) DEFAULT NULL,
   `journalKey` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `eIssn` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `eIssn` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `title` varchar(500) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `lastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
