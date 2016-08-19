@@ -6,9 +6,21 @@ CREATE TABLE `article` (
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`articleId`));
 
+CREATE TABLE `journal` (
+  `journalId` bigint(20) NOT NULL AUTO_INCREMENT,
+  `currentIssueId` bigint(20) DEFAULT NULL,
+  `journalKey` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `eIssn` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `title` varchar(500) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`journalId`),
+  KEY `journal_ibfk_1_idx` (`currentIssueId`));
+
 CREATE TABLE `articleIngestion` (
   `ingestionId` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `articleId` BIGINT(20) NOT NULL,
+  `journalId` BIGINT(20) NOT NULL,
   `ingestionNumber` INT NOT NULL,
   `title` TEXT NOT NULL,
   `publicationDate` DATE NOT NULL,
@@ -19,6 +31,11 @@ CREATE TABLE `articleIngestion` (
   CONSTRAINT `fk_articleIngestion_1`
     FOREIGN KEY (`articleId`)
     REFERENCES `article` (`articleId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_articleIngestion_2`
+    FOREIGN KEY (`journalId`)
+    REFERENCES `journal` (`journalId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
@@ -151,33 +168,18 @@ CREATE TABLE `commentFlag` (
   KEY `userProfileId` (`userProfileId`),
   CONSTRAINT `fk_commentFlag_1` FOREIGN KEY (`commentId`) REFERENCES `comment` (`commentId`));
 
-CREATE TABLE `journal` (
-  `journalId` bigint(20) NOT NULL AUTO_INCREMENT,
-  `currentIssueId` bigint(20) DEFAULT NULL,
-  `journalKey` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `eIssn` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `imageArticleId` bigint(20) DEFAULT NULL,
-  `title` varchar(500) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `lastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`journalId`),
-  KEY `journal_ibfk_1_idx` (`currentIssueId`),
-  CONSTRAINT `fk_journal_2` FOREIGN KEY (`imageArticleId`) REFERENCES `article` (`articleId`));
-
 CREATE TABLE `volume` (
   `volumeId` bigint(20) NOT NULL AUTO_INCREMENT,
   `doi` varchar(150) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `journalId` bigint(20) NOT NULL,
   `journalSortOrder` int(11) NOT NULL,
   `displayName` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `imageArticleId` bigint(20) DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `lastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`volumeId`),
   UNIQUE KEY `doi` (`doi`),
   KEY `journalID` (`journalId`),
-  CONSTRAINT `fk_volume_1` FOREIGN KEY (`journalId`) REFERENCES `journal` (`journalId`),
-  CONSTRAINT `fk_volume_2` FOREIGN KEY (`imageArticleId`) REFERENCES `article` (`articleId`));
+  CONSTRAINT `fk_volume_1` FOREIGN KEY (`journalId`) REFERENCES `journal` (`journalId`));
 
 CREATE TABLE `issue` (
   `issueId` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -226,19 +228,3 @@ CREATE TABLE `issueArticleList` (
   PRIMARY KEY (`issueId`,`articleId`),
   CONSTRAINT `fk_issueArticleList_1` FOREIGN KEY (`issueId`) REFERENCES `issue` (`issueId`),
   CONSTRAINT `fk_issueArticleList_2` FOREIGN KEY (`articleId`) REFERENCES `article` (`articleId`));
-
-CREATE TABLE `articleJournalJoinTable` (
-  `ingestionId` BIGINT(20) NOT NULL,
-  `journalId` BIGINT(20) NOT NULL,
-  INDEX `fk_articleJournalJoinTable_1_idx` (`ingestionId` ASC),
-  INDEX `fk_articleJournalJoinTable_2_idx` (`journalID` ASC),
-  CONSTRAINT `fk_articleJournalJoinTable_1`
-    FOREIGN KEY (`ingestionId`)
-    REFERENCES `articleIngestion` (`ingestionId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_articleJournalJoinTable_2`
-    FOREIGN KEY (`journalId`)
-    REFERENCES `journal` (`journalID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);

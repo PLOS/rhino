@@ -41,14 +41,9 @@ public class ArticleIngestion implements Timestamped {
   @Column
   private String articleType;
 
-  @Cascade(CascadeType.SAVE_UPDATE)
-  @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(
-      name = "articleJournalJoinTable",
-      joinColumns = @JoinColumn(name = "ingestionId", nullable = false),
-      inverseJoinColumns = @JoinColumn(name = "journalId", nullable = false)
-  )
-  private Set<Journal> journals;
+  @JoinColumn(name = "journalId", nullable = false)
+  @ManyToOne
+  private Journal journal;
 
   @Column
   private Date lastModified;
@@ -78,12 +73,12 @@ public class ArticleIngestion implements Timestamped {
     this.ingestionNumber = ingestionNumber;
   }
 
-  public Set<Journal> getJournals() {
-    return journals;
+  public Journal getJournal() {
+    return journal;
   }
 
-  public void setJournals(Set<Journal> journals) {
-    this.journals = journals;
+  public void setJournal(Journal journal) {
+    this.journal = journal;
   }
 
   public String getTitle() {
@@ -144,7 +139,6 @@ public class ArticleIngestion implements Timestamped {
     return "ArticleIngestion{" +
         "ingestionId=" + ingestionId +
         ", article=" + article +
-        ", journals=" + journals +
         '}';
   }
 }

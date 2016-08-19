@@ -145,8 +145,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
   public VolumeNonAssocView getParentVolumeView(Issue issue) {
     Volume parentVolume = getParentVolumeByIssue(issue);
     if (parentVolume == null) return null;
-    return new VolumeNonAssocView(parentVolume.getDoi(), parentVolume.getDisplayName(),
-        parentVolume.getImageArticle().getDoi());
+    return new VolumeNonAssocView(parentVolume.getDoi(), parentVolume.getDisplayName());
   }
 
   private Volume getParentVolumeByIssue(Issue issue) {

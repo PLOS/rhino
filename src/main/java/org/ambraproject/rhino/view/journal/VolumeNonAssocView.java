@@ -9,20 +9,16 @@ public class VolumeNonAssocView {
 
   private final String doi;
   private final String displayName;
-  private final String imageArticleDoi;
 
   public VolumeNonAssocView(String doi,
-                            String displayName,
-                            String imageArticleDoi) {
+                            String displayName) {
     this.doi = doi;
     this.displayName = displayName;
-    this.imageArticleDoi = imageArticleDoi;
   }
 
   public VolumeNonAssocView(Volume volume){
     this(volume.getDoi(),
-         volume.getDisplayName(),
-         volume.getImageArticle().getDoi());
+         volume.getDisplayName());
   }
 
 }

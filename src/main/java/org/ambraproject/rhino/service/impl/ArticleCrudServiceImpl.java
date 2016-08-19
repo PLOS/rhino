@@ -40,7 +40,6 @@ import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
-import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.VersionedArticleRelationship;
 import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -166,18 +165,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         throw e;
       }
     }
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @param article
-   */
-  @Override
-  public Journal getPublicationJournal(ArticleTable article) {
-    ArticleRevision revision = readLatestRevision(article);
-    Set<Journal> journals = revision.getIngestion().getJournals();
-    return journals.iterator().next(); // TODO: Need original journal?
   }
 
   @Override

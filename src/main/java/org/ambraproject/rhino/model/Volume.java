@@ -52,10 +52,6 @@ public class Volume implements Timestamped {
   @Column
   private String displayName;
 
-  @OneToOne
-  @JoinColumn(name = "imageArticleId")
-  private ArticleTable imageArticle;
-
   @Generated(value= GenerationTime.INSERT)
   @Temporal(javax.persistence.TemporalType.TIMESTAMP)
   @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
@@ -103,14 +99,6 @@ public class Volume implements Timestamped {
 
   public void setDisplayName(String displayName) {
     this.displayName = displayName;
-  }
-
-  public ArticleTable getImageArticle() {
-    return imageArticle;
-  }
-
-  public void setImageArticle(ArticleTable imageArticle) {
-    this.imageArticle = imageArticle;
   }
 
   public Date getCreated() {

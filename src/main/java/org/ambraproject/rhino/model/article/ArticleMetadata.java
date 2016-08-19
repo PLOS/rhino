@@ -24,7 +24,6 @@ public class ArticleMetadata {
 
   private final String volume;
   private final String issue;
-  private final String journal;
 
   private final String publisherLocation;
   private final String publisherName;
@@ -53,7 +52,6 @@ public class ArticleMetadata {
     this.publicationDate = builder.publicationDate;
     this.volume = builder.volume;
     this.issue = builder.issue;
-    this.journal = builder.journal;
     this.publisherLocation = builder.publisherLocation;
     this.publisherName = builder.publisherName;
     this.url = builder.url;
@@ -112,10 +110,6 @@ public class ArticleMetadata {
 
   public String getIssue() {
     return issue;
-  }
-
-  public String getJournal() {
-    return journal;
   }
 
   public String getPublisherLocation() {
@@ -182,7 +176,6 @@ public class ArticleMetadata {
 
     private String volume;
     private String issue;
-    private String journal;
 
     private String publisherLocation;
     private String publisherName;
@@ -262,11 +255,6 @@ public class ArticleMetadata {
       return this;
     }
 
-    public Builder setJournal(String journal) {
-      this.journal = journal;
-      return this;
-    }
-
     public Builder setPublisherLocation(String publisherLocation) {
       this.publisherLocation = publisherLocation;
       return this;
@@ -339,7 +327,6 @@ public class ArticleMetadata {
     }
     if (volume != null ? !volume.equals(that.volume) : that.volume != null) return false;
     if (issue != null ? !issue.equals(that.issue) : that.issue != null) return false;
-    if (journal != null ? !journal.equals(that.journal) : that.journal != null) return false;
     if (publisherLocation != null ? !publisherLocation.equals(that.publisherLocation) : that.publisherLocation != null) {
       return false;
     }
@@ -374,7 +361,6 @@ public class ArticleMetadata {
     result = 31 * result + (publicationDate != null ? publicationDate.hashCode() : 0);
     result = 31 * result + (volume != null ? volume.hashCode() : 0);
     result = 31 * result + (issue != null ? issue.hashCode() : 0);
-    result = 31 * result + (journal != null ? journal.hashCode() : 0);
     result = 31 * result + (publisherLocation != null ? publisherLocation.hashCode() : 0);
     result = 31 * result + (publisherName != null ? publisherName.hashCode() : 0);
     result = 31 * result + (url != null ? url.hashCode() : 0);

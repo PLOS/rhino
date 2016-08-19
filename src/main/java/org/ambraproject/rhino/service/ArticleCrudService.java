@@ -30,7 +30,6 @@ import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
-import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.VersionedArticleRelationship;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
@@ -64,17 +63,6 @@ public interface ArticleCrudService {
    * @throws org.ambraproject.rhino.rest.RestClientException if the DOI does not belong to an article
    */
   public abstract InputStream readXml(ArticleIdentity id);
-
-  /**
-   * Retrieve an article's publication {@code journal} field based on the article's {@code eIssn} field. Always expects
-   * {@code eIssn} to match to a journal in the system.
-   *
-   * @param article the article to modify
-   * @throws RestClientException if {@code article.eIssn} is null or the {@code article.eIssn} isn't matched to a
-   *                             journal in the database
-   */
-
-  public abstract Journal getPublicationJournal(ArticleTable article) throws RestClientException;
 
   /**
    * Read the metadata of an article.
