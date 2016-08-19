@@ -24,6 +24,7 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 
+import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -36,8 +37,8 @@ public class SpringPlaceholderConfigurer extends PropertyPlaceholderConfigurer {
   protected String resolvePlaceholder(String placeholder, Properties properties) {
     Configuration conf;
     try {
-      conf = LegacyConfiguration.loadDefaultConfiguration();
-    } catch (ConfigurationException e) {
+      conf = new LegacyConfiguration(RhinoConfiguration.getConfigDirectory()).loadDefaultConfiguration();
+    } catch (ConfigurationException | IOException e) {
       throw new RuntimeException(e);
     }
 

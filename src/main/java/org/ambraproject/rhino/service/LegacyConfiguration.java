@@ -36,7 +36,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Collection;
 import java.util.Enumeration;
 
 /**
@@ -63,7 +62,7 @@ public class LegacyConfiguration {
    * A property used to define the location of the master set of configuration overrides. This is usually a xml or
    * properties file in /etc somewhere. Note that this must be a URL. (For example: file:///etc/ambra/ambra.xml.)
    */
-  private static final String CONFIG_URL = "ambra.configuration";
+  private static final String CONFIG_URL_PROPERTY_NAME = "ambra.configuration";
 
   /**
    * A property used to define overrides. This is primarily to support something like a development mode. If a valid
@@ -71,33 +70,13 @@ public class LegacyConfiguration {
    */
   private static final String OVERRIDES_URL = "ambra.configuration.overrides";
 
-  /**
-   * Default configuration overrides in /etc
-   */
-  private static final String DEFAULT_CONFIG_URL = "file:///etc/ambra/ambra.xml";
-
-  /**
-   * <p>Name of resource(s) that contain defaults in a given journal</p> <p> <p>There is one per journal.</p>
-   */
-  private static final String JOURNAL_DIRECTORY = "/configuration/journal.xml";
   private static final String DEFAULTS_RESOURCE = "ambra/configuration/defaults.xml";
 
-  /**
-   * The name of the global defaults that exist in this library.<p>
-   * <p>
-   * It is assumed there is only one of these in the classpath. If somebody defines a second copy of this, the results
-   * are undefined. (TODO: Detect this.)
-   */
-  private static final String GLOBAL_DEFAULTS_RESOURCE = "/ambra/configuration/global-defaults.xml";
+  private final File configDir;
 
-  /**
-   * Location of journal templates
-   */
-  private static final String JOURNAL_TEMPLATE_DIR = "ambra.virtualJournals.templateDir";
-  private static final String JOURNALS = "ambra.virtualJournals.journals";
-
-  private LegacyConfiguration() {
-    throw new AssertionError("Not instantiable");
+  public LegacyConfiguration(File configDir) throws FileNotFoundException {
+    if (!configDir.exists()) throw new FileNotFoundException();
+    this.configDir = configDir;
   }
 
   /**
@@ -141,7 +120,6 @@ public class LegacyConfiguration {
     // Add defaults.xml from classpath
     addResources(defaults, DEFAULTS_RESOURCE);
     // Add journal.xml from journals/journal-name/configuration/journal.xml
-    addJournalResources(root, defaults, JOURNAL_DIRECTORY);
     root.addConfiguration(defaults);
 
     if (log.isDebugEnabled()) {
@@ -157,19 +135,28 @@ public class LegacyConfiguration {
    *
    * @throws ConfigurationException when the configuration can't be found.
    */
-  public static CombinedConfiguration loadDefaultConfiguration() throws ConfigurationException {
+  public CombinedConfiguration loadDefaultConfiguration() throws ConfigurationException {
+    final URL configUrl;
+
     // Allow JVM level property to override everything else
-    String name = System.getProperty(CONFIG_URL);
-    if (name == null) {
-      name = DEFAULT_CONFIG_URL;
+    String configUrlProperty = System.getProperty(CONFIG_URL_PROPERTY_NAME);
+    if (configUrlProperty != null) {
+      try {
+        configUrl = new URL(configUrlProperty);
+      } catch (MalformedURLException e) {
+        throw new ConfigurationException("Invalid value of '" + configUrlProperty + "' for '" + CONFIG_URL_PROPERTY_NAME +
+            "'. Must be a valid URL.");
+      }
+    } else {
+      File configFile = new File(configDir, "ambra.xml");
+      try {
+        configUrl = configFile.toURI().toURL();
+      } catch (MalformedURLException e) {
+        throw new RuntimeException(e);
+      }
     }
 
-    try {
-      return loadConfiguration(new URL(name));
-    } catch (MalformedURLException e) {
-      throw new ConfigurationException("Invalid value of '" + name + "' for '" + CONFIG_URL +
-          "'. Must be a valid URL.");
-    }
+    return loadConfiguration(configUrl);
   }
 
   /**
@@ -213,24 +200,4 @@ public class LegacyConfiguration {
     }
   }
 
-  private static void addJournalResources(CombinedConfiguration root, CombinedConfiguration defaults, String path)
-      throws ConfigurationException {
-
-    Collection<String> journals = root.getList(JOURNALS);
-    String journalTemplatePath = root.getString(JOURNAL_TEMPLATE_DIR, "/");
-
-    for (String journal : journals) {
-
-      String resourcePath = journalTemplatePath
-          + (journalTemplatePath.endsWith("/") ? "journals/" : "/journals/")
-          + journal
-          + path;
-
-      File defaultsXmlFile = new File(resourcePath);
-      if (defaultsXmlFile.isFile() && defaultsXmlFile.canRead()) {
-        defaults.addConfiguration(new XMLConfiguration(defaultsXmlFile));
-        log.info("Added resource '" + resourcePath + "' to configuration");
-      }
-    }
-  }
 }

@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.config;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.ambraproject.rhino.config.json.AdapterRegistry;
@@ -170,10 +171,11 @@ public class RhinoConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public org.apache.commons.configuration.Configuration ambraConfiguration() {
+  public org.apache.commons.configuration.Configuration ambraConfiguration()
+      throws IOException {
     // Fetch from Ambra's custom container
     try {
-      return LegacyConfiguration.loadDefaultConfiguration();
+      return new LegacyConfiguration(getConfigDirectory()).loadDefaultConfiguration();
     } catch (ConfigurationException e) {
       throw new RuntimeException(e);
     }
@@ -318,9 +320,23 @@ public class RhinoConfiguration extends BaseConfiguration {
     return new Yaml();
   }
 
+
+  private static final String CONFIG_DIR_PROPERTY_NAME = "rhino.configDir";
+
+  static File getConfigDirectory() {
+    String property = System.getProperty(CONFIG_DIR_PROPERTY_NAME);
+    if (!Strings.isNullOrEmpty(property)) {
+      return new File(property);
+    } else {
+      throw new RuntimeException("Config directory not found. " + CONFIG_DIR_PROPERTY_NAME + " must be defined.");
+    }
+  }
+
   @Bean
-  public RuntimeConfiguration runtimeConfiguration(Yaml yaml) throws Exception {
-    final File configPath = new File("/etc/ambra/rhino.yaml");
+  public RuntimeConfiguration runtimeConfiguration(Yaml yaml)
+      throws IOException {
+    File configDir = getConfigDirectory();
+    File configPath = new File(configDir, "rhino.yaml");
     if (!configPath.exists()) {
       throw new RuntimeConfigurationException(configPath.getAbsolutePath() + " not found");
     }
