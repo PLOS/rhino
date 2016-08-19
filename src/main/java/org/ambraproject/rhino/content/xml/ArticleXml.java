@@ -288,10 +288,10 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
   private String parseArticleHeading() {
     List<String> headings = readTextList("/article/front/article-meta/article-categories/"
         + "subj-group[@subj-group-type = 'heading']/subject");
-    if (headings.size() != 1) {
-      throw new XmlContentException("Must contain exactly one subject group with subj-group-type=\"heading\"");
+    if (headings.size() > 1) {
+      throw new XmlContentException("Must not contain more than one subject group with subj-group-type=\"heading\"");
     }
-    return headings.get(0);
+    return headings.isEmpty() ? null : headings.get(0);
   }
 
 
