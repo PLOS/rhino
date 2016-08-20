@@ -211,10 +211,7 @@ CREATE PROCEDURE migrate_articles()
     DECLARE done INT DEFAULT FALSE;
 
     DECLARE old_articles_cursor CURSOR FOR
-      SELECT articleID FROM oldArticle
-      ORDER BY rand()
-      LIMIT 10;
-    #WHERE doi LIKE '%pbio.1002509%';
+      SELECT articleID FROM oldArticle;
 
     DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
     BEGIN
