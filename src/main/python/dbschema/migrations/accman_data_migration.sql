@@ -28,7 +28,6 @@ CREATE PROCEDURE migrate_article_rollback(IN article_id BIGINT)
       DELETE FROM `comment` WHERE articleId = article_id;
       SET FOREIGN_KEY_CHECKS=1;
       DELETE FROM articleCategoryAssignment WHERE articleId = article_id;
-      DELETE FROM articleJournalJoinTable WHERE ingestionId = ingestion_id;
       DELETE FROM articleListJoinTable WHERE articleId = article_id;
       DELETE FROM issueArticleList WHERE articleId = article_id;
       DELETE FROM articleFile WHERE ingestionId = ingestion_id;
@@ -62,6 +61,8 @@ CREATE PROCEDURE migrate_article(IN article_id BIGINT)
     DECLARE prev_asset_doi VARCHAR(150) DEFAULT '';
     DECLARE asset_extension VARCHAR(10);
     DECLARE context_element VARCHAR(30);
+    DECLARE article_type VARCHAR(100);
+    DECLARE journal_id BIGINT;
     DECLARE crepo_key VARCHAR(255);
     DECLARE crepo_uuid CHAR(36);
     DECLARE err_msg VARCHAR(1024);
@@ -87,15 +88,30 @@ CREATE PROCEDURE migrate_article(IN article_id BIGINT)
       IF article_doi <> '' THEN
 
         SET article_doi_name = get_doi_name(article_doi);
-        INSERT INTO article
-        (articleId, doi, created)
+        INSERT INTO article (articleId, doi, created)
         VALUES (article_id, article_doi_name, NOW());
+
+        # use capitalized article type and remove URI prefix and escaped spaces (i.e. "http://rdf.plos.org/RDF/articleType/Message%20from%20PLoS" becomes "Message from PLoS")
+        SELECT REPLACE(REPLACE(MIN(type),'http://rdf.plos.org/RDF/articleType/',''),'%20',' ')
+        INTO article_type
+        FROM articleType
+        WHERE articleID = article_id AND type IS NOT NULL;
+
+        # fix the couple cases where the capitalized version is not present (only occurs in research article type)
+        IF article_type = 'research-article' THEN
+          SET article_type = 'Research Article';
+        END IF;
+
+        # find published journal (use MAX() to select clinical trials journal for cross-published records)
+        SELECT MAX(journalID)
+        INTO journal_id
+        FROM articlePublishedJournals
+        WHERE articleID = article_id;
 
         SET title_XML_prefix = '<article-title xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink">';
         SET title_XML_postfix = '</article-title>';
-        INSERT INTO articleIngestion
-        (articleId, ingestionNumber, title, publicationDate, created, lastModified)
-        VALUES (article_id, 1, CONCAT(title_XML_prefix, article_title, title_XML_postfix), pub_date, NOW(), NOW());
+        INSERT INTO articleIngestion (articleId, ingestionNumber, journalId, title, publicationDate, articleType, created, lastModified)
+        VALUES (article_id, 1, journal_id, CONCAT(title_XML_prefix, article_title, title_XML_postfix), pub_date, article_type, NOW(), NOW());
 
         SET ingestion_id = LAST_INSERT_ID();
 
@@ -211,7 +227,10 @@ CREATE PROCEDURE migrate_articles()
     DECLARE done INT DEFAULT FALSE;
 
     DECLARE old_articles_cursor CURSOR FOR
-      SELECT articleID FROM oldArticle;
+      SELECT articleID FROM oldArticle
+      ORDER BY rand();
+    #LIMIT 10;
+    #WHERE doi LIKE '%pbio.1002509%';
 
     DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
     BEGIN
@@ -223,6 +242,22 @@ CREATE PROCEDURE migrate_articles()
     END;
 
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    CREATE TABLE IF NOT EXISTS migration_status_log (
+      articleId BIGINT(20) NOT NULL,
+      migration_date DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+      migration_status INT(11) DEFAULT NULL,
+      error_message VARCHAR(255) DEFAULT NULL);
+
+    # replace the temporary records added by the migrate_article.py script
+    IF EXISTS (SELECT journalID FROM oldJournal WHERE journalID NOT IN (SELECT journalId FROM journal)) THEN
+      SET FOREIGN_KEY_CHECKS=0;
+      DELETE FROM journal;
+      INSERT INTO journal (journalId, journalKey, eIssn, title, created, lastModified)
+        SELECT journalID, journalKey, eIssn, title, created, lastModified
+        FROM oldJournal;
+      SET FOREIGN_KEY_CHECKS=1;
+    END IF;
 
     OPEN old_articles_cursor;
     article_loop: LOOP
@@ -239,11 +274,6 @@ CREATE PROCEDURE migrate_articles()
 
     # the insert statements below are designed to be able to run incrementally without causing
     # duplication errors in the case we need to run a secondary migration for a partial list of articles IDs
-
-    DELETE FROM journal; # clears the temporary records added by the migrate_article.py script
-    INSERT INTO journal (journalId, journalKey, eIssn, title, created, lastModified)
-      SELECT journalID, journalKey, eIssn, title, created, lastModified
-      FROM oldJournal;
 
     INSERT INTO articleList
       SELECT * FROM oldArticleList
@@ -280,11 +310,7 @@ CREATE PROCEDURE migrate_articles()
       SELECT acjt.* FROM articleCategoryJoinTable acjt INNER JOIN article a ON acjt.articleID = a.articleId
       WHERE acjt.articleID NOT IN (SELECT articleId FROM articleCategoryAssignment);
 
-    INSERT INTO articleJournalJoinTable
-      SELECT ingestionId, journalID FROM articleIngestion ai INNER JOIN articlePublishedJournals apj ON ai.articleId = apj.articleID
-      WHERE ingestionId NOT IN (SELECT ingestionId FROM articleJournalJoinTable);
-
-    SET FOREIGN_KEY_CHECKS=0; # necessary becasue of parent/child relationships
+    SET FOREIGN_KEY_CHECKS=0; # necessary because of parent/child relationships
     INSERT INTO `comment` (commentId, commentURI, articleId, parentId, userProfileId, title, body, competingInterestBody, highlightedText, created, lastModified, isRemoved)
       SELECT annotationID, get_doi_name(annotationURI), ann.articleID, parentID, userProfileID, title, body, competingInterestBody, highlightedText, ann.created, ann.lastModified, isRemoved
       FROM annotation ann INNER JOIN article a ON ann.articleID = a.articleId
@@ -295,8 +321,8 @@ CREATE PROCEDURE migrate_articles()
       SELECT af.* FROM annotationFlag af INNER JOIN `comment` c ON af.annotationID = c.commentId
       WHERE annotationFlagID NOT IN (SELECT commentFlagId FROM commentFlag);
 
-    INSERT INTO syndication (syndicationId, tergetQueue, status, submissionCount, errorMessage, created, lastSubmitTimestamp, lastModified, revisionId)
-      SELECT syndicationID, target, status, submissionCount, errorMessage, os.created, lastSubmitTimestamp, os.lastModified,
+    INSERT INTO syndication (syndicationId, targetQueue, status, submissionCount, errorMessage, created, lastSubmitTimestamp, lastModified, revisionId)
+      SELECT syndicationID, target, `status`, submissionCount, errorMessage, os.created, lastSubmitTimestamp, os.lastModified,
         (SELECT revisionId FROM articleRevision ar INNER JOIN articleIngestion ai ON ar.ingestionId = ai.ingestionId WHERE ai.articleId = a.articleId)
       FROM oldSyndication os INNER JOIN oldArticle oa ON os.doi = oa.doi INNER JOIN article a ON oa.articleID = a.articleId
       WHERE os.syndicationID NOT IN (SELECT syndicationId FROM syndication);
