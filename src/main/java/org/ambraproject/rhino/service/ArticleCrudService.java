@@ -32,7 +32,6 @@ import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.VersionedArticleRelationship;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.ResolvedDoiView;
@@ -126,14 +125,6 @@ public interface ArticleCrudService {
    * @param articleCriteria description of the subset of articles to list
    */
   public abstract Transceiver listDois(ArticleCriteria articleCriteria)
-      throws IOException;
-
-  /**
-   * Carry out a query for recent articles.
-   *
-   * @see org.ambraproject.rhino.service.impl.RecentArticleQuery
-   */
-  public abstract Transceiver listRecent(RecentArticleQuery query)
       throws IOException;
 
   /**

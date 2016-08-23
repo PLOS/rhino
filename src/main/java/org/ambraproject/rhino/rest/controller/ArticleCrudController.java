@@ -33,14 +33,12 @@ import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.ArticleRevisionWriteService;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.SyndicationCrudService;
-import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.SyndicationInputView;
 import org.ambraproject.rhino.view.article.versioned.ArticleRevisionView;
 import org.ambraproject.rhino.view.article.versioned.RelationshipSetView;
 import org.ambraproject.rhino.view.article.versioned.SyndicationView;
-import org.ambraproject.rhombat.HttpDateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,25 +101,6 @@ public class ArticleCrudController extends RestController {
    */
   private static <E> List<E> asList(E[] array) {
     return (array == null) ? null : Arrays.asList(array);
-  }
-
-  @Transactional(readOnly = true)
-  @RequestMapping(value = "/articles", params = {"since", "journal"}, method = RequestMethod.GET)
-  public void listRecent(HttpServletRequest request, HttpServletResponse response,
-                         @RequestParam(value = "since", required = true) String since,
-                         @RequestParam(value = "journal", required = true) String journalKey,
-                         @RequestParam(value = "min", required = false) Integer minimum,
-                         @RequestParam(value = "type", required = false) String[] articleTypes,
-                         @RequestParam(value = "exclude", required = false) String[] typesToExclude)
-      throws IOException {
-    RecentArticleQuery query = RecentArticleQuery.builder()
-        .setJournalKey(journalKey)
-        .setThreshold(HttpDateUtil.parse(since))
-        .setArticleTypes(asList(articleTypes))
-        .setExcludedArticleTypes(asList(typesToExclude))
-        .setMinimum(minimum == null || minimum == 0 ? null : minimum)
-        .build();
-    articleCrudService.listRecent(query).respond(request, response, entityGson);
   }
 
   /**
