@@ -1,20 +1,13 @@
 package org.ambraproject.rhino.model;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.sql.Date;
-import java.util.Set;
 
 @Entity
 @Table(name = "articleIngestion")
@@ -34,6 +27,9 @@ public class ArticleIngestion implements Timestamped {
 
   @Column
   private Date publicationDate;
+
+  @Column
+  private Date revisionDate;
 
   @Column
   private int ingestionNumber;
@@ -95,6 +91,14 @@ public class ArticleIngestion implements Timestamped {
 
   public void setPublicationDate(Date publicationDate) {
     this.publicationDate = publicationDate;
+  }
+
+  public Date getRevisionDate() {
+    return revisionDate;
+  }
+
+  public void setRevisionDate(Date revisionDate) {
+    this.revisionDate = revisionDate;
   }
 
   public String getArticleType() {

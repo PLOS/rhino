@@ -58,12 +58,12 @@ public class PersistentArticleView implements JsonOutputView {
       serialized.addProperty("revisionNumber", latestRevision.getRevisionNumber());
 
       ArticleIngestion ingestion = latestRevision.getIngestion();
+      serialized.add("journal", context.serialize(ingestion.getJournal()));
       serialized.addProperty("ingestionNumber", ingestion.getIngestionNumber());
       serialized.addProperty("title", ingestion.getTitle());
       serialized.addProperty("publicationDate", ingestion.getPublicationDate().toLocalDate().toString());
+      serialized.addProperty("revisionDate", ingestion.getRevisionDate().toLocalDate().toString());
       serialized.addProperty("articleType", ingestion.getArticleType());
-      // TODO: Journal of publication (when there is only one)?
-      // TODO: Revision date?
     });
 
     return serialized;

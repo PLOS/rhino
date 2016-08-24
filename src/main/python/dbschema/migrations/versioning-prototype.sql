@@ -24,6 +24,7 @@ CREATE TABLE `articleIngestion` (
   `ingestionNumber` INT NOT NULL,
   `title` TEXT NOT NULL,
   `publicationDate` DATE NOT NULL,
+  `revisionDate` DATE NOT NULL,
   `articleType` VARCHAR(100) DEFAULT NULL,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `lastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

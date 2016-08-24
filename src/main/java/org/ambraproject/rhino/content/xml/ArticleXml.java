@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.content.xml;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
@@ -185,7 +186,9 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     article.setPublisherLocation(readString("/article/front/journal-meta/publisher/publisher-loc"));
 
     article.setLanguage(parseLanguage(readString("/article/@xml:lang")));
-    article.setPublicationDate(parseDate(readNode("/article/front/article-meta/pub-date[@pub-type=\"epub\"]")));
+    LocalDate publicationDate = parseDate(readNode("/article/front/article-meta/pub-date[@pub-type=\"epub\"]"));
+    article.setPublicationDate(publicationDate);
+    article.setRevisionDate(getRevisionDate(publicationDate));
 
     article.setNlmArticleType(readString("/article/@article-type"));
     article.setArticleType(parseArticleHeading());
@@ -358,4 +361,14 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     }).collect(Collectors.toList());
   }
 
+  //todo: implement once we know where and how revision dates are stored in the manuscript.
+  //See DPRO-2893. This method should also fail gracefully if revision date is absent.
+  public LocalDate getRevisionDate(LocalDate publicationDate) {
+    Optional<LocalDate> revisionDate = Optional.absent();
+    if (revisionDate.isPresent()) {
+      return revisionDate.get();
+    } else {
+      return publicationDate;
+    }
+  }
 }
