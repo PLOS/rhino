@@ -59,19 +59,16 @@ class ArticlePackageBuilder {
   public ArticlePackage build() {
     Map<String, RepoObjectInput> articleObjects = buildArticleObjects();
     List<ArticleItemInput> assetWorks = buildAssetWorks(article.findAllAssetNodes());
-    List<RepoObjectInput> archivalFiles = manifest.getArchivalFiles().stream()
+    List<RepoObjectInput> ancillaryFiles = manifest.getAncillaryFiles().stream()
         .map(this::buildObjectFor).collect(Collectors.toList());
 
     return new ArticlePackage(new ArticleItemInput(articleIdentity, articleObjects, AssetType.ARTICLE.identifier),
-        assetWorks, archivalFiles);
+        assetWorks, ancillaryFiles);
   }
 
   private RepoObjectInput buildObjectFor(ManifestXml.Asset asset, ManifestXml.Representation representation) {
     ManifestXml.ManifestFile manifestFile = representation.getFile();
     String mimetype = manifestFile.getMimetype();
-    if (mimetype == null) {
-      mimetype = AssetFileIdentity.create(asset.getUri(), representation.getName()).inferContentType().toString();
-    }
     return buildObject(manifestFile, mimetype);
   }
 
@@ -114,7 +111,7 @@ class ArticlePackageBuilder {
       ImmutableMap.Builder<String, RepoObjectInput> assetObjects = ImmutableMap.builder();
       Doi assetIdentity = Doi.create(asset.getUri());
       for (ManifestXml.Representation representation : asset.getRepresentations()) {
-        FileType fileType = assetType.getFileType(representation.getName()); // TODO: Use representation.getType instead
+        FileType fileType = assetType.getFileType(representation.getType()); // TODO: Change AssetType.getFileType implementation
         assetObjects.put(fileType.identifier, buildObjectFor(representation.getFile()));
       }
       works.add(new ArticleItemInput(assetIdentity, assetObjects.build(), assetType.identifier));

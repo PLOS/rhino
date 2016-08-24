@@ -42,18 +42,15 @@ public class AssetTableTest {
   @DataProvider
   public Object[][] ingestibles() {
     File[] ingestibles = new File("src/test/resources/articles/").listFiles((dir, name) -> name.endsWith(".zip"));
-    return Lists.transform(Arrays.asList(ingestibles), new Function<File, Object[]>() {
-      @Override
-      public Object[] apply(File file) {
-        try {
-          Archive archive = Archive.readZipFileIntoMemory(file);
-          ManifestXml manifest = new ManifestXml(parseFrom(archive, "MANIFEST.xml"));
-          String articleEntryName = manifest.getArticleXml();
-          ArticleXml article = new ArticleXml(parseFrom(archive, articleEntryName));
-          return new Object[]{manifest, article};
-        } catch (IOException e) {
-          throw new RuntimeException(e);
-        }
+    return Lists.transform(Arrays.asList(ingestibles), file -> {
+      try {
+        Archive archive = Archive.readZipFileIntoMemory(file);
+        ManifestXml manifest = new ManifestXml(parseFrom(archive, "MANIFEST.xml"));
+        String articleEntryName = manifest.getArticleAsset().getRepresentation("manuscript").get().getFile().getEntry();
+        ArticleXml article = new ArticleXml(parseFrom(archive, articleEntryName));
+        return new Object[]{manifest, article};
+      } catch (IOException e) {
+        throw new RuntimeException(e);
       }
     }).toArray(new Object[0][]);
   }

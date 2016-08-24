@@ -1,6 +1,5 @@
 package org.ambraproject.rhino.service.impl;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
 import org.ambraproject.rhino.content.xml.ArticleXml;
@@ -72,18 +71,17 @@ public class VersionedIngestionService extends AmbraService {
       manifestXml = new ManifestXml(AmbraService.parseXml(manifestStream));
     }
 
-    // TODO: reinstate the validation check when AccMan friendly zip files become more readily available
-    // validateManifestCompleteness(manifestXml, archive);
-    log.warn("*** Skipping validation of manifest to accommodate ingestion of legacy zip files ***");
+    validateManifestCompleteness(manifestXml, archive);
 
     ImmutableList<ManifestXml.Asset> assets = manifestXml.getAssets();
-    ManifestXml.Asset manuscriptAsset = findManuscriptAsset(assets);
-    ManifestXml.Representation manuscriptRepr = findManuscriptRepr(manuscriptAsset);
-    Optional<ManifestXml.Representation> printableRepr = findPrintableRepr(manuscriptAsset);
+    ManifestXml.Asset manuscriptAsset = manifestXml.getArticleAsset();
+    ManifestXml.Representation manuscriptRepr = manuscriptAsset.getRepresentation("manuscript")
+        .orElseThrow(() -> new RestClientException("Manuscript entry not found in manifest", HttpStatus.BAD_REQUEST));
+    Optional<ManifestXml.Representation> printableRepr = manuscriptAsset.getRepresentation("printable");
 
     String manuscriptEntry = manuscriptRepr.getFile().getEntry();
     if (!archive.getEntryNames().contains(manifestEntry)) {
-      throw new RestClientException("Manifest refers to missing file as main-entry: " + manuscriptEntry, HttpStatus.BAD_REQUEST);
+      throw new RestClientException("Manuscript file not found in archive: " + manuscriptEntry, HttpStatus.BAD_REQUEST);
     }
 
     ArticleXml parsedArticle;
@@ -184,7 +182,7 @@ public class VersionedIngestionService extends AmbraService {
         manifest.getAssets().stream()
             .flatMap(asset -> asset.getRepresentations().stream())
             .map(ManifestXml.Representation::getFile),
-        manifest.getArchivalFiles().stream());
+        manifest.getAncillaryFiles().stream());
     Set<String> manifestEntryNames = manifestFiles
         .map(ManifestXml.ManifestFile::getEntry)
         .collect(Collectors.toSet());
@@ -195,7 +193,10 @@ public class VersionedIngestionService extends AmbraService {
       String message = "Manifest is not consistent with files in archive."
           + (missingFromArchive.isEmpty() ? "" : (" Files in manifest not included in archive: " + missingFromArchive))
           + (missingFromManifest.isEmpty() ? "" : (" Files in archive not described in manifest: " + missingFromManifest));
-      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+
+      // TODO: reinstate the validation check when AccMan friendly zip files become more readily available
+      log.warn("*** Skipping validation of manifest to accommodate ingestion of legacy zip files ***");
+      // throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -205,7 +206,7 @@ public class VersionedIngestionService extends AmbraService {
       ArticleTable existingParentArticle = existingItem.getIngestion().getArticle();
       if (!Doi.create(existingParentArticle.getDoi()).equals(articleDoi)) {
         String errorMessage = String.format("Incoming article ingestion (doi:%s) has a duplicate " +
-            "article asset (doi:%s). Duplicate asset belongs to article doi: %s.",
+                "article asset (doi:%s). Duplicate asset belongs to article doi: %s.",
             articleDoi.getName(), assetDoi, existingParentArticle.getDoi());
         throw new RestClientException(errorMessage, HttpStatus.BAD_REQUEST);
       }
@@ -216,7 +217,7 @@ public class VersionedIngestionService extends AmbraService {
     for (ArticleItemInput work : articlePackage.getAllWorks()) {
       persistItem(work, ingestionId);
     }
-    persistArchivalFiles(articlePackage, ingestionId);
+    persistAncillaryFiles(articlePackage, ingestionId);
   }
 
   private long persistItem(ArticleItemInput work, long ingestionId) {
@@ -257,20 +258,20 @@ public class VersionedIngestionService extends AmbraService {
     });
   }
 
-  private void persistArchivalFiles(ArticlePackage articlePackage, long ingestionId) {
-    List<RepoVersion> archivalFiles = articlePackage.getArchivalFiles().stream()
-        .map(archivalFile -> contentRepoService.autoCreateRepoObject(archivalFile).getVersion())
+  private void persistAncillaryFiles(ArticlePackage articlePackage, long ingestionId) {
+    List<RepoVersion> ancillaryFiles = articlePackage.getAncillaryFiles().stream()
+        .map(ancillaryFile -> contentRepoService.autoCreateRepoObject(ancillaryFile).getVersion())
         .collect(Collectors.toList());
     hibernateTemplate.execute(session -> {
-      for (RepoVersion archivalFile : archivalFiles) {
+      for (RepoVersion ancillaryFile : ancillaryFiles) {
         SQLQuery insertFile = session.createSQLQuery("" +
             "INSERT INTO articleFile (ingestionId, bucketName, crepoKey, crepoUuid) " +
             "  VALUES (:ingestionId, :bucketName, :crepoKey, :crepoUuid)");
         insertFile.setParameter("ingestionId", ingestionId);
-        RepoId repoId = archivalFile.getId();
+        RepoId repoId = ancillaryFile.getId();
         insertFile.setParameter("bucketName", repoId.getBucketName());
         insertFile.setParameter("crepoKey", repoId.getKey());
-        insertFile.setParameter("crepoUuid", archivalFile.getUuid().toString());
+        insertFile.setParameter("crepoUuid", ancillaryFile.getUuid().toString());
         insertFile.executeUpdate();
       }
       return null;
@@ -287,34 +288,6 @@ public class VersionedIngestionService extends AmbraService {
       String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
       return new RestClientException(msg, HttpStatus.BAD_REQUEST);
     });
-  }
-
-
-  private ManifestXml.Asset findManuscriptAsset(List<ManifestXml.Asset> assets) {
-    for (ManifestXml.Asset asset : assets) {
-      if (asset.getMainEntry().isPresent()) {
-        return asset;
-      }
-    }
-    throw new RestClientException("main-entry not found", HttpStatus.BAD_REQUEST);
-  }
-
-  private Optional<ManifestXml.Representation> findPrintableRepr(ManifestXml.Asset manuscriptAsset) {
-    Preconditions.checkArgument(manuscriptAsset.getMainEntry().isPresent(), "manuscriptAsset must have main-entry");
-    return manuscriptAsset.getRepresentations().stream()
-        .filter(representation -> representation.getName().equals("PDF"))
-        .findAny();
-  }
-
-  private ManifestXml.Representation findManuscriptRepr(ManifestXml.Asset manuscriptAsset) {
-    Optional<String> mainEntry = manuscriptAsset.getMainEntry();
-    Preconditions.checkArgument(mainEntry.isPresent(), "manuscriptAsset must have main-entry");
-    for (ManifestXml.Representation representation : manuscriptAsset.getRepresentations()) {
-      if (representation.getFile().getEntry().equals(mainEntry.get())) {
-        return representation;
-      }
-    }
-    throw new RestClientException("main-entry not matched to asset", HttpStatus.BAD_REQUEST);
   }
 
 

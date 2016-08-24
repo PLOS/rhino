@@ -14,6 +14,7 @@
 package org.ambraproject.rhino.content.xml;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import org.w3c.dom.Node;
 
@@ -40,15 +41,19 @@ public class ManifestXml extends AbstractXpathReader {
     }
   }
 
-  private static <T, K> void validateUniqueKeys(Collection<? extends T> values, Function<T, K> keyFunction) {
-    Map<K, T> keys = Maps.newHashMapWithExpectedSize(values.size());
+  // Like Maps.uniqueIndex, but in case of key collision, throws ManifestDataException with a helpful message
+  private static <T, K> ImmutableMap<K, T> mapByUniqueKeys(Collection<? extends T> values,
+                                                           Function<T, K> keyFunction,
+                                                           Function<K, String> parentDescription) {
+    Map<K, T> map = Maps.newLinkedHashMapWithExpectedSize(values.size());
     for (T value : values) {
       K key = Objects.requireNonNull(keyFunction.apply(Objects.requireNonNull(value)));
-      T previous = keys.put(key, value);
+      T previous = map.put(key, value);
       if (previous != null) {
-        throw new ManifestDataException("Collision on key: " + key);
+        throw new ManifestDataException(parentDescription.apply(key));
       }
     }
+    return ImmutableMap.copyOf(map);
   }
 
 
@@ -63,7 +68,7 @@ public class ManifestXml extends AbstractXpathReader {
 
 
   private class Parsed {
-    private final ImmutableList<Asset> assets;
+    private final ImmutableMap<String, Asset> assets;
     private final ImmutableList<ManifestFile> ancillaryFiles;
 
     private Parsed() {
@@ -73,8 +78,10 @@ public class ManifestXml extends AbstractXpathReader {
       for (Node objectNode : readNodeList("//object")) {
         assets.add(parseAssetNode(AssetTagName.OBJECT, objectNode));
       }
-      validateUniqueKeys(assets, Asset::getUri);
-      this.assets = ImmutableList.copyOf(assets);
+
+      this.assets = mapByUniqueKeys(assets, Asset::getUri,
+          assetUri -> "Manifest has assets with duplicate uri: " + assetUri
+      );
 
       this.ancillaryFiles = parseAncillaryFiles(readNode("//ancillary"));
     }
@@ -118,12 +125,24 @@ public class ManifestXml extends AbstractXpathReader {
 
   private transient Parsed parsed;
 
+  private Parsed getParsedObject() {
+    return (this.parsed != null) ? this.parsed : (this.parsed = new Parsed());
+  }
+
   public ImmutableList<Asset> getAssets() {
-    return (parsed != null) ? parsed.assets : (parsed = new Parsed()).assets;
+    return getParsedObject().assets.values().asList();
+  }
+
+  public Asset getArticleAsset() {
+    return getAssets().stream()
+        .filter(asset -> asset.getAssetTagName().equals(AssetTagName.ARTICLE))
+        .findAny().orElseThrow(() ->
+            new ManifestDataException("Manifest does not have <article> element"));
   }
 
   public ImmutableList<ManifestFile> getAncillaryFiles() {
-    return (parsed != null) ? parsed.ancillaryFiles : (parsed = new Parsed()).ancillaryFiles;
+    Parsed parsed = getParsedObject();
+    return parsed.ancillaryFiles;
   }
 
 
@@ -136,15 +155,16 @@ public class ManifestXml extends AbstractXpathReader {
     private final String type;
     private final String uri;
     private final boolean isStrikingImage;
-    private final ImmutableList<Representation> representations;
+    private final ImmutableMap<String, Representation> representations;
 
     private Asset(AssetTagName assetTagName, String type, String uri, boolean isStrikingImage, List<Representation> representations) {
       this.assetTagName = Objects.requireNonNull(assetTagName);
       this.type = Objects.requireNonNull(type);
       this.uri = Objects.requireNonNull(uri);
       this.isStrikingImage = isStrikingImage;
-      this.representations = ImmutableList.copyOf(representations);
-      validateUniqueKeys(this.representations, Representation::getType);
+      this.representations = mapByUniqueKeys(representations, Representation::getType,
+          representationType -> String.format("<%s type=\"%s\" uri=\"%s\"> has representations with duplicate type: %s",
+              assetTagName, type, uri, representationType));
     }
 
     public AssetTagName getAssetTagName() {
@@ -163,8 +183,12 @@ public class ManifestXml extends AbstractXpathReader {
       return isStrikingImage;
     }
 
+    public Optional<Representation> getRepresentation(String type) {
+      return Optional.ofNullable(representations.get(type));
+    }
+
     public ImmutableList<Representation> getRepresentations() {
-      return representations;
+      return representations.values().asList();
     }
 
     @Override
