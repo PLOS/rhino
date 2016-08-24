@@ -14,7 +14,6 @@
 package org.ambraproject.rhino.content.xml;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import org.w3c.dom.Node;
 
@@ -62,46 +61,10 @@ public class ManifestXml extends AbstractXpathReader {
     super(xml);
   }
 
-  /**
-   * @return the name of the file in the zip archive that is the XML article
-   */
-  public String getArticleXml() {
-    return readString("//article/@main-entry");
-  }
-
-  /**
-   * @return the URI of the "striking image" associated with this article
-   */
-  public String getStrkImgURI() {
-    return readString("//object[@strkImage='True']/@uri");
-  }
-
-  private transient ImmutableMap<String, String> uriMap;
-
-  public String getUriForFile(String filename) {
-    ImmutableMap<String, String> uriMap = (this.uriMap == null) ? (this.uriMap = buildUriMap()) : this.uriMap;
-    return uriMap.get(filename);
-  }
-
-  private ImmutableMap<String, String> buildUriMap() {
-    ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
-    List<Node> objectNodes = readNodeList("//article|//object");
-    for (Node objectNode : objectNodes) {
-      // TODO: Is there an efficient way to pull this logic into an XPath query?
-      String uri = readString("@uri", objectNode);
-      List<Node> representationNode = readNodeList("child::representation", objectNode);
-      for (Node reprNode : representationNode) {
-        String filename = readString("@entry", reprNode);
-        builder.put(filename, uri);
-      }
-    }
-    return builder.build();
-  }
-
 
   private class Parsed {
     private final ImmutableList<Asset> assets;
-    private final ImmutableList<ManifestFile> archivalFiles;
+    private final ImmutableList<ManifestFile> ancillaryFiles;
 
     private Parsed() {
       List<Asset> assets = new ArrayList<>();
@@ -113,18 +76,17 @@ public class ManifestXml extends AbstractXpathReader {
       validateUniqueKeys(assets, Asset::getUri);
       this.assets = ImmutableList.copyOf(assets);
 
-      this.archivalFiles = parseArchivalFiles(readNode("//archival"));
+      this.ancillaryFiles = parseAncillaryFiles(readNode("//ancillary"));
     }
 
     private Asset parseAssetNode(AssetTagName assetTagName, Node assetNode) {
       String type = readString("@type", assetNode);
       String uri = readString("@uri", assetNode);
-      String mainEntry = readString("@main-entry", assetNode);
       String strkImage = readString("@strkImage", assetNode);
       boolean isStrikingImage = Boolean.toString(true).equalsIgnoreCase(strkImage);
 
       List<Representation> representations = parseRepresentations(assetNode);
-      return new Asset(assetTagName, type, uri, mainEntry, isStrikingImage, representations);
+      return new Asset(assetTagName, type, uri, isStrikingImage, representations);
     }
 
     private ImmutableList<Representation> parseRepresentations(Node assetNode) {
@@ -133,16 +95,15 @@ public class ManifestXml extends AbstractXpathReader {
       List<Representation> representations = new ArrayList<>(representationNodes.size());
       for (Node representationNode : representationNodes) {
         ManifestFile file = parseFile(representationNode);
-        String name = readString("@name", representationNode);
         String type = readString("@type", representationNode);
-        representations.add(new Representation(file, name, type));
+        representations.add(new Representation(file, type));
       }
       return ImmutableList.copyOf(representations);
     }
 
-    private ImmutableList<ManifestFile> parseArchivalFiles(Node archivalNode) {
-      return (archivalNode == null) ? ImmutableList.of() : ImmutableList.copyOf(
-          readNodeList("child::representation", archivalNode).stream()
+    private ImmutableList<ManifestFile> parseAncillaryFiles(Node ancillaryNode) {
+      return (ancillaryNode == null) ? ImmutableList.of() : ImmutableList.copyOf(
+          readNodeList("child::representation", ancillaryNode).stream()
               .map(this::parseFile)
               .collect(Collectors.toList()));
     }
@@ -161,34 +122,29 @@ public class ManifestXml extends AbstractXpathReader {
     return (parsed != null) ? parsed.assets : (parsed = new Parsed()).assets;
   }
 
-  public ImmutableList<ManifestFile> getArchivalFiles() {
-    return (parsed != null) ? parsed.archivalFiles : (parsed = new Parsed()).archivalFiles;
+  public ImmutableList<ManifestFile> getAncillaryFiles() {
+    return (parsed != null) ? parsed.ancillaryFiles : (parsed = new Parsed()).ancillaryFiles;
   }
 
 
   public static enum AssetTagName {
-    ARTICLE, OBJECT, ARCHIVAL;
+    ARTICLE, OBJECT, ANCILLARY;
   }
 
   public static class Asset {
-    private final AssetTagName assetTagName; // TODO: Delete this field when Asset.type is required and replaces it
+    private final AssetTagName assetTagName;
     private final String type;
     private final String uri;
-    private final Optional<String> mainEntry; // TODO: Delete this field when Representation.type="manuscript" replaces it
-    private final boolean isStrikingImage; // TODO: Delete this field when Asset.type is required and replaces it
+    private final boolean isStrikingImage;
     private final ImmutableList<Representation> representations;
 
-    private Asset(AssetTagName assetTagName, String type, String uri, String mainEntry, boolean isStrikingImage, List<Representation> representations) {
+    private Asset(AssetTagName assetTagName, String type, String uri, boolean isStrikingImage, List<Representation> representations) {
       this.assetTagName = Objects.requireNonNull(assetTagName);
-      this.type = type; // TODO: Apply Objects.requireNonNull when the input contract requires this
+      this.type = Objects.requireNonNull(type);
       this.uri = Objects.requireNonNull(uri);
-      this.mainEntry = Optional.ofNullable(mainEntry);
       this.isStrikingImage = isStrikingImage;
       this.representations = ImmutableList.copyOf(representations);
-      validateUniqueKeys(this.representations, Representation::getName);
-
-      // TODO: Uncomment the following line when Representation.type is required
-      // validateUniqueKeys(this.representations, Representation::getType);
+      validateUniqueKeys(this.representations, Representation::getType);
     }
 
     public AssetTagName getAssetTagName() {
@@ -201,10 +157,6 @@ public class ManifestXml extends AbstractXpathReader {
 
     public String getUri() {
       return uri;
-    }
-
-    public Optional<String> getMainEntry() {
-      return mainEntry;
     }
 
     public boolean isStrikingImage() {
@@ -221,13 +173,13 @@ public class ManifestXml extends AbstractXpathReader {
       if (o == null || getClass() != o.getClass()) return false;
       Asset asset = (Asset) o;
       return isStrikingImage == asset.isStrikingImage && assetTagName == asset.assetTagName && uri.equals(asset.uri)
-          && mainEntry.equals(asset.mainEntry) && representations.equals(asset.representations);
+          && representations.equals(asset.representations);
     }
 
     @Override
     public int hashCode() {
-      return 31 * (31 * (31 * (31 * assetTagName.hashCode() + uri.hashCode()) + mainEntry.hashCode())
-          + (isStrikingImage ? 1 : 0)) + representations.hashCode();
+      return 31 * (31 * (31 * assetTagName.hashCode() + uri.hashCode())
+          + Boolean.hashCode(isStrikingImage)) + representations.hashCode();
     }
   }
 
@@ -239,7 +191,7 @@ public class ManifestXml extends AbstractXpathReader {
     private ManifestFile(String entry, String key, String mimetype) {
       this.entry = Objects.requireNonNull(entry);
       this.key = Optional.ofNullable(key);
-      this.mimetype = mimetype; // TODO: Apply Objects.requireNonNull when the input contract requires this
+      this.mimetype = Objects.requireNonNull(mimetype);
     }
 
     public String getEntry() {
@@ -270,21 +222,15 @@ public class ManifestXml extends AbstractXpathReader {
 
   public static class Representation {
     private final ManifestFile file;
-    private final String name; // TODO: Delete this field when Representation.type is required and replaces it
     private final String type;
 
-    private Representation(ManifestFile file, String name, String type) {
+    private Representation(ManifestFile file, String type) {
       this.file = Objects.requireNonNull(file);
-      this.name = Objects.requireNonNull(name);
-      this.type = type; // TODO: Apply Objects.requireNonNull when the input contract requires this
+      this.type = Objects.requireNonNull(type);
     }
 
     public ManifestFile getFile() {
       return file;
-    }
-
-    public String getName() {
-      return name;
     }
 
     public String getType() {
@@ -295,13 +241,12 @@ public class ManifestXml extends AbstractXpathReader {
     public boolean equals(Object o) {
       return this == o || o != null && getClass() == o.getClass()
           && file.equals(((Representation) o).file)
-          && name.equals(((Representation) o).name)
           && type.equals(((Representation) o).type);
     }
 
     @Override
     public int hashCode() {
-      return 31 * (31 * file.hashCode() + name.hashCode()) + type.hashCode();
+      return 31 * file.hashCode() + type.hashCode();
     }
   }
 
