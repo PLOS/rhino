@@ -228,7 +228,8 @@ CREATE PROCEDURE migrate_articles()
 
     DECLARE old_articles_cursor CURSOR FOR
       SELECT articleID FROM oldArticle
-      ORDER BY rand();
+      ORDER BY articleID;
+    #  ORDER BY rand();
     #LIMIT 10;
     #WHERE doi LIKE '%pbio.1002509%';
 
@@ -364,7 +365,8 @@ CREATE PROCEDURE migrate_article_rollback_all()
 
   END;
 
-CALL migrate_articles();
+# Use this for initial migration attempt and modify select statement to choose specific articles as needed thereafter
+# CALL migrate_articles();
 
 # Pull in case of emergency
 # CALL migrate_article_rollback_all();
