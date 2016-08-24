@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.service.impl;
+package org.ambraproject.rhino.model.ingest;
 
 import com.google.common.collect.ImmutableList;
 import org.ambraproject.rhino.identity.Doi;
@@ -7,7 +7,7 @@ import org.plos.crepo.model.input.RepoObjectInput;
 import java.util.List;
 import java.util.Objects;
 
-class ArticlePackage {
+public class ArticlePackage {
 
   private final ArticleItemInput articleWork;
   private final ImmutableList<ArticleItemInput> allWorks;

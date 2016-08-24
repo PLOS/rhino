@@ -1,14 +1,13 @@
-package org.ambraproject.rhino.service.impl;
+package org.ambraproject.rhino.model.ingest;
 
 import com.google.common.collect.ImmutableMap;
 import org.ambraproject.rhino.identity.Doi;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.plos.crepo.model.input.RepoObjectInput;
 
 import java.util.Map;
 import java.util.Objects;
 
-class ArticleItemInput {
+public class ArticleItemInput {
 
   private final Doi doi;
   private final ImmutableMap<String, RepoObjectInput> objects;
