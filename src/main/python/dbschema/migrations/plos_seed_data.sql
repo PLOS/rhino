@@ -8,4 +8,4 @@ INSERT INTO journal (eissn, journalKey, title) VALUES ("1553-7404", "PLoSGenetic
 INSERT INTO journal (eissn, journalKey, title) VALUES ("1555-5887", "PLoSClinicalTrials", "PLOS Clinical Trials"            );
 INSERT INTO journal (eissn, journalKey, title) VALUES ("1932-6203", "PLoSONE",            "PLOS ONE"                        );
 INSERT INTO journal (eissn, journalKey, title) VALUES ("1935-2735", "PLoSNTD",            "PLOS Neglected Tropical Diseases");
-INSERT INTO journal (eissn, journalKey, title) VALUES (NULL,        "PLoSCollections",    "PLOS Collections"                );
+INSERT INTO journal (eissn, journalKey, title) VALUES ("3333-3333",        "PLoSCollections",    "PLOS Collections"         );
