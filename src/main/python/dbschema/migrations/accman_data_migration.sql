@@ -27,6 +27,7 @@ CREATE PROCEDURE migrate_article_rollback(IN article_id BIGINT)
       SET FOREIGN_KEY_CHECKS=0; # necessary becasue of parent/child relationships
       DELETE FROM `comment` WHERE articleId = article_id;
       SET FOREIGN_KEY_CHECKS=1;
+      DELETE FROM articleRelationship WHERE sourceArticleId = article_id OR targetArticleId = article_id;
       DELETE FROM articleCategoryAssignment WHERE articleId = article_id;
       DELETE FROM articleListJoinTable WHERE articleId = article_id;
       DELETE FROM issueArticleList WHERE articleId = article_id;
@@ -328,7 +329,10 @@ CREATE PROCEDURE migrate_articles()
       FROM oldSyndication os INNER JOIN oldArticle oa ON os.doi = oa.doi INNER JOIN article a ON oa.articleID = a.articleId
       WHERE os.syndicationID NOT IN (SELECT syndicationId FROM syndication);
 
-    # TODO: articleRelationship table
+    INSERT INTO articleRelationship (articleRelationshipId, sourceArticleId, targetArticleId, type, created, lastModified)
+      SELECT articleRelationshipID, parentArticleID, otherArticleID, type, ar.created, ar.lastModified
+      FROM oldArticleRelationship ar INNER JOIN article a1 ON ar.parentArticleID = a1.articleId INNER JOIN article a2 ON ar.otherArticleID = a2.articleId
+      WHERE type NOT IN ('retraction', 'expressed-concern') AND articleRelationshipID NOT IN (SELECT articleRelationshipId FROM articleRelationship);
 
   END;
 
