@@ -15,6 +15,8 @@ package org.ambraproject.rhino.model;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +26,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import java.util.Date;
 import java.util.List;
 
@@ -46,10 +50,14 @@ public class ArticleList implements Timestamped {
   @Column
   private String displayName;
 
-  @Column
+  @Generated(value= GenerationTime.INSERT)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
   private Date created;
 
-  @Column
+  @Generated(value= GenerationTime.ALWAYS)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
   private Date lastModified;
 
   @Cascade(CascadeType.SAVE_UPDATE)
@@ -59,6 +67,7 @@ public class ArticleList implements Timestamped {
       joinColumns = @JoinColumn(name = "articleListId", nullable = false),
       inverseJoinColumns = @JoinColumn(name = "articleId", nullable = false)
   )
+  @OrderColumn(name="sortOrder", nullable=false)
   private List<ArticleTable> articles;
 
   public ArticleList() {

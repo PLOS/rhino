@@ -25,10 +25,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -71,10 +69,7 @@ public class Journal implements Timestamped {
 
   @Cascade(CascadeType.SAVE_UPDATE)
   @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
-  @JoinTable(
-      name = "articleList",
-      joinColumns = @JoinColumn(name = "journalId", nullable = false),
-      inverseJoinColumns = @JoinColumn(name = "articleListId", nullable = false))
+  @JoinColumn(name = "journalId", nullable = false)
   private Collection<ArticleList> articleLists;
 
   @Generated(value= GenerationTime.INSERT)
