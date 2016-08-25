@@ -169,7 +169,9 @@ public class VersionedIngestionService extends AmbraService {
       insertEvent.setParameter("ingestionNumber", nextIngestionNumber);
       insertEvent.setParameter("title", articleMetadata.getTitle());
       insertEvent.setParameter("publicationDate", java.sql.Date.valueOf(articleMetadata.getPublicationDate()));
-      insertEvent.setParameter("revisionDate", java.sql.Date.valueOf(articleMetadata.getRevisionDate()));
+      if (articleMetadata.getRevisionDate() != null) {
+        insertEvent.setParameter("revisionDate", java.sql.Date.valueOf(articleMetadata.getRevisionDate()));
+      }
       insertEvent.setParameter("articleType", articleMetadata.getArticleType());
       insertEvent.setParameter("journalId", journal.getJournalId());
       insertEvent.executeUpdate();
