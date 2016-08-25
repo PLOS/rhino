@@ -16,6 +16,9 @@ package org.ambraproject.rhino.content.xml;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import org.ambraproject.rhino.model.ingest.AssetType;
+import org.ambraproject.rhino.rest.RestClientException;
+import org.springframework.http.HttpStatus;
 import org.w3c.dom.Node;
 
 import java.util.ArrayList;
@@ -152,14 +155,14 @@ public class ManifestXml extends AbstractXpathReader {
 
   public static class Asset {
     private final AssetTagName assetTagName;
-    private final String type;
+    private final AssetType type;
     private final String uri;
     private final boolean isStrikingImage;
     private final ImmutableMap<String, Representation> representations;
 
     private Asset(AssetTagName assetTagName, String type, String uri, boolean isStrikingImage, List<Representation> representations) {
       this.assetTagName = Objects.requireNonNull(assetTagName);
-      this.type = Objects.requireNonNull(type);
+      this.type = determineType(assetTagName, type);
       this.uri = Objects.requireNonNull(uri);
       this.isStrikingImage = isStrikingImage;
       this.representations = mapByUniqueKeys(representations, Representation::getType,
@@ -167,11 +170,22 @@ public class ManifestXml extends AbstractXpathReader {
               assetTagName, type, uri, representationType));
     }
 
+    private static AssetType determineType(AssetTagName assetTagName, String type) {
+      if (assetTagName == AssetTagName.ARTICLE) {
+        if (type != null) {
+          throw new RestClientException("<article> element should not have 'type' attribute", HttpStatus.BAD_REQUEST);
+        }
+        return AssetType.ARTICLE;
+      }
+      return AssetType.fromIdentifier(type).orElseThrow(() ->
+          new ManifestDataException("Unrecognized asset type: " + type));
+    }
+
     public AssetTagName getAssetTagName() {
       return assetTagName;
     }
 
-    public String getType() {
+    public AssetType getType() {
       return type;
     }
 

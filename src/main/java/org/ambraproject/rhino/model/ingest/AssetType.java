@@ -1,10 +1,16 @@
 package org.ambraproject.rhino.model.ingest;
 
 import com.google.common.base.CaseFormat;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.springframework.http.HttpStatus;
+
+import java.util.EnumSet;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * The type of an asset (with a unique asset DOI, represented by one or more files) as determined by where the asset DOI
@@ -99,6 +105,13 @@ public enum AssetType {
    */
   protected ImmutableSet<FileType> getRequiredFileTypes() {
     return getSupportedFileTypes();
+  }
+
+  private static final ImmutableMap<String, AssetType> BY_IDENTIFIER = Maps.uniqueIndex(EnumSet.allOf(AssetType.class),
+      input -> input.identifier);
+
+  public static Optional<AssetType> fromIdentifier(String identifier) {
+    return Optional.ofNullable(BY_IDENTIFIER.get(Objects.requireNonNull(identifier)));
   }
 
 }

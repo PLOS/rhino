@@ -41,12 +41,8 @@ public enum FileType {
   private static final ImmutableMap<String, FileType> BY_IDENTIFIER = Maps.uniqueIndex(EnumSet.allOf(FileType.class),
       input -> input.identifier);
 
-  static Optional<FileType> fromIdentifier(String identifier) {
+  public static Optional<FileType> fromIdentifier(String identifier) {
     return Optional.ofNullable(BY_IDENTIFIER.get(Objects.requireNonNull(identifier)));
   }
 
-  private static String unrecognizedFileType(String fileTypeIdentifier) {
-    return String.format("File type not recognized: \"%s\". Must be one of: %s",
-        fileTypeIdentifier, FileType.BY_IDENTIFIER.keySet());
-  }
 }

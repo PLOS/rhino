@@ -1,6 +1,8 @@
 package org.ambraproject.rhino.rest.controller;
 
+import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.impl.VersionedIngestionService;
 import org.ambraproject.rhino.util.Archive;
@@ -44,6 +46,8 @@ public class IngestibleZipController extends RestController {
     try (InputStream requestInputStream = requestFile.getInputStream();
          Archive archive = Archive.readZipFile(archiveName, requestInputStream)) {
       ingestionId = versionedIngestionService.ingest(archive);
+    } catch (ManifestXml.ManifestDataException e) {
+      throw new RestClientException("Invalid manifest: " + e.getMessage(), HttpStatus.BAD_REQUEST, e);
     }
     response.setStatus(HttpStatus.CREATED.value());
 
