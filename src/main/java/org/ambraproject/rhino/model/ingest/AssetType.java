@@ -84,11 +84,11 @@ public enum AssetType {
     return identifier;
   }
 
-  FileType getFileType(String identifier) {
-    FileType fileType = FileType.fromIdentifier(identifier).orElseThrow(() ->
-        new RestClientException("File type not recognized: " + identifier, HttpStatus.BAD_REQUEST));
+  FileType getFileType(String fileTypeIdentifier) {
+    FileType fileType = FileType.fromIdentifier(fileTypeIdentifier).orElseThrow(() ->
+        new RestClientException("File type not recognized: " + fileTypeIdentifier, HttpStatus.BAD_REQUEST));
     if (!getSupportedFileTypes().contains(fileType)) {
-      String message = String.format("File type not recognized: %s", identifier);
+      String message = String.format("File type is not valid for %s: %s", this.identifier, fileTypeIdentifier);
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
     return fileType;
