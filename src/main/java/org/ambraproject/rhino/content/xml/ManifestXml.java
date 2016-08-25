@@ -70,6 +70,15 @@ public class ManifestXml extends AbstractXpathReader {
   }
 
 
+  private String requireAttribute(String attributeName, Node node) {
+    String value = readString("@" + attributeName, node);
+    if (value == null) {
+      throw new ManifestDataException(String.format(
+          "'%s' node must have '%s' attribute", node.getNodeName(), attributeName));
+    }
+    return value;
+  }
+
   private class Parsed {
     private final ImmutableMap<String, Asset> assets;
     private final ImmutableList<ManifestFile> ancillaryFiles;
@@ -91,7 +100,7 @@ public class ManifestXml extends AbstractXpathReader {
 
     private Asset parseAssetNode(AssetTagName assetTagName, Node assetNode) {
       String type = readString("@type", assetNode);
-      String uri = readString("@uri", assetNode);
+      String uri = requireAttribute("uri", assetNode);
       String strkImage = readString("@strkImage", assetNode);
       boolean isStrikingImage = Boolean.toString(true).equalsIgnoreCase(strkImage);
 
@@ -105,7 +114,7 @@ public class ManifestXml extends AbstractXpathReader {
       List<Representation> representations = new ArrayList<>(representationNodes.size());
       for (Node representationNode : representationNodes) {
         ManifestFile file = parseFile(representationNode);
-        String type = readString("@type", representationNode);
+        String type = requireAttribute("type", representationNode);
         representations.add(new Representation(file, type));
       }
       return ImmutableList.copyOf(representations);
@@ -119,9 +128,9 @@ public class ManifestXml extends AbstractXpathReader {
     }
 
     private ManifestFile parseFile(Node node) {
-      String entry = readString("@entry", node);
+      String entry = requireAttribute("entry", node);
       String key = readString("@key", node);
-      String mimetype = readString("@mimetype", node);
+      String mimetype = requireAttribute("mimetype", node);
       return new ManifestFile(entry, key, mimetype);
     }
   }
