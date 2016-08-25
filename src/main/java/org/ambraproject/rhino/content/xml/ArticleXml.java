@@ -40,6 +40,7 @@ import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -186,6 +187,7 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
 
     article.setLanguage(parseLanguage(readString("/article/@xml:lang")));
     article.setPublicationDate(parseDate(readNode("/article/front/article-meta/pub-date[@pub-type=\"epub\"]")));
+    article.setRevisionDate(getRevisionDate().orElse(null));
 
     article.setNlmArticleType(readString("/article/@article-type"));
     article.setArticleType(parseArticleHeading());
@@ -358,4 +360,9 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     }).collect(Collectors.toList());
   }
 
+  //todo: implement once we know where and how revision dates are stored in the manuscript.
+  //See DPRO-2893.
+  private Optional<LocalDate> getRevisionDate() {
+    return Optional.empty();
+  }
 }

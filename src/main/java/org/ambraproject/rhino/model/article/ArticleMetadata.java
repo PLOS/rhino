@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableList;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 public class ArticleMetadata {
 
@@ -21,6 +20,7 @@ public class ArticleMetadata {
   private final String eLocationId;
 
   private final LocalDate publicationDate;
+  private final LocalDate revisionDate;
 
   private final String volume;
   private final String issue;
@@ -50,6 +50,7 @@ public class ArticleMetadata {
     this.pageCount = builder.pageCount;
     this.eLocationId = builder.eLocationId;
     this.publicationDate = builder.publicationDate;
+    this.revisionDate = builder.revisionDate;
     this.volume = builder.volume;
     this.issue = builder.issue;
     this.publisherLocation = builder.publisherLocation;
@@ -102,6 +103,10 @@ public class ArticleMetadata {
 
   public LocalDate getPublicationDate() {
     return publicationDate;
+  }
+
+  public LocalDate getRevisionDate() {
+    return revisionDate;
   }
 
   public String getVolume() {
@@ -173,6 +178,7 @@ public class ArticleMetadata {
     private String eLocationId;
 
     private LocalDate publicationDate;
+    private LocalDate revisionDate;
 
     private String volume;
     private String issue;
@@ -242,6 +248,11 @@ public class ArticleMetadata {
 
     public Builder setPublicationDate(LocalDate publicationDate) {
       this.publicationDate = publicationDate;
+      return this;
+    }
+
+    public Builder setRevisionDate(LocalDate revisionDate) {
+      this.revisionDate = revisionDate;
       return this;
     }
 

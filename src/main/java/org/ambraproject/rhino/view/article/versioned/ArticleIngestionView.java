@@ -27,7 +27,8 @@ public class ArticleIngestionView implements JsonOutputView {
     private ArticleCrudService articleCrudService;
     @Autowired
     private VersionedIngestionService versionedIngestionService;
-    @Autowired private JournalOutputView.Factory journalOutputViewFactory;
+    @Autowired
+    private JournalOutputView.Factory journalOutputViewFactory;
 
     public ArticleIngestionView getView(ArticleIngestionIdentifier ingestionId) {
       ArticleIngestion ingestion = articleCrudService.readIngestion(ingestionId);

@@ -161,13 +161,16 @@ public class VersionedIngestionService extends AmbraService {
       int nextIngestionNumber = (maxIngestionNumber == null) ? FIRST_INGESTION_NUMBER
           : maxIngestionNumber.intValue() + 1;
 
+      //todo: replace this straight SQL statement by creating and saving a new ArticleIngestion object
       SQLQuery insertEvent = session.createSQLQuery("" +
-          "INSERT INTO articleIngestion (articleId, ingestionNumber, title, publicationDate, articleType, journalId) " +
-          "VALUES (:articleId, :ingestionNumber, :title, :publicationDate, :articleType, :journalId)");
+          "INSERT INTO articleIngestion (articleId, ingestionNumber, title, publicationDate, revisionDate, articleType, journalId) " +
+          "VALUES (:articleId, :ingestionNumber, :title, :publicationDate, :revisionDate, :articleType, :journalId)");
       insertEvent.setParameter("articleId", articlePk);
       insertEvent.setParameter("ingestionNumber", nextIngestionNumber);
       insertEvent.setParameter("title", articleMetadata.getTitle());
       insertEvent.setParameter("publicationDate", java.sql.Date.valueOf(articleMetadata.getPublicationDate()));
+      insertEvent.setParameter("revisionDate", (articleMetadata.getRevisionDate() == null
+          ? null : java.sql.Date.valueOf(articleMetadata.getRevisionDate())));
       insertEvent.setParameter("articleType", articleMetadata.getArticleType());
       insertEvent.setParameter("journalId", journal.getJournalId());
       insertEvent.executeUpdate();
