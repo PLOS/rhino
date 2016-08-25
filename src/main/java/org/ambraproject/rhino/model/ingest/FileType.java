@@ -5,6 +5,8 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
 import java.util.EnumSet;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * The type of a file that represents an asset. Each asset type has a set of these that it uses, as defined by {@link
@@ -32,11 +34,15 @@ public enum FileType {
 
   private final String identifier = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name());
 
+  public String getIdentifier() {
+    return identifier;
+  }
+
   private static final ImmutableMap<String, FileType> BY_IDENTIFIER = Maps.uniqueIndex(EnumSet.allOf(FileType.class),
       input -> input.identifier);
 
-  public String getIdentifier() {
-    return identifier;
+  static Optional<FileType> fromIdentifier(String identifier) {
+    return Optional.ofNullable(BY_IDENTIFIER.get(Objects.requireNonNull(identifier)));
   }
 
   private static String unrecognizedFileType(String fileTypeIdentifier) {

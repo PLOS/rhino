@@ -105,7 +105,7 @@ public class ArticlePackageBuilder {
       ImmutableMap.Builder<String, RepoObjectInput> assetObjects = ImmutableMap.builder();
       Doi assetIdentity = Doi.create(asset.getUri());
       for (ManifestXml.Representation representation : asset.getRepresentations()) {
-        FileType fileType = assetType.getFileType(representation.getType()); // TODO: Change AssetType.getFileType implementation
+        FileType fileType = assetType.getFileType(representation.getType());
         assetObjects.put(fileType.getIdentifier(), buildObjectFor(representation.getFile()));
       }
       works.add(new ArticleItemInput(assetIdentity, assetObjects.build(), assetType.getIdentifier()));
