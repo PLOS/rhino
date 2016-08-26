@@ -17,8 +17,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import org.ambraproject.rhino.model.ingest.AssetType;
-import org.ambraproject.rhino.rest.RestClientException;
-import org.springframework.http.HttpStatus;
 import org.w3c.dom.Node;
 
 import java.util.ArrayList;
@@ -182,9 +180,12 @@ public class ManifestXml extends AbstractXpathReader {
     private static AssetType determineType(AssetTagName assetTagName, String type) {
       if (assetTagName == AssetTagName.ARTICLE) {
         if (type != null) {
-          throw new RestClientException("<article> element should not have 'type' attribute", HttpStatus.BAD_REQUEST);
+          throw new ManifestDataException("<article> element should not have 'type' attribute");
         }
         return AssetType.ARTICLE;
+      }
+      if (type == null) {
+        throw new ManifestDataException(String.format("'%s' node must have 'type' attribute", assetTagName));
       }
       return AssetType.fromIdentifier(type).orElseThrow(() ->
           new ManifestDataException("Unrecognized asset type: " + type));
