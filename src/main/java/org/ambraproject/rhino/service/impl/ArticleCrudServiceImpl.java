@@ -430,12 +430,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public Transceiver listRecent(RecentArticleQuery query)
-      throws IOException {
-    return query.execute(hibernateTemplate);
-  }
-
-  @Override
   public List<RelatedArticleView> getRelatedArticles(Article article) {
     List<ArticleRelationship> rawRelationships = article.getRelatedArticles();
     if (rawRelationships.isEmpty()) return ImmutableList.of();
