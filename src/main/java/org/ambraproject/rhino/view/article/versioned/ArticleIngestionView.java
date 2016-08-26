@@ -33,7 +33,7 @@ public class ArticleIngestionView implements JsonOutputView {
     public ArticleIngestionView getView(ArticleIngestionIdentifier ingestionId) {
       ArticleIngestion ingestion = articleCrudService.readIngestion(ingestionId);
       ArticleMetadata metadata = versionedIngestionService.getArticleMetadata(ingestionId);
-      JournalOutputView journal = journalOutputViewFactory.getView(ingestion.getJournal());
+      JournalOutputView journal = journalOutputViewFactory.getShallowView(ingestion.getJournal());
 
       return new ArticleIngestionView(ingestion, metadata, journal);
     }

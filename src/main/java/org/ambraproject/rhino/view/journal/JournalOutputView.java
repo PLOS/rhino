@@ -26,19 +26,27 @@ public class JournalOutputView implements JsonOutputView {
     private VolumeOutputView.Factory volumeOutputViewFactory;
 
     public JournalOutputView getView(Journal journal) {
-      return new JournalOutputView(issueOutputViewFactory, volumeOutputViewFactory, journal);
+      return new JournalOutputView(issueOutputViewFactory, volumeOutputViewFactory, journal, true);
+    }
+
+    public JournalOutputView getShallowView(Journal journal) {
+      return new JournalOutputView(issueOutputViewFactory, volumeOutputViewFactory, journal, false);
     }
   }
 
-  private final Journal journal;
-  private IssueOutputView.Factory issueOutputViewFactory;
-  private VolumeOutputView.Factory volumeOutputViewFactory;
+  private final IssueOutputView.Factory issueOutputViewFactory;
+  private final VolumeOutputView.Factory volumeOutputViewFactory;
 
-  public JournalOutputView(IssueOutputView.Factory issueOutputViewFactory,
-                           VolumeOutputView.Factory volumeOutputViewFactory, Journal journal) {
+  private final Journal journal;
+  private final boolean showChildren;
+
+  private JournalOutputView(IssueOutputView.Factory issueOutputViewFactory,
+                            VolumeOutputView.Factory volumeOutputViewFactory,
+                            Journal journal, boolean showChildren) {
     this.journal = Objects.requireNonNull(journal);
     this.issueOutputViewFactory = Objects.requireNonNull(issueOutputViewFactory);
     this.volumeOutputViewFactory = Objects.requireNonNull(volumeOutputViewFactory);
+    this.showChildren = showChildren;
   }
 
   @Override
@@ -48,18 +56,20 @@ public class JournalOutputView implements JsonOutputView {
     serialized.addProperty("title", journal.getTitle());
     serialized.addProperty("eIssn", journal.geteIssn());
 
-    Issue currentIssue = journal.getCurrentIssue();
-    if (currentIssue != null) {
-      IssueOutputView currentIssueView = issueOutputViewFactory.getView(currentIssue);
-      serialized.add("currentIssue", currentIssueView.serialize(context));
-    }
+    if (showChildren) {
+      Issue currentIssue = journal.getCurrentIssue();
+      if (currentIssue != null) {
+        IssueOutputView currentIssueView = issueOutputViewFactory.getView(currentIssue);
+        serialized.add("currentIssue", currentIssueView.serialize(context));
+      }
 
-    List<VolumeOutputView> volumeOutputViews = new ArrayList<>();
-    for (Volume volume : journal.getVolumes()) {
-      VolumeOutputView volumeOutputView = volumeOutputViewFactory.getView(volume);
-      volumeOutputViews.add(volumeOutputView);
+      List<VolumeOutputView> volumeOutputViews = new ArrayList<>();
+      for (Volume volume : journal.getVolumes()) {
+        VolumeOutputView volumeOutputView = volumeOutputViewFactory.getView(volume);
+        volumeOutputViews.add(volumeOutputView);
+      }
+      serialized.add("volumes", context.serialize(volumeOutputViews));
     }
-    serialized.add("volumes", context.serialize(volumeOutputViews));
 
     return serialized;
   }
