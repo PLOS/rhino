@@ -3,48 +3,23 @@
 # results of migration sent to migration_status_log
 #
 #
+# Use this for initial migration attempt and modify select statement to choose specific articles as needed thereafter
+# CALL migrate_articles();
 
-DROP FUNCTION IF EXISTS get_doi_name;
-CREATE FUNCTION get_doi_name(full_doi VARCHAR(150)) RETURNS VARCHAR(150) DETERMINISTIC
+####################################################################################################
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `get_doi_name`(full_doi VARCHAR(150)) RETURNS varchar(150) CHARSET latin1
+DETERMINISTIC
   BEGIN
     RETURN REPLACE(full_doi, 'info:doi/', '');
-  END;
+  END$$
+DELIMITER ;
 
-DROP PROCEDURE IF EXISTS migrate_article_rollback;
-CREATE PROCEDURE migrate_article_rollback(IN article_id BIGINT)
-  BEGIN
-    DECLARE ingestion_id BIGINT DEFAULT 0;
+####################################################################################################
 
-    DECLARE EXIT HANDLER FOR 1242
-    SELECT 'More than one ingestion exists for the given article ID. Rollback aborted.';
-
-    IF EXISTS (SELECT * FROM article WHERE articleId = article_id) THEN
-      # Get ingestion id for migrated article. Throws error 1242 when more than one ingestion exists.
-      # This should not be possible for migrated articles and aborts rollback.
-      SET ingestion_id = (SELECT ingestionId FROM articleIngestion WHERE articleId = article_id);
-
-      DELETE FROM commentFlag WHERE commentId in (SELECT commentId FROM `comment` WHERE articleId = article_id);
-      SET FOREIGN_KEY_CHECKS=0; # necessary becasue of parent/child relationships
-      DELETE FROM `comment` WHERE articleId = article_id;
-      SET FOREIGN_KEY_CHECKS=1;
-      DELETE FROM articleRelationship WHERE sourceArticleId = article_id OR targetArticleId = article_id;
-      DELETE FROM articleCategoryAssignment WHERE articleId = article_id;
-      DELETE FROM articleListJoinTable WHERE articleId = article_id;
-      DELETE FROM issueArticleList WHERE articleId = article_id;
-      DELETE FROM articleFile WHERE ingestionId = ingestion_id;
-      DELETE FROM articleItem WHERE ingestionId = ingestion_id;
-      DELETE FROM syndication WHERE revisionId IN (SELECT revisionId FROM articleRevision WHERE ingestionId = ingestion_id);
-      DELETE FROM articleRevision WHERE ingestionId = ingestion_id;
-      DELETE FROM articleIngestion WHERE ingestionId = ingestion_id;
-      DELETE FROM article WHERE articleId = article_id;
-    ELSE
-      SIGNAL SQLSTATE '45000'
-      SET MESSAGE_TEXT = 'Article not found matching the given ID';
-    END IF;
-  END;
-
-DROP PROCEDURE IF EXISTS migrate_article;
-CREATE PROCEDURE migrate_article(IN article_id BIGINT)
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGINT)
   BEGIN
 
     DECLARE pub_date DATE DEFAULT NULL;
@@ -214,10 +189,13 @@ CREATE PROCEDURE migrate_article(IN article_id BIGINT)
     # log as success
     INSERT INTO migration_status_log (articleId, migration_date, migration_status)
     VALUES (article_id, NOW(), 0);
-  END;
+  END$$
+DELIMITER ;
 
-DROP PROCEDURE IF EXISTS migrate_articles;
-CREATE PROCEDURE migrate_articles()
+####################################################################################################
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_articles`()
   BEGIN
 
     DECLARE article_id BIGINT DEFAULT NULL;
@@ -334,10 +312,50 @@ CREATE PROCEDURE migrate_articles()
       FROM oldArticleRelationship ar INNER JOIN article a1 ON ar.parentArticleID = a1.articleId INNER JOIN article a2 ON ar.otherArticleID = a2.articleId
       WHERE type NOT IN ('retraction', 'expressed-concern') AND articleRelationshipID NOT IN (SELECT articleRelationshipId FROM articleRelationship);
 
-  END;
+  END$$
+DELIMITER ;
 
-DROP PROCEDURE IF EXISTS migrate_article_rollback_all;
-CREATE PROCEDURE migrate_article_rollback_all()
+####################################################################################################
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article_rollback`(IN article_id BIGINT)
+  BEGIN
+    DECLARE ingestion_id BIGINT DEFAULT 0;
+
+    DECLARE EXIT HANDLER FOR 1242
+    SELECT 'More than one ingestion exists for the given article ID. Rollback aborted.';
+
+    IF EXISTS (SELECT * FROM article WHERE articleId = article_id) THEN
+      # Get ingestion id for migrated article. Throws error 1242 when more than one ingestion exists.
+      # This should not be possible for migrated articles and aborts rollback.
+      SET ingestion_id = (SELECT ingestionId FROM articleIngestion WHERE articleId = article_id);
+
+      DELETE FROM commentFlag WHERE commentId in (SELECT commentId FROM `comment` WHERE articleId = article_id);
+      SET FOREIGN_KEY_CHECKS=0; # necessary because of parent/child relationships
+      DELETE FROM `comment` WHERE articleId = article_id;
+      SET FOREIGN_KEY_CHECKS=1;
+      DELETE FROM articleRelationship WHERE sourceArticleId = article_id OR targetArticleId = article_id;
+      DELETE FROM articleCategoryAssignment WHERE articleId = article_id;
+      DELETE FROM articleListJoinTable WHERE articleId = article_id;
+      DELETE FROM issueArticleList WHERE articleId = article_id;
+      DELETE FROM articleFile WHERE ingestionId = ingestion_id;
+      DELETE FROM articleItem WHERE ingestionId = ingestion_id;
+      DELETE FROM syndication WHERE revisionId IN (SELECT revisionId FROM articleRevision WHERE ingestionId = ingestion_id);
+      DELETE FROM articleRevision WHERE ingestionId = ingestion_id;
+      DELETE FROM articleIngestion WHERE ingestionId = ingestion_id;
+      DELETE FROM article WHERE articleId = article_id;
+    ELSE
+      SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'Article not found matching the given ID';
+    END IF;
+  END$$
+DELIMITER ;
+
+
+####################################################################################################
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article_rollback_all`()
   BEGIN
 
     DECLARE article_id BIGINT DEFAULT NULL;
@@ -367,10 +385,5 @@ CREATE PROCEDURE migrate_article_rollback_all()
     DELETE FROM volume;
     DELETE FROM journal;
 
-  END;
-
-# Use this for initial migration attempt and modify select statement to choose specific articles as needed thereafter
-# CALL migrate_articles();
-
-# Pull in case of emergency
-# CALL migrate_article_rollback_all();
+  END$$
+DELIMITER ;
