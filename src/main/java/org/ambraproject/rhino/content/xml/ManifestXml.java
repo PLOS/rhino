@@ -84,8 +84,8 @@ public class ManifestXml extends AbstractXpathReader {
     private Parsed() {
       List<Asset> assets = new ArrayList<>();
 
-      assets.add(parseAssetNode(AssetTagName.ARTICLE, readNode("//article")));
-      for (Node objectNode : readNodeList("//object")) {
+      assets.add(parseAssetNode(AssetTagName.ARTICLE, readNode("/manifest/articleBundle/article")));
+      for (Node objectNode : readNodeList("/manifest/articleBundle/object")) {
         assets.add(parseAssetNode(AssetTagName.OBJECT, objectNode));
       }
 
@@ -93,7 +93,7 @@ public class ManifestXml extends AbstractXpathReader {
           assetUri -> "Manifest has assets with duplicate uri: " + assetUri
       );
 
-      this.ancillaryFiles = parseAncillaryFiles(readNode("//ancillary"));
+      this.ancillaryFiles = parseAncillaryFiles(readNode("/manifest/ancillary"));
     }
 
     private Asset parseAssetNode(AssetTagName assetTagName, Node assetNode) {
