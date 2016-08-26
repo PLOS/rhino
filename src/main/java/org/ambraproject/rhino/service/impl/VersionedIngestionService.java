@@ -27,8 +27,6 @@ import org.hibernate.Session;
 import org.plos.crepo.model.identity.RepoId;
 import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.model.input.RepoObjectInput;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
@@ -45,8 +43,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class VersionedIngestionService extends AmbraService {
-
-  private static final Logger log = LoggerFactory.getLogger(VersionedIngestionService.class);
 
   @Autowired
   private ArticleCrudService articleCrudService;
@@ -197,9 +193,7 @@ public class VersionedIngestionService extends AmbraService {
           + (missingFromArchive.isEmpty() ? "" : (" Files in manifest not included in archive: " + missingFromArchive))
           + (missingFromManifest.isEmpty() ? "" : (" Files in archive not described in manifest: " + missingFromManifest));
 
-      // TODO: reinstate the validation check when AccMan friendly zip files become more readily available
-      log.warn("*** Skipping validation of manifest to accommodate ingestion of legacy zip files ***");
-      // throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
   }
 
