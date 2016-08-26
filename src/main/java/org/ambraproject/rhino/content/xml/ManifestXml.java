@@ -120,7 +120,7 @@ public class ManifestXml extends AbstractXpathReader {
 
     private ImmutableList<ManifestFile> parseAncillaryFiles(Node ancillaryNode) {
       return (ancillaryNode == null) ? ImmutableList.of() : ImmutableList.copyOf(
-          readNodeList("child::representation", ancillaryNode).stream()
+          readNodeList("child::file", ancillaryNode).stream()
               .map(this::parseFile)
               .collect(Collectors.toList()));
     }
