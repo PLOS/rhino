@@ -229,7 +229,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_articles`()
       migration_status INT(11) DEFAULT NULL,
       error_message VARCHAR(255) DEFAULT NULL);
 
-    # replace the temporary records added by the migrate_article.py script
+    # replace the temporary records added by the migrate.py script
     IF EXISTS (SELECT journalID FROM oldJournal WHERE journalID NOT IN (SELECT journalId FROM journal)) THEN
       SET FOREIGN_KEY_CHECKS=0;
       DELETE FROM journal;
