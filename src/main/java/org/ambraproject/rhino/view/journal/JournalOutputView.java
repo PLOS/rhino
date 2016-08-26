@@ -43,16 +43,17 @@ public class JournalOutputView implements JsonOutputView {
 
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
-    JsonObject serialized = context.serialize(journal).getAsJsonObject();
+    JsonObject serialized = new JsonObject();
+    serialized.addProperty("journalKey", journal.getJournalKey());
+    serialized.addProperty("title", journal.getTitle());
+    serialized.addProperty("eIssn", journal.geteIssn());
 
-    serialized.remove("currentIssue");
     Issue currentIssue = journal.getCurrentIssue();
     if (currentIssue != null) {
       IssueOutputView currentIssueView = issueOutputViewFactory.getView(currentIssue);
       serialized.add("currentIssue", currentIssueView.serialize(context));
     }
 
-    serialized.remove("volumes");
     List<VolumeOutputView> volumeOutputViews = new ArrayList<>();
     for (Volume volume : journal.getVolumes()) {
       VolumeOutputView volumeOutputView = volumeOutputViewFactory.getView(volume);
