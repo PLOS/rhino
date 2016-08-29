@@ -22,6 +22,8 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.service.impl.VersionedIngestionService;
 import org.ambraproject.rhino.util.Archive;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -45,6 +47,7 @@ import java.util.Optional;
  */
 @Controller
 public class IngestibleController extends RestController {
+  private static final Logger log = LoggerFactory.getLogger(IngestibleController.class);
 
   private static final String INGESTIBLE_ROOT = "/ingestibles";
 
@@ -104,8 +107,13 @@ public class IngestibleController extends RestController {
     ingestibleService.archiveIngested(name);
     response.setStatus(HttpStatus.CREATED.value());
 
-    // Report the written data, as JSON, in the response.
-    articleCrudService.serveMetadata(ingestionId).respond(request, response, entityGson);
+    try {
+      // Report the written data, as JSON, in the response.
+      articleCrudService.serveMetadata(ingestionId).respond(request, response, entityGson);
+    } catch (Exception e) {
+      // Throwing an exception could cause a rollback. It's preferable to let the response body be broken.
+      log.error("Error writing response body after ingesting article", e);
+    }
   }
 
   @Transactional(rollbackFor = {Throwable.class})
