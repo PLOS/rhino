@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.service.impl;
+package org.ambraproject.rhino.model.ingest;
 
 import com.google.common.collect.ImmutableList;
 import org.ambraproject.rhino.identity.Doi;
@@ -7,17 +7,17 @@ import org.plos.crepo.model.input.RepoObjectInput;
 import java.util.List;
 import java.util.Objects;
 
-class ArticlePackage {
+public class ArticlePackage {
 
   private final ArticleItemInput articleWork;
   private final ImmutableList<ArticleItemInput> allWorks;
-  private final ImmutableList<RepoObjectInput> archivalFiles;
+  private final ImmutableList<RepoObjectInput> ancillaryFiles;
 
-  ArticlePackage(ArticleItemInput articleWork, List<ArticleItemInput> assetWorks, List<RepoObjectInput> archivalFiles) {
+  ArticlePackage(ArticleItemInput articleWork, List<ArticleItemInput> assetWorks, List<RepoObjectInput> ancillaryFiles) {
     this.articleWork = Objects.requireNonNull(articleWork);
     this.allWorks = ImmutableList.<ArticleItemInput>builder()
         .add(articleWork).addAll(assetWorks).build();
-    this.archivalFiles = ImmutableList.copyOf(archivalFiles);
+    this.ancillaryFiles = ImmutableList.copyOf(ancillaryFiles);
   }
 
   public Doi getDoi() {
@@ -28,8 +28,8 @@ class ArticlePackage {
     return allWorks;
   }
 
-  public ImmutableList<RepoObjectInput> getArchivalFiles() {
-    return archivalFiles;
+  public ImmutableList<RepoObjectInput> getAncillaryFiles() {
+    return ancillaryFiles;
   }
 
 }
