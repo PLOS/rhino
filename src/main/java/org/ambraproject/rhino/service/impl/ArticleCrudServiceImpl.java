@@ -23,6 +23,7 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
+import com.google.common.io.ByteSource;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
@@ -35,6 +36,7 @@ import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleFile;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRelationship;
@@ -71,6 +73,7 @@ import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.ErrorType;
 import org.plos.crepo.model.identity.RepoId;
+import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,6 +95,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -112,8 +117,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private XpathReader xpathReader;
   @Autowired
   private TaxonomyService taxonomyService;
-  @Autowired
-  private VersionedIngestionService versionedIngestionService;
   @Autowired
   private ArticleIngestionView.Factory articleIngestionViewFactory;
   @Autowired
@@ -522,8 +525,39 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public Archive repack(ArticleIdentity articleIdentity) {
-    return versionedIngestionService.repack(articleIdentity);
+  public Archive repack(ArticleIngestionIdentifier ingestionId) {
+    ArticleIngestion ingestion = readIngestion(ingestionId);
+    List<ArticleFile> files = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM ArticleFile WHERE ingestion = :ingestion");
+      query.setParameter("ingestion", ingestion);
+      return (List<ArticleFile>) query.list();
+    });
+
+    Map<String, ByteSource> archiveMap = files.stream()
+        .map(ArticleFile::getCrepoVersion)
+        .collect(Collectors.toMap(
+            // File name within zip archive
+            (RepoVersion v) -> {
+              RepoObjectMetadata metadata = contentRepoService.getRepoObjectMetadata(v);
+              return metadata.getDownloadName().orElseGet(() -> extractFilenameStub(v.getId().getKey()));
+            },
+
+            // File content within zip archive
+            (RepoVersion v) -> new ByteSource() {
+              @Override
+              public InputStream openStream() throws IOException {
+                return contentRepoService.getRepoObject(v);
+              }
+            }));
+
+    return Archive.pack(extractFilenameStub(ingestionId.getDoiName()) + ".zip", archiveMap);
+  }
+
+  private static final Pattern FILENAME_STUB_PATTERN = Pattern.compile("(?:[^/]*/)*?([^/]*)/?");
+
+  private static String extractFilenameStub(String name) {
+    Matcher m = FILENAME_STUB_PATTERN.matcher(name);
+    return m.matches() ? m.group(1) : name;
   }
 
   @Override

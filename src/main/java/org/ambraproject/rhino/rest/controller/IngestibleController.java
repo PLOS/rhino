@@ -124,8 +124,7 @@ public class IngestibleController extends RestController {
       throws IOException {
     ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
 
-    String articleId = null; // TODO: Implement ArticleCrudService.repack for ArticleIngestionIdentifier
-    Archive archive = articleCrudService.repack(ArticleIdentity.create(articleId));
+    Archive archive = articleCrudService.repack(ingestionId);
     response.setStatus(HttpStatus.OK.value());
     response.setContentType("application/zip");
     response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "filename=" + archive.getArchiveName());
