@@ -9,6 +9,7 @@ import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.VersionedArticleRelationship;
 import org.ambraproject.rhino.service.ArticleCrudService;
+import org.ambraproject.rhino.view.journal.JournalOutputView;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
@@ -66,6 +67,7 @@ public class RelationshipSetView {
     private final Integer revisionNumber;
     private final String title;
     private final LocalDate publicationDate;
+    private final JournalOutputView journal;
 
     private RelationshipView(String type, Doi doi, Optional<ArticleRevision> otherArticle) {
       this.type = Objects.requireNonNull(type);
@@ -78,10 +80,12 @@ public class RelationshipSetView {
         this.revisionNumber = revision.getRevisionNumber();
         this.title = ingestion.getTitle();
         this.publicationDate = ingestion.getPublicationDate().toLocalDate();
+        this.journal = JournalOutputView.getShallowView(ingestion.getJournal());
       } else {
         this.revisionNumber = null;
         this.title = null;
         this.publicationDate = null;
+        this.journal = null;
       }
     }
   }
