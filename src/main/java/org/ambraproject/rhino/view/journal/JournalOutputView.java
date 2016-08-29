@@ -26,27 +26,18 @@ public class JournalOutputView implements JsonOutputView {
     private VolumeOutputView.Factory volumeOutputViewFactory;
 
     public JournalOutputView getView(Journal journal) {
-      return new JournalOutputView(issueOutputViewFactory, volumeOutputViewFactory, journal, true);
-    }
-
-    public JournalOutputView getShallowView(Journal journal) {
-      return new JournalOutputView(issueOutputViewFactory, volumeOutputViewFactory, journal, false);
+      return new DeepView(journal, issueOutputViewFactory, volumeOutputViewFactory);
     }
   }
 
-  private final IssueOutputView.Factory issueOutputViewFactory;
-  private final VolumeOutputView.Factory volumeOutputViewFactory;
+  public static JournalOutputView getShallowView(Journal journal) {
+    return new JournalOutputView(journal);
+  }
 
-  private final Journal journal;
-  private final boolean showChildren;
+  protected final Journal journal;
 
-  private JournalOutputView(IssueOutputView.Factory issueOutputViewFactory,
-                            VolumeOutputView.Factory volumeOutputViewFactory,
-                            Journal journal, boolean showChildren) {
+  private JournalOutputView(Journal journal) {
     this.journal = Objects.requireNonNull(journal);
-    this.issueOutputViewFactory = Objects.requireNonNull(issueOutputViewFactory);
-    this.volumeOutputViewFactory = Objects.requireNonNull(volumeOutputViewFactory);
-    this.showChildren = showChildren;
   }
 
   @Override
@@ -56,7 +47,26 @@ public class JournalOutputView implements JsonOutputView {
     serialized.addProperty("title", journal.getTitle());
     serialized.addProperty("eIssn", journal.geteIssn());
 
-    if (showChildren) {
+    addChildren(context, serialized);
+
+    return serialized;
+  }
+
+  protected void addChildren(JsonSerializationContext context, JsonObject serialized) {
+  }
+
+  private static class DeepView extends JournalOutputView {
+    private final IssueOutputView.Factory issueOutputViewFactory;
+    private final VolumeOutputView.Factory volumeOutputViewFactory;
+
+    private DeepView(Journal journal, IssueOutputView.Factory issueOutputViewFactory, VolumeOutputView.Factory volumeOutputViewFactory) {
+      super(journal);
+      this.issueOutputViewFactory = Objects.requireNonNull(issueOutputViewFactory);
+      this.volumeOutputViewFactory = Objects.requireNonNull(volumeOutputViewFactory);
+    }
+
+    @Override
+    protected void addChildren(JsonSerializationContext context, JsonObject serialized) {
       Issue currentIssue = journal.getCurrentIssue();
       if (currentIssue != null) {
         IssueOutputView currentIssueView = issueOutputViewFactory.getView(currentIssue);
@@ -70,8 +80,6 @@ public class JournalOutputView implements JsonOutputView {
       }
       serialized.add("volumes", context.serialize(volumeOutputViews));
     }
-
-    return serialized;
   }
 
 }
