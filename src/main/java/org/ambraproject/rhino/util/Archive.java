@@ -1,16 +1,11 @@
 package org.ambraproject.rhino.util;
 
-import com.google.common.base.Function;
-import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.io.ByteSource;
 import com.google.common.io.ByteStreams;
-import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.model.input.RepoObjectInput;
-import org.plos.crepo.model.metadata.RepoCollectionList;
-import org.plos.crepo.model.metadata.RepoObjectMetadata;
-import org.plos.crepo.service.ContentRepoService;
 
 import java.io.ByteArrayInputStream;
 import java.io.Closeable;
@@ -199,17 +194,13 @@ public abstract class Archive implements Closeable {
     };
   }
 
-  public static interface InputStreamSource {
-    public abstract InputStream open() throws IOException;
-  }
-
-  public static Archive pack(String archiveName, Map<String, ? extends InputStreamSource> files) {
-    final ImmutableMap<String, InputStreamSource> defensiveFiles = ImmutableMap.copyOf(files);
+  public static Archive pack(String archiveName, Map<String, ? extends ByteSource> files) {
+    final ImmutableMap<String, ByteSource> defensiveFiles = ImmutableMap.copyOf(files);
     return new Archive(archiveName, defensiveFiles) {
       @Override
       protected InputStream openFileFrom(Object source) {
         try {
-          return ((InputStreamSource) source).open();
+          return ((ByteSource) source).openStream();
         } catch (IOException e) {
           throw new RuntimeException(e);
         }

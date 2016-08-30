@@ -6,7 +6,6 @@ import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
@@ -312,7 +311,4 @@ public class VersionedIngestionService extends AmbraService {
     }
   }
 
-  public Archive repack(ArticleIdentity articleIdentity) {
-    throw new UnsupportedOperationException(); // TODO
-  }
 }

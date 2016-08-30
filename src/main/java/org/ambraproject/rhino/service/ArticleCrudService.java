@@ -150,13 +150,16 @@ public interface ArticleCrudService {
   public abstract Transceiver readRandom() throws IOException;
 
   /**
-   * Represent an existing article as an ingestible archive. The archive, if it were reingested, should produce an
-   * identical article and assets.
+   * Recreate an ingested archive.
+   * <p>
+   * The recreated archive will contain the same file entries with the same names, but is not guaranteed to be a
+   * byte-for-byte copy of the original zip file. It may vary in details such as entry order, compression parameters,
+   * file timestamps, and zip comments.
    *
-   * @param articleIdentity the article to represent
-   * @return the archive
+   * @param ingestionId the ingestion created by ingesting the original archive
+   * @return a copy of the original archive
    */
-  public abstract Archive repack(ArticleIdentity articleIdentity);
+  public abstract Archive repack(ArticleIngestionIdentifier ingestionId);
 
   public abstract Transceiver serveMetadata(ArticleIngestionIdentifier ingestionId);
 
