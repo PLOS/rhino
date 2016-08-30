@@ -63,7 +63,7 @@ public class ArticleListCrudController extends RestController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/lists/{type}/{journal}/{key}", method = RequestMethod.PATCH)
+  @RequestMapping(value = "/lists/{type}/journals/{journal}/keys/{key}", method = RequestMethod.PATCH)
   public ResponseEntity<?> update(HttpServletRequest request,
                                   @PathVariable("type") String type,
                                   @PathVariable("journal") String journalKey,
@@ -100,7 +100,7 @@ public class ArticleListCrudController extends RestController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/lists/{type}/{journal}", method = RequestMethod.GET)
+  @RequestMapping(value = "/lists/{type}/journals/{journal}", method = RequestMethod.GET)
   public void listAll(HttpServletRequest request, HttpServletResponse response,
                       @PathVariable("type") String type,
                       @PathVariable("journal") String journalKey)
@@ -109,7 +109,7 @@ public class ArticleListCrudController extends RestController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/lists/{type}/{journal}/{key}", method = RequestMethod.GET)
+  @RequestMapping(value = "/lists/{type}/journals/{journal}/keys/{key}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @PathVariable("type") String type,
                    @PathVariable("journal") String journalKey,
