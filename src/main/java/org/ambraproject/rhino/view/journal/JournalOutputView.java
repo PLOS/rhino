@@ -55,7 +55,7 @@ public class JournalOutputView implements JsonOutputView {
   protected void addChildren(JsonSerializationContext context, JsonObject serialized) {
   }
 
-  private static class DeepView extends JournalOutputView {
+  public static class DeepView extends JournalOutputView {
     private final IssueOutputView.Factory issueOutputViewFactory;
     private final VolumeOutputView.Factory volumeOutputViewFactory;
 
