@@ -68,6 +68,7 @@ import org.ambraproject.rhino.view.article.versioned.ArticleIngestionView;
 import org.ambraproject.rhino.view.article.versioned.ItemSetView;
 import org.ambraproject.rhino.view.article.versioned.PersistentArticleView;
 import org.ambraproject.rhino.view.article.versioned.RelationshipSetView;
+import org.ambraproject.rhino.view.journal.ArticleListView;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
 import org.ambraproject.rhino.view.journal.VolumeOutputView;
@@ -337,6 +338,11 @@ public class RhinoConfiguration extends BaseConfiguration {
   @Bean
   public PersistentArticleView.Factory persistentArticleViewFactory() {
     return new PersistentArticleView.Factory();
+  }
+
+  @Bean
+  public ArticleListView.Factory articleListViewFactory() {
+    return new ArticleListView.Factory();
   }
 
   @Bean
