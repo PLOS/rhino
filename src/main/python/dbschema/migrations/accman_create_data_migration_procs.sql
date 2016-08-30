@@ -8,6 +8,7 @@
 
 ####################################################################################################
 
+DROP FUNCTION IF EXISTS `get_doi_name`;
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` FUNCTION `get_doi_name`(full_doi VARCHAR(150)) RETURNS varchar(150) CHARSET latin1
 DETERMINISTIC
@@ -18,6 +19,7 @@ DELIMITER ;
 
 ####################################################################################################
 
+DROP PROCEDURE IF EXISTS `migrate_article`;
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGINT)
   BEGIN
@@ -48,7 +50,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
     DECLARE old_assets_cursor CURSOR FOR
       SELECT doi, extension, contextElement
       FROM articleAsset
-      WHERE articleID = article_id;
+      WHERE articleID = article_id AND extension NOT IN ('ORIG','ZIP','ZIP_PART') # bogus recs and safe to ignore
+      ORDER BY doi;
 
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
@@ -56,7 +59,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
       SIGNAL SQLSTATE '45000'
       SET MESSAGE_TEXT = 'Article already exists in target table';
     ELSE
-      SELECT doi, title, date
+      SELECT doi, title, `date`
       INTO article_doi, article_title, pub_date
       FROM oldArticle
       WHERE articleID = article_id;
@@ -113,8 +116,19 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
             WHEN context_element = 'table-wrap' THEN 'table'
             WHEN context_element = 'disp-formula' OR context_element = 'inline-formula' THEN 'graphic'
             WHEN context_element = 'supplementary-material' THEN 'supplementaryMaterial'
+            WHEN asset_doi LIKE '%.g___' THEN 'figure'
+            WHEN asset_doi LIKE '%.t___' OR asset_doi LIKE '%.t___-M' THEN 'table'
+            WHEN asset_doi LIKE '%.e___' OR asset_doi LIKE '%.m___' OR asset_doi LIKE '%logo' THEN 'graphic'
+            WHEN asset_doi LIKE '%.s___' OR asset_doi LIKE '%.sd___' THEN 'supplementaryMaterial'
             ELSE 'unknown'
             END;
+
+            IF item_type = 'unknown' THEN
+              SET err_msg = CONCAT('Item type for ', get_doi_name(asset_doi), ' not found. Rolling back ', get_doi_name(article_doi));
+              CALL migrate_article_rollback(article_id);
+              SIGNAL SQLSTATE '45000'
+              SET MESSAGE_TEXT = err_msg;
+            END IF;
 
             INSERT INTO articleItem
             (ingestionId, doi, articleItemType, created)
@@ -128,8 +142,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
           SET crepo_uuid = '';
           SELECT uuid INTO crepo_uuid FROM objects WHERE bucketId = 1 AND status = 0 AND objkey = crepo_key ORDER BY versionNumber DESC LIMIT 1;
           IF crepo_uuid = '' THEN
-            SET err_msg = CONCAT('Crepo key ', crepo_key, ' not found. Rolling back migration for article ', get_doi_name(article_doi));
-            CALL migrate_article_rollback(article_doi);
+            SET err_msg = CONCAT('Crepo key ', crepo_key, ' not found. Rolling back ', get_doi_name(article_doi));
+            CALL migrate_article_rollback(article_id);
             SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = err_msg;
           END IF;
@@ -141,7 +155,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
             CASE
             WHEN asset_extension = 'XML' THEN 'manuscript'
             WHEN asset_extension = 'PDF' THEN 'printable'
-            ELSE 'unknown_article'
+            ELSE 'Unknown article'
             END
           WHEN item_type = 'figure' THEN
             CASE
@@ -150,7 +164,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
             WHEN asset_extension = 'PNG_L' THEN 'large'
             WHEN asset_extension = 'PNG_I' THEN 'inline'
             WHEN asset_extension = 'TIFF' OR asset_extension = 'TIF' OR asset_extension = 'GIF' THEN 'original'
-            ELSE 'unknown_figure'
+            ELSE 'Unknown figure'
             END
           WHEN item_type = 'table' THEN
             CASE
@@ -159,16 +173,23 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
             WHEN asset_extension = 'PNG_L' THEN 'large'
             WHEN asset_extension = 'PNG_I' THEN 'inline'
             WHEN asset_extension = 'TIFF' OR asset_extension = 'TIF' OR asset_extension = 'GIF' THEN 'original'
-            ELSE 'unknown_table'
+            ELSE 'Unknown table'
             END
           WHEN item_type = 'graphic' THEN
             CASE WHEN asset_extension = 'TIF' OR asset_extension = 'GIF' THEN 'original'
             WHEN asset_extension = 'PNG' THEN 'thumbnail'
-            ELSE 'unknown_graphic'
+            ELSE 'Unknown graphic'
             END
           WHEN item_type = 'supplementaryMaterial' THEN 'supplementary'
-          ELSE 'unknown'
+          ELSE 'Unknown'
           END;
+
+          IF file_type LIKE 'unknown%' THEN
+            SET err_msg = CONCAT(file_type, ' file type for ', get_doi_name(asset_doi), '. Rolling back ', get_doi_name(article_doi));
+            CALL migrate_article_rollback(article_id);
+            SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = err_msg;
+          END IF;
 
           INSERT INTO articleFile
           (ingestionId, itemId, bucketName, crepoKey, crepoUuid, created, fileType)
@@ -194,6 +215,7 @@ DELIMITER ;
 
 ####################################################################################################
 
+DROP PROCEDURE IF EXISTS `migrate_articles`;
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_articles`()
   BEGIN
@@ -205,6 +227,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_articles`()
     DECLARE full_err_msg VARCHAR(1024);
     DECLARE done INT DEFAULT FALSE;
 
+    ##### MODIFY THIS SQL STATEMENT TO SELECT OTHER THAN ALL RECORDS IF A SECONDARY MIGRATION RUN IS DESIRED #####
     DECLARE old_articles_cursor CURSOR FOR
       SELECT articleID FROM oldArticle
       ORDER BY articleID;
@@ -317,6 +340,7 @@ DELIMITER ;
 
 ####################################################################################################
 
+DROP PROCEDURE IF EXISTS `migrate_article_rollback`;
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article_rollback`(IN article_id BIGINT)
   BEGIN
@@ -354,6 +378,7 @@ DELIMITER ;
 
 ####################################################################################################
 
+DROP PROCEDURE IF EXISTS `migrate_article_rollback_all`;
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article_rollback_all`()
   BEGIN
