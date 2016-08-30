@@ -72,7 +72,8 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
       "supplementary-material", "inline-formula", "disp-formula", GRAPHIC);
 
   // The node-names for nodes that can be an asset if they have a descendant <graphic> node
-  protected static final ImmutableSet<String> GRAPHIC_NODE_PARENTS = ImmutableSet.of(TABLE_WRAP, "fig");
+  protected static final ImmutableSet<String> GRAPHIC_NODE_PARENTS = ImmutableSet.of(TABLE_WRAP, "fig",
+      "disp-formula");
 
   // An XPath expression that will match any node with one of the name in ASSET_NODE_NAMES.
   protected static final String ASSET_EXPRESSION = Joiner.on('|').join(
