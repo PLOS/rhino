@@ -27,4 +27,11 @@ public interface ArticleStateService {
    */
   public abstract void updateSolrIndex(ArticleIdentifier articleId);
 
+  /**
+   * Push a message to the queue that will remove an article from the Solr index.
+   *
+   * @param articleId the article to be removed
+   */
+  public abstract void removeSolrIndex(ArticleIdentifier articleId);
+
 }

@@ -16,6 +16,7 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
+import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
@@ -111,6 +112,13 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
     doc = appendStrikingImage(doc, ingestion);
     messageSender.sendBody(ambraConfiguration.getString(
         "ambra.services.search.articleIndexingQueue", null), doc);
+  }
+
+  @Override
+  public void removeSolrIndex(ArticleIdentifier articleId) {
+    String doi = articleId.getDoi().asUri(Doi.UriStyle.INFO_DOI).toString();
+    String destination = ambraConfiguration.getString("ambra.services.search.articleDeleteQueue", null);
+    messageSender.sendBody(destination, doi);
   }
 
 }
