@@ -26,7 +26,7 @@ import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.PublicationState;
 import org.ambraproject.rhino.model.SyndicationStatus;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
+import org.ambraproject.rhino.service.impl.SolrIndexServiceImpl;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.view.article.ArticleInputView;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
@@ -59,14 +59,14 @@ import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 /**
- * Tests for {@link org.ambraproject.rhino.service.impl.ArticleStateServiceImpl}
+ * Tests for {@link SolrIndexServiceImpl}
  */
-public class ArticleStateServiceTest extends BaseRhinoTest {
+public class SolrIndexServiceTest extends BaseRhinoTest {
 
   private static final String TEST_DATA_DIR = "src/test/resources/articles/";
 
   @Autowired
-  private ArticleStateService articleStateService;
+  private SolrIndexService solrIndexService;
 
   @Autowired
   private ArticleCrudService articleCrudService;
@@ -85,7 +85,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
 
   @Test
   public void testServiceAutowiring() {
-    assertNotNull(articleStateService);
+    assertNotNull(solrIndexService);
   }
 
   @BeforeMethod
@@ -157,14 +157,14 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     assertEquals(inputView.getSyndicationUpdate(crossref).getStatus(), SyndicationStatus.IN_PROGRESS.getLabel());
     assertEquals(inputView.getSyndicationUpdate(pmc).getStatus(), SyndicationStatus.IN_PROGRESS.getLabel());
     assertEquals(inputView.getSyndicationUpdate(pubmed).getStatus(), SyndicationStatus.IN_PROGRESS.getLabel());
-    article = articleStateService.update(articleId, inputView);
+    article = solrIndexService.update(articleId, inputView);
 
     ArticleOutputView result = articleOutputViewFactory.create(article, false);
     assertEquals(result.getArticle().getState(), PublicationState.PUBLISHED.getValue());
     assertEquals(result.getSyndication(crossref).getStatus(), SyndicationStatus.IN_PROGRESS.getLabel());
     assertEquals(result.getSyndication(pmc).getStatus(), SyndicationStatus.IN_PROGRESS.getLabel());
     assertEquals(result.getSyndication(pubmed).getStatus(), SyndicationStatus.IN_PROGRESS.getLabel());
-    ArticleStateServiceImpl impl = (ArticleStateServiceImpl) articleStateService;
+    SolrIndexServiceImpl impl = (SolrIndexServiceImpl) solrIndexService;
     DummyMessageSender dummySender = (DummyMessageSender) impl.messageSender;
     assertEquals(dummySender.messagesSent.size(), 5);
 
@@ -189,7 +189,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
 
     // Confirm that disabling the article removes it from the solr index.
     inputView = entityGson.fromJson("{'state': 'disabled'}", ArticleInputView.class);
-    article = articleStateService.update(articleId, inputView);
+    article = solrIndexService.update(articleId, inputView);
     assertEquals(article.getState(), PublicationState.DISABLED.getValue());
     assertEquals(dummySender.messagesSent.size(), 6);
     List<String> deletionMessages = dummySender.messagesSent.get("activemq:fake.delete.queue");
@@ -202,7 +202,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     // Attempting to publish the disabled article should fail.
     inputView = entityGson.fromJson("{'state': 'published'}", ArticleInputView.class);
     try {
-      article = articleStateService.update(articleId, inputView);
+      article = solrIndexService.update(articleId, inputView);
       fail("Publication of disabled article succeeded");
     } catch (RestClientException expected) {
       assertEquals(expected.getResponseStatus(), HttpStatus.METHOD_NOT_ALLOWED);
@@ -214,7 +214,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     assertEquals(citedArticlesQueue.get(0), article.getDoi());
     assertEquals(dummySender.headersSent.size(), 1);
     String[] headerKeys = dummySender.headersSent.keySet().toArray(new String[1]);
-    assertEquals(headerKeys[0], ArticleStateServiceImpl.HEADER_AUTH_ID);
+    assertEquals(headerKeys[0], SolrIndexServiceImpl.HEADER_AUTH_ID);
     assertNull(dummySender.headersSent.get(0));
   }
 }

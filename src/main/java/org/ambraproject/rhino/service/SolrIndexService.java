@@ -16,9 +16,9 @@ package org.ambraproject.rhino.service;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 
 /**
- * Service that reads and writes an article's state after it has been created.
+ * Service that pushes messages to the queue related to Solr indexing.
  */
-public interface ArticleStateService {
+public interface SolrIndexService {
 
   /**
    * Push a message to the queue that will update an article's Solr index.

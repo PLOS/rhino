@@ -22,7 +22,7 @@ import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.ArticleStateService;
+import org.ambraproject.rhino.service.SolrIndexService;
 import org.ambraproject.rhino.service.MessageSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.Document;
@@ -33,7 +33,7 @@ import org.w3c.dom.NodeList;
 /**
  * {@inheritDoc}
  */
-public class ArticleStateServiceImpl extends AmbraService implements ArticleStateService {
+public class SolrIndexServiceImpl extends AmbraService implements SolrIndexService {
 
   private static final String XML_NAMESPACE = "http://www.ambraproject.org/article/additionalInfo";
 
