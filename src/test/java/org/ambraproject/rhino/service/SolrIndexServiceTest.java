@@ -14,49 +14,27 @@
 package org.ambraproject.rhino.service;
 
 import com.google.common.collect.ImmutableSet;
-import com.google.gson.Gson;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.RhinoTestHelper;
-import org.ambraproject.rhino.config.RuntimeConfiguration;
-import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.AssetFileIdentity;
-import org.ambraproject.rhino.model.Article;
-import org.ambraproject.rhino.model.ArticleAsset;
+import org.ambraproject.rhino.identity.ArticleIdentifier;
+import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
-import org.ambraproject.rhino.model.PublicationState;
-import org.ambraproject.rhino.model.SyndicationStatus;
-import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.SolrIndexServiceImpl;
 import org.ambraproject.rhino.util.Archive;
-import org.ambraproject.rhino.view.article.ArticleInputView;
-import org.ambraproject.rhino.view.article.ArticleOutputView;
-import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
 import org.apache.commons.io.IOUtils;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
-import org.plos.crepo.exceptions.ContentRepoException;
-import org.plos.crepo.exceptions.NotFoundException;
-import org.plos.crepo.model.identity.RepoId;
-import org.plos.crepo.service.ContentRepoService;
-import org.plos.crepo.service.InMemoryContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertNull;
-import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
 
 /**
  * Tests for {@link SolrIndexServiceImpl}
@@ -67,21 +45,6 @@ public class SolrIndexServiceTest extends BaseRhinoTest {
 
   @Autowired
   private SolrIndexService solrIndexService;
-
-  @Autowired
-  private ArticleCrudService articleCrudService;
-
-  @Autowired
-  private ContentRepoService contentRepoService;
-
-  @Autowired
-  private ArticleOutputViewFactory articleOutputViewFactory;
-
-  @Autowired
-  private Gson entityGson;
-
-  @Autowired
-  private RuntimeConfiguration runtimeConfiguration;
 
   @Test
   public void testServiceAutowiring() {
@@ -103,67 +66,14 @@ public class SolrIndexServiceTest extends BaseRhinoTest {
     }
   }
 
-  private void checkFileExistence(AssetFileIdentity fileIdentity, boolean expectedToExist) throws IOException {
-    RepoId repoId = RepoId.create(runtimeConfiguration.getCorpusStorage().getDefaultBucket(), fileIdentity.toString());
-    try (InputStream stream = contentRepoService.getLatestRepoObject(repoId)) {
-      assertNotNull(stream);
-      assertTrue(expectedToExist);
-    } catch (InMemoryContentRepoService.InMemoryContentRepoServiceException|NotFoundException nfe) {
-      assertFalse(expectedToExist);
-    } catch (ContentRepoException e) {
-      throw e;
-    }
-  }
-
   @Test(enabled = false)
   public void testPublication() throws Exception {
-    final String crossref = "CROSSREF";
-    final String pmc = "PMC";
-    final String pubmed = "PUBMED";
-
     Archive archive = Archive.readZipFileIntoMemory(new File(TEST_DATA_DIR + "pone.0056489.zip"));
 //    Article article = articleCrudService.writeArchive(archive,
 //        Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY, OptionalInt.empty());
-    Article article = new Article();
-    ArticleIdentity articleId = ArticleIdentity.create(article);
-    assertEquals(article.getState(), PublicationState.INGESTED.getValue());
-    for (ArticleAsset asset : article.getAssets()) {
-      checkFileExistence(AssetFileIdentity.from(asset), true);
-    }
+    ArticleTable article = new ArticleTable();
+    ArticleIdentifier articleId = ArticleIdentifier.create(article.getDoi());
 
-    ArticleOutputView outputView = articleOutputViewFactory.create(article, false);
-    assertEquals(outputView.getArticle().getState(), PublicationState.INGESTED.getValue());
-    assertEquals(outputView.getSyndication(crossref).getStatus(), SyndicationStatus.PENDING.getLabel());
-    assertEquals(outputView.getSyndication(pmc).getStatus(), SyndicationStatus.PENDING.getLabel());
-    assertEquals(outputView.getSyndication(pubmed).getStatus(), SyndicationStatus.PENDING.getLabel());
-
-    String inputJson = ""
-        + "{"
-        + "  \"state\": \"published\","
-        + "  \"syndications\": {"
-        + "    \"CROSSREF\": {"
-        + "      \"status\": \"IN_PROGRESS\""
-        + "    },"
-        + "    \"PMC\": {"
-        + "      \"status\": \"IN_PROGRESS\""
-        + "    },"
-        + "    \"PUBMED\": {"
-        + "      \"status\": \"IN_PROGRESS\""
-        + "    }"
-        + "  }"
-        + "}";
-    ArticleInputView inputView = entityGson.fromJson(inputJson, ArticleInputView.class);
-    assertEquals(inputView.getPublicationState().get().intValue(), PublicationState.PUBLISHED.getValue());
-    assertEquals(inputView.getSyndicationUpdate(crossref).getStatus(), SyndicationStatus.IN_PROGRESS.getLabel());
-    assertEquals(inputView.getSyndicationUpdate(pmc).getStatus(), SyndicationStatus.IN_PROGRESS.getLabel());
-    assertEquals(inputView.getSyndicationUpdate(pubmed).getStatus(), SyndicationStatus.IN_PROGRESS.getLabel());
-    article = solrIndexService.update(articleId, inputView);
-
-    ArticleOutputView result = articleOutputViewFactory.create(article, false);
-    assertEquals(result.getArticle().getState(), PublicationState.PUBLISHED.getValue());
-    assertEquals(result.getSyndication(crossref).getStatus(), SyndicationStatus.IN_PROGRESS.getLabel());
-    assertEquals(result.getSyndication(pmc).getStatus(), SyndicationStatus.IN_PROGRESS.getLabel());
-    assertEquals(result.getSyndication(pubmed).getStatus(), SyndicationStatus.IN_PROGRESS.getLabel());
     SolrIndexServiceImpl impl = (SolrIndexServiceImpl) solrIndexService;
     DummyMessageSender dummySender = (DummyMessageSender) impl.messageSender;
     assertEquals(dummySender.messagesSent.size(), 5);
@@ -187,34 +97,10 @@ public class SolrIndexServiceTest extends BaseRhinoTest {
     assertEquals(pubmedMessages.size(), 1);
     XMLUnit.compareXML(expectedSyndication, pubmedMessages.get(0));
 
-    // Confirm that disabling the article removes it from the solr index.
-    inputView = entityGson.fromJson("{'state': 'disabled'}", ArticleInputView.class);
-    article = solrIndexService.update(articleId, inputView);
-    assertEquals(article.getState(), PublicationState.DISABLED.getValue());
+    solrIndexService.removeSolrIndex(articleId);
     assertEquals(dummySender.messagesSent.size(), 6);
     List<String> deletionMessages = dummySender.messagesSent.get("activemq:fake.delete.queue");
     assertEquals(deletionMessages.size(), 1);
     assertEquals(deletionMessages.get(0), article.getDoi());
-    for (ArticleAsset asset : article.getAssets()) {
-      checkFileExistence(AssetFileIdentity.from(asset), false);
-    }
-
-    // Attempting to publish the disabled article should fail.
-    inputView = entityGson.fromJson("{'state': 'published'}", ArticleInputView.class);
-    try {
-      article = solrIndexService.update(articleId, inputView);
-      fail("Publication of disabled article succeeded");
-    } catch (RestClientException expected) {
-      assertEquals(expected.getResponseStatus(), HttpStatus.METHOD_NOT_ALLOWED);
-    }
-
-    //Make sure we sent the item to the cross ref queue
-    List<String> citedArticlesQueue = dummySender.messagesSent.get("activemq:fake.citedArticles.queue");
-    assertEquals(citedArticlesQueue.size(), 1);
-    assertEquals(citedArticlesQueue.get(0), article.getDoi());
-    assertEquals(dummySender.headersSent.size(), 1);
-    String[] headerKeys = dummySender.headersSent.keySet().toArray(new String[1]);
-    assertEquals(headerKeys[0], SolrIndexServiceImpl.HEADER_AUTH_ID);
-    assertNull(dummySender.headersSent.get(0));
   }
 }
