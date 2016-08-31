@@ -15,6 +15,7 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
+import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.ArticleIngestion;
@@ -23,7 +24,6 @@ import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.MessageSender;
-import org.apache.commons.configuration.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -51,7 +51,7 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
   public MessageSender messageSender;
 
   @Autowired
-  private Configuration ambraConfiguration;
+  private RuntimeConfiguration runtimeConfiguration;
 
   /**
    * Attaches additional XML info to an article document specifying the journals it is published in.
@@ -110,14 +110,21 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
 
     doc = appendJournals(doc, ingestion);
     doc = appendStrikingImage(doc, ingestion);
-    messageSender.sendBody(ambraConfiguration.getString(
-        "ambra.services.search.articleIndexingQueue", null), doc);
+
+    String destination = runtimeConfiguration.getQueueConfiguration().getSolrUpdate();
+    if (destination == null) {
+      throw new RuntimeException("solrUpdate is not configured");
+    }
+    messageSender.sendBody(destination, doc);
   }
 
   @Override
   public void removeSolrIndex(ArticleIdentifier articleId) {
     String doi = articleId.getDoi().asUri(Doi.UriStyle.INFO_DOI).toString();
-    String destination = ambraConfiguration.getString("ambra.services.search.articleDeleteQueue", null);
+    String destination = runtimeConfiguration.getQueueConfiguration().getSolrDelete();
+    if (destination == null) {
+      throw new RuntimeException("solrDelete is not configured");
+    }
     messageSender.sendBody(destination, doi);
   }
 
