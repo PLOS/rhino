@@ -23,16 +23,14 @@ public class PersistentArticleView implements JsonOutputView {
   public static class Factory {
     @Autowired
     private ArticleCrudService articleCrudService;
-    @Autowired
-    private JournalOutputView.Factory journalOutputViewFactory;
 
     /**
      * @param article the article to represent
      * @return a view representing the article and, if it has one, its latest revision
      */
     public PersistentArticleView getView(ArticleTable article) {
-      return new PersistentArticleView(article, articleCrudService.getLatestRevision(article),
-          journalOutputViewFactory);
+      return new PersistentArticleView(article, articleCrudService.getLatestRevision(article)
+      );
     }
 
     /**
@@ -40,20 +38,17 @@ public class PersistentArticleView implements JsonOutputView {
      * @return a view representing the parent article and the revision
      */
     public PersistentArticleView getView(ArticleRevision revision) {
-      return new PersistentArticleView(revision.getIngestion().getArticle(), Optional.of(revision),
-          journalOutputViewFactory);
+      return new PersistentArticleView(revision.getIngestion().getArticle(), Optional.of(revision)
+      );
     }
   }
 
   private final ArticleTable article;
   private final Optional<ArticleRevision> latestRevision;
-  private final JournalOutputView.Factory journalOutputViewFactory;
 
-  private PersistentArticleView(ArticleTable article, Optional<ArticleRevision> latestRevision,
-                                JournalOutputView.Factory journalOutputViewFactory) {
+  private PersistentArticleView(ArticleTable article, Optional<ArticleRevision> latestRevision) {
     this.article = Objects.requireNonNull(article);
     this.latestRevision = Objects.requireNonNull(latestRevision);
-    this.journalOutputViewFactory = journalOutputViewFactory;
   }
 
   @Override

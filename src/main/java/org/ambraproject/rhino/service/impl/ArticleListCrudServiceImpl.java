@@ -19,6 +19,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateCallback;
@@ -36,6 +37,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class ArticleListCrudServiceImpl extends AmbraService implements ArticleListCrudService {
+
+  @Autowired
+  private ArticleListView.Factory articleListViewFactory;
 
   private static Query queryFor(Session hibernateSession, String selectClause, ArticleListIdentity identity) {
     Query query = hibernateSession.createQuery(selectClause +
@@ -84,7 +88,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     journalLists.add(list);
     hibernateTemplate.update(journal);
 
-    return new ArticleListView(journal.getJournalKey(), list);
+    return articleListViewFactory.getView(list, journal.getJournalKey());
   }
 
   private ArticleListView getArticleList(final ArticleListIdentity identity) {
@@ -101,7 +105,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
 
     String journalKey = (String) result[0];
     ArticleList articleList = (ArticleList) result[1];
-    return new ArticleListView(journalKey, articleList);
+    return articleListViewFactory.getView(articleList, journalKey);
   }
 
   private static RuntimeException nonexistentList(ArticleListIdentity identity) {
@@ -190,12 +194,12 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     };
   }
 
-  private static Collection<ArticleListView> asArticleListViews(List<Object[]> results) {
+  private Collection<ArticleListView> asArticleListViews(List<Object[]> results) {
     Collection<ArticleListView> views = new ArrayList<>(results.size());
     for (Object[] result : results) {
       String journalKey = (String) result[0];
       ArticleList articleList = (ArticleList) result[1];
-      views.add(new ArticleListView(journalKey, articleList));
+      views.add(articleListViewFactory.getView(articleList, journalKey));
     }
     return views;
   }
