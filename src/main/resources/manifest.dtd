@@ -21,7 +21,7 @@
   - this DTD.
   -->
 
-<!ELEMENT manifest (articleBundle) >
+<!ELEMENT manifest (articleBundle, ancillary) >
 
 <!ELEMENT articleBundle (article, object*) >
 
@@ -30,13 +30,13 @@
    -->
 <!ELEMENT article (representation+) >
 <!ATTLIST article
-    uri         CDATA          #REQUIRED 
-    main-entry  CDATA          #REQUIRED >
+    uri         CDATA          #REQUIRED  >
 
 <!-- all included secondary objects (images, movies, data, etc) -->
 <!ELEMENT object (representation+) >
 <!ATTLIST object
-    uri         CDATA          #REQUIRED 
+    uri         CDATA          #REQUIRED
+    type        CDATA          #REQUIRED
     strkImage   CDATA          #IMPLIED          >
 
 <!-- a specific representation.
@@ -45,28 +45,54 @@
    -->
 <!ELEMENT representation EMPTY >
 <!ATTLIST representation
-    name        CDATA          #REQUIRED 
-    entry       CDATA          #REQUIRED >
+    entry        CDATA          #REQUIRED
+    mimetype     CDATA          #REQUIRED
+    type         CDATA          #REQUIRED
+    key          CDATA          #IMPLIED  >
 
+<!ELEMENT ancillary (file+)  >
 
+<!ELEMENT file EMPTY>
+<!ATTLIST file
+    entry        CDATA          #REQUIRED
+    mimetype     CDATA          #REQUIRED
+    key          CDATA          #IMPLIED  >
 
 <!-- Example:
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE manifest SYSTEM "manifest.dtd">
 <manifest>
   <articleBundle>
-    <article uri="info:doi/10.1371/journal.foo.00042" main-entry="my-article.xml">
-      <representation name="XML" entry="my-article.xml"/>
-      <representation name="PDF" entry="my-article.pdf"/>
+    <article uri="info:doi/10.1371/journal.foo.0000001">
+      <representation entry="foo.0000001.xml" mimetype="application/xml" type="manuscript"/>
+      <representation entry="foo.0000001.pdf" mimetype="application/pdf" type="printable"/>
     </article>
-    <object uri="info:doi/10.1371/journal.foo.00042.g001" strkImage="True">
-      <representation name="PNG_S" entry="image01.small.png"/>
-      <representation name="PNG_L" entry="image01.large.png"/>
+    <object type="figure" uri="info:doi/10.1371/journal.foo.0000001.g001">
+      <representation entry="foo.0000001.g001.tif" mimetype="image/tiff" type="original"/>
+      <representation entry="foo.0000001.g001.PNG_M" mimetype="image/png" type="medium"/>
+      <representation entry="foo.0000001.g001.PNG_L" mimetype="image/png" type="large"/>
+      <representation entry="foo.0000001.g001.PNG_I" mimetype="image/png" type="inline"/>
+      <representation entry="foo.0000001.g001.PNG_S" mimetype="image/png" type="small"/>
     </object>
-    <object uri="info:doi/10.1371/journal.foo.00042.g002">
-      <representation name="PNG_S" entry="image02.small.png"/>
-      <representation name="TIFF"  entry="image02.tiff"/>
+    <object type="graphic" uri="info:doi/10.1371/journal.foo.0000001.e001">
+      <representation entry="foo.0000001.e001.tif" mimetype="image/tiff" type="original"/>
+      <representation entry="foo.0000001.e001.PNG_I" mimetype="image/png" type="inline"/>
+    </object>
+    <object type="supplementaryMaterial" uri="info:doi/10.1371/journal.foo.0000001.s001">
+      <representation entry="foo.0000001.s001.docx" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" type="supplementary"/>
+    </object>
+    <object type="table" uri="info:doi/10.1371/journal.foo.0000001.t001">
+      <representation entry="foo.0000001.t001.tif" mimetype="image/tiff" type="original"/>
+      <representation entry="foo.0000001.t001.PNG_M" mimetype="image/png" type="medium"/>
+      <representation entry="foo.0000001.t001.PNG_L" mimetype="image/png" type="large"/>
+      <representation entry="foo.0000001.t001.PNG_I" mimetype="image/png" type="inline"/>
+      <representation entry="foo.0000001.t001.PNG_S" mimetype="image/png" type="small"/>
     </object>
   </articleBundle>
+  <ancillary>
+    <file entry="manifest.xml" mimetype="application/xml"/>
+    <file entry="manifest.dtd" mimetype="application/xml-dtd"/>
+    <file entry="foo.0000001.xml.orig" mimetype="application/xml" type="original"/>
+  </ancillary>
 </manifest>
 -->
