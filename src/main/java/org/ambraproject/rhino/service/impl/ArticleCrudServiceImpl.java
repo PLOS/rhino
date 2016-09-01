@@ -709,7 +709,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public Collection<ArticleRevision> getArticlesPublishedOn(LocalDate fromDate, LocalDate toDate) {
     return  hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
-          "Select ar " +
+          "SELECT ar " +
           "FROM ArticleRevision ar " +
           "INNER JOIN ar.ingestion ai " +
           "INNER JOIN  ar.ingestion.article at " +
@@ -725,7 +725,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public Collection<ArticleRevision> getArticlesRevisedOn(LocalDate fromDate, LocalDate toDate) {
     return  hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
-          "Select ar " +
+          "SELECT ar " +
           "FROM ArticleRevision ar " +
           "INNER JOIN ar.ingestion ai " +
           "INNER JOIN  ar.ingestion.article at " +
@@ -736,6 +736,5 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       return (Collection<ArticleRevision>) query.list();
     });
   }
-
 
 }
