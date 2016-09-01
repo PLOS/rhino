@@ -25,7 +25,7 @@ public class ArticleFile implements Timestamped {
   @ManyToOne
   private ArticleIngestion ingestion;
 
-  @JoinColumn(name = "itemId", nullable = false)
+  @JoinColumn(name = "itemId", nullable = true) // null if (and only if) this is an ancillary file
   @ManyToOne
   private ArticleItem item;
 
