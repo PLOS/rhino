@@ -54,7 +54,6 @@ public class AdapterRegistry {
 
       .add(org.ambraproject.rhino.view.article.versioned.ArticleIngestionView.class)
       .add(org.ambraproject.rhino.view.article.versioned.ArticleRevisionView.class)
-      .add(org.ambraproject.rhino.view.article.versioned.PersistentArticleView.class)
       .add(org.ambraproject.rhino.view.article.versioned.SyndicationView.class)
 
       .add(org.ambraproject.rhino.view.asset.groomed.GroomedAssetFileView.class)
