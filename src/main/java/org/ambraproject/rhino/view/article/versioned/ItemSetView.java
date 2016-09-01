@@ -27,6 +27,10 @@ public class ItemSetView {
     }
   }
 
+  public static ItemView getItemView(ArticleItem item) {
+    return new ItemView(item, item.getFiles());
+  }
+
   private final ImmutableMap<String, ItemView> items;
   private final ImmutableCollection<FileView> archival;
 
@@ -61,7 +65,7 @@ public class ItemSetView {
     }
   }
 
-  private static class ItemView {
+  public static class ItemView {
     private final String itemType;
     private final ImmutableMap<String, FileView> files;
 
