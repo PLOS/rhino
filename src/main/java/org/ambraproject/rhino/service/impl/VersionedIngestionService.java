@@ -238,8 +238,8 @@ public class VersionedIngestionService extends AmbraService {
 
       for (Map.Entry<String, RepoVersion> entry : crepoResults.entrySet()) {
         SQLQuery insertFile = session.createSQLQuery("" +
-            "INSERT INTO articleFile (ingestionId, itemId, fileType, bucketName, crepoKey, crepoUuid) " +
-            "  VALUES (:ingestionId, :itemId, :fileType, :bucketName, :crepoKey, :crepoUuid)");
+            "INSERT INTO articleFile (ingestionId, itemId, fileType, bucketName, crepoKey, crepoUuid, fileSize) " +
+            "  VALUES (:ingestionId, :itemId, :fileType, :bucketName, :crepoKey, :crepoUuid, :fileSize)");
         insertFile.setParameter("ingestionId", ingestionId);
         insertFile.setParameter("itemId", itemId);
         insertFile.setParameter("fileType", entry.getKey());
@@ -249,6 +249,7 @@ public class VersionedIngestionService extends AmbraService {
         insertFile.setParameter("bucketName", repoId.getBucketName());
         insertFile.setParameter("crepoKey", repoId.getKey());
         insertFile.setParameter("crepoUuid", repoVersion.getUuid().toString());
+        insertFile.setParameter("fileSize", contentRepoService.getRepoObjectMetadata(repoVersion).getSize());
 
         insertFile.executeUpdate();
       }
@@ -264,13 +265,14 @@ public class VersionedIngestionService extends AmbraService {
     hibernateTemplate.execute(session -> {
       for (RepoVersion ancillaryFile : ancillaryFiles) {
         SQLQuery insertFile = session.createSQLQuery("" +
-            "INSERT INTO articleFile (ingestionId, bucketName, crepoKey, crepoUuid) " +
-            "  VALUES (:ingestionId, :bucketName, :crepoKey, :crepoUuid)");
+            "INSERT INTO articleFile (ingestionId, bucketName, crepoKey, crepoUuid, fileSize) " +
+            "  VALUES (:ingestionId, :bucketName, :crepoKey, :crepoUuid, :fileSize)");
         insertFile.setParameter("ingestionId", ingestionId);
         RepoId repoId = ancillaryFile.getId();
         insertFile.setParameter("bucketName", repoId.getBucketName());
         insertFile.setParameter("crepoKey", repoId.getKey());
         insertFile.setParameter("crepoUuid", ancillaryFile.getUuid().toString());
+        insertFile.setParameter("fileSize", contentRepoService.getRepoObjectMetadata(ancillaryFile).getSize());
         insertFile.executeUpdate();
       }
       return null;
