@@ -104,7 +104,7 @@ public class VersionedIngestionService extends AmbraService {
 
     ArticlePackage articlePackage = new ArticlePackageBuilder(destinationBucketName, archive, parsedArticle, manifestXml,
         manuscriptAsset, manuscriptRepr, printableRepr).build();
-    persistItems(articlePackage, ingestion);
+    persistAssets(articlePackage, ingestion, manifestXml);
 
     hibernateTemplate.refresh(ingestion); // Pick up auto-persisted timestamp
     return ingestion;
@@ -194,14 +194,23 @@ public class VersionedIngestionService extends AmbraService {
     }
   }
 
-  private void persistItems(ArticlePackage articlePackage, ArticleIngestion ingestion) {
-    for (ArticleItemInput work : articlePackage.getAllWorks()) {
-      persistItem(work, ingestion);
+  /**
+   * Persist items, items' file representations, ancillary files, and the link to the striking image.
+   */
+  private void persistAssets(ArticlePackage articlePackage, ArticleIngestion ingestion, ManifestXml manifest) {
+    List<ArticleItem> items = articlePackage.getAllItems().stream()
+        .map((ArticleItemInput item) -> createItem(item, ingestion))
+        .collect(Collectors.toList());
+    for (ArticleItem item : items) {
+      hibernateTemplate.save(item);
     }
+
     persistAncillaryFiles(articlePackage, ingestion);
+
+    linkStrikingImage(ingestion, items, manifest);
   }
 
-  private ArticleItem persistItem(ArticleItemInput work, ArticleIngestion ingestion) {
+  private ArticleItem createItem(ArticleItemInput work, ArticleIngestion ingestion) {
     Map<String, RepoVersion> crepoResults = new LinkedHashMap<>();
     for (Map.Entry<String, RepoObjectInput> entry : work.getObjects().entrySet()) {
       RepoVersion result = contentRepoService.autoCreateRepoObject(entry.getValue()).getVersion();
@@ -228,7 +237,6 @@ public class VersionedIngestionService extends AmbraService {
       return file;
     }).collect(Collectors.toList()));
 
-    hibernateTemplate.save(item);
     return item;
   }
 
@@ -252,6 +260,28 @@ public class VersionedIngestionService extends AmbraService {
     }
     return fileObjects;
   }
+
+  private Optional<ArticleItem> linkStrikingImage(ArticleIngestion ingestion, List<ArticleItem> items, ManifestXml manifest) {
+    Optional<ManifestXml.Asset> strikingImageAsset = manifest.getAssets().stream()
+        .filter(ManifestXml.Asset::isStrikingImage)
+        .findAny();
+    if (!strikingImageAsset.isPresent()) {
+      return Optional.empty(); // No striking image declared, so go without setting one.
+    }
+
+    Doi strikingImageDoi = Doi.create(strikingImageAsset.get().getUri());
+    Optional<ArticleItem> strikingImageItem = items.stream()
+        .filter(item -> Doi.create(item.getDoi()).equals(strikingImageDoi))
+        .findAny();
+    if (!strikingImageItem.isPresent()) {
+      throw new RuntimeException("Striking image from manifest not found (should have been created by now)");
+    }
+
+    ingestion.setStrikingImage(strikingImageItem.get());
+    hibernateTemplate.update(ingestion);
+    return strikingImageItem;
+  }
+
 
   private Journal fetchJournal(ArticleMetadata article) {
     String eissn = article.geteIssn();

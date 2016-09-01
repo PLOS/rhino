@@ -52,12 +52,12 @@ public class ArticlePackageBuilder {
 
   public ArticlePackage build() {
     Map<String, RepoObjectInput> articleObjects = buildArticleObjects();
-    List<ArticleItemInput> assetWorks = buildAssetWorks(article.findAllAssetNodes());
+    List<ArticleItemInput> assetItems = buildAssetItems(article.findAllAssetNodes());
     List<RepoObjectInput> ancillaryFiles = manifest.getAncillaryFiles().stream()
         .map(this::buildObjectFor).collect(Collectors.toList());
 
     return new ArticlePackage(new ArticleItemInput(articleIdentity, articleObjects, AssetType.ARTICLE.getIdentifier()),
-        assetWorks, ancillaryFiles);
+        assetItems, ancillaryFiles);
   }
 
   private RepoObjectInput buildObjectFor(ManifestXml.Asset asset, ManifestXml.Representation representation) {
@@ -97,8 +97,8 @@ public class ArticlePackageBuilder {
    * @param assetNodeMap encapsulated descriptions of references to asset DOIs in the manuscript
    * @return the built asset table
    */
-  private List<ArticleItemInput> buildAssetWorks(AssetNodesByDoi assetNodeMap) {
-    List<ArticleItemInput> works = new ArrayList<>();
+  private List<ArticleItemInput> buildAssetItems(AssetNodesByDoi assetNodeMap) {
+    List<ArticleItemInput> items = new ArrayList<>();
     for (ManifestXml.Asset asset : manifest.getAssets()) {
       AssetType assetType = findAssetType(assetNodeMap, asset);
       if (assetType == AssetType.ARTICLE) continue;
@@ -108,9 +108,9 @@ public class ArticlePackageBuilder {
         FileType fileType = assetType.getFileType(representation.getType());
         assetObjects.put(fileType.getIdentifier(), buildObjectFor(representation.getFile()));
       }
-      works.add(new ArticleItemInput(assetIdentity, assetObjects.build(), assetType.getIdentifier()));
+      items.add(new ArticleItemInput(assetIdentity, assetObjects.build(), assetType.getIdentifier()));
     }
-    return works;
+    return items;
   }
 
   private static AssetType findAssetType(AssetNodesByDoi assetNodeMap, ManifestXml.Asset asset) {
