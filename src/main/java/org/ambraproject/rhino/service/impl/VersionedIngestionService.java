@@ -234,6 +234,8 @@ public class VersionedIngestionService extends AmbraService {
       file.setCrepoKey(repoId.getKey());
       file.setCrepoUuid(repoVersion.getUuid().toString());
 
+      file.setFileSize(contentRepoService.getRepoObjectMetadata(repoVersion).getSize());
+
       return file;
     }).collect(Collectors.toList()));
 
@@ -248,6 +250,8 @@ public class VersionedIngestionService extends AmbraService {
     List<ArticleFile> fileObjects = ancillaryFiles.stream().map(repoVersion -> {
       ArticleFile file = new ArticleFile();
       file.setIngestion(ingestion);
+      file.setFileSize(contentRepoService.getRepoObjectMetadata(repoVersion).getSize());
+
       RepoId repoId = repoVersion.getId();
       file.setBucketName(repoId.getBucketName());
       file.setCrepoKey(repoId.getKey());

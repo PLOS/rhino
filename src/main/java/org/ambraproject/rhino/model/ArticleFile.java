@@ -31,12 +31,16 @@ public class ArticleFile implements Timestamped {
 
   @Column
   private String fileType;
+
   @Column
   private String bucketName;
   @Column
   private String crepoKey;
   @Column
   private String crepoUuid;
+
+  @Column
+  private long fileSize;
 
   @Column
   private Date created;
@@ -96,6 +100,14 @@ public class ArticleFile implements Timestamped {
 
   public void setCrepoUuid(String crepoUuid) {
     this.crepoUuid = crepoUuid;
+  }
+
+  public long getFileSize() {
+    return fileSize;
+  }
+
+  public void setFileSize(long fileSize) {
+    this.fileSize = fileSize;
   }
 
   public Date getCreated() {

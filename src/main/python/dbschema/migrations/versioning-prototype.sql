@@ -68,6 +68,7 @@ CREATE TABLE `articleFile` (
   `bucketName` VARCHAR(255) NOT NULL,
   `crepoKey` VARCHAR(255) NOT NULL,
   `crepoUuid` VARCHAR(36) NOT NULL,
+  `fileSize` BIGINT NOT NULL,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`fileId`),
   CONSTRAINT `fk_articleFile_1`
