@@ -132,12 +132,6 @@ public class AssetFileCrudController extends RestController {
     ArticleFileIdentifier fileId = ArticleFileIdentifier.create(DoiEscaping.unescape(itemDoi), ingestionNumber, fileType);
     // TODO: Validate that articleDoi belongs to item's parent
 
-    serveFile(request, response, fileId);
-  }
-
-  void serveFile(HttpServletRequest request, HttpServletResponse response,
-                 ArticleFileIdentifier fileId)
-      throws IOException {
     RepoObjectMetadata objectMetadata = assetCrudService.getArticleItemFile(fileId);
     serve(request, response, objectMetadata);
   }
