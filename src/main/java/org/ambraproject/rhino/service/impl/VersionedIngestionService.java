@@ -106,6 +106,7 @@ public class VersionedIngestionService extends AmbraService {
         manuscriptAsset, manuscriptRepr, printableRepr).build();
     persistAssets(articlePackage, ingestion, manifestXml);
 
+    hibernateTemplate.flush();
     hibernateTemplate.refresh(ingestion); // Pick up auto-persisted timestamp
     return ingestion;
   }
