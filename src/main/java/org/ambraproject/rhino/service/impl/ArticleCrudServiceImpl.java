@@ -281,7 +281,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
       @Override
       protected Object getView(ArticleRevision entity) {
-        return new ArticleRevisionView(entity);
+        return ArticleRevisionView.getView(entity);
       }
     };
   }

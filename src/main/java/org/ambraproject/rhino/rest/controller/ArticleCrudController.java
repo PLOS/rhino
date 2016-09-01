@@ -18,7 +18,6 @@
 
 package org.ambraproject.rhino.rest.controller;
 
-import com.google.gson.Gson;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
@@ -61,7 +60,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -159,7 +157,7 @@ public class ArticleCrudController extends RestController {
       revision = articleRevisionWriteService.writeRevision(revisionId, ingestionId);
     }
 
-    return reportCreated(new ArticleRevisionView(revision));
+    return reportCreated(ArticleRevisionView.getView(revision));
   }
 
   @Transactional(readOnly = false)
@@ -430,7 +428,7 @@ public class ArticleCrudController extends RestController {
                                                  @ApiParam(value = "Date Format: yyyy-MM-dd")
                                                  @RequestParam(value = "endDate") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate toDate) throws IOException {
   Transceiver.serveUntimestampedView(() -> articleCrudService.getArticlesPublishedOn(fromDate, toDate)
-      .stream().map(ArticleRevisionView::new)
+      .stream().map(ArticleRevisionView::getView)
       .collect(Collectors.toList())).respond(request, response, entityGson);
   }
 
@@ -443,7 +441,7 @@ public class ArticleCrudController extends RestController {
                                @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate toDate) throws IOException {
 
     Transceiver.serveUntimestampedView(() -> articleCrudService.getArticlesRevisedOn(fromDate, toDate)
-        .stream().map(ArticleRevisionView::new)
+        .stream().map(ArticleRevisionView::getView)
         .collect(Collectors.toList())).respond(request, response, entityGson);
   }
 

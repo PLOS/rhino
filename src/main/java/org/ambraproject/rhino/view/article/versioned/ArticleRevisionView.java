@@ -26,29 +26,69 @@ package org.ambraproject.rhino.view.article.versioned;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleRevision;
+import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.view.JsonOutputView;
+import org.ambraproject.rhino.view.journal.JournalOutputView;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class ArticleRevisionView implements JsonOutputView {
 
-  private final ArticleRevision revision;
+  public static class Factory {
+    @Autowired
+    private ArticleCrudService articleCrudService;
 
-  public ArticleRevisionView(ArticleRevision revision) {
+    /**
+     * @param article the article to represent
+     * @return a view representing the article and, if it has one, its latest revision
+     */
+    public ArticleRevisionView getLatestRevisionView(ArticleTable article) {
+      return new ArticleRevisionView(article, articleCrudService.getLatestRevision(article));
+    }
+  }
+
+  public static ArticleRevisionView getView(ArticleRevision revision) {
+    return new ArticleRevisionView(revision.getIngestion().getArticle(), Optional.of(revision));
+  }
+
+
+  private final ArticleTable article;
+  private final Optional<ArticleRevision> revision;
+
+  private ArticleRevisionView(ArticleTable article, Optional<ArticleRevision> revision) {
+    this.article = Objects.requireNonNull(article);
     this.revision = Objects.requireNonNull(revision);
   }
 
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
-    ArticleIngestion ingestion = revision.getIngestion();
-
     JsonObject serialized = new JsonObject();
-    serialized.addProperty("doi", Doi.create(ingestion.getArticle().getDoi()).getName());
-    serialized.addProperty("revision", revision.getRevisionNumber());
-    serialized.addProperty("ingestion", ingestion.getIngestionNumber());
+    serialized.addProperty("doi", article.getDoi());
+
+    this.revision.ifPresent((ArticleRevision revision) -> {
+      serialized.addProperty("revisionNumber", revision.getRevisionNumber());
+      serialized.add("ingestion", serializeIngestion(context, revision.getIngestion()));
+    });
+
+    return serialized;
+  }
+
+  private JsonObject serializeIngestion(JsonSerializationContext context, ArticleIngestion ingestion) {
+    JsonObject serialized = new JsonObject();
+    JournalOutputView journalOutputView = JournalOutputView.getShallowView(ingestion.getJournal());
+    serialized.add("journal", context.serialize(journalOutputView));
+    serialized.addProperty("ingestionNumber", ingestion.getIngestionNumber());
+    serialized.addProperty("title", ingestion.getTitle());
+    serialized.addProperty("publicationDate", ingestion.getPublicationDate().toLocalDate().toString());
+    if (ingestion.getRevisionDate() != null) {
+      serialized.addProperty("revisionDate", ingestion.getRevisionDate().toLocalDate().toString());
+    }
+    serialized.addProperty("articleType", ingestion.getArticleType());
     return serialized;
   }
 
