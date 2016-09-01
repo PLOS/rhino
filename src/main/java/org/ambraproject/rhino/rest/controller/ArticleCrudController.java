@@ -32,6 +32,7 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.ArticleRevisionWriteService;
 import org.ambraproject.rhino.service.CommentCrudService;
+import org.ambraproject.rhino.service.SolrIndexService;
 import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
@@ -73,6 +74,8 @@ public class ArticleCrudController extends RestController {
   private ArticleCrudService articleCrudService;
   @Autowired
   private ArticleRevisionWriteService articleRevisionWriteService;
+  @Autowired
+  private SolrIndexService solrIndexService;
   @Autowired
   private CommentCrudService commentCrudService;
   @Autowired
@@ -339,6 +342,20 @@ public class ArticleCrudController extends RestController {
       throws IOException {
     ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     articleListCrudService.readContainingLists(id).respond(request, response, entityGson);
+  }
+
+  @RequestMapping(value = "/articles/{doi}", params = {"solrIndex"}, method = RequestMethod.POST)
+  public ResponseEntity<?> updateSolrIndex(@PathVariable("doi") String doi) {
+    ArticleIdentifier identifier = ArticleIdentifier.create(DoiEscaping.unescape(doi));
+    solrIndexService.updateSolrIndex(identifier);
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "/articles/{doi}", params = {"solrIndex"}, method = RequestMethod.DELETE)
+  public ResponseEntity<?> removeSolrIndex(@PathVariable("doi") String doi) {
+    ArticleIdentifier identifier = ArticleIdentifier.create(DoiEscaping.unescape(doi));
+    solrIndexService.removeSolrIndex(identifier);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
   @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications", method = RequestMethod.GET)

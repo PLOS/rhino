@@ -8,6 +8,7 @@ import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -39,7 +40,7 @@ public class ArticleItem implements Timestamped {
   private String itemType;
 
   @Cascade(CascadeType.SAVE_UPDATE)
-  @OneToMany(targetEntity = ArticleFile.class, mappedBy = "item")
+  @OneToMany(targetEntity = ArticleFile.class, mappedBy = "item", fetch = FetchType.EAGER)
   private Collection<ArticleFile> files;
 
   @Column
