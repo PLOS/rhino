@@ -120,6 +120,14 @@ public interface RuntimeConfiguration {
    */
   LocalDate getCompetingInterestPolicyStart();
 
+  interface QueueConfiguration {
+    String getSolrUpdate();
+
+    String getSolrDelete();
+  }
+
+  QueueConfiguration getQueueConfiguration();
+
   /**
    * @deprecated Temporary; to be removed when versioned ingestion data model is stable.
    */

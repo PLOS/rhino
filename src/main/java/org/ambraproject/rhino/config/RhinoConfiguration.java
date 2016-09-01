@@ -28,7 +28,6 @@ import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.ArticleRevisionWriteService;
-import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.CamelSender;
 import org.ambraproject.rhino.service.CommentCrudService;
@@ -39,12 +38,12 @@ import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.LegacyConfiguration;
 import org.ambraproject.rhino.service.MessageSender;
 import org.ambraproject.rhino.service.PingbackReadService;
+import org.ambraproject.rhino.service.SolrIndexService;
 import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleListCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleRevisionWriteServiceImpl;
-import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.CommentCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
@@ -52,6 +51,7 @@ import org.ambraproject.rhino.service.impl.IngestibleServiceImpl;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.JournalCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.PingbackReadServiceImpl;
+import org.ambraproject.rhino.service.impl.SolrIndexServiceImpl;
 import org.ambraproject.rhino.service.impl.SyndicationCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.VersionedIngestionService;
 import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
@@ -241,8 +241,8 @@ public class RhinoConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public ArticleStateService articleStateService() {
-    return new ArticleStateServiceImpl();
+  public SolrIndexService solrIndexService() {
+    return new SolrIndexServiceImpl();
   }
 
   @Bean

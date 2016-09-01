@@ -227,6 +227,24 @@ public class YamlConfiguration implements RuntimeConfiguration {
    */
   private static final LocalDate DEFAULT_COMPETING_INTEREST_POLICY_START = LocalDate.of(2009, Month.MARCH, 20);
 
+
+  private transient QueueConfiguration queueConfiguration;
+
+  @Override
+  public QueueConfiguration getQueueConfiguration() {
+    return (queueConfiguration != null) ? queueConfiguration : (queueConfiguration = new QueueConfiguration() {
+      @Override
+      public String getSolrUpdate() {
+        return input.queue == null ? null : input.queue.solrUpdate;
+      }
+
+      @Override
+      public String getSolrDelete() {
+        return input.queue == null ? null : input.queue.solrDelete;
+      }
+    });
+  }
+
   /**
    * @deprecated Temporary; to be removed when versioned ingestion data model is stable.
    */
@@ -246,6 +264,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
     private UserApiConfigurationInput userApi;
     private boolean usingVersionedIngestion = true; // default is true
     private String competingInterestPolicyStart;
+    private QueueConfigurationInput queue;
 
     /**
      * @deprecated For reflective access by SnakeYAML only
@@ -293,6 +312,14 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setCompetingInterestPolicyStart(String competingInterestPolicyStart) {
       this.competingInterestPolicyStart = competingInterestPolicyStart;
+    }
+
+    /**
+     * @deprecated For reflective access by SnakeYAML only
+     */
+    @Deprecated
+    public void setQueue(QueueConfigurationInput queue) {
+      this.queue = queue;
     }
 
     /**
@@ -415,6 +442,21 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setAuthorizationPassword(String authorizationPassword) {
       this.authorizationPassword = authorizationPassword;
+    }
+  }
+
+  public static class QueueConfigurationInput {
+    private String solrUpdate;
+    private String solrDelete;
+
+    @Deprecated
+    public void setSolrUpdate(String solrUpdate) {
+      this.solrUpdate = solrUpdate;
+    }
+
+    @Deprecated
+    public void setSolrDelete(String solrDelete) {
+      this.solrDelete = solrDelete;
     }
   }
 
