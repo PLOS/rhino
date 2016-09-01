@@ -423,10 +423,10 @@ public class ArticleCrudController extends RestController {
   @Transactional(readOnly = true)
   @RequestMapping(value = "/articles", method = RequestMethod.GET, params = "published")
   public void getDoisPublishedOn(HttpServletRequest request, HttpServletResponse response,
-                                                 @ApiParam(value = "Date Format: yyyy-MM-dd")
-                                                 @RequestParam(value = "startDate") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate fromDate,
-                                                 @ApiParam(value = "Date Format: yyyy-MM-dd")
-                                                 @RequestParam(value = "endDate") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate toDate) throws IOException {
+                                 @ApiParam(value = "Date Format: yyyy-MM-dd")
+                                 @RequestParam(value = "fromDate") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate fromDate,
+                                 @ApiParam(value = "Date Format: yyyy-MM-dd")
+                                 @RequestParam(value = "toDate") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate toDate) throws IOException {
   Transceiver.serveUntimestampedView(() -> articleCrudService.getArticlesPublishedOn(fromDate, toDate)
       .stream().map(ArticleRevisionView::getView)
       .collect(Collectors.toList())).respond(request, response, entityGson);
@@ -436,9 +436,9 @@ public class ArticleCrudController extends RestController {
   @RequestMapping(value = "/articles", method = RequestMethod.GET, params = "revised")
   public void getDoisRevisedOn(HttpServletRequest request, HttpServletResponse response,
                                @ApiParam(value = "Date Format: yyyy-MM-dd")
-                               @RequestParam(value = "startDate") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate fromDate,
-                               @ApiParam(value = "Date Format: yyyy-MM-dd") @RequestParam(value = "endDate")
-                               @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate toDate) throws IOException {
+                               @RequestParam(value = "fromDate") @DateTimeFormat(pattern="yyyy-MM-dd")LocalDate fromDate,
+                               @ApiParam(value = "Date Format: yyyy-MM-dd")
+                               @RequestParam(value = "toDate") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate toDate) throws IOException {
 
     Transceiver.serveUntimestampedView(() -> articleCrudService.getArticlesRevisedOn(fromDate, toDate)
         .stream().map(ArticleRevisionView::getView)
