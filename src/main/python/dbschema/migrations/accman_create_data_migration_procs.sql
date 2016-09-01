@@ -50,7 +50,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
     DECLARE old_assets_cursor CURSOR FOR
       SELECT doi, extension, contextElement
       FROM articleAsset
-      WHERE articleID = article_id AND extension NOT IN ('ORIG','ZIP','ZIP_PART') # bogus recs and safe to ignore
+      WHERE articleID = article_id
+            AND extension NOT IN ('ORIG','ZIP','ZIP_PART') AND doi NOT LIKE '%.t___-M' # bogus recs and safe to ignore
       ORDER BY doi;
 
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
@@ -117,7 +118,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
             WHEN context_element = 'disp-formula' OR context_element = 'inline-formula' THEN 'graphic'
             WHEN context_element = 'supplementary-material' THEN 'supplementaryMaterial'
             WHEN asset_doi LIKE '%.g___' THEN 'figure'
-            WHEN asset_doi LIKE '%.t___' OR asset_doi LIKE '%.t___-M' THEN 'table'
+            WHEN asset_doi LIKE '%.t___' THEN 'table'
             WHEN asset_doi LIKE '%.e___' OR asset_doi LIKE '%.m___' OR asset_doi LIKE '%logo' THEN 'graphic'
             WHEN asset_doi LIKE '%.s___' OR asset_doi LIKE '%.sd___' THEN 'supplementaryMaterial'
             ELSE 'unknown'
