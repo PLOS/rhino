@@ -22,8 +22,8 @@ import com.google.common.base.Joiner;
 import com.google.common.io.ByteStreams;
 import com.google.common.net.HttpHeaders;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
-import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.DoiEscaping;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.plos.crepo.service.ContentRepoService;
@@ -59,15 +59,16 @@ public class AssetFileCrudController extends RestController {
   private static final String REPROXY_CACHE_FOR_HEADER =
       REPROXY_CACHE_FOR_VALUE + "; Last-Modified Content-Type Content-Disposition";
 
-  private void serve(HttpServletRequest request, HttpServletResponse response,
-                     AssetFileIdentity id, RepoObjectMetadata objMeta)
+  private void serve(HttpServletRequest request, HttpServletResponse response, RepoObjectMetadata objMeta)
       throws IOException {
-    // In case contentType field is empty, default to what we would have written at ingestion
-    response.setHeader(HttpHeaders.CONTENT_TYPE, objMeta.getContentType().orElseGet(() -> id.inferContentType().toString()));
+    objMeta.getContentType().ifPresent((String contentType) -> {
+      response.setHeader(HttpHeaders.CONTENT_TYPE, contentType);
+    });
 
-    // In case downloadName field is empty, default to what we would have written at ingestion
-    String contentDisposition = "attachment; filename=" + objMeta.getDownloadName().orElseGet(id::getFileName); // TODO: 'attachment' is not always correct
-    response.setHeader(HttpHeaders.CONTENT_DISPOSITION, contentDisposition);
+    objMeta.getDownloadName().ifPresent((String downloadName) -> {
+      String contentDisposition = "attachment; filename=" + downloadName;
+      response.setHeader(HttpHeaders.CONTENT_DISPOSITION, contentDisposition);
+    });
 
     Timestamp timestamp = objMeta.getTimestamp();
     setLastModifiedHeader(response, timestamp);
@@ -105,27 +106,32 @@ public class AssetFileCrudController extends RestController {
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/articles/{doi}/ingestions/{number}/files/{filetype}", method = RequestMethod.GET)
+  @RequestMapping(value = "/articles/{articleDoi}/ingestions/{number}/items/{itemDoi}/files/{filetype}", method = RequestMethod.GET)
   public void readMetadata(HttpServletRequest request, HttpServletResponse response,
-                           @PathVariable("doi") String doi,
+                           @PathVariable("articleDoi") String articleDoi,
                            @PathVariable("number") int ingestionNumber,
+                           @PathVariable("itemDoi") String itemDoi,
                            @PathVariable("filetype") String fileType)
       throws IOException {
-    ArticleFileIdentifier fileId = ArticleFileIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber, fileType);
-    AssetFileIdentity id = null; // TODO: Reimplement AssetCrudService.readFileMetadata for ArticleFileIdentifier
-    assetCrudService.readFileMetadata(id).respond(request, response, entityGson);
+    ArticleFileIdentifier fileId = ArticleFileIdentifier.create(DoiEscaping.unescape(itemDoi), ingestionNumber, fileType);
+    // TODO: Validate that articleDoi belongs to item's parent
+
+    // TODO: Add support for serving metadata about individual files?
+    throw new RestClientException("File metadata not supported (URL reserved)", HttpStatus.NOT_FOUND);
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/articles/{doi}/ingestions/{number}/files/{filetype}", method = RequestMethod.GET,
-      // TODO: Do we even want to support this, as opposed to sending the client to the CRepo?
-      params = "download")
+  @RequestMapping(value = "/articles/{articleDoi}/ingestions/{number}/items/{itemDoi}/files/{filetype}",
+      params = "download", method = RequestMethod.GET)
   public void serveFile(HttpServletRequest request, HttpServletResponse response,
-                        @PathVariable("doi") String doi,
+                        @PathVariable("articleDoi") String articleDoi,
                         @PathVariable("number") int ingestionNumber,
+                        @PathVariable("itemDoi") String itemDoi,
                         @PathVariable("filetype") String fileType)
       throws IOException {
-    ArticleFileIdentifier fileId = ArticleFileIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber, fileType);
+    ArticleFileIdentifier fileId = ArticleFileIdentifier.create(DoiEscaping.unescape(itemDoi), ingestionNumber, fileType);
+    // TODO: Validate that articleDoi belongs to item's parent
+
     serveFile(request, response, fileId);
   }
 
@@ -133,14 +139,7 @@ public class AssetFileCrudController extends RestController {
                  ArticleFileIdentifier fileId)
       throws IOException {
     RepoObjectMetadata objectMetadata = assetCrudService.getArticleItemFile(fileId);
-
-    // Used only for defaults when objectMetadata does not supply values.
-    // We expect objectMetadata to always supply those values.
-    // TODO: Refactor serve not to take this argument when no legacy services depend on it.
-    AssetFileIdentity assetFileIdentity = null;
-
-    serve(request, response, assetFileIdentity, objectMetadata);
+    serve(request, response, objectMetadata);
   }
-
 
 }
