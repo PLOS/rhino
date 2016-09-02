@@ -92,7 +92,7 @@
   <ancillary>
     <file entry="manifest.xml" mimetype="application/xml"/>
     <file entry="manifest.dtd" mimetype="application/xml-dtd"/>
-    <file entry="foo.0000001.xml.orig" mimetype="application/xml" type="original"/>
+    <file entry="foo.0000001.xml.orig" mimetype="application/xml"/>
   </ancillary>
 </manifest>
 -->
