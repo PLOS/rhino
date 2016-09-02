@@ -227,6 +227,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_articles`()
     DECLARE err_msg VARCHAR(1024);
     DECLARE full_err_msg VARCHAR(1024);
     DECLARE done INT DEFAULT FALSE;
+    DECLARE commit_skip_max INT DEFAULT 100;
+    DECLARE commit_skip_num INT;
 
     ##### MODIFY THIS SQL STATEMENT TO SELECT OTHER THAN ALL RECORDS IF A SECONDARY MIGRATION RUN IS DESIRED #####
     DECLARE old_articles_cursor CURSOR FOR
@@ -263,6 +265,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_articles`()
       SET FOREIGN_KEY_CHECKS=1;
     END IF;
 
+    SET commit_skip_num = 0;
+    SET autocommit = 0;
+    START TRANSACTION;
+
     OPEN old_articles_cursor;
     article_loop: LOOP
 
@@ -273,9 +279,18 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_articles`()
 
       CALL migrate_article(article_id);
 
+      SET commit_skip_num = commit_skip_num + 1;
+      IF commit_skip_num > commit_skip_max THEN
+        COMMIT;
+        SET commit_skip_num = 0;
+      END IF;
+
     END LOOP;
     CLOSE old_articles_cursor;
 
+    COMMIT;
+    SET autocommit = 1;
+    
     # the insert statements below are designed to be able to run incrementally without causing
     # duplication errors in the case we need to run a secondary migration for a partial list of articles IDs
 
