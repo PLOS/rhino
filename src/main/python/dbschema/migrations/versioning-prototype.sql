@@ -26,6 +26,7 @@ CREATE TABLE `articleIngestion` (
   `publicationDate` DATE NOT NULL,
   `revisionDate` DATE DEFAULT NULL,
   `articleType` VARCHAR(100) DEFAULT NULL,
+  `strikingImageItemId` BIGINT(20) DEFAULT NULL,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `lastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`ingestionId`),
@@ -52,6 +53,12 @@ CREATE TABLE `articleItem` (
     REFERENCES `articleIngestion` (`ingestionId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+ALTER TABLE `articleIngestion`
+  ADD CONSTRAINT `fk_articleIngestion_3`
+    FOREIGN KEY (`strikingImageItemId`)
+    REFERENCES `articleItem` (`itemId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
 
 CREATE TABLE `articleFile` (
   `fileId` BIGINT(20) NOT NULL AUTO_INCREMENT,

@@ -2,6 +2,7 @@ package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
+import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.impl.VersionedIngestionService;
@@ -42,17 +43,17 @@ public class IngestibleZipController extends RestController {
       throws IOException {
 
     String archiveName = requestFile.getOriginalFilename();
-    ArticleIngestionIdentifier ingestionId;
+    ArticleIngestion ingestion;
     try (InputStream requestInputStream = requestFile.getInputStream();
          Archive archive = Archive.readZipFile(archiveName, requestInputStream)) {
-      ingestionId = versionedIngestionService.ingest(archive);
+      ingestion = versionedIngestionService.ingest(archive);
     } catch (ManifestXml.ManifestDataException e) {
       throw new RestClientException("Invalid manifest: " + e.getMessage(), HttpStatus.BAD_REQUEST, e);
     }
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
-    articleCrudService.serveMetadata(ingestionId).respond(request, response, entityGson);
+    articleCrudService.serveMetadata(ArticleIngestionIdentifier.of(ingestion)).respond(request, response, entityGson);
   }
 
 }

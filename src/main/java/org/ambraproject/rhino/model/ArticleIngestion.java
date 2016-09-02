@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.sql.Date;
 
@@ -40,6 +41,10 @@ public class ArticleIngestion implements Timestamped {
   @JoinColumn(name = "journalId", nullable = false)
   @ManyToOne
   private Journal journal;
+
+  @JoinColumn(name = "strikingImageItemId", nullable = true)
+  @OneToOne
+  private ArticleItem strikingImage;
 
   @Column
   private Date lastModified;
@@ -107,6 +112,14 @@ public class ArticleIngestion implements Timestamped {
 
   public void setArticleType(String articleType) {
     this.articleType = articleType;
+  }
+
+  public ArticleItem getStrikingImage() {
+    return strikingImage;
+  }
+
+  public void setStrikingImage(ArticleItem strikingImage) {
+    this.strikingImage = strikingImage;
   }
 
   @Override

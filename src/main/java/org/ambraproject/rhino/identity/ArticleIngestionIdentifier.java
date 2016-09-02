@@ -1,5 +1,7 @@
 package org.ambraproject.rhino.identity;
 
+import org.ambraproject.rhino.model.ArticleIngestion;
+
 import java.util.Objects;
 
 public final class ArticleIngestionIdentifier {
@@ -22,6 +24,10 @@ public final class ArticleIngestionIdentifier {
 
   public static ArticleIngestionIdentifier create(String articleIdentifier, int ingestionNumber) {
     return create(ArticleIdentifier.create(articleIdentifier), ingestionNumber);
+  }
+
+  public static ArticleIngestionIdentifier of(ArticleIngestion ingestion) {
+    return create(ArticleIdentifier.create(ingestion.getArticle().getDoi()), ingestion.getIngestionNumber());
   }
 
   public ArticleIdentifier getArticleIdentifier() {

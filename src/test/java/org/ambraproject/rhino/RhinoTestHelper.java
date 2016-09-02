@@ -22,6 +22,7 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleAsset;
+import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
@@ -237,9 +238,9 @@ public final class RhinoTestHelper {
 
     RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
     Archive mockIngestible = createMockIngestible(articleId, input, reference.getAssets());
-    ArticleIngestionIdentifier ingestionIdentifier;
+    ArticleIngestion ingestion;
     try {
-      ingestionIdentifier = versionedIngestionService.ingest(mockIngestible);
+      ingestion = versionedIngestionService.ingest(mockIngestible);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.model.ArticleIngestion;
+import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.model.article.AssetMetadata;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -58,6 +59,11 @@ public class ArticleIngestionView implements JsonOutputView {
     serialized.addProperty("doi", ingestion.getArticle().getDoi());
     serialized.addProperty("ingestionNumber", ingestion.getIngestionNumber());
     serialized.add("journal", context.serialize(journal));
+
+    ArticleItem strikingImage = ingestion.getStrikingImage();
+    if (strikingImage != null) {
+      serialized.add("strikingImage", context.serialize(ItemSetView.getItemView(strikingImage)));
+    }
 
     JsonAdapterUtil.copyWithoutOverwriting(context.serialize(metadata).getAsJsonObject(), serialized);
     serialized.remove("authors");
