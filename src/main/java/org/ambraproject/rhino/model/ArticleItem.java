@@ -5,6 +5,8 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import java.util.Collection;
 import java.util.Date;
@@ -43,7 +46,9 @@ public class ArticleItem implements Timestamped {
   @OneToMany(targetEntity = ArticleFile.class, mappedBy = "item", fetch = FetchType.EAGER)
   private Collection<ArticleFile> files;
 
-  @Column
+  @Generated(value = GenerationTime.INSERT)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(name = "created", insertable = false, updatable = false, columnDefinition = "timestamp default current_timestamp")
   private Date created;
 
 
