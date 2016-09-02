@@ -18,8 +18,8 @@
  */
 package org.ambraproject.rhino.model;
 
-import org.hibernate.annotations.Parameter;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,6 +28,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import java.util.Date;
 
 /**
@@ -57,10 +58,14 @@ public class VersionedArticleRelationship implements Timestamped {
   @Column
   private String type;
 
-  @Column
+  @Generated(value = GenerationTime.INSERT)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(name = "created", insertable = false, updatable = false, columnDefinition = "timestamp default current_timestamp")
   private Date created;
 
-  @Column
+  @Generated(value= GenerationTime.ALWAYS)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
   private Date lastModified;
 
   public ArticleTable getSourceArticle() {

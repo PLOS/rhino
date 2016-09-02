@@ -9,23 +9,23 @@ import java.util.Objects;
 
 public class ArticlePackage {
 
-  private final ArticleItemInput articleWork;
-  private final ImmutableList<ArticleItemInput> allWorks;
+  private final ArticleItemInput articleItem;
+  private final ImmutableList<ArticleItemInput> allItems;
   private final ImmutableList<RepoObjectInput> ancillaryFiles;
 
-  ArticlePackage(ArticleItemInput articleWork, List<ArticleItemInput> assetWorks, List<RepoObjectInput> ancillaryFiles) {
-    this.articleWork = Objects.requireNonNull(articleWork);
-    this.allWorks = ImmutableList.<ArticleItemInput>builder()
-        .add(articleWork).addAll(assetWorks).build();
+  ArticlePackage(ArticleItemInput articleItem, List<ArticleItemInput> assetItems, List<RepoObjectInput> ancillaryFiles) {
+    this.articleItem = Objects.requireNonNull(articleItem);
+    this.allItems = ImmutableList.<ArticleItemInput>builder()
+        .add(articleItem).addAll(assetItems).build();
     this.ancillaryFiles = ImmutableList.copyOf(ancillaryFiles);
   }
 
   public Doi getDoi() {
-    return articleWork.getDoi();
+    return articleItem.getDoi();
   }
 
-  public ImmutableList<ArticleItemInput> getAllWorks() {
-    return allWorks;
+  public ImmutableList<ArticleItemInput> getAllItems() {
+    return allItems;
   }
 
   public ImmutableList<RepoObjectInput> getAncillaryFiles() {

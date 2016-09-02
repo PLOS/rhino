@@ -1,5 +1,7 @@
 package org.ambraproject.rhino.model;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 import org.plos.crepo.model.identity.RepoVersion;
 
 import javax.persistence.Column;
@@ -9,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import java.util.Date;
 
@@ -25,7 +28,7 @@ public class ArticleFile implements Timestamped {
   @ManyToOne
   private ArticleIngestion ingestion;
 
-  @JoinColumn(name = "itemId", nullable = false)
+  @JoinColumn(name = "itemId", nullable = true) // null if (and only if) this is an ancillary file
   @ManyToOne
   private ArticleItem item;
 
@@ -34,17 +37,20 @@ public class ArticleFile implements Timestamped {
 
   @Column
   private String bucketName;
+
   @Column
   private String crepoKey;
+
   @Column
   private String crepoUuid;
 
   @Column
   private long fileSize;
 
-  @Column
+  @Generated(value = GenerationTime.INSERT)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(name = "created", insertable = false, updatable = false, columnDefinition = "timestamp default current_timestamp")
   private Date created;
-
 
   public long getFileId() {
     return fileId;

@@ -9,6 +9,7 @@ import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleFile;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleTable;
@@ -21,8 +22,7 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.util.Archive;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
+import org.hibernate.Query;
 import org.plos.crepo.model.identity.RepoId;
 import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.model.input.RepoObjectInput;
@@ -49,11 +49,7 @@ public class VersionedIngestionService extends AmbraService {
   private JournalCrudService journalCrudService;
 
 
-  private static long getLastInsertId(Session session) {
-    return ((Number) session.createSQLQuery("SELECT LAST_INSERT_ID()").uniqueResult()).longValue();
-  }
-
-  public ArticleIngestionIdentifier ingest(Archive archive) throws IOException, XmlContentException {
+  public ArticleIngestion ingest(Archive archive) throws IOException, XmlContentException {
     String manifestEntry = null;
     for (String entryName : archive.getEntryNames()) {
       if (entryName.equalsIgnoreCase("manifest.xml")) {
@@ -100,80 +96,67 @@ public class VersionedIngestionService extends AmbraService {
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
 
-    long articlePk = persistArticlePk(articleIdentifier);
-    IngestionPersistenceResult ingestionResult = persistIngestion(articlePk, articleMetadata);
-    long ingestionId = ingestionResult.pk;
+    ArticleTable article = persistArticle(articleIdentifier);
+    ArticleIngestion ingestion = persistIngestion(article, articleMetadata);
 
     // TODO: Allow bucket name to be specified as an ingestion parameter
     String destinationBucketName = runtimeConfiguration.getCorpusStorage().getDefaultBucket();
 
     ArticlePackage articlePackage = new ArticlePackageBuilder(destinationBucketName, archive, parsedArticle, manifestXml,
         manuscriptAsset, manuscriptRepr, printableRepr).build();
-    persistItem(articlePackage, ingestionId);
+    persistAssets(articlePackage, ingestion, manifestXml);
 
-    return ArticleIngestionIdentifier.create(doi, ingestionResult.ingestionNumber);
+    hibernateTemplate.flush();
+    hibernateTemplate.refresh(ingestion); // Pick up auto-persisted timestamp
+    return ingestion;
   }
 
   /**
-   * Get the PK of the "article" row for a DOI if it exists, and insert it if it doesn't.
+   * Get the article object for a DOI if it exists, and save it if it doesn't.
    *
    * @param articleIdentifier
    */
-  private long persistArticlePk(ArticleIdentifier articleIdentifier) {
+  private ArticleTable persistArticle(ArticleIdentifier articleIdentifier) {
     String articleDoi = articleIdentifier.getDoiName();
-    return hibernateTemplate.execute(session -> {
-      SQLQuery selectQuery = session.createSQLQuery("SELECT articleId FROM article WHERE doi = :doi");
+    ArticleTable article = hibernateTemplate.execute(session -> {
+      Query selectQuery = session.createQuery("FROM ArticleTable WHERE doi = :doi");
       selectQuery.setParameter("doi", articleDoi);
-      Number articlePk = (Number) selectQuery.uniqueResult();
-      if (articlePk != null) return articlePk.longValue();
-
-      SQLQuery insertQuery = session.createSQLQuery("INSERT INTO article (doi) VALUES (:doi)");
-      insertQuery.setParameter("doi", articleDoi);
-      insertQuery.executeUpdate();
-      return getLastInsertId(session);
+      return (ArticleTable) selectQuery.uniqueResult();
     });
+    if (article == null) {
+      article = new ArticleTable();
+      article.setDoi(articleDoi);
+      hibernateTemplate.save(article);
+    }
+    return article;
   }
 
   private static final int FIRST_INGESTION_NUMBER = 1;
 
-  private static class IngestionPersistenceResult {
-    private final long pk;
-    private final int ingestionNumber;
-
-    private IngestionPersistenceResult(long pk, int ingestionNumber) {
-      this.pk = pk;
-      this.ingestionNumber = ingestionNumber;
-    }
-  }
-
-  private IngestionPersistenceResult persistIngestion(long articlePk, ArticleMetadata articleMetadata) {
+  private ArticleIngestion persistIngestion(ArticleTable article, ArticleMetadata articleMetadata) {
     Journal journal = fetchJournal(articleMetadata);
 
-    return hibernateTemplate.execute(session -> {
-      SQLQuery findNextIngestionNumber = session.createSQLQuery(
-          "SELECT MAX(ingestionNumber) FROM articleIngestion WHERE articleId = :articleId");
-      findNextIngestionNumber.setParameter("articleId", articlePk);
+    int nextIngestionNumber = hibernateTemplate.execute(session -> {
+      Query findNextIngestionNumber = session.createQuery(
+          "SELECT MAX(ingestionNumber) FROM ArticleIngestion WHERE article = :article");
+      findNextIngestionNumber.setParameter("article", article);
       Number maxIngestionNumber = (Number) findNextIngestionNumber.uniqueResult();
-      int nextIngestionNumber = (maxIngestionNumber == null) ? FIRST_INGESTION_NUMBER
+      return (maxIngestionNumber == null) ? FIRST_INGESTION_NUMBER
           : maxIngestionNumber.intValue() + 1;
-
-      //todo: replace this straight SQL statement by creating and saving a new ArticleIngestion object
-      SQLQuery insertEvent = session.createSQLQuery("" +
-          "INSERT INTO articleIngestion (articleId, ingestionNumber, title, publicationDate, revisionDate, articleType, journalId) " +
-          "VALUES (:articleId, :ingestionNumber, :title, :publicationDate, :revisionDate, :articleType, :journalId)");
-      insertEvent.setParameter("articleId", articlePk);
-      insertEvent.setParameter("ingestionNumber", nextIngestionNumber);
-      insertEvent.setParameter("title", articleMetadata.getTitle());
-      insertEvent.setParameter("publicationDate", java.sql.Date.valueOf(articleMetadata.getPublicationDate()));
-      insertEvent.setParameter("revisionDate", (articleMetadata.getRevisionDate() == null
-          ? null : java.sql.Date.valueOf(articleMetadata.getRevisionDate())));
-      insertEvent.setParameter("articleType", articleMetadata.getArticleType());
-      insertEvent.setParameter("journalId", journal.getJournalId());
-      insertEvent.executeUpdate();
-      long pk = getLastInsertId(session);
-
-      return new IngestionPersistenceResult(pk, nextIngestionNumber);
     });
+
+    ArticleIngestion ingestion = new ArticleIngestion();
+    ingestion.setArticle(article);
+    ingestion.setIngestionNumber(nextIngestionNumber);
+    ingestion.setTitle(articleMetadata.getTitle());
+    ingestion.setPublicationDate(java.sql.Date.valueOf(articleMetadata.getPublicationDate()));
+    ingestion.setRevisionDate((articleMetadata.getRevisionDate() == null ? null
+        : java.sql.Date.valueOf(articleMetadata.getRevisionDate())));
+    ingestion.setArticleType(articleMetadata.getArticleType());
+    ingestion.setJournal(journal);
+
+    hibernateTemplate.save(ingestion);
+    return ingestion;
   }
 
   private void validateManifestCompleteness(ManifestXml manifest, Archive archive) {
@@ -212,72 +195,98 @@ public class VersionedIngestionService extends AmbraService {
     }
   }
 
-  private void persistItem(ArticlePackage articlePackage, long ingestionId) {
-    for (ArticleItemInput work : articlePackage.getAllWorks()) {
-      persistItem(work, ingestionId);
+  /**
+   * Persist items, items' file representations, ancillary files, and the link to the striking image.
+   */
+  private void persistAssets(ArticlePackage articlePackage, ArticleIngestion ingestion, ManifestXml manifest) {
+    List<ArticleItem> items = articlePackage.getAllItems().stream()
+        .map((ArticleItemInput item) -> createItem(item, ingestion))
+        .collect(Collectors.toList());
+    for (ArticleItem item : items) {
+      hibernateTemplate.save(item);
     }
-    persistAncillaryFiles(articlePackage, ingestionId);
+
+    persistAncillaryFiles(articlePackage, ingestion);
+
+    linkStrikingImage(ingestion, items, manifest);
   }
 
-  private long persistItem(ArticleItemInput work, long ingestionId) {
+  private ArticleItem createItem(ArticleItemInput itemInput, ArticleIngestion ingestion) {
     Map<String, RepoVersion> crepoResults = new LinkedHashMap<>();
-    for (Map.Entry<String, RepoObjectInput> entry : work.getObjects().entrySet()) {
+    for (Map.Entry<String, RepoObjectInput> entry : itemInput.getObjects().entrySet()) {
       RepoVersion result = contentRepoService.autoCreateRepoObject(entry.getValue()).getVersion();
       crepoResults.put(entry.getKey(), result);
     }
 
-    return hibernateTemplate.execute(session -> {
-      SQLQuery insertWork = session.createSQLQuery("" +
-          "INSERT INTO articleItem (ingestionId, doi, articleItemType) " +
-          "  VALUES (:ingestionId, :doi, :articleItemType)");
-      insertWork.setParameter("ingestionId", ingestionId);
-      insertWork.setParameter("doi", work.getDoi().getName());
-      insertWork.setParameter("articleItemType", work.getType());
-      insertWork.executeUpdate();
-      long itemId = getLastInsertId(session);
+    ArticleItem item = new ArticleItem();
+    item.setIngestion(ingestion);
+    item.setDoi(itemInput.getDoi().getName());
+    item.setItemType(itemInput.getType());
 
-      for (Map.Entry<String, RepoVersion> entry : crepoResults.entrySet()) {
-        SQLQuery insertFile = session.createSQLQuery("" +
-            "INSERT INTO articleFile (ingestionId, itemId, fileType, bucketName, crepoKey, crepoUuid, fileSize) " +
-            "  VALUES (:ingestionId, :itemId, :fileType, :bucketName, :crepoKey, :crepoUuid, :fileSize)");
-        insertFile.setParameter("ingestionId", ingestionId);
-        insertFile.setParameter("itemId", itemId);
-        insertFile.setParameter("fileType", entry.getKey());
+    item.setFiles(crepoResults.entrySet().stream().map((Map.Entry<String, RepoVersion> entry) -> {
+      ArticleFile file = new ArticleFile();
+      file.setIngestion(ingestion);
+      file.setItem(item);
+      file.setFileType(entry.getKey());
 
-        RepoVersion repoVersion = entry.getValue();
-        RepoId repoId = repoVersion.getId();
-        insertFile.setParameter("bucketName", repoId.getBucketName());
-        insertFile.setParameter("crepoKey", repoId.getKey());
-        insertFile.setParameter("crepoUuid", repoVersion.getUuid().toString());
-        insertFile.setParameter("fileSize", contentRepoService.getRepoObjectMetadata(repoVersion).getSize());
+      RepoVersion repoVersion = entry.getValue();
+      RepoId repoId = repoVersion.getId();
+      file.setBucketName(repoId.getBucketName());
+      file.setCrepoKey(repoId.getKey());
+      file.setCrepoUuid(repoVersion.getUuid().toString());
 
-        insertFile.executeUpdate();
-      }
+      file.setFileSize(contentRepoService.getRepoObjectMetadata(repoVersion).getSize());
 
-      return itemId;
-    });
+      return file;
+    }).collect(Collectors.toList()));
+
+    return item;
   }
 
-  private void persistAncillaryFiles(ArticlePackage articlePackage, long ingestionId) {
+  private List<ArticleFile> persistAncillaryFiles(ArticlePackage articlePackage, ArticleIngestion ingestion) {
     List<RepoVersion> ancillaryFiles = articlePackage.getAncillaryFiles().stream()
         .map(ancillaryFile -> contentRepoService.autoCreateRepoObject(ancillaryFile).getVersion())
         .collect(Collectors.toList());
-    hibernateTemplate.execute(session -> {
-      for (RepoVersion ancillaryFile : ancillaryFiles) {
-        SQLQuery insertFile = session.createSQLQuery("" +
-            "INSERT INTO articleFile (ingestionId, bucketName, crepoKey, crepoUuid, fileSize) " +
-            "  VALUES (:ingestionId, :bucketName, :crepoKey, :crepoUuid, :fileSize)");
-        insertFile.setParameter("ingestionId", ingestionId);
-        RepoId repoId = ancillaryFile.getId();
-        insertFile.setParameter("bucketName", repoId.getBucketName());
-        insertFile.setParameter("crepoKey", repoId.getKey());
-        insertFile.setParameter("crepoUuid", ancillaryFile.getUuid().toString());
-        insertFile.setParameter("fileSize", contentRepoService.getRepoObjectMetadata(ancillaryFile).getSize());
-        insertFile.executeUpdate();
-      }
-      return null;
-    });
+
+    List<ArticleFile> fileObjects = ancillaryFiles.stream().map(repoVersion -> {
+      ArticleFile file = new ArticleFile();
+      file.setIngestion(ingestion);
+      file.setFileSize(contentRepoService.getRepoObjectMetadata(repoVersion).getSize());
+
+      RepoId repoId = repoVersion.getId();
+      file.setBucketName(repoId.getBucketName());
+      file.setCrepoKey(repoId.getKey());
+      file.setCrepoUuid(repoVersion.getUuid().toString());
+      return file;
+    }).collect(Collectors.toList());
+
+    for (ArticleFile fileObject : fileObjects) {
+      hibernateTemplate.save(fileObject);
+    }
+    return fileObjects;
   }
+
+  private Optional<ArticleItem> linkStrikingImage(ArticleIngestion ingestion, List<ArticleItem> items, ManifestXml manifest) {
+    Optional<ManifestXml.Asset> strikingImageAsset = manifest.getAssets().stream()
+        .filter(ManifestXml.Asset::isStrikingImage)
+        .findAny();
+    if (!strikingImageAsset.isPresent()) {
+      return Optional.empty(); // No striking image declared, so go without setting one.
+    }
+
+    Doi strikingImageDoi = Doi.create(strikingImageAsset.get().getUri());
+    Optional<ArticleItem> strikingImageItem = items.stream()
+        .filter(item -> Doi.create(item.getDoi()).equals(strikingImageDoi))
+        .findAny();
+    if (!strikingImageItem.isPresent()) {
+      throw new RuntimeException("Striking image from manifest not found (should have been created by now)");
+    }
+
+    ingestion.setStrikingImage(strikingImageItem.get());
+    hibernateTemplate.update(ingestion);
+    return strikingImageItem;
+  }
+
 
   private Journal fetchJournal(ArticleMetadata article) {
     String eissn = article.geteIssn();
