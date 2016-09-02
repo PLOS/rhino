@@ -344,14 +344,14 @@ public class ArticleCrudController extends RestController {
     articleListCrudService.readContainingLists(id).respond(request, response, entityGson);
   }
 
-  @RequestMapping(value = "/articles/{doi}", params = {"solrIndex"}, method = RequestMethod.POST)
+  @RequestMapping(value = "/articles/{doi:.+}", params = {"solrIndex"}, method = RequestMethod.POST)
   public ResponseEntity<?> updateSolrIndex(@PathVariable("doi") String doi) {
     ArticleIdentifier identifier = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     solrIndexService.updateSolrIndex(identifier);
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  @RequestMapping(value = "/articles/{doi}", params = {"solrIndex"}, method = RequestMethod.DELETE)
+  @RequestMapping(value = "/articles/{doi:.+}", params = {"solrIndex"}, method = RequestMethod.DELETE)
   public ResponseEntity<?> removeSolrIndex(@PathVariable("doi") String doi) {
     ArticleIdentifier identifier = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     solrIndexService.removeSolrIndex(identifier);
