@@ -42,7 +42,7 @@ public class ArticleIngestion implements Timestamped {
   @ManyToOne
   private Journal journal;
 
-  @JoinColumn(name = "strikingImageId", nullable = true)
+  @JoinColumn(name = "strikingImageItemId", nullable = true)
   @OneToOne
   private ArticleItem strikingImage;
 
