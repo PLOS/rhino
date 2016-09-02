@@ -1,0 +1,8 @@
+. filter=lfs diff=lfs merge=lfs -text
+objkey-uuid-aa2.gz filter=lfs diff=lfs merge=lfs -text
+objkey-uuid-ab2.gz filter=lfs diff=lfs merge=lfs -text
+objkey-uuid-ac2.gz filter=lfs diff=lfs merge=lfs -text
+objkey-uuid-ad2.gz filter=lfs diff=lfs merge=lfs -text
+objkey-uuid-ae2.gz filter=lfs diff=lfs merge=lfs -text
+objkey-uuid-af2.gz filter=lfs diff=lfs merge=lfs -text
+objkey-uuid.csv.gz filter=lfs diff=lfs merge=lfs -text

@@ -1,5 +1,8 @@
 package org.ambraproject.rhino.model;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import java.sql.Date;
 
 @Entity
@@ -42,12 +46,14 @@ public class ArticleIngestion implements Timestamped {
   @ManyToOne
   private Journal journal;
 
-  @JoinColumn(name = "strikingImageId", nullable = true)
+  @JoinColumn(name = "strikingImageItemId", nullable = true)
   @OneToOne
   private ArticleItem strikingImage;
 
-  @Column
-  private Date lastModified;
+  @Generated(value= GenerationTime.ALWAYS)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
+  private java.util.Date lastModified;
 
 
   public long getVersionId() {
@@ -123,7 +129,7 @@ public class ArticleIngestion implements Timestamped {
   }
 
   @Override
-  public Date getLastModified() {
+  public java.util.Date getLastModified() {
     return lastModified;
   }
 

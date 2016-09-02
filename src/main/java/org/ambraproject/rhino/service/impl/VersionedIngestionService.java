@@ -211,17 +211,17 @@ public class VersionedIngestionService extends AmbraService {
     linkStrikingImage(ingestion, items, manifest);
   }
 
-  private ArticleItem createItem(ArticleItemInput work, ArticleIngestion ingestion) {
+  private ArticleItem createItem(ArticleItemInput itemInput, ArticleIngestion ingestion) {
     Map<String, RepoVersion> crepoResults = new LinkedHashMap<>();
-    for (Map.Entry<String, RepoObjectInput> entry : work.getObjects().entrySet()) {
+    for (Map.Entry<String, RepoObjectInput> entry : itemInput.getObjects().entrySet()) {
       RepoVersion result = contentRepoService.autoCreateRepoObject(entry.getValue()).getVersion();
       crepoResults.put(entry.getKey(), result);
     }
 
     ArticleItem item = new ArticleItem();
     item.setIngestion(ingestion);
-    item.setDoi(work.getDoi().getName());
-    item.setItemType(work.getType());
+    item.setDoi(itemInput.getDoi().getName());
+    item.setItemType(itemInput.getType());
 
     item.setFiles(crepoResults.entrySet().stream().map((Map.Entry<String, RepoVersion> entry) -> {
       ArticleFile file = new ArticleFile();
