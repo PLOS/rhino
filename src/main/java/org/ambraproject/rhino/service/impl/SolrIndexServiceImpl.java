@@ -19,11 +19,12 @@ import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.ArticleIngestion;
+import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.SolrIndexService;
 import org.ambraproject.rhino.service.MessageSender;
+import org.ambraproject.rhino.service.SolrIndexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -92,12 +93,15 @@ public class SolrIndexServiceImpl extends AmbraService implements SolrIndexServi
    * @return doc
    */
   private Document appendStrikingImage(Document doc, ArticleIngestion ingestion) {
-    String strikingImage = null; // TODO: Recover from ingestion object when it is supported
+    ArticleItem strikingImage = ingestion.getStrikingImage();
+    String strikingImageDoi = (strikingImage == null) ? null :
+        Doi.create(strikingImage.getDoi()).asUri(Doi.UriStyle.INFO_DOI).toString();
+
     NodeList metaNodeLst = doc.getElementsByTagName("article-meta");
     Node metaNode = metaNodeLst.item(0);
     Element strkImgElem = doc.createElement("article-strkImg");
 
-    strkImgElem.setTextContent(Strings.nullToEmpty(strikingImage));
+    strkImgElem.setTextContent(Strings.nullToEmpty(strikingImageDoi));
     metaNode.appendChild(strkImgElem.cloneNode(true));
     return doc;
   }
