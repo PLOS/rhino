@@ -13,24 +13,25 @@
 
 package org.ambraproject.rhino.service;
 
-import org.ambraproject.rhino.model.Article;
-import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.view.article.ArticleInputView;
-
-import java.io.IOException;
+import org.ambraproject.rhino.identity.ArticleIdentifier;
 
 /**
- * Service that reads and writes an article's state after it has been created.
+ * Service that pushes messages to the queue related to Solr indexing.
  */
-public interface ArticleStateService {
+public interface SolrIndexService {
 
   /**
-   * Writes a set of client inputs to the persistent article identified by articleId.
+   * Push a message to the queue that will update an article's Solr index.
    *
-   * @param articleId identifies the article whose state we are updating
-   * @param input     the client-submitted values to update
-   * @return the article after updates are applied
+   * @param articleId the article to be indexed
    */
-  public abstract Article update(ArticleIdentity articleId, ArticleInputView input)
-      throws IOException;
+  public abstract void updateSolrIndex(ArticleIdentifier articleId);
+
+  /**
+   * Push a message to the queue that will remove an article from the Solr index.
+   *
+   * @param articleId the article to be removed
+   */
+  public abstract void removeSolrIndex(ArticleIdentifier articleId);
+
 }
