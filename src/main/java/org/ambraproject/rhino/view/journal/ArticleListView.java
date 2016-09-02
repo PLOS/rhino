@@ -6,7 +6,7 @@ import com.google.gson.JsonSerializationContext;
 import org.ambraproject.rhino.identity.ArticleListIdentity;
 import org.ambraproject.rhino.model.ArticleList;
 import org.ambraproject.rhino.view.JsonOutputView;
-import org.ambraproject.rhino.view.article.versioned.PersistentArticleView;
+import org.ambraproject.rhino.view.article.versioned.ArticleRevisionView;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -16,19 +16,19 @@ public class ArticleListView implements JsonOutputView {
 
   public static class Factory {
     @Autowired
-    private PersistentArticleView.Factory persistentArticleViewFactory;
+    private ArticleRevisionView.Factory articleRevisionViewFactory;
 
     public ArticleListView getView(ArticleList articleList, String journalKey) {
-      return new ArticleListView(journalKey, articleList, persistentArticleViewFactory);
+      return new ArticleListView(journalKey, articleList, articleRevisionViewFactory);
     }
   }
 
   private final String journalKey;
   private final ArticleList articleList;
-  private final PersistentArticleView.Factory articleFactory;
+  private final ArticleRevisionView.Factory articleFactory;
 
   private ArticleListView(String journalKey, ArticleList articleList,
-                          PersistentArticleView.Factory articleFactory) {
+                          ArticleRevisionView.Factory articleFactory) {
     this.journalKey = Objects.requireNonNull(journalKey);
     this.articleList = Objects.requireNonNull(articleList);
     this.articleFactory = Objects.requireNonNull(articleFactory);
@@ -50,8 +50,8 @@ public class ArticleListView implements JsonOutputView {
     JsonObject serialized = context.serialize(getIdentity()).getAsJsonObject();
     serialized.addProperty("title", articleList.getDisplayName());
 
-    List<PersistentArticleView> articleViews = Lists.transform(articleList.getArticles(),
-        articleFactory::getView);
+    List<ArticleRevisionView> articleViews = Lists.transform(articleList.getArticles(),
+        articleFactory::getLatestRevisionView);
     serialized.add("articles", context.serialize(articleViews));
     return serialized;
   }

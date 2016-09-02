@@ -41,7 +41,9 @@ import org.w3c.dom.Document;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -219,5 +221,16 @@ public interface ArticleCrudService {
   public abstract ArticleTable readArticle(ArticleIdentifier articleIdentifier);
 
   public abstract Document getManuscriptXml(ArticleIngestion articleIngestion);
+
+  /**
+   * Get all the article revisions published within a given date range
+   */
+  public abstract Collection<ArticleRevision> getArticlesPublishedOn(LocalDate fromDate, LocalDate toDate);
+
+  /**
+   * Get all the article revisions revised within a given date range
+   */
+  public abstract Collection<ArticleRevision> getArticlesRevisedOn(LocalDate fromDate, LocalDate toDate);
+
 
 }

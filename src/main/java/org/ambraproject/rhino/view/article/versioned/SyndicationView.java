@@ -42,7 +42,7 @@ public class SyndicationView implements JsonOutputView {
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = new JsonObject();
-    serialized.add("revision", context.serialize(new ArticleRevisionView(syndication.getArticleRevision())));
+    serialized.add("revision", context.serialize(ArticleRevisionView.getView(syndication.getArticleRevision())));
     serialized.addProperty("target", syndication.getTarget());
     serialized.addProperty("status", syndication.getStatus());
     serialized.addProperty("submissionCount", syndication.getSubmissionCount());
