@@ -1,9 +1,9 @@
 package org.ambraproject.rhino.service.taxonomy;
 
 import com.google.common.collect.ImmutableList;
+import org.ambraproject.rhino.model.ArticleCategoryAssignment;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
-import org.ambraproject.rhino.model.Category;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
@@ -37,7 +37,7 @@ public class DummyTaxonomyClassificationService implements TaxonomyClassificatio
   }
 
   @Override
-  public Collection<Category> getCategoriesForArticle(ArticleTable article) {
+  public Collection<ArticleCategoryAssignment> getCategoriesForArticle(ArticleTable article) {
     return null;
   }
 }

@@ -1,8 +1,8 @@
 package org.ambraproject.rhino.service.taxonomy.impl;
 
+import org.ambraproject.rhino.model.ArticleCategoryAssignment;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
-import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.service.impl.AmbraService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
@@ -37,7 +37,7 @@ public class TaxonomyServiceImpl extends AmbraService implements TaxonomyService
   }
 
   @Override
-  public Collection<Category> getCategoriesForArticle(ArticleTable article) {
+  public Collection<ArticleCategoryAssignment> getCategoriesForArticle(ArticleTable article) {
     return taxonomyClassificationService.getCategoriesForArticle(article);
   }
 

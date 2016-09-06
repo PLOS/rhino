@@ -194,26 +194,13 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   }
 
   @Override
-  public Collection<Category> getCategoriesForArticle(ArticleTable article) {
+  public Collection<ArticleCategoryAssignment> getCategoriesForArticle(ArticleTable article) {
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
-          "SELECT category " +
           "FROM ArticleCategoryAssignment aca " +
           "WHERE aca.article = :article");
       query.setParameter("article", article);
-      return (Collection<Category>) query.list();
-    });
-  }
-
-  public ArticleCategoryAssignment getArticleCategoryAssignment(ArticleTable article, Category category) {
-    return hibernateTemplate.execute(session -> {
-      Query query = session.createQuery("" +
-          "FROM ArticleCategoryAssignment " +
-          "WHERE article = :article " +
-          "AND category = :category");
-      query.setParameter("article", article);
-      query.setParameter("category", category);
-      return (ArticleCategoryAssignment) query.uniqueResult();
+      return (Collection<ArticleCategoryAssignment>) query.list();
     });
   }
 
@@ -280,7 +267,8 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     });
 
     Map<String, Category> existingCategoryMap = Maps.uniqueIndex(existingCategories, Category::getPath);
-    Collection<Category> categoriesForArticle = getCategoriesForArticle(article);
+    Map<Category, ArticleCategoryAssignment> categoriesForArticle = Maps.uniqueIndex(
+        getCategoriesForArticle(article), ArticleCategoryAssignment::getCategory);
 
     for (WeightedTerm term : terms) {
       Category category = existingCategoryMap.get(term.getPath());
@@ -296,10 +284,10 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
         hibernateTemplate.save(category);
       }
 
-      if (!categoriesForArticle.contains(category)) {
+      ArticleCategoryAssignment assignment = categoriesForArticle.get(category);
+      if (assignment == null) {
         hibernateTemplate.save(new ArticleCategoryAssignment(category, article, term.getWeight()));
       } else {
-        ArticleCategoryAssignment assignment = getArticleCategoryAssignment(article, category);
         assignment.setWeight(term.getWeight());
         hibernateTemplate.update(assignment);
       }
