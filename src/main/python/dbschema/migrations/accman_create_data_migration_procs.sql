@@ -1,4 +1,4 @@
-# assumptions: the objects table from content repo has been added to the ambra db for use as a UUID lookup
+# assumptions: the objkey_uuid extract from content repo has been added to the ambra db for use as a UUID/filesize lookup
 #
 # results of migration sent to migration_status_log
 #
@@ -32,8 +32,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
     DECLARE article_doi_name VARCHAR(150) DEFAULT '';
     DECLARE ingestion_id BIGINT DEFAULT 0;
     DECLARE item_id BIGINT DEFAULT 0;
+    DECLARE striking_image_item_id BIGINT;
+    DECLARE striking_image_doi VARCHAR(150);
     DECLARE item_type VARCHAR(128);
     DECLARE file_type VARCHAR(128);
+    DECLARE file_size BIGINT;
     DECLARE asset_doi VARCHAR(150);
     DECLARE asset_doi_name VARCHAR(150);
     DECLARE prev_asset_doi VARCHAR(150) DEFAULT '';
@@ -60,8 +63,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
       SIGNAL SQLSTATE '45000'
       SET MESSAGE_TEXT = 'Article already exists in target table';
     ELSE
-      SELECT doi, title, `date`
-      INTO article_doi, article_title, pub_date
+      SELECT doi, title, `date`, strkImgURI
+      INTO article_doi, article_title, pub_date, striking_image_doi
       FROM oldArticle
       WHERE articleID = article_id;
 
@@ -136,12 +139,15 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
             VALUES (ingestion_id, asset_doi_name, item_type, NOW());
 
             SET item_id = LAST_INSERT_ID();
+
+            IF asset_doi = striking_image_doi THEN
+              SET striking_image_item_id = item_id;
+            END IF;
           END IF;
 
-          # TODO: consider preloading the entire objects table extract into memory within the calling routine to speed up performance
           SET crepo_key = CONCAT(get_doi_name(asset_doi), '.', asset_extension);
           SET crepo_uuid = '';
-          SELECT uuid INTO crepo_uuid FROM objects WHERE bucketId = 1 AND status = 0 AND objkey = crepo_key ORDER BY versionNumber DESC LIMIT 1;
+          SELECT uuid, size INTO crepo_uuid, file_size FROM objkey_uuid WHERE objkey = crepo_key;
           IF crepo_uuid = '' THEN
             SET err_msg = CONCAT('Crepo key ', crepo_key, ' not found. Rolling back ', get_doi_name(article_doi));
             CALL migrate_article_rollback(article_id);
@@ -193,13 +199,17 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
           END IF;
 
           INSERT INTO articleFile
-          (ingestionId, itemId, bucketName, crepoKey, crepoUuid, created, fileType)
-          VALUES (ingestion_id, item_id, 'corpus', crepo_key, crepo_uuid, NOW(), file_type);
+          (ingestionId, itemId, bucketName, crepoKey, crepoUuid, created, fileType, fileSize)
+          VALUES (ingestion_id, item_id, 'corpus', crepo_key, crepo_uuid, NOW(), file_type, file_size);
 
           SET prev_asset_doi = asset_doi;
 
         END LOOP persist_assets_loop;
         CLOSE old_assets_cursor;
+
+        IF striking_image_item_id IS NOT NULL THEN
+          UPDATE articleIngestion SET strikingImageItemId = striking_image_item_id WHERE ingestionId = ingestion_id;
+        END IF;
 
       ELSE
         SET err_msg = CONCAT('Article with ID=', article_id, ' not found in source table');
