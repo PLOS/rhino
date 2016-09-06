@@ -255,6 +255,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_articles`()
       SET full_err_msg = CONCAT("ERROR ", err_num, " (", err_state, "): ", err_msg);
       INSERT INTO migration_status_log (articleId, migration_date, migration_status, error_message)
       VALUES (article_id, NOW(), 1, full_err_msg);
+      CALL migrate_article_rollback(article_id);
     END;
 
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
