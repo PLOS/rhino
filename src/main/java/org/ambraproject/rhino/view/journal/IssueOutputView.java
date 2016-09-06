@@ -14,7 +14,7 @@ import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.view.JsonOutputView;
-import org.ambraproject.rhino.view.article.versioned.PersistentArticleView;
+import org.ambraproject.rhino.view.article.versioned.ArticleRevisionView;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;
@@ -30,13 +30,13 @@ public class IssueOutputView implements JsonOutputView {
     @Autowired
     private IssueCrudService issueCrudService;
     @Autowired
-    private PersistentArticleView.Factory persistentArticleViewFactory;
+    private ArticleRevisionView.Factory articleRevisionViewFactory;
 
-    private List<PersistentArticleView> getIssueArticles(Issue issue) {
+    private List<ArticleRevisionView> getIssueArticles(Issue issue) {
       List<ArticleTable> articles = issue.getArticles();
       if (articles == null) return ImmutableList.of();
       return articles.stream()
-          .map(persistentArticleViewFactory::getView)
+          .map(articleRevisionViewFactory::getLatestRevisionView)
           .collect(Collectors.toList());
     }
 
@@ -52,9 +52,9 @@ public class IssueOutputView implements JsonOutputView {
   private final Issue issue;
   private final VolumeNonAssocView parentVolumeView;
   private final IssueOutputView.Factory factory;
-  private final ImmutableList<PersistentArticleView> articles;
+  private final ImmutableList<ArticleRevisionView> articles;
 
-  private IssueOutputView(Factory factory, Issue issue, VolumeNonAssocView parentVolumeView, List<PersistentArticleView> articles) {
+  private IssueOutputView(Factory factory, Issue issue, VolumeNonAssocView parentVolumeView, List<ArticleRevisionView> articles) {
     this.issue = Objects.requireNonNull(issue);
     this.parentVolumeView = Objects.requireNonNull(parentVolumeView);
     this.factory = Objects.requireNonNull(factory);

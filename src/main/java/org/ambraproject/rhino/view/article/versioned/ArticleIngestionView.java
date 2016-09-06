@@ -20,6 +20,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * Deep view of an article ingestion, including data parsed dynamically from the manuscript.
+ * <p>
+ * In case of a future need for a shallow view that uses only data is that available from the database, see {@link
+ * ArticleRevisionView#serializeIngestion}.
+ */
 public class ArticleIngestionView implements JsonOutputView {
 
   public static class Factory {

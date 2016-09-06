@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
@@ -41,6 +42,7 @@ import org.ambraproject.rhino.view.article.versioned.SyndicationView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -55,6 +57,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -155,7 +158,7 @@ public class ArticleCrudController extends RestController {
       revision = articleRevisionWriteService.writeRevision(revisionId, ingestionId);
     }
 
-    return reportCreated(new ArticleRevisionView(revision));
+    return reportCreated(ArticleRevisionView.getView(revision));
   }
 
   @Transactional(readOnly = false)
@@ -322,14 +325,14 @@ public class ArticleCrudController extends RestController {
     articleListCrudService.readContainingLists(id).respond(request, response, entityGson);
   }
 
-  @RequestMapping(value = "/articles/{doi}", params = {"solrIndex"}, method = RequestMethod.POST)
+  @RequestMapping(value = "/articles/{doi:.+}", params = {"solrIndex"}, method = RequestMethod.POST)
   public ResponseEntity<?> updateSolrIndex(@PathVariable("doi") String doi) {
     ArticleIdentifier identifier = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     solrIndexService.updateSolrIndex(identifier);
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  @RequestMapping(value = "/articles/{doi}", params = {"solrIndex"}, method = RequestMethod.DELETE)
+  @RequestMapping(value = "/articles/{doi:.+}", params = {"solrIndex"}, method = RequestMethod.DELETE)
   public ResponseEntity<?> removeSolrIndex(@PathVariable("doi") String doi) {
     ArticleIdentifier identifier = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     solrIndexService.removeSolrIndex(identifier);
@@ -403,6 +406,38 @@ public class ArticleCrudController extends RestController {
   public void readRandom(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     articleCrudService.readRandom().respond(request, response, entityGson);
+  }
+
+
+  /**
+   * The following two methods {@link getDoisPublishedOn()} and {@link getDoisRevisedOn()} provide two
+   * utility endpoints for our publication workflow. Their main use-case is to ensure that all articles
+   * that are to be published on a given date are picked up by the publication scripts.
+   *
+   */
+  @Transactional(readOnly = true)
+  @RequestMapping(value = "/articles", method = RequestMethod.GET, params = "published")
+  public void getDoisPublishedOn(HttpServletRequest request, HttpServletResponse response,
+                                 @ApiParam(value = "Date Format: yyyy-MM-dd")
+                                 @RequestParam(value = "fromDate") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate fromDate,
+                                 @ApiParam(value = "Date Format: yyyy-MM-dd")
+                                 @RequestParam(value = "toDate") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate toDate) throws IOException {
+  Transceiver.serveUntimestampedView(() -> articleCrudService.getArticlesPublishedOn(fromDate, toDate)
+      .stream().map(ArticleRevisionView::getView)
+      .collect(Collectors.toList())).respond(request, response, entityGson);
+  }
+
+  @Transactional(readOnly = true)
+  @RequestMapping(value = "/articles", method = RequestMethod.GET, params = "revised")
+  public void getDoisRevisedOn(HttpServletRequest request, HttpServletResponse response,
+                               @ApiParam(value = "Date Format: yyyy-MM-dd")
+                               @RequestParam(value = "fromDate") @DateTimeFormat(pattern="yyyy-MM-dd")LocalDate fromDate,
+                               @ApiParam(value = "Date Format: yyyy-MM-dd")
+                               @RequestParam(value = "toDate") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate toDate) throws IOException {
+
+    Transceiver.serveUntimestampedView(() -> articleCrudService.getArticlesRevisedOn(fromDate, toDate)
+        .stream().map(ArticleRevisionView::getView)
+        .collect(Collectors.toList())).respond(request, response, entityGson);
   }
 
 }

@@ -85,6 +85,7 @@ import org.w3c.dom.Document;
 import javax.xml.xpath.XPathException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -280,7 +281,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
       @Override
       protected Object getView(ArticleRevision entity) {
-        return new ArticleRevisionView(entity);
+        return ArticleRevisionView.getView(entity);
       }
     };
   }
@@ -702,6 +703,38 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public ArticleTable readArticle(ArticleIdentifier articleIdentifier) {
     return getArticle(articleIdentifier).orElseThrow(() ->
         new RestClientException("Article not found: " + articleIdentifier, HttpStatus.NOT_FOUND));
+  }
+
+  @Override
+  public Collection<ArticleRevision> getArticlesPublishedOn(LocalDate fromDate, LocalDate toDate) {
+    return  hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "SELECT ar " +
+          "FROM ArticleRevision ar " +
+          "INNER JOIN ar.ingestion ai " +
+          "INNER JOIN  ar.ingestion.article at " +
+          "WHERE ai.publicationDate >= :fromDate AND ai.publicationDate <= :toDate " +
+          "AND ar.revisionId IS NOT NULL");
+      query.setParameter("fromDate", java.sql.Date.valueOf(fromDate));
+      query.setParameter("toDate", java.sql.Date.valueOf(toDate));
+      return (Collection<ArticleRevision>) query.list();
+    });
+  }
+
+  @Override
+  public Collection<ArticleRevision> getArticlesRevisedOn(LocalDate fromDate, LocalDate toDate) {
+    return  hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "SELECT ar " +
+          "FROM ArticleRevision ar " +
+          "INNER JOIN ar.ingestion ai " +
+          "INNER JOIN  ar.ingestion.article at " +
+          "WHERE ai.revisionDate >= :fromDate AND ai.revisionDate <= :toDate " +
+          "AND ar.revisionId IS NOT NULL");
+      query.setParameter("fromDate", java.sql.Date.valueOf(fromDate));
+      query.setParameter("toDate", java.sql.Date.valueOf(toDate));
+      return (Collection<ArticleRevision>) query.list();
+    });
   }
 
 }
