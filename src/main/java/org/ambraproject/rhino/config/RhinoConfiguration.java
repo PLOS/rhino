@@ -32,7 +32,6 @@ import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.CamelSender;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.ConfigurationReadService;
-import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.LegacyConfiguration;
@@ -47,7 +46,6 @@ import org.ambraproject.rhino.service.impl.ArticleRevisionWriteServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.CommentCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
-import org.ambraproject.rhino.service.impl.IngestibleServiceImpl;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.JournalCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.PingbackReadServiceImpl;
@@ -233,11 +231,6 @@ public class RhinoConfiguration extends BaseConfiguration {
   @Bean
   public IssueCrudService issueCrudService() {
     return new IssueCrudServiceImpl();
-  }
-
-  @Bean
-  public IngestibleService ingestibleService() {
-    return new IngestibleServiceImpl();
   }
 
   @Bean
