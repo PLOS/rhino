@@ -221,7 +221,7 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
     body.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
         .append("<ambraMessage>")
         .append("<doi>").append(revisionId.getDoiName()).append("</doi>")
-        .append("<version>").append(revisionId.getRevision()).append("</doi>")
+        .append("<revision>").append(revisionId.getRevision()).append("</revision>")
         .append("</ambraMessage>");
 
     return body.toString();

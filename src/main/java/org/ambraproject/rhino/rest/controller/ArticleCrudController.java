@@ -20,10 +20,8 @@ package org.ambraproject.rhino.rest.controller;
 
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
-import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
-import org.ambraproject.rhino.identity.ArticleItemIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
@@ -237,26 +235,6 @@ public class ArticleCrudController extends RestController {
 
     ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
     articleCrudService.serveAuthors(ingestionId).respond(request, response, entityGson);
-  }
-
-  /**
-   * Retrieves the XML file containing the text of an article.
-   *
-   * @param request
-   * @param response
-   * @throws IOException
-   */
-  // TODO: Get rid of this?
-  @Transactional(readOnly = true)
-  @RequestMapping(value = "/articles/{doi}/ingestions/{number}", method = RequestMethod.GET, params = "xml")
-  public void readXml(HttpServletRequest request, HttpServletResponse response,
-                      @PathVariable("doi") String doi,
-                      @PathVariable("number") int ingestionNumber)
-      throws IOException {
-    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
-    ArticleItemIdentifier itemId = ingestionId.getItemFor();
-    ArticleFileIdentifier fileId = ArticleFileIdentifier.create(itemId, "manuscript");
-    assetFileCrudController.serveFile(request, response, fileId);
   }
 
   /**
