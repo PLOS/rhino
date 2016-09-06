@@ -412,6 +412,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article_rollback_all`()
     DECLARE article_id BIGINT DEFAULT NULL;
     DECLARE done INT DEFAULT FALSE;
 
+    ##### MODIFY THIS SQL STATEMENT TO SELECT OTHER THAN ALL RECORDS IF DESIRED #####
     DECLARE old_articles_cursor CURSOR FOR
       SELECT articleId FROM article;
 
@@ -430,11 +431,13 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article_rollback_all`()
     END LOOP;
     CLOSE old_articles_cursor;
 
-    DELETE FROM articleList;
-    UPDATE journal SET currentIssueId = NULL;
-    DELETE FROM issue;
-    DELETE FROM volume;
-    DELETE FROM journal;
+    IF NOT EXISTS (SELECT * FROM article) THEN
+      DELETE FROM articleList;
+      UPDATE journal SET currentIssueId = NULL;
+      DELETE FROM issue;
+      DELETE FROM volume;
+      DELETE FROM journal;
+    END IF;
 
   END$$
 DELIMITER ;
