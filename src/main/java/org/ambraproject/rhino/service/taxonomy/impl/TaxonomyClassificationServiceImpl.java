@@ -267,8 +267,8 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     });
 
     Map<String, Category> existingCategoryMap = Maps.uniqueIndex(existingCategories, Category::getPath);
-    Map<Category, ArticleCategoryAssignment> categoriesForArticle = Maps.uniqueIndex(
-        getCategoriesForArticle(article), ArticleCategoryAssignment::getCategory);
+    Map<String, ArticleCategoryAssignment> categoriesForArticle = Maps.uniqueIndex(getCategoriesForArticle(article),
+        (ArticleCategoryAssignment a) -> a.getCategory().getPath());
 
     for (WeightedTerm term : terms) {
       Category category = existingCategoryMap.get(term.getPath());
@@ -284,7 +284,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
         hibernateTemplate.save(category);
       }
 
-      ArticleCategoryAssignment assignment = categoriesForArticle.get(category);
+      ArticleCategoryAssignment assignment = categoriesForArticle.get(category.getPath());
       if (assignment == null) {
         hibernateTemplate.save(new ArticleCategoryAssignment(category, article, term.getWeight()));
       } else {
