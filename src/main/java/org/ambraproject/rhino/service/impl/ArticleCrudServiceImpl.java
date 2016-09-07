@@ -36,6 +36,7 @@ import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleCategoryAssignment;
 import org.ambraproject.rhino.model.ArticleFile;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
@@ -62,6 +63,7 @@ import org.ambraproject.rhino.view.article.author.AuthorView;
 import org.ambraproject.rhino.view.article.versioned.ArticleIngestionView;
 import org.ambraproject.rhino.view.article.versioned.ArticleOverview;
 import org.ambraproject.rhino.view.article.versioned.ArticleRevisionView;
+import org.ambraproject.rhino.view.article.versioned.CategoryAssignmentView;
 import org.ambraproject.rhino.view.article.versioned.ItemSetView;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.hibernate.Criteria;
@@ -345,17 +347,19 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    */
   @Override
   public Transceiver serveCategories(final ArticleIdentifier articleId) throws IOException {
-
-    return new EntityTransceiver<ArticleTable>() {
-
+    ArticleTable article = readArticle(articleId);
+    return new Transceiver() {
       @Override
-      protected ArticleTable fetchEntity() {
-        return readArticle(articleId);
+      protected Collection<CategoryAssignmentView> getData() throws IOException {
+        Collection<ArticleCategoryAssignment> categoryAssignments = taxonomyService.getCategoriesForArticle(article);
+        return categoryAssignments.stream().map(CategoryAssignmentView::new).collect(Collectors.toList());
       }
 
       @Override
-      protected Object getView(ArticleTable entity) {
-        return taxonomyService.getCategoriesForArticle(entity);
+      protected Calendar getLastModifiedDate() throws IOException {
+        // Category changes are not necessarily reflected in article's last modified date.
+        // TODO: Check max timestamp among category objects?
+        return null;
       }
     };
   }
