@@ -371,34 +371,30 @@ DROP PROCEDURE IF EXISTS `migrate_article_rollback`;
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article_rollback`(IN article_id BIGINT)
   BEGIN
-    DECLARE ingestion_id BIGINT DEFAULT 0;
+    DECLARE ingestion_id BIGINT;
 
     DECLARE EXIT HANDLER FOR 1242
     SELECT 'More than one ingestion exists for the given article ID. Rollback aborted.';
 
-    IF EXISTS (SELECT * FROM article WHERE articleId = article_id) THEN
-      # Get ingestion id for migrated article. Throws error 1242 when more than one ingestion exists.
-      # This should not be possible for migrated articles and aborts rollback.
-      SET ingestion_id = (SELECT ingestionId FROM articleIngestion WHERE articleId = article_id);
+    # Get ingestion id for migrated article. Throws error 1242 when more than one ingestion exists.
+    # This should not be possible for migrated articles and aborts rollback.
+    SET ingestion_id = (SELECT ingestionId FROM articleIngestion WHERE articleId = article_id);
 
-      DELETE FROM commentFlag WHERE commentId in (SELECT commentId FROM `comment` WHERE articleId = article_id);
-      SET FOREIGN_KEY_CHECKS=0; # necessary because of parent/child relationships
-      DELETE FROM `comment` WHERE articleId = article_id;
-      SET FOREIGN_KEY_CHECKS=1;
-      DELETE FROM articleRelationship WHERE sourceArticleId = article_id OR targetArticleId = article_id;
-      DELETE FROM articleCategoryAssignment WHERE articleId = article_id;
-      DELETE FROM articleListJoinTable WHERE articleId = article_id;
-      DELETE FROM issueArticleList WHERE articleId = article_id;
-      DELETE FROM articleFile WHERE ingestionId = ingestion_id;
-      DELETE FROM articleItem WHERE ingestionId = ingestion_id;
-      DELETE FROM syndication WHERE revisionId IN (SELECT revisionId FROM articleRevision WHERE ingestionId = ingestion_id);
-      DELETE FROM articleRevision WHERE ingestionId = ingestion_id;
-      DELETE FROM articleIngestion WHERE ingestionId = ingestion_id;
-      DELETE FROM article WHERE articleId = article_id;
-    ELSE
-      SIGNAL SQLSTATE '45000'
-      SET MESSAGE_TEXT = 'Article not found matching the given ID';
-    END IF;
+    DELETE FROM commentFlag WHERE commentId in (SELECT commentId FROM `comment` WHERE articleId = article_id);
+    SET FOREIGN_KEY_CHECKS=0; # necessary because of parent/child relationships
+    DELETE FROM `comment` WHERE articleId = article_id;
+    SET FOREIGN_KEY_CHECKS=1;
+    DELETE FROM articleRelationship WHERE sourceArticleId = article_id OR targetArticleId = article_id;
+    DELETE FROM articleCategoryAssignment WHERE articleId = article_id;
+    DELETE FROM articleListJoinTable WHERE articleId = article_id;
+    DELETE FROM issueArticleList WHERE articleId = article_id;
+    DELETE FROM articleFile WHERE ingestionId = ingestion_id;
+    DELETE FROM articleItem WHERE ingestionId = ingestion_id;
+    DELETE FROM syndication WHERE revisionId IN (SELECT revisionId FROM articleRevision WHERE ingestionId = ingestion_id);
+    DELETE FROM articleRevision WHERE ingestionId = ingestion_id;
+    DELETE FROM articleIngestion WHERE ingestionId = ingestion_id;
+    DELETE FROM article WHERE articleId = article_id;
+
   END$$
 DELIMITER ;
 
