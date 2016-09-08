@@ -21,6 +21,8 @@ package org.ambraproject.rhino.content.xml;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableListMultimap;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
@@ -38,9 +40,10 @@ import org.w3c.dom.Node;
 
 import java.net.URLEncoder;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -184,10 +187,12 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     article.setIssue(readString("/article/front/article-meta/issue"));
     article.setPublisherName(readString("/article/front/journal-meta/publisher/publisher-name"));
     article.setPublisherLocation(readString("/article/front/journal-meta/publisher/publisher-loc"));
-
     article.setLanguage(parseLanguage(readString("/article/@xml:lang")));
+
+    ListMultimap<String, String> customMeta = parseCustomMeta();
+    article.setCustomMeta(customMeta);
     article.setPublicationDate(parseDate(readNode("/article/front/article-meta/pub-date[@pub-type=\"epub\"]")));
-    article.setRevisionDate(getRevisionDate().orElse(null));
+    article.setRevisionDate(getRevisionDate(customMeta));
 
     article.setNlmArticleType(readString("/article/@article-type"));
     article.setArticleType(parseArticleHeading());
@@ -360,9 +365,51 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     }).collect(Collectors.toList());
   }
 
-  //todo: implement once we know where and how revision dates are stored in the manuscript.
-  //See DPRO-2893.
-  private Optional<LocalDate> getRevisionDate() {
-    return Optional.empty();
+  /**
+   * Parse the {@code custom-meta} name-value pairs from the manuscript.
+   * <p>
+   * It is possible for the manuscript to contain multiple custom meta nodes with the same name, though this may be
+   * invalid depending on the name.
+   *
+   * @return the multimap of {@code custom-meta} name-value pairs
+   */
+  private ListMultimap<String, String> parseCustomMeta() {
+    List<Node> customMetaNodes = readNodeList("//custom-meta-group/custom-meta");
+    ImmutableListMultimap.Builder<String, String> builder = ImmutableListMultimap.builder();
+    for (Node node : customMetaNodes) {
+      String name = readString("child::meta-name", node);
+      String value = sanitize(readString("child::meta-value", node));
+      builder.put(name, value);
+    }
+    return builder.build();
   }
+
+  /**
+   * Parse a revision date from the manuscript, if it is present.
+   * <p>
+   * Currently, this application looks for a custom meta node with the name "Publication Update", pending a formal
+   * definition for a semantically equivalent value in the JATS spec. We should add support here if such a value is
+   * added to the spec in the future. (In this case, continue supporting the old way so as to be able to reingest
+   * existing content.)
+   *
+   * @param customMeta the document's custom meta nodes
+   * @return the revision date, or {@code null} if none is declared
+   */
+  private LocalDate getRevisionDate(Multimap<String, String> customMeta) {
+    Collection<String> revisionDateMetaValues = customMeta.get("Publication Update");
+    if (revisionDateMetaValues.isEmpty()) {
+      return null;
+    }
+    if (revisionDateMetaValues.size() > 1) {
+      throw new XmlContentException("Multiple 'Publication Update' custom-meta nodes");
+    }
+
+    String revisionDate = Iterables.getOnlyElement(revisionDateMetaValues);
+    try {
+      return LocalDate.parse(revisionDate);
+    } catch (DateTimeParseException e) {
+      throw new XmlContentException("'Publication Update' custom-meta value must be an ISO-8601 date", e);
+    }
+  }
+
 }
