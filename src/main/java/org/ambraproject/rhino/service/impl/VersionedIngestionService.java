@@ -104,6 +104,7 @@ public class VersionedIngestionService extends AmbraService {
 
     ArticlePackage articlePackage = new ArticlePackageBuilder(destinationBucketName, archive, parsedArticle, manifestXml,
         manuscriptAsset, manuscriptRepr, printableRepr).build();
+    validateAssetCompleteness(parsedArticle, articlePackage);
     persistAssets(articlePackage, ingestion, manifestXml);
 
     hibernateTemplate.flush();
@@ -192,6 +193,22 @@ public class VersionedIngestionService extends AmbraService {
             articleDoi.getName(), assetDoi, existingParentArticle.getDoi());
         throw new RestClientException(errorMessage, HttpStatus.BAD_REQUEST);
       }
+    }
+  }
+
+  /**
+   * Validate that all assets mentioned in the manuscript were included in the package.
+   */
+  private void validateAssetCompleteness(ArticleXml manuscript, ArticlePackage articlePackage) {
+    Set<Doi> manuscriptDois = manuscript.findAllAssetNodes().getDois();
+    Set<Doi> packageDois = articlePackage.getAllItems().stream()
+        .map(ArticleItemInput::getDoi)
+        .collect(Collectors.toSet());
+    Set<Doi> missingDois = Sets.difference(manuscriptDois, packageDois);
+    if (!missingDois.isEmpty()) {
+      String message = "Asset DOIs mentioned in manuscript are not included in package: "
+          + missingDois.stream().map(Doi::getName).sorted().collect(Collectors.toList());
+      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
   }
 
