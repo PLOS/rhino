@@ -14,21 +14,14 @@
 package org.ambraproject.rhino.service;
 
 import com.google.common.collect.ImmutableSet;
-import org.ambraproject.rhino.model.ArticleTable;
-import org.ambraproject.rhino.model.Issue;
-import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.BaseRhinoTest;
-import org.ambraproject.rhino.rest.RestClientException;
-import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.util.Map;
 
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
 
 /**
  * Test for {@link JournalCrudServiceImpl}
@@ -50,28 +43,6 @@ public class JournalCrudServiceTest extends BaseRhinoTest {
     assertTrue(journals.size() > 0);
     Map<String, ?> journal = (Map<String, ?>) journals.values().iterator().next();
     assertTrue(journal.keySet().containsAll(ImmutableSet.of("journalKey", "eIssn")));
-  }
-
-  @Test
-  public void testReadCurrentIssue() throws IOException {
-    Journal journal = (Journal) hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Journal.class)).get(0);
-    try {
-      journalCrudService.serveCurrentIssue(journal.getJournalKey()).readJson(entityGson);
-      fail("Expected RestClientException");
-    } catch (RestClientException e) {
-      // expected
-    }
-
-    Issue issue = new Issue();
-    String testIssueUri = "testIssue";
-    issue.setImageArticle(new ArticleTable()); //todo: fix
-    journal.setCurrentIssue(issue);
-    hibernateTemplate.update(journal);
-
-    Map<?, ?> currentIssueResult = entityGson.fromJson(
-        journalCrudService.serveCurrentIssue(journal.getJournalKey()).readJson(entityGson),
-        Map.class);
-    assertEquals(currentIssueResult.get("issueUri"), testIssueUri);
   }
 
 }
