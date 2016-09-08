@@ -111,10 +111,6 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
     }
   }
 
-  private static String journalNotFoundMessage(String journalKey) {
-    return "No journal found with key: " + journalKey;
-  }
-
   @Override
   public Optional<Journal> getJournal(String journalKey) {
     return Optional.ofNullable(hibernateTemplate.execute(session -> {
@@ -126,8 +122,7 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
 
   @Override
   public Journal readJournal(String journalKey) {
-    return getJournal(journalKey).orElseThrow(() ->
-        new RestClientException(journalNotFoundMessage(journalKey), HttpStatus.NOT_FOUND));
+    return getJournal(journalKey).orElseThrow(() -> new RestClientException("No journal found with key: " + journalKey, HttpStatus.NOT_FOUND));
   }
 
   @Override
