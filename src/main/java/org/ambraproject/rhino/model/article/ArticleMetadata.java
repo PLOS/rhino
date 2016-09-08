@@ -1,6 +1,11 @@
 package org.ambraproject.rhino.model.article;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableListMultimap;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ListMultimap;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Multimaps;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -39,6 +44,8 @@ public class ArticleMetadata {
   private final ImmutableList<NlmPerson> authors;
   private final ImmutableList<NlmPerson> editors;
 
+  private final ImmutableMap<String, ImmutableList<String>> customMeta;
+
   private ArticleMetadata(Builder builder) {
     this.doi = Objects.requireNonNull(builder.doi);
     this.title = builder.title;
@@ -63,6 +70,7 @@ public class ArticleMetadata {
     this.relatedArticles = ImmutableList.copyOf(builder.relatedArticles);
     this.authors = ImmutableList.copyOf(builder.authors);
     this.editors = ImmutableList.copyOf(builder.editors);
+    this.customMeta = ImmutableMap.copyOf(Maps.transformValues(builder.customMeta.asMap(), ImmutableList::copyOf));
   }
 
   public String getDoi() {
@@ -197,6 +205,8 @@ public class ArticleMetadata {
     private List<NlmPerson> authors;
     private List<NlmPerson> editors;
 
+    private ListMultimap<String, String> customMeta;
+
     public ArticleMetadata build() {
       return new ArticleMetadata(this);
     }
@@ -315,6 +325,11 @@ public class ArticleMetadata {
       this.editors = editors;
       return this;
     }
+
+    public Builder setCustomMeta(ListMultimap<String, String> customMeta) {
+      this.customMeta = customMeta;
+      return this;
+    }
   }
 
   @Override
@@ -336,6 +351,7 @@ public class ArticleMetadata {
     if (publicationDate != null ? !publicationDate.equals(that.publicationDate) : that.publicationDate != null) {
       return false;
     }
+    if (revisionDate != null ? !revisionDate.equals(that.revisionDate) : that.revisionDate != null) return false;
     if (volume != null ? !volume.equals(that.volume) : that.volume != null) return false;
     if (issue != null ? !issue.equals(that.issue) : that.issue != null) return false;
     if (publisherLocation != null ? !publisherLocation.equals(that.publisherLocation) : that.publisherLocation != null) {
@@ -343,9 +359,10 @@ public class ArticleMetadata {
     }
     if (publisherName != null ? !publisherName.equals(that.publisherName) : that.publisherName != null) return false;
     if (url != null ? !url.equals(that.url) : that.url != null) return false;
-    if (nlmArticleType != null ? !nlmArticleType.equals(that.nlmArticleType) : that.nlmArticleType != null) return false;
-    if (articleType != null ? !articleType.equals(that.articleType) : that.articleType != null)
+    if (nlmArticleType != null ? !nlmArticleType.equals(that.nlmArticleType) : that.nlmArticleType != null) {
       return false;
+    }
+    if (articleType != null ? !articleType.equals(that.articleType) : that.articleType != null) return false;
     if (collaborativeAuthors != null ? !collaborativeAuthors.equals(that.collaborativeAuthors) : that.collaborativeAuthors != null) {
       return false;
     }
@@ -354,8 +371,8 @@ public class ArticleMetadata {
       return false;
     }
     if (authors != null ? !authors.equals(that.authors) : that.authors != null) return false;
-    return editors != null ? editors.equals(that.editors) : that.editors == null;
-
+    if (editors != null ? !editors.equals(that.editors) : that.editors != null) return false;
+    return customMeta != null ? customMeta.equals(that.customMeta) : that.customMeta == null;
   }
 
   @Override
@@ -370,6 +387,7 @@ public class ArticleMetadata {
     result = 31 * result + (pageCount != null ? pageCount.hashCode() : 0);
     result = 31 * result + (eLocationId != null ? eLocationId.hashCode() : 0);
     result = 31 * result + (publicationDate != null ? publicationDate.hashCode() : 0);
+    result = 31 * result + (revisionDate != null ? revisionDate.hashCode() : 0);
     result = 31 * result + (volume != null ? volume.hashCode() : 0);
     result = 31 * result + (issue != null ? issue.hashCode() : 0);
     result = 31 * result + (publisherLocation != null ? publisherLocation.hashCode() : 0);
@@ -382,6 +400,7 @@ public class ArticleMetadata {
     result = 31 * result + (relatedArticles != null ? relatedArticles.hashCode() : 0);
     result = 31 * result + (authors != null ? authors.hashCode() : 0);
     result = 31 * result + (editors != null ? editors.hashCode() : 0);
+    result = 31 * result + (customMeta != null ? customMeta.hashCode() : 0);
     return result;
   }
 }

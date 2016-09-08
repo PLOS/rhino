@@ -166,6 +166,7 @@ public class RhinoConfiguration extends BaseConfiguration {
     Java8TimeGsonAdapters.register(builder);
     DoiBasedIdentitySerializer.INSTANCE.register(builder);
 
+
     return builder.create();
   }
 
