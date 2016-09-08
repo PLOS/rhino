@@ -16,8 +16,6 @@ public interface JournalCrudService {
 
   public abstract void update(String journalKey, JournalInputView input);
 
-  public abstract Transceiver serveCurrentIssue(String journalKey);
-
   public abstract Optional<Journal> getJournal(String journalKey);
 
   public abstract Journal readJournal(String journalKey);

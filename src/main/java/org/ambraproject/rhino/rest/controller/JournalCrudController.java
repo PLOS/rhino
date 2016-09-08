@@ -34,14 +34,9 @@ public class JournalCrudController extends RestController {
   @Transactional(readOnly = true)
   @RequestMapping(value = "/journals/{journalKey}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
-                   @PathVariable String journalKey,
-                   @RequestParam(value = "currentIssue", required = false) String currentIssue)
+                   @PathVariable String journalKey)
       throws IOException {
-    if (booleanParameter(currentIssue)) {
-      journalCrudService.serveCurrentIssue(journalKey).respond(request, response, entityGson);
-    } else {
-      journalCrudService.serve(journalKey).respond(request, response, entityGson);
-    }
+    journalCrudService.serve(journalKey).respond(request, response, entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
