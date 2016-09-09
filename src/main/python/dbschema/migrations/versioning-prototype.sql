@@ -149,7 +149,7 @@ CREATE TABLE `comment` (
   `commentId` bigint(20) NOT NULL AUTO_INCREMENT,
   `commentURI` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `articleId` bigint(20) NOT NULL,
-  `parentId` bigint(20) NOT NULL,
+  `parentId` bigint(20) DEFAULT NULL,
   `userProfileId` bigint(20) NOT NULL,
   `title` text CHARACTER SET utf8 COLLATE utf8_bin,
   `body` text CHARACTER SET utf8 COLLATE utf8_bin,
