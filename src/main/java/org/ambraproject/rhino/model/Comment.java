@@ -46,7 +46,7 @@ public class Comment {
   private ArticleTable article;
 
   @ManyToOne
-  @JoinColumn(name = "parentId", nullable = false)
+  @JoinColumn(name = "parentId", nullable = true)
   private Comment parent;
 
   @Column
