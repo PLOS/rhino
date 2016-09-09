@@ -27,10 +27,7 @@ public enum FileType {
   SMALL, MEDIUM, INLINE, LARGE,
 
   // A supplementary information file, which should always be the only file with its DOI
-  SUPPLEMENTARY,
-
-  // An image that is used only as a striking image and is not otherwise part of the article
-  STRIKING_IMAGE;
+  SUPPLEMENTARY;
 
   private final String identifier = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name());
 
