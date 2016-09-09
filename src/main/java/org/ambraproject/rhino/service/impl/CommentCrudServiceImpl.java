@@ -361,7 +361,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
       @Override
       protected List<CommentNodeView> getData() throws IOException {
         return readFlaggedComments(session ->
-            session.createQuery("SELECT DISTINCT flaggedAnnotation FROM Flag").list());
+            session.createQuery("SELECT DISTINCT flaggedComment FROM Flag").list());
       }
 
       @Override
@@ -379,9 +379,9 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
         Journal journal = journalCrudService.readJournal(journalKey);
         return readFlaggedComments(session -> {
           Query query = session.createQuery("" +
-              "SELECT DISTINCT f.flaggedAnnotation " +
+              "SELECT DISTINCT f.flaggedComment " +
               "FROM Flag f, Article a " +
-              "WHERE f.flaggedAnnotation.articleID = a.ID " +
+              "WHERE f.flaggedComment.articleID = a.ID " +
               "  AND :journal IN ELEMENTS(a.journals)");
           query.setParameter("journal", journal);
           return query.list();
