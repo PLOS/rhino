@@ -122,7 +122,7 @@ public class ArticlePackageBuilder {
       if (asset.isStrikingImage()) {
         return AssetType.STANDALONE_STRIKING_IMAGE;
       } else {
-        throw new RestClientException("Asset not mentioned in manuscript", HttpStatus.BAD_REQUEST);
+        throw new RestClientException("Asset not mentioned in manuscript: " + asset.getUri(), HttpStatus.BAD_REQUEST);
       }
     }
 
