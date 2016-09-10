@@ -2,6 +2,8 @@ package org.ambraproject.rhino.service.taxonomy.impl;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Charsets;
+import com.google.common.base.Splitter;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.model.ArticleCategoryAssignment;
@@ -39,6 +41,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -202,6 +205,24 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
       query.setParameter("article", article);
       return (Collection<ArticleCategoryAssignment>) query.list();
     });
+  }
+
+  private static final Splitter TAXONOMY_PATH_SPLITTER = Splitter.on('/');
+
+  private static String getTermFromPath(String path) {
+    return Iterables.getLast(TAXONOMY_PATH_SPLITTER.split(path));
+  }
+
+  @Override
+  public Collection<Category> getArticleCategoriesWithTerm(ArticleTable article, String term) {
+    Objects.requireNonNull(term);
+    return getCategoriesForArticle(article).stream()
+        .filter((ArticleCategoryAssignment aca) -> {
+          String path = aca.getCategory().getPath();
+          return getTermFromPath(path).equals(term);
+        })
+        .map(ArticleCategoryAssignment::getCategory)
+        .collect(Collectors.toList());
   }
 
   /**
