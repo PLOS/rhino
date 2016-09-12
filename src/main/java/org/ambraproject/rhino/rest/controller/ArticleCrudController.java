@@ -329,7 +329,7 @@ public class ArticleCrudController extends RestController {
   public Map<String, String> flagArticleCategory(@PathVariable("doi")  String articleDoi,
                                                  @RequestParam(value = "categoryTerm", required = true) String categoryTerm,
                                                  @RequestParam(value = "userId", required = false) String userId,
-                                                 @RequestParam(value = "action", required = true) String action)
+                                                 @RequestParam(value = "flag", required = true) String action)
       throws IOException {
     ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(articleDoi));
     ArticleTable article = articleCrudService.readArticle(articleId);
