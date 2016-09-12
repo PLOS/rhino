@@ -32,7 +32,7 @@ public class ItemSetView {
   }
 
   private final ImmutableMap<String, ItemView> items;
-  private final ImmutableCollection<FileView> archival;
+  private final ImmutableCollection<FileView> ancillary;
 
   private ItemSetView(ArticleIngestion ingestion, Collection<ArticleFile> files) {
     Map<ArticleItem, List<ArticleFile>> itemFileGroups = files.stream()
@@ -44,7 +44,7 @@ public class ItemSetView {
             entry -> entry.getKey().getDoi(),
             entry -> new ItemView(entry.getKey(), entry.getValue()))));
 
-    this.archival = ImmutableList.copyOf(files.stream()
+    this.ancillary = ImmutableList.copyOf(files.stream()
         .filter(file -> file.getItem() == null)
         .map(FileView::new)
         .collect(Collectors.toList()));
