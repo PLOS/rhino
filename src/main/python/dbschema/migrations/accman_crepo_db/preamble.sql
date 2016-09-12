@@ -1,2 +1,0 @@
-SET autocommit = 0;
-START TRANSACTION;

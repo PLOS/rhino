@@ -19,6 +19,38 @@ DELIMITER ;
 
 ####################################################################################################
 
+DROP PROCEDURE IF EXISTS `create_uuid_lut`;
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `create_uuid_lut`()
+  BEGIN
+
+    IF NOT EXISTS (SELECT * FROM information_schema.tables
+                   WHERE table_schema = (SELECT DATABASE()) AND table_name = 'objects') THEN
+      SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'Please restore the ''objects'' table from the crepo db into the ambra db before proceeding';
+    END IF;
+
+    DROP TABLE IF EXISTS uuid_lut;
+    CREATE TABLE uuid_lut (
+      objkey varchar(255) COLLATE utf8_bin NOT NULL,
+      size int(11) NOT NULL,
+      versionNumber int(11) NOT NULL,
+      uuid char(36) COLLATE utf8_bin NOT NULL,
+      PRIMARY KEY (`objkey`));
+
+    INSERT INTO uuid_lut (objkey, versionNumber)
+      SELECT objkey, MAX(versionNumber)
+      FROM objects WHERE bucketId = 1 AND `status` = 0
+      GROUP BY objkey;
+    UPDATE uuid_lut lut
+      INNER JOIN objects o ON bucketId = 1 AND lut.objkey = o.objkey AND lut.versionNumber = o.versionNumber
+      SET lut.uuid = o.uuid, lut.size = o.size;
+
+END $$
+DELIMITER ;
+
+####################################################################################################
+
 DROP PROCEDURE IF EXISTS `migrate_article`;
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGINT)
@@ -147,7 +179,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
 
           SET crepo_key = CONCAT(get_doi_name(asset_doi), '.', asset_extension);
           SET crepo_uuid = '';
-          SELECT uuid, size INTO crepo_uuid, file_size FROM objkey_uuid WHERE objkey = crepo_key;
+          SELECT uuid, size INTO crepo_uuid, file_size FROM uuid_lut WHERE objkey = crepo_key;
           IF crepo_uuid = '' THEN
             SET err_msg = CONCAT('Crepo key ', crepo_key, ' not found. Rolling back ', get_doi_name(article_doi));
             CALL migrate_article_rollback(article_id);
@@ -242,7 +274,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_articles`()
 
     ##### MODIFY THIS SQL STATEMENT TO SELECT OTHER THAN ALL RECORDS IF A SECONDARY MIGRATION RUN IS DESIRED #####
     DECLARE old_articles_cursor CURSOR FOR
-      SELECT articleID FROM oldArticle
+      SELECT articleID FROM oldArticle WHERE articleID NOT IN (SELECT articleId FROM article)
       ORDER BY articleID;
     #  ORDER BY rand();
     #LIMIT 10;
@@ -259,6 +291,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_articles`()
     END;
 
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    IF NOT EXISTS (SELECT * FROM information_schema.tables
+      WHERE table_schema = (SELECT DATABASE()) AND table_name = 'uuid_lut') THEN
+      CALL create_uuid_lut();
+    END IF;
 
     CREATE TABLE IF NOT EXISTS migration_status_log (
       articleId BIGINT(20) NOT NULL,
@@ -389,6 +426,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article_rollback`(IN articl
     DELETE FROM articleListJoinTable WHERE articleId = article_id;
     DELETE FROM issueArticleList WHERE articleId = article_id;
     DELETE FROM articleFile WHERE ingestionId = ingestion_id;
+    UPDATE articleIngestion SET strikingImageItemId = NULL WHERE ingestionId = ingestion_id;
     DELETE FROM articleItem WHERE ingestionId = ingestion_id;
     DELETE FROM syndication WHERE revisionId IN (SELECT revisionId FROM articleRevision WHERE ingestionId = ingestion_id);
     DELETE FROM articleRevision WHERE ingestionId = ingestion_id;
@@ -411,7 +449,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article_rollback_all`()
 
     ##### MODIFY THIS SQL STATEMENT TO SELECT OTHER THAN ALL RECORDS IF DESIRED #####
     DECLARE old_articles_cursor CURSOR FOR
-      SELECT articleId FROM article;
+      SELECT articleId FROM article ORDER BY rand() LIMIT 1000;
+      #SELECT articleId FROM article;
 
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
