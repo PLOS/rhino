@@ -26,6 +26,7 @@ public class ArticleCategoryAssignmentFlag implements Serializable {
   @JoinColumn(name = "categoryId", nullable = false)
   @ManyToOne
   private Category category;
+
   @JoinColumn(name = "articleId", nullable = false)
   @ManyToOne
   private ArticleTable article;
