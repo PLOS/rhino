@@ -449,8 +449,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article_rollback_all`()
 
     ##### MODIFY THIS SQL STATEMENT TO SELECT OTHER THAN ALL RECORDS IF DESIRED #####
     DECLARE old_articles_cursor CURSOR FOR
-      SELECT articleId FROM article ORDER BY rand() LIMIT 1000;
-      #SELECT articleId FROM article;
+      SELECT articleId FROM article;
 
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
