@@ -66,11 +66,9 @@ public enum AssetType {
   },
 
   STANDALONE_STRIKING_IMAGE {
-    private final ImmutableSet<FileType> TYPES = Sets.immutableEnumSet(FileType.STRIKING_IMAGE);
-
     @Override
     protected ImmutableSet<FileType> getSupportedFileTypes() {
-      return TYPES;
+      return STANDARD_THUMBNAIL_FILE_TYPES;
     }
   };
 
