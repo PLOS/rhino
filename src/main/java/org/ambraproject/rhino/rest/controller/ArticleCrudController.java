@@ -18,21 +18,26 @@
 
 package org.ambraproject.rhino.rest.controller;
 
+import com.google.common.collect.ImmutableMap;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
+import org.ambraproject.rhino.model.ArticleCategoryAssignment;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.rest.DoiEscaping;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.ArticleRevisionWriteService;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.SolrIndexService;
 import org.ambraproject.rhino.service.SyndicationCrudService;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.SyndicationInputView;
@@ -53,13 +58,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.OptionalLong;
 import java.util.stream.Collectors;
 
 /**
@@ -85,6 +95,8 @@ public class ArticleCrudController extends RestController {
   private ArticleListCrudService articleListCrudService;
   @Autowired
   private SyndicationCrudService syndicationCrudService;
+  @Autowired
+  private TaxonomyService taxonomyService;
   @Autowired
   private RelationshipSetView.Factory relationshipSetViewFactory;
 
@@ -310,6 +322,39 @@ public class ArticleCrudController extends RestController {
     responseHeader.setContentType(MediaType.TEXT_HTML);
     return new ResponseEntity<>(categoriesAndText, responseHeader, HttpStatus.OK);
   }
+
+  @Transactional(rollbackFor = {Throwable.class})
+  @RequestMapping(value = "/articles/{doi}/categories", params={"flag"}, method = RequestMethod.POST)
+  @ResponseBody
+  public Map<String, String> flagArticleCategory(@PathVariable("doi")  String articleDoi,
+                                                 @RequestParam(value = "categoryTerm", required = true) String categoryTerm,
+                                                 @RequestParam(value = "userId", required = false) String userId,
+                                                 @RequestParam(value = "flag", required = true) String action)
+      throws IOException {
+    ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(articleDoi));
+    ArticleTable article = articleCrudService.readArticle(articleId);
+    Optional<Long> userIdObj = Optional.ofNullable(userId).map(Long::parseLong);
+
+    Collection<Category> categories = taxonomyService.getArticleCategoriesWithTerm(article, categoryTerm);
+
+    switch (action) {
+      case "add":
+        for (Category category : categories) {
+          taxonomyService.flagArticleCategory(article, category, userIdObj);
+        }
+        break;
+      case "remove":
+        for (Category category : categories) {
+          taxonomyService.deflagArticleCategory(article, category, userIdObj);
+        }
+        break;
+      default:
+        throw new RestClientException("action must be 'add' or 'remove'", HttpStatus.BAD_REQUEST);
+    }
+
+    return ImmutableMap.of(); // ajax call expects returned data so provide an empty map for the body
+  }
+
 
   /**
    * Retrieves a collection of article lists that contain an article.

@@ -144,6 +144,21 @@ CREATE TABLE `articleCategoryAssignment` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
+CREATE TABLE `articleCategoryAssignmentFlag` (
+  `flagId` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `articleId` bigint(20) NOT NULL,
+  `categoryId` bigint(20) NOT NULL,
+  `userProfileId` bigint(20) DEFAULT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`flagId`),
+  KEY `articleId` (`articleId`),
+  KEY `categoryId` (`categoryId`),
+  CONSTRAINT `fk_articleCategoryAssignmentFlag_1`
+  FOREIGN KEY (`articleId`,`categoryId`)
+  REFERENCES `articleCategoryAssignment` (`articleId`,`categoryId`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION);
+
 
 CREATE TABLE `comment` (
   `commentId` bigint(20) NOT NULL AUTO_INCREMENT,
