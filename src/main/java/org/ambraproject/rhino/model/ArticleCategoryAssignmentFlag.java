@@ -23,10 +23,19 @@ public class ArticleCategoryAssignmentFlag implements Serializable {
   @Column
   private Long flagId;
 
+  /*
+   * The 'category' and 'article' fields together are a logical pointer to an ArticleCategoryAssignment object. The
+   * database schema has a foreign key constraint that requires the pair of them to point to an existing
+   * ArticleCategoryAssignment row, even though it is possible in Hibernate to point to a category that the article
+   * isn't in.
+   *
+   * It would be better to refactor this class to remove the 'category' and 'article' fields and instead associate with
+   * an ArticleCategoryAssignment object. This would probably use the @Embedded annotation and may necessitate a
+   * compound ID class with Category and ArticleTable fields.
+   */
   @JoinColumn(name = "categoryId", nullable = false)
   @ManyToOne
   private Category category;
-
   @JoinColumn(name = "articleId", nullable = false)
   @ManyToOne
   private ArticleTable article;
