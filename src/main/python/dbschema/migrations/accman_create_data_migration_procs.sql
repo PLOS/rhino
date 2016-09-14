@@ -19,6 +19,76 @@ DELIMITER ;
 
 ####################################################################################################
 
+DROP PROCEDURE IF EXISTS `correct_article_asset_table()`;
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `correct_article_asset_table`()
+  BEGIN
+    # see DPRO-2938 for justification of each statement
+
+    # rows in articleAsset table where doi = artilce doi and extension is not XML or PDF
+    DELETE FROM articleAsset WHERE articleAssetID IN (4325338, 4325330, 4325360, 4325348, 4325312, 4325320, 4325354,
+      4325356, 4325346, 4325318, 4325358, 4325336, 4325322, 4768867, 6521805, 10816407, 11648965, 12074323, 17002131, 17016278);
+
+    # malformed extension for inline TIF asset (not present in repo db so UUID lookup fails)
+    DELETE FROM articleAsset WHERE articleAssetID IN (3261684, 3261686, 4004838, 3506626, 3276844, 3996370, 3617756,
+      3387424, 3436982, 4107892, 3313340, 3676070, 3145172, 3269304, 3354794, 3730104, 3284248, 3671736, 3276846, 4011052,
+      3238278, 2798598, 3554196, 4071214, 3430956, 3246144, 3238280, 3994200, 3261688, 3996372, 3489904, 2824584, 3994202,
+      3107822, 3246146, 3253938, 3284250, 4006920, 4218776, 3246148, 3253940, 1207348, 3761232, 3738028, 3931960, 2444060,
+      4090248, 1496856, 4019248, 4099226, 3538722, 2869282, 3276848, 2652614, 3734084, 1496858, 3693104, 3368024, 3598796,
+      3549106, 3717992, 3327438, 2798600, 3253942, 3564266, 3608318, 3276852, 3730108, 3284252, 2769946, 3033834, 3269314,
+      3974020, 2996694, 3400038, 3135944, 3772444, 3517478, 3097958, 3915706, 3693094, 4088712, 4090244, 3135946, 3654196,
+      3824832, 3145054, 3495522, 3645260, 904138, 3713874, 3117298, 3327382, 1496428, 3033598, 3738022, 1993436, 3603534,
+      3087912, 3424848, 262234);
+
+    # individual cases (mostly duplicate or extraneous assets not reachable in final article page or present in the repo)
+    UPDATE articleAsset SET doi = 'info:doi/10.1371/journal.pbio.0020012.s003' WHERE articleAssetID = 1207360;
+    UPDATE articleAsset SET doi = 'info:doi/10.1371/journal.pbio.0020012.s004' WHERE articleAssetID = 1496904;
+
+    DELETE FROM articleAsset WHERE articleAssetID IN (2795796, 2822204, 2845876);
+
+    UPDATE articleAsset SET contextElement = 'inline-formula' WHERE articleAssetID IN (2800526, 2811392);
+
+    UPDATE articleAsset SET contextElement = 'disp-formula' WHERE articleAssetID IN (2906826, 18586085);
+
+    DELETE FROM articleAsset WHERE articleAssetID = 4135480;
+
+    DELETE FROM articleAsset WHERE articleAssetID = 2867706;
+
+    DELETE FROM articleAsset WHERE articleAssetID = 2938856;
+
+    DELETE FROM articleAsset WHERE articleAssetID IN (2847384, 2868804, 2888378, 2906612, 2923808, 2939944);
+
+    DELETE FROM articleAsset WHERE articleAssetID = 6954501;
+
+    DELETE FROM articleAsset WHERE articleAssetID = 8404193;
+
+    DELETE FROM articleAsset WHERE articleAssetID = 8636225;
+
+    DELETE FROM articleAsset WHERE articleAssetID = 9120333;
+
+    DELETE FROM articleAsset WHERE articleAssetID = 8636225;
+
+    DELETE FROM articleAsset WHERE articleAssetID = 9134183;
+
+    DELETE FROM articleAsset WHERE articleAssetID = 9756233;
+
+    DELETE FROM articleAsset WHERE articleAssetID = 9756959;
+
+    DELETE FROM articleAsset WHERE articleAssetID = 9815499;
+
+    DELETE FROM articleAsset WHERE articleAssetID = 9961945;
+
+    DELETE FROM articleAsset WHERE articleAssetID = 11491203;
+
+    DELETE FROM articleAsset WHERE articleAssetID IN (14789201, 14789193, 14789195, 14789197, 14789199);
+
+    DELETE FROM articleAsset WHERE articleAssetID = 15588622;
+
+  END $$
+DELIMITER ;
+
+####################################################################################################
+
 DROP PROCEDURE IF EXISTS `create_uuid_lut`;
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `create_uuid_lut`()
@@ -291,6 +361,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_articles`()
     END;
 
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    CALL correct_article_asset_table();
 
     IF NOT EXISTS (SELECT * FROM information_schema.tables
       WHERE table_schema = (SELECT DATABASE()) AND table_name = 'uuid_lut') THEN
