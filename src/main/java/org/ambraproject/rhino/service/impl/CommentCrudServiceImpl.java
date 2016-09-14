@@ -31,12 +31,14 @@ import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.view.comment.CommentCountView;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentFlagOutputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
 import org.ambraproject.rhino.view.comment.CommentNodeView;
 import org.ambraproject.rhino.view.comment.CommentOutputView;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateCallback;
@@ -45,7 +47,6 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.UUID;
@@ -433,18 +434,20 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   @Override
   public Transceiver getCommentCount(ArticleTable article) {
     return new Transceiver() {
+      private long getCount(Session session, String whereClause) {
+        Query query = session.createQuery("SELECT COUNT(*) FROM Comment WHERE article = :article " + whereClause);
+        query.setParameter("article", article);
+        return ((Number) query.uniqueResult()).longValue();
+      }
+
       @Override
-      protected Map<String, Object> getData() throws IOException {
-        Map<String, Object> result = (Map<String, Object>) hibernateTemplate.execute(session -> {
-          Query query = session.createQuery("" +
-              "SELECT NEW MAP(COUNT(*) AS all, " +
-              "COALESCE(SUM(CASE WHEN ann.parentID IS NULL THEN 1 ELSE 0 END), 0) AS root) " +
-              "FROM Annotation ann " +
-              "WHERE ann.articleID = :articleID ");
-          query.setParameter("articleID", article.getArticleId());
-          return query.uniqueResult();
+      protected CommentCountView getData() throws IOException {
+        return hibernateTemplate.execute((Session session) -> {
+          long all = getCount(session, "AND isRemoved = FALSE");
+          long root = getCount(session, "AND isRemoved = FALSE AND parent IS NULL");
+          long removed = getCount(session, "AND isRemoved = TRUE");
+          return new CommentCountView(all, root, removed);
         });
-        return result;
       }
 
       @Override
