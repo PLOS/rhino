@@ -24,7 +24,6 @@ import com.wordnik.swagger.annotations.ApiParam;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
-import org.ambraproject.rhino.model.ArticleCategoryAssignment;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Category;
@@ -69,7 +68,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.OptionalLong;
 import java.util.stream.Collectors;
 
 /**
@@ -210,7 +208,7 @@ public class ArticleCrudController extends RestController {
 
   // TODO: Get rid of this?
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/articles/{doi:.+}", method = RequestMethod.GET, params = "commentCount")
+  @RequestMapping(value = "/articles/{doi:.+}/comments", method = RequestMethod.GET, params = "count")
   public void getCommentCount(HttpServletRequest request, HttpServletResponse response,
                               @PathVariable("doi") String doi)
       throws IOException {
