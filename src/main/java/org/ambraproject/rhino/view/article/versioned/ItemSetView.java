@@ -66,10 +66,12 @@ public class ItemSetView {
   }
 
   public static class ItemView {
+    private final String doi;
     private final String itemType;
     private final ImmutableMap<String, FileView> files;
 
     private ItemView(ArticleItem item, Collection<ArticleFile> files) {
+      this.doi = Objects.requireNonNull(item.getDoi());
       this.itemType = Objects.requireNonNull(item.getItemType());
       this.files = ImmutableMap.copyOf(files.stream()
           .collect(Collectors.toMap(ArticleFile::getFileType, FileView::new)));
