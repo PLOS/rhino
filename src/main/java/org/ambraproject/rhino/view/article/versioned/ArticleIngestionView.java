@@ -72,7 +72,6 @@ public class ArticleIngestionView implements JsonOutputView {
     }
 
     JsonAdapterUtil.copyWithoutOverwriting(context.serialize(metadata).getAsJsonObject(), serialized);
-    serialized.remove("authors");
 
     serialized.remove("assets");
     List<AssetMetadataView> assetViews = metadata.getAssets().stream().map(AssetMetadataView::new).collect(Collectors.toList());

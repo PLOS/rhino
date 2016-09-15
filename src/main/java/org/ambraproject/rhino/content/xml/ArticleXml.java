@@ -32,7 +32,6 @@ import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.model.article.AssetMetadata;
 import org.ambraproject.rhino.model.article.RelatedArticleLink;
-import org.ambraproject.rhino.util.NodeListAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -197,12 +196,8 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     article.setNlmArticleType(readString("/article/@article-type"));
     article.setArticleType(parseArticleHeading());
 
-    article.setAuthors(readPersons(readNodeList(
-        "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/name")));
     article.setEditors(readPersons(readNodeList(
         "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"editor\"]/name")));
-    article.setCollaborativeAuthors(parseCollaborativeAuthors(readNodeList(
-        "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/collab")));
 
     article.setUrl(buildUrl(readString("/article/front/article-meta/article-id[@pub-id-type = 'doi']")));
 
@@ -303,30 +298,6 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     }
 
     return LocalDate.of(year, month, day);
-  }
-
-  /**
-   * Convert each collab node to its text content, excluding any text that appears inside a nested "contrib-group"
-   * element.
-   * <p/>
-   * TODO: Find a way to do this with just XPath?
-   *
-   * @param collabNodes XML nodes representing "collab" elements
-   * @return a list of their text content
-   */
-  private List<String> parseCollaborativeAuthors(List<Node> collabNodes) {
-    List<String> collabStrings = Lists.newArrayListWithCapacity(collabNodes.size());
-    for (Node collabNode : collabNodes) {
-      StringBuilder text = new StringBuilder();
-      for (Node child : NodeListAdapter.wrap(collabNode.getChildNodes())) {
-        if (!"contrib-group".equals(child.getNodeName())) {
-          text.append(child.getTextContent());
-        }
-      }
-      String result = sanitize(text.toString());
-      collabStrings.add(result);
-    }
-    return collabStrings;
   }
 
   /**
