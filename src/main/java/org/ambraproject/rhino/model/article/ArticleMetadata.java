@@ -37,11 +37,8 @@ public class ArticleMetadata {
   private final String nlmArticleType;
   private final String articleType;
 
-  private final ImmutableList<String> collaborativeAuthors;
-
   private final ImmutableList<AssetMetadata> assets;
   private final ImmutableList<RelatedArticleLink> relatedArticles;
-  private final ImmutableList<NlmPerson> authors;
   private final ImmutableList<NlmPerson> editors;
 
   private final ImmutableMap<String, ImmutableList<String>> customMeta;
@@ -65,10 +62,8 @@ public class ArticleMetadata {
     this.url = builder.url;
     this.nlmArticleType = builder.nlmArticleType;
     this.articleType = builder.articleType;
-    this.collaborativeAuthors = ImmutableList.copyOf(builder.collaborativeAuthors);
     this.assets = ImmutableList.copyOf(builder.assets);
     this.relatedArticles = ImmutableList.copyOf(builder.relatedArticles);
-    this.authors = ImmutableList.copyOf(builder.authors);
     this.editors = ImmutableList.copyOf(builder.editors);
     this.customMeta = ImmutableMap.copyOf(Maps.transformValues(builder.customMeta.asMap(), ImmutableList::copyOf));
   }
@@ -145,20 +140,12 @@ public class ArticleMetadata {
     return articleType;
   }
 
-  public ImmutableList<String> getCollaborativeAuthors() {
-    return collaborativeAuthors;
-  }
-
   public ImmutableList<AssetMetadata> getAssets() {
     return assets;
   }
 
   public ImmutableList<RelatedArticleLink> getRelatedArticles() {
     return relatedArticles;
-  }
-
-  public ImmutableList<NlmPerson> getAuthors() {
-    return authors;
   }
 
   public ImmutableList<NlmPerson> getEditors() {
@@ -198,11 +185,8 @@ public class ArticleMetadata {
     private String nlmArticleType;
     private String articleType;
 
-    private List<String> collaborativeAuthors;
-
     private List<AssetMetadata> assets;
     private List<RelatedArticleLink> relatedArticles;
-    private List<NlmPerson> authors;
     private List<NlmPerson> editors;
 
     private ListMultimap<String, String> customMeta;
@@ -301,11 +285,6 @@ public class ArticleMetadata {
       return this;
     }
 
-    public Builder setCollaborativeAuthors(List<String> collaborativeAuthors) {
-      this.collaborativeAuthors = collaborativeAuthors;
-      return this;
-    }
-
     public Builder setAssets(List<AssetMetadata> assets) {
       this.assets = assets;
       return this;
@@ -313,11 +292,6 @@ public class ArticleMetadata {
 
     public Builder setRelatedArticles(List<RelatedArticleLink> relatedArticles) {
       this.relatedArticles = relatedArticles;
-      return this;
-    }
-
-    public Builder setAuthors(List<NlmPerson> authors) {
-      this.authors = authors;
       return this;
     }
 
@@ -363,14 +337,10 @@ public class ArticleMetadata {
       return false;
     }
     if (articleType != null ? !articleType.equals(that.articleType) : that.articleType != null) return false;
-    if (collaborativeAuthors != null ? !collaborativeAuthors.equals(that.collaborativeAuthors) : that.collaborativeAuthors != null) {
-      return false;
-    }
     if (assets != null ? !assets.equals(that.assets) : that.assets != null) return false;
     if (relatedArticles != null ? !relatedArticles.equals(that.relatedArticles) : that.relatedArticles != null) {
       return false;
     }
-    if (authors != null ? !authors.equals(that.authors) : that.authors != null) return false;
     if (editors != null ? !editors.equals(that.editors) : that.editors != null) return false;
     return customMeta != null ? customMeta.equals(that.customMeta) : that.customMeta == null;
   }
@@ -395,10 +365,8 @@ public class ArticleMetadata {
     result = 31 * result + (url != null ? url.hashCode() : 0);
     result = 31 * result + (nlmArticleType != null ? nlmArticleType.hashCode() : 0);
     result = 31 * result + (articleType != null ? articleType.hashCode() : 0);
-    result = 31 * result + (collaborativeAuthors != null ? collaborativeAuthors.hashCode() : 0);
     result = 31 * result + (assets != null ? assets.hashCode() : 0);
     result = 31 * result + (relatedArticles != null ? relatedArticles.hashCode() : 0);
-    result = 31 * result + (authors != null ? authors.hashCode() : 0);
     result = 31 * result + (editors != null ? editors.hashCode() : 0);
     result = 31 * result + (customMeta != null ? customMeta.hashCode() : 0);
     return result;
