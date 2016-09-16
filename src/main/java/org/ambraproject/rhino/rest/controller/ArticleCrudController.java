@@ -143,6 +143,15 @@ public class ArticleCrudController extends RestController {
   }
 
   @Transactional(readOnly = true)
+  @RequestMapping(value = "/articles/{doi}/revisions", method = RequestMethod.GET)
+  public void readRevisions(HttpServletRequest request, HttpServletResponse response,
+                           @PathVariable("doi") String doi)
+      throws IOException {
+    ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
+    articleCrudService.serveRevisions(id).respond(request, response, entityGson);
+  }
+
+  @Transactional(readOnly = true)
   @RequestMapping(value = "/articles/{doi}/revisions/{revision}", method = RequestMethod.GET)
   public void readRevision(HttpServletRequest request, HttpServletResponse response,
                            @PathVariable("doi") String doi,

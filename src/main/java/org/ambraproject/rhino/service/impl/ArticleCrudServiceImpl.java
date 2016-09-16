@@ -23,6 +23,7 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.google.common.io.ByteSource;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
@@ -92,6 +93,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -272,6 +274,28 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       @Override
       protected Calendar getLastModifiedDate() throws IOException {
         return null;
+      }
+    };
+  }
+
+  @Override
+  public Transceiver serveRevisions(ArticleIdentifier id) {
+    ArticleTable article = readArticle(id);
+    List<ArticleRevision> revisions = (List<ArticleRevision>) hibernateTemplate.find(
+        "FROM ArticleRevision WHERE ingestion.article = ? ORDER BY revisionNumber", article);
+    return new Transceiver() {
+      @Override
+      protected List<ArticleRevisionView> getData() throws IOException {
+        return Lists.transform(revisions, ArticleRevisionView::getView);
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return revisions.stream()
+            .map(ArticleRevision::getLastModified)
+            .max(Comparator.naturalOrder())
+            .map(Transceiver::copyToCalendar)
+            .orElse(null);
       }
     };
   }

@@ -43,7 +43,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -169,7 +168,9 @@ public interface ArticleCrudService {
 
   public abstract Transceiver serveOverview(ArticleIdentifier id);
 
-  Transceiver serveRevision(ArticleRevisionIdentifier revisionId);
+  public abstract Transceiver serveRevisions(ArticleIdentifier id);
+
+  public abstract Transceiver serveRevision(ArticleRevisionIdentifier revisionId);
 
   public abstract ArticleItem getArticleItem(ArticleItemIdentifier id);
 
