@@ -15,6 +15,7 @@ import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
+import org.ambraproject.rhino.model.article.CustomMetaExtractor;
 import org.ambraproject.rhino.model.ingest.ArticleItemInput;
 import org.ambraproject.rhino.model.ingest.ArticlePackage;
 import org.ambraproject.rhino.model.ingest.ArticlePackageBuilder;
@@ -47,6 +48,8 @@ public class VersionedIngestionService extends AmbraService {
   private ArticleCrudService articleCrudService;
   @Autowired
   private JournalCrudService journalCrudService;
+  @Autowired
+  private CustomMetaExtractor customMetaExtractor;
 
 
   public ArticleIngestion ingest(Archive archive) throws IOException, XmlContentException {
@@ -80,7 +83,7 @@ public class VersionedIngestionService extends AmbraService {
 
     ArticleXml parsedArticle;
     try (InputStream manuscriptStream = new BufferedInputStream(archive.openFile(manuscriptEntry))) {
-      parsedArticle = new ArticleXml(AmbraService.parseXml(manuscriptStream));
+      parsedArticle = new ArticleXml(customMetaExtractor, AmbraService.parseXml(manuscriptStream));
     }
     final ArticleMetadata articleMetadata = parsedArticle.build();
     ArticleIdentifier articleIdentifier = ArticleIdentifier.create(articleMetadata.getDoi());
@@ -153,6 +156,7 @@ public class VersionedIngestionService extends AmbraService {
     ingestion.setPublicationDate(java.sql.Date.valueOf(articleMetadata.getPublicationDate()));
     ingestion.setRevisionDate((articleMetadata.getRevisionDate() == null ? null
         : java.sql.Date.valueOf(articleMetadata.getRevisionDate())));
+    ingestion.setPublicationStage(articleMetadata.getPublicationStage());
     ingestion.setArticleType(articleMetadata.getArticleType());
     ingestion.setJournal(journal);
 
@@ -333,7 +337,7 @@ public class VersionedIngestionService extends AmbraService {
     Document document = articleCrudService.getManuscriptXml(ingestion);
 
     try {
-      return new ArticleXml(document).build();
+      return new ArticleXml(customMetaExtractor, document).build();
     } catch (XmlContentException e) {
       throw new RuntimeException(e);
     }

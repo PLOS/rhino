@@ -2,12 +2,13 @@ package org.ambraproject.rhino;
 
 import com.google.common.hash.Hashing;
 import com.google.common.io.ByteStreams;
-import org.ambraproject.rhino.model.ArticleAsset;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
+import org.ambraproject.rhino.model.ArticleAsset;
+import org.ambraproject.rhino.model.article.CustomMetaExtractor;
 import org.ambraproject.rhino.service.impl.AmbraService;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -25,7 +26,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -89,6 +89,8 @@ public class IngestibleUtil {
   }
 
   public static InputStream buildMockIngestible(InputStream xml, List<ArticleAsset> expectedAssets) throws IOException {
+    CustomMetaExtractor customMetaExtractor = null; // TODO: Inject this
+
     byte[] xmlData;
     try {
       xmlData = ByteStreams.toByteArray(xml);
@@ -103,7 +105,7 @@ public class IngestibleUtil {
     } catch (SAXException e) {
       throw new RuntimeException(e);
     }
-    ArticleXml article = new ArticleXml(document);
+    ArticleXml article = new ArticleXml(customMetaExtractor, document);
     ArticleIdentity identity;
     try {
       identity = ArticleIdentity.create(article.readDoi().getName());

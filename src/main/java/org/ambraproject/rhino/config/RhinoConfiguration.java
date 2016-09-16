@@ -25,6 +25,7 @@ import org.ambraproject.rhino.config.json.AdapterRegistry;
 import org.ambraproject.rhino.config.json.DoiBasedIdentitySerializer;
 import org.ambraproject.rhino.config.json.ExclusionSpecialCase;
 import org.ambraproject.rhino.content.xml.XpathReader;
+import org.ambraproject.rhino.model.article.CustomMetaExtractor;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.ArticleRevisionWriteService;
@@ -292,6 +293,11 @@ public class RhinoConfiguration extends BaseConfiguration {
   @Bean
   public MessageSender messageSender() {
     return new CamelSender();
+  }
+
+  @Bean
+  public CustomMetaExtractor customMetaExtractor() {
+    return new CustomMetaExtractor();
   }
 
   @Bean

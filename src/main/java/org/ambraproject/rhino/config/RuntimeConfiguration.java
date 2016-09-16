@@ -128,6 +128,14 @@ public interface RuntimeConfiguration {
 
   QueueConfiguration getQueueConfiguration();
 
+  interface ManuscriptCustomMeta {
+    String getRevisionDateName();
+
+    String getPublicationStageName();
+  }
+
+  ManuscriptCustomMeta getManuscriptCustomMeta();
+
   /**
    * @deprecated Temporary; to be removed when versioned ingestion data model is stable.
    */

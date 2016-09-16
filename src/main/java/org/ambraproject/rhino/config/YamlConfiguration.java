@@ -245,6 +245,27 @@ public class YamlConfiguration implements RuntimeConfiguration {
     });
   }
 
+  private transient ManuscriptCustomMeta manuscriptCustomMeta;
+
+  @Override
+  public ManuscriptCustomMeta getManuscriptCustomMeta() {
+    return (manuscriptCustomMeta != null) ? manuscriptCustomMeta : (manuscriptCustomMeta = new ManuscriptCustomMeta() {
+      @Override
+      public String getRevisionDateName() {
+        return (input.manuscriptCustomMeta != null && input.manuscriptCustomMeta.revisionDate != null)
+            ? input.manuscriptCustomMeta.revisionDate
+            : "Revision Date";
+      }
+
+      @Override
+      public String getPublicationStageName() {
+        return (input.manuscriptCustomMeta != null && input.manuscriptCustomMeta.publicationStage != null)
+            ? input.manuscriptCustomMeta.publicationStage
+            : "Publication Stage";
+      }
+    });
+  }
+
   /**
    * @deprecated Temporary; to be removed when versioned ingestion data model is stable.
    */
@@ -265,6 +286,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
     private boolean usingVersionedIngestion = true; // default is true
     private String competingInterestPolicyStart;
     private QueueConfigurationInput queue;
+    private ManuscriptCustomMetaInput manuscriptCustomMeta;
 
     /**
      * @deprecated For reflective access by SnakeYAML only
@@ -320,6 +342,14 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setQueue(QueueConfigurationInput queue) {
       this.queue = queue;
+    }
+
+    /**
+     * @deprecated For reflective access by SnakeYAML only
+     */
+    @Deprecated
+    public void setManuscriptCustomMeta(ManuscriptCustomMetaInput manuscriptCustomMeta) {
+      this.manuscriptCustomMeta = manuscriptCustomMeta;
     }
 
     /**
@@ -457,6 +487,21 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setSolrDelete(String solrDelete) {
       this.solrDelete = solrDelete;
+    }
+  }
+
+  public static class ManuscriptCustomMetaInput {
+    private String revisionDate;
+    private String publicationStage;
+
+    @Deprecated
+    public void setRevisionDate(String revisionDate) {
+      this.revisionDate = revisionDate;
+    }
+
+    @Deprecated
+    public void setPublicationStage(String publicationStage) {
+      this.publicationStage = publicationStage;
     }
   }
 

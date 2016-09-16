@@ -1,11 +1,9 @@
 package org.ambraproject.rhino.model.article;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Multimaps;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -26,6 +24,7 @@ public class ArticleMetadata {
 
   private final LocalDate publicationDate;
   private final LocalDate revisionDate;
+  private final String publicationStage;
 
   private final String volume;
   private final String issue;
@@ -55,6 +54,7 @@ public class ArticleMetadata {
     this.eLocationId = builder.eLocationId;
     this.publicationDate = builder.publicationDate;
     this.revisionDate = builder.revisionDate;
+    this.publicationStage = builder.publicationStage;
     this.volume = builder.volume;
     this.issue = builder.issue;
     this.publisherLocation = builder.publisherLocation;
@@ -110,6 +110,10 @@ public class ArticleMetadata {
 
   public LocalDate getRevisionDate() {
     return revisionDate;
+  }
+
+  public String getPublicationStage() {
+    return publicationStage;
   }
 
   public String getVolume() {
@@ -174,6 +178,7 @@ public class ArticleMetadata {
 
     private LocalDate publicationDate;
     private LocalDate revisionDate;
+    private String publicationStage;
 
     private String volume;
     private String issue;
@@ -247,6 +252,11 @@ public class ArticleMetadata {
 
     public Builder setRevisionDate(LocalDate revisionDate) {
       this.revisionDate = revisionDate;
+      return this;
+    }
+
+    public Builder setPublicationStage(String publicationStage) {
+      this.publicationStage = publicationStage;
       return this;
     }
 
@@ -326,6 +336,9 @@ public class ArticleMetadata {
       return false;
     }
     if (revisionDate != null ? !revisionDate.equals(that.revisionDate) : that.revisionDate != null) return false;
+    if (publicationStage != null ? !publicationStage.equals(that.publicationStage) : that.publicationStage != null) {
+      return false;
+    }
     if (volume != null ? !volume.equals(that.volume) : that.volume != null) return false;
     if (issue != null ? !issue.equals(that.issue) : that.issue != null) return false;
     if (publisherLocation != null ? !publisherLocation.equals(that.publisherLocation) : that.publisherLocation != null) {
@@ -358,6 +371,7 @@ public class ArticleMetadata {
     result = 31 * result + (eLocationId != null ? eLocationId.hashCode() : 0);
     result = 31 * result + (publicationDate != null ? publicationDate.hashCode() : 0);
     result = 31 * result + (revisionDate != null ? revisionDate.hashCode() : 0);
+    result = 31 * result + (publicationStage != null ? publicationStage.hashCode() : 0);
     result = 31 * result + (volume != null ? volume.hashCode() : 0);
     result = 31 * result + (issue != null ? issue.hashCode() : 0);
     result = 31 * result + (publisherLocation != null ? publisherLocation.hashCode() : 0);

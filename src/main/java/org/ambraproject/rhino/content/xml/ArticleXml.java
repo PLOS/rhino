@@ -22,7 +22,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableListMultimap;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
@@ -31,6 +30,7 @@ import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.model.article.AssetMetadata;
+import org.ambraproject.rhino.model.article.CustomMetaExtractor;
 import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,10 +39,9 @@ import org.w3c.dom.Node;
 
 import java.net.URLEncoder;
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -52,8 +51,11 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleXml.class);
 
-  public ArticleXml(Document xml) {
+  private final CustomMetaExtractor customMetaExtractor;
+
+  public ArticleXml(CustomMetaExtractor customMetaExtractor, Document xml) {
     super(xml);
+    this.customMetaExtractor = Objects.requireNonNull(customMetaExtractor);
   }
 
   public Document getDocument() {
@@ -188,10 +190,10 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     article.setPublisherLocation(readString("/article/front/journal-meta/publisher/publisher-loc"));
     article.setLanguage(parseLanguage(readString("/article/@xml:lang")));
 
-    ListMultimap<String, String> customMeta = parseCustomMeta();
+    ImmutableListMultimap<String, String> customMeta = parseCustomMeta();
     article.setCustomMeta(customMeta);
+    customMetaExtractor.apply(article, customMeta);
     article.setPublicationDate(parseDate(readNode("/article/front/article-meta/pub-date[@pub-type=\"epub\"]")));
-    article.setRevisionDate(getRevisionDate(customMeta));
 
     article.setNlmArticleType(readString("/article/@article-type"));
     article.setArticleType(parseArticleHeading());
@@ -344,7 +346,7 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
    *
    * @return the multimap of {@code custom-meta} name-value pairs
    */
-  private ListMultimap<String, String> parseCustomMeta() {
+  private ImmutableListMultimap<String, String> parseCustomMeta() {
     List<Node> customMetaNodes = readNodeList("//custom-meta-group/custom-meta");
     ImmutableListMultimap.Builder<String, String> builder = ImmutableListMultimap.builder();
     for (Node node : customMetaNodes) {
@@ -353,34 +355,6 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
       builder.put(name, value);
     }
     return builder.build();
-  }
-
-  /**
-   * Parse a revision date from the manuscript, if it is present.
-   * <p>
-   * Currently, this application looks for a custom meta node with the name "Publication Update", pending a formal
-   * definition for a semantically equivalent value in the JATS spec. We should add support here if such a value is
-   * added to the spec in the future. (In this case, continue supporting the old way so as to be able to reingest
-   * existing content.)
-   *
-   * @param customMeta the document's custom meta nodes
-   * @return the revision date, or {@code null} if none is declared
-   */
-  private LocalDate getRevisionDate(Multimap<String, String> customMeta) {
-    Collection<String> revisionDateMetaValues = customMeta.get("Publication Update");
-    if (revisionDateMetaValues.isEmpty()) {
-      return null;
-    }
-    if (revisionDateMetaValues.size() > 1) {
-      throw new XmlContentException("Multiple 'Publication Update' custom-meta nodes");
-    }
-
-    String revisionDate = Iterables.getOnlyElement(revisionDateMetaValues);
-    try {
-      return LocalDate.parse(revisionDate);
-    } catch (DateTimeParseException e) {
-      throw new XmlContentException("'Publication Update' custom-meta value must be an ISO-8601 date", e);
-    }
   }
 
 }

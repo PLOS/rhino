@@ -13,6 +13,7 @@ import com.google.common.hash.Hashing;
 import com.google.gson.Gson;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
+import org.ambraproject.rhino.model.article.CustomMetaExtractor;
 import org.ambraproject.rhino.util.Archive;
 import org.plos.crepo.model.input.RepoCollectionInput;
 import org.plos.crepo.model.metadata.RepoCollectionList;
@@ -20,6 +21,7 @@ import org.plos.crepo.model.input.RepoObjectInput;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.service.InMemoryContentRepoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.w3c.dom.Document;
@@ -39,6 +41,9 @@ import static org.testng.Assert.assertFalse;
 
 public class AssetTableTest {
 
+  @Autowired
+  private CustomMetaExtractor customMetaExtractor;
+
   @DataProvider
   public Object[][] ingestibles() {
     File[] ingestibles = new File("src/test/resources/articles/").listFiles((dir, name) -> name.endsWith(".zip"));
@@ -47,7 +52,7 @@ public class AssetTableTest {
         Archive archive = Archive.readZipFileIntoMemory(file);
         ManifestXml manifest = new ManifestXml(parseFrom(archive, "MANIFEST.xml"));
         String articleEntryName = manifest.getArticleAsset().getRepresentation("manuscript").get().getFile().getEntry();
-        ArticleXml article = new ArticleXml(parseFrom(archive, articleEntryName));
+        ArticleXml article = new ArticleXml(customMetaExtractor, parseFrom(archive, articleEntryName));
         return new Object[]{manifest, article};
       } catch (IOException e) {
         throw new RuntimeException(e);
