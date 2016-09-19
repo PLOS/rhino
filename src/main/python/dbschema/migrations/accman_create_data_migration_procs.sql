@@ -436,7 +436,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_articles`()
     UPDATE oldIssue SET issueUri = 'info:doi/10.1371/issue.ppat.v12.i02' WHERE issueUri = 'info:doi/10.1371/issue.ppat.v12.i022'; # issueID=2798
 
     INSERT INTO issue (issueId, doi, volumeId, volumeSortOrder, displayName, created, lastModified)
-      SELECT issueID, issueUri, volumeID, volumeSortOrder, displayName, created, lastModified
+      SELECT issueID, get_doi_name(issueUri), volumeID, volumeSortOrder, displayName, created, lastModified
       FROM oldIssue
       WHERE issueId NOT IN (SELECT issueId FROM issue);
 
