@@ -19,6 +19,58 @@ DELIMITER ;
 
 ####################################################################################################
 
+DROP PROCEDURE IF EXISTS `drop_tables`;
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `drop_tables`()
+  BEGIN
+    SET FOREIGN_KEY_CHECKS=0;
+    DROP TABLE IF EXISTS `annotationCitationCollabAuthor`;
+    DROP TABLE IF EXISTS `annotationCitationAuthor`;
+    DROP TABLE IF EXISTS `annotationCitation`;
+    DROP TABLE IF EXISTS `annotationFlag`;
+    DROP TABLE IF EXISTS `annotation`;
+    DROP TABLE IF EXISTS `articleAsset`;
+    DROP TABLE IF EXISTS `articleCategoryFlagged`;
+    DROP TABLE IF EXISTS `articleCategoryJoinTable`;
+    DROP TABLE IF EXISTS `articleCollaborativeAuthors`;
+    DROP TABLE IF EXISTS `articlePerson`;
+    DROP TABLE IF EXISTS `articlePublishedJournals`;
+    DROP TABLE IF EXISTS `articleType`;
+    DROP TABLE IF EXISTS `categoryFeaturedArticle`;
+    DROP TABLE IF EXISTS `citedArticleCollaborativeAuthors`;
+    DROP TABLE IF EXISTS `citedPerson`;
+    DROP TABLE IF EXISTS `citedArticle`;
+    DROP TABLE IF EXISTS `oldArticleListJoinTable`;
+    DROP TABLE IF EXISTS `oldArticleList`;
+    DROP TABLE IF EXISTS `oldArticleRelationship`;
+    DROP TABLE IF EXISTS `oldArticle`;
+    DROP TABLE IF EXISTS `oldVolume`;
+    DROP TABLE IF EXISTS `oldIssueArticleList`;
+    DROP TABLE IF EXISTS `oldJournal`;
+    DROP TABLE IF EXISTS `oldIssue`;
+    DROP TABLE IF EXISTS `oldSyndication`;
+    DROP TABLE IF EXISTS `pingback`;
+    DROP TABLE IF EXISTS `savedSearch`;
+    DROP TABLE IF EXISTS `savedSearchQuery`;
+    DROP TABLE IF EXISTS `trackback`;
+    DROP TABLE IF EXISTS `userArticleView`;
+    DROP TABLE IF EXISTS `userLogin`;
+    DROP TABLE IF EXISTS `userOrcid`;
+    DROP TABLE IF EXISTS `userProfile`;
+    DROP TABLE IF EXISTS `userProfileMetaData`;
+    DROP TABLE IF EXISTS `userProfileRoleJoinTable`;
+    DROP TABLE IF EXISTS `userRole`;
+    DROP TABLE IF EXISTS `userRolePermission`;
+    DROP TABLE IF EXISTS `userSearch`;
+    DROP TABLE IF EXISTS `uuid_lut`;
+    DROP TABLE IF EXISTS `objects`;
+    DROP TABLE IF EXISTS `migration_status_log`;
+    SET FOREIGN_KEY_CHECKS=1;
+  END$$
+DELIMITER ;
+
+####################################################################################################
+
 DROP PROCEDURE IF EXISTS `correct_article_asset_table()`;
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `correct_article_asset_table`()
