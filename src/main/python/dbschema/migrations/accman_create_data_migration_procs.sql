@@ -440,6 +440,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_articles`()
       FROM oldIssue
       WHERE issueId NOT IN (SELECT issueId FROM issue);
 
+    UPDATE issue SET imageArticleId = (SELECT articleID FROM article INNER JOIN oldIssue ON get_doi_name(imageUri) = doi WHERE issueID = issue.issueId);
+
     UPDATE journal SET currentIssueId = (SELECT currentIssueID FROM oldJournal WHERE journalID = journal.journalId);
 
     INSERT INTO issueArticleList (issueId, sortOrder, articleId)
