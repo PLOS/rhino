@@ -14,7 +14,7 @@ import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.view.JsonOutputView;
-import org.ambraproject.rhino.view.article.versioned.ArticleRevisionView;
+import org.ambraproject.rhino.view.article.ArticleRevisionView;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;

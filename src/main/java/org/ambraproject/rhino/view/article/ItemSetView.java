@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.view.article.versioned;
+package org.ambraproject.rhino.view.article;
 
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;

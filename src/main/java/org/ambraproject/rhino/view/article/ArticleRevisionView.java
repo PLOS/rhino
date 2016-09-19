@@ -21,7 +21,7 @@
  *
  */
 
-package org.ambraproject.rhino.view.article.versioned;
+package org.ambraproject.rhino.view.article;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

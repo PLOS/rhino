@@ -6,7 +6,7 @@ import com.google.gson.JsonSerializationContext;
 import org.ambraproject.rhino.identity.ArticleListIdentity;
 import org.ambraproject.rhino.model.ArticleList;
 import org.ambraproject.rhino.view.JsonOutputView;
-import org.ambraproject.rhino.view.article.versioned.ArticleRevisionView;
+import org.ambraproject.rhino.view.article.ArticleRevisionView;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
