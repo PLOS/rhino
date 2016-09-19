@@ -26,7 +26,7 @@ import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRevision;
-import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.Archive;
@@ -141,23 +141,23 @@ public interface ArticleCrudService {
   /**
    * Get an article's latest revision, if it has any revisions.
    */
-  public abstract Optional<ArticleRevision> getLatestRevision(ArticleTable article);
+  public abstract Optional<ArticleRevision> getLatestRevision(Article article);
 
   /**
    * Get the latest revision of an article requested by the client, throwing {@link RestClientException} if the article
    * has no revisions.
    */
-  public abstract ArticleRevision readLatestRevision(ArticleTable article);
+  public abstract ArticleRevision readLatestRevision(Article article);
 
   /**
    * Get an article if it exists.
    */
-  public abstract Optional<ArticleTable> getArticle(ArticleIdentifier articleIdentifier);
+  public abstract Optional<Article> getArticle(ArticleIdentifier articleIdentifier);
 
   /**
    * Read an article requested by the client, throwing {@link RestClientException} if it is not found.
    */
-  public abstract ArticleTable readArticle(ArticleIdentifier articleIdentifier);
+  public abstract Article readArticle(ArticleIdentifier articleIdentifier);
 
   public abstract Document getManuscriptXml(ArticleIngestion articleIngestion);
 

@@ -6,7 +6,7 @@ import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleRevision;
-import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
@@ -27,7 +27,7 @@ public class RelationshipSetView {
 
     private List<RelationshipSetView.RelationshipView> getRelationshipViews(
         List<ArticleRelationship> relationships,
-        Function<ArticleRelationship, ArticleTable> direction) {
+        Function<ArticleRelationship, Article> direction) {
       Objects.requireNonNull(direction);
       return relationships.stream()
           .map((ArticleRelationship var) -> {

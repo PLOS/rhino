@@ -22,7 +22,7 @@ import com.google.common.base.Preconditions;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.IssueIdentifier;
 import org.ambraproject.rhino.identity.VolumeIdentifier;
-import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -101,7 +101,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
     String imageDoi = input.getImageArticleDoi();
     if (imageDoi != null) {
       ArticleIdentifier imageArticleId = ArticleIdentifier.create(imageDoi);
-      ArticleTable imageArticle = articleCrudService.readArticle(imageArticleId);
+      Article imageArticle = articleCrudService.readArticle(imageArticleId);
       issue.setImageArticle(imageArticle);
     } else {
       issue.setImageArticle(null);
@@ -109,7 +109,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
 
     List<String> inputArticleDois = input.getArticleOrder();
     if (inputArticleDois != null) {
-      List<ArticleTable> inputArticles = inputArticleDois.stream()
+      List<Article> inputArticles = inputArticleDois.stream()
           .map(doi -> articleCrudService.readArticle(ArticleIdentifier.create(doi)))
           .collect(Collectors.toList());
       issue.setArticles(inputArticles);

@@ -25,7 +25,7 @@ public class ArticleIngestion implements Timestamped {
 
   @JoinColumn(name = "articleId", nullable = false)
   @ManyToOne
-  private ArticleTable article;
+  private Article article;
 
   @Column
   private String title;
@@ -64,11 +64,11 @@ public class ArticleIngestion implements Timestamped {
     this.ingestionId = ingestionId;
   }
 
-  public ArticleTable getArticle() {
+  public Article getArticle() {
     return article;
   }
 
-  public void setArticle(ArticleTable article) {
+  public void setArticle(Article article) {
     this.article = article;
   }
 

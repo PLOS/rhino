@@ -49,11 +49,11 @@ public class ArticleRelationship implements Timestamped {
 
   @ManyToOne
   @JoinColumn(name = "sourceArticleId", nullable = false)
-  private ArticleTable sourceArticle;
+  private Article sourceArticle;
 
   @ManyToOne
   @JoinColumn(name = "targetArticleId", nullable = false)
-  private ArticleTable targetArticle;
+  private Article targetArticle;
 
   @Column
   private String type;
@@ -68,19 +68,19 @@ public class ArticleRelationship implements Timestamped {
   @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
   private Date lastModified;
 
-  public ArticleTable getSourceArticle() {
+  public Article getSourceArticle() {
     return sourceArticle;
   }
 
-  public void setSourceArticle(ArticleTable sourceArticle) {
+  public void setSourceArticle(Article sourceArticle) {
     this.sourceArticle = sourceArticle;
   }
 
-  public ArticleTable getTargetArticle() {
+  public Article getTargetArticle() {
     return targetArticle;
   }
 
-  public void setTargetArticle(ArticleTable targetArticle) {
+  public void setTargetArticle(Article targetArticle) {
     this.targetArticle = targetArticle;
   }
 

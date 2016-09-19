@@ -14,7 +14,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "article")
-public class ArticleTable implements Timestamped, Serializable { //todo: rename to "Article" once the old Article class is removed
+public class Article implements Timestamped, Serializable {
 
   @Id
   @GeneratedValue
@@ -59,7 +59,7 @@ public class ArticleTable implements Timestamped, Serializable { //todo: rename 
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    ArticleTable that = (ArticleTable) o;
+    Article that = (Article) o;
     return doi != null ? doi.equals(that.doi) : that.doi == null;
   }
 

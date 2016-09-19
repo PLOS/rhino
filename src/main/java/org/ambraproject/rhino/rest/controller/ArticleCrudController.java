@@ -25,7 +25,7 @@ import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.model.ArticleRevision;
-import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.rest.DoiEscaping;
@@ -207,7 +207,7 @@ public class ArticleCrudController extends RestController {
                               @PathVariable("doi") String doi)
       throws IOException {
     ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
-    ArticleTable article = articleCrudService.readArticle(id);
+    Article article = articleCrudService.readArticle(id);
     commentCrudService.getCommentCount(article).respond(request, response, entityGson);
   }
 
@@ -324,7 +324,7 @@ public class ArticleCrudController extends RestController {
                                                  @RequestParam(value = "flag", required = true) String action)
       throws IOException {
     ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(articleDoi));
-    ArticleTable article = articleCrudService.readArticle(articleId);
+    Article article = articleCrudService.readArticle(articleId);
     Optional<Long> userIdObj = Optional.ofNullable(userId).map(Long::parseLong);
 
     Collection<Category> categories = taxonomyService.getArticleCategoriesWithTerm(article, categoryTerm);
