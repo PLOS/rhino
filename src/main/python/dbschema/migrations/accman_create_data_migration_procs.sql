@@ -38,7 +38,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `correct_article_asset_table`()
       3549106, 3717992, 3327438, 2798600, 3253942, 3564266, 3608318, 3276852, 3730108, 3284252, 2769946, 3033834, 3269314,
       3974020, 2996694, 3400038, 3135944, 3772444, 3517478, 3097958, 3915706, 3693094, 4088712, 4090244, 3135946, 3654196,
       3824832, 3145054, 3495522, 3645260, 904138, 3713874, 3117298, 3327382, 1496428, 3033598, 3738022, 1993436, 3603534,
-      3087912, 3424848, 262234);
+      3087912, 3424848, 262234, 3393766, 3291602, 3269302);
 
     # individual cases (mostly duplicate or extraneous assets not reachable in final article page or present in the repo)
     UPDATE articleAsset SET doi = 'info:doi/10.1371/journal.pbio.0020012.s003' WHERE articleAssetID = 1207360;
@@ -83,6 +83,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `correct_article_asset_table`()
     DELETE FROM articleAsset WHERE articleAssetID IN (14789201, 14789193, 14789195, 14789197, 14789199);
 
     DELETE FROM articleAsset WHERE articleAssetID = 15588622;
+
+    DELETE FROM articleAsset WHERE articleAssetID = 8975739;
 
   END $$
 DELIMITER ;
