@@ -10,7 +10,7 @@ import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.model.article.AssetMetadata;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.impl.VersionedIngestionService;
+import org.ambraproject.rhino.service.impl.IngestionService;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
@@ -33,13 +33,13 @@ public class ArticleIngestionView implements JsonOutputView {
     @Autowired
     private ArticleCrudService articleCrudService;
     @Autowired
-    private VersionedIngestionService versionedIngestionService;
+    private IngestionService ingestionService;
     @Autowired
     private JournalOutputView.Factory journalOutputViewFactory;
 
     public ArticleIngestionView getView(ArticleIngestionIdentifier ingestionId) {
       ArticleIngestion ingestion = articleCrudService.readIngestion(ingestionId);
-      ArticleMetadata metadata = versionedIngestionService.getArticleMetadata(ingestionId);
+      ArticleMetadata metadata = ingestionService.getArticleMetadata(ingestionId);
       JournalOutputView journal = JournalOutputView.getShallowView(ingestion.getJournal());
 
       return new ArticleIngestionView(ingestion, metadata, journal);

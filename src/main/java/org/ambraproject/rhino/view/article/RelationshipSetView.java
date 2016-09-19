@@ -7,7 +7,7 @@ import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
-import org.ambraproject.rhino.model.VersionedArticleRelationship;
+import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +26,11 @@ public class RelationshipSetView {
     private ArticleCrudService articleCrudService;
 
     private List<RelationshipSetView.RelationshipView> getRelationshipViews(
-        List<VersionedArticleRelationship> relationships,
-        Function<VersionedArticleRelationship, ArticleTable> direction) {
+        List<ArticleRelationship> relationships,
+        Function<ArticleRelationship, ArticleTable> direction) {
       Objects.requireNonNull(direction);
       return relationships.stream()
-          .map((VersionedArticleRelationship var) -> {
+          .map((ArticleRelationship var) -> {
             String type = var.getType();
             Doi doi = Doi.create(direction.apply(var).getDoi());
             Optional<ArticleRevision> revision = articleCrudService.getLatestRevision(direction.apply(var));
@@ -40,11 +40,11 @@ public class RelationshipSetView {
     }
 
     public RelationshipSetView getSetView(ArticleIdentifier articleId) {
-      List<VersionedArticleRelationship> inbound = articleCrudService.getRelationshipsTo(articleId);
-      List<RelationshipSetView.RelationshipView> inboundViews = getRelationshipViews(inbound, VersionedArticleRelationship::getSourceArticle);
+      List<ArticleRelationship> inbound = articleCrudService.getRelationshipsTo(articleId);
+      List<RelationshipSetView.RelationshipView> inboundViews = getRelationshipViews(inbound, ArticleRelationship::getSourceArticle);
 
-      List<VersionedArticleRelationship> outbound = articleCrudService.getRelationshipsFrom(articleId);
-      List<RelationshipSetView.RelationshipView> outboundViews = getRelationshipViews(outbound, VersionedArticleRelationship::getTargetArticle);
+      List<ArticleRelationship> outbound = articleCrudService.getRelationshipsFrom(articleId);
+      List<RelationshipSetView.RelationshipView> outboundViews = getRelationshipViews(outbound, ArticleRelationship::getTargetArticle);
 
       return new RelationshipSetView(inboundViews, outboundViews);
     }

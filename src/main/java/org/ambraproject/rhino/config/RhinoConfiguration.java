@@ -47,7 +47,7 @@ import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.JournalCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.SolrIndexServiceImpl;
 import org.ambraproject.rhino.service.impl.SyndicationCrudServiceImpl;
-import org.ambraproject.rhino.service.impl.VersionedIngestionService;
+import org.ambraproject.rhino.service.impl.IngestionService;
 import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
@@ -267,8 +267,8 @@ public class RhinoConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public VersionedIngestionService versionedIngestionService() {
-    return new VersionedIngestionService();
+  public IngestionService ingestionService() {
+    return new IngestionService();
   }
 
   @Bean

@@ -37,7 +37,7 @@ import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
-import org.ambraproject.rhino.model.VersionedArticleRelationship;
+import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -316,8 +316,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
 
   @Override
-  public List<VersionedArticleRelationship> getRelationshipsFrom(ArticleIdentifier sourceId) {
-    return (List<VersionedArticleRelationship>) hibernateTemplate.execute(session -> {
+  public List<ArticleRelationship> getRelationshipsFrom(ArticleIdentifier sourceId) {
+    return (List<ArticleRelationship>) hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "SELECT ar " +
           "FROM VersionedArticleRelationship ar " +
@@ -328,8 +328,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public List<VersionedArticleRelationship> getRelationshipsTo(ArticleIdentifier targetId) {
-    return (List<VersionedArticleRelationship>) hibernateTemplate.execute(session -> {
+  public List<ArticleRelationship> getRelationshipsTo(ArticleIdentifier targetId) {
+    return (List<ArticleRelationship>) hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "SELECT ar " +
           "FROM VersionedArticleRelationship ar " +
@@ -345,13 +345,13 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     ArticleTable sourceArticle = sourceArticleRev.getIngestion().getArticle();
 
     List<RelatedArticleLink> xmlRelationships = sourceArticleXml.parseRelatedArticles();
-    List<VersionedArticleRelationship> dbRelationships = getRelationshipsFrom(ArticleIdentifier.create(sourceArticle.getDoi()));
-    for (VersionedArticleRelationship ar : dbRelationships) {
+    List<ArticleRelationship> dbRelationships = getRelationshipsFrom(ArticleIdentifier.create(sourceArticle.getDoi()));
+    for (ArticleRelationship ar : dbRelationships) {
       hibernateTemplate.delete(ar);
     }
     for (RelatedArticleLink ar : xmlRelationships) {
       getArticle(ar.getArticleId()).ifPresent((ArticleTable targetArticle) -> {
-        VersionedArticleRelationship newAr = new VersionedArticleRelationship();
+        ArticleRelationship newAr = new ArticleRelationship();
         newAr.setSourceArticle(sourceArticle);
         newAr.setTargetArticle(targetArticle);
         newAr.setType(ar.getType());

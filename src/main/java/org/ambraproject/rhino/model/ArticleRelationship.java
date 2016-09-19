@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "articleRelationship")
-public class VersionedArticleRelationship implements Timestamped {
+public class ArticleRelationship implements Timestamped {
 
   @Id
   @GeneratedValue

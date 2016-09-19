@@ -27,7 +27,7 @@ import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
-import org.ambraproject.rhino.model.VersionedArticleRelationship;
+import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.Transceiver;
@@ -84,9 +84,9 @@ public interface ArticleCrudService {
    */
   public abstract String getRawCategoriesAndText(ArticleIdentifier articleId) throws IOException;
 
-  List<VersionedArticleRelationship> getRelationshipsFrom(ArticleIdentifier sourceId);
+  List<ArticleRelationship> getRelationshipsFrom(ArticleIdentifier sourceId);
 
-  List<VersionedArticleRelationship> getRelationshipsTo(ArticleIdentifier targetId);
+  List<ArticleRelationship> getRelationshipsTo(ArticleIdentifier targetId);
 
   void refreshArticleRelationships(ArticleRevision sourceArticleRev);
 

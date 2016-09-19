@@ -19,14 +19,13 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleAsset;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
-import org.ambraproject.rhino.service.impl.VersionedIngestionService;
+import org.ambraproject.rhino.service.impl.IngestionService;
 import org.ambraproject.rhino.util.Archive;
 import org.apache.commons.io.IOUtils;
 import org.hibernate.criterion.DetachedCriteria;
@@ -214,15 +213,15 @@ public final class RhinoTestHelper {
     }
   }
 
-  public static Stream<ArticleMetadata> createTestArticles(VersionedIngestionService versionedIngestionService) {
-    return SAMPLE_ARTICLES.stream().map(doiStub -> createTestArticle(versionedIngestionService, doiStub));
+  public static Stream<ArticleMetadata> createTestArticles(IngestionService ingestionService) {
+    return SAMPLE_ARTICLES.stream().map(doiStub -> createTestArticle(ingestionService, doiStub));
   }
 
-  public static ArticleMetadata createTestArticle(VersionedIngestionService versionedIngestionService) {
-    return createTestArticle(versionedIngestionService, SAMPLE_ARTICLES.get(0));
+  public static ArticleMetadata createTestArticle(IngestionService ingestionService) {
+    return createTestArticle(ingestionService, SAMPLE_ARTICLES.get(0));
   }
 
-  public static ArticleMetadata createTestArticle(VersionedIngestionService versionedIngestionService, String doiStub) {
+  public static ArticleMetadata createTestArticle(IngestionService ingestionService, String doiStub) {
     ArticleIdentity articleId = ArticleIdentity.create(RhinoTestHelper.prefixed(doiStub));
     RhinoTestHelper.TestFile sampleFile = new RhinoTestHelper.TestFile(getXmlPath(doiStub));
     String doi = articleId.getIdentifier();
@@ -240,7 +239,7 @@ public final class RhinoTestHelper {
     Archive mockIngestible = createMockIngestible(articleId, input, reference.getAssets());
     ArticleIngestion ingestion;
     try {
-      ingestion = versionedIngestionService.ingest(mockIngestible);
+      ingestion = ingestionService.ingest(mockIngestible);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
