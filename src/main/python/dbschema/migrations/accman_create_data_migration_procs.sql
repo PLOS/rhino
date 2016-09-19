@@ -302,7 +302,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
 
           INSERT INTO articleFile
           (ingestionId, itemId, bucketName, crepoKey, crepoUuid, created, fileType, fileSize)
-          VALUES (ingestion_id, item_id, 'corpus', crepo_key, crepo_uuid, NOW(), file_type, file_size);
+          VALUES (ingestion_id, item_id, 'mogilefs-prod-repo', crepo_key, crepo_uuid, NOW(), file_type, file_size);
 
           SET prev_asset_doi = asset_doi;
 
