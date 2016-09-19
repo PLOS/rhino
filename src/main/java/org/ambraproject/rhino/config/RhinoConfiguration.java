@@ -22,8 +22,6 @@ import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.ambraproject.rhino.config.json.AdapterRegistry;
-import org.ambraproject.rhino.config.json.DoiBasedIdentitySerializer;
-import org.ambraproject.rhino.config.json.ExclusionSpecialCase;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleListCrudService;
@@ -36,7 +34,6 @@ import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.LegacyConfiguration;
 import org.ambraproject.rhino.service.MessageSender;
-import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.service.SolrIndexService;
 import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
@@ -48,7 +45,6 @@ import org.ambraproject.rhino.service.impl.CommentCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.JournalCrudServiceImpl;
-import org.ambraproject.rhino.service.impl.PingbackReadServiceImpl;
 import org.ambraproject.rhino.service.impl.SolrIndexServiceImpl;
 import org.ambraproject.rhino.service.impl.SyndicationCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.VersionedIngestionService;
@@ -61,7 +57,6 @@ import org.ambraproject.rhino.util.GitInfo;
 import org.ambraproject.rhino.util.Java8TimeGsonAdapters;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
-import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
 import org.ambraproject.rhino.view.article.versioned.ArticleIngestionView;
 import org.ambraproject.rhino.view.article.versioned.ArticleRevisionView;
 import org.ambraproject.rhino.view.article.versioned.ItemSetView;
@@ -156,7 +151,6 @@ public class RhinoConfiguration extends BaseConfiguration {
     }
 
     // Bulk-apply special cases defined in org.ambraproject.rhino.config.json
-    builder.setExclusionStrategies(ExclusionSpecialCase.values());
     for (Class<? extends JsonOutputView> viewClass : AdapterRegistry.getOutputViewClasses()) {
       builder.registerTypeAdapter(viewClass, JsonOutputView.SERIALIZER);
     }
@@ -164,8 +158,6 @@ public class RhinoConfiguration extends BaseConfiguration {
       builder.registerTypeAdapter(entry.getKey(), entry.getValue());
     }
     Java8TimeGsonAdapters.register(builder);
-    DoiBasedIdentitySerializer.INSTANCE.register(builder);
-
 
     return builder.create();
   }
@@ -245,11 +237,6 @@ public class RhinoConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public PingbackReadService pingbackReadService() {
-    return new PingbackReadServiceImpl();
-  }
-
-  @Bean
   public JournalCrudService journalCrudService() {
     return new JournalCrudServiceImpl();
   }
@@ -292,11 +279,6 @@ public class RhinoConfiguration extends BaseConfiguration {
   @Bean
   public MessageSender messageSender() {
     return new CamelSender();
-  }
-
-  @Bean
-  public ArticleOutputViewFactory articleOutputViewFactory() {
-    return new ArticleOutputViewFactory();
   }
 
   @Bean

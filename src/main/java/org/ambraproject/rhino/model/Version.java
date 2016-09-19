@@ -15,15 +15,47 @@
  */
 package org.ambraproject.rhino.model;
 
+import java.util.Date;
+
 /**
  * For storing the version of ambra
  *
  * @author Joe Osowski
  */
-public class Version extends AmbraEntity {
+public class Version {
+  private Long ID;
+  private Date created;
+  private Date lastModified;
+
   private String name;
   private int version;
   private boolean updateInProcess;
+
+
+  public Long getID() {
+    return ID;
+  }
+
+  public void setID(Long ID) {
+    this.ID = ID;
+  }
+
+  public Date getCreated() {
+    return created;
+  }
+
+  public void setCreated(Date created) {
+    this.created = created;
+  }
+
+  public Date getLastModified() {
+    return lastModified;
+  }
+
+  public void setLastModified(Date lastModified) {
+    this.lastModified = lastModified;
+  }
+
 
   public boolean getUpdateInProcess() {
     return updateInProcess;

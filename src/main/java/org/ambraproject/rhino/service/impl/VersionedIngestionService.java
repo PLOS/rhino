@@ -8,7 +8,6 @@ import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
-import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleFile;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
@@ -320,9 +319,6 @@ public class VersionedIngestionService extends AmbraService {
 
   /**
    * Build a representation of an article's metadata from a persisted collection.
-   * <p>
-   * The legacy Hibernate model object {@link Article} is used as a data-holder for convenience and compatibility. This
-   * method constructs it anew, not by accessing Hibnerate, and populates only a subset of its normal fields.
    *
    * @param ingestionId the ID of the article to serve
    * @return an object containing metadata that could be extracted from the manuscript, with other fields unfilled

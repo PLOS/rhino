@@ -23,8 +23,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
-import org.ambraproject.rhino.identity.AssetFileIdentity;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.apache.commons.io.IOUtils;
@@ -33,7 +31,6 @@ import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
-import org.plos.crepo.model.identity.RepoId;
 import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
@@ -45,7 +42,6 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -88,11 +84,6 @@ public abstract class AmbraService {
         .addOrder(Order.asc("journalKey"));
   }
 
-  public static RestClientException reportNotFound(DoiBasedIdentity id) {
-    String message = "Item not found at the provided ID: " + id;
-    return new RestClientException(message, HttpStatus.NOT_FOUND);
-  }
-
   /**
    * Read a client-provided stream into memory. Report it as a client error if the stream cannot be read. Closes the
    * stream.
@@ -111,17 +102,6 @@ public abstract class AmbraService {
     } catch (IOException e) {
       String message = "Error reading provided file: " + e.getMessage();
       throw new RestClientException(message, HttpStatus.BAD_REQUEST, e);
-    }
-  }
-
-  protected void deleteAssetFile(AssetFileIdentity identity) {
-    RepoId repoId = RepoId.create(runtimeConfiguration.getCorpusStorage().getDefaultBucket(), identity.getFilePath());
-    contentRepoService.deleteLatestRepoObject(repoId); // TODO: Need to delete all versions?
-  }
-
-  protected static Document parseXml(byte[] bytes) throws IOException, RestClientException {
-    try (InputStream stream = new ByteArrayInputStream(bytes)) {
-      return parseXml(stream);
     }
   }
 
