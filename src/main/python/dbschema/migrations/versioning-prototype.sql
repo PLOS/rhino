@@ -4,7 +4,7 @@ CREATE TABLE `article` (
   `articleId` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `doi` VARCHAR(150) NOT NULL,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`articleId`)
+  PRIMARY KEY (`articleId`),
   UNIQUE KEY `doi` (`doi`));
 
 CREATE TABLE `journal` (
