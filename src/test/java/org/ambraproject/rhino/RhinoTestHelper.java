@@ -18,9 +18,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.model.Article;
-import org.ambraproject.rhino.model.ArticleAsset;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Syndication;
@@ -198,53 +196,53 @@ public final class RhinoTestHelper {
     }
   }
 
-  public static Archive createMockIngestible(ArticleIdentity articleId, InputStream xmlData,
-                                             List<ArticleAsset> referenceAssets) {
-    try {
-      try {
-        String archiveName = articleId.getLastToken() + ".zip";
-        InputStream mockIngestible = IngestibleUtil.buildMockIngestible(xmlData, referenceAssets);
-        return Archive.readZipFileIntoMemory(archiveName, mockIngestible);
-      } finally {
-        xmlData.close();
-      }
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
+//  public static Archive createMockIngestible(ArticleIdentity articleId, InputStream xmlData,
+//                                             List<ArticleAsset> referenceAssets) {
+//    try {
+//      try {
+//        String archiveName = articleId.getLastToken() + ".zip";
+//        InputStream mockIngestible = IngestibleUtil.buildMockIngestible(xmlData, referenceAssets);
+//        return Archive.readZipFileIntoMemory(archiveName, mockIngestible);
+//      } finally {
+//        xmlData.close();
+//      }
+//    } catch (IOException e) {
+//      throw new RuntimeException(e);
+//    }
+//  }
 
-  public static Stream<ArticleMetadata> createTestArticles(IngestionService ingestionService) {
-    return SAMPLE_ARTICLES.stream().map(doiStub -> createTestArticle(ingestionService, doiStub));
-  }
+//  public static Stream<ArticleMetadata> createTestArticles(IngestionService ingestionService) {
+//    return SAMPLE_ARTICLES.stream().map(doiStub -> createTestArticle(ingestionService, doiStub));
+//  }
+//
+//  public static ArticleMetadata createTestArticle(IngestionService ingestionService) {
+//    return createTestArticle(ingestionService, SAMPLE_ARTICLES.get(0));
+//  }
 
-  public static ArticleMetadata createTestArticle(IngestionService ingestionService) {
-    return createTestArticle(ingestionService, SAMPLE_ARTICLES.get(0));
-  }
-
-  public static ArticleMetadata createTestArticle(IngestionService ingestionService, String doiStub) {
-    ArticleIdentity articleId = ArticleIdentity.create(RhinoTestHelper.prefixed(doiStub));
-    RhinoTestHelper.TestFile sampleFile = new RhinoTestHelper.TestFile(getXmlPath(doiStub));
-    String doi = articleId.getIdentifier();
-
-    byte[] sampleData;
-    try {
-      sampleData = IOUtils.toByteArray(RhinoTestHelper.alterStream(sampleFile.read(), doi, doi));
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-
-    Article reference = readReferenceCase(getJsonPath(doiStub));
-
-    RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
-    Archive mockIngestible = createMockIngestible(articleId, input, reference.getAssets());
-    ArticleIngestion ingestion;
-    try {
-      ingestion = ingestionService.ingest(mockIngestible);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-    return null; // TODO: Recover ArticleMetadata from ArticleIngestionIdentifier
-  }
+//  public static ArticleMetadata createTestArticle(IngestionService ingestionService, String doiStub) {
+//    ArticleIdentity articleId = ArticleIdentity.create(RhinoTestHelper.prefixed(doiStub));
+//    RhinoTestHelper.TestFile sampleFile = new RhinoTestHelper.TestFile(getXmlPath(doiStub));
+//    String doi = articleId.getIdentifier();
+//
+//    byte[] sampleData;
+//    try {
+//      sampleData = IOUtils.toByteArray(RhinoTestHelper.alterStream(sampleFile.read(), doi, doi));
+//    } catch (IOException e) {
+//      throw new RuntimeException(e);
+//    }
+//
+//    Article reference = readReferenceCase(getJsonPath(doiStub));
+//
+//    RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
+//    Archive mockIngestible = createMockIngestible(articleId, input, reference.getAssets());
+//    ArticleIngestion ingestion;
+//    try {
+//      ingestion = ingestionService.ingest(mockIngestible);
+//    } catch (IOException e) {
+//      throw new RuntimeException(e);
+//    }
+//    return null; // TODO: Recover ArticleMetadata from ArticleIngestionIdentifier
+//  }
 
   public static Article readReferenceCase(File jsonFile) {
     Preconditions.checkNotNull(jsonFile);

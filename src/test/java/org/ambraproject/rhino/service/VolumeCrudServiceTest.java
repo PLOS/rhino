@@ -18,10 +18,10 @@
 
 package org.ambraproject.rhino.service;
 
+import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.BaseRhinoTest;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.view.journal.VolumeInputView;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
@@ -60,12 +60,12 @@ public class VolumeCrudServiceTest extends BaseRhinoTest {
 
   @Test
   public void testCreate() {
-    DoiBasedIdentity volumeId = DoiBasedIdentity.create("10.1371/volume.pmed.v05");
+    Doi volumeId = Doi.create("10.1371/volume.pmed.v05");
     String displayName = "volumeDisplay";
 
     String json = String.format(
         "{\"volumeUri\": \"%s\", \"displayName\": \"%s\"}",
-        volumeId.getKey(), displayName);
+        volumeId.getName(), displayName);
     VolumeInputView input = entityGson.fromJson(json, VolumeInputView.class);
 
     Journal testJournal = createTestJournal();
