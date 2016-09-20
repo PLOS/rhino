@@ -1,9 +1,6 @@
 package org.ambraproject.rhino.model.article;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ListMultimap;
-import com.google.common.collect.Maps;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,8 +20,6 @@ public class ArticleMetadata {
   private final String eLocationId;
 
   private final LocalDate publicationDate;
-  private final LocalDate revisionDate;
-  private final String publicationStage;
 
   private final String volume;
   private final String issue;
@@ -40,8 +35,6 @@ public class ArticleMetadata {
   private final ImmutableList<RelatedArticleLink> relatedArticles;
   private final ImmutableList<NlmPerson> editors;
 
-  private final ImmutableMap<String, ImmutableList<String>> customMeta;
-
   private ArticleMetadata(Builder builder) {
     this.doi = Objects.requireNonNull(builder.doi);
     this.title = builder.title;
@@ -53,8 +46,6 @@ public class ArticleMetadata {
     this.pageCount = builder.pageCount;
     this.eLocationId = builder.eLocationId;
     this.publicationDate = builder.publicationDate;
-    this.revisionDate = builder.revisionDate;
-    this.publicationStage = builder.publicationStage;
     this.volume = builder.volume;
     this.issue = builder.issue;
     this.publisherLocation = builder.publisherLocation;
@@ -65,7 +56,6 @@ public class ArticleMetadata {
     this.assets = ImmutableList.copyOf(builder.assets);
     this.relatedArticles = ImmutableList.copyOf(builder.relatedArticles);
     this.editors = ImmutableList.copyOf(builder.editors);
-    this.customMeta = ImmutableMap.copyOf(Maps.transformValues(builder.customMeta.asMap(), ImmutableList::copyOf));
   }
 
   public String getDoi() {
@@ -106,14 +96,6 @@ public class ArticleMetadata {
 
   public LocalDate getPublicationDate() {
     return publicationDate;
-  }
-
-  public LocalDate getRevisionDate() {
-    return revisionDate;
-  }
-
-  public String getPublicationStage() {
-    return publicationStage;
   }
 
   public String getVolume() {
@@ -177,8 +159,6 @@ public class ArticleMetadata {
     private String eLocationId;
 
     private LocalDate publicationDate;
-    private LocalDate revisionDate;
-    private String publicationStage;
 
     private String volume;
     private String issue;
@@ -193,8 +173,6 @@ public class ArticleMetadata {
     private List<AssetMetadata> assets;
     private List<RelatedArticleLink> relatedArticles;
     private List<NlmPerson> editors;
-
-    private ListMultimap<String, String> customMeta;
 
     public ArticleMetadata build() {
       return new ArticleMetadata(this);
@@ -250,16 +228,6 @@ public class ArticleMetadata {
       return this;
     }
 
-    public Builder setRevisionDate(LocalDate revisionDate) {
-      this.revisionDate = revisionDate;
-      return this;
-    }
-
-    public Builder setPublicationStage(String publicationStage) {
-      this.publicationStage = publicationStage;
-      return this;
-    }
-
     public Builder setVolume(String volume) {
       this.volume = volume;
       return this;
@@ -309,11 +277,6 @@ public class ArticleMetadata {
       this.editors = editors;
       return this;
     }
-
-    public Builder setCustomMeta(ListMultimap<String, String> customMeta) {
-      this.customMeta = customMeta;
-      return this;
-    }
   }
 
   @Override
@@ -335,10 +298,6 @@ public class ArticleMetadata {
     if (publicationDate != null ? !publicationDate.equals(that.publicationDate) : that.publicationDate != null) {
       return false;
     }
-    if (revisionDate != null ? !revisionDate.equals(that.revisionDate) : that.revisionDate != null) return false;
-    if (publicationStage != null ? !publicationStage.equals(that.publicationStage) : that.publicationStage != null) {
-      return false;
-    }
     if (volume != null ? !volume.equals(that.volume) : that.volume != null) return false;
     if (issue != null ? !issue.equals(that.issue) : that.issue != null) return false;
     if (publisherLocation != null ? !publisherLocation.equals(that.publisherLocation) : that.publisherLocation != null) {
@@ -354,8 +313,8 @@ public class ArticleMetadata {
     if (relatedArticles != null ? !relatedArticles.equals(that.relatedArticles) : that.relatedArticles != null) {
       return false;
     }
-    if (editors != null ? !editors.equals(that.editors) : that.editors != null) return false;
-    return customMeta != null ? customMeta.equals(that.customMeta) : that.customMeta == null;
+    return editors != null ? editors.equals(that.editors) : that.editors == null;
+
   }
 
   @Override
@@ -370,8 +329,6 @@ public class ArticleMetadata {
     result = 31 * result + (pageCount != null ? pageCount.hashCode() : 0);
     result = 31 * result + (eLocationId != null ? eLocationId.hashCode() : 0);
     result = 31 * result + (publicationDate != null ? publicationDate.hashCode() : 0);
-    result = 31 * result + (revisionDate != null ? revisionDate.hashCode() : 0);
-    result = 31 * result + (publicationStage != null ? publicationStage.hashCode() : 0);
     result = 31 * result + (volume != null ? volume.hashCode() : 0);
     result = 31 * result + (issue != null ? issue.hashCode() : 0);
     result = 31 * result + (publisherLocation != null ? publisherLocation.hashCode() : 0);
@@ -382,7 +339,6 @@ public class ArticleMetadata {
     result = 31 * result + (assets != null ? assets.hashCode() : 0);
     result = 31 * result + (relatedArticles != null ? relatedArticles.hashCode() : 0);
     result = 31 * result + (editors != null ? editors.hashCode() : 0);
-    result = 31 * result + (customMeta != null ? customMeta.hashCode() : 0);
     return result;
   }
 }

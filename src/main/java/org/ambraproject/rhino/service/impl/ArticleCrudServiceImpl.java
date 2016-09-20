@@ -26,6 +26,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.io.ByteSource;
 import org.ambraproject.rhino.content.xml.ArticleXml;
+import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
@@ -45,7 +46,6 @@ import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.VersionedArticleRelationship;
-import org.ambraproject.rhino.model.article.CustomMetaExtractor;
 import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -128,7 +128,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Autowired
   private ItemSetView.Factory itemSetViewFactory;
   @Autowired
-  private CustomMetaExtractor customMetaExtractor;
+  private CustomMetadataExtractor.Factory customMetadataExtractorFactory;
 
   @Override
   public void populateCategories(ArticleIdentifier articleId) throws IOException {
@@ -517,7 +517,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public void refreshArticleRelationships(ArticleRevision sourceArticleRev) {
-    ArticleXml sourceArticleXml = new ArticleXml(customMetaExtractor, getManuscriptXml(sourceArticleRev.getIngestion()));
+    ArticleXml sourceArticleXml = new ArticleXml(getManuscriptXml(sourceArticleRev.getIngestion()));
     ArticleTable sourceArticle = sourceArticleRev.getIngestion().getArticle();
 
     List<RelatedArticleLink> xmlRelationships = sourceArticleXml.parseRelatedArticles();

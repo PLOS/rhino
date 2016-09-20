@@ -21,7 +21,6 @@ package org.ambraproject.rhino.content.xml;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
@@ -30,7 +29,6 @@ import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.model.article.AssetMetadata;
-import org.ambraproject.rhino.model.article.CustomMetaExtractor;
 import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +39,6 @@ import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -51,11 +48,8 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleXml.class);
 
-  private final CustomMetaExtractor customMetaExtractor;
-
-  public ArticleXml(CustomMetaExtractor customMetaExtractor, Document xml) {
+  public ArticleXml(Document xml) {
     super(xml);
-    this.customMetaExtractor = Objects.requireNonNull(customMetaExtractor);
   }
 
   public Document getDocument() {
@@ -189,10 +183,6 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     article.setPublisherName(readString("/article/front/journal-meta/publisher/publisher-name"));
     article.setPublisherLocation(readString("/article/front/journal-meta/publisher/publisher-loc"));
     article.setLanguage(parseLanguage(readString("/article/@xml:lang")));
-
-    ImmutableListMultimap<String, String> customMeta = parseCustomMeta();
-    article.setCustomMeta(customMeta);
-    customMetaExtractor.apply(article, customMeta);
     article.setPublicationDate(parseDate(readNode("/article/front/article-meta/pub-date[@pub-type=\"epub\"]")));
 
     article.setNlmArticleType(readString("/article/@article-type"));
@@ -336,25 +326,6 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
       }
       return assetMetadataList.get(0);
     }).collect(Collectors.toList());
-  }
-
-  /**
-   * Parse the {@code custom-meta} name-value pairs from the manuscript.
-   * <p>
-   * It is possible for the manuscript to contain multiple custom meta nodes with the same name, though this may be
-   * invalid depending on the name.
-   *
-   * @return the multimap of {@code custom-meta} name-value pairs
-   */
-  private ImmutableListMultimap<String, String> parseCustomMeta() {
-    List<Node> customMetaNodes = readNodeList("//custom-meta-group/custom-meta");
-    ImmutableListMultimap.Builder<String, String> builder = ImmutableListMultimap.builder();
-    for (Node node : customMetaNodes) {
-      String name = readString("child::meta-name", node);
-      String value = sanitize(readString("child::meta-value", node));
-      builder.put(name, value);
-    }
-    return builder.build();
   }
 
 }
