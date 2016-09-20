@@ -320,7 +320,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return (List<ArticleRelationship>) hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "SELECT ar " +
-          "FROM VersionedArticleRelationship ar " +
+          "FROM ArticleRelationship ar " +
           "WHERE ar.sourceArticle.doi = :doi ");
       query.setParameter("doi", sourceId.getDoiName());
       return query.list();
@@ -332,7 +332,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return (List<ArticleRelationship>) hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "SELECT ar " +
-          "FROM VersionedArticleRelationship ar " +
+          "FROM ArticleRelationship ar " +
           "WHERE ar.targetArticle.doi = :doi ");
       query.setParameter("doi", targetId.getDoiName());
       return query.list();
