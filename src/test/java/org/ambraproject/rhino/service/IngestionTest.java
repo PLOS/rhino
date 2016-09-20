@@ -19,9 +19,7 @@
 package org.ambraproject.rhino.service;
 
 import com.google.common.base.CharMatcher;
-import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
@@ -30,25 +28,19 @@ import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.RhinoTestHelper;
-import org.ambraproject.rhino.content.PersonName;
-import org.ambraproject.rhino.identity.AssetFileIdentity;
-import org.ambraproject.rhino.model.AmbraEntity;
+import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.model.Article;
-import org.ambraproject.rhino.model.ArticleAsset;
-import org.ambraproject.rhino.model.ArticlePerson;
 import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.model.Category;
-import org.ambraproject.rhino.model.CitedArticle;
-import org.ambraproject.rhino.model.CitedArticlePerson;
 import org.ambraproject.rhino.model.Journal;
-import org.ambraproject.rhino.model.Syndication;
+import org.ambraproject.rhino.model.article.ArticleMetadata;
+import org.ambraproject.rhino.model.article.AssetMetadata;
+import org.ambraproject.rhino.model.article.NlmPerson;
+import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.ambraproject.rhino.test.AssertionCollector;
 import org.ambraproject.rhino.util.StringReplacer;
-import org.ambraproject.rhino.util.response.Transceiver;
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,11 +51,8 @@ import org.testng.annotations.DataProvider;
 import javax.annotation.Nullable;
 import java.io.File;
 import java.io.FilenameFilter;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -72,10 +61,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
 
 /**
  * Special test suite for testing ingestion features, using the legacy Admin app as a reference implementation.
@@ -255,12 +240,12 @@ public class IngestionTest extends BaseRhinoTest {
 //    testReadMetadata(actual);
 //  }
 
-  private void testReadMetadata(Article article) throws IOException {
-    // Mostly we want to test that this method call doesn't crash or hang
-    Transceiver response = articleCrudService.serveMetadata(article, true);
-
-    assertFalse(StringUtils.isBlank(response.readJson(entityGson)));
-  }
+//  private void testReadMetadata(Article article) throws IOException {
+//    // Mostly we want to test that this method call doesn't crash or hang
+//    Transceiver response = articleCrudService.serveMetadata(article, true);
+//
+//    assertFalse(StringUtils.isBlank(response.readJson(entityGson)));
+//  }
 
 //  @Test(dataProvider = "generatedZipIngestionData", enabled = false)
 //  public void testZipIngestion(File jsonFile, File zipFile) throws Exception {
@@ -333,23 +318,14 @@ public class IngestionTest extends BaseRhinoTest {
     return results.compare(objectName, fieldName, actual, expected);
   }
 
-  private AssertionCollector compareArticle(Article actual, Article expected) {
+  private AssertionCollector compareArticle(ArticleMetadata actual, ArticleMetadata expected) {
     AssertionCollector results = new AssertionCollector();
     compareArticleFields(results, actual, expected);
-    comparePersonLists(results, Article.class, "authors", actual.getAuthors(), expected.getAuthors());
+//    comparePersonLists(results, Article.class, "authors", actual.getAuthors(), expected.getAuthors());
     comparePersonLists(results, Article.class, "editors", actual.getEditors(), expected.getEditors());
-    compareCategorySets(results, actual.getCategories(), expected.getCategories());
-    compareJournalSets(results, actual.getJournals(), expected.getJournals());
     compareRelationshipLists(results, actual.getRelatedArticles(), expected.getRelatedArticles());
     compareAssetsWithExpectedFiles(results, actual.getAssets(), expected.getAssets());
 
-    // Since citedArticles are lazily loaded, and this test doesn't currently execute transactionally,
-    // we have to reload the actual citations separately.
-    // TODO: fix this.
-    List<CitedArticle> actualCitations = (List<CitedArticle>) hibernateTemplate.find(
-        "FROM CitedArticle WHERE articleID = ?", actual.getID());
-    compareCitationLists(results, actualCitations, expected.getCitedArticles());
-    assertSyndications(results, actual);
     return results;
   }
 
@@ -462,30 +438,23 @@ public class IngestionTest extends BaseRhinoTest {
    * @param actual
    * @param expected
    */
-  private void compareArticleFields(AssertionCollector results, Article actual, Article expected) {
+  private void compareArticleFields(AssertionCollector results, ArticleMetadata actual, ArticleMetadata expected) {
     compare(results, Article.class, "doi", actual.getDoi(), expected.getDoi());
     compareMarkupText(results, Article.class, "title", actual.getTitle(), expected.getTitle());
     compare(results, Article.class, "eIssn", actual.geteIssn(), expected.geteIssn());
-    compare(results, Article.class, "state", actual.getState(), expected.getState());
     compareMarkupText(results, Article.class, "description", actual.getDescription(), expected.getDescription());
     compareRights(results, actual.getRights(), expected.getRights());
     compare(results, Article.class, "language", actual.getLanguage(), expected.getLanguage());
     compare(results, Article.class, "format", actual.getFormat(), expected.getFormat());
-    comparePageRanges(results, Article.class, "pages", actual.getPages(), expected.getPages());
+    compare(results, Article.class, "pages", actual.getPageCount(), expected.getPageCount());
     compare(results, Article.class, "eLocationId", actual.geteLocationId(), expected.geteLocationId());
-
-    // actual.getDate() returns a java.sql.Date since it's coming from hibernate.  We have
-    // to convert that to a java.util.Date (which GSON returns) for the comparison.
-    compare(results, Article.class, "date", new Date(actual.getDate().getTime()),
-        expected.getDate());
+    compare(results, Article.class, "publicationDate", actual.getPublicationDate(), expected.getPublicationDate());
     compare(results, Article.class, "volume", actual.getVolume(), expected.getVolume());
     compare(results, Article.class, "issue", actual.getIssue(), expected.getIssue());
-    compare(results, Article.class, "journal", actual.getJournal(), expected.getJournal());
     compare(results, Article.class, "publisherLocation", actual.getPublisherLocation(), expected.getPublisherLocation());
     compare(results, Article.class, "publisherName", actual.getPublisherName(), expected.getPublisherName());
     compare(results, Article.class, "url", actual.getUrl(), expected.getUrl());
-    compareMarkupLists(results, Article.class, "collaborativeAuthors", actual.getCollaborativeAuthors(), expected.getCollaborativeAuthors());
-    compare(results, Article.class, "types", actual.getTypes(), expected.getTypes());
+    compare(results, Article.class, "types", actual.getArticleType(), expected.getArticleType());
   }
 
   private boolean compareRights(AssertionCollector results, String actualRights, String expectedRights) {
@@ -502,57 +471,40 @@ public class IngestionTest extends BaseRhinoTest {
      */
   }
 
-  private void compareJournalSets(AssertionCollector results, Set<Journal> actualSet, Set<Journal> expectedSet) {
-    // We care only about eIssn, because that's the only part given in article XML.
-    // All other Journal fields come from the environment, which doesn't exist here (see createTestJournal).
-    Set<String> actualEissns = Maps.uniqueIndex(actualSet, Journal::geteIssn).keySet();
-    Set<String> expectedEissns = Maps.uniqueIndex(expectedSet, Journal::geteIssn).keySet();
+  private void compareRelationshipLists(AssertionCollector results, List<RelatedArticleLink> actual, List<RelatedArticleLink> expected) {
+    Map<ArticleIdentifier, RelatedArticleLink> actualMap = Maps.uniqueIndex(actual, RelatedArticleLink::getArticleId);
+    Set<ArticleIdentifier> actualDois = actualMap.keySet();
+    Map<ArticleIdentifier, RelatedArticleLink> expectedMap = Maps.uniqueIndex(expected, RelatedArticleLink::getArticleId);
+    Set<ArticleIdentifier> expectedDois = expectedMap.keySet();
 
-    for (String missing : Sets.difference(expectedEissns, actualEissns)) {
-      compare(results, Journal.class, "eIssn", null, missing);
-    }
-    for (String extra : Sets.difference(actualEissns, expectedEissns)) {
-      compare(results, Journal.class, "eIssn", extra, null);
-    }
-    for (String eissn : Sets.intersection(actualEissns, expectedEissns)) {
-      compare(results, Journal.class, "eIssn", eissn, eissn);
-    }
-  }
-
-  private void compareRelationshipLists(AssertionCollector results, List<ArticleRelationship> actual, List<ArticleRelationship> expected) {
-    Map<String, ArticleRelationship> actualMap = Maps.uniqueIndex(actual, ArticleRelationship::getOtherArticleDoi);
-    Set<String> actualDois = actualMap.keySet();
-    Map<String, ArticleRelationship> expectedMap = Maps.uniqueIndex(expected, ArticleRelationship::getOtherArticleDoi);
-    Set<String> expectedDois = expectedMap.keySet();
-
-    for (String missingDoi : Sets.difference(expectedDois, actualDois)) {
+    for (ArticleIdentifier missingDoi : Sets.difference(expectedDois, actualDois)) {
       compare(results, ArticleRelationship.class, "otherArticleDoi", null, missingDoi);
     }
-    for (String extraDoi : Sets.difference(actualDois, expectedDois)) {
+    for (ArticleIdentifier extraDoi : Sets.difference(actualDois, expectedDois)) {
       compare(results, ArticleRelationship.class, "otherArticleDoi", extraDoi, null);
     }
 
-    for (String doi : Sets.intersection(actualDois, expectedDois)) {
+    for (ArticleIdentifier doi : Sets.intersection(actualDois, expectedDois)) {
       compare(results, ArticleRelationship.class, "otherArticleDoi", doi, doi);
       compare(results, ArticleRelationship.class, "type", actualMap.get(doi).getType(), expectedMap.get(doi).getType());
     }
   }
 
   private void compareAssetsWithExpectedFiles(AssertionCollector results,
-                                              Collection<ArticleAsset> actual, Collection<ArticleAsset> expected) {
-    Map<AssetFileIdentity, ArticleAsset> actualMap = Maps.uniqueIndex(actual, AssetFileIdentity::from);
-    Set<AssetFileIdentity> actualKeys = actualMap.keySet();
-    Map<AssetFileIdentity, ArticleAsset> expectedMap = Maps.uniqueIndex(expected, AssetFileIdentity::from);
-    Set<AssetFileIdentity> expectedKeys = expectedMap.keySet();
+                                              Collection<AssetMetadata> actual, Collection<AssetMetadata> expected) {
+    Map<String, AssetMetadata> actualMap = Maps.uniqueIndex(actual, AssetMetadata::getDoi);
+    Set<String> actualKeys = actualMap.keySet();
+    Map<String, AssetMetadata> expectedMap = Maps.uniqueIndex(expected, AssetMetadata::getDoi);
+    Set<String> expectedKeys = expectedMap.keySet();
 
-    for (AssetFileIdentity missing : Sets.difference(expectedKeys, actualKeys)) {
-      compare(results, ArticleAsset.class, "doi/extension", null, missing);
+    for (String missing : Sets.difference(expectedKeys, actualKeys)) {
+      compare(results, AssetMetadata.class, "doi", null, missing);
     }
-    for (AssetFileIdentity extra : Sets.difference(actualKeys, expectedKeys)) {
-      compare(results, ArticleAsset.class, "doi/extension", extra, null);
+    for (String extra : Sets.difference(actualKeys, expectedKeys)) {
+      compare(results, AssetMetadata.class, "doi", extra, null);
     }
-    for (AssetFileIdentity key : Sets.intersection(actualKeys, expectedKeys)) {
-      compareAssetFields(results, actualMap.get(key), expectedMap.get(key), true);
+    for (String key : Sets.intersection(actualKeys, expectedKeys)) {
+      compareAssetFields(results, actualMap.get(key), expectedMap.get(key));
     }
   }
 
@@ -563,8 +515,7 @@ public class IngestionTest extends BaseRhinoTest {
    * @param actual   an actual asset with no information specific to an uploaded file
    * @param expected an expected asset with an associated file
    */
-  private void compareAssetFields(AssertionCollector results, ArticleAsset actual,
-                                  ArticleAsset expected, boolean assetFileExpected) {
+  private void compareAssetFields(AssertionCollector results, AssetMetadata actual, AssetMetadata expected) {
     assertEquals(actual.getDoi(), expected.getDoi()); // should be true as a method precondition
 
     String actualContextElement = actual.getContextElement();
@@ -577,160 +528,20 @@ public class IngestionTest extends BaseRhinoTest {
        */
       expectedContextElement = actualContextElement;
     }
-    compare(results, ArticleAsset.class, "contextElement(" + actual.getDoi() + ")", actualContextElement, expectedContextElement);
+    compare(results, AssetMetadata.class, "contextElement(" + actual.getDoi() + ")", actualContextElement, expectedContextElement);
 
-    compareMarkupText(results, ArticleAsset.class, "title(" + actual.getDoi() + ")", actual.getTitle(), expected.getTitle());
-    compareMarkupText(results, ArticleAsset.class, "description(" + actual.getDoi() + ")", actual.getDescription(), expected.getDescription());
-
-    if (assetFileExpected) {
-      compare(results, ArticleAsset.class, "extension(" + actual.getDoi() + ")", actual.getExtension(), expected.getExtension());
-      compare(results, ArticleAsset.class, "contentType(" + actual.getDoi() + ")", actual.getContentType(), expected.getContentType());
-      compare(results, ArticleAsset.class, "size(" + actual.getDoi() + ")", actual.getSize(), expected.getSize());
-    }
-  }
-
-  /**
-   * Assert that the fields checked in {@link #compareAssetFields} are the same among all expected assets with the same
-   * DOI. The test expects this condition to hold about its own case data, so if it fails, halt instead of logging a
-   * soft case failure.
-   *
-   * @param assets non-empty collection of expected assets
-   */
-  private void verifyExpectedAssets(Iterable<ArticleAsset> assets) {
-    Iterator<ArticleAsset> iterator = assets.iterator();
-    ArticleAsset first = iterator.next();
-    while (iterator.hasNext()) {
-      ArticleAsset next = iterator.next();
-      assertTrue(Objects.equal(first.getDoi(), next.getDoi()));
-      assertTrue(Objects.equal(first.getContextElement(), next.getContextElement()));
-      assertTrue(Objects.equal(first.getTitle(), next.getTitle()));
-      assertTrue(Objects.equal(first.getDescription(), next.getDescription()));
-    }
-  }
-
-  private void compareCitationLists(AssertionCollector results,
-                                    List<CitedArticle> actualList, List<CitedArticle> expectedList) {
-    for (CitedArticle expectedCitation : expectedList) {
-      if (expectedCitation.getKey() == null) {
-        // At least one expected case has null keys. Fall back on comparing by order.
-        compareCitationListsByIndex(results, actualList, expectedList);
-        return;
-      }
-    }
-
-    Map<String, CitedArticle> actualMap = Maps.uniqueIndex(actualList, CitedArticle::getKey);
-    Set<String> actualKeys = actualMap.keySet();
-    Map<String, CitedArticle> expectedMap = Maps.uniqueIndex(expectedList, CitedArticle::getKey);
-    Set<String> expectedKeys = expectedMap.keySet();
-
-    for (String key : Sets.intersection(actualKeys, expectedKeys)) {
-      compareCitations(results, actualMap.get(key), expectedMap.get(key));
-    }
-    for (String extra : Sets.difference(actualKeys, expectedKeys)) {
-      compare(results, Article.class, "citedArticles", actualMap.get(extra), null);
-    }
-    for (String missing : Sets.difference(expectedKeys, actualKeys)) {
-      compare(results, Article.class, "citedArticles", null, expectedMap.get(missing));
-    }
-  }
-
-  private void compareCitationListsByIndex(AssertionCollector results,
-                                           List<CitedArticle> actualList, List<CitedArticle> expectedList) {
-    // Ensure no problems with random access or delayed evaluation
-    actualList = ImmutableList.copyOf(actualList);
-    expectedList = ImmutableList.copyOf(expectedList);
-
-    int commonSize = Math.min(actualList.size(), expectedList.size());
-    for (int i = 0; i < commonSize; i++) {
-      compareCitations(results, actualList.get(i), expectedList.get(i));
-    }
-
-    // If the sizes didn't match, report missing/extra citations as errors
-    for (int i = commonSize; i < actualList.size(); i++) {
-      compare(results, Article.class, "citedArticles", actualList.get(i), null);
-    }
-    for (int i = commonSize; i < expectedList.size(); i++) {
-      compare(results, Article.class, "citedArticles", null, expectedList.get(i));
-    }
-  }
-
-  private void compareCitations(AssertionCollector results, CitedArticle actual, CitedArticle expected) {
-    if (isEmptyCitation(expected)) {
-      return; // Apparently these occur because of an Admin bug. Assume the actual data is correct.
-    }
-
-    compare(results, CitedArticle.class, "key", actual.getKey(), expected.getKey());
-    compareYear(results, actual.getYear(), expected.getYear());
-    compare(results, CitedArticle.class, "displayYear", actual.getDisplayYear(), expected.getDisplayYear());
-    compare(results, CitedArticle.class, "month", actual.getMonth(), expected.getMonth());
-    compare(results, CitedArticle.class, "day", actual.getDay(), expected.getDay());
-    compare(results, CitedArticle.class, "volumeNumber", actual.getVolumeNumber(), expected.getVolumeNumber());
-    compare(results, CitedArticle.class, "volume", actual.getVolume(), expected.getVolume());
-    compare(results, CitedArticle.class, "issue", actual.getIssue(), expected.getIssue());
-    compareMarkupText(results, CitedArticle.class, "title", actual.getTitle(), expected.getTitle());
-    compare(results, CitedArticle.class, "publisherLocation", actual.getPublisherLocation(), expected.getPublisherLocation());
-    compare(results, CitedArticle.class, "publisherName", actual.getPublisherName(), expected.getPublisherName());
-    comparePageRanges(results, CitedArticle.class, "pages", actual.getPages(), expected.getPages());
-    compare(results, CitedArticle.class, "eLocationID", actual.geteLocationID(), expected.geteLocationID());
-    compare(results, CitedArticle.class, "journal", actual.getJournal(), expected.getJournal());
-    compareMarkupText(results, CitedArticle.class, "note", actual.getNote(), expected.getNote());
-    compareMarkupLists(results, CitedArticle.class, "collaborativeAuthors", actual.getCollaborativeAuthors(), expected.getCollaborativeAuthors());
-    compare(results, CitedArticle.class, "url", actual.getUrl(), expected.getUrl());
-    compare(results, CitedArticle.class, "doi", actual.getDoi(), expected.getDoi());
-    compare(results, CitedArticle.class, "summary", actual.getSummary(), expected.getSummary());
-    compare(results, CitedArticle.class, "citationType", actual.getCitationType(), expected.getCitationType());
-
-    comparePersonLists(results, CitedArticle.class, "authors", actual.getAuthors(), expected.getAuthors());
-    comparePersonLists(results, CitedArticle.class, "editors", actual.getEditors(), expected.getEditors());
-  }
-
-  private static void compareYear(AssertionCollector results, Integer actualYear, Integer expectedYear) {
-    if (actualYear != null && expectedYear != null
-        && actualYear.toString().length() == 4 && expectedYear.toString().length() > 4) {
-      // On displayYear fields with more than one four-digit substring, legacy behavior is to just concatenate them.
-      // New behavior is to just take the first one.
-      expectedYear = Integer.valueOf(expectedYear.toString().substring(0, 4));
-    }
-    compare(results, CitedArticle.class, "year", actualYear, expectedYear);
-  }
-
-  private static final Pattern PAGE_RANGE_DELIMITER = Pattern.compile("\\s*-\\s*");
-
-  private static boolean comparePageRanges(AssertionCollector results, Class<?> parentType, String fieldName,
-                                           String actualPageRange, String expectedPageRange) {
-    if (expectedPageRange != null) {
-      // Legacy page range values sometimes have junk whitespace. Remove it before comparing.
-      expectedPageRange = PAGE_RANGE_DELIMITER.matcher(expectedPageRange.trim()).replaceAll("-");
-
-      // Legacy page range values sometimes put a hyphen before the last page if the first page was missing.
-      if (expectedPageRange.charAt(0) == '-') {
-        expectedPageRange = expectedPageRange.substring(1);
-      }
-    }
-
-    return compare(results, parentType, fieldName, actualPageRange, expectedPageRange);
-  }
-
-  private static boolean isEmptyCitation(CitedArticle c) {
-    return c.getCitationType() == null && c.getYear() == null && c.getDisplayYear() == null && c.getMonth() == null
-        && c.getDay() == null && c.getVolume() == null && c.getVolumeNumber() == null
-        && c.getPublisherLocation() == null && c.getPublisherName() == null && c.getPages() == null
-        && c.geteLocationID() == null && c.getJournal() == null && c.getIssue() == null && c.getUrl() == null
-        && c.getDoi() == null && c.getNote() == null && c.getTitle() == null && c.getSummary() == null
-        && c.getAuthors().isEmpty() && c.getEditors().isEmpty() && c.getCollaborativeAuthors().isEmpty();
+    compareMarkupText(results, AssetMetadata.class, "title(" + actual.getDoi() + ")", actual.getTitle(), expected.getTitle());
+    compareMarkupText(results, AssetMetadata.class, "description(" + actual.getDoi() + ")", actual.getDescription(), expected.getDescription());
   }
 
   private void comparePersonLists(AssertionCollector results, Class<?> parentType, String fieldName,
-                                  List<? extends AmbraEntity> actualList, List<? extends AmbraEntity> expectedList) {
+                                  List<NlmPerson> actualNames, List<NlmPerson> expectedNames) {
     final String field = parentType.getSimpleName() + "." + fieldName;
-
-    List<PersonName> actualNames = asPersonNames(actualList);
-    List<PersonName> expectedNames = asPersonNames(expectedList);
 
     int commonSize = Math.min(actualNames.size(), expectedNames.size());
     for (int i = 0; i < commonSize; i++) {
-      PersonName actualName = actualNames.get(i);
-      PersonName expectedName = expectedNames.get(i);
+      NlmPerson actualName = actualNames.get(i);
+      NlmPerson expectedName = expectedNames.get(i);
 
       compare(results, field, "fullName", actualName.getFullName(), expectedName.getFullName());
       compare(results, field, "givenNames", actualName.getGivenNames(), expectedName.getGivenNames());
@@ -739,75 +550,12 @@ public class IngestionTest extends BaseRhinoTest {
     }
 
     // If the sizes didn't match, report missing/extra elements as errors
-    for (int i = commonSize; i < actualList.size(); i++) {
+    for (int i = commonSize; i < actualNames.size(); i++) {
       compare(results, parentType, fieldName, actualNames.get(i), null);
     }
-    for (int i = commonSize; i < expectedList.size(); i++) {
+    for (int i = commonSize; i < expectedNames.size(); i++) {
       compare(results, parentType, fieldName, null, expectedNames.get(i));
     }
-  }
-
-  /**
-   * Tests some Article fields that are only populated if we ingest a .zip archive.
-   */
-  private void compareArchiveFields(AssertionCollector results, Article actual, Article expected) {
-    compare(results, Article.class, "archiveName", actual.getArchiveName(),
-        expected.getArchiveName());
-    compare(results, Article.class, "strkImgURI", Strings.nullToEmpty(actual.getStrkImgURI()),
-        Strings.nullToEmpty(expected.getStrkImgURI()));
-  }
-
-  private Syndication buildExpectedSyndication(String target, Article article) {
-    Syndication result = new Syndication();
-//    result.setDoi(article.getDoi());
-    result.setTarget(target);
-    result.setStatus("PENDING");
-    result.setSubmissionCount(0);
-    return result;
-  }
-
-  private void assertSyndications(AssertionCollector results, Article article) {
-
-    // There is no getter for syndication in article, since the foreign key is
-    // doi instead of articleID.  So we can't do the comparison via JSON as we
-    // do elsewhere in this test.
-    List<Syndication> expected = new ArrayList<Syndication>(2);
-    expected.add(buildExpectedSyndication("CROSSREF", article));
-    expected.add(buildExpectedSyndication("PMC", article));
-    expected.add(buildExpectedSyndication("PUBMED", article));
-    List<Syndication> actual = (List<Syndication>) hibernateTemplate.findByCriteria(
-        DetachedCriteria.forClass(Syndication.class)
-            .add(Restrictions.eq("doi", article.getDoi()))
-            .addOrder(Order.asc("target"))
-    );
-
-    int commonSize = Math.min(expected.size(), actual.size());
-    for (int i = 0; i < commonSize; i++) {
-      results.compare(Syndication.class, "syndication", actual.get(i), expected.get(i));
-    }
-    for (int i = commonSize; i < actual.size(); i++) {
-      results.compare(Syndication.class, "syndication", actual.get(i), null);
-    }
-    for (int i = commonSize; i < expected.size(); i++) {
-      results.compare(Syndication.class, "syndication", null, expected.get(i));
-    }
-  }
-
-  private static ImmutableList<PersonName> asPersonNames(Collection<? extends AmbraEntity> persons) {
-    List<PersonName> names = Lists.newArrayListWithCapacity(persons.size());
-    for (Object personObj : persons) {
-      // Have to do it this way for the same reason that PersonName exists in the first place -- see PersonName docs
-      PersonName name;
-      if (personObj instanceof ArticlePerson) {
-        name = PersonName.from((ArticlePerson) personObj);
-      } else if (personObj instanceof CitedArticlePerson) {
-        name = PersonName.from((CitedArticlePerson) personObj);
-      } else {
-        throw new ClassCastException();
-      }
-      names.add(name);
-    }
-    return ImmutableList.copyOf(names);
   }
 
 }
