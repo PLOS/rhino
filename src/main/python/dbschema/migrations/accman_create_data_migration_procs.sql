@@ -261,14 +261,13 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
 
           SET file_type =
           CASE
-          WHEN item_type = 'standaloneStrikingImage' THEN 'strikingImage'
           WHEN item_type = 'article' THEN
             CASE
             WHEN asset_extension = 'XML' THEN 'manuscript'
             WHEN asset_extension = 'PDF' THEN 'printable'
             ELSE 'Unknown article'
             END
-          WHEN item_type = 'figure' THEN
+          WHEN item_type IN ('figure', 'strikingImage') THEN
             CASE
             WHEN asset_extension = 'PNG_S' THEN 'small'
             WHEN asset_extension = 'PNG_M' THEN 'medium'
