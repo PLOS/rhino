@@ -129,9 +129,9 @@ public interface RuntimeConfiguration {
   QueueConfiguration getQueueConfiguration();
 
   interface ManuscriptCustomMeta {
-    String getRevisionDateName();
+    String getRevisionDateMetaTagName();
 
-    String getPublicationStageName();
+    String getPublicationStageMetaTagName();
   }
 
   ManuscriptCustomMeta getManuscriptCustomMeta();

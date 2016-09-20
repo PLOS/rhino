@@ -18,18 +18,18 @@ public class CustomMetaExtractor {
   public void apply(ArticleMetadata.Builder metadataBuilder, ListMultimap<String, String> customMeta) {
     RuntimeConfiguration.ManuscriptCustomMeta customMetaConfig = runtimeConfiguration.getManuscriptCustomMeta();
 
-    getSingleValue(customMeta, customMetaConfig.getRevisionDateName()).ifPresent((String revisionDate) -> {
+    getSingleValue(customMeta, customMetaConfig.getRevisionDateMetaTagName()).ifPresent((String revisionDate) -> {
       LocalDate parsedDate;
       try {
         parsedDate = LocalDate.parse(revisionDate);
       } catch (DateTimeParseException e) {
-        String message = String.format("'%s' custom-meta value must be an ISO-8601 date", customMetaConfig.getRevisionDateName());
+        String message = String.format("'%s' custom-meta value must be an ISO-8601 date", customMetaConfig.getRevisionDateMetaTagName());
         throw new XmlContentException(message, e);
       }
       metadataBuilder.setRevisionDate(parsedDate);
     });
 
-    getSingleValue(customMeta, customMetaConfig.getPublicationStageName())
+    getSingleValue(customMeta, customMetaConfig.getPublicationStageMetaTagName())
         .ifPresent(metadataBuilder::setPublicationStage);
   }
 

@@ -251,14 +251,14 @@ public class YamlConfiguration implements RuntimeConfiguration {
   public ManuscriptCustomMeta getManuscriptCustomMeta() {
     return (manuscriptCustomMeta != null) ? manuscriptCustomMeta : (manuscriptCustomMeta = new ManuscriptCustomMeta() {
       @Override
-      public String getRevisionDateName() {
+      public String getRevisionDateMetaTagName() {
         return (input.manuscriptCustomMeta != null && input.manuscriptCustomMeta.revisionDate != null)
             ? input.manuscriptCustomMeta.revisionDate
             : "Revision Date";
       }
 
       @Override
-      public String getPublicationStageName() {
+      public String getPublicationStageMetaTagName() {
         return (input.manuscriptCustomMeta != null && input.manuscriptCustomMeta.publicationStage != null)
             ? input.manuscriptCustomMeta.publicationStage
             : "Publication Stage";
