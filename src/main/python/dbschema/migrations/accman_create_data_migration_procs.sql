@@ -250,8 +250,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
           END IF;
 
           SET crepo_key = CONCAT(get_doi_name(asset_doi), '.', asset_extension);
-          SET crepo_uuid = '';
-          SELECT uuid, size INTO crepo_uuid, file_size FROM uuid_lut WHERE objkey = crepo_key;
+          SET crepo_uuid = UUID();
+          set file_size = 0;
+          #SELECT uuid, size INTO crepo_uuid, file_size FROM uuid_lut WHERE objkey = crepo_key;
           IF crepo_uuid = '' THEN
             SET err_msg = CONCAT('Crepo key ', crepo_key, ' not found. Rolling back ', get_doi_name(article_doi));
             CALL migrate_article_rollback(article_id);
@@ -437,7 +438,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_articles`()
     INSERT INTO issue (issueId, doi, volumeId, volumeSortOrder, displayName, created, lastModified)
       SELECT issueID, get_doi_name(issueUri), volumeID, volumeSortOrder, displayName, created, lastModified
       FROM oldIssue
-      WHERE issueId NOT IN (SELECT issueId FROM issue);
+      WHERE issueId NOT IN (SELECT issueId FROM issue) AND doi NOT LIKE '%pcol%';
 
     UPDATE issue SET imageArticleId = (SELECT articleID FROM article INNER JOIN oldIssue ON get_doi_name(imageUri) = doi WHERE issueID = issue.issueId);
 
@@ -446,7 +447,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_articles`()
     INSERT INTO issueArticleList (issueId, sortOrder, articleId)
       SELECT issueID, sortOrder, a.articleId
       FROM oldIssueArticleList ial INNER JOIN oldArticle oa ON ial.doi = oa.doi INNER JOIN article a ON oa.articleID = a.articleId
-      WHERE a.articleId NOT IN (SELECT articleId FROM issueArticleList WHERE issueId = ial.issueID);
+      WHERE a.articleId NOT IN (SELECT articleId FROM issueArticleList WHERE issueId = ial.issueID) AND issueID NOT IN (SELECT issueID FROM oldIssue WHERE issueUri LIKE '%pcol%');
 
     INSERT INTO articleCategoryAssignment
       SELECT acjt.* FROM articleCategoryJoinTable acjt INNER JOIN article a ON acjt.articleID = a.articleId
