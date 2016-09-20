@@ -32,7 +32,7 @@ public class CommentOutputView implements JsonOutputView {
   private final CompetingInterestStatement competingInterestStatement;
 
   private final ImmutableList<CommentOutputView> replies;
-  private final int replyTreeSize;
+  private final Integer replyTreeSize;
   private final Date mostRecentActivity;
 
   private CommentOutputView(ArticleVisibility parentArticle,
@@ -50,8 +50,18 @@ public class CommentOutputView implements JsonOutputView {
     this.mostRecentActivity = Objects.requireNonNull(mostRecentActivity);
   }
 
+  private CommentOutputView(ArticleVisibility parentArticle,
+                            Comment comment,
+                            CompetingInterestStatement competingInterestStatement) {
+    this.parentArticle = Objects.requireNonNull(parentArticle);
+    this.comment = Objects.requireNonNull(comment);
+    this.competingInterestStatement = Objects.requireNonNull(competingInterestStatement);
+    this.replies = null;
+    this.replyTreeSize = null;
+    this.mostRecentActivity = null;
+  }
 
-  public static class Factory {
+  public static class ByArticleFactory {
     private final CompetingInterestPolicy competingInterestPolicy;
     private final ArticleVisibility parentArticle;
     private final Map<Long, List<Comment>> commentsByParent;
@@ -60,8 +70,8 @@ public class CommentOutputView implements JsonOutputView {
      * @param comments      all comments belonging to the parent article
      * @param parentArticle
      */
-    public Factory(RuntimeConfiguration runtimeConfiguration, List<Comment> comments,
-        Article parentArticle) {
+    public ByArticleFactory(RuntimeConfiguration runtimeConfiguration, List<Comment> comments,
+                            Article parentArticle) {
       this.competingInterestPolicy = new CompetingInterestPolicy(runtimeConfiguration);
       this.parentArticle = ArticleVisibility.create(Doi.create(parentArticle.getDoi()));
       this.commentsByParent = comments.stream()
@@ -100,6 +110,24 @@ public class CommentOutputView implements JsonOutputView {
     }
   }
 
+  public static class Factory {
+    private final CompetingInterestPolicy competingInterestPolicy;
+
+    public Factory(RuntimeConfiguration runtimeConfiguration) {
+      this.competingInterestPolicy = new CompetingInterestPolicy(runtimeConfiguration);
+    }
+
+    /**
+     * @param comment a comment belonging to this object's parent article
+     * @return a view of the comment and all its children
+     */
+    public CommentOutputView buildView(Comment comment) {
+      CompetingInterestStatement competingInterestStatement = competingInterestPolicy.createStatement(comment);
+      return new CommentOutputView(ArticleVisibility.create(
+          Doi.create(comment.getArticle().getDoi())), comment, competingInterestStatement);
+    }
+  }
+
   public static final Comparator<Comment> BY_DATE = Comparator.comparing(Comment::getCreated);
 
 
@@ -130,7 +158,6 @@ public class CommentOutputView implements JsonOutputView {
 
     serialized.remove("competingInterestBody");
     serialized.add("competingInterestStatement", context.serialize(competingInterestStatement));
-    serialized.add("isRemoved", context.serialize(comment.getIsRemoved()));
     return serialized;
   }
 

@@ -24,6 +24,8 @@ import org.ambraproject.rhino.view.comment.CommentInputView;
 import org.ambraproject.rhino.view.comment.CommentOutputView;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
 
@@ -85,4 +87,5 @@ public interface CommentCrudService {
 
   public Transceiver getCommentCount(Article article);
 
+  public List<CommentOutputView> getCommentsCreatedOn(LocalDate fromDate, LocalDate toDate);
 }

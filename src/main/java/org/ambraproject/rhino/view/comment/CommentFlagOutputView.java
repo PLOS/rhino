@@ -37,7 +37,7 @@ public class CommentFlagOutputView implements JsonOutputView {
   private final Flag flag;
   private final CommentNodeView flaggedComment;
 
-  // Invoked from org.ambraproject.rhino.view.comment.CommentNodeView.Factory.createFlagView()
+  // Invoked from org.ambraproject.rhino.view.comment.CommentNodeView.ByArticleFactory.createFlagView()
   CommentFlagOutputView(Flag flag, CommentNodeView flaggedComment) {
     this.flag = Objects.requireNonNull(flag);
     this.flaggedComment = Objects.requireNonNull(flaggedComment);
