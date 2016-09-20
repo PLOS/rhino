@@ -192,7 +192,7 @@ public final class RhinoTestHelper {
         continue;
       }
       Journal journal = createDummyJournal(eissn);
-      hibernateTemplate.save(journal);
+//      hibernateTemplate.save(journal);
     }
   }
 
