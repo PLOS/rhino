@@ -260,15 +260,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
     }
   }
 
-  /**
-   * @deprecated Temporary; to be removed when versioned ingestion data model is stable.
-   */
-  @Deprecated
-  @Override
-  public boolean isUsingVersionedIngestion() {
-    return input.usingVersionedIngestion;
-  }
-
 
   public static class Input {
 
@@ -277,7 +268,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
     private HttpConnectionPoolConfigurationInput httpConnectionPool;
     private TaxonomyConfigurationInput taxonomy;
     private UserApiConfigurationInput userApi;
-    private boolean usingVersionedIngestion = true; // default is true
     private String competingInterestPolicyStart;
     private QueueConfigurationInput queue;
     private ManuscriptCustomMetaInput manuscriptCustomMeta;
@@ -344,17 +334,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setManuscriptCustomMeta(ManuscriptCustomMetaInput manuscriptCustomMeta) {
       this.manuscriptCustomMeta = manuscriptCustomMeta;
-    }
-
-    /**
-     * This one will likely be removed in the future, when versioned ingestion is stable and/or the only data schema in
-     * use.
-     *
-     * @deprecated Temporary; for reflective access by SnakeYAML only.
-     */
-    @Deprecated
-    public void setUsingVersionedIngestion(boolean usingVersionedIngestion) {
-      this.usingVersionedIngestion = usingVersionedIngestion;
     }
   }
 

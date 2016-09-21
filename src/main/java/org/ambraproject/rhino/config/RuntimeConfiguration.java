@@ -159,10 +159,4 @@ public interface RuntimeConfiguration {
    */
   String getManuscriptCustomMetaName(ManuscriptCustomMetaAttribute attribute);
 
-  /**
-   * @deprecated Temporary; to be removed when versioned ingestion data model is stable.
-   */
-  @Deprecated
-  boolean isUsingVersionedIngestion();
-
 }
