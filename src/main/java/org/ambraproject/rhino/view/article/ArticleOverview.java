@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.view.article.versioned;
+package org.ambraproject.rhino.view.article;
 
 import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.ImmutableSortedSet;
@@ -6,7 +6,6 @@ import com.google.common.collect.Maps;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleRevision;
-import org.ambraproject.rhino.model.ArticleTable;
 
 import java.util.ArrayList;
 import java.util.Collection;

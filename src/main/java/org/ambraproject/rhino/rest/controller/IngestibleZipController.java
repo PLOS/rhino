@@ -5,7 +5,7 @@ import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.impl.VersionedIngestionService;
+import org.ambraproject.rhino.service.impl.IngestionService;
 import org.ambraproject.rhino.util.Archive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +27,7 @@ public class IngestibleZipController extends RestController {
   @Autowired
   private ArticleCrudService articleCrudService;
   @Autowired
-  private VersionedIngestionService versionedIngestionService;
+  private IngestionService ingestionService;
 
   /**
    * Create an article based on a POST containing an article .zip archive file.
@@ -46,7 +46,7 @@ public class IngestibleZipController extends RestController {
     ArticleIngestion ingestion;
     try (InputStream requestInputStream = requestFile.getInputStream();
          Archive archive = Archive.readZipFile(archiveName, requestInputStream)) {
-      ingestion = versionedIngestionService.ingest(archive);
+      ingestion = ingestionService.ingest(archive);
     } catch (ManifestXml.ManifestDataException e) {
       throw new RestClientException("Invalid manifest: " + e.getMessage(), HttpStatus.BAD_REQUEST, e);
     }

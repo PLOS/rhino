@@ -5,7 +5,7 @@ import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleRevision;
-import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleRevisionWriteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class ArticleRevisionWriteServiceImpl implements ArticleRevisionWriteServ
     Preconditions.checkArgument(revisionId.getArticleIdentifier().equals(ingestionId.getArticleIdentifier()));
     ArticleIngestion ingestion = articleCrudService.readIngestion(ingestionId);
 
-    ArticleTable article = ingestion.getArticle();
+    Article article = ingestion.getArticle();
     Optional<ArticleRevision> previousLatest = articleCrudService.getLatestRevision(article);
 
     ArticleRevision newRevision = articleCrudService.getRevision(revisionId)
@@ -63,7 +63,7 @@ public class ArticleRevisionWriteServiceImpl implements ArticleRevisionWriteServ
   @Override
   public void deleteRevision(ArticleRevisionIdentifier revisionId) {
     ArticleRevision revision = articleCrudService.readRevision(revisionId);
-    ArticleTable article = revision.getIngestion().getArticle();
+    Article article = revision.getIngestion().getArticle();
 
     ArticleRevision latestRevision = articleCrudService.getLatestRevision(article)
         .orElseThrow(RuntimeException::new); // should be guaranteed to exist because at least one revision exists

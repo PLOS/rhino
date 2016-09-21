@@ -17,7 +17,7 @@ import com.google.common.collect.ImmutableSet;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
-import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.service.impl.SolrIndexServiceImpl;
 import org.ambraproject.rhino.util.Archive;
@@ -62,7 +62,7 @@ public class SolrIndexServiceTest extends BaseRhinoTest {
       if (!existing.isEmpty())
         continue;
       Journal journal = RhinoTestHelper.createDummyJournal(eissn);
-      hibernateTemplate.save(journal);
+//      hibernateTemplate.save(journal);
     }
   }
 
@@ -71,7 +71,7 @@ public class SolrIndexServiceTest extends BaseRhinoTest {
     Archive archive = Archive.readZipFileIntoMemory(new File(TEST_DATA_DIR + "pone.0056489.zip"));
 //    Article article = articleCrudService.writeArchive(archive,
 //        Optional.empty(), DoiBasedCrudService.WriteMode.CREATE_ONLY, OptionalInt.empty());
-    ArticleTable article = new ArticleTable();
+    Article article = new Article();
     ArticleIdentifier articleId = ArticleIdentifier.create(article.getDoi());
 
     SolrIndexServiceImpl impl = (SolrIndexServiceImpl) solrIndexService;

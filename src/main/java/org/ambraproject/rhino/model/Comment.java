@@ -43,7 +43,7 @@ public class Comment {
 
   @ManyToOne
   @JoinColumn(name = "articleId", nullable = false)
-  private ArticleTable article;
+  private Article article;
 
   @ManyToOne
   @JoinColumn(name = "parentId", nullable = true)
@@ -97,11 +97,11 @@ public class Comment {
     this.userProfileID = userProfileID;
   }
 
-  public ArticleTable getArticle() {
+  public Article getArticle() {
     return article;
   }
 
-  public void setArticle(ArticleTable article) {
+  public void setArticle(Article article) {
     this.article = article;
   }
 

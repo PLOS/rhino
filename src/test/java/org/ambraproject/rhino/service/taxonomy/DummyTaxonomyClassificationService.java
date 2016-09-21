@@ -3,7 +3,7 @@ package org.ambraproject.rhino.service.taxonomy;
 import com.google.common.collect.ImmutableList;
 import org.ambraproject.rhino.model.ArticleCategoryAssignment;
 import org.ambraproject.rhino.model.ArticleRevision;
-import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Category;
 import org.w3c.dom.Document;
 
@@ -19,12 +19,12 @@ public class DummyTaxonomyClassificationService implements TaxonomyClassificatio
       .build();
 
   @Override
-  public List<WeightedTerm> classifyArticle(ArticleTable article, Document articleXml) {
+  public List<WeightedTerm> classifyArticle(Article article, Document articleXml) {
     return DUMMY_DATA;
   }
 
   @Override
-  public List<String> getRawTerms(Document articleXml, ArticleTable article,
+  public List<String> getRawTerms(Document articleXml, Article article,
                                   boolean isTextRequired) throws IOException {
     if (isTextRequired) {
       return ImmutableList.of("dummy text sent to MAIstro", "dummy raw term");
@@ -38,12 +38,12 @@ public class DummyTaxonomyClassificationService implements TaxonomyClassificatio
   }
 
   @Override
-  public Collection<ArticleCategoryAssignment> getCategoriesForArticle(ArticleTable article) {
+  public Collection<ArticleCategoryAssignment> getCategoriesForArticle(Article article) {
     return null;
   }
 
   @Override
-  public Collection<Category> getArticleCategoriesWithTerm(ArticleTable article, String term) {
+  public Collection<Category> getArticleCategoriesWithTerm(Article article, String term) {
     return null;
   }
 }

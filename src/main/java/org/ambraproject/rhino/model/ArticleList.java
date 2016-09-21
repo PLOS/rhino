@@ -68,7 +68,7 @@ public class ArticleList implements Timestamped {
       inverseJoinColumns = @JoinColumn(name = "articleId", nullable = false)
   )
   @OrderColumn(name="sortOrder", nullable=false)
-  private List<ArticleTable> articles;
+  private List<Article> articles;
 
   public ArticleList() {
     super();
@@ -111,11 +111,11 @@ public class ArticleList implements Timestamped {
     this.displayName = displayName;
   }
 
-  public List<ArticleTable> getArticles() {
+  public List<Article> getArticles() {
     return articles;
   }
 
-  public void setArticles(List<ArticleTable> articles) {
+  public void setArticles(List<Article> articles) {
     this.articles = articles;
   }
 

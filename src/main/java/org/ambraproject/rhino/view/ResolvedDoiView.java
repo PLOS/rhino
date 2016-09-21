@@ -2,7 +2,7 @@ package org.ambraproject.rhino.view;
 
 import com.google.common.base.Preconditions;
 import org.ambraproject.rhino.identity.Doi;
-import org.ambraproject.rhino.view.article.versioned.ArticleOverview;
+import org.ambraproject.rhino.view.article.ArticleOverview;
 
 import java.util.Objects;
 

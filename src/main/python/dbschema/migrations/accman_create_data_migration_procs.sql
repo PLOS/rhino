@@ -19,6 +19,58 @@ DELIMITER ;
 
 ####################################################################################################
 
+DROP PROCEDURE IF EXISTS `drop_tables`;
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `drop_tables`()
+  BEGIN
+    SET FOREIGN_KEY_CHECKS=0;
+    DROP TABLE IF EXISTS `annotationCitationCollabAuthor`;
+    DROP TABLE IF EXISTS `annotationCitationAuthor`;
+    DROP TABLE IF EXISTS `annotationCitation`;
+    DROP TABLE IF EXISTS `annotationFlag`;
+    DROP TABLE IF EXISTS `annotation`;
+    DROP TABLE IF EXISTS `articleAsset`;
+    DROP TABLE IF EXISTS `articleCategoryFlagged`;
+    DROP TABLE IF EXISTS `articleCategoryJoinTable`;
+    DROP TABLE IF EXISTS `articleCollaborativeAuthors`;
+    DROP TABLE IF EXISTS `articlePerson`;
+    DROP TABLE IF EXISTS `articlePublishedJournals`;
+    DROP TABLE IF EXISTS `articleType`;
+    DROP TABLE IF EXISTS `categoryFeaturedArticle`;
+    DROP TABLE IF EXISTS `citedArticleCollaborativeAuthors`;
+    DROP TABLE IF EXISTS `citedPerson`;
+    DROP TABLE IF EXISTS `citedArticle`;
+    DROP TABLE IF EXISTS `oldArticleListJoinTable`;
+    DROP TABLE IF EXISTS `oldArticleList`;
+    DROP TABLE IF EXISTS `oldArticleRelationship`;
+    DROP TABLE IF EXISTS `oldArticle`;
+    DROP TABLE IF EXISTS `oldVolume`;
+    DROP TABLE IF EXISTS `oldIssueArticleList`;
+    DROP TABLE IF EXISTS `oldJournal`;
+    DROP TABLE IF EXISTS `oldIssue`;
+    DROP TABLE IF EXISTS `oldSyndication`;
+    DROP TABLE IF EXISTS `pingback`;
+    DROP TABLE IF EXISTS `savedSearch`;
+    DROP TABLE IF EXISTS `savedSearchQuery`;
+    DROP TABLE IF EXISTS `trackback`;
+    DROP TABLE IF EXISTS `userArticleView`;
+    DROP TABLE IF EXISTS `userLogin`;
+    DROP TABLE IF EXISTS `userOrcid`;
+    DROP TABLE IF EXISTS `userProfile`;
+    DROP TABLE IF EXISTS `userProfileMetaData`;
+    DROP TABLE IF EXISTS `userProfileRoleJoinTable`;
+    DROP TABLE IF EXISTS `userRole`;
+    DROP TABLE IF EXISTS `userRolePermission`;
+    DROP TABLE IF EXISTS `userSearch`;
+    DROP TABLE IF EXISTS `uuid_lut`;
+    DROP TABLE IF EXISTS `objects`;
+    DROP TABLE IF EXISTS `migration_status_log`;
+    SET FOREIGN_KEY_CHECKS=1;
+  END$$
+DELIMITER ;
+
+####################################################################################################
+
 DROP PROCEDURE IF EXISTS `correct_article_asset_table()`;
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `correct_article_asset_table`()
@@ -38,7 +90,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `correct_article_asset_table`()
       3549106, 3717992, 3327438, 2798600, 3253942, 3564266, 3608318, 3276852, 3730108, 3284252, 2769946, 3033834, 3269314,
       3974020, 2996694, 3400038, 3135944, 3772444, 3517478, 3097958, 3915706, 3693094, 4088712, 4090244, 3135946, 3654196,
       3824832, 3145054, 3495522, 3645260, 904138, 3713874, 3117298, 3327382, 1496428, 3033598, 3738022, 1993436, 3603534,
-      3087912, 3424848, 262234);
+      3087912, 3424848, 262234, 3393766, 3291602, 3269302);
 
     # individual cases (mostly duplicate or extraneous assets not reachable in final article page or present in the repo)
     UPDATE articleAsset SET doi = 'info:doi/10.1371/journal.pbio.0020012.s003' WHERE articleAssetID = 1207360;
@@ -84,7 +136,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `correct_article_asset_table`()
 
     DELETE FROM articleAsset WHERE articleAssetID = 15588622;
 
+<<<<<<< HEAD
     DELETE FROM articleAsset WHERE articleAssetID IN (8357149, 8420183);
+=======
+    DELETE FROM articleAsset WHERE articleAssetID = 8975739;
+>>>>>>> accman
 
   END $$
 DELIMITER ;
@@ -251,8 +307,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
           END IF;
 
           SET crepo_key = CONCAT(get_doi_name(asset_doi), '.', asset_extension);
-          SET crepo_uuid = '';
-          SELECT uuid, size INTO crepo_uuid, file_size FROM uuid_lut WHERE objkey = crepo_key;
+          SET crepo_uuid = UUID();
+          set file_size = 0;
+          #SELECT uuid, size INTO crepo_uuid, file_size FROM uuid_lut WHERE objkey = crepo_key;
           IF crepo_uuid = '' THEN
             SET err_msg = CONCAT('Crepo key ', crepo_key, ' not found. Rolling back ', get_doi_name(article_doi));
             CALL migrate_article_rollback(article_id);
@@ -263,14 +320,13 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
           SET file_type =
           CASE
           WHEN item_type IS NULL THEN NULL
-          WHEN item_type = 'standaloneStrikingImage' THEN 'strikingImage'
           WHEN item_type = 'article' THEN
             CASE
             WHEN asset_extension = 'XML' THEN 'manuscript'
             WHEN asset_extension = 'PDF' THEN 'printable'
             ELSE 'Unknown article'
             END
-          WHEN item_type = 'figure' THEN
+          WHEN item_type IN ('figure', 'standaloneStrikingImage') THEN
             CASE
             WHEN asset_extension = 'PNG_S' THEN 'small'
             WHEN asset_extension = 'PNG_M' THEN 'medium'
@@ -306,7 +362,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
 
           INSERT INTO articleFile
           (ingestionId, itemId, bucketName, crepoKey, crepoUuid, created, fileType, fileSize)
-          VALUES (ingestion_id, item_id, 'corpus', crepo_key, crepo_uuid, NOW(), file_type, file_size);
+          VALUES (ingestion_id, item_id, 'mogilefs-prod-repo', crepo_key, crepo_uuid, NOW(), file_type, file_size);
 
           SET prev_asset_doi = asset_doi;
 
@@ -438,16 +494,18 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_articles`()
     UPDATE oldIssue SET issueUri = 'info:doi/10.1371/issue.ppat.v12.i02' WHERE issueUri = 'info:doi/10.1371/issue.ppat.v12.i022'; # issueID=2798
 
     INSERT INTO issue (issueId, doi, volumeId, volumeSortOrder, displayName, created, lastModified)
-      SELECT issueID, issueUri, volumeID, volumeSortOrder, displayName, created, lastModified
+      SELECT issueID, get_doi_name(issueUri), volumeID, volumeSortOrder, displayName, created, lastModified
       FROM oldIssue
-      WHERE issueId NOT IN (SELECT issueId FROM issue);
+      WHERE issueId NOT IN (SELECT issueId FROM issue) AND doi NOT LIKE '%pcol%';
+
+    UPDATE issue SET imageArticleId = (SELECT articleID FROM article INNER JOIN oldIssue ON get_doi_name(imageUri) = doi WHERE issueID = issue.issueId);
 
     UPDATE journal SET currentIssueId = (SELECT currentIssueID FROM oldJournal WHERE journalID = journal.journalId);
 
     INSERT INTO issueArticleList (issueId, sortOrder, articleId)
       SELECT issueID, sortOrder, a.articleId
       FROM oldIssueArticleList ial INNER JOIN oldArticle oa ON ial.doi = oa.doi INNER JOIN article a ON oa.articleID = a.articleId
-      WHERE a.articleId NOT IN (SELECT articleId FROM issueArticleList WHERE issueId = ial.issueID);
+      WHERE a.articleId NOT IN (SELECT articleId FROM issueArticleList WHERE issueId = ial.issueID) AND issueID NOT IN (SELECT issueID FROM oldIssue WHERE issueUri LIKE '%pcol%');
 
     INSERT INTO articleCategoryAssignment
       SELECT acjt.* FROM articleCategoryJoinTable acjt INNER JOIN article a ON acjt.articleID = a.articleId

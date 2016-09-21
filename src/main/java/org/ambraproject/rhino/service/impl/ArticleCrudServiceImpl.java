@@ -20,8 +20,6 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Collections2;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 import com.google.common.io.ByteSource;
 import org.ambraproject.rhino.content.xml.ArticleXml;
@@ -29,58 +27,40 @@ import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleItemIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleCategoryAssignment;
 import org.ambraproject.rhino.model.ArticleFile;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
-import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.model.ArticleRevision;
-import org.ambraproject.rhino.model.ArticleTable;
-import org.ambraproject.rhino.model.VersionedArticleRelationship;
+import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
-import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.ResolvedDoiView;
-import org.ambraproject.rhino.view.article.ArticleCriteria;
-import org.ambraproject.rhino.view.article.ArticleOutputView;
-import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
-import org.ambraproject.rhino.view.article.RelatedArticleView;
 import org.ambraproject.rhino.view.article.author.ArticleAllAuthorsView;
 import org.ambraproject.rhino.view.article.author.AuthorView;
-import org.ambraproject.rhino.view.article.versioned.ArticleIngestionView;
-import org.ambraproject.rhino.view.article.versioned.ArticleOverview;
-import org.ambraproject.rhino.view.article.versioned.ArticleRevisionView;
-import org.ambraproject.rhino.view.article.versioned.CategoryAssignmentView;
-import org.ambraproject.rhino.view.article.versioned.ItemSetView;
+import org.ambraproject.rhino.view.article.ArticleIngestionView;
+import org.ambraproject.rhino.view.article.ArticleOverview;
+import org.ambraproject.rhino.view.article.ArticleRevisionView;
+import org.ambraproject.rhino.view.article.CategoryAssignmentView;
+import org.ambraproject.rhino.view.article.ItemSetView;
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Restrictions;
-import org.plos.crepo.exceptions.ContentRepoException;
-import org.plos.crepo.exceptions.ErrorType;
-import org.plos.crepo.model.identity.RepoId;
 import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
 
@@ -91,13 +71,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
-import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -113,10 +89,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Autowired
   AssetCrudService assetCrudService;
   @Autowired
-  protected PingbackReadService pingbackReadService;
-  @Autowired
-  private ArticleOutputViewFactory articleOutputViewFactory;
-  @Autowired
   private XpathReader xpathReader;
   @Autowired
   private TaxonomyService taxonomyService;
@@ -127,7 +99,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public void populateCategories(ArticleIdentifier articleId) throws IOException {
-    ArticleTable article = readArticle(articleId);
+    Article article = readArticle(articleId);
     ArticleRevision revision = readLatestRevision(article);
     taxonomyService.populateCategories(revision);
   }
@@ -155,65 +127,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return new RestClientException(msg, HttpStatus.BAD_REQUEST, e);
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public InputStream readXml(ArticleIdentity articleIdentity) {
-    RepoId repoId = RepoId.create(runtimeConfiguration.getCorpusStorage().getDefaultBucket(),
-        articleIdentity.forXmlAsset().getFilePath());
-    try {
-      return contentRepoService.getLatestRepoObject(repoId);
-    } catch (ContentRepoException e) {
-      if (e.getErrorType() == ErrorType.ErrorFetchingObject) {
-        throw reportNotFound(articleIdentity);
-      } else {
-        throw e;
-      }
-    }
-  }
-
-  @Override
-  public Transceiver serveMetadata(final DoiBasedIdentity id, final boolean excludeCitations) throws IOException {
-    return new EntityTransceiver<Article>() {
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        Date lastModified = (Date) DataAccessUtils.uniqueResult(hibernateTemplate.find(
-            "select lastModified from Article where doi = ?", id.getKey()));
-        if (lastModified == null) {
-          return null;
-        }
-        return copyToCalendar(lastModified);
-      }
-
-      @Override
-      protected Article fetchEntity() {
-        Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
-            hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
-                .add(Restrictions.eq("doi", id.getKey()))
-                .setFetchMode("categories", FetchMode.SELECT)
-                .setFetchMode("assets", FetchMode.SELECT)
-                .setFetchMode("articleType", FetchMode.JOIN)
-                .setFetchMode("journals", FetchMode.JOIN)
-                .setFetchMode("journals.volumes", FetchMode.JOIN)
-                .setFetchMode("journals.volumes.issues", FetchMode.JOIN)
-                .setFetchMode("journals.articleList", FetchMode.JOIN)
-                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-            ));
-        if (article == null) {
-          throw reportNotFound(id);
-        }
-        return article;
-      }
-
-      @Override
-      protected Object getView(Article entity) {
-        return createArticleView(entity, excludeCitations);
-      }
-    };
-  }
-
-  @Deprecated
   @Override
   public Transceiver serveMetadata(final ArticleIngestionIdentifier ingestionId) {
     ArticleIngestion ingestion = readIngestion(ingestionId);
@@ -289,25 +202,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public Transceiver serveMetadata(final Article article, final boolean excludeCitations) throws IOException {
-    return new EntityTransceiver<Article>() {
-      @Override
-      protected Article fetchEntity() {
-        return article;
-      }
-
-      @Override
-      protected Object getView(Article entity) {
-        return ImmutableMap.of();//createArticleView(entity, excludeCitations);
-      }
-    };
-  }
-
-  private ArticleOutputView createArticleView(Article article, boolean excludeCitations) {
-    return articleOutputViewFactory.create(article, excludeCitations);
-  }
-
-  @Override
   public Transceiver serveAuthors(ArticleIngestionIdentifier ingestionId) {
     ArticleIngestion articleIngestion = readIngestion(ingestionId);
     return new Transceiver() {
@@ -347,7 +241,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    */
   @Override
   public Transceiver serveCategories(final ArticleIdentifier articleId) throws IOException {
-    ArticleTable article = readArticle(articleId);
+    Article article = readArticle(articleId);
     return new Transceiver() {
       @Override
       protected Collection<CategoryAssignmentView> getData() throws IOException {
@@ -379,7 +273,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
       @Override
       protected Object getData() throws IOException {
-        ArticleTable article = readArticle(articleId);
+        Article article = readArticle(articleId);
         ArticleRevision revision = readLatestRevision(article);
         Document manuscriptXml = getManuscriptXml(revision.getIngestion());
         List<String> rawTerms = taxonomyService.getRawTerms(manuscriptXml, article, false /*isTextRequired*/);
@@ -400,7 +294,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    */
   @Override
   public String getRawCategoriesAndText(final ArticleIdentifier articleId) throws IOException {
-    ArticleTable article = readArticle(articleId);
+    Article article = readArticle(articleId);
     ArticleRevision revision = readLatestRevision(article);
     Document manuscriptXml = getManuscriptXml(revision.getIngestion());
 
@@ -422,54 +316,11 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
 
   @Override
-  public Transceiver listDois(final ArticleCriteria articleCriteria)
-      throws IOException {
-    return new Transceiver() {
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return null;
-      }
-
-      @Override
-      protected Object getData() throws IOException {
-        return articleCriteria.apply(hibernateTemplate);
-      }
-    };
-  }
-
-  @Override
-  public List<RelatedArticleView> getRelatedArticles(Article article) {
-    List<ArticleRelationship> rawRelationships = article.getRelatedArticles();
-    if (rawRelationships.isEmpty()) return ImmutableList.of();
-
-    Set<String> relatedArticleDois = rawRelationships.stream()
-        .map(ArticleRelationship::getOtherArticleDoi)
-        .filter(Objects::nonNull) // not every ArticleRelationship points to an article in our own database
-        .collect(Collectors.toSet());
-    Map<String, Article> relatedArticles = hibernateTemplate.execute(
-        (Session session) -> {
-          Query query = session.createQuery("FROM Article WHERE doi in :relatedArticleDois");
-          query.setParameterList("relatedArticleDois", relatedArticleDois);
-          return (List<Article>) query.list();
-        })
-        .stream().collect(Collectors.toMap(Article::getDoi, Function.identity()));
-
-    // Our Hibernate mappings maintain an explicit order of ArticleRelationships.
-    // The Article objects were fetched unordered, so preserve the order of the rawRelationships list.
-    return rawRelationships.stream()
-        .map((ArticleRelationship relationship) -> {
-          Article relatedArticle = relatedArticles.get(relationship.getOtherArticleDoi());
-          return new RelatedArticleView(relationship, relatedArticle);
-        })
-        .collect(Collectors.toList());
-  }
-
-  @Override
-  public List<VersionedArticleRelationship> getRelationshipsFrom(ArticleIdentifier sourceId) {
-    return (List<VersionedArticleRelationship>) hibernateTemplate.execute(session -> {
+  public List<ArticleRelationship> getRelationshipsFrom(ArticleIdentifier sourceId) {
+    return (List<ArticleRelationship>) hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "SELECT ar " +
-          "FROM VersionedArticleRelationship ar " +
+          "FROM ArticleRelationship ar " +
           "WHERE ar.sourceArticle.doi = :doi ");
       query.setParameter("doi", sourceId.getDoiName());
       return query.list();
@@ -477,11 +328,11 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public List<VersionedArticleRelationship> getRelationshipsTo(ArticleIdentifier targetId) {
-    return (List<VersionedArticleRelationship>) hibernateTemplate.execute(session -> {
+  public List<ArticleRelationship> getRelationshipsTo(ArticleIdentifier targetId) {
+    return (List<ArticleRelationship>) hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "SELECT ar " +
-          "FROM VersionedArticleRelationship ar " +
+          "FROM ArticleRelationship ar " +
           "WHERE ar.targetArticle.doi = :doi ");
       query.setParameter("doi", targetId.getDoiName());
       return query.list();
@@ -491,16 +342,16 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public void refreshArticleRelationships(ArticleRevision sourceArticleRev) {
     ArticleXml sourceArticleXml = new ArticleXml(getManuscriptXml(sourceArticleRev.getIngestion()));
-    ArticleTable sourceArticle = sourceArticleRev.getIngestion().getArticle();
+    Article sourceArticle = sourceArticleRev.getIngestion().getArticle();
 
     List<RelatedArticleLink> xmlRelationships = sourceArticleXml.parseRelatedArticles();
-    List<VersionedArticleRelationship> dbRelationships = getRelationshipsFrom(ArticleIdentifier.create(sourceArticle.getDoi()));
-    for (VersionedArticleRelationship ar : dbRelationships) {
+    List<ArticleRelationship> dbRelationships = getRelationshipsFrom(ArticleIdentifier.create(sourceArticle.getDoi()));
+    for (ArticleRelationship ar : dbRelationships) {
       hibernateTemplate.delete(ar);
     }
     for (RelatedArticleLink ar : xmlRelationships) {
-      getArticle(ar.getArticleId()).ifPresent((ArticleTable targetArticle) -> {
-        VersionedArticleRelationship newAr = new VersionedArticleRelationship();
+      getArticle(ar.getArticleId()).ifPresent((Article targetArticle) -> {
+        ArticleRelationship newAr = new ArticleRelationship();
         newAr.setSourceArticle(sourceArticle);
         newAr.setTargetArticle(targetArticle);
         newAr.setType(ar.getType());
@@ -508,25 +359,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       });
       // else, likely a reference to an article external to our system and so the relationship is not persisted
     }
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Transceiver readRandom() throws IOException {
-    Criteria criteria = hibernateTemplate.getSessionFactory()
-        .getCurrentSession().createCriteria(Article.class);
-
-    criteria.add(Restrictions.sqlRestriction("1=1 order by rand()"));
-    criteria.setMaxResults(1);
-
-    Object result = criteria.uniqueResult();
-    if (result != null) {
-      Article randomArticle = (Article) result;
-      return serveMetadata(randomArticle, true /*excludeCitations*/);
-    }
-    throw new RestClientException("No articles present in database.", HttpStatus.NOT_FOUND);
   }
 
   @Override
@@ -665,7 +497,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public Optional<ArticleRevision> getLatestRevision(ArticleTable article) {
+  public Optional<ArticleRevision> getLatestRevision(Article article) {
     Integer maxRevisionNumber = hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "SELECT MAX(rev.revisionNumber) " +
@@ -689,29 +521,29 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public ArticleRevision readLatestRevision(ArticleTable article) {
+  public ArticleRevision readLatestRevision(Article article) {
     return getLatestRevision(article).orElseThrow(() ->
         new RestClientException("No revisions found for " + article.getDoi(), HttpStatus.NOT_FOUND));
   }
 
   @Override
-  public Optional<ArticleTable> getArticle(ArticleIdentifier articleIdentifier) {
+  public Optional<Article> getArticle(ArticleIdentifier articleIdentifier) {
     return Optional.ofNullable(hibernateTemplate.execute(session -> {
-      Query query = session.createQuery("FROM ArticleTable WHERE doi = :doi");
+      Query query = session.createQuery("FROM Article WHERE doi = :doi");
       query.setParameter("doi", articleIdentifier.getDoiName());
-      return (ArticleTable) query.uniqueResult();
+      return (Article) query.uniqueResult();
     }));
   }
 
   @Override
-  public ArticleTable readArticle(ArticleIdentifier articleIdentifier) {
+  public Article readArticle(ArticleIdentifier articleIdentifier) {
     return getArticle(articleIdentifier).orElseThrow(() ->
         new RestClientException("Article not found: " + articleIdentifier, HttpStatus.NOT_FOUND));
   }
 
   @Override
   public Collection<ArticleRevision> getArticlesPublishedOn(LocalDate fromDate, LocalDate toDate) {
-    return  hibernateTemplate.execute(session -> {
+    return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "SELECT ar " +
           "FROM ArticleRevision ar " +
@@ -727,7 +559,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public Collection<ArticleRevision> getArticlesRevisedOn(LocalDate fromDate, LocalDate toDate) {
-    return  hibernateTemplate.execute(session -> {
+    return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "SELECT ar " +
           "FROM ArticleRevision ar " +

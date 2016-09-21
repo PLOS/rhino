@@ -25,7 +25,7 @@ import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.model.ArticleRevision;
-import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.rest.DoiEscaping;
@@ -38,11 +38,10 @@ import org.ambraproject.rhino.service.SolrIndexService;
 import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.util.response.Transceiver;
-import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.SyndicationInputView;
-import org.ambraproject.rhino.view.article.versioned.ArticleRevisionView;
-import org.ambraproject.rhino.view.article.versioned.RelationshipSetView;
-import org.ambraproject.rhino.view.article.versioned.SyndicationView;
+import org.ambraproject.rhino.view.article.ArticleRevisionView;
+import org.ambraproject.rhino.view.article.RelationshipSetView;
+import org.ambraproject.rhino.view.article.SyndicationView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,14 +99,10 @@ public class ArticleCrudController extends RestController {
 
   @Transactional(readOnly = true)
   @RequestMapping(value = "/articles", method = RequestMethod.GET)
-  public void listDois(HttpServletRequest request, HttpServletResponse response,
-                       @RequestParam(value = "date", required = false) String includeLastModifiedDate,
-                       @RequestParam(value = "state", required = false) String[] pubStates,
-                       @RequestParam(value = "syndication", required = false) String[] syndStatuses)
+  public void listDois(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    ArticleCriteria articleCriteria = ArticleCriteria.create(asList(pubStates), asList(syndStatuses),
-        booleanParameter(includeLastModifiedDate));
-    articleCrudService.listDois(articleCriteria).respond(request, response, entityGson);
+    // TODO: Reimplement?
+    throw new RestClientException("GET /articles not currently supported", HttpStatus.METHOD_NOT_ALLOWED);
   }
 
   /*
@@ -122,7 +117,6 @@ public class ArticleCrudController extends RestController {
    *
    * @throws IOException
    */
-  @Deprecated
   @Transactional(readOnly = true)
   @RequestMapping(value = "/articles/{doi}/ingestions/{number}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
@@ -213,7 +207,7 @@ public class ArticleCrudController extends RestController {
                               @PathVariable("doi") String doi)
       throws IOException {
     ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
-    ArticleTable article = articleCrudService.readArticle(id);
+    Article article = articleCrudService.readArticle(id);
     commentCrudService.getCommentCount(article).respond(request, response, entityGson);
   }
 
@@ -322,15 +316,15 @@ public class ArticleCrudController extends RestController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/articles/{doi}/categories", params={"flag"}, method = RequestMethod.POST)
+  @RequestMapping(value = "/articles/{doi}/categories", params = {"flag"}, method = RequestMethod.POST)
   @ResponseBody
-  public Map<String, String> flagArticleCategory(@PathVariable("doi")  String articleDoi,
+  public Map<String, String> flagArticleCategory(@PathVariable("doi") String articleDoi,
                                                  @RequestParam(value = "categoryTerm", required = true) String categoryTerm,
                                                  @RequestParam(value = "userId", required = false) String userId,
                                                  @RequestParam(value = "flag", required = true) String action)
       throws IOException {
     ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(articleDoi));
-    ArticleTable article = articleCrudService.readArticle(articleId);
+    Article article = articleCrudService.readArticle(articleId);
     Optional<Long> userIdObj = Optional.ofNullable(userId).map(Long::parseLong);
 
     Collection<Category> categories = taxonomyService.getArticleCategoriesWithTerm(article, categoryTerm);
@@ -436,47 +430,31 @@ public class ArticleCrudController extends RestController {
     return reportUpdated(new SyndicationView(patched));
   }
 
-  /**
-   * Retrieves the metadata from a random article
-   *
-   * @param request  HttpServletRequest
-   * @param response HttpServletResponse
-   * @return a JSON representation of the random article
-   * @throws IOException
-   */
-  @Transactional(readOnly = true)
-  @RequestMapping(value = "/articles", method = RequestMethod.GET, params = "random")
-  public void readRandom(HttpServletRequest request, HttpServletResponse response)
-      throws IOException {
-    articleCrudService.readRandom().respond(request, response, entityGson);
-  }
-
 
   /**
-   * The following two methods {@link getDoisPublishedOn()} and {@link getDoisRevisedOn()} provide two
-   * utility endpoints for our publication workflow. Their main use-case is to ensure that all articles
-   * that are to be published on a given date are picked up by the publication scripts.
-   *
+   * The following two methods {@link #getDoisPublishedOn} and {@link #getDoisRevisedOn} provide two utility endpoints
+   * for our publication workflow. Their main use-case is to ensure that all articles that are to be published on a
+   * given date are picked up by the publication scripts.
    */
   @Transactional(readOnly = true)
   @RequestMapping(value = "/articles", method = RequestMethod.GET, params = "published")
   public void getDoisPublishedOn(HttpServletRequest request, HttpServletResponse response,
                                  @ApiParam(value = "Date Format: yyyy-MM-dd")
-                                 @RequestParam(value = "fromDate") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate fromDate,
+                                 @RequestParam(value = "fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fromDate,
                                  @ApiParam(value = "Date Format: yyyy-MM-dd")
-                                 @RequestParam(value = "toDate") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate toDate) throws IOException {
-  Transceiver.serveUntimestampedView(() -> articleCrudService.getArticlesPublishedOn(fromDate, toDate)
-      .stream().map(ArticleRevisionView::getView)
-      .collect(Collectors.toList())).respond(request, response, entityGson);
+                                 @RequestParam(value = "toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate) throws IOException {
+    Transceiver.serveUntimestampedView(() -> articleCrudService.getArticlesPublishedOn(fromDate, toDate)
+        .stream().map(ArticleRevisionView::getView)
+        .collect(Collectors.toList())).respond(request, response, entityGson);
   }
 
   @Transactional(readOnly = true)
   @RequestMapping(value = "/articles", method = RequestMethod.GET, params = "revised")
   public void getDoisRevisedOn(HttpServletRequest request, HttpServletResponse response,
                                @ApiParam(value = "Date Format: yyyy-MM-dd")
-                               @RequestParam(value = "fromDate") @DateTimeFormat(pattern="yyyy-MM-dd")LocalDate fromDate,
+                               @RequestParam(value = "fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fromDate,
                                @ApiParam(value = "Date Format: yyyy-MM-dd")
-                               @RequestParam(value = "toDate") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate toDate) throws IOException {
+                               @RequestParam(value = "toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate) throws IOException {
 
     Transceiver.serveUntimestampedView(() -> articleCrudService.getArticlesRevisedOn(fromDate, toDate)
         .stream().map(ArticleRevisionView::getView)

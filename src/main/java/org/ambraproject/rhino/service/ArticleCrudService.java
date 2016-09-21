@@ -19,31 +19,24 @@
 package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.identity.ArticleIdentifier;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleItemIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRevision;
-import org.ambraproject.rhino.model.ArticleTable;
-import org.ambraproject.rhino.model.VersionedArticleRelationship;
+import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.ResolvedDoiView;
-import org.ambraproject.rhino.view.article.ArticleCriteria;
-import org.ambraproject.rhino.view.article.RelatedArticleView;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,41 +50,11 @@ public interface ArticleCrudService {
   public abstract void populateCategories(ArticleIdentifier articleId) throws IOException;
 
   /**
-   * Open a stream to read the XML file for an article, as raw bytes. The caller must close the stream.
-   *
-   * @param id the identifier of the article
-   * @return a stream containing the XML file
-   * @throws org.ambraproject.rhino.rest.RestClientException if the DOI does not belong to an article
-   */
-  public abstract InputStream readXml(ArticleIdentity id);
-
-  /**
-   * Read the metadata of an article.
-   *
-   * @param id               the identifier of the article
-   * @param excludeCitations if true, no citation information will be included in the response (useful for performance
-   *                         reasons, since this is a lot of data)
-   * @throws org.ambraproject.rhino.rest.RestClientException if the DOI does not belong to an article
-   */
-  public abstract Transceiver serveMetadata(DoiBasedIdentity id, boolean excludeCitations) throws IOException;
-
-  /**
-   * Read the metadata of an article.
-   *
-   * @param article          the article
-   * @param excludeCitations if true, no citation information will be included in the response (useful for performance
-   *                         reasons, since this is a lot of data)
-   * @throws org.ambraproject.rhino.rest.RestClientException if the DOI does not belong to an article
-   */
-  public abstract Transceiver serveMetadata(Article article, boolean excludeCitations) throws IOException;
-
-  /**
    * Read information about the authors of an article.
    *
    * @param ingestionId specifies the article
    * @throws IOException
    */
-
   public abstract Transceiver serveAuthors(ArticleIngestionIdentifier ingestionId);
 
   /**
@@ -121,35 +84,11 @@ public interface ArticleCrudService {
    */
   public abstract String getRawCategoriesAndText(ArticleIdentifier articleId) throws IOException;
 
-  /**
-   * List the DOIs of all ingested articles, or a described subset.
-   *
-   * @param articleCriteria description of the subset of articles to list
-   */
-  public abstract Transceiver listDois(ArticleCriteria articleCriteria)
-      throws IOException;
+  List<ArticleRelationship> getRelationshipsFrom(ArticleIdentifier sourceId);
 
-  /**
-   * Produce views of an article's related articles. Wraps the objects returned by {@link Article#getRelatedArticles()}
-   * and adds those articles' titles and author lists.
-   *
-   * @param article an article with a populated {@code relatedArticles} field
-   * @return a set of views of the related articles
-   */
-  public abstract List<RelatedArticleView> getRelatedArticles(Article article);
-
-  List<VersionedArticleRelationship> getRelationshipsFrom(ArticleIdentifier sourceId);
-
-  List<VersionedArticleRelationship> getRelationshipsTo(ArticleIdentifier targetId);
+  List<ArticleRelationship> getRelationshipsTo(ArticleIdentifier targetId);
 
   void refreshArticleRelationships(ArticleRevision sourceArticleRev);
-
-  /**
-   * Read the metadata of a random article.
-   * <p>
-   * <em>WARNING</em> random retrieval of records is not performant and should be used only for testing
-   */
-  public abstract Transceiver readRandom() throws IOException;
 
   /**
    * Recreate an ingested archive.
@@ -202,23 +141,23 @@ public interface ArticleCrudService {
   /**
    * Get an article's latest revision, if it has any revisions.
    */
-  public abstract Optional<ArticleRevision> getLatestRevision(ArticleTable article);
+  public abstract Optional<ArticleRevision> getLatestRevision(Article article);
 
   /**
    * Get the latest revision of an article requested by the client, throwing {@link RestClientException} if the article
    * has no revisions.
    */
-  public abstract ArticleRevision readLatestRevision(ArticleTable article);
+  public abstract ArticleRevision readLatestRevision(Article article);
 
   /**
    * Get an article if it exists.
    */
-  public abstract Optional<ArticleTable> getArticle(ArticleIdentifier articleIdentifier);
+  public abstract Optional<Article> getArticle(ArticleIdentifier articleIdentifier);
 
   /**
    * Read an article requested by the client, throwing {@link RestClientException} if it is not found.
    */
-  public abstract ArticleTable readArticle(ArticleIdentifier articleIdentifier);
+  public abstract Article readArticle(ArticleIdentifier articleIdentifier);
 
   public abstract Document getManuscriptXml(ArticleIngestion articleIngestion);
 
