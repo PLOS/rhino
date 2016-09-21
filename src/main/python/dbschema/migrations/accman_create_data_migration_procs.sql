@@ -71,7 +71,7 @@ DELIMITER ;
 
 ####################################################################################################
 
-DROP PROCEDURE IF EXISTS `correct_article_asset_table()`;
+DROP PROCEDURE IF EXISTS `correct_article_asset_table`;
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `correct_article_asset_table`()
   BEGIN
@@ -135,6 +135,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `correct_article_asset_table`()
     DELETE FROM articleAsset WHERE articleAssetID IN (14789201, 14789193, 14789195, 14789197, 14789199);
 
     DELETE FROM articleAsset WHERE articleAssetID = 15588622;
+
+    DELETE FROM articleAsset WHERE articleAssetID IN (8357149, 8420183);
 
     DELETE FROM articleAsset WHERE articleAssetID = 8975739;
 
@@ -209,8 +211,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
     DECLARE old_assets_cursor CURSOR FOR
       SELECT doi, extension, contextElement
       FROM articleAsset
-      WHERE articleID = article_id
-            AND extension NOT IN ('ORIG','ZIP','ZIP_PART') AND doi NOT LIKE '%.t___-M' # bogus recs and safe to ignore
+      WHERE articleID = article_id AND doi NOT LIKE '%.t___-M' # bogus recs and safe to ignore
       ORDER BY doi;
 
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
@@ -266,7 +267,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
             LEAVE persist_assets_loop;
           END IF;
 
-          IF asset_doi <> prev_asset_doi THEN
+          IF asset_extension IN ('ORIG', 'ZIP_PART') THEN
+            # ancillary files without associated articleItem record
+            SET item_type = NULL;
+            SET item_id = NULL;
+          ELSEIF asset_doi <> prev_asset_doi THEN
             SET asset_doi_name = get_doi_name(asset_doi);
             SET item_type =
             CASE
@@ -314,6 +319,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
 
           SET file_type =
           CASE
+          WHEN item_type IS NULL THEN NULL
           WHEN item_type = 'article' THEN
             CASE
             WHEN asset_extension = 'XML' THEN 'manuscript'
@@ -490,7 +496,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_articles`()
     INSERT INTO issue (issueId, doi, volumeId, volumeSortOrder, displayName, created, lastModified)
       SELECT issueID, get_doi_name(issueUri), volumeID, volumeSortOrder, displayName, created, lastModified
       FROM oldIssue
-      WHERE issueId NOT IN (SELECT issueId FROM issue) AND doi NOT LIKE '%pcol%';
+      WHERE issueId NOT IN (SELECT issueId FROM issue) AND issueUri NOT LIKE '%pcol%';
 
     UPDATE issue SET imageArticleId = (SELECT articleID FROM article INNER JOIN oldIssue ON get_doi_name(imageUri) = doi WHERE issueID = issue.issueId);
 
