@@ -26,6 +26,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -245,21 +246,18 @@ public class YamlConfiguration implements RuntimeConfiguration {
     });
   }
 
-  private transient ManuscriptCustomMeta manuscriptCustomMeta;
-
   @Override
-  public ManuscriptCustomMeta getManuscriptCustomMeta() {
-    return (manuscriptCustomMeta != null) ? manuscriptCustomMeta : (manuscriptCustomMeta = new ManuscriptCustomMeta() {
-      @Override
-      public String getRevisionDateMetaTagName() {
-        return input.manuscriptCustomMeta == null ? null : input.manuscriptCustomMeta.revisionDate;
-      }
-
-      @Override
-      public String getPublicationStageMetaTagName() {
-        return input.manuscriptCustomMeta == null ? null : input.manuscriptCustomMeta.publicationStage;
-      }
-    });
+  public String getManuscriptCustomMetaName(ManuscriptCustomMetaAttribute attribute) {
+    Objects.requireNonNull(attribute);
+    if (input.manuscriptCustomMeta == null) return null;
+    switch (attribute) {
+      case REVISION_DATE:
+        return input.manuscriptCustomMeta.revisionDate;
+      case PUBLICATION_STAGE:
+        return input.manuscriptCustomMeta.publicationStage;
+      default:
+        throw new AssertionError();
+    }
   }
 
   /**

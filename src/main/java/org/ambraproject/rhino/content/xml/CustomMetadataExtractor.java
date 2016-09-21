@@ -3,6 +3,7 @@ package org.ambraproject.rhino.content.xml;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ListMultimap;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
+import org.ambraproject.rhino.config.RuntimeConfiguration.ManuscriptCustomMetaAttribute;
 import org.ambraproject.rhino.model.article.ArticleCustomMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,6 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
 
 public class CustomMetadataExtractor extends AbstractArticleXml<ArticleCustomMetadata> {
   private static final Logger log = LoggerFactory.getLogger(CustomMetadataExtractor.class);
@@ -24,37 +24,24 @@ public class CustomMetadataExtractor extends AbstractArticleXml<ArticleCustomMet
     private RuntimeConfiguration runtimeConfiguration;
 
     public CustomMetadataExtractor parse(Node xml) {
-      return new CustomMetadataExtractor(xml, runtimeConfiguration.getManuscriptCustomMeta());
+      return new CustomMetadataExtractor(xml, runtimeConfiguration);
     }
   }
 
-  private final RuntimeConfiguration.ManuscriptCustomMeta customMetaNames;
+  private final RuntimeConfiguration runtimeConfiguration;
 
-  private CustomMetadataExtractor(Node xml, RuntimeConfiguration.ManuscriptCustomMeta customMetaNames) {
+  private CustomMetadataExtractor(Node xml, RuntimeConfiguration runtimeConfiguration) {
     super(xml);
-    this.customMetaNames = Objects.requireNonNull(customMetaNames);
-  }
-
-  private static enum MetaTag {
-    REVISION_DATE("manuscriptCustomMeta.revisionDate", RuntimeConfiguration.ManuscriptCustomMeta::getRevisionDateMetaTagName),
-    PUBLICATION_STAGE("manuscriptCustomMeta.publicationStage", RuntimeConfiguration.ManuscriptCustomMeta::getPublicationStageMetaTagName);
-
-    private final String description;
-    private final Function<RuntimeConfiguration.ManuscriptCustomMeta, String> getter;
-
-    private MetaTag(String description, Function<RuntimeConfiguration.ManuscriptCustomMeta, String> getter) {
-      this.description = description;
-      this.getter = getter;
-    }
+    this.runtimeConfiguration = Objects.requireNonNull(runtimeConfiguration);
   }
 
   @Override
   public ArticleCustomMetadata build() throws XmlContentException {
     ListMultimap<String, String> customMeta = parseCustomMeta();
     ArticleCustomMetadata.Builder builder = ArticleCustomMetadata.builder();
-    getSingleValue(customMeta, MetaTag.REVISION_DATE)
+    getSingleValue(customMeta, ManuscriptCustomMetaAttribute.REVISION_DATE)
         .ifPresent(revisionDate -> builder.setRevisionDate(parseRevisionDate(revisionDate)));
-    getSingleValue(customMeta, MetaTag.PUBLICATION_STAGE)
+    getSingleValue(customMeta, ManuscriptCustomMetaAttribute.PUBLICATION_STAGE)
         .ifPresent(builder::setPublicationStage);
     return builder.build();
   }
@@ -78,20 +65,20 @@ public class CustomMetadataExtractor extends AbstractArticleXml<ArticleCustomMet
     return builder.build();
   }
 
-  private Optional<String> getSingleValue(ListMultimap<String, String> customMeta, MetaTag tag) {
-    String key = tag.getter.apply(customMetaNames);
-    if (key == null) {
-      log.warn("No meta-name is configured for {}. Value cannot be parsed from manuscript or persisted on new ingestions.", tag.description);
+  private Optional<String> getSingleValue(ListMultimap<String, String> customMeta, ManuscriptCustomMetaAttribute attribute) {
+    String metaName = runtimeConfiguration.getManuscriptCustomMetaName(attribute);
+    if (metaName == null) {
+      log.warn("No meta-name is configured for {}. Value cannot be parsed from manuscript or persisted on new ingestions.", attribute.getConfigKey());
       return Optional.empty();
     }
 
-    List<String> values = customMeta.get(key);
+    List<String> values = customMeta.get(metaName);
     if (values.isEmpty()) {
       return Optional.empty();
     }
     if (values.size() > 1) {
       String message = String.format("Must not have more than one custom-meta node with <meta-name>%s</meta-name>. Values: %s",
-          key, values);
+          metaName, values);
       throw new XmlContentException(message);
     }
     return Optional.of(values.get(0));
@@ -102,7 +89,8 @@ public class CustomMetadataExtractor extends AbstractArticleXml<ArticleCustomMet
     try {
       parsedDate = LocalDate.parse(revisionDate);
     } catch (DateTimeParseException e) {
-      String message = String.format("'%s' custom-meta value must be an ISO-8601 date", customMetaNames.getRevisionDateMetaTagName());
+      String message = String.format("'%s' custom-meta value must be an ISO-8601 date",
+          runtimeConfiguration.getManuscriptCustomMetaName(ManuscriptCustomMetaAttribute.REVISION_DATE));
       throw new XmlContentException(message, e);
     }
     return parsedDate;

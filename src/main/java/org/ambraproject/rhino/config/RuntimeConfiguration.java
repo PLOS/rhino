@@ -128,13 +128,22 @@ public interface RuntimeConfiguration {
 
   QueueConfiguration getQueueConfiguration();
 
-  interface ManuscriptCustomMeta {
-    String getRevisionDateMetaTagName();
+  static enum ManuscriptCustomMetaAttribute {
+    REVISION_DATE("revisionDate"),
+    PUBLICATION_STAGE("publicationStage");
 
-    String getPublicationStageMetaTagName();
+    private final String configKey;
+
+    private ManuscriptCustomMetaAttribute(String configKey) {
+      this.configKey = configKey;
+    }
+
+    public String getConfigKey() {
+      return configKey;
+    }
   }
 
-  ManuscriptCustomMeta getManuscriptCustomMeta();
+  String getManuscriptCustomMetaName(ManuscriptCustomMetaAttribute attribute);
 
   /**
    * @deprecated Temporary; to be removed when versioned ingestion data model is stable.
