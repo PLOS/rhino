@@ -62,7 +62,7 @@ public class SolrIndexServiceTest extends BaseRhinoTest {
       if (!existing.isEmpty())
         continue;
       Journal journal = RhinoTestHelper.createDummyJournal(eissn);
-      hibernateTemplate.save(journal);
+//      hibernateTemplate.save(journal);
     }
   }
 

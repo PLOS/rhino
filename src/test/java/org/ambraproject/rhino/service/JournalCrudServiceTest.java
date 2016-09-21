@@ -37,7 +37,7 @@ public class JournalCrudServiceTest extends BaseRhinoTest {
   @Autowired
   private JournalCrudService journalCrudService;
 
-  @Test
+  @Test(enabled = false)
   public void testListJournals() throws IOException {
     Map<String, ?> journals = entityGson.fromJson(journalCrudService.listJournals().readJson(entityGson), Map.class);
     assertTrue(journals.size() > 0);
