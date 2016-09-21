@@ -2,7 +2,7 @@ package org.ambraproject.rhino.service.taxonomy;
 
 import org.ambraproject.rhino.model.ArticleCategoryAssignment;
 import org.ambraproject.rhino.model.ArticleRevision;
-import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Category;
 import org.w3c.dom.Document;
 
@@ -25,7 +25,7 @@ public interface TaxonomyClassificationService {
    * value
    * @throws TaxonomyRemoteServiceNotConfiguredException if a remote service is required but not configured
    */
-  public List<WeightedTerm> classifyArticle(ArticleTable article, Document articleXml);
+  public List<WeightedTerm> classifyArticle(Article article, Document articleXml);
 
   /**
    * Queries the MAI server for taxonomic terms for a given article, and returns a list of the raw results.
@@ -39,7 +39,7 @@ public interface TaxonomyClassificationService {
    * server if  {@param isTextRequired} is true.
    * @throws IOException
    */
-  public List<String> getRawTerms(Document articleXml, ArticleTable article,
+  public List<String> getRawTerms(Document articleXml, Article article,
                                   boolean isTextRequired) throws IOException;
 
   /**
@@ -51,8 +51,8 @@ public interface TaxonomyClassificationService {
    */
   public void populateCategories(ArticleRevision revision);
 
-  public Collection<ArticleCategoryAssignment> getCategoriesForArticle(ArticleTable article);
+  public Collection<ArticleCategoryAssignment> getCategoriesForArticle(Article article);
 
-  public Collection<Category> getArticleCategoriesWithTerm(ArticleTable article, String term);
+  public Collection<Category> getArticleCategoriesWithTerm(Article article, String term);
 
 }

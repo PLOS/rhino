@@ -8,13 +8,13 @@ import com.google.gson.JsonSerializationContext;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRevision;
-import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.view.JsonOutputView;
-import org.ambraproject.rhino.view.article.versioned.ArticleRevisionView;
+import org.ambraproject.rhino.view.article.ArticleRevisionView;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;
@@ -33,7 +33,7 @@ public class IssueOutputView implements JsonOutputView {
     private ArticleRevisionView.Factory articleRevisionViewFactory;
 
     private List<ArticleRevisionView> getIssueArticles(Issue issue) {
-      List<ArticleTable> articles = issue.getArticles();
+      List<Article> articles = issue.getArticles();
       if (articles == null) return ImmutableList.of();
       return articles.stream()
           .map(articleRevisionViewFactory::getLatestRevisionView)
@@ -78,7 +78,7 @@ public class IssueOutputView implements JsonOutputView {
   private static final ImmutableSet<String> FIGURE_IMAGE_TYPES = ImmutableSet.of("figure", "table");
 
   private String getIssueImageFigureDoi() {
-    ArticleTable imageArticle = issue.getImageArticle();
+    Article imageArticle = issue.getImageArticle();
     ArticleRevision latestArticleRevision = factory.articleCrudService.getLatestRevision(imageArticle).orElseThrow(
         () -> new RuntimeException("Image article has no published revisions. " + imageArticle.getDoi()));
     ArticleIngestion ingestion = latestArticleRevision.getIngestion();

@@ -9,7 +9,7 @@ import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.model.ArticleCategoryAssignment;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleRevision;
-import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
@@ -103,7 +103,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
    * @inheritDoc
    */
   @Override
-  public List<WeightedTerm> classifyArticle(ArticleTable article, Document articleXml)  {
+  public List<WeightedTerm> classifyArticle(Article article, Document articleXml)  {
     RuntimeConfiguration.TaxonomyConfiguration configuration = getTaxonomyConfiguration();
 
     List<String> rawTerms = getRawTerms(articleXml, article, false /*isTextRequired*/);
@@ -142,7 +142,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
    * @inheritDoc
    */
   @Override
-  public List<String> getRawTerms(Document articleXml, ArticleTable article, boolean isTextRequired) {
+  public List<String> getRawTerms(Document articleXml, Article article, boolean isTextRequired) {
     RuntimeConfiguration.TaxonomyConfiguration configuration = getTaxonomyConfiguration();
 
 
@@ -197,7 +197,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   }
 
   @Override
-  public Collection<ArticleCategoryAssignment> getCategoriesForArticle(ArticleTable article) {
+  public Collection<ArticleCategoryAssignment> getCategoriesForArticle(Article article) {
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "FROM ArticleCategoryAssignment aca " +
@@ -214,7 +214,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   }
 
   @Override
-  public Collection<Category> getArticleCategoriesWithTerm(ArticleTable article, String term) {
+  public Collection<Category> getArticleCategoriesWithTerm(Article article, String term) {
     Objects.requireNonNull(term);
     return getCategoriesForArticle(article).stream()
         .filter((ArticleCategoryAssignment aca) -> {
@@ -231,7 +231,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   @Override
   public void populateCategories(ArticleRevision revision) {
     ArticleIngestion ingestion = revision.getIngestion();
-    ArticleTable article = ingestion.getArticle();
+    Article article = ingestion.getArticle();
     Document xml = articleCrudService.getManuscriptXml(ingestion);
 
     List<WeightedTerm> terms;
@@ -276,7 +276,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     return results;
   }
 
-  private void persistCategories(List<WeightedTerm> terms, ArticleTable article) {
+  private void persistCategories(List<WeightedTerm> terms, Article article) {
     Set<String> termStrings = terms.stream()
         .map(WeightedTerm::getPath)
         .collect(Collectors.toSet());

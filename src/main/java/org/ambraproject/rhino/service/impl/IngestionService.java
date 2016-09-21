@@ -8,11 +8,10 @@ import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
-import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleFile;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
-import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.model.ingest.ArticleItemInput;
@@ -41,7 +40,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class VersionedIngestionService extends AmbraService {
+public class IngestionService extends AmbraService {
 
   @Autowired
   private ArticleCrudService articleCrudService;
@@ -96,7 +95,7 @@ public class VersionedIngestionService extends AmbraService {
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
 
-    ArticleTable article = persistArticle(articleIdentifier);
+    Article article = persistArticle(articleIdentifier);
     ArticleIngestion ingestion = persistIngestion(article, articleMetadata);
 
     // TODO: Allow bucket name to be specified as an ingestion parameter
@@ -117,15 +116,15 @@ public class VersionedIngestionService extends AmbraService {
    *
    * @param articleIdentifier
    */
-  private ArticleTable persistArticle(ArticleIdentifier articleIdentifier) {
+  private Article persistArticle(ArticleIdentifier articleIdentifier) {
     String articleDoi = articleIdentifier.getDoiName();
-    ArticleTable article = hibernateTemplate.execute(session -> {
-      Query selectQuery = session.createQuery("FROM ArticleTable WHERE doi = :doi");
+    Article article = hibernateTemplate.execute(session -> {
+      Query selectQuery = session.createQuery("FROM Article WHERE doi = :doi");
       selectQuery.setParameter("doi", articleDoi);
-      return (ArticleTable) selectQuery.uniqueResult();
+      return (Article) selectQuery.uniqueResult();
     });
     if (article == null) {
-      article = new ArticleTable();
+      article = new Article();
       article.setDoi(articleDoi);
       hibernateTemplate.save(article);
     }
@@ -134,7 +133,7 @@ public class VersionedIngestionService extends AmbraService {
 
   private static final int FIRST_INGESTION_NUMBER = 1;
 
-  private ArticleIngestion persistIngestion(ArticleTable article, ArticleMetadata articleMetadata) {
+  private ArticleIngestion persistIngestion(Article article, ArticleMetadata articleMetadata) {
     Journal journal = fetchJournal(articleMetadata);
 
     int nextIngestionNumber = hibernateTemplate.execute(session -> {
@@ -186,7 +185,7 @@ public class VersionedIngestionService extends AmbraService {
   private void validateAssetUniqueness(ManifestXml.Asset asset, Doi articleDoi) {
     Doi assetDoi = Doi.create(asset.getUri());
     for (ArticleItem existingItem : articleCrudService.getAllArticleItems(assetDoi)) {
-      ArticleTable existingParentArticle = existingItem.getIngestion().getArticle();
+      Article existingParentArticle = existingItem.getIngestion().getArticle();
       if (!Doi.create(existingParentArticle.getDoi()).equals(articleDoi)) {
         String errorMessage = String.format("Incoming article ingestion (doi:%s) has a duplicate " +
                 "article asset (doi:%s). Duplicate asset belongs to article doi: %s.",
@@ -320,9 +319,6 @@ public class VersionedIngestionService extends AmbraService {
 
   /**
    * Build a representation of an article's metadata from a persisted collection.
-   * <p>
-   * The legacy Hibernate model object {@link Article} is used as a data-holder for convenience and compatibility. This
-   * method constructs it anew, not by accessing Hibnerate, and populates only a subset of its normal fields.
    *
    * @param ingestionId the ID of the article to serve
    * @return an object containing metadata that could be extracted from the manuscript, with other fields unfilled

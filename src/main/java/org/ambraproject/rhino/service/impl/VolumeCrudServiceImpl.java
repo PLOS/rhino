@@ -19,9 +19,7 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
-import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.VolumeIdentifier;
-import org.ambraproject.rhino.model.ArticleTable;
 import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
