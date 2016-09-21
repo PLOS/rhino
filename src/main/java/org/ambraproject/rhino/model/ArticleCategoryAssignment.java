@@ -19,7 +19,7 @@ public class ArticleCategoryAssignment implements Serializable {
   @Id
   @JoinColumn(name = "articleId", nullable = false)
   @ManyToOne
-  private ArticleTable article;
+  private Article article;
 
   @Column
   private int weight;
@@ -27,7 +27,7 @@ public class ArticleCategoryAssignment implements Serializable {
   public ArticleCategoryAssignment() {
   }
 
-  public ArticleCategoryAssignment(Category category, ArticleTable article, int weight) {
+  public ArticleCategoryAssignment(Category category, Article article, int weight) {
     this.category = category;
     this.article = article;
     this.weight = weight;
@@ -41,11 +41,11 @@ public class ArticleCategoryAssignment implements Serializable {
     this.category = category;
   }
 
-  public ArticleTable getArticle() {
+  public Article getArticle() {
     return article;
   }
 
-  public void setArticle(ArticleTable article) {
+  public void setArticle(Article article) {
     this.article = article;
   }
 

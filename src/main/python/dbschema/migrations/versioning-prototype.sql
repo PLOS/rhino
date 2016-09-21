@@ -4,7 +4,8 @@ CREATE TABLE `article` (
   `articleId` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `doi` VARCHAR(150) NOT NULL,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`articleId`));
+  PRIMARY KEY (`articleId`),
+  UNIQUE KEY `doi` (`doi`));
 
 CREATE TABLE `journal` (
   `journalId` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -31,6 +32,7 @@ CREATE TABLE `articleIngestion` (
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `lastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`ingestionId`),
+  UNIQUE KEY `article_ingestnum` (`articleId`,`ingestionNumber`),
   CONSTRAINT `fk_articleIngestion_1`
     FOREIGN KEY (`articleId`)
     REFERENCES `article` (`articleId`)
@@ -49,6 +51,7 @@ CREATE TABLE `articleItem` (
   `articleItemType` VARCHAR(128) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`itemId`),
+  KEY `doi` (`doi`),
   CONSTRAINT `fk_articleItem_1`
     FOREIGN KEY (`ingestionId`)
     REFERENCES `articleIngestion` (`ingestionId`)
@@ -72,6 +75,7 @@ CREATE TABLE `articleFile` (
   `fileSize` BIGINT NOT NULL,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`fileId`),
+  UNIQUE KEY `ingest_item_filetype` (`ingestionId`,`itemId`,`fileType`),
   CONSTRAINT `fk_articleFile_1`
     FOREIGN KEY (`ingestionId`)
     REFERENCES `articleIngestion` (`ingestionId`)

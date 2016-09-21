@@ -21,14 +21,14 @@
  *
  */
 
-package org.ambraproject.rhino.view.article.versioned;
+package org.ambraproject.rhino.view.article;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleRevision;
-import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
@@ -47,7 +47,7 @@ public class ArticleRevisionView implements JsonOutputView {
      * @param article the article to represent
      * @return a view representing the article and, if it has one, its latest revision
      */
-    public ArticleRevisionView getLatestRevisionView(ArticleTable article) {
+    public ArticleRevisionView getLatestRevisionView(Article article) {
       return new ArticleRevisionView(article, articleCrudService.getLatestRevision(article));
     }
   }
@@ -57,10 +57,10 @@ public class ArticleRevisionView implements JsonOutputView {
   }
 
 
-  private final ArticleTable article;
+  private final Article article;
   private final Optional<ArticleRevision> revision;
 
-  private ArticleRevisionView(ArticleTable article, Optional<ArticleRevision> revision) {
+  private ArticleRevisionView(Article article, Optional<ArticleRevision> revision) {
     this.article = Objects.requireNonNull(article);
     this.revision = Objects.requireNonNull(revision);
   }

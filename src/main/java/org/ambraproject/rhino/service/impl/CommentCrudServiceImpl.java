@@ -20,7 +20,7 @@ import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.CommentIdentifier;
 import org.ambraproject.rhino.identity.Doi;
-import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Comment;
 import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.model.FlagReasonCode;
@@ -71,7 +71,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
    * @param article the article
    * @return the collection of annotations
    */
-  private List<Comment> fetchAllComments(ArticleTable article) {
+  private List<Comment> fetchAllComments(Article article) {
     return (List<Comment>) hibernateTemplate.find("FROM Comment WHERE articleId = ?", article.getArticleId());
   }
 
@@ -80,7 +80,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     return new Transceiver() {
       @Override
       protected Collection<CommentOutputView> getData() throws IOException {
-        ArticleTable article = articleCrudService.readArticle(articleId);
+        Article article = articleCrudService.readArticle(articleId);
         List<Comment> comments = fetchAllComments(article);
         CommentOutputView.Factory factory = new CommentOutputView.Factory(runtimeConfiguration,
             comments, article);
@@ -154,7 +154,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   public CommentOutputView createComment(Optional<ArticleIdentifier> articleId, CommentInputView input) {
     final Optional<String> parentCommentUri = Optional.ofNullable(input.getParentCommentId());
 
-    final ArticleTable article;
+    final Article article;
     final Comment parentComment;
     if (parentCommentUri.isPresent()) {
       parentComment = readComment(CommentIdentifier.create(parentCommentUri.get()));
@@ -432,7 +432,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   }
 
   @Override
-  public Transceiver getCommentCount(ArticleTable article) {
+  public Transceiver getCommentCount(Article article) {
     return new Transceiver() {
       private long getCount(Session session, String whereClause) {
         Query query = session.createQuery("SELECT COUNT(*) FROM Comment WHERE article = :article " + whereClause);

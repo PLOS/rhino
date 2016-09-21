@@ -6,9 +6,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.view.JsonOutputView;
-import org.ambraproject.rhino.view.KeyedListView;
 
 import java.util.Collection;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * A view of a {@link Journal} object that does not serialize its associative {@code volumes} field. Therefore, it is
@@ -20,7 +21,7 @@ public class JournalNonAssocView implements JsonOutputView {
 
   private final Journal journal;
 
-  public JournalNonAssocView(Journal journal) {
+  private JournalNonAssocView(Journal journal) {
     this.journal = Preconditions.checkNotNull(journal);
   }
 
@@ -33,31 +34,14 @@ public class JournalNonAssocView implements JsonOutputView {
     return serialized;
   }
 
-  public static class ListView extends KeyedListView<Journal> {
-    private ListView(Collection<? extends Journal> values) {
-      super(values);
-    }
-
-    @Override
-    protected String getKey(Journal value) {
-      return value.getJournalKey();
-    }
-
-    @Override
-    protected Object wrap(Journal value) {
-      return new JournalNonAssocView(value);
-    }
-  }
-
   /**
-   * Return a keyed list view of journals, wrapped such that the journals' associative fields are left alone. The
-   * returned list view is homomorphic to {@link JournalListView}.
+   * Return a keyed list view of journals, wrapped such that the journals' associative fields are left alone.
    *
    * @param journals the journals to wrap
    * @return the view
    */
-  public static ListView wrapList(Collection<? extends Journal> journals) {
-    return new ListView(journals);
+  public static Map<String, JournalNonAssocView> wrapList(Collection<? extends Journal> journals) {
+    return journals.stream().collect(Collectors.toMap(Journal::getJournalKey, JournalNonAssocView::new));
   }
 
 }

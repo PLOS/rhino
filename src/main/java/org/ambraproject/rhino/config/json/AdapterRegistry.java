@@ -4,18 +4,14 @@ import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.ambraproject.rhino.view.JsonOutputView;
-import org.ambraproject.rhino.view.KeyedStringList;
-import org.ambraproject.rhino.view.article.ArticleInputView;
-import org.ambraproject.rhino.view.article.DoiList;
 import org.ambraproject.rhino.view.article.ListInputView;
-import org.ambraproject.rhino.view.user.AuthIdList;
 
 import java.lang.reflect.Type;
 
 /**
  * Statically-defined collections of adapter objects to provide to Gson in configuration.
  *
- * @see org.ambraproject.rhino.config.RhinoConfiguration#entityGson()
+ * @see org.ambraproject.rhino.config.RhinoConfiguration#entityGson
  */
 public class AdapterRegistry {
   private AdapterRegistry() {
@@ -43,25 +39,10 @@ public class AdapterRegistry {
 
       .add(org.ambraproject.rhino.view.JsonWrapper.class)
 
-      .add(org.ambraproject.rhino.view.article.ArticleIssueOutputView.ListView.class)
-      .add(org.ambraproject.rhino.view.article.ArticleIssueOutputView.class)
-      .add(org.ambraproject.rhino.view.article.ArticleOutputView.AugmentedView.class)
-      .add(org.ambraproject.rhino.view.article.ArticleOutputView.class)
-      .add(org.ambraproject.rhino.view.article.ArticleStateView.class)
-      .add(org.ambraproject.rhino.view.article.ArticleViewList.class)
-      .add(org.ambraproject.rhino.view.article.CategoryView.class)
-      .add(org.ambraproject.rhino.view.article.RelatedArticleView.class)
-
-      .add(org.ambraproject.rhino.view.article.versioned.ArticleIngestionView.class)
-      .add(org.ambraproject.rhino.view.article.versioned.ArticleRevisionView.class)
-      .add(org.ambraproject.rhino.view.article.versioned.CategoryAssignmentView.class)
-      .add(org.ambraproject.rhino.view.article.versioned.SyndicationView.class)
-
-      .add(org.ambraproject.rhino.view.asset.groomed.GroomedAssetFileView.class)
-      .add(org.ambraproject.rhino.view.asset.groomed.GroomedImageView.class)
-      .add(org.ambraproject.rhino.view.asset.raw.RawAssetCollectionView.class)
-      .add(org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView.class)
-      .add(org.ambraproject.rhino.view.asset.raw.RawAssetFileView.class)
+      .add(org.ambraproject.rhino.view.article.ArticleIngestionView.class)
+      .add(org.ambraproject.rhino.view.article.ArticleRevisionView.class)
+      .add(org.ambraproject.rhino.view.article.CategoryAssignmentView.class)
+      .add(org.ambraproject.rhino.view.article.SyndicationView.class)
 
       .add(org.ambraproject.rhino.view.comment.CommentFlagOutputView.class)
       .add(org.ambraproject.rhino.view.comment.CommentNodeView.class)
@@ -69,12 +50,9 @@ public class AdapterRegistry {
 
       .add(org.ambraproject.rhino.view.journal.ArticleListView.class)
       .add(org.ambraproject.rhino.view.journal.IssueOutputView.class)
-      .add(org.ambraproject.rhino.view.journal.JournalListView.class)
-      .add(org.ambraproject.rhino.view.journal.JournalNonAssocView.ListView.class)
       .add(org.ambraproject.rhino.view.journal.JournalNonAssocView.class)
       .add(org.ambraproject.rhino.view.journal.JournalOutputView.class)
       .add(org.ambraproject.rhino.view.journal.JournalOutputView.DeepView.class)
-      .add(org.ambraproject.rhino.view.journal.VolumeListView.class)
       .add(org.ambraproject.rhino.view.journal.VolumeOutputView.class)
 
       .add(org.ambraproject.rhino.view.user.UserIdView.class)
@@ -89,9 +67,6 @@ public class AdapterRegistry {
    * Unlike {@link #JSON_OUTPUT_VIEW_CLASSES}, this is not so much an apparent kludge but normal Gson configuration.
    */
   private static final ImmutableMap<Type, Object> CUSTOM_ADAPTERS = ImmutableMap.<Type, Object>builder()
-      .put(DoiList.class, KeyedStringList.ADAPTER)
-      .put(AuthIdList.class, KeyedStringList.ADAPTER)
-      .put(ArticleInputView.class, ArticleInputView.DESERIALIZER)
       .put(ListInputView.class, ListInputView.DESERIALIZER)
       .build();
 

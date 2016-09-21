@@ -31,14 +31,14 @@ public class ArticleCategoryAssignmentFlag implements Serializable {
    *
    * It would be better to refactor this class to remove the 'category' and 'article' fields and instead associate with
    * an ArticleCategoryAssignment object. This would probably use the @Embedded annotation and may necessitate a
-   * compound ID class with Category and ArticleTable fields.
+   * compound ID class with Category and Article fields.
    */
   @JoinColumn(name = "categoryId", nullable = false)
   @ManyToOne
   private Category category;
   @JoinColumn(name = "articleId", nullable = false)
   @ManyToOne
-  private ArticleTable article;
+  private Article article;
 
   @Column(nullable = true)
   private Long userProfileId;
@@ -65,11 +65,11 @@ public class ArticleCategoryAssignmentFlag implements Serializable {
     this.category = category;
   }
 
-  public ArticleTable getArticle() {
+  public Article getArticle() {
     return article;
   }
 
-  public void setArticle(ArticleTable article) {
+  public void setArticle(Article article) {
     this.article = article;
   }
 

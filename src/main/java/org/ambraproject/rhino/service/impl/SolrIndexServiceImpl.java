@@ -20,7 +20,7 @@ import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
-import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.MessageSender;
@@ -108,7 +108,7 @@ public class SolrIndexServiceImpl extends AmbraService implements SolrIndexServi
 
   @Override
   public void updateSolrIndex(ArticleIdentifier articleId) {
-    ArticleTable article = articleCrudService.readArticle(articleId);
+    Article article = articleCrudService.readArticle(articleId);
     ArticleIngestion ingestion = articleCrudService.readLatestRevision(article).getIngestion();
     Document doc = articleCrudService.getManuscriptXml(ingestion);
 

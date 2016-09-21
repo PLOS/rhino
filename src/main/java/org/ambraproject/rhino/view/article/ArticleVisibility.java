@@ -1,12 +1,8 @@
 package org.ambraproject.rhino.view.article;
 
-import com.google.common.base.Preconditions;
-import org.ambraproject.rhino.model.Article;
-import org.ambraproject.rhino.model.Journal;
-import org.ambraproject.rhino.model.PublicationState;
-import org.ambraproject.rhino.view.journal.JournalNonAssocView;
+import org.ambraproject.rhino.identity.Doi;
 
-import java.util.Collection;
+import java.util.Objects;
 
 /**
  * An object describing an article's visibility: whether it is in a published state, and the set of journals in which it
@@ -14,18 +10,13 @@ import java.util.Collection;
  */
 public class ArticleVisibility {
 
-  private final String doi;
-  private final String state;
-  private final JournalNonAssocView.ListView journals;
+  private final Doi doi;
 
-  public ArticleVisibility(String doi, int state, Collection<Journal> journals) {
-    this.doi = Preconditions.checkNotNull(doi);
-    this.state = PublicationState.fromValue(state).getLabel();
-    this.journals = JournalNonAssocView.wrapList(journals);
-    Preconditions.checkArgument(this.state != null);
+  private ArticleVisibility(Doi doi) {
+    this.doi = Objects.requireNonNull(doi);
   }
 
-  public static ArticleVisibility create(Article article) {
-    return new ArticleVisibility(article.getDoi(), article.getState(), article.getJournals());
+  public static ArticleVisibility create(Doi doi) {
+    return new ArticleVisibility(doi);
   }
 }

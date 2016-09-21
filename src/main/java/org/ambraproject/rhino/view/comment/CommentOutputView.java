@@ -8,10 +8,10 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.Doi;
-import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Comment;
 import org.ambraproject.rhino.view.JsonOutputView;
-import org.ambraproject.rhino.view.article.ArticleTableVisibility;
+import org.ambraproject.rhino.view.article.ArticleVisibility;
 import org.ambraproject.rhino.view.user.UserIdView;
 
 import java.util.Collection;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  */
 public class CommentOutputView implements JsonOutputView {
 
-  private final ArticleTableVisibility parentArticle;
+  private final ArticleVisibility parentArticle;
   private final Comment comment;
   private final CompetingInterestStatement competingInterestStatement;
 
@@ -35,7 +35,7 @@ public class CommentOutputView implements JsonOutputView {
   private final int replyTreeSize;
   private final Date mostRecentActivity;
 
-  private CommentOutputView(ArticleTableVisibility parentArticle,
+  private CommentOutputView(ArticleVisibility parentArticle,
                             Comment comment,
                             CompetingInterestStatement competingInterestStatement,
                             List<CommentOutputView> replies,
@@ -53,7 +53,7 @@ public class CommentOutputView implements JsonOutputView {
 
   public static class Factory {
     private final CompetingInterestPolicy competingInterestPolicy;
-    private final ArticleTableVisibility parentArticle;
+    private final ArticleVisibility parentArticle;
     private final Map<Long, List<Comment>> commentsByParent;
 
     /**
@@ -61,9 +61,9 @@ public class CommentOutputView implements JsonOutputView {
      * @param parentArticle
      */
     public Factory(RuntimeConfiguration runtimeConfiguration, List<Comment> comments,
-        ArticleTable parentArticle) {
+        Article parentArticle) {
       this.competingInterestPolicy = new CompetingInterestPolicy(runtimeConfiguration);
-      this.parentArticle = ArticleTableVisibility.create(Doi.create(parentArticle.getDoi()));
+      this.parentArticle = ArticleVisibility.create(Doi.create(parentArticle.getDoi()));
       this.commentsByParent = comments.stream()
           .filter(comment -> comment.getParent() != null)
           .collect(Collectors.groupingBy(Comment::getParentId));

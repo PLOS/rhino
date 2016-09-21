@@ -22,8 +22,6 @@ import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.ambraproject.rhino.config.json.AdapterRegistry;
-import org.ambraproject.rhino.config.json.DoiBasedIdentitySerializer;
-import org.ambraproject.rhino.config.json.ExclusionSpecialCase;
 import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -37,7 +35,6 @@ import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.LegacyConfiguration;
 import org.ambraproject.rhino.service.MessageSender;
-import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.service.SolrIndexService;
 import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
@@ -47,12 +44,11 @@ import org.ambraproject.rhino.service.impl.ArticleRevisionWriteServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.CommentCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
+import org.ambraproject.rhino.service.impl.IngestionService;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.JournalCrudServiceImpl;
-import org.ambraproject.rhino.service.impl.PingbackReadServiceImpl;
 import org.ambraproject.rhino.service.impl.SolrIndexServiceImpl;
 import org.ambraproject.rhino.service.impl.SyndicationCrudServiceImpl;
-import org.ambraproject.rhino.service.impl.VersionedIngestionService;
 import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
@@ -62,11 +58,10 @@ import org.ambraproject.rhino.util.GitInfo;
 import org.ambraproject.rhino.util.Java8TimeGsonAdapters;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
-import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
-import org.ambraproject.rhino.view.article.versioned.ArticleIngestionView;
-import org.ambraproject.rhino.view.article.versioned.ArticleRevisionView;
-import org.ambraproject.rhino.view.article.versioned.ItemSetView;
-import org.ambraproject.rhino.view.article.versioned.RelationshipSetView;
+import org.ambraproject.rhino.view.article.ArticleIngestionView;
+import org.ambraproject.rhino.view.article.ArticleRevisionView;
+import org.ambraproject.rhino.view.article.ItemSetView;
+import org.ambraproject.rhino.view.article.RelationshipSetView;
 import org.ambraproject.rhino.view.journal.ArticleListView;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
@@ -106,7 +101,7 @@ import java.util.Properties;
  */
 @Configuration
 @EnableTransactionManagement
-public class RhinoConfiguration extends BaseConfiguration {
+public class RhinoConfiguration {
 
   @Bean
   public AnnotationSessionFactoryBean sessionFactory(DataSource hibernateDataSource) throws IOException {
@@ -116,7 +111,6 @@ public class RhinoConfiguration extends BaseConfiguration {
 
     AnnotationSessionFactoryBean bean = new AnnotationSessionFactoryBean();
     bean.setDataSource(hibernateDataSource);
-    setHibernateMappings(bean);
 
     Properties hibernateProperties = new Properties();
     hibernateProperties.setProperty("hibernate.dialect", org.hibernate.dialect.MySQLDialect.class.getName());
@@ -157,7 +151,6 @@ public class RhinoConfiguration extends BaseConfiguration {
     }
 
     // Bulk-apply special cases defined in org.ambraproject.rhino.config.json
-    builder.setExclusionStrategies(ExclusionSpecialCase.values());
     for (Class<? extends JsonOutputView> viewClass : AdapterRegistry.getOutputViewClasses()) {
       builder.registerTypeAdapter(viewClass, JsonOutputView.SERIALIZER);
     }
@@ -165,8 +158,6 @@ public class RhinoConfiguration extends BaseConfiguration {
       builder.registerTypeAdapter(entry.getKey(), entry.getValue());
     }
     Java8TimeGsonAdapters.register(builder);
-    DoiBasedIdentitySerializer.INSTANCE.register(builder);
-
 
     return builder.create();
   }
@@ -246,11 +237,6 @@ public class RhinoConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public PingbackReadService pingbackReadService() {
-    return new PingbackReadServiceImpl();
-  }
-
-  @Bean
   public JournalCrudService journalCrudService() {
     return new JournalCrudServiceImpl();
   }
@@ -281,8 +267,8 @@ public class RhinoConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public VersionedIngestionService versionedIngestionService() {
-    return new VersionedIngestionService();
+  public IngestionService ingestionService() {
+    return new IngestionService();
   }
 
   @Bean
@@ -298,11 +284,6 @@ public class RhinoConfiguration extends BaseConfiguration {
   @Bean
   public CustomMetadataExtractor.Factory customMetadataExtractorFactory() {
     return new CustomMetadataExtractor.Factory();
-  }
-
-  @Bean
-  public ArticleOutputViewFactory articleOutputViewFactory() {
-    return new ArticleOutputViewFactory();
   }
 
   @Bean

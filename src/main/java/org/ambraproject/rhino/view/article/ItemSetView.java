@@ -1,8 +1,9 @@
-package org.ambraproject.rhino.view.article.versioned;
+package org.ambraproject.rhino.view.article;
 
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import org.ambraproject.rhino.model.ArticleFile;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
@@ -73,8 +74,22 @@ public class ItemSetView {
     private ItemView(ArticleItem item, Collection<ArticleFile> files) {
       this.doi = Objects.requireNonNull(item.getDoi());
       this.itemType = Objects.requireNonNull(item.getItemType());
-      this.files = ImmutableMap.copyOf(files.stream()
-          .collect(Collectors.toMap(ArticleFile::getFileType, FileView::new)));
+      this.files = buildFileViewMap(item, files);
+    }
+
+    private static ImmutableMap<String, FileView> buildFileViewMap(ArticleItem item, Collection<ArticleFile> files) {
+      Map<String, FileView> builder = Maps.newLinkedHashMapWithExpectedSize(files.size());
+      for (ArticleFile file : files) {
+        String type = file.getFileType();
+        FileView view = new FileView(file);
+        FileView previous = builder.put(type, view);
+        if (previous != null) {
+          String message = String.format("Item has more than one file with file type \"%s\": %s",
+              type, item.getDoi());
+          throw new RuntimeException(message);
+        }
+      }
+      return ImmutableMap.copyOf(builder);
     }
   }
 

@@ -56,7 +56,7 @@ import java.util.Properties;
 
 // TODO: get tests to work transactionally
 /* @EnableTransactionManagement(proxyTargetClass = true) */
-public class TestConfiguration extends BaseConfiguration {
+public class TestConfiguration {
 
   /**
    * Dummy object for sanity-checking the unit test configuration.
@@ -81,7 +81,6 @@ public class TestConfiguration extends BaseConfiguration {
     LocalSessionFactoryBean bean = new LocalSessionFactoryBean();
     bean.setDataSource(dataSource);
     bean.setSchemaUpdate(true);
-    setHibernateMappings(bean);
 
     Properties hibernateProperties = new Properties();
     hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");

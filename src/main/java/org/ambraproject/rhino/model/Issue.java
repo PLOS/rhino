@@ -55,7 +55,7 @@ public class Issue implements Timestamped {
 
   @OneToOne
   @JoinColumn(name = "imageArticleId")
-  private ArticleTable imageArticle;
+  private Article imageArticle;
 
   @Generated(value= GenerationTime.INSERT)
   @Temporal(javax.persistence.TemporalType.TIMESTAMP)
@@ -75,7 +75,7 @@ public class Issue implements Timestamped {
       inverseJoinColumns = @JoinColumn(name = "articleId", nullable = false)
   )
   @OrderColumn(name="sortOrder", nullable=false)
-  private List<ArticleTable> articles;
+  private List<Article> articles;
 
   public Issue() {
     super();
@@ -110,11 +110,11 @@ public class Issue implements Timestamped {
     this.displayName = displayName;
   }
 
-  public ArticleTable getImageArticle() {
+  public Article getImageArticle() {
     return imageArticle;
   }
 
-  public void setImageArticle(ArticleTable imageArticle) {
+  public void setImageArticle(Article imageArticle) {
     this.imageArticle = imageArticle;
   }
 
@@ -135,11 +135,11 @@ public class Issue implements Timestamped {
     this.lastModified = lastModified;
   }
 
-  public List<ArticleTable> getArticles() {
+  public List<Article> getArticles() {
     return articles;
   }
 
-  public void setArticles(List<ArticleTable> articles) {
+  public void setArticles(List<Article> articles) {
     this.articles = articles;
   }
 

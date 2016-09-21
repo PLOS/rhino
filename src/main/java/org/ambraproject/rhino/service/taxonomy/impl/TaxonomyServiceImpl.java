@@ -3,7 +3,7 @@ package org.ambraproject.rhino.service.taxonomy.impl;
 import org.ambraproject.rhino.model.ArticleCategoryAssignment;
 import org.ambraproject.rhino.model.ArticleCategoryAssignmentFlag;
 import org.ambraproject.rhino.model.ArticleRevision;
-import org.ambraproject.rhino.model.ArticleTable;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.AmbraService;
@@ -26,12 +26,12 @@ public class TaxonomyServiceImpl extends AmbraService implements TaxonomyService
   private TaxonomyClassificationService taxonomyClassificationService;
 
   @Override
-  public List<WeightedTerm> classifyArticle(ArticleTable article, Document articleXml) {
+  public List<WeightedTerm> classifyArticle(Article article, Document articleXml) {
     return taxonomyClassificationService.classifyArticle(article, articleXml);
   }
 
   @Override
-  public List<String> getRawTerms(Document articleXml, ArticleTable article, boolean isTextRequired) throws IOException {
+  public List<String> getRawTerms(Document articleXml, Article article, boolean isTextRequired) throws IOException {
     return taxonomyClassificationService.getRawTerms(articleXml, article, isTextRequired);
   }
 
@@ -41,17 +41,17 @@ public class TaxonomyServiceImpl extends AmbraService implements TaxonomyService
   }
 
   @Override
-  public Collection<ArticleCategoryAssignment> getCategoriesForArticle(ArticleTable article) {
+  public Collection<ArticleCategoryAssignment> getCategoriesForArticle(Article article) {
     return taxonomyClassificationService.getCategoriesForArticle(article);
   }
 
   @Override
-  public Collection<Category> getArticleCategoriesWithTerm(ArticleTable article, String term) {
+  public Collection<Category> getArticleCategoriesWithTerm(Article article, String term) {
     return taxonomyClassificationService.getArticleCategoriesWithTerm(article, term);
   }
 
 
-  private List<ArticleCategoryAssignmentFlag> getArticleCategoryAssignmentFlags(ArticleTable article, Category category, Optional<Long> userProfileId) {
+  private List<ArticleCategoryAssignmentFlag> getArticleCategoryAssignmentFlags(Article article, Category category, Optional<Long> userProfileId) {
     return hibernateTemplate.execute(session -> {
       Query query = userProfileId
           .map(userProfileIdValue -> session.createQuery("" +
@@ -68,7 +68,7 @@ public class TaxonomyServiceImpl extends AmbraService implements TaxonomyService
   }
 
   @Override
-  public void flagArticleCategory(ArticleTable article, Category category, Optional<Long> userProfileId) throws IOException {
+  public void flagArticleCategory(Article article, Category category, Optional<Long> userProfileId) throws IOException {
     if (userProfileId.isPresent()) {
       List<ArticleCategoryAssignmentFlag> flags = getArticleCategoryAssignmentFlags(article, category, userProfileId);
       if (!flags.isEmpty()) {
@@ -85,7 +85,7 @@ public class TaxonomyServiceImpl extends AmbraService implements TaxonomyService
   }
 
   @Override
-  public void deflagArticleCategory(ArticleTable article, Category category, Optional<Long> userProfileId) throws IOException {
+  public void deflagArticleCategory(Article article, Category category, Optional<Long> userProfileId) throws IOException {
     List<ArticleCategoryAssignmentFlag> flags = getArticleCategoryAssignmentFlags(article, category, userProfileId);
     if (flags.isEmpty()) {
       throw new RestClientException("Flag does not exist", HttpStatus.NOT_FOUND);
