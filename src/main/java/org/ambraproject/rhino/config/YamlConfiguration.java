@@ -252,16 +252,12 @@ public class YamlConfiguration implements RuntimeConfiguration {
     return (manuscriptCustomMeta != null) ? manuscriptCustomMeta : (manuscriptCustomMeta = new ManuscriptCustomMeta() {
       @Override
       public String getRevisionDateMetaTagName() {
-        return (input.manuscriptCustomMeta != null && input.manuscriptCustomMeta.revisionDate != null)
-            ? input.manuscriptCustomMeta.revisionDate
-            : "Revision Date";
+        return input.manuscriptCustomMeta == null ? null : input.manuscriptCustomMeta.revisionDate;
       }
 
       @Override
       public String getPublicationStageMetaTagName() {
-        return (input.manuscriptCustomMeta != null && input.manuscriptCustomMeta.publicationStage != null)
-            ? input.manuscriptCustomMeta.publicationStage
-            : "Publication Stage";
+        return input.manuscriptCustomMeta == null ? null : input.manuscriptCustomMeta.publicationStage;
       }
     });
   }
