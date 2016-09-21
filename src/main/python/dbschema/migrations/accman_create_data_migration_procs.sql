@@ -136,11 +136,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `correct_article_asset_table`()
 
     DELETE FROM articleAsset WHERE articleAssetID = 15588622;
 
-<<<<<<< HEAD
     DELETE FROM articleAsset WHERE articleAssetID IN (8357149, 8420183);
-=======
+
     DELETE FROM articleAsset WHERE articleAssetID = 8975739;
->>>>>>> accman
 
   END $$
 DELIMITER ;
