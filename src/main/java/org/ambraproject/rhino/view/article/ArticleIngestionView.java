@@ -4,17 +4,21 @@ import com.google.common.base.Preconditions;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
+import org.ambraproject.rhino.content.xml.ArticleXml;
+import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
+import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
+import org.ambraproject.rhino.model.article.ArticleCustomMetadata;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.model.article.AssetMetadata;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.impl.IngestionService;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.w3c.dom.Document;
 
 import java.util.List;
 import java.util.Objects;
@@ -33,29 +37,41 @@ public class ArticleIngestionView implements JsonOutputView {
     @Autowired
     private ArticleCrudService articleCrudService;
     @Autowired
-    private IngestionService ingestionService;
-    @Autowired
-    private JournalOutputView.Factory journalOutputViewFactory;
+    private CustomMetadataExtractor.Factory customMetadataExtractorFactory;
 
     public ArticleIngestionView getView(ArticleIngestionIdentifier ingestionId) {
       ArticleIngestion ingestion = articleCrudService.readIngestion(ingestionId);
-      ArticleMetadata metadata = ingestionService.getArticleMetadata(ingestionId);
       JournalOutputView journal = JournalOutputView.getShallowView(ingestion.getJournal());
 
-      return new ArticleIngestionView(ingestion, metadata, journal);
+      Document document = articleCrudService.getManuscriptXml(ingestion);
+      ArticleMetadata metadata;
+      ArticleCustomMetadata customMetadata;
+      try {
+        metadata = new ArticleXml(document).build();
+        customMetadata = customMetadataExtractorFactory.parse(document).build();
+      } catch (XmlContentException e) {
+        throw new RuntimeException(e);
+      }
+
+      return new ArticleIngestionView(ingestion, metadata, customMetadata, journal);
     }
 
   }
 
   private final ArticleIngestion ingestion;
   private final ArticleMetadata metadata;
+  private final ArticleCustomMetadata customMetadata;
   private final JournalOutputView journal;
 
   private ArticleIngestionView(ArticleIngestion ingestion,
-                               ArticleMetadata metadata, JournalOutputView journal) {
+                               ArticleMetadata metadata,
+                               ArticleCustomMetadata customMetadata,
+                               JournalOutputView journal) {
     Preconditions.checkArgument(ingestion.getArticle().getDoi().equals(metadata.getDoi()));
     this.ingestion = ingestion;
     this.metadata = metadata;
+
+    this.customMetadata = Objects.requireNonNull(customMetadata);
     this.journal = Objects.requireNonNull(journal);
   }
 
@@ -72,6 +88,7 @@ public class ArticleIngestionView implements JsonOutputView {
     }
 
     JsonAdapterUtil.copyWithoutOverwriting(context.serialize(metadata).getAsJsonObject(), serialized);
+    JsonAdapterUtil.copyWithoutOverwriting(context.serialize(customMetadata).getAsJsonObject(), serialized);
 
     serialized.remove("assets");
     List<AssetMetadataView> assetViews = metadata.getAssets().stream().map(AssetMetadataView::new).collect(Collectors.toList());

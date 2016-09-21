@@ -7,7 +7,6 @@ import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
-import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleFile;
@@ -324,25 +323,6 @@ public class IngestionService extends AmbraService {
       String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
       return new RestClientException(msg, HttpStatus.BAD_REQUEST);
     });
-  }
-
-
-  /**
-   * Build a representation of an article's metadata from a persisted collection.
-   *
-   * @param ingestionId the ID of the article to serve
-   * @return an object containing metadata that could be extracted from the manuscript, with other fields unfilled
-   */
-  public ArticleMetadata getArticleMetadata(ArticleIngestionIdentifier ingestionId) {
-    ArticleIngestion ingestion = articleCrudService.readIngestion(ingestionId);
-
-    Document document = articleCrudService.getManuscriptXml(ingestion);
-
-    try {
-      return new ArticleXml(document).build();
-    } catch (XmlContentException e) {
-      throw new RuntimeException(e);
-    }
   }
 
 }
