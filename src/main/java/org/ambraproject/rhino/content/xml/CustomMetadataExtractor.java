@@ -16,6 +16,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * Parses {@code &lt;custom-meta&gt;} elements from a manuscript, looking for {@code &lt;meta-name&gt;} values that are
+ * configured per server.
+ */
 public class CustomMetadataExtractor extends AbstractArticleXml<ArticleCustomMetadata> {
   private static final Logger log = LoggerFactory.getLogger(CustomMetadataExtractor.class);
 
@@ -65,6 +69,16 @@ public class CustomMetadataExtractor extends AbstractArticleXml<ArticleCustomMet
     return builder.build();
   }
 
+  /**
+   * Read a custom meta value, expecting at most one.
+   * <p>
+   * The return value will be empty if the manuscript does not have a value of the given type <em>or</em> if no
+   * meta-name is configured for that type.
+   *
+   * @param customMeta the table of all of a manuscript's custom meta values
+   * @param attribute  the type of value to retrieve, if a meta-name is configured for it
+   * @return the value if the type is configured and it is present
+   */
   private Optional<String> getSingleValue(ListMultimap<String, String> customMeta, ManuscriptCustomMetaAttribute attribute) {
     String metaName = runtimeConfiguration.getManuscriptCustomMetaName(attribute);
     if (metaName == null) {
