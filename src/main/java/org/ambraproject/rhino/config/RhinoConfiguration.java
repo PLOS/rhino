@@ -43,11 +43,11 @@ import org.ambraproject.rhino.service.impl.ArticleRevisionWriteServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.CommentCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
+import org.ambraproject.rhino.service.impl.IngestionService;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.JournalCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.SolrIndexServiceImpl;
 import org.ambraproject.rhino.service.impl.SyndicationCrudServiceImpl;
-import org.ambraproject.rhino.service.impl.IngestionService;
 import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
@@ -100,7 +100,7 @@ import java.util.Properties;
  */
 @Configuration
 @EnableTransactionManagement
-public class RhinoConfiguration extends BaseConfiguration {
+public class RhinoConfiguration {
 
   @Bean
   public AnnotationSessionFactoryBean sessionFactory(DataSource hibernateDataSource) throws IOException {
@@ -110,7 +110,6 @@ public class RhinoConfiguration extends BaseConfiguration {
 
     AnnotationSessionFactoryBean bean = new AnnotationSessionFactoryBean();
     bean.setDataSource(hibernateDataSource);
-    setHibernateMappings(bean);
 
     Properties hibernateProperties = new Properties();
     hibernateProperties.setProperty("hibernate.dialect", org.hibernate.dialect.MySQLDialect.class.getName());
