@@ -89,6 +89,7 @@ public class ArticleRevisionView implements JsonOutputView {
     if (ingestion.getRevisionDate() != null) {
       serialized.addProperty("revisionDate", ingestion.getRevisionDate().toLocalDate().toString());
     }
+    serialized.addProperty("publicationStage", ingestion.getPublicationStage());
     serialized.addProperty("articleType", ingestion.getArticleType());
     return serialized;
   }

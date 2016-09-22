@@ -26,6 +26,7 @@ CREATE TABLE `articleIngestion` (
   `title` TEXT NOT NULL,
   `publicationDate` DATE NOT NULL,
   `revisionDate` DATE DEFAULT NULL,
+  `publicationStage` VARCHAR(100) DEFAULT NULL,
   `articleType` VARCHAR(100) DEFAULT NULL,
   `strikingImageItemId` BIGINT(20) DEFAULT NULL,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

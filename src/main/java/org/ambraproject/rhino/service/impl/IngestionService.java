@@ -3,16 +3,17 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
 import org.ambraproject.rhino.content.xml.ArticleXml;
+import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
-import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleFile;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
-import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.article.ArticleCustomMetadata;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.model.ingest.ArticleItemInput;
 import org.ambraproject.rhino.model.ingest.ArticlePackage;
@@ -46,6 +47,8 @@ public class IngestionService extends AmbraService {
   private ArticleCrudService articleCrudService;
   @Autowired
   private JournalCrudService journalCrudService;
+  @Autowired
+  private CustomMetadataExtractor.Factory customMetadataExtractorFactory;
 
 
   public ArticleIngestion ingest(Archive archive) throws IOException, XmlContentException {
@@ -78,10 +81,14 @@ public class IngestionService extends AmbraService {
     }
 
     ArticleXml parsedArticle;
+    CustomMetadataExtractor customMetadataExtractor;
     try (InputStream manuscriptStream = new BufferedInputStream(archive.openFile(manuscriptEntry))) {
-      parsedArticle = new ArticleXml(AmbraService.parseXml(manuscriptStream));
+      Document document = AmbraService.parseXml(manuscriptStream);
+      parsedArticle = new ArticleXml(document);
+      customMetadataExtractor = customMetadataExtractorFactory.parse(document);
     }
     final ArticleMetadata articleMetadata = parsedArticle.build();
+    ArticleCustomMetadata customMetadata = customMetadataExtractor.build();
     ArticleIdentifier articleIdentifier = ArticleIdentifier.create(articleMetadata.getDoi());
     Doi doi = articleIdentifier.getDoi();
 
@@ -96,7 +103,7 @@ public class IngestionService extends AmbraService {
     }
 
     Article article = persistArticle(articleIdentifier);
-    ArticleIngestion ingestion = persistIngestion(article, articleMetadata);
+    ArticleIngestion ingestion = persistIngestion(article, articleMetadata, customMetadata);
 
     // TODO: Allow bucket name to be specified as an ingestion parameter
     String destinationBucketName = runtimeConfiguration.getCorpusStorage().getDefaultBucket();
@@ -133,7 +140,7 @@ public class IngestionService extends AmbraService {
 
   private static final int FIRST_INGESTION_NUMBER = 1;
 
-  private ArticleIngestion persistIngestion(Article article, ArticleMetadata articleMetadata) {
+  private ArticleIngestion persistIngestion(Article article, ArticleMetadata articleMetadata, ArticleCustomMetadata customMetadata) {
     Journal journal = fetchJournal(articleMetadata);
 
     int nextIngestionNumber = hibernateTemplate.execute(session -> {
@@ -150,10 +157,12 @@ public class IngestionService extends AmbraService {
     ingestion.setIngestionNumber(nextIngestionNumber);
     ingestion.setTitle(articleMetadata.getTitle());
     ingestion.setPublicationDate(java.sql.Date.valueOf(articleMetadata.getPublicationDate()));
-    ingestion.setRevisionDate((articleMetadata.getRevisionDate() == null ? null
-        : java.sql.Date.valueOf(articleMetadata.getRevisionDate())));
     ingestion.setArticleType(articleMetadata.getArticleType());
     ingestion.setJournal(journal);
+
+    ingestion.setRevisionDate((customMetadata.getRevisionDate() == null ? null
+        : java.sql.Date.valueOf(customMetadata.getRevisionDate())));
+    ingestion.setPublicationStage(customMetadata.getPublicationStage());
 
     hibernateTemplate.save(ingestion);
     return ingestion;
@@ -314,25 +323,6 @@ public class IngestionService extends AmbraService {
       String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
       return new RestClientException(msg, HttpStatus.BAD_REQUEST);
     });
-  }
-
-
-  /**
-   * Build a representation of an article's metadata from a persisted collection.
-   *
-   * @param ingestionId the ID of the article to serve
-   * @return an object containing metadata that could be extracted from the manuscript, with other fields unfilled
-   */
-  public ArticleMetadata getArticleMetadata(ArticleIngestionIdentifier ingestionId) {
-    ArticleIngestion ingestion = articleCrudService.readIngestion(ingestionId);
-
-    Document document = articleCrudService.getManuscriptXml(ingestion);
-
-    try {
-      return new ArticleXml(document).build();
-    } catch (XmlContentException e) {
-      throw new RuntimeException(e);
-    }
   }
 
 }

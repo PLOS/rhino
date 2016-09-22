@@ -26,6 +26,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -245,13 +246,18 @@ public class YamlConfiguration implements RuntimeConfiguration {
     });
   }
 
-  /**
-   * @deprecated Temporary; to be removed when versioned ingestion data model is stable.
-   */
-  @Deprecated
   @Override
-  public boolean isUsingVersionedIngestion() {
-    return input.usingVersionedIngestion;
+  public String getManuscriptCustomMetaName(ManuscriptCustomMetaAttribute attribute) {
+    Objects.requireNonNull(attribute);
+    if (input.manuscriptCustomMeta == null) return null;
+    switch (attribute) {
+      case REVISION_DATE:
+        return input.manuscriptCustomMeta.revisionDate;
+      case PUBLICATION_STAGE:
+        return input.manuscriptCustomMeta.publicationStage;
+      default:
+        throw new AssertionError();
+    }
   }
 
 
@@ -262,9 +268,9 @@ public class YamlConfiguration implements RuntimeConfiguration {
     private HttpConnectionPoolConfigurationInput httpConnectionPool;
     private TaxonomyConfigurationInput taxonomy;
     private UserApiConfigurationInput userApi;
-    private boolean usingVersionedIngestion = true; // default is true
     private String competingInterestPolicyStart;
     private QueueConfigurationInput queue;
+    private ManuscriptCustomMetaInput manuscriptCustomMeta;
 
     /**
      * @deprecated For reflective access by SnakeYAML only
@@ -323,14 +329,11 @@ public class YamlConfiguration implements RuntimeConfiguration {
     }
 
     /**
-     * This one will likely be removed in the future, when versioned ingestion is stable and/or the only data schema in
-     * use.
-     *
-     * @deprecated Temporary; for reflective access by SnakeYAML only.
+     * @deprecated For reflective access by SnakeYAML only
      */
     @Deprecated
-    public void setUsingVersionedIngestion(boolean usingVersionedIngestion) {
-      this.usingVersionedIngestion = usingVersionedIngestion;
+    public void setManuscriptCustomMeta(ManuscriptCustomMetaInput manuscriptCustomMeta) {
+      this.manuscriptCustomMeta = manuscriptCustomMeta;
     }
   }
 
@@ -457,6 +460,21 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setSolrDelete(String solrDelete) {
       this.solrDelete = solrDelete;
+    }
+  }
+
+  public static class ManuscriptCustomMetaInput {
+    private String revisionDate;
+    private String publicationStage;
+
+    @Deprecated
+    public void setRevisionDate(String revisionDate) {
+      this.revisionDate = revisionDate;
+    }
+
+    @Deprecated
+    public void setPublicationStage(String publicationStage) {
+      this.publicationStage = publicationStage;
     }
   }
 
