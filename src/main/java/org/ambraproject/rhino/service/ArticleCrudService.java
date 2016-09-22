@@ -108,7 +108,9 @@ public interface ArticleCrudService {
 
   public abstract Transceiver serveOverview(ArticleIdentifier id);
 
-  Transceiver serveRevision(ArticleRevisionIdentifier revisionId);
+  public abstract Transceiver serveRevisions(ArticleIdentifier id);
+
+  public abstract Transceiver serveRevision(ArticleRevisionIdentifier revisionId);
 
   public abstract ArticleItem getArticleItem(ArticleItemIdentifier id);
 

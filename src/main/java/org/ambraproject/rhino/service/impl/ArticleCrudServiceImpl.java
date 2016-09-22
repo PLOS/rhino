@@ -21,8 +21,10 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Strings;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.google.common.io.ByteSource;
 import org.ambraproject.rhino.content.xml.ArticleXml;
+import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
@@ -31,13 +33,13 @@ import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleItemIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleCategoryAssignment;
 import org.ambraproject.rhino.model.ArticleFile;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
-import org.ambraproject.rhino.model.ArticleRevision;
-import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleRelationship;
+import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -47,13 +49,13 @@ import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.ResolvedDoiView;
-import org.ambraproject.rhino.view.article.author.ArticleAllAuthorsView;
-import org.ambraproject.rhino.view.article.author.AuthorView;
 import org.ambraproject.rhino.view.article.ArticleIngestionView;
 import org.ambraproject.rhino.view.article.ArticleOverview;
 import org.ambraproject.rhino.view.article.ArticleRevisionView;
 import org.ambraproject.rhino.view.article.CategoryAssignmentView;
 import org.ambraproject.rhino.view.article.ItemSetView;
+import org.ambraproject.rhino.view.article.author.ArticleAllAuthorsView;
+import org.ambraproject.rhino.view.article.author.AuthorView;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.hibernate.Query;
 import org.plos.crepo.model.identity.RepoVersion;
@@ -71,6 +73,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -96,6 +99,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private ArticleIngestionView.Factory articleIngestionViewFactory;
   @Autowired
   private ItemSetView.Factory itemSetViewFactory;
+  @Autowired
+  private CustomMetadataExtractor.Factory customMetadataExtractorFactory;
 
   @Override
   public void populateCategories(ArticleIdentifier articleId) throws IOException {
@@ -182,6 +187,28 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       @Override
       protected Calendar getLastModifiedDate() throws IOException {
         return null;
+      }
+    };
+  }
+
+  @Override
+  public Transceiver serveRevisions(ArticleIdentifier id) {
+    Article article = readArticle(id);
+    List<ArticleRevision> revisions = (List<ArticleRevision>) hibernateTemplate.find(
+        "FROM ArticleRevision WHERE ingestion.article = ? ORDER BY revisionNumber", article);
+    return new Transceiver() {
+      @Override
+      protected List<ArticleRevisionView> getData() throws IOException {
+        return Lists.transform(revisions, ArticleRevisionView::getView);
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return revisions.stream()
+            .map(ArticleRevision::getLastModified)
+            .max(Comparator.naturalOrder())
+            .map(Transceiver::copyToCalendar)
+            .orElse(null);
       }
     };
   }

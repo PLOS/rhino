@@ -37,6 +37,9 @@ public class ArticleIngestion implements Timestamped {
   private Date revisionDate;
 
   @Column
+  private String publicationStage;
+
+  @Column
   private int ingestionNumber;
 
   @Column
@@ -50,9 +53,9 @@ public class ArticleIngestion implements Timestamped {
   @OneToOne
   private ArticleItem strikingImage;
 
-  @Generated(value= GenerationTime.ALWAYS)
+  @Generated(value = GenerationTime.ALWAYS)
   @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-  @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
+  @Column(insertable = false, updatable = false, columnDefinition = "timestamp default current_timestamp")
   private java.util.Date lastModified;
 
 
@@ -110,6 +113,14 @@ public class ArticleIngestion implements Timestamped {
 
   public void setRevisionDate(Date revisionDate) {
     this.revisionDate = revisionDate;
+  }
+
+  public String getPublicationStage() {
+    return publicationStage;
+  }
+
+  public void setPublicationStage(String publicationStage) {
+    this.publicationStage = publicationStage;
   }
 
   public String getArticleType() {
