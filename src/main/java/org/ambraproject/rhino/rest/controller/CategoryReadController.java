@@ -24,7 +24,7 @@ public class CategoryReadController extends RestController {
 
   /**
    * Provides a utility endpoint for the publication workflow.
-   * The main use-case is to notify journal stakeholders when new comments are posted.
+   * The main use-case is to notify journal stakeholders when new category flags are created.
    */
   @Transactional(readOnly = true)
   @RequestMapping(value = "/categoryFlags", method = RequestMethod.GET, params = "created")

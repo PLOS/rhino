@@ -10,7 +10,6 @@ import org.ambraproject.rhino.service.impl.AmbraService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
-import org.ambraproject.rhino.view.article.CategoryFlagOutputView;
 import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +20,6 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class TaxonomyServiceImpl extends AmbraService implements TaxonomyService {
 
@@ -108,15 +106,13 @@ public class TaxonomyServiceImpl extends AmbraService implements TaxonomyService
   }
 
   @Override
-  public List<CategoryFlagOutputView> getFlagsCreatedOn(LocalDate fromDate, LocalDate toDate) {
+  public List<ArticleCategoryAssignmentFlag> getFlagsCreatedOn(LocalDate fromDate, LocalDate toDate) {
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("FROM ArticleCategoryAssignmentFlag " +
           "WHERE created >= :fromDate AND created <= :toDate");
       query.setParameter("fromDate", java.sql.Date.valueOf(fromDate));
       query.setParameter("toDate", java.sql.Date.valueOf(toDate));
-      List<ArticleCategoryAssignmentFlag> flags = query.list();
-
-      return flags.stream().map(CategoryFlagOutputView::new).collect(Collectors.toList());
+      return (List<ArticleCategoryAssignmentFlag>) query.list();
     });
   }
 }
