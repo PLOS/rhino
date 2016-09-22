@@ -2,7 +2,6 @@ package org.ambraproject.rhino.rest.controller;
 
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
-import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.CommentIdentifier;
 import org.ambraproject.rhino.model.Flag;
@@ -33,7 +32,7 @@ import java.util.Optional;
 public class CommentCrudController extends RestController {
 
   @Autowired
-  private RuntimeConfiguration runtimeConfiguration;
+  private CommentNodeView.Factory commentNodeViewFactory;
   @Autowired
   private CommentCrudService commentCrudService;
 
@@ -162,7 +161,7 @@ public class CommentCrudController extends RestController {
 
     CommentFlagInputView input = readJsonFromRequest(request, CommentFlagInputView.class);
     Flag commentFlag = commentCrudService.createCommentFlag(commentId, input);
-    return reportCreated(new CommentNodeView.Factory(runtimeConfiguration).createFlagView(commentFlag));
+    return reportCreated(commentNodeViewFactory.createFlagView(commentFlag));
   }
 
   @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi}/flags", method = RequestMethod.GET)
