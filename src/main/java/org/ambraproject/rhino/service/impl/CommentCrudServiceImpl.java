@@ -16,7 +16,6 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
-import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.CommentIdentifier;
 import org.ambraproject.rhino.identity.Doi;
@@ -44,6 +43,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateCallback;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
@@ -58,10 +58,9 @@ import java.util.stream.Collectors;
 public class CommentCrudServiceImpl extends AmbraService implements CommentCrudService {
 
   @Autowired
-  private RuntimeConfiguration runtimeConfiguration;
+  private CommentNodeView.Factory commentNodeViewFactory;
   @Autowired
   private JournalCrudService journalCrudService;
-
   @Autowired
   private ArticleCrudService articleCrudService;
 
@@ -82,8 +81,8 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
       protected Collection<CommentOutputView> getData() throws IOException {
         Article article = articleCrudService.readArticle(articleId);
         List<Comment> comments = fetchAllComments(article);
-        CommentOutputView.Factory factory = new CommentOutputView.Factory(runtimeConfiguration,
-            comments, article);
+        CommentOutputView.Factory factory
+            = new CommentOutputView.Factory(runtimeConfiguration, comments, article);
         return comments.stream()
             .filter(comment -> comment.getParent() == null)
             .sorted(CommentOutputView.BY_DATE)
@@ -200,7 +199,8 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     hibernateTemplate.save(created);
 
     List<Comment> childComments = ImmutableList.of(); // the new comment can't have any children yet
-    CommentOutputView.Factory viewFactory = new CommentOutputView.Factory(runtimeConfiguration, childComments, article);
+    CommentOutputView.Factory viewFactory
+        = new CommentOutputView.Factory(runtimeConfiguration, childComments, article);
     return viewFactory.buildView(created);
   }
 
@@ -292,8 +292,8 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     return new Transceiver() {
       @Override
       protected List<CommentFlagOutputView> getData() throws IOException {
-        CommentNodeView.Factory viewFactory = new CommentNodeView.Factory(runtimeConfiguration);
-        return getAllFlags().stream().map(viewFactory::createFlagView).collect(Collectors.toList());
+        return getAllFlags().stream().map(commentNodeViewFactory::createFlagView)
+            .collect(Collectors.toList());
       }
 
       @Override
@@ -330,8 +330,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
       @Override
       protected Object getData() throws IOException {
         List<Flag> flags = getCommentFlagsOn(readComment(commentId));
-        CommentNodeView.Factory viewFactory = new CommentNodeView.Factory(runtimeConfiguration);
-        return flags.stream().map(viewFactory::createFlagView).collect(Collectors.toList());
+        return flags.stream().map(commentNodeViewFactory::createFlagView).collect(Collectors.toList());
       }
 
       @Override
@@ -349,11 +348,8 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   }
 
   private List<CommentNodeView> readFlaggedComments(HibernateCallback<List<Comment>> hibernateCallback) {
-    CommentNodeView.Factory viewFactory = new CommentNodeView.Factory(runtimeConfiguration);
     List<Comment> flaggedComments = hibernateTemplate.execute(hibernateCallback);
-    return flaggedComments.stream()
-        .map(viewFactory::create)
-        .collect(Collectors.toList());
+    return flaggedComments.stream().map(commentNodeViewFactory::create).collect(Collectors.toList());
   }
 
   @Override
@@ -414,12 +410,11 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
           limit.ifPresent(query::setMaxResults);
           return query.list();
         });
-        CommentNodeView.Factory viewFactory = new CommentNodeView.Factory(runtimeConfiguration);
         return results.stream()
             .map((Object[] result) -> {
               Comment comment = (Comment) result[0];
               String articleDoi = (String) result[1];
-              return viewFactory.create(comment, journalKey, articleDoi);
+              return commentNodeViewFactory.create(comment, articleDoi);
             })
             .collect(Collectors.toList());
       }
@@ -457,4 +452,16 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     };
   }
 
+  @Override
+  public List<CommentNodeView> getCommentsCreatedOn(LocalDate fromDate, LocalDate toDate) {
+    return hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM Comment " +
+          "WHERE created >= :fromDate AND created <= :toDate ");
+      query.setParameter("fromDate", java.sql.Date.valueOf(fromDate));
+      query.setParameter("toDate", java.sql.Date.valueOf(toDate));
+      List<Comment> comments = query.list();
+
+      return comments.stream().map(commentNodeViewFactory::create).collect(Collectors.toList());
+    });
+  }
 }

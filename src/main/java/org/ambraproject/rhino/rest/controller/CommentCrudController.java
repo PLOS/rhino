@@ -1,20 +1,22 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.wordnik.swagger.annotations.ApiOperation;
-import org.ambraproject.rhino.config.RuntimeConfiguration;
+import com.wordnik.swagger.annotations.ApiParam;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.CommentIdentifier;
-import org.ambraproject.rhino.model.Comment;
 import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.service.CommentCrudService;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
 import org.ambraproject.rhino.view.comment.CommentNodeView;
 import org.ambraproject.rhino.view.comment.CommentOutputView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,13 +25,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Controller
 public class CommentCrudController extends RestController {
 
   @Autowired
-  private RuntimeConfiguration runtimeConfiguration;
+  private CommentNodeView.Factory commentNodeViewFactory;
   @Autowired
   private CommentCrudService commentCrudService;
 
@@ -66,6 +69,22 @@ public class CommentCrudController extends RestController {
                                   @RequestParam("journal") String journalKey)
       throws IOException {
     commentCrudService.serveFlaggedComments(journalKey).respond(request, response, entityGson);
+  }
+
+  /**
+   * Provides a utility endpoint for the publication workflow.
+   * The main use-case is to notify journal stakeholders when new comments are posted.
+   */
+  @Transactional(readOnly = true)
+  @RequestMapping(value = "/comments", method = RequestMethod.GET, params = "created")
+  public void getCommentsCreatedOn(HttpServletRequest request, HttpServletResponse response,
+                                   @ApiParam(value = "Date Format: yyyy-MM-dd")
+                                   @RequestParam(value = "fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fromDate,
+                                   @ApiParam(value = "Date Format: yyyy-MM-dd")
+                                   @RequestParam(value = "toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate) throws IOException {
+
+    Transceiver.serveUntimestampedView(() -> commentCrudService.getCommentsCreatedOn(fromDate, toDate))
+        .respond(request, response, entityGson);
   }
 
   @RequestMapping(value = "/commentFlags", method = RequestMethod.GET)
@@ -142,7 +161,7 @@ public class CommentCrudController extends RestController {
 
     CommentFlagInputView input = readJsonFromRequest(request, CommentFlagInputView.class);
     Flag commentFlag = commentCrudService.createCommentFlag(commentId, input);
-    return reportCreated(new CommentNodeView.Factory(runtimeConfiguration).createFlagView(commentFlag));
+    return reportCreated(commentNodeViewFactory.createFlagView(commentFlag));
   }
 
   @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi}/flags", method = RequestMethod.GET)

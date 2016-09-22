@@ -50,7 +50,6 @@ public class CommentOutputView implements JsonOutputView {
     this.mostRecentActivity = Objects.requireNonNull(mostRecentActivity);
   }
 
-
   public static class Factory {
     private final CompetingInterestPolicy competingInterestPolicy;
     private final ArticleVisibility parentArticle;
@@ -61,7 +60,7 @@ public class CommentOutputView implements JsonOutputView {
      * @param parentArticle
      */
     public Factory(RuntimeConfiguration runtimeConfiguration, List<Comment> comments,
-        Article parentArticle) {
+                   Article parentArticle) {
       this.competingInterestPolicy = new CompetingInterestPolicy(runtimeConfiguration);
       this.parentArticle = ArticleVisibility.create(Doi.create(parentArticle.getDoi()));
       this.commentsByParent = comments.stream()
@@ -130,7 +129,6 @@ public class CommentOutputView implements JsonOutputView {
 
     serialized.remove("competingInterestBody");
     serialized.add("competingInterestStatement", context.serialize(competingInterestStatement));
-    serialized.add("isRemoved", context.serialize(comment.getIsRemoved()));
     return serialized;
   }
 
