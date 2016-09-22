@@ -307,9 +307,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
           END IF;
 
           SET crepo_key = CONCAT(get_doi_name(asset_doi), '.', asset_extension);
-          SET crepo_uuid = UUID();
-          set file_size = 0;
-          #SELECT uuid, size INTO crepo_uuid, file_size FROM uuid_lut WHERE objkey = crepo_key;
+          SELECT uuid, size INTO crepo_uuid, file_size FROM uuid_lut WHERE objkey = crepo_key;
           IF crepo_uuid = '' THEN
             SET err_msg = CONCAT('Crepo key ', crepo_key, ' not found. Rolling back ', get_doi_name(article_doi));
             CALL migrate_article_rollback(article_id);
