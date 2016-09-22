@@ -32,7 +32,7 @@ public class CommentOutputView implements JsonOutputView {
   private final CompetingInterestStatement competingInterestStatement;
 
   private final ImmutableList<CommentOutputView> replies;
-  private final Integer replyTreeSize;
+  private final int replyTreeSize;
   private final Date mostRecentActivity;
 
   private CommentOutputView(ArticleVisibility parentArticle,
