@@ -3,10 +3,12 @@ package org.ambraproject.rhino.view.comment;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
+import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Comment;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.view.JsonOutputView;
+import org.ambraproject.rhino.view.article.ArticleVisibility;
 
 import java.util.Objects;
 
@@ -15,23 +17,12 @@ import java.util.Objects;
  */
 public class CommentNodeView implements JsonOutputView {
 
-  // Slightly different from org.ambraproject.rhino.view.article.ArticleVisibility, which might be a bad thing
-  public static class ArticleReference {
-    private final String doi;
-    private final String journal;
-
-    private ArticleReference(String doi, String journal) {
-      this.doi = Objects.requireNonNull(doi);
-      this.journal = Objects.requireNonNull(journal);
-    }
-  }
-
   private final Comment comment;
   private final CompetingInterestStatement competingInterestStatement;
-  private final ArticleReference parentArticle;
+  private final ArticleVisibility parentArticle;
 
   private CommentNodeView(Comment comment, CompetingInterestStatement competingInterestStatement,
-      ArticleReference parentArticle) {
+                          ArticleVisibility parentArticle) {
     this.comment = Objects.requireNonNull(comment);
     this.competingInterestStatement = Objects.requireNonNull(competingInterestStatement);
     this.parentArticle = Objects.requireNonNull(parentArticle);
@@ -50,10 +41,9 @@ public class CommentNodeView implements JsonOutputView {
       this.competingInterestPolicy = new CompetingInterestPolicy(runtimeConfiguration);
     }
 
-    public CommentNodeView create(Comment comment, String journalKey, String articleDoi) {
-      return new CommentNodeView(comment,
-          competingInterestPolicy.createStatement(comment),
-          new ArticleReference(articleDoi, journalKey));
+    public CommentNodeView create(Comment comment, String articleDoi) {
+      return new CommentNodeView(comment, competingInterestPolicy.createStatement(comment),
+          ArticleVisibility.create(Doi.create(articleDoi)));
     }
 
     public CommentNodeView create(Comment comment) {

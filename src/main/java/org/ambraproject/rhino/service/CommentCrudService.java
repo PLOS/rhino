@@ -21,6 +21,7 @@ import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
+import org.ambraproject.rhino.view.comment.CommentNodeView;
 import org.ambraproject.rhino.view.comment.CommentOutputView;
 
 import java.io.IOException;
@@ -87,5 +88,5 @@ public interface CommentCrudService {
 
   public Transceiver getCommentCount(Article article);
 
-  public List<CommentOutputView> getCommentsCreatedOn(LocalDate fromDate, LocalDate toDate);
+  public List<CommentNodeView> getCommentsCreatedOn(LocalDate fromDate, LocalDate toDate);
 }

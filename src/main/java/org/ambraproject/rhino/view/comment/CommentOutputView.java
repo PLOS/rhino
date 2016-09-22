@@ -50,18 +50,7 @@ public class CommentOutputView implements JsonOutputView {
     this.mostRecentActivity = Objects.requireNonNull(mostRecentActivity);
   }
 
-  private CommentOutputView(ArticleVisibility parentArticle,
-                            Comment comment,
-                            CompetingInterestStatement competingInterestStatement) {
-    this.parentArticle = Objects.requireNonNull(parentArticle);
-    this.comment = Objects.requireNonNull(comment);
-    this.competingInterestStatement = Objects.requireNonNull(competingInterestStatement);
-    this.replies = null;
-    this.replyTreeSize = null;
-    this.mostRecentActivity = null;
-  }
-
-  public static class ByArticleFactory {
+  public static class Factory {
     private final CompetingInterestPolicy competingInterestPolicy;
     private final ArticleVisibility parentArticle;
     private final Map<Long, List<Comment>> commentsByParent;
@@ -70,8 +59,8 @@ public class CommentOutputView implements JsonOutputView {
      * @param comments      all comments belonging to the parent article
      * @param parentArticle
      */
-    public ByArticleFactory(RuntimeConfiguration runtimeConfiguration, List<Comment> comments,
-                            Article parentArticle) {
+    public Factory(RuntimeConfiguration runtimeConfiguration, List<Comment> comments,
+                   Article parentArticle) {
       this.competingInterestPolicy = new CompetingInterestPolicy(runtimeConfiguration);
       this.parentArticle = ArticleVisibility.create(Doi.create(parentArticle.getDoi()));
       this.commentsByParent = comments.stream()
@@ -107,24 +96,6 @@ public class CommentOutputView implements JsonOutputView {
           .map(view -> view.mostRecentActivity)
           .max(Comparator.naturalOrder())
           .orElse(comment.getCreated());
-    }
-  }
-
-  public static class Factory {
-    private final CompetingInterestPolicy competingInterestPolicy;
-
-    public Factory(RuntimeConfiguration runtimeConfiguration) {
-      this.competingInterestPolicy = new CompetingInterestPolicy(runtimeConfiguration);
-    }
-
-    /**
-     * @param comment a comment belonging to this object's parent article
-     * @return a view of the comment and all its children
-     */
-    public CommentOutputView buildView(Comment comment) {
-      CompetingInterestStatement competingInterestStatement = competingInterestPolicy.createStatement(comment);
-      return new CommentOutputView(ArticleVisibility.create(
-          Doi.create(comment.getArticle().getDoi())), comment, competingInterestStatement);
     }
   }
 

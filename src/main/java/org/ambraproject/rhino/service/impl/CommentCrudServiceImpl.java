@@ -83,8 +83,8 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
       protected Collection<CommentOutputView> getData() throws IOException {
         Article article = articleCrudService.readArticle(articleId);
         List<Comment> comments = fetchAllComments(article);
-        CommentOutputView.ByArticleFactory factory
-            = new CommentOutputView.ByArticleFactory(runtimeConfiguration, comments, article);
+        CommentOutputView.Factory factory
+            = new CommentOutputView.Factory(runtimeConfiguration, comments, article);
         return comments.stream()
             .filter(comment -> comment.getParent() == null)
             .sorted(CommentOutputView.BY_DATE)
@@ -105,7 +105,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
       @Override
       protected CommentOutputView getData() throws IOException {
         Comment comment = readComment(commentId);
-        return new CommentOutputView.ByArticleFactory(runtimeConfiguration,
+        return new CommentOutputView.Factory(runtimeConfiguration,
             fetchAllComments(comment.getArticle()), comment.getArticle()).buildView(comment);
       }
 
@@ -201,8 +201,8 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     hibernateTemplate.save(created);
 
     List<Comment> childComments = ImmutableList.of(); // the new comment can't have any children yet
-    CommentOutputView.ByArticleFactory viewFactory
-        = new CommentOutputView.ByArticleFactory(runtimeConfiguration, childComments, article);
+    CommentOutputView.Factory viewFactory
+        = new CommentOutputView.Factory(runtimeConfiguration, childComments, article);
     return viewFactory.buildView(created);
   }
 
@@ -247,7 +247,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
 
     hibernateTemplate.update(comment);
 
-    return new CommentOutputView.ByArticleFactory(runtimeConfiguration,
+    return new CommentOutputView.Factory(runtimeConfiguration,
         fetchAllComments(comment.getArticle()), comment.getArticle()).buildView(comment);
   }
 
@@ -421,7 +421,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
             .map((Object[] result) -> {
               Comment comment = (Comment) result[0];
               String articleDoi = (String) result[1];
-              return viewFactory.create(comment, journalKey, articleDoi);
+              return viewFactory.create(comment, articleDoi);
             })
             .collect(Collectors.toList());
       }
@@ -460,7 +460,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   }
 
   @Override
-  public List<CommentOutputView> getCommentsCreatedOn(LocalDate fromDate, LocalDate toDate) {
+  public List<CommentNodeView> getCommentsCreatedOn(LocalDate fromDate, LocalDate toDate) {
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("FROM Comment " +
           "WHERE created >= :fromDate AND created <= :toDate ");
@@ -468,8 +468,8 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
       query.setParameter("toDate", java.sql.Date.valueOf(toDate));
       List<Comment> comments = query.list();
 
-      CommentOutputView.Factory viewFactory = new CommentOutputView.Factory(runtimeConfiguration);
-      return comments.stream().map(viewFactory::buildView).collect(Collectors.toList());
+      CommentNodeView.Factory viewFactory = new CommentNodeView.Factory(runtimeConfiguration);
+      return comments.stream().map(viewFactory::create).collect(Collectors.toList());
     });
   }
 }
