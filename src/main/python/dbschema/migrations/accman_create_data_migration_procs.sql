@@ -420,18 +420,21 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_articles`()
 
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
+    CREATE TABLE IF NOT EXISTS migration_status_log (
+      articleId BIGINT(20) DEFAULT NULL,
+      migration_date DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+      migration_status INT(11) DEFAULT NULL,
+      error_message VARCHAR(255) DEFAULT NULL);
+
+    INSERT INTO migration_status_log (migration_date, migration_status, error_message)
+    VALUES (NOW(), 0, 'Starting migration');
+
     CALL correct_article_asset_table();
 
     IF NOT EXISTS (SELECT * FROM information_schema.tables
       WHERE table_schema = (SELECT DATABASE()) AND table_name = 'uuid_lut') THEN
       CALL create_uuid_lut();
     END IF;
-
-    CREATE TABLE IF NOT EXISTS migration_status_log (
-      articleId BIGINT(20) NOT NULL,
-      migration_date DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-      migration_status INT(11) DEFAULT NULL,
-      error_message VARCHAR(255) DEFAULT NULL);
 
     # replace the temporary records added by the migrate.py script
     IF EXISTS (SELECT journalID FROM oldJournal WHERE journalID NOT IN (SELECT journalId FROM journal)) THEN
@@ -530,6 +533,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_articles`()
       SELECT articleRelationshipID, parentArticleID, otherArticleID, type, ar.created, ar.lastModified
       FROM oldArticleRelationship ar INNER JOIN article a1 ON ar.parentArticleID = a1.articleId INNER JOIN article a2 ON ar.otherArticleID = a2.articleId
       WHERE type NOT IN ('retraction', 'expressed-concern') AND articleRelationshipID NOT IN (SELECT articleRelationshipId FROM articleRelationship);
+
+    INSERT INTO migration_status_log (migration_date, migration_status, error_message)
+    VALUES (NOW(), 0, 'Migration complete');
 
   END$$
 DELIMITER ;
