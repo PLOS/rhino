@@ -61,6 +61,7 @@ import org.ambraproject.rhino.view.article.ArticleIngestionView;
 import org.ambraproject.rhino.view.article.ArticleRevisionView;
 import org.ambraproject.rhino.view.article.ItemSetView;
 import org.ambraproject.rhino.view.article.RelationshipSetView;
+import org.ambraproject.rhino.view.comment.CommentNodeView;
 import org.ambraproject.rhino.view.journal.ArticleListView;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
@@ -73,6 +74,7 @@ import org.hibernate.SessionFactory;
 import org.plos.crepo.config.HttpClientFunction;
 import org.plos.crepo.service.ContentRepoService;
 import org.plos.crepo.service.ContentRepoServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -101,6 +103,9 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 public class RhinoConfiguration {
+
+  @Autowired
+  private RuntimeConfiguration runtimeConfiguration;
 
   @Bean
   public AnnotationSessionFactoryBean sessionFactory(DataSource hibernateDataSource) throws IOException {
@@ -318,6 +323,11 @@ public class RhinoConfiguration {
   @Bean
   public ArticleListView.Factory articleListViewFactory() {
     return new ArticleListView.Factory();
+  }
+
+  @Bean
+  public CommentNodeView.Factory commentNodeViewFactory() {
+    return new CommentNodeView.Factory(runtimeConfiguration);
   }
 
   @Bean
