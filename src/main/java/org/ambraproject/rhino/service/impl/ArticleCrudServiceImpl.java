@@ -576,10 +576,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           "FROM ArticleRevision ar " +
           "INNER JOIN ar.ingestion ai " +
           "INNER JOIN  ar.ingestion.article at " +
-          "WHERE ai.publicationDate >= :fromDate AND ai.publicationDate <= :toDate " +
+          "WHERE ai.publicationDate >= :fromDate AND ai.publicationDate < :toDate " +
           "AND ar.revisionId IS NOT NULL");
       query.setParameter("fromDate", java.sql.Date.valueOf(fromDate));
-      query.setParameter("toDate", java.sql.Date.valueOf(toDate));
+      query.setParameter("toDate", java.sql.Date.valueOf(toDate.plusDays(1)));
       return (Collection<ArticleRevision>) query.list();
     });
   }
@@ -592,10 +592,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           "FROM ArticleRevision ar " +
           "INNER JOIN ar.ingestion ai " +
           "INNER JOIN  ar.ingestion.article at " +
-          "WHERE ai.revisionDate >= :fromDate AND ai.revisionDate <= :toDate " +
+          "WHERE ai.revisionDate >= :fromDate AND ai.revisionDate < :toDate " +
           "AND ar.revisionId IS NOT NULL");
       query.setParameter("fromDate", java.sql.Date.valueOf(fromDate));
-      query.setParameter("toDate", java.sql.Date.valueOf(toDate));
+      query.setParameter("toDate", java.sql.Date.valueOf(toDate.plusDays(1)));
       return (Collection<ArticleRevision>) query.list();
     });
   }
