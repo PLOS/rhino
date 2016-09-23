@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -104,4 +105,14 @@ public class TaxonomyServiceImpl extends AmbraService implements TaxonomyService
     }
   }
 
+  @Override
+  public List<ArticleCategoryAssignmentFlag> getFlagsCreatedOn(LocalDate fromDate, LocalDate toDate) {
+    return hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM ArticleCategoryAssignmentFlag " +
+          "WHERE created >= :fromDate AND created <= :toDate");
+      query.setParameter("fromDate", java.sql.Date.valueOf(fromDate));
+      query.setParameter("toDate", java.sql.Date.valueOf(toDate));
+      return (List<ArticleCategoryAssignmentFlag>) query.list();
+    });
+  }
 }
