@@ -140,6 +140,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `correct_article_asset_table`()
 
     DELETE FROM articleAsset WHERE articleAssetID = 8975739;
 
+    DELETE FROM articleAsset WHERE articleAssetID = 262370;
+
+    DELETE FROM articleAsset WHERE articleAssetID = 11557097;
+
   END $$
 DELIMITER ;
 
