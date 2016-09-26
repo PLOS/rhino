@@ -79,11 +79,10 @@ public class CommentCrudController extends RestController {
   @RequestMapping(value = "/comments", method = RequestMethod.GET, params = "created")
   public void getCommentsCreatedOn(HttpServletRequest request, HttpServletResponse response,
                                    @ApiParam(value = "Date Format: yyyy-MM-dd")
-                                   @RequestParam(value = "fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fromDate,
-                                   @ApiParam(value = "Date Format: yyyy-MM-dd")
-                                   @RequestParam(value = "toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate) throws IOException {
+                                   @RequestParam(value = "date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date)
+      throws IOException {
 
-    Transceiver.serveUntimestampedView(() -> commentCrudService.getCommentsCreatedOn(fromDate, toDate))
+    Transceiver.serveUntimestampedView(() -> commentCrudService.getCommentsCreatedOn(date))
         .respond(request, response, entityGson);
   }
 

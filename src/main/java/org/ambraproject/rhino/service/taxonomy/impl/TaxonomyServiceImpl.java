@@ -109,9 +109,9 @@ public class TaxonomyServiceImpl extends AmbraService implements TaxonomyService
   public List<ArticleCategoryAssignmentFlag> getFlagsCreatedOn(LocalDate fromDate, LocalDate toDate) {
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("FROM ArticleCategoryAssignmentFlag " +
-          "WHERE created >= :fromDate AND created <= :toDate");
+          "WHERE created >= :fromDate AND created < :toDate");
       query.setParameter("fromDate", java.sql.Date.valueOf(fromDate));
-      query.setParameter("toDate", java.sql.Date.valueOf(toDate));
+      query.setParameter("toDate", java.sql.Date.valueOf(toDate.plusDays(1)));
       return (List<ArticleCategoryAssignmentFlag>) query.list();
     });
   }
