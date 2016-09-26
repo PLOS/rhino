@@ -453,12 +453,10 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   }
 
   @Override
-  public List<CommentNodeView> getCommentsCreatedOn(LocalDate fromDate, LocalDate toDate) {
+  public List<CommentNodeView> getCommentsCreatedOn(LocalDate date) {
     return hibernateTemplate.execute(session -> {
-      Query query = session.createQuery("FROM Comment " +
-          "WHERE created >= :fromDate AND created < :toDate ");
-      query.setParameter("fromDate", java.sql.Date.valueOf(fromDate));
-      query.setParameter("toDate", java.sql.Date.valueOf(toDate.plusDays(1)));
+      Query query = session.createQuery("FROM Comment WHERE DATE(created) = :date");
+      query.setParameter("date", java.sql.Date.valueOf(date));
       List<Comment> comments = query.list();
 
       return comments.stream().map(commentNodeViewFactory::create).collect(Collectors.toList());

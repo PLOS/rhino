@@ -88,5 +88,5 @@ public interface CommentCrudService {
 
   public Transceiver getCommentCount(Article article);
 
-  public List<CommentNodeView> getCommentsCreatedOn(LocalDate fromDate, LocalDate toDate);
+  public List<CommentNodeView> getCommentsCreatedOn(LocalDate date);
 }
