@@ -321,8 +321,11 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
           .distinct()
           .collect(Collectors.toList());
       if (assetMetadataList.size() > 1) {
-        // TODO: It might be okay if the duplicate AssetMetadata objects differ only by contextElement
-        throw new XmlContentException("Non-matching duplicate assets with DOI: " + assetDoi);
+        String contextElements = assetMetadataList.stream()
+            .map(node -> node.getContextElement())
+            .collect(Collectors.joining(", "));
+        log.warn(String.format("Choosing the first of duplicate XML asset nodes (contextElements: %s) for asset DOI: %s",
+            contextElements, assetDoi));
       }
       return assetMetadataList.get(0);
     }).collect(Collectors.toList());
