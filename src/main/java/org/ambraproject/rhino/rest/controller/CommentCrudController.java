@@ -41,9 +41,7 @@ public class CommentCrudController extends RestController {
                    @PathVariable("commentDoi") String commentDoi)
       throws IOException {
     CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
-
-    // TODO: Look up article; redirect to main service
-    // TODO: Equivalent aliases for other methods?
+    commentCrudService.serveComment(commentId).respond(request, response, entityGson);
   }
 
   @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi:.+}", method = RequestMethod.GET)
