@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.content.xml;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
@@ -37,6 +38,8 @@ import org.w3c.dom.Node;
 
 import java.net.URLEncoder;
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -321,11 +324,45 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
           .distinct()
           .collect(Collectors.toList());
       if (assetMetadataList.size() > 1) {
-        log.warn(String.format("Choosing the first of duplicate XML asset nodes for asset DOI: %s",
-            assetDoi));
+        return disambiguateAssetNodes(assetMetadataList);
       }
       return assetMetadataList.get(0);
     }).collect(Collectors.toList());
+  }
+
+  private static final Comparator<AssetMetadata> ASSET_NODE_PREFERENCE = Comparator.<AssetMetadata, Boolean>
+      comparing(node -> node.getTitle().isEmpty() || node.getDescription().isEmpty())
+      .thenComparing(Comparator.comparing(node -> node.getTitle().isEmpty()))
+      .thenComparing(Comparator.comparing(node -> node.getDescription().isEmpty()));
+
+  /**
+   * @param assetNodesMetadata metadata for at least two asset nodes with the same DOI and unequal content
+   * @return the metadata with the most non-empty fields
+   * @throws XmlContentException if two or more asset nodes have non-empty, inconsistent title or description
+   */
+  @VisibleForTesting
+  static AssetMetadata disambiguateAssetNodes(Collection<AssetMetadata> assetNodesMetadata) {
+    // Find the node with the most substantial content
+    AssetMetadata bestNode = assetNodesMetadata.stream().min(ASSET_NODE_PREFERENCE)
+        .orElseThrow(() -> new IllegalArgumentException("Argument list must not be empty"));
+
+    // If any other nodes have non-empty fields that are inconsistent with bestNode, complain about ambiguity
+    Collection<AssetMetadata> ambiguous = assetNodesMetadata.stream()
+        .filter(node -> {
+          String title = node.getTitle();
+          boolean ambiguousTitle = !title.isEmpty() && !title.equals(bestNode.getTitle());
+
+          String description = node.getDescription();
+          boolean ambiguousDescription = !description.isEmpty() && !description.equals(bestNode.getDescription());
+
+          return ambiguousTitle || ambiguousDescription;
+        })
+        .collect(Collectors.toList());
+    if (!ambiguous.isEmpty()) {
+      throw new XmlContentException(String.format("Ambiguous asset nodes: %s, %s", bestNode, ambiguous));
+    }
+
+    return bestNode;
   }
 
 }
