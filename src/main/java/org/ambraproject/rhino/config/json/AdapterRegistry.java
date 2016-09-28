@@ -39,6 +39,7 @@ public class AdapterRegistry {
 
       .add(org.ambraproject.rhino.view.JsonWrapper.class)
 
+      .add(org.ambraproject.rhino.view.article.ArticleVisibility.class)
       .add(org.ambraproject.rhino.view.article.ArticleIngestionView.class)
       .add(org.ambraproject.rhino.view.article.ArticleRevisionView.class)
       .add(org.ambraproject.rhino.view.article.CategoryAssignmentView.class)
