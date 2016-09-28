@@ -82,7 +82,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
         Article article = articleCrudService.readArticle(articleId);
         List<Comment> comments = fetchAllComments(article);
         CommentOutputView.Factory factory
-            = new CommentOutputView.Factory(runtimeConfiguration, comments);
+            = new CommentOutputView.Factory(runtimeConfiguration, comments, article);
         return comments.stream()
             .filter(comment -> comment.getParent() == null)
             .sorted(CommentOutputView.BY_DATE)
@@ -104,7 +104,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
       protected CommentOutputView getData() throws IOException {
         Comment comment = readComment(commentId);
         return new CommentOutputView.Factory(runtimeConfiguration,
-            fetchAllComments(comment.getArticle())).buildView(comment);
+            fetchAllComments(comment.getArticle()), comment.getArticle()).buildView(comment);
       }
 
       @Override
@@ -200,7 +200,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
 
     List<Comment> childComments = ImmutableList.of(); // the new comment can't have any children yet
     CommentOutputView.Factory viewFactory
-        = new CommentOutputView.Factory(runtimeConfiguration, childComments);
+        = new CommentOutputView.Factory(runtimeConfiguration, childComments, article);
     return viewFactory.buildView(created);
   }
 
@@ -246,7 +246,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     hibernateTemplate.update(comment);
 
     return new CommentOutputView.Factory(runtimeConfiguration,
-        fetchAllComments(comment.getArticle())).buildView(comment);
+        fetchAllComments(comment.getArticle()), comment.getArticle()).buildView(comment);
   }
 
   @Override
