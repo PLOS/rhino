@@ -257,3 +257,8 @@ CREATE TABLE `issueArticleList` (
   PRIMARY KEY (`issueId`,`articleId`),
   CONSTRAINT `fk_issueArticleList_1` FOREIGN KEY (`issueId`) REFERENCES `issue` (`issueId`),
   CONSTRAINT `fk_issueArticleList_2` FOREIGN KEY (`articleId`) REFERENCES `article` (`articleId`));
+
+ALTER TABLE category CHANGE categoryID categoryId bigint(20) NOT NULL AUTO_INCREMENT;
+ALTER TABLE category CHANGE created created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE category CHANGE lastModified lastModified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON
+UPDATE CURRENT_TIMESTAMP;
