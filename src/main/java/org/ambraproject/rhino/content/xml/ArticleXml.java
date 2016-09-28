@@ -321,11 +321,8 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
           .distinct()
           .collect(Collectors.toList());
       if (assetMetadataList.size() > 1) {
-        String contextElements = assetMetadataList.stream()
-            .map(node -> node.getContextElement())
-            .collect(Collectors.joining(", "));
-        log.warn(String.format("Choosing the first of duplicate XML asset nodes (contextElements: %s) for asset DOI: %s",
-            contextElements, assetDoi));
+        log.warn(String.format("Choosing the first of duplicate XML asset nodes for asset DOI: %s",
+            assetDoi));
       }
       return assetMetadataList.get(0);
     }).collect(Collectors.toList());
