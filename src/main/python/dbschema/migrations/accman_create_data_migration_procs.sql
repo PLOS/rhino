@@ -144,6 +144,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `correct_article_asset_table`()
 
     DELETE FROM articleAsset WHERE articleAssetID = 11557097;
 
+    DELETE FROM articleAsset WHERE articleAssetID IN (2868870, 2888424, 2940472, 2955664, 2184512, 3077550, 12528549);
+
   END $$
 DELIMITER ;
 
