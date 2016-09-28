@@ -3,6 +3,7 @@ package org.ambraproject.rhino.config.json;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.article.ListInputView;
 
@@ -39,7 +40,6 @@ public class AdapterRegistry {
 
       .add(org.ambraproject.rhino.view.JsonWrapper.class)
 
-      .add(org.ambraproject.rhino.view.article.ArticleVisibility.class)
       .add(org.ambraproject.rhino.view.article.ArticleIngestionView.class)
       .add(org.ambraproject.rhino.view.article.ArticleRevisionView.class)
       .add(org.ambraproject.rhino.view.article.CategoryAssignmentView.class)
@@ -69,6 +69,7 @@ public class AdapterRegistry {
    */
   private static final ImmutableMap<Type, Object> CUSTOM_ADAPTERS = ImmutableMap.<Type, Object>builder()
       .put(ListInputView.class, ListInputView.DESERIALIZER)
+      .put(Doi.class, Doi.SERIALIZER)
       .build();
 
 

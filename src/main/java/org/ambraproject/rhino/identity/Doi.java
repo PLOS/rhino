@@ -2,7 +2,12 @@ package org.ambraproject.rhino.identity;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableSet;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
+import java.lang.reflect.Type;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -123,4 +128,12 @@ public final class Doi {
     return doiName.toLowerCase(Locale.ROOT).hashCode();
   }
 
+  public static final JsonSerializer<Doi> SERIALIZER = new JsonSerializer<Doi>() {
+    @Override
+    public JsonElement serialize(Doi doi, Type typeOfSrc, JsonSerializationContext context) {
+      JsonObject serialized = new JsonObject();
+      serialized.add("doi", context.serialize(doi.getName()));
+      return serialized;
+    }
+  };
 }
