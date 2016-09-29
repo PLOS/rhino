@@ -52,19 +52,11 @@ public class AssetXml extends AbstractArticleXml<AssetMetadata> {
   public AssetMetadata build() throws XmlContentException {
     String doi = assetId.getName();
 
-    Node contextNode = xml;
-    if (GRAPHIC.equals(contextNode.getNodeName())) {
-      // Ambra treats "graphic" as a special case and uses the parent node instead.
-      // TODO: Ambra bug? Just using contextElement="graphic" makes more sense and is consistent with other cases.
-      contextNode = contextNode.getParentNode();
-    }
-    String contextElement = contextNode.getNodeName();
-
     String title = Strings.nullToEmpty(readString("child::label"));
     Node captionNode = readNode("child::caption");
     String description = Strings.nullToEmpty(getXmlFromNode(captionNode));
 
-    return new AssetMetadata(doi, contextElement, title, description);
+    return new AssetMetadata(doi, title, description);
   }
 
 }

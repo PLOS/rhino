@@ -518,18 +518,6 @@ public class IngestionTest extends BaseRhinoTest {
   private void compareAssetFields(AssertionCollector results, AssetMetadata actual, AssetMetadata expected) {
     assertEquals(actual.getDoi(), expected.getDoi()); // should be true as a method precondition
 
-    String actualContextElement = actual.getContextElement();
-    String expectedContextElement = expected.getContextElement();
-    if ("".equals(expectedContextElement) && "inline-formula".equals(actualContextElement)) {
-      /*
-       * Some test cases have an empty string for inline-formula elements. This is not true for all inline formulas,
-       * therefore this seems not to be a special case where the empty string is correct. It's probably a legacy bug.
-       * So, make sure we don't assert for the buggy value.
-       */
-      expectedContextElement = actualContextElement;
-    }
-    compare(results, AssetMetadata.class, "contextElement(" + actual.getDoi() + ")", actualContextElement, expectedContextElement);
-
     compareMarkupText(results, AssetMetadata.class, "title(" + actual.getDoi() + ")", actual.getTitle(), expected.getTitle());
     compareMarkupText(results, AssetMetadata.class, "description(" + actual.getDoi() + ")", actual.getDescription(), expected.getDescription());
   }
