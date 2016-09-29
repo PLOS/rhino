@@ -89,14 +89,12 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
   protected Doi getAssetDoi(Node assetNode) {
     String nodeName = assetNode.getNodeName();
     String doi;
-    //disp-formula may be a graphic node parent, or an asset node name
-    if (nodeName.equals(DISP_FORMULA)) {
+    if (GRAPHIC_NODE_PARENTS.contains(nodeName)) {
       doi = readString("object-id[@pub-id-type=\"doi\"]", assetNode);
-      if (doi == null) {
+      if (doi == null && nodeName.equals(DISP_FORMULA)) {
+        //disp-formula may be a graphic node parent, or an asset node name
         doi = readHrefAttribute(assetNode);
       }
-    } else if (GRAPHIC_NODE_PARENTS.contains(nodeName)) {
-      doi = readString("object-id[@pub-id-type=\"doi\"]", assetNode);
     } else if (ASSET_NODE_NAMES.contains(nodeName)) {
       doi = readHrefAttribute(assetNode);
     } else {
