@@ -331,8 +331,7 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
   }
 
   private static final Comparator<AssetMetadata> ASSET_NODE_PREFERENCE = Comparator.<AssetMetadata, Boolean>
-      comparing(node -> node.getTitle().isEmpty() || node.getDescription().isEmpty())
-      .thenComparing(Comparator.comparing(node -> node.getTitle().isEmpty()))
+      comparing(node -> node.getTitle().isEmpty())
       .thenComparing(Comparator.comparing(node -> node.getDescription().isEmpty()));
 
   /**
