@@ -2,6 +2,8 @@ package org.ambraproject.rhino.identity;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableSet;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializer;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -123,4 +125,6 @@ public final class Doi {
     return doiName.toLowerCase(Locale.ROOT).hashCode();
   }
 
+  public static final JsonSerializer<Doi> SERIALIZER = (doi, typeOfSrc, context)
+      -> new JsonPrimitive(doi.getName());
 }
