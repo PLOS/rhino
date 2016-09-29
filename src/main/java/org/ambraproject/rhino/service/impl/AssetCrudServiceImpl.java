@@ -43,7 +43,8 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     try {
       return contentRepoService.getRepoObjectMetadata(articleFile.getCrepoVersion());
     } catch (NotFoundException e) {
-      throw new RestClientException("Object not found: " + fileId, HttpStatus.NOT_FOUND);
+      throw new RestClientException("Object not found: " + fileId + ". File info: " + articleFile,
+          HttpStatus.NOT_FOUND);
     }
   }
 

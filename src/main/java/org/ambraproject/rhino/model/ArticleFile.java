@@ -163,4 +163,13 @@ public class ArticleFile implements Timestamped {
     result = 31 * result + (crepoUuid != null ? crepoUuid.hashCode() : 0);
     return result;
   }
+
+  @Override
+  public String toString() {
+    return "ArticleFile{" +
+        "bucketName='" + bucketName + '\'' +
+        ", crepoKey='" + crepoKey + '\'' +
+        ", crepoUuid='" + crepoUuid + '\'' +
+        '}';
+  }
 }
