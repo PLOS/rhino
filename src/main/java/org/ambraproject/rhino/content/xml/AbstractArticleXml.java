@@ -89,7 +89,13 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
   protected Doi getAssetDoi(Node assetNode) {
     String nodeName = assetNode.getNodeName();
     String doi;
-    if (GRAPHIC_NODE_PARENTS.contains(nodeName)) {
+    //disp-formula may be a graphic node parent, or an asset node name
+    if (nodeName.equals(DISP_FORMULA)) {
+      doi = readString("object-id[@pub-id-type=\"doi\"]", assetNode);
+      if (doi == null) {
+        doi = readHrefAttribute(assetNode);
+      }
+    } else if (GRAPHIC_NODE_PARENTS.contains(nodeName)) {
       doi = readString("object-id[@pub-id-type=\"doi\"]", assetNode);
     } else if (ASSET_NODE_NAMES.contains(nodeName)) {
       doi = readHrefAttribute(assetNode);
@@ -141,8 +147,8 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
   }
 
   /**
-   * Parse a person's name from an article XML node. The returned object is useful for populating a {@link
-   * org.ambraproject.models.ArticlePerson} or {@link org.ambraproject.models.CitedArticlePerson}.
+   * Parse a person's name from an article XML node. The returned object is useful for populating a
+   * {@link NlmPerson}
    * <p/>
    * This method expects to find a "name-style" attribute and "surname" subnode. The "given-names" and "suffix" subnodes
    * are optional. Omitted nodes are represented by an empty string.
