@@ -29,8 +29,8 @@ public class ArticleXmlTest {
         {asset("", "description"), asset("", "")},
     };
     return Stream.of(cases).map((AssetMetadata[] metadataCases) -> {
-      Object goodNode = metadataCases[0];
-      Object[] badNodes = Arrays.copyOfRange(metadataCases, 1, metadataCases.length);
+      AssetMetadata goodNode = metadataCases[0];
+      AssetMetadata[] badNodes = Arrays.copyOfRange(metadataCases, 1, metadataCases.length);
       return new Object[]{goodNode, badNodes};
     }).iterator();
   }
@@ -51,6 +51,8 @@ public class ArticleXmlTest {
         {asset("title1", "description1"), asset("title2", "")},
         {asset("title1", "description1"), asset("", "description2")},
         {asset("title1", "description1"), asset("title2", ""), asset("", "description3")},
+        {asset("title", "description1"), asset("title", "description2"), asset("title", "")},
+        {asset("title1", "description"), asset("title2", "description"), asset("", "description")},
         {asset("title1", ""), asset("title2", "")},
         {asset("", "description1"), asset("", "description2")},
     };
