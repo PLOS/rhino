@@ -522,7 +522,15 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_articles`()
     INSERT INTO `comment` (commentId, commentURI, articleId, parentId, userProfileId, title, body, competingInterestBody, highlightedText, created, lastModified, isRemoved)
       SELECT annotationID, get_doi_name(annotationURI), ann.articleID, parentID, userProfileID, title, body, competingInterestBody, highlightedText, ann.created, ann.lastModified, isRemoved
       FROM annotation ann INNER JOIN article a ON ann.articleID = a.articleId
-      WHERE ann.articleID NOT IN (SELECT articleId FROM comment);
+      WHERE ann.articleID NOT IN (SELECT articleId FROM comment)
+            AND annotationID NOT IN (34409, 34663, 34885, 34945, 35313, 35811, 36551,
+                                     36929, 36963, 36995, 37001, 37379, 37863, 50439,
+                                     51965, 51989, 52915, 53973, 54277, 54459, 55017,
+                                     55661, 55663, 55665, 58099, 58101, 58589, 60909,
+                                     63315, 63807, 64381, 66795, 66945, 67707, 68729,
+                                     69859, 70189, 71577, 72937, 73761, 75933, 76099,
+                                     76353, 76967, 77365, 77791, 78185, 78319, 54527,
+                                     59361, 78187); # orphaned records of deleted comments (see DPRO-2960)
     SET FOREIGN_KEY_CHECKS=1;
 
     INSERT INTO commentFlag
