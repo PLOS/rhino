@@ -9,12 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.OptionalInt;
 
 @Controller
 public class JournalCrudController extends RestController {
@@ -48,15 +46,4 @@ public class JournalCrudController extends RestController {
 
     journalCrudService.serve(journalKey).respond(request, response, entityGson);
   }
-
-  @Transactional(readOnly = true)
-  @RequestMapping(value = "/journals/{journalKey}", method = RequestMethod.GET, params = "comments")
-  public void getRecentComments(HttpServletRequest request, HttpServletResponse response,
-                                @PathVariable String journalKey,
-                                @RequestParam(value = "limit", required = false) Integer limit)
-      throws IOException {
-    OptionalInt limitObj = (limit == null) ? OptionalInt.empty() : OptionalInt.of(limit);
-    commentCrudService.readRecentComments(journalKey, limitObj).respond(request, response, entityGson);
-  }
-
 }
