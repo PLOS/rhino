@@ -1,5 +1,6 @@
 package org.ambraproject.rhino.content.xml;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ListMultimap;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
@@ -63,7 +64,7 @@ public class CustomMetadataExtractor extends AbstractArticleXml<ArticleCustomMet
     ImmutableListMultimap.Builder<String, String> builder = ImmutableListMultimap.builder();
     for (Node node : customMetaNodes) {
       String name = readString("child::meta-name", node);
-      String value = sanitize(readString("child::meta-value", node));
+      String value = Strings.nullToEmpty(sanitize(readString("child::meta-value", node)));
       builder.put(name, value);
     }
     return builder.build();
