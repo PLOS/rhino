@@ -64,6 +64,7 @@ public class CustomMetadataExtractor extends AbstractArticleXml<ArticleCustomMet
     for (Node node : customMetaNodes) {
       String name = readString("child::meta-name", node);
       String value = sanitize(readString("child::meta-value", node));
+      if (value == null) continue;
       builder.put(name, value);
     }
     return builder.build();
