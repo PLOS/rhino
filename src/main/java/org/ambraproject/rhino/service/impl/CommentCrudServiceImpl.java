@@ -48,7 +48,6 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -377,46 +376,13 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
         return readFlaggedComments(session -> {
           Query query = session.createQuery("" +
               "SELECT DISTINCT f.flaggedComment " +
-              "FROM Flag f, Article a " +
-              "WHERE f.flaggedComment.articleID = a.ID " +
-              "  AND :journal IN ELEMENTS(a.journals)");
+              "FROM Flag f, Article a, ArticleIngestion i " +
+              "WHERE f.flaggedComment.article = a " +
+              "AND i.article = a " +
+              "AND i.journal = :journal");
           query.setParameter("journal", journal);
           return query.list();
         });
-      }
-
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return null;
-      }
-    };
-  }
-
-  @Override
-  public Transceiver readRecentComments(String journalKey, OptionalInt limit) {
-    return new Transceiver() {
-      //todo: include article title?
-      @Override
-      protected List<CommentNodeView> getData() throws IOException {
-        List<Object[]> results = (List<Object[]>) hibernateTemplate.execute(session -> {
-          Query query = session.createQuery("" +
-              "SELECT com, art.doi " +
-              "FROM Comment com, Article art, Journal j " +
-              "WHERE com.article = art " +
-              "  AND j IN ELEMENTS(art.journals) " +
-              "  AND j.journalKey = :journalKey " +
-              "ORDER BY com.created DESC");
-          query.setParameter("journalKey", journalKey);
-          limit.ifPresent(query::setMaxResults);
-          return query.list();
-        });
-        return results.stream()
-            .map((Object[] result) -> {
-              Comment comment = (Comment) result[0];
-              String articleDoi = (String) result[1];
-              return commentNodeViewFactory.create(comment, articleDoi);
-            })
-            .collect(Collectors.toList());
       }
 
       @Override

@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalInt;
 
 /**
  * Service that handles comments and replies associated with articles. For legacy reasons, these are referred to
@@ -83,8 +82,6 @@ public interface CommentCrudService {
   public Transceiver readCommentFlagsOn(CommentIdentifier commentId);
 
   public Long deleteCommentFlag(Long flagId);
-
-  public Transceiver readRecentComments(String journalKey, OptionalInt limit);
 
   public Transceiver getCommentCount(Article article);
 
