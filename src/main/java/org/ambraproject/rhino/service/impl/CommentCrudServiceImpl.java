@@ -307,6 +307,17 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
         .execute(session -> session.createCriteria(Flag.class).list());
   }
 
+  private List<Flag> getAllFlags(String journalKey) {
+    Journal journal = journalCrudService.readJournal(journalKey);
+    return hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("SELECT DISTINCT f FROM ArticleIngestion i, Flag f " +
+          "WHERE f.flaggedComment.article = i.article " +
+          "AND i.journal = :journal ");
+      query.setParameter("journal", journal);
+      return (List<Flag>) query.list();
+    });
+  }
+
   @Override
   public Transceiver readCommentFlag(Long flagId) {
     return new EntityTransceiver<Flag>() {
@@ -329,6 +340,22 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
       @Override
       protected Object getData() throws IOException {
         List<Flag> flags = getCommentFlagsOn(readComment(commentId));
+        return flags.stream().map(commentNodeViewFactory::createFlagView).collect(Collectors.toList());
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    };
+  }
+
+  @Override
+  public Transceiver readAllCommentFlags(String journalKey) {
+    return new Transceiver() {
+      @Override
+      protected Object getData() throws IOException {
+        List<Flag> flags = getAllFlags(journalKey);
         return flags.stream().map(commentNodeViewFactory::createFlagView).collect(Collectors.toList());
       }
 

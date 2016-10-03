@@ -91,6 +91,13 @@ public class CommentCrudController extends RestController {
     commentCrudService.readAllCommentFlags().respond(request, response, entityGson);
   }
 
+  @RequestMapping(value = "/commentFlags", method = RequestMethod.GET, params = {"journal"})
+  public void readAllFlagsByJournal(HttpServletRequest request, HttpServletResponse response,
+                                    @RequestParam("journal") String journalKey)
+      throws IOException {
+    commentCrudService.readAllCommentFlags(journalKey).respond(request, response, entityGson);
+  }
+
   @RequestMapping(value = "/articles/{articleDoi}/comments", method = RequestMethod.POST)
   public ResponseEntity<?> create(HttpServletRequest request,
                                   @PathVariable("articleDoi") String articleDoi)

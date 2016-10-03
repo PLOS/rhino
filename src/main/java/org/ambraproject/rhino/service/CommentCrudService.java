@@ -77,6 +77,8 @@ public interface CommentCrudService {
 
   public Transceiver readAllCommentFlags();
 
+  public Transceiver readAllCommentFlags(String journalKey);
+
   public Transceiver readCommentFlag(Long flagId);
 
   public Transceiver readCommentFlagsOn(CommentIdentifier commentId);
