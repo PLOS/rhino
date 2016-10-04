@@ -44,8 +44,6 @@ public class VolumeCrudController extends RestController {
 
   @Autowired
   private VolumeCrudService volumeCrudService;
-  @Autowired
-  private VolumeOutputView.Factory volumeOutputViewFactory;
 
   private static VolumeIdentifier getVolumeId(String volumeDoi) {
     return VolumeIdentifier.create(DoiEscaping.unescape(volumeDoi));
@@ -82,7 +80,7 @@ public class VolumeCrudController extends RestController {
     }
 
     Volume volume = volumeCrudService.create(journalKey, input);
-    return reportCreated(volumeOutputViewFactory.getView(volume));
+    return reportCreated(VolumeOutputView.getView(volume));
   }
 
   @Transactional(rollbackFor = {Throwable.class})
@@ -95,7 +93,7 @@ public class VolumeCrudController extends RestController {
     VolumeIdentifier volumeId = getVolumeId(volumeDoi);
     VolumeInputView input = readJsonFromRequest(request, VolumeInputView.class);
     Volume updated = volumeCrudService.update(volumeId, input);
-    return reportUpdated(volumeOutputViewFactory.getView(updated));
+    return reportUpdated(VolumeOutputView.getView(updated));
   }
 
   @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi:.+}", method = RequestMethod.DELETE)

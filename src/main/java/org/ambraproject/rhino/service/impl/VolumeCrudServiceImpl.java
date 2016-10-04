@@ -44,10 +44,6 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
 
   @Autowired
   private JournalCrudService journalCrudService;
-  @Autowired
-  private ArticleCrudService articleCrudService;
-  @Autowired
-  private VolumeOutputView.Factory volumeOutputViewFactory;
 
   @Override
   public Volume readVolume(VolumeIdentifier volumeId) {
@@ -112,7 +108,7 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
 
       @Override
       protected Object getView(Volume volume) {
-        return volumeOutputViewFactory.getView(volume);
+        return VolumeOutputView.getView(volume);
       }
     };
   }

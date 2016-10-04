@@ -66,7 +66,6 @@ import org.ambraproject.rhino.view.comment.CommentNodeView;
 import org.ambraproject.rhino.view.journal.ArticleListView;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
-import org.ambraproject.rhino.view.journal.VolumeOutputView;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -304,11 +303,6 @@ public class RhinoConfiguration {
   @Bean
   public IssueOutputView.Factory issueOutputViewFactory() {
     return new IssueOutputView.Factory();
-  }
-
-  @Bean
-  public VolumeOutputView.Factory volumeOutputViewFactory() {
-    return new VolumeOutputView.Factory();
   }
 
   @Bean
