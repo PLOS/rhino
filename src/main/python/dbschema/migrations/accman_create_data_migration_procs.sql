@@ -168,7 +168,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `create_uuid_lut`()
       size int(11) NOT NULL,
       versionNumber int(11) NOT NULL,
       uuid char(36) COLLATE utf8_bin NOT NULL,
-      PRIMARY KEY (`objkey`));
+      PRIMARY KEY (`objkey`),
+      UNIQUE KEY objkey_versionNumber (objkey, versionNumber));
 
     INSERT INTO uuid_lut (objkey, versionNumber)
       SELECT objkey, MAX(versionNumber)
