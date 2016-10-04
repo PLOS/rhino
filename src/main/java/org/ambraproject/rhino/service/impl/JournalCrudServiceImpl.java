@@ -13,7 +13,6 @@ import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.ambraproject.rhino.view.journal.JournalInputView;
-import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -24,7 +23,9 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("JpaQlInspection")
 public class JournalCrudServiceImpl extends AmbraService implements JournalCrudService {
@@ -47,8 +48,8 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
       }
 
       @Override
-      protected Object getView(Collection<? extends Journal> journals) {
-        return JournalNonAssocView.wrapList(journals);
+      protected Map<String, JournalOutputView> getView(Collection<? extends Journal> journals) {
+        return journals.stream().collect(Collectors.toMap(Journal::getJournalKey, JournalOutputView::getShallowView));
       }
     };
   }
