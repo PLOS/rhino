@@ -247,7 +247,7 @@ public class ManifestXml extends AbstractXpathReader {
     }
 
     public String getCrepoKey() {
-      return entry;
+      return key;
     }
 
     public String getMimetype() {
