@@ -63,13 +63,6 @@ public class CommentCrudController extends RestController {
     commentCrudService.serveFlaggedComments().respond(request, response, entityGson);
   }
 
-  @RequestMapping(value = "/comments", method = RequestMethod.GET, params = {"flagged", "journal"})
-  public void readFlaggedComments(HttpServletRequest request, HttpServletResponse response,
-                                  @RequestParam("journal") String journalKey)
-      throws IOException {
-    commentCrudService.serveFlaggedComments(journalKey).respond(request, response, entityGson);
-  }
-
   /**
    * Provides a utility endpoint for the publication workflow.
    * The main use-case is to notify journal stakeholders when new comments are posted.
@@ -95,7 +88,7 @@ public class CommentCrudController extends RestController {
   public void readAllFlagsByJournal(HttpServletRequest request, HttpServletResponse response,
                                     @RequestParam("journal") String journalKey)
       throws IOException {
-    commentCrudService.readAllCommentFlags(journalKey).respond(request, response, entityGson);
+    commentCrudService.readCommentFlagsForJournal(journalKey).respond(request, response, entityGson);
   }
 
   @RequestMapping(value = "/articles/{articleDoi}/comments", method = RequestMethod.POST)
