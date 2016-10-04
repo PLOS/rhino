@@ -307,6 +307,17 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
         .execute(session -> session.createCriteria(Flag.class).list());
   }
 
+  private List<Flag> getAllFlags(String journalKey) {
+    Journal journal = journalCrudService.readJournal(journalKey);
+    return hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("SELECT DISTINCT f FROM ArticleIngestion i, Flag f " +
+          "WHERE f.flaggedComment.article = i.article " +
+          "AND i.journal = :journal ");
+      query.setParameter("journal", journal);
+      return (List<Flag>) query.list();
+    });
+  }
+
   @Override
   public Transceiver readCommentFlag(Long flagId) {
     return new EntityTransceiver<Flag>() {
@@ -340,6 +351,22 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   }
 
   @Override
+  public Transceiver readCommentFlagsForJournal(String journalKey) {
+    return new Transceiver() {
+      @Override
+      protected Object getData() throws IOException {
+        List<Flag> flags = getAllFlags(journalKey);
+        return flags.stream().map(commentNodeViewFactory::createFlagView).collect(Collectors.toList());
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    };
+  }
+
+  @Override
   public Long deleteCommentFlag(Long flagId) {
     Flag flag = getFlag(flagId);
     hibernateTemplate.delete(flag);
@@ -358,31 +385,6 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
       protected List<CommentNodeView> getData() throws IOException {
         return readFlaggedComments(session ->
             session.createQuery("SELECT DISTINCT flaggedComment FROM Flag").list());
-      }
-
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return null;
-      }
-    };
-  }
-
-  @Override
-  public Transceiver serveFlaggedComments(String journalKey) throws IOException {
-    return new Transceiver() {
-      @Override
-      protected List<CommentNodeView> getData() throws IOException {
-        Journal journal = journalCrudService.readJournal(journalKey);
-        return readFlaggedComments(session -> {
-          Query query = session.createQuery("" +
-              "SELECT DISTINCT f.flaggedComment " +
-              "FROM Flag f, Article a, ArticleIngestion i " +
-              "WHERE f.flaggedComment.article = a " +
-              "AND i.article = a " +
-              "AND i.journal = :journal");
-          query.setParameter("journal", journal);
-          return query.list();
-        });
       }
 
       @Override

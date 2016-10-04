@@ -61,8 +61,6 @@ public interface CommentCrudService {
    */
   public Transceiver serveFlaggedComments() throws IOException;
 
-  public Transceiver serveFlaggedComments(String journalKey) throws IOException;
-
   public Optional<Comment> getComment(CommentIdentifier commentId);
 
   public CommentOutputView createComment(Optional<ArticleIdentifier> articleId, CommentInputView input);
@@ -76,6 +74,8 @@ public interface CommentCrudService {
   public Flag createCommentFlag(CommentIdentifier commentId, CommentFlagInputView input);
 
   public Transceiver readAllCommentFlags();
+
+  public Transceiver readCommentFlagsForJournal(String journalKey);
 
   public Transceiver readCommentFlag(Long flagId);
 
