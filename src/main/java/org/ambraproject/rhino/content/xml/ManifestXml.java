@@ -127,7 +127,7 @@ public class ManifestXml extends AbstractXpathReader {
 
     private ManifestFile parseFile(Node node) {
       String entry = requireAttribute("entry", node);
-      String key = readString("@key", node);
+      String key = requireAttribute("key", node);
       String mimetype = requireAttribute("mimetype", node);
       return new ManifestFile(entry, key, mimetype);
     }
@@ -233,12 +233,12 @@ public class ManifestXml extends AbstractXpathReader {
 
   public static class ManifestFile {
     private final String entry;
-    private final Optional<String> key;
+    private final String key;
     private final String mimetype;
 
     private ManifestFile(String entry, String key, String mimetype) {
       this.entry = Objects.requireNonNull(entry);
-      this.key = Optional.ofNullable(key);
+      this.key = Objects.requireNonNull(key);
       this.mimetype = Objects.requireNonNull(mimetype);
     }
 
@@ -247,7 +247,7 @@ public class ManifestXml extends AbstractXpathReader {
     }
 
     public String getCrepoKey() {
-      return key.orElse(entry);
+      return key;
     }
 
     public String getMimetype() {
