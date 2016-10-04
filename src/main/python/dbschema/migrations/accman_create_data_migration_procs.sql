@@ -491,7 +491,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_articles`()
       WHERE aljt.articleID NOT IN (SELECT articleId FROM articleListJoinTable WHERE articleListID = aljt.articleListID);
 
     INSERT INTO volume (volumeId, doi, journalId, journalSortOrder, displayName, created, lastModified)
-      SELECT volumeID, volumeUri, journalID, journalSortOrder, displayName, created, lastModified
+      SELECT volumeID, get_doi_name(volumeUri), journalID, journalSortOrder, displayName, created, lastModified
       FROM oldVolume
       WHERE volumeID NOT IN (SELECT volumeId FROM volume);
 
