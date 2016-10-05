@@ -21,12 +21,10 @@ package org.ambraproject.rhino.rest.controller;
 import org.ambraproject.rhino.identity.IssueIdentifier;
 import org.ambraproject.rhino.identity.VolumeIdentifier;
 import org.ambraproject.rhino.model.Issue;
-import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.IssueCrudService;
-import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.journal.IssueInputView;
@@ -54,8 +52,6 @@ public class IssueCrudController extends RestController {
   @Autowired
   private VolumeCrudService volumeCrudService;
   @Autowired
-  private JournalCrudService journalCrudService;
-  @Autowired
   private IssueOutputView.Factory issueOutputViewFactory;
 
   private IssueIdentifier getIssueId(String issueDoi) {
@@ -68,12 +64,21 @@ public class IssueCrudController extends RestController {
                    @PathVariable("issueDoi") String issueDoi)
       throws IOException {
     IssueIdentifier issueId = getIssueId(issueDoi);
-    Issue issue = issueCrudService.readIssue(issueId);
-    Volume volume = volumeCrudService.readVolumeByIssue(issue);
-    Journal journal = journalCrudService.readJournalByVolume(volume);
-    read(request, response, journal.getJournalKey(), volume.getDoi(), issueDoi);
+    issueCrudService.serveIssue(issueId).respond(request, response, entityGson);
 
     // TODO: Equivalent alias methods for other HTTP methods?
+  }
+
+  @Transactional(readOnly = true)
+  @RequestMapping(value = "/issues/{issueDoi:.+}/articles", method = RequestMethod.GET)
+  public void readArticlesInIssue(HttpServletRequest request, HttpServletResponse response,
+                                  @PathVariable("issueDoi") String issueDoi)
+      throws IOException {
+    IssueIdentifier issueId = getIssueId(issueDoi);
+    Issue issue = issueCrudService.readIssue(issueId);
+    Transceiver.serveTimestampedView(issue,
+        () -> issueOutputViewFactory.getIssueArticlesView(issue))
+        .respond(request, response, entityGson);
   }
 
   @Transactional(readOnly = true)
@@ -99,9 +104,8 @@ public class IssueCrudController extends RestController {
                    @PathVariable("volumeDoi") String volumeDoi,
                    @PathVariable("issueDoi") String issueDoi)
       throws IOException {
-    // TODO: Validate journalKey and volumeDoiObj
-    IssueIdentifier issueId = getIssueId(issueDoi);
-    issueCrudService.serveIssue(issueId).respond(request, response, entityGson);
+    // TODO: Validate journalKey and volumeDoi
+    read(request, response, issueDoi);
   }
 
   @Transactional(readOnly = true)
@@ -112,11 +116,7 @@ public class IssueCrudController extends RestController {
                                   @PathVariable("issueDoi") String issueDoi)
       throws IOException {
     // TODO: Validate journalKey and volumeDoi
-    IssueIdentifier issueId = getIssueId(issueDoi);
-    Issue issue = issueCrudService.readIssue(issueId);
-    Transceiver.serveTimestampedView(issue,
-        () -> issueOutputViewFactory.getIssueArticlesView(issue))
-        .respond(request, response, entityGson);
+    readArticlesInIssue(request, response, issueDoi);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
