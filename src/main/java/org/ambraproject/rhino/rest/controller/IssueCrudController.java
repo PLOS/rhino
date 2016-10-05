@@ -28,6 +28,7 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.journal.IssueInputView;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.apache.commons.lang3.StringUtils;
@@ -43,6 +44,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 @Controller
 public class IssueCrudController extends RestController {
@@ -75,6 +77,22 @@ public class IssueCrudController extends RestController {
   }
 
   @Transactional(readOnly = true)
+  @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi}/issues", method = RequestMethod.GET)
+  public void readIssuesForVolume(HttpServletRequest request, HttpServletResponse response,
+                                  @PathVariable("journalKey") String journalKey,
+                                  @PathVariable("volumeDoi") String volumeDoi)
+      throws IOException {
+    // TODO: Validate journalKey
+    VolumeIdentifier volumeId = VolumeIdentifier.create(DoiEscaping.unescape(volumeDoi));
+    Volume volume = volumeCrudService.readVolume(volumeId);
+    Transceiver.serveTimestampedView(volume,
+        () -> volume.getIssues().stream()
+            .map(issueOutputViewFactory::getView)
+            .collect(Collectors.toList()))
+        .respond(request, response, entityGson);
+  }
+
+  @Transactional(readOnly = true)
   @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi}/issues/{issueDoi:.+}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @PathVariable("journalKey") String journalKey,
@@ -84,6 +102,21 @@ public class IssueCrudController extends RestController {
     // TODO: Validate journalKey and volumeDoiObj
     IssueIdentifier issueId = getIssueId(issueDoi);
     issueCrudService.serveIssue(issueId).respond(request, response, entityGson);
+  }
+
+  @Transactional(readOnly = true)
+  @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi}/issues/{issueDoi:.+}/articles", method = RequestMethod.GET)
+  public void readArticlesInIssue(HttpServletRequest request, HttpServletResponse response,
+                                  @PathVariable("journalKey") String journalKey,
+                                  @PathVariable("volumeDoi") String volumeDoi,
+                                  @PathVariable("issueDoi") String issueDoi)
+      throws IOException {
+    // TODO: Validate journalKey and volumeDoi
+    IssueIdentifier issueId = getIssueId(issueDoi);
+    Issue issue = issueCrudService.readIssue(issueId);
+    Transceiver.serveTimestampedView(issue,
+        () -> issueOutputViewFactory.getIssueArticlesView(issue))
+        .respond(request, response, entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})

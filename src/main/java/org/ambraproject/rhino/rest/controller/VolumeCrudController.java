@@ -19,10 +19,13 @@
 package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.identity.VolumeIdentifier;
+import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.journal.VolumeInputView;
 import org.ambraproject.rhino.view.journal.VolumeOutputView;
 import org.apache.commons.lang3.StringUtils;
@@ -38,12 +41,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 @Controller
 public class VolumeCrudController extends RestController {
 
   @Autowired
   private VolumeCrudService volumeCrudService;
+  @Autowired
+  private JournalCrudService journalCrudService;
 
   private static VolumeIdentifier getVolumeId(String volumeDoi) {
     return VolumeIdentifier.create(DoiEscaping.unescape(volumeDoi));
@@ -52,7 +58,7 @@ public class VolumeCrudController extends RestController {
   @Transactional(readOnly = true)
   @RequestMapping(value = "/volumes/{volumeDoi:.+}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
-      @PathVariable("volumeDoi") String volumeDoi)
+                   @PathVariable("volumeDoi") String volumeDoi)
       throws IOException {
     VolumeIdentifier volumeId = getVolumeId(volumeDoi);
     // TODO: Look up journal; redirect to main service
@@ -60,10 +66,23 @@ public class VolumeCrudController extends RestController {
   }
 
   @Transactional(readOnly = true)
+  @RequestMapping(value = "/journals/{journalKey}/volumes", method = RequestMethod.GET)
+  public void readVolumesForJournal(HttpServletRequest request, HttpServletResponse response,
+                                    @PathVariable("journalKey") String journalKey)
+      throws IOException {
+    Journal journal = journalCrudService.readJournal(journalKey);
+    Transceiver.serveTimestampedView(journal,
+        () -> journal.getVolumes().stream()
+            .map(VolumeOutputView::getView)
+            .collect(Collectors.toList()))
+        .respond(request, response, entityGson);
+  }
+
+  @Transactional(readOnly = true)
   @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi:.+}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
-      @PathVariable("journalKey") String journalKey,
-      @PathVariable("volumeDoi") String volumeDoi)
+                   @PathVariable("journalKey") String journalKey,
+                   @PathVariable("volumeDoi") String volumeDoi)
       throws IOException {
     // TODO: Validate journalKey
     VolumeIdentifier volumeId = getVolumeId(volumeDoi);
