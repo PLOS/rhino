@@ -72,9 +72,14 @@ public class IssueOutputView implements JsonOutputView {
     serialized.addProperty("displayName", issue.getDisplayName());
     serialized.add("parentVolume", context.serialize(VolumeOutputView.getView(parentVolume)));
 
-    JsonElement imageArticle = serialized.get("imageArticle");
+    Article imageArticle = issue.getImageArticle();
     if (imageArticle != null) {
-      imageArticle.getAsJsonObject().addProperty("figureImageDoi", getIssueImageFigureDoi());
+      JsonObject serializedImageArticle = new JsonObject();
+      String figureImageDoi = getIssueImageFigureDoi(factory.articleCrudService, imageArticle);
+
+      serializedImageArticle.addProperty("doi", imageArticle.getDoi());
+      serializedImageArticle.addProperty("figureImageDoi", figureImageDoi);
+      serialized.add("imageArticle", serializedImageArticle);
     }
 
     return serialized;
@@ -82,12 +87,11 @@ public class IssueOutputView implements JsonOutputView {
 
   private static final ImmutableSet<String> FIGURE_IMAGE_TYPES = ImmutableSet.of("figure", "table");
 
-  private String getIssueImageFigureDoi() {
-    Article imageArticle = issue.getImageArticle();
-    ArticleRevision latestArticleRevision = factory.articleCrudService.getLatestRevision(imageArticle).orElseThrow(
+  private static String getIssueImageFigureDoi(ArticleCrudService articleCrudService, Article imageArticle) {
+    ArticleRevision latestArticleRevision = articleCrudService.getLatestRevision(imageArticle).orElseThrow(
         () -> new RuntimeException("Image article has no published revisions. " + imageArticle.getDoi()));
     ArticleIngestion ingestion = latestArticleRevision.getIngestion();
-    Collection<ArticleItem> allArticleItems = factory.articleCrudService.getAllArticleItems(ingestion);
+    Collection<ArticleItem> allArticleItems = articleCrudService.getAllArticleItems(ingestion);
     List<ArticleItem> figureImageItems = allArticleItems.stream()
         .filter(item -> FIGURE_IMAGE_TYPES.contains(item.getItemType())).collect(Collectors.toList());
     if (figureImageItems.size() != 1) {
