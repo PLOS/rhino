@@ -36,8 +36,6 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
   private IssueCrudService issueCrudService;
   @Autowired
   private IssueOutputView.Factory issueOutputViewFactory;
-  @Autowired
-  private JournalOutputView.Factory journalOutputViewFactory;
 
   @Override
   public Transceiver listJournals() throws IOException {
@@ -49,7 +47,7 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
 
       @Override
       protected Map<String, JournalOutputView> getView(Collection<? extends Journal> journals) {
-        return journals.stream().collect(Collectors.toMap(Journal::getJournalKey, JournalOutputView::getShallowView));
+        return journals.stream().collect(Collectors.toMap(Journal::getJournalKey, JournalOutputView::getView));
       }
     };
   }
@@ -69,7 +67,7 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
 
       @Override
       protected Object getView(Journal journal) {
-        return journalOutputViewFactory.getView(journal);
+        return JournalOutputView.getView(journal);
       }
     };
   }

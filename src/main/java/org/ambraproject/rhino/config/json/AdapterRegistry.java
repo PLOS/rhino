@@ -51,9 +51,7 @@ public class AdapterRegistry {
 
       .add(org.ambraproject.rhino.view.journal.ArticleListView.class)
       .add(org.ambraproject.rhino.view.journal.IssueOutputView.class)
-      .add(org.ambraproject.rhino.view.journal.IssueOutputView.DeepView.class)
       .add(org.ambraproject.rhino.view.journal.JournalOutputView.class)
-      .add(org.ambraproject.rhino.view.journal.JournalOutputView.DeepView.class)
       .add(org.ambraproject.rhino.view.journal.VolumeOutputView.class)
 
       .add(org.ambraproject.rhino.view.user.UserIdView.class)
