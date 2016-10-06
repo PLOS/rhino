@@ -70,7 +70,7 @@ public class IssueCrudController extends RestController {
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/issues/{issueDoi:.+}/articles", method = RequestMethod.GET)
+  @RequestMapping(value = "/issues/{issueDoi:.+}/contents", method = RequestMethod.GET)
   public void readArticlesInIssue(HttpServletRequest request, HttpServletResponse response,
                                   @PathVariable("issueDoi") String issueDoi)
       throws IOException {
@@ -109,7 +109,7 @@ public class IssueCrudController extends RestController {
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi}/issues/{issueDoi:.+}/articles", method = RequestMethod.GET)
+  @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi}/issues/{issueDoi:.+}/contents", method = RequestMethod.GET)
   public void readArticlesInIssue(HttpServletRequest request, HttpServletResponse response,
                                   @PathVariable("journalKey") String journalKey,
                                   @PathVariable("volumeDoi") String volumeDoi,
