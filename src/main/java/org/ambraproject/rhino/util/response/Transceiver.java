@@ -6,6 +6,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.net.MediaType;
 import com.google.gson.Gson;
+import org.ambraproject.rhino.model.Timestamped;
 import org.ambraproject.rhombat.HttpDateUtil;
 import org.springframework.http.HttpStatus;
 
@@ -75,6 +76,25 @@ public abstract class Transceiver {
       @Override
       protected Calendar getLastModifiedDate() throws IOException {
         return null;
+      }
+    };
+  }
+
+  /**
+   * Similar to {@link EntityTransceiver} for when the entity is already fetched.
+   */
+  public static Transceiver serveTimestampedView(Timestamped entity, ViewSupplier<?> supplier) {
+    Objects.requireNonNull(entity);
+    Objects.requireNonNull(supplier);
+    return new Transceiver() {
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return copyToCalendar(entity.getLastModified());
+      }
+
+      @Override
+      protected Object getData() throws IOException {
+        return supplier.get();
       }
     };
   }

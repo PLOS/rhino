@@ -1,9 +1,13 @@
 package org.ambraproject.rhino.rest.controller;
 
-import org.ambraproject.rhino.service.CommentCrudService;
+import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.JournalCrudService;
+import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.ambraproject.rhino.view.journal.JournalInputView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +24,7 @@ public class JournalCrudController extends RestController {
   @Autowired
   private JournalCrudService journalCrudService;
   @Autowired
-  private CommentCrudService commentCrudService;
+  private IssueOutputView.Factory issueOutputViewFactory;
 
   @Transactional(readOnly = true)
   @RequestMapping(value = "/journals", method = RequestMethod.GET)
@@ -45,5 +49,17 @@ public class JournalCrudController extends RestController {
     journalCrudService.update(journalKey, input);
 
     journalCrudService.serve(journalKey).respond(request, response, entityGson);
+  }
+
+  @Transactional(readOnly = true)
+  @RequestMapping(value = "/journals/{journalKey}/currentIssue", method = RequestMethod.GET)
+  public void readCurrentIssue(HttpServletRequest request, HttpServletResponse response,
+                               @PathVariable String journalKey)
+      throws IOException {
+    Journal journal = journalCrudService.readJournal(journalKey);
+    Transceiver.serveTimestampedView(journal, () ->
+        issueOutputViewFactory.getCurrentIssueViewFor(journal)
+            .orElseThrow(() -> new RestClientException("Current issue is not set for " + journalKey, HttpStatus.NOT_FOUND)))
+        .respond(request, response, entityGson);
   }
 }

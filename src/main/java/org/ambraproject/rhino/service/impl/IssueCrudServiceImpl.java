@@ -33,7 +33,6 @@ import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.journal.IssueInputView;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
-import org.ambraproject.rhino.view.journal.VolumeNonAssocView;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,18 +141,16 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
   }
 
   @Override
-  public VolumeNonAssocView getParentVolumeView(Issue issue) {
-    Volume parentVolume = getParentVolumeByIssue(issue);
-    if (parentVolume == null) return null;
-    return new VolumeNonAssocView(parentVolume.getDoi(), parentVolume.getDisplayName());
-  }
-
-  private Volume getParentVolumeByIssue(Issue issue) {
-    return hibernateTemplate.execute((Session session) -> {
-        Query query = session.createQuery("from Volume where :issue in elements(issues)");
-        query.setParameter("issue", issue);
-        return (Volume) query.uniqueResult();
-      });
+  public Volume getParentVolume(Issue issue) {
+    Volume parentVolume = hibernateTemplate.execute((Session session) -> {
+      Query query = session.createQuery("from Volume where :issue in elements(issues)");
+      query.setParameter("issue", issue);
+      return (Volume) query.uniqueResult();
+    });
+    if (parentVolume == null) {
+      throw new RuntimeException("Data integrity error; issue has no parent volume: " + issue.getDoi());
+    }
+    return parentVolume;
   }
 
   @Override

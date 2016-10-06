@@ -81,7 +81,7 @@ public class ArticleRevisionView implements JsonOutputView {
   // Could be extracted for more public use, in case we ever need this shallow ArticleIngestion view elsewhere.
   private JsonObject serializeIngestion(JsonSerializationContext context, ArticleIngestion ingestion) {
     JsonObject serialized = new JsonObject();
-    JournalOutputView journalOutputView = JournalOutputView.getShallowView(ingestion.getJournal());
+    JournalOutputView journalOutputView = JournalOutputView.getView(ingestion.getJournal());
     serialized.add("journal", context.serialize(journalOutputView));
     serialized.addProperty("ingestionNumber", ingestion.getIngestionNumber());
     serialized.addProperty("title", ingestion.getTitle());

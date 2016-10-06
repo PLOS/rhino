@@ -80,7 +80,7 @@ public class RelationshipSetView {
         this.revisionNumber = revision.getRevisionNumber();
         this.title = ingestion.getTitle();
         this.publicationDate = ingestion.getPublicationDate().toLocalDate();
-        this.journal = JournalOutputView.getShallowView(ingestion.getJournal());
+        this.journal = JournalOutputView.getView(ingestion.getJournal());
       } else {
         this.revisionNumber = null;
         this.title = null;
