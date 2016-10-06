@@ -148,7 +148,7 @@ public class IssueCrudController extends RestController {
     IssueInputView input = readJsonFromRequest(request, IssueInputView.class);
     issueCrudService.update(issueId, input);
 
-    issueCrudService.serveIssue(issueId);
+    issueCrudService.serveIssue(issueId).respond(request, response, entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
