@@ -389,7 +389,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
               .collect(Collectors.toList());
           targetArticleXml.parseRelatedArticles().stream()
               .filter(ral -> ral.getArticleId().getDoiName().equals(sourceArticle.getDoi()))
-              .map(ral -> new ArticleRelationship(targetArticle, sourceArticle, ral.getType()))
+              .map(ral -> new ArticleRelationship(targetArticle, sourceArticle, ral.getType())) //reciprocal, so source = target
               .filter(targetAr -> reciprocalDbRelationships.stream().noneMatch(dbr -> dbr.getType().equals(targetAr.getType())))
               .forEach(targetAr -> hibernateTemplate.save(targetAr));
         });
