@@ -376,6 +376,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     dbRelationships.forEach(ar -> hibernateTemplate.delete(ar));
     xmlRelationships.forEach(ar -> {
       getArticle(ar.getArticleId()).ifPresent((Article targetArticle) -> {
+        // if target article exists, persist ArticleRelationship object
+        // otherwise, likely a reference to an article external to our system and so the relationship is not persisted
         hibernateTemplate.save(new ArticleRelationship(sourceArticle, targetArticle, ar.getType()));
 
         // refresh target article relationships pointing back to the source article
@@ -392,7 +394,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
               .forEach(targetAr -> hibernateTemplate.save(targetAr));
         });
       });
-      // else, likely a reference to an article external to our system and so the relationship is not persisted
     });
   }
 
