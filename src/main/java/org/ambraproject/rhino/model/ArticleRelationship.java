@@ -20,7 +20,6 @@ package org.ambraproject.rhino.model;
 
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,6 +29,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * An outgoing relationship between two articles (e.g. for corrections, sourceArticle = correction article,
@@ -41,6 +41,17 @@ import java.util.Date;
 @Entity
 @Table(name = "articleRelationship")
 public class ArticleRelationship implements Timestamped {
+
+  public ArticleRelationship() {
+    super();
+  }
+
+  public ArticleRelationship(Article sourceArticle, Article targetArticle, String type) {
+    this();
+    this.sourceArticle = Objects.requireNonNull(sourceArticle);
+    this.targetArticle = Objects.requireNonNull(targetArticle);
+    this.type = Objects.requireNonNull(type);
+  }
 
   @Id
   @GeneratedValue

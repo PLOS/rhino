@@ -373,19 +373,27 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     List<RelatedArticleLink> xmlRelationships = sourceArticleXml.parseRelatedArticles();
     List<ArticleRelationship> dbRelationships = getRelationshipsFrom(ArticleIdentifier.create(sourceArticle.getDoi()));
-    for (ArticleRelationship ar : dbRelationships) {
-      hibernateTemplate.delete(ar);
-    }
-    for (RelatedArticleLink ar : xmlRelationships) {
+    dbRelationships.forEach(ar -> hibernateTemplate.delete(ar));
+    xmlRelationships.forEach(ar -> {
       getArticle(ar.getArticleId()).ifPresent((Article targetArticle) -> {
-        ArticleRelationship newAr = new ArticleRelationship();
-        newAr.setSourceArticle(sourceArticle);
-        newAr.setTargetArticle(targetArticle);
-        newAr.setType(ar.getType());
-        hibernateTemplate.save(newAr);
+        hibernateTemplate.save(new ArticleRelationship(sourceArticle, targetArticle, ar.getType()));
+
+        // refresh target article relationships pointing back to the source article
+        getLatestRevision(targetArticle).ifPresent((ArticleRevision targetArticleRev) -> {
+          ArticleXml targetArticleXml = new ArticleXml(getManuscriptXml(targetArticleRev.getIngestion()));
+          List<ArticleRelationship> reciprocalDbRelationships =
+              getRelationshipsFrom(ArticleIdentifier.create(targetArticle.getDoi())).stream()
+              .filter(dbAr -> dbAr.getTargetArticle() == sourceArticle)
+              .collect(Collectors.toList());
+          targetArticleXml.parseRelatedArticles().stream()
+              .filter(ral -> ral.getArticleId().getDoiName().equals(sourceArticle.getDoi()) && ral.getType().equals(ar.getType()))
+              .map(ral -> new ArticleRelationship(targetArticle, sourceArticle, ral.getType()))
+              .filter(targetAr -> reciprocalDbRelationships.stream().noneMatch(dbr -> dbr.getType().equals(targetAr.getType())))
+              .forEach(targetAr -> hibernateTemplate.save(targetAr));
+        });
       });
       // else, likely a reference to an article external to our system and so the relationship is not persisted
-    }
+    });
   }
 
   @Override
