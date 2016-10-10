@@ -29,7 +29,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * An outgoing relationship between two articles (e.g. for corrections, sourceArticle = correction article,
@@ -41,17 +40,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "articleRelationship")
 public class ArticleRelationship implements Timestamped {
-
-  public ArticleRelationship() {
-    super();
-  }
-
-  public ArticleRelationship(Article sourceArticle, Article targetArticle, String type) {
-    this();
-    this.sourceArticle = Objects.requireNonNull(sourceArticle);
-    this.targetArticle = Objects.requireNonNull(targetArticle);
-    this.type = Objects.requireNonNull(type);
-  }
 
   @Id
   @GeneratedValue
@@ -120,5 +108,24 @@ public class ArticleRelationship implements Timestamped {
     this.lastModified = lastModified;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
 
+    ArticleRelationship that = (ArticleRelationship) o;
+
+    if (sourceArticle != null ? !sourceArticle.equals(that.sourceArticle) : that.sourceArticle != null) return false;
+    if (targetArticle != null ? !targetArticle.equals(that.targetArticle) : that.targetArticle != null) return false;
+    return type != null ? type.equals(that.type) : that.type == null;
+
+  }
+
+  @Override
+  public int hashCode() {
+    int result = sourceArticle != null ? sourceArticle.hashCode() : 0;
+    result = 31 * result + (targetArticle != null ? targetArticle.hashCode() : 0);
+    result = 31 * result + (type != null ? type.hashCode() : 0);
+    return result;
+  }
 }

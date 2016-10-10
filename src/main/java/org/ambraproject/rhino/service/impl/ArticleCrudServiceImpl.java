@@ -70,13 +70,7 @@ import javax.xml.xpath.XPathException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -375,26 +369,35 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     List<ArticleRelationship> dbRelationships = getRelationshipsFrom(ArticleIdentifier.create(sourceArticle.getDoi()));
     dbRelationships.forEach(ar -> hibernateTemplate.delete(ar));
     xmlRelationships.forEach(ar -> {
-      getArticle(ar.getArticleId()).ifPresent((Article targetArticle) -> {
-        // if target article exists, persist ArticleRelationship object
+      getArticle(ar.getArticleId()).ifPresent((Article relatedArticle) -> {
+        // if related article exists, persist ArticleRelationship object
         // otherwise, likely a reference to an article external to our system and so the relationship is not persisted
-        hibernateTemplate.save(new ArticleRelationship(sourceArticle, targetArticle, ar.getType()));
+        hibernateTemplate.save(fromRelatedArticleLink(sourceArticle, ar));
 
-        // refresh target article relationships pointing back to the source article
-        getLatestRevision(targetArticle).ifPresent((ArticleRevision targetArticleRev) -> {
-          ArticleXml targetArticleXml = new ArticleXml(getManuscriptXml(targetArticleRev.getIngestion()));
-          List<ArticleRelationship> reciprocalDbRelationships =
-              getRelationshipsFrom(ArticleIdentifier.create(targetArticle.getDoi())).stream()
-              .filter(dbAr -> dbAr.getTargetArticle() == sourceArticle)
-              .collect(Collectors.toList());
-          targetArticleXml.parseRelatedArticles().stream()
+        // refresh related article relationships pointing back to the source article
+        getLatestRevision(relatedArticle).ifPresent((ArticleRevision relatedArticleRev) -> {
+          ArticleXml relatedArticleXml = new ArticleXml(getManuscriptXml(relatedArticleRev.getIngestion()));
+          Set<ArticleRelationship> inboundDbRelationships =
+              getRelationshipsTo(ArticleIdentifier.create(sourceArticle.getDoi())).stream()
+              .filter(dbAr -> dbAr.getSourceArticle().equals(relatedArticle))
+              .collect(Collectors.toSet());
+          relatedArticleXml.parseRelatedArticles().stream()
               .filter(ral -> ral.getArticleId().getDoiName().equals(sourceArticle.getDoi()))
-              .map(ral -> new ArticleRelationship(targetArticle, sourceArticle, ral.getType())) //reciprocal, so source = target
-              .filter(targetAr -> reciprocalDbRelationships.stream().noneMatch(dbr -> dbr.getType().equals(targetAr.getType())))
-              .forEach(targetAr -> hibernateTemplate.save(targetAr));
+              .map(ral -> fromRelatedArticleLink(relatedArticle, ral))
+              .filter(relatedAr -> !inboundDbRelationships.contains(relatedAr))
+              .forEach(relatedAr -> hibernateTemplate.save(relatedAr));
         });
       });
     });
+  }
+
+  private ArticleRelationship fromRelatedArticleLink(Article article, RelatedArticleLink ral) {
+    ArticleRelationship ar = new ArticleRelationship();
+    ar.setSourceArticle(Objects.requireNonNull(article));
+    Article targetArticle = getArticle(ral.getArticleId()).orElse(null);
+    ar.setTargetArticle(Objects.requireNonNull(targetArticle));
+    ar.setType(Objects.requireNonNull(ral.getType()));
+    return ar;
   }
 
   @Override
