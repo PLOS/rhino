@@ -373,19 +373,37 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     List<RelatedArticleLink> xmlRelationships = sourceArticleXml.parseRelatedArticles();
     List<ArticleRelationship> dbRelationships = getRelationshipsFrom(ArticleIdentifier.create(sourceArticle.getDoi()));
-    for (ArticleRelationship ar : dbRelationships) {
-      hibernateTemplate.delete(ar);
-    }
-    for (RelatedArticleLink ar : xmlRelationships) {
-      getArticle(ar.getArticleId()).ifPresent((Article targetArticle) -> {
-        ArticleRelationship newAr = new ArticleRelationship();
-        newAr.setSourceArticle(sourceArticle);
-        newAr.setTargetArticle(targetArticle);
-        newAr.setType(ar.getType());
-        hibernateTemplate.save(newAr);
+    dbRelationships.forEach(ar -> hibernateTemplate.delete(ar));
+    xmlRelationships.forEach(ar -> {
+      getArticle(ar.getArticleId()).ifPresent((Article relatedArticle) -> {
+        // if related article exists, persist ArticleRelationship object
+        // otherwise, likely a reference to an article external to our system and so the relationship is not persisted
+        hibernateTemplate.save(fromRelatedArticleLink(sourceArticle, ar));
+
+        // refresh related article relationships pointing back to the source article
+        getLatestRevision(relatedArticle).ifPresent((ArticleRevision relatedArticleRev) -> {
+          ArticleXml relatedArticleXml = new ArticleXml(getManuscriptXml(relatedArticleRev.getIngestion()));
+          Set<ArticleRelationship> inboundDbRelationships =
+              getRelationshipsTo(ArticleIdentifier.create(sourceArticle.getDoi())).stream()
+              .filter(dbAr -> dbAr.getSourceArticle().equals(relatedArticle))
+              .collect(Collectors.toSet());
+          relatedArticleXml.parseRelatedArticles().stream()
+              .filter(ral -> ral.getArticleId().getDoiName().equals(sourceArticle.getDoi()))
+              .map(ral -> fromRelatedArticleLink(relatedArticle, ral))
+              .filter(relatedAr -> !inboundDbRelationships.contains(relatedAr))
+              .forEach(relatedAr -> hibernateTemplate.save(relatedAr));
+        });
       });
-      // else, likely a reference to an article external to our system and so the relationship is not persisted
-    }
+    });
+  }
+
+  private ArticleRelationship fromRelatedArticleLink(Article article, RelatedArticleLink ral) {
+    ArticleRelationship ar = new ArticleRelationship();
+    ar.setSourceArticle(Objects.requireNonNull(article));
+    Article targetArticle = getArticle(ral.getArticleId()).orElse(null);
+    ar.setTargetArticle(Objects.requireNonNull(targetArticle));
+    ar.setType(Objects.requireNonNull(ral.getType()));
+    return ar;
   }
 
   @Override

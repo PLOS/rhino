@@ -20,7 +20,6 @@ package org.ambraproject.rhino.model;
 
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -109,5 +108,24 @@ public class ArticleRelationship implements Timestamped {
     this.lastModified = lastModified;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
 
+    ArticleRelationship that = (ArticleRelationship) o;
+
+    if (sourceArticle != null ? !sourceArticle.equals(that.sourceArticle) : that.sourceArticle != null) return false;
+    if (targetArticle != null ? !targetArticle.equals(that.targetArticle) : that.targetArticle != null) return false;
+    return type != null ? type.equals(that.type) : that.type == null;
+
+  }
+
+  @Override
+  public int hashCode() {
+    int result = sourceArticle != null ? sourceArticle.hashCode() : 0;
+    result = 31 * result + (targetArticle != null ? targetArticle.hashCode() : 0);
+    result = 31 * result + (type != null ? type.hashCode() : 0);
+    return result;
+  }
 }
