@@ -18,23 +18,39 @@
 
 package org.ambraproject.rhino.service;
 
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.identity.VolumeIdentifier;
+import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.model.Volume;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.journal.VolumeInputView;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public interface VolumeCrudService {
 
-  public abstract Volume findVolume(DoiBasedIdentity volumeId);
+  /**
+   * Serve volume metadata to a client.
+   */
+  public abstract Transceiver serveVolume(VolumeIdentifier id) throws IOException;
 
-  public abstract DoiBasedIdentity create(String journalKey, VolumeInputView input);
+  /**
+   * Read a volume requested by the client, throwing {@link RestClientException} if the volume does not exist.
+   */
+  public abstract Volume readVolume(VolumeIdentifier volumeId);
 
-  public abstract void update(DoiBasedIdentity volumeId, VolumeInputView input);
+  /**
+   * Get a volume if it exists.
+   */
+  public abstract Optional<Volume> getVolume(VolumeIdentifier volumeId);
 
-  public abstract Transceiver read(DoiBasedIdentity id) throws IOException;
+  public abstract Volume readVolumeByIssue(Issue issueId);
 
-  public abstract void delete(DoiBasedIdentity id) throws IOException;
+  public abstract Volume create(String journalKey, VolumeInputView input);
+
+  public abstract Volume update(VolumeIdentifier volumeId, VolumeInputView input);
+
+  public abstract void delete(VolumeIdentifier id) throws IOException;
 
 }

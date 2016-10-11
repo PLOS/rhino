@@ -24,11 +24,9 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
-import org.ambraproject.rhino.model.AmbraEntity;
-import org.ambraproject.rhino.content.PersonName;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.identity.Doi;
+import org.ambraproject.rhino.model.article.NlmPerson;
 import org.ambraproject.rhino.util.NodeListAdapter;
-import org.ambraproject.rhino.util.StringReplacer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.util.UriUtils;
@@ -37,6 +35,7 @@ import org.w3c.dom.Node;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * A holder for a piece (node or document) of NLM-format XML, which can be built into an entity.
@@ -54,32 +53,28 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
   /**
    * Build an object from the XML supplied to this object.
    *
-   * @param obj the object to modify, typically empty or mostly empty
-   * @return the same object with values inserted
    * @throws XmlContentException if the supplied XML omits a required element or does not have the expected structure
    */
-  public abstract T build(T obj) throws XmlContentException;
-
-  protected static String standardizeWhitespace(CharSequence text) {
-    return (text == null) ? null : CharMatcher.WHITESPACE.trimAndCollapseFrom(text, ' ');
-  }
+  public abstract T build() throws XmlContentException;
 
   @Override
-  protected String getTextFromNode(Node node) {
-    return standardizeWhitespace(super.getTextFromNode(node));
+  protected String sanitize(String text) {
+    return (text == null) ? null : CharMatcher.WHITESPACE.trimAndCollapseFrom(text, ' ');
   }
 
   // Node names that get special handling
   protected static final String GRAPHIC = "graphic";
   protected static final String TABLE_WRAP = "table-wrap";
   protected static final String ALTERNATIVES = "alternatives";
+  protected static final String DISP_FORMULA = "disp-formula";
 
   // The node-names for nodes that can be an asset on their own
   protected static final ImmutableSet<String> ASSET_NODE_NAMES = ImmutableSet.of(
-      "supplementary-material", "inline-formula", "disp-formula", GRAPHIC);
+      "supplementary-material", "inline-formula", DISP_FORMULA, GRAPHIC);
 
   // The node-names for nodes that can be an asset if they have a descendant <graphic> node
-  protected static final ImmutableSet<String> GRAPHIC_NODE_PARENTS = ImmutableSet.of(TABLE_WRAP, "fig");
+  protected static final ImmutableSet<String> GRAPHIC_NODE_PARENTS = ImmutableSet.of(TABLE_WRAP, "fig",
+      DISP_FORMULA);
 
   // An XPath expression that will match any node with one of the name in ASSET_NODE_NAMES.
   protected static final String ASSET_EXPRESSION = Joiner.on('|').join(
@@ -91,11 +86,15 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
       })
   );
 
-  protected String getAssetDoi(Node assetNode) {
+  protected Doi getAssetDoi(Node assetNode) {
     String nodeName = assetNode.getNodeName();
     String doi;
     if (GRAPHIC_NODE_PARENTS.contains(nodeName)) {
       doi = readString("object-id[@pub-id-type=\"doi\"]", assetNode);
+      if (doi == null && nodeName.equals(DISP_FORMULA)) {
+        //disp-formula may be a graphic node parent, or an asset node name
+        doi = readHrefAttribute(assetNode);
+      }
     } else if (ASSET_NODE_NAMES.contains(nodeName)) {
       doi = readHrefAttribute(assetNode);
     } else {
@@ -107,7 +106,7 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
       log.warn("An asset node ({}) does not have DOI as expected", assetNode.getNodeName());
       return null;
     }
-    return DoiBasedIdentity.asIdentifier(doi);
+    return Doi.create(doi);
   }
 
   /**
@@ -141,9 +140,13 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
 
   private static final Joiner NAME_JOINER = Joiner.on(' ').skipNulls();
 
+  protected List<NlmPerson> readPersons(List<Node> personNodes) throws XmlContentException {
+    return personNodes.stream().map(this::parsePersonName).collect(Collectors.toList());
+  }
+
   /**
-   * Parse a person's name from an article XML node. The returned object is useful for populating a {@link
-   * org.ambraproject.models.ArticlePerson} or {@link org.ambraproject.models.CitedArticlePerson}.
+   * Parse a person's name from an article XML node. The returned object is useful for populating a
+   * {@link NlmPerson}
    * <p/>
    * This method expects to find a "name-style" attribute and "surname" subnode. The "given-names" and "suffix" subnodes
    * are optional. Omitted nodes are represented by an empty string.
@@ -152,8 +155,7 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
    * @return the name
    * @throws XmlContentException if an expected field is omitted
    */
-  protected PersonName parsePersonName(Node nameNode)
-      throws XmlContentException {
+  private NlmPerson parsePersonName(Node nameNode) throws XmlContentException {
     String nameStyle = readString("@name-style", nameNode);
     String surname = readString("surname", nameNode);
     String givenName = readString("given-names", nameNode);
@@ -175,13 +177,13 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
     String fullName = NAME_JOINER.join(fullNameParts);
     givenName = Strings.nullToEmpty(givenName);
     suffix = Strings.nullToEmpty(suffix);
-    return new PersonName(fullName, givenName, surname, suffix);
+    return new NlmPerson(fullName, givenName, surname, suffix);
   }
 
   /**
    * Encodes a string according to the URI escaping rules as described in section 2 of RFC 3986.
    */
-  public static String uriEncode(String s) {
+  protected static String uriEncode(String s) {
 
     // This is surprisingly difficult in Java.  You would think that java.net.URLEncoder would
     // do the trick, but it doesn't--it uses HTML form encoding, which is different.  For
@@ -192,73 +194,6 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
     } catch (UnsupportedEncodingException uee) {
       throw new RuntimeException(uee);
     }
-  }
-
-  /**
-   * Build a text field by partially reconstructing the node's content as XML. The output is text content between the
-   * node's two tags, including nested XML tags with attributes, but not this node's outer tags. Continuous substrings
-   * of whitespace may be substituted with other whitespace. Markup characters are escaped.
-   * <p/>
-   * This method is used instead of an appropriate XML library in order to match the behavior of legacy code, for now.
-   *
-   * @param node the node containing the text we are retrieving
-   * @return the marked-up node contents
-   */
-  protected static String buildTextWithMarkup(Node node) {
-    String text = buildTextWithMarkup(new StringBuilder(), node).toString();
-    return standardizeWhitespace(text);
-  }
-
-  private static StringBuilder buildTextWithMarkup(StringBuilder nodeContent, Node node) {
-    List<Node> children = NodeListAdapter.wrap(node.getChildNodes());
-    for (Node child : children) {
-      switch (child.getNodeType()) {
-        case Node.TEXT_NODE:
-          appendTextNode(nodeContent, child);
-          break;
-        case Node.ELEMENT_NODE:
-          appendElementNode(nodeContent, child);
-          break;
-        default:
-          log.warn("Skipping node (name={}, type={})", child.getNodeName(), child.getNodeType());
-      }
-    }
-    return nodeContent;
-  }
-
-  private static final StringReplacer XML_CHAR_ESCAPES = StringReplacer.builder()
-      .replaceExact("&", "&amp;")
-      .replaceExact("<", "&lt;")
-      .replaceExact(">", "&gt;")
-      .build();
-
-  private static void appendTextNode(StringBuilder nodeContent, Node child) {
-    String text = child.getNodeValue();
-    text = XML_CHAR_ESCAPES.replace(text);
-    nodeContent.append(text);
-  }
-
-  private static void appendElementNode(StringBuilder nodeContent, Node child) {
-    String nodeName = child.getNodeName();
-    nodeContent.append('<').append(nodeName);
-    List<Node> attributes = NodeListAdapter.wrap(child.getAttributes());
-
-    // Search for xlink attributes and declare the xlink namespace if found
-    // TODO Better way? This is probably a symptom of needing to use a proper XML library here in the first place.
-    for (Node attribute : attributes) {
-      if (attribute.getNodeName().startsWith("xlink:")) {
-        nodeContent.append(" xmlns:xlink=\"http://www.w3.org/1999/xlink\"");
-        break;
-      }
-    }
-
-    for (Node attribute : attributes) {
-      nodeContent.append(' ').append(attribute.toString());
-    }
-
-    nodeContent.append('>');
-    buildTextWithMarkup(nodeContent, child);
-    nodeContent.append("</").append(nodeName).append('>');
   }
 
 }

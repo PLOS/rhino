@@ -18,48 +18,38 @@
 
 package org.ambraproject.rhino.content.xml;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
-import org.ambraproject.rhino.model.Article;
-import org.ambraproject.rhino.model.ArticleAuthor;
-import org.ambraproject.rhino.model.ArticleEditor;
-import org.ambraproject.rhino.model.ArticleRelationship;
-import org.ambraproject.rhino.model.CitedArticle;
-import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.util.NodeListAdapter;
-import org.ambraproject.rhino.util.StringReplacer;
+import org.ambraproject.rhino.identity.ArticleIdentifier;
+import org.ambraproject.rhino.identity.Doi;
+import org.ambraproject.rhino.model.article.ArticleMetadata;
+import org.ambraproject.rhino.model.article.AssetMetadata;
+import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
-import javax.annotation.Nullable;
 import java.net.URLEncoder;
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TimeZone;
+import java.util.stream.Collectors;
 
 /**
- * An NLM-format XML document that can be "ingested" to build an {@link Article} object.
+ * An NLM-format XML document that can be "ingested" to build an {@link ArticleMetadata} object.
  */
-public class ArticleXml extends AbstractArticleXml<Article> {
+public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleXml.class);
-
-  private static final TimeZone UTC = TimeZone.getTimeZone("UTC");
 
   public ArticleXml(Document xml) {
     super(xml);
@@ -74,12 +64,12 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    * @return
    * @throws XmlContentException if the DOI is not present
    */
-  public ArticleIdentity readDoi() throws XmlContentException {
+  public Doi readDoi() throws XmlContentException {
     String doi = readString("/article/front/article-meta/article-id[@pub-id-type=\"doi\"]");
     if (doi == null) {
       throw new XmlContentException("DOI not found");
     }
-    return ArticleIdentity.create(doi);
+    return Doi.create(doi);
   }
 
   /**
@@ -90,9 +80,9 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   public AssetNodesByDoi findAllAssetNodes() {
     // Find all nodes of an asset type and map them by DOI
     List<Node> rawNodes = readNodeList(ASSET_EXPRESSION);
-    ListMultimap<String, Node> nodeMap = LinkedListMultimap.create(rawNodes.size());
+    ListMultimap<Doi, Node> nodeMap = LinkedListMultimap.create(rawNodes.size());
     for (Node node : rawNodes) {
-      String assetDoi = getAssetDoi(node);
+      Doi assetDoi = getAssetDoi(node);
       if (assetDoi != null) {
         nodeMap.put(assetDoi, node);
       } else {
@@ -101,7 +91,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     }
 
     // Replace <graphic> nodes without changing keys or iteration order
-    for (Map.Entry<String, Node> entry : nodeMap.entries()) {
+    for (Map.Entry<Doi, Node> entry : nodeMap.entries()) {
       Node node = entry.getValue();
       if (node.getNodeName().equals(GRAPHIC)) {
         entry.setValue(replaceGraphicNode(node));
@@ -111,46 +101,6 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     return new AssetNodesByDoi(nodeMap);
   }
 
-  private static final ImmutableSet<String> BODY = ImmutableSet.of("body");
-  private static final ImmutableSet<String> BODY_AND_BACK = ImmutableSet.of("body", "back");
-
-  /**
-   * Build a deep copy of the article XML document that contains only the {@code &lt;front>} node. The returned document
-   * can be read (into a future {@code ArticleXml} object, or by other means) and parsed to get article metadata from
-   * the front matter. Metadata from the {@code &lt;back>} node will not be available.
-   *
-   * @return a copy of the document that contains only the {@code &lt;front>} node
-   */
-  public Document extractFrontMatter() {
-    return truncate(BODY_AND_BACK);
-  }
-
-  /**
-   * Build a deep copy of the article XML document that contains only the {@code &lt;front>} and {@code &lt;back>} node.
-   * The returned document can be read (into a future {@code ArticleXml} object, or by other means) and parsed to get
-   * article metadata.
-   *
-   * @return a copy of the document that contains only the {@code &lt;front>} node
-   */
-  public Document extractFrontAndBackMatter() {
-    return truncate(BODY);
-  }
-
-  private Document truncate(Set<String> nodeNamesToRemove) {
-    Preconditions.checkNotNull(nodeNamesToRemove);
-    Document document = (Document) xml.cloneNode(true);
-    for (Node articleNode : NodeListAdapter.wrap(document.getChildNodes())) {
-      NodeList childNodes = articleNode.getChildNodes(); // can't use NodeListAdapter because we want to delete during iteration
-      for (int i = 0; i < childNodes.getLength(); i++) {
-        Node childNode = childNodes.item(i);
-        if (nodeNamesToRemove.contains(childNode.getNodeName())) {
-          articleNode.removeChild(childNode);
-          i--;
-        }
-      }
-    }
-    return document;
-  }
 
   /**
    * Return the node that should represent the asset for a "graphic" node.
@@ -176,7 +126,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    * @param outerNode an asset node such that {@code getAssetDoi(outerNode) == null}
    * @param nodeMap   the map to modify if a nested DOI is found
    */
-  private void findNestedDoi(Node outerNode, Multimap<String, Node> nodeMap) {
+  private void findNestedDoi(Node outerNode, Multimap<Doi, Node> nodeMap) {
     Preconditions.checkNotNull(nodeMap);
 
     // Currently, the only special case handled here is
@@ -185,7 +135,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     if (TABLE_WRAP.equals(outerNode.getNodeName())) {
       Node graphicNode = readNode("descendant::" + GRAPHIC, outerNode);
       if (graphicNode != null) {
-        String doi = getAssetDoi(graphicNode);
+        Doi doi = getAssetDoi(graphicNode);
         if (doi != null) {
           nodeMap.put(doi, outerNode);
         }
@@ -197,10 +147,11 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    * {@inheritDoc}
    */
   @Override
-  public Article build(Article article) throws XmlContentException {
+  public ArticleMetadata build() throws XmlContentException {
+    ArticleMetadata.Builder article = ArticleMetadata.builder();
     setConstants(article);
     setFromXml(article);
-    return article;
+    return article.build();
   }
 
   /**
@@ -208,16 +159,17 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    *
    * @param article the article to modify
    */
-  private static void setConstants(Article article) {
+  private static void setConstants(ArticleMetadata.Builder article) {
     // These are constants because they are implied by how we get the input
     article.setFormat("text/xml");
-    article.setState(Article.STATE_UNPUBLISHED);
   }
 
-  private void setFromXml(final Article article) throws XmlContentException {
-    article.setTitle(buildXmlExcerpt(readNode("/article/front/article-meta/title-group/article-title")));
+  private void setFromXml(final ArticleMetadata.Builder article) throws XmlContentException {
+    article.setDoi(readDoi().getName());
+
+    article.setTitle(getXmlFromNode(readNode("/article/front/article-meta/title-group/article-title")));
     article.seteIssn(checkEissn(readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]")));
-    article.setDescription(buildXmlExcerpt(findAbstractNode()));
+    article.setDescription(getXmlFromNode(findAbstractNode()));
 
     String rights = readString("/article/front/article-meta/copyright-statement");
     if (rights == null) {
@@ -227,106 +179,26 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     }
     article.setRights(rights);
 
-    article.setPages(buildPages(readString("/article/front/article-meta/counts/page-count/@count")));
+    article.setPageCount(parsePageCount(readString("/article/front/article-meta/counts/page-count/@count")));
     article.seteLocationId(readString("/article/front/article-meta/elocation-id"));
     article.setVolume(readString("/article/front/article-meta/volume"));
     article.setIssue(readString("/article/front/article-meta/issue"));
-    article.setJournal(buildJournal());
     article.setPublisherName(readString("/article/front/journal-meta/publisher/publisher-name"));
     article.setPublisherLocation(readString("/article/front/journal-meta/publisher/publisher-loc"));
-
     article.setLanguage(parseLanguage(readString("/article/@xml:lang")));
-    article.setDate(parseDate(readNode("/article/front/article-meta/pub-date[@pub-type=\"epub\"]")));
+    article.setPublicationDate(parseDate(readNode("/article/front/article-meta/pub-date[@pub-type=\"epub\"]")));
 
-    // We have to be careful when setting Article properties that have a one-to-many relationship with entities
-    // that are marked 'cascade="all-delete-orphans"' in the hibernate config.  This is especially important
-    // during reingestion.  If we call the setter of such a property, and it's already populated, then the old
-    // entries are garbage-collected and eventually deleted from the database.  This is usually not what we
-    // want, and it leads to bugs.
+    article.setNlmArticleType(readString("/article/@article-type"));
+    article.setArticleType(parseArticleHeading());
 
-    // TODO: this can probably be made more elegant with lambdas once we are on Java 8.
-
-    final Set<String> newTypes = buildArticleTypes();
-    setDeletableChildrenRelationship(article, article.getTypes(), newTypes, new Runnable() {
-      @Override
-      public void run() {
-        article.setTypes(newTypes);
-      }
-    });
-
-    final List<CitedArticle> newCitedArticles = parseCitations(readNodeList("/article/back/ref-list/ref"));
-    setDeletableChildrenRelationship(article, article.getCitedArticles(), newCitedArticles, new Runnable() {
-      @Override
-      public void run() {
-        article.setCitedArticles(newCitedArticles);
-      }
-    });
-
-    final List<ArticleAuthor> newAuthors = readAuthors(readNodeList(
-        "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/name"));
-    setDeletableChildrenRelationship(article, article.getAuthors(), newAuthors, new Runnable() {
-      @Override
-      public void run() {
-        article.setAuthors(newAuthors);
-      }
-    });
-
-    final List<ArticleEditor> newEditors = readEditors(readNodeList(
-        "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"editor\"]/name"));
-    setDeletableChildrenRelationship(article, article.getEditors(), newEditors, new Runnable() {
-      @Override
-      public void run() {
-        article.setEditors(newEditors);
-      }
-    });
-
-    final List<String> newCollaborativeAuthors = parseCollaborativeAuthors(readNodeList(
-        "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/collab"));
-    setDeletableChildrenRelationship(article, article.getCollaborativeAuthors(), newCollaborativeAuthors,
-        new Runnable() {
-          @Override
-          public void run() {
-            article.setCollaborativeAuthors(newCollaborativeAuthors);
-          }
-        }
-    );
+    article.setEditors(readPersons(readNodeList(
+        "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"editor\"]/name")));
 
     article.setUrl(buildUrl(readString("/article/front/article-meta/article-id[@pub-id-type = 'doi']")));
-  }
 
-  /**
-   * Safely sets a property of an article that has a one-to-many relationship, and is automatically deleted when
-   * dissociated from the parent.  The collection will only be set if it differs from the values already defined.
-   * <p/>
-   * For example, instead of <pre>article.setFoo(newStuff);</pre>
-   * you should instead do
-   * <pre>
-   *   setDeletableChildrenRelationship(article, article.getFoo(), newStuff, new Runnable() {
-   *     public void run() {
-   *       article.setFoo(newStuff);
-   *     }
-   *   }
-   * </pre>
-   *
-   * @param article        parent object
-   * @param existingValues existing values obtained by calling the getter on article
-   * @param newValues      new values that will be set if they differ from existingValues
-   * @param setter         encapsulates the property's setter method, which will be called with newValues when run
-   */
-  private void setDeletableChildrenRelationship(Article article, @Nullable Collection existingValues,
-                                                Collection newValues, Runnable setter) {
-    if (!newValues.equals(existingValues)) {
-      if (existingValues != null) {
+    article.setRelatedArticles(parseRelatedArticles());
 
-        // This is the safe and recommended way to work with a hibernate all-delete-orphan property.  Instead
-        // of calling the setter with the new collection, work with the existing collection, which is already
-        // imbued with hibernate magic.
-        existingValues.clear();
-        existingValues.addAll(newValues);
-      } else {
-        setter.run();
-      }
-    }
+    article.setAssets(parseAssets());
   }
 
   /**
@@ -359,7 +231,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   }
 
   /**
-   * @return the appropriate value for the rights property of {@link Article}, based on the article XML.
+   * @return the appropriate value for the rights property of {@link ArticleMetadata}, based on the article XML.
    */
   private static String buildRights(String holder, String license) throws XmlContentException {
     if (license == null) {
@@ -372,31 +244,17 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   }
 
   /**
-   * @return the appropriate value for the pages property of {@link Article}, based on the article XML.
+   * @return the appropriate value for the pages property of {@link ArticleMetadata}, based on the article XML.
    */
-  private static String buildPages(String pageCount) {
+  private static Integer parsePageCount(String pageCount) {
     if (Strings.isNullOrEmpty(pageCount)) {
       return null;
-    } else {
-      return "1-" + pageCount;
     }
-  }
-
-  /**
-   * @return the name of the journal the article was published in
-   */
-  private String buildJournal() {
-
-    // pmc2obj-v3.xslt lines 308-311
-    String result;
-    String journalId = readString(
-        "/article/front/journal-meta/journal-id[@journal-id-type='nlm-ta']");
-    if (!Strings.isNullOrEmpty(journalId)) {
-      result = journalId;
-    } else {
-      result = readString("/article/front/journal-meta/journal-title-group/journal-title");
+    try {
+      return Integer.parseInt(pageCount);
+    } catch (NumberFormatException e) {
+      throw new XmlContentException("Expected number for page count", e);
     }
-    return result == null ? "" : result;
   }
 
   /**
@@ -406,45 +264,13 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     return "http://dx.doi.org/" + URLEncoder.encode(doi);
   }
 
-  private static String buildArticleTypeUri(String articleType) {
-    // Represent a article type token as a URI, as required by legacy article type model.
-    // TODO: Either refactor URI-based data model, or allow base URI to be configured (no hard-coded "plos.org").
-    // This also ensures that we throw a NullPointerException rather than return "http://rdf.plos.org/RDF/articleType/null"
-    return "http://rdf.plos.org/RDF/articleType/" + Preconditions.checkNotNull(articleType);
-  }
-
-  /**
-   * @return set of article type strings for the article
-   */
-  private Set<String> buildArticleTypes() {
-
-    // pmc2obj-v3.xslt lines 93-96
-    Set<String> articleTypes = Sets.newHashSet();
-    articleTypes.add(buildArticleTypeUri(readString("/article/@article-type")));
-    List<String> otherTypes = readTextList("/article/front/article-meta/article-categories/"
+  private String parseArticleHeading() {
+    List<String> headings = readTextList("/article/front/article-meta/article-categories/"
         + "subj-group[@subj-group-type = 'heading']/subject");
-    for (String otherType : otherTypes) {
-      otherType = uriEncode(otherType);
-      otherType = SLASH_ESCAPE.replace(otherType); // uriEncode leaves slashes alone, but we actually want them escaped
-      articleTypes.add(buildArticleTypeUri(otherType));
+    if (headings.size() > 1) {
+      throw new XmlContentException("Must not contain more than one subject group with subj-group-type=\"heading\"");
     }
-    return articleTypes;
-  }
-
-  private static final StringReplacer SLASH_ESCAPE = StringReplacer.builder()
-      .replaceExact("/", String.format("%%%H", '/'))
-      .build();
-
-  /**
-   * Build a field of XML text by partially reconstructing the node's content. The output is text content between the
-   * node's two tags, including nested XML tags but not this node's outer tags. Nested tags show only the node name;
-   * their attributes are deleted. Text nodes containing only whitespace are deleted.
-   *
-   * @param node the description node
-   * @return the marked-up description
-   */
-  private static String buildXmlExcerpt(Node node) {
-    return (node == null) ? null : buildTextWithMarkup(node);
+    return headings.isEmpty() ? null : headings.get(0);
   }
 
 
@@ -456,7 +282,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     return language.toLowerCase();
   }
 
-  private Date parseDate(Node dateNode) throws XmlContentException {
+  private LocalDate parseDate(Node dateNode) throws XmlContentException {
     int year, month, day;
     try {
       year = Integer.parseInt(readString("child::year", dateNode));
@@ -465,98 +291,77 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     } catch (NumberFormatException e) {
       throw new XmlContentException("Expected numbers for date fields", e);
     }
-    Calendar date = GregorianCalendar.getInstance();
 
-    // Need to call clear to clear out fields we don't set below (like milliseconds).
-    date.clear();
-
-    // TODO: figure out if we want to set time zone.  I'm leaving it out for now
-    // so that the tests will pass in all locales (the date returned by this method
-    // will be in the same time zone as the ones used in the tests).
-//    date.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
-
-    // Note that Calendar wants month to be zero-based.
-    date.set(year, month - 1, day, 0, 0, 0);
-    return date.getTime();
-  }
-
-  private List<ArticleAuthor> readAuthors(List<Node> authorNodes) throws XmlContentException {
-    List<ArticleAuthor> authors = Lists.newArrayListWithCapacity(authorNodes.size());
-    for (Node authorNode : authorNodes) {
-      ArticleAuthor author = parsePersonName(authorNode).copyTo(new ArticleAuthor());
-      authors.add(author);
-    }
-    return authors;
-  }
-
-  private List<ArticleEditor> readEditors(List<Node> editorNodes) throws XmlContentException {
-    List<ArticleEditor> editors = Lists.newArrayListWithCapacity(editorNodes.size());
-    for (Node editorNode : editorNodes) {
-      ArticleEditor editor = parsePersonName(editorNode).copyTo(new ArticleEditor());
-      editors.add(editor);
-    }
-    return editors;
-  }
-
-  private List<CitedArticle> parseCitations(List<Node> refNodes) throws XmlContentException {
-    List<CitedArticle> citations = Lists.newArrayListWithCapacity(refNodes.size());
-    for (Node refNode : refNodes) {
-      CitedArticle citation = new CitedArticle();
-      citation.setKey(readString("child::label", refNode));
-
-      Node citationNode = readNode("(child::element-citation|child::mixed-citation|child::nlm-citation)", refNode);
-      if (citationNode == null) {
-        throw new XmlContentException("All citation (<ref>) nodes expected to contain one of: "
-            + "element-citation, mixed-citation, nlm-citation");
-      }
-      citation = new CitedArticleXml(citationNode).build(citation);
-      citations.add(citation);
-    }
-    return citations;
+    return LocalDate.of(year, month, day);
   }
 
   /**
-   * Convert each collab node to its text content, excluding any text that appears inside a nested "contrib-group"
-   * element.
+   * Parse {@link RelatedArticleLink} objects from XML.
    * <p/>
-   * TODO: Find a way to do this with just XPath?
-   *
-   * @param collabNodes XML nodes representing "collab" elements
-   * @return a list of their text content
-   */
-  private static List<String> parseCollaborativeAuthors(List<Node> collabNodes) {
-    List<String> collabStrings = Lists.newArrayListWithCapacity(collabNodes.size());
-    for (Node collabNode : collabNodes) {
-      StringBuilder text = new StringBuilder();
-      for (Node child : NodeListAdapter.wrap(collabNode.getChildNodes())) {
-        if (!"contrib-group".equals(child.getNodeName())) {
-          text.append(child.getTextContent());
-        }
-      }
-      String result = standardizeWhitespace(text.toString());
-      collabStrings.add(result);
-    }
-    return collabStrings;
-  }
-
-  /**
-   * Parse {@link ArticleRelationship} objects from XML.
-   * <p/>
-   * These are returned from here, rather than set in the {@link Article} object during normal parsing, so they can get
-   * special handling.
+   * These are returned from here, rather than set in the {@link ArticleMetadata} object during normal parsing, so they
+   * can get special handling.
    *
    * @return the article relationships defined by the XML
    */
-  public List<ArticleRelationship> parseRelatedArticles() {
+  public List<RelatedArticleLink> parseRelatedArticles() {
     List<Node> relatedArticleNodes = readNodeList("//related-article");
-    List<ArticleRelationship> relatedArticles = Lists.newArrayListWithCapacity(relatedArticleNodes.size());
+    List<RelatedArticleLink> relatedArticles = Lists.newArrayListWithCapacity(relatedArticleNodes.size());
     for (Node relatedArticleNode : relatedArticleNodes) {
-      ArticleRelationship relatedArticle = new ArticleRelationship();
-      relatedArticle.setType(readString("attribute::related-article-type", relatedArticleNode));
-      relatedArticle.setOtherArticleDoi(readHrefAttribute(relatedArticleNode));
+      String type = readString("attribute::related-article-type", relatedArticleNode);
+      String doi = readHrefAttribute(relatedArticleNode);
+      RelatedArticleLink relatedArticle = new RelatedArticleLink(type, ArticleIdentifier.create(doi));
       relatedArticles.add(relatedArticle);
     }
     return relatedArticles;
+  }
+
+  private List<AssetMetadata> parseAssets() {
+    AssetNodesByDoi nodeMap = findAllAssetNodes();
+    return nodeMap.getDois().stream().map((Doi assetDoi) -> {
+      ImmutableList<Node> nodes = nodeMap.getNodes(assetDoi);
+      List<AssetMetadata> assetMetadataList = nodes.stream()
+          .map(assetNode -> new AssetXml(assetNode, assetDoi).build())
+          .distinct()
+          .collect(Collectors.toList());
+      if (assetMetadataList.size() > 1) {
+        return disambiguateAssetNodes(assetMetadataList);
+      }
+      return assetMetadataList.get(0);
+    }).collect(Collectors.toList());
+  }
+
+  private static final Comparator<AssetMetadata> ASSET_NODE_PREFERENCE = Comparator.<AssetMetadata, Boolean>
+      comparing(node -> node.getTitle().isEmpty())
+      .thenComparing(Comparator.comparing(node -> node.getDescription().isEmpty()));
+
+  /**
+   * @param assetNodesMetadata metadata for at least two asset nodes with the same DOI and unequal content
+   * @return the metadata with the most non-empty fields
+   * @throws XmlContentException if two or more asset nodes have non-empty, inconsistent title or description
+   */
+  @VisibleForTesting
+  static AssetMetadata disambiguateAssetNodes(Collection<AssetMetadata> assetNodesMetadata) {
+    // Find the node with the most substantial content
+    AssetMetadata bestNode = assetNodesMetadata.stream().min(ASSET_NODE_PREFERENCE)
+        .orElseThrow(() -> new IllegalArgumentException("Argument list must not be empty"));
+
+    // If any other nodes have non-empty fields that are inconsistent with bestNode, complain about ambiguity
+    Collection<AssetMetadata> ambiguous = assetNodesMetadata.stream()
+        .filter(node -> {
+          String title = node.getTitle();
+          boolean ambiguousTitle = !title.isEmpty() && !title.equals(bestNode.getTitle());
+
+          String description = node.getDescription();
+          boolean ambiguousDescription = !description.isEmpty() && !description.equals(bestNode.getDescription());
+
+          return ambiguousTitle || ambiguousDescription;
+        })
+        .collect(Collectors.toList());
+    if (!ambiguous.isEmpty()) {
+      throw new XmlContentException(String.format("Ambiguous asset nodes: %s, %s", bestNode, ambiguous));
+    }
+
+    return bestNode;
   }
 
 }

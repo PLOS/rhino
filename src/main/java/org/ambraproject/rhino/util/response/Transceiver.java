@@ -6,6 +6,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.net.MediaType;
 import com.google.gson.Gson;
+import org.ambraproject.rhino.model.Timestamped;
 import org.ambraproject.rhombat.HttpDateUtil;
 import org.springframework.http.HttpStatus;
 
@@ -14,8 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 import java.util.TimeZone;
 
 /**
@@ -56,6 +59,47 @@ public abstract class Transceiver {
    */
   protected abstract Calendar getLastModifiedDate() throws IOException;
 
+
+  @FunctionalInterface
+  public static interface ViewSupplier<T> {
+    T get() throws IOException;
+  }
+
+  public static Transceiver serveUntimestampedView(ViewSupplier<?> supplier) {
+    Objects.requireNonNull(supplier);
+    return new Transceiver() {
+      @Override
+      protected Object getData() throws IOException {
+        return supplier.get();
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    };
+  }
+
+  /**
+   * Similar to {@link EntityTransceiver} for when the entity is already fetched.
+   */
+  public static Transceiver serveTimestampedView(Timestamped entity, ViewSupplier<?> supplier) {
+    Objects.requireNonNull(entity);
+    Objects.requireNonNull(supplier);
+    return new Transceiver() {
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return copyToCalendar(entity.getLastModified());
+      }
+
+      @Override
+      protected Object getData() throws IOException {
+        return supplier.get();
+      }
+    };
+  }
+
+
   private static final TimeZone GMT = TimeZone.getTimeZone("GMT");
 
   /**
@@ -69,6 +113,10 @@ public abstract class Transceiver {
     calendar.setTimeZone(GMT);
     calendar.setTime(date);
     return calendar;
+  }
+
+  protected static Calendar copyToCalendar(Instant instant) {
+    return copyToCalendar(Date.from(instant));
   }
 
   /**

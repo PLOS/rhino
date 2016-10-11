@@ -1,28 +1,30 @@
 package org.ambraproject.rhino.view.journal;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.view.JsonOutputView;
 
-import java.util.List;
+import java.util.Objects;
 
 public class VolumeOutputView implements JsonOutputView {
 
+  public static VolumeOutputView getView(Volume volume) {
+    return new VolumeOutputView(volume);
+  }
+
   private final Volume volume;
 
-  public VolumeOutputView(Volume volume) {
-    this.volume = Preconditions.checkNotNull(volume);
+  private VolumeOutputView(Volume volume) {
+    this.volume = Objects.requireNonNull(volume);
   }
 
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
-    JsonObject serialized = context.serialize(volume).getAsJsonObject();
-    List<IssueOutputView> issueViews = Lists.transform(volume.getIssues(), IssueOutputView::new);
-    serialized.add("issues", context.serialize(issueViews));
+    JsonObject serialized = new JsonObject();
+    serialized.addProperty("doi", volume.getDoi());
+    serialized.addProperty("displayName", volume.getDisplayName());
     return serialized;
   }
 

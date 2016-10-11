@@ -2,12 +2,12 @@ package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
-import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleListIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.view.article.ListInputView;
+import org.ambraproject.rhino.view.journal.ArticleListView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,13 +49,13 @@ public class ArticleListCrudController extends RestController {
     if (!title.isPresent()) {
       throw new RestClientException("title required", HttpStatus.BAD_REQUEST);
     }
-    Optional<ImmutableSet<ArticleIdentity>> articleDois = inputView.getArticleIds();
+    Optional<ImmutableSet<ArticleIdentifier>> articleDois = inputView.getArticleIds();
     if (!articleDois.isPresent()) {
       throw new RestClientException("articleDois required", HttpStatus.BAD_REQUEST);
     }
 
-    articleListCrudService.create(identity.get(), title.get(), articleDois.get());
-    return new ResponseEntity<>(HttpStatus.CREATED);
+    ArticleListView listView = articleListCrudService.create(identity.get(), title.get(), articleDois.get());
+    return reportCreated(listView);
   }
 
   private static RestClientException complainAboutListIdentityOnPatch(Exception cause) {
@@ -63,7 +63,7 @@ public class ArticleListCrudController extends RestController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/lists/{type}/{journal}/{key}", method = RequestMethod.PATCH)
+  @RequestMapping(value = "/lists/{type}/journals/{journal}/keys/{key}", method = RequestMethod.PATCH)
   public ResponseEntity<?> update(HttpServletRequest request,
                                   @PathVariable("type") String type,
                                   @PathVariable("journal") String journalKey,
@@ -100,7 +100,7 @@ public class ArticleListCrudController extends RestController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/lists/{type}/{journal}", method = RequestMethod.GET)
+  @RequestMapping(value = "/lists/{type}/journals/{journal}", method = RequestMethod.GET)
   public void listAll(HttpServletRequest request, HttpServletResponse response,
                       @PathVariable("type") String type,
                       @PathVariable("journal") String journalKey)
@@ -109,7 +109,7 @@ public class ArticleListCrudController extends RestController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/lists/{type}/{journal}/{key}", method = RequestMethod.GET)
+  @RequestMapping(value = "/lists/{type}/journals/{journal}/keys/{key}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @PathVariable("type") String type,
                    @PathVariable("journal") String journalKey,

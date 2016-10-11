@@ -3,10 +3,10 @@ package org.ambraproject.rhino.view.journal;
 public class JournalInputView {
 
   // Immutable by convention, but non-final to allow Gson's reflection magic
-  private String currentIssueUri;
+  private String currentIssueDoi;
 
-  public String getCurrentIssueUri() {
-    return currentIssueUri;
+  public String getCurrentIssueDoi() {
+    return currentIssueDoi;
   }
 
 }

@@ -18,57 +18,69 @@
  */
 package org.ambraproject.rhino.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import java.util.Date;
 
 /**
- * Relationship between two articles. The 'other article id' could be null if it is an article which is not in the
- * system.
+ * An outgoing relationship between two articles (e.g. for corrections, sourceArticle = correction article,
+ * targetArticle = original article). The corresponding incoming relationships are not persisted in order to
+ * avoid redundancy and potential data integrity headaches.
  *
- * @author Alex Kudlick 11/9/11
+ * @author John Fesenko 6/28/2016
  */
-public class ArticleRelationship extends AmbraEntity {
+@Entity
+@Table(name = "articleRelationship")
+public class ArticleRelationship implements Timestamped {
 
-  private Article parentArticle;
-  private Long otherArticleID;
-  private String otherArticleDoi;
+  @Id
+  @GeneratedValue
+  @Column
+  private int articleRelationshipId;
+
+  @ManyToOne
+  @JoinColumn(name = "sourceArticleId", nullable = false)
+  private Article sourceArticle;
+
+  @ManyToOne
+  @JoinColumn(name = "targetArticleId", nullable = false)
+  private Article targetArticle;
+
+  @Column
   private String type;
-  // from original article to amendments
-  private static final Set<String> ORIGINAL_ARTICLE_AMENDMENT_TYPE = new HashSet<String>();
-  // from amendment to original article defined in xml
-  private static final Set<String> AMENDMENT_ARTICLE_RELATIONSHIP_TYPE = new HashSet<String>();
 
-  static {
-    ORIGINAL_ARTICLE_AMENDMENT_TYPE.add("correction-forward");
-    ORIGINAL_ARTICLE_AMENDMENT_TYPE.add("expressed-concern");
-    ORIGINAL_ARTICLE_AMENDMENT_TYPE.add("retraction");
-    AMENDMENT_ARTICLE_RELATIONSHIP_TYPE.add("corrected-article");
-    AMENDMENT_ARTICLE_RELATIONSHIP_TYPE.add("retracted-article");
-    AMENDMENT_ARTICLE_RELATIONSHIP_TYPE.add("object-of-concern");
+  @Generated(value = GenerationTime.INSERT)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(name = "created", insertable = false, updatable = false, columnDefinition = "timestamp default current_timestamp")
+  private Date created;
+
+  @Generated(value= GenerationTime.ALWAYS)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
+  private Date lastModified;
+
+  public Article getSourceArticle() {
+    return sourceArticle;
   }
 
-  public Long getOtherArticleID() {
-    return otherArticleID;
+  public void setSourceArticle(Article sourceArticle) {
+    this.sourceArticle = sourceArticle;
   }
 
-  public void setOtherArticleID(Long otherArticleID) {
-    this.otherArticleID = otherArticleID;
+  public Article getTargetArticle() {
+    return targetArticle;
   }
 
-  public String getOtherArticleDoi() {
-    return otherArticleDoi;
-  }
-
-  public void setOtherArticleDoi(String otherArticleDoi) {
-    this.otherArticleDoi = otherArticleDoi;
-  }
-
-  public Article getParentArticle() {
-    return parentArticle;
-  }
-
-  public void setParentArticle(Article parentArticle) {
-    this.parentArticle = parentArticle;
+  public void setTargetArticle(Article targetArticle) {
+    this.targetArticle = targetArticle;
   }
 
   public String getType() {
@@ -79,49 +91,41 @@ public class ArticleRelationship extends AmbraEntity {
     this.type = type;
   }
 
+  public Date getCreated() {
+    return created;
+  }
+
+  public void setCreated(Date created) {
+    this.created = created;
+  }
+
+  @Override
+  public Date getLastModified() {
+    return lastModified;
+  }
+
+  public void setLastModified(Date lastModified) {
+    this.lastModified = lastModified;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (o == null) return false;
-    if (!(o instanceof ArticleRelationship)) return false;
+    if (o == null || getClass() != o.getClass()) return false;
 
+    ArticleRelationship that = (ArticleRelationship) o;
 
-    ArticleRelationship relationship = (ArticleRelationship) o;
+    if (sourceArticle != null ? !sourceArticle.equals(that.sourceArticle) : that.sourceArticle != null) return false;
+    if (targetArticle != null ? !targetArticle.equals(that.targetArticle) : that.targetArticle != null) return false;
+    return type != null ? type.equals(that.type) : that.type == null;
 
-    if (getID() != null ? !getID().equals(relationship.getID()) : relationship.getID() != null) return false;
-
-    return true;
   }
 
   @Override
   public int hashCode() {
-    return getID() != null ? getID().hashCode() : 0;
+    int result = sourceArticle != null ? sourceArticle.hashCode() : 0;
+    result = 31 * result + (targetArticle != null ? targetArticle.hashCode() : 0);
+    result = 31 * result + (type != null ? type.hashCode() : 0);
+    return result;
   }
-
-  /**
-   * Determines if the related article of the original article is an amendment
-   *
-   * @param type relationship type
-   * @return true/false
-   */
-  public static boolean isAmendmentRelationship(String type) {
-    if (ORIGINAL_ARTICLE_AMENDMENT_TYPE.contains(type)) {
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * Determines if the related article of an amendment is its original article
-   *
-   * @param type the relationship type
-   * @return true/false
-   */
-  public static boolean isOriginalArticleOfAmendment(String type) {
-    if (AMENDMENT_ARTICLE_RELATIONSHIP_TYPE.contains(type)) {
-      return true;
-    }
-    return false;
-  }
-
 }

@@ -1,24 +1,37 @@
 package org.ambraproject.rhino.view.journal;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import org.ambraproject.rhino.model.ArticleList;
 import org.ambraproject.rhino.identity.ArticleListIdentity;
+import org.ambraproject.rhino.model.ArticleList;
 import org.ambraproject.rhino.view.JsonOutputView;
-import org.ambraproject.rhino.view.article.ArticleOutputView;
+import org.ambraproject.rhino.view.article.ArticleRevisionView;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ArticleListView implements JsonOutputView {
 
+  public static class Factory {
+    @Autowired
+    private ArticleRevisionView.Factory articleRevisionViewFactory;
+
+    public ArticleListView getView(ArticleList articleList, String journalKey) {
+      return new ArticleListView(journalKey, articleList, articleRevisionViewFactory);
+    }
+  }
+
   private final String journalKey;
   private final ArticleList articleList;
+  private final ArticleRevisionView.Factory articleFactory;
 
-  public ArticleListView(String journalKey, ArticleList articleList) {
-    this.journalKey = Preconditions.checkNotNull(journalKey);
-    this.articleList = Preconditions.checkNotNull(articleList);
+  private ArticleListView(String journalKey, ArticleList articleList,
+                          ArticleRevisionView.Factory articleFactory) {
+    this.journalKey = Objects.requireNonNull(journalKey);
+    this.articleList = Objects.requireNonNull(articleList);
+    this.articleFactory = Objects.requireNonNull(articleFactory);
   }
 
   public ArticleListIdentity getIdentity() {
@@ -37,12 +50,11 @@ public class ArticleListView implements JsonOutputView {
     JsonObject serialized = context.serialize(getIdentity()).getAsJsonObject();
     serialized.addProperty("title", articleList.getDisplayName());
 
-    List<ArticleOutputView> articleIdList = Lists.transform(articleList.getArticles(), ArticleOutputView::createMinimalView);
-    serialized.add("articles", context.serialize(articleIdList));
-
+    List<ArticleRevisionView> articleViews = Lists.transform(articleList.getArticles(),
+        articleFactory::getLatestRevisionView);
+    serialized.add("articles", context.serialize(articleViews));
     return serialized;
   }
-
 
   @Override
   public boolean equals(Object o) {

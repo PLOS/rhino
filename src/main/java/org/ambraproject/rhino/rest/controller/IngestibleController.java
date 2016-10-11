@@ -14,147 +14,47 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.net.HttpHeaders;
-import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.model.Article;
-import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
+import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
+import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
-import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.util.Archive;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Optional;
 
 /**
  * Controller enabling access to the ambra ingest directory (whose location is defined by the
  * ambra.services.documentManagement.ingestSourceDir property of ambra.xml).
  */
 @Controller
-public class IngestibleController extends DoiBasedCrudController {
-  private static final Logger log = LoggerFactory.getLogger(IngestibleController.class);
-
-  private static final String INGESTIBLE_ROOT = "/ingestibles";
-  private static final String INGESTIBLE_NAMESPACE = INGESTIBLE_ROOT + "/";
-  private static final String INGESTIBLE_TEMPLATE = INGESTIBLE_NAMESPACE + "**";
+public class IngestibleController extends RestController {
 
   @Autowired
   private ArticleCrudService articleCrudService;
 
-  @Autowired
-  private IngestibleService ingestibleService;
-
-  @Override
-  protected String getNamespacePrefix() {
-    return INGESTIBLE_NAMESPACE;
-  }
-
-  @Override
-  protected ArticleIdentity parse(HttpServletRequest request) {
-    return ArticleIdentity.create(getIdentifier(request));
-  }
-
-  /**
-   * Method that lists all ingestible archives in the ingest source directory.
-   *
-   * @param response HttpServletResponse
-   * @throws IOException
-   */
-  @Transactional(readOnly = true)
-  @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response)
-      throws IOException {
-    ingestibleService.read().respond(request, response, entityGson);
-  }
-
-  /**
-   * Ingests an archive present in the ingest source directory.
-   *
-   * @param response      HttpServletResponse
-   * @param name          the name of an ingestible archive present in the ingest source directory
-   * @param forceReingest if present, we will reingest the article if it already exists
-   * @throws IOException
-   */
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.POST)
-  public void ingest(HttpServletRequest request, HttpServletResponse response,
-                     @RequestParam(value = "name") String name,
-                     @RequestParam(value = "force_reingest", required = false) String forceReingest)
-      throws IOException {
-
-    File archiveFile;
-    try {
-      archiveFile = ingestibleService.getIngestibleArchive(name);
-    } catch (FileNotFoundException fnfe) {
-      throw new RestClientException("Could not find ingestible archive for: " + name,
-          HttpStatus.METHOD_NOT_ALLOWED, fnfe);
-    }
-
-    WriteMode reingestMode = booleanParameter(forceReingest) ? WriteMode.WRITE_ANY : WriteMode.CREATE_ONLY;
-
-    // TODO: Add user-specific (i.e., PLOS-vs-non-PLOS) way to infer expected ID from zip file naming convention.
-    Optional<ArticleIdentity> expectedId = Optional.empty();
-
-    Article result;
-    try (Archive archive = Archive.readZipFile(archiveFile)) {
-      result = articleCrudService.writeArchive(archive, expectedId, reingestMode);
-    }
-    ingestibleService.archiveIngested(name);
-    response.setStatus(HttpStatus.CREATED.value());
-
-    try {
-      // Report the written data, as JSON, in the response.
-      articleCrudService.readMetadata(result, false).respond(request, response, entityGson);
-    } catch (Exception e) {
-      // Throwing an exception could cause a rollback. It's preferable to let the response body be broken.
-      log.error("Error writing response body after ingesting article", e);
-    }
-  }
-
-  @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.GET, params = "article")
+  @RequestMapping(value = "/articles/{doi}/ingestions/{number}/ingestible", method = RequestMethod.GET)
   public void repack(HttpServletResponse response,
-                     @RequestParam("article") String articleId)
+                     @PathVariable("doi") String doi,
+                     @PathVariable("number") int ingestionNumber)
       throws IOException {
-    Archive archive = articleCrudService.repack(ArticleIdentity.create(articleId));
+    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
+
+    Archive archive = articleCrudService.repack(ingestionId);
     response.setStatus(HttpStatus.OK.value());
     response.setContentType("application/zip");
     response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "filename=" + archive.getArchiveName());
     try (OutputStream outputStream = response.getOutputStream()) {
       archive.write(outputStream);
     }
-  }
-
-  /**
-   * Read an article from the legacy data model and rewrite it as a versioned article. Does not reingest the article to
-   * legacy persistence.
-   *
-   * @deprecated This is a temporary kludge for data migration. It should be deleted when the legacy article model is no
-   * longer supported.
-   */
-  @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.POST, params = {"versionedReingestInPlace", "article"})
-  @Deprecated
-  public ResponseEntity<?> versionedReingestInPlace(@RequestParam("article") String articleId)
-      throws IOException {
-    Archive archive = articleCrudService.repack(ArticleIdentity.create(articleId));
-    articleCrudService.writeArchiveAsVersionedOnly(archive);
-    return new ResponseEntity<>(HttpStatus.OK);
   }
 
 }

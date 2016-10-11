@@ -7,7 +7,7 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
-import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleListIdentity;
 
 import java.lang.reflect.Type;
@@ -18,12 +18,12 @@ public class ListInputView {
 
   private final Optional<ArticleListIdentity> identity;
   private final Optional<String> title;
-  private final Optional<ImmutableSet<ArticleIdentity>> articleIds;
+  private final Optional<ImmutableSet<ArticleIdentifier>> articleIds;
 
-  private ListInputView(ArticleListIdentity identity, String title, Set<ArticleIdentity> articleIds) {
+  private ListInputView(ArticleListIdentity identity, String title, Set<ArticleIdentifier> articleIds) {
     this.identity = Optional.fromNullable(identity);
     this.title = Optional.fromNullable(title);
-    this.articleIds = (articleIds == null) ? Optional.<ImmutableSet<ArticleIdentity>>absent()
+    this.articleIds = (articleIds == null) ? Optional.<ImmutableSet<ArticleIdentifier>>absent()
         : Optional.of(ImmutableSet.copyOf(articleIds));
   }
 
@@ -35,7 +35,7 @@ public class ListInputView {
     return title;
   }
 
-  public Optional<ImmutableSet<ArticleIdentity>> getArticleIds() {
+  public Optional<ImmutableSet<ArticleIdentifier>> getArticleIds() {
     return articleIds;
   }
 
@@ -63,13 +63,13 @@ public class ListInputView {
         throw new PartialIdentityException();
       }
 
-      final Set<ArticleIdentity> articleIds;
+      final Set<ArticleIdentifier> articleIds;
       if (inp.articleDois == null) {
         articleIds = null;
       } else {
         articleIds = Sets.newLinkedHashSetWithExpectedSize(inp.articleDois.size());
         for (String articleDoi : inp.articleDois) {
-          articleIds.add(ArticleIdentity.create(articleDoi));
+          articleIds.add(ArticleIdentifier.create(articleDoi));
         }
       }
 

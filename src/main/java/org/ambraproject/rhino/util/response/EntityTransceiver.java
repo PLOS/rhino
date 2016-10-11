@@ -1,7 +1,7 @@
 package org.ambraproject.rhino.util.response;
 
 import com.google.common.base.Preconditions;
-import org.ambraproject.rhino.model.AmbraEntity;
+import org.ambraproject.rhino.model.Timestamped;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -11,7 +11,7 @@ import java.util.Calendar;
  *
  * @param <E> the persistent entity type
  */
-public abstract class EntityTransceiver<E extends AmbraEntity> extends Transceiver {
+public abstract class EntityTransceiver<E extends Timestamped> extends Transceiver {
 
   private E entity = null;
 

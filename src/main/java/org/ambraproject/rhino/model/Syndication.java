@@ -1,5 +1,16 @@
 package org.ambraproject.rhino.model;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
 import java.util.Date;
 
 /**
@@ -8,57 +19,75 @@ import java.util.Date;
  *
  * @author Alex Kudlick  11/17/11
  */
-public class Syndication extends AmbraEntity {
-  /**
-   * This Article has been published, but has not yet been submitted to this syndication target.
-   */
-  public static final String STATUS_PENDING = "PENDING";
-  /**
-   * This Article has been submitted to this syndication target, but the process is not yet complete.
-   */
-  public static final String STATUS_IN_PROGRESS = "IN_PROGRESS";
-  /**
-   * This Article has been successfully submitted to this syndication target.
-   */
-  public static final String STATUS_SUCCESS = "SUCCESS";
-  /**
-   * This Article was submitted to this syndication target, but the process failed. The reason for this failure should
-   * be written into the <i>errorMessage</i> variable.
-   */
-  public static final String STATUS_FAILURE = "FAILURE";
+@Entity
+@Table(name = "syndication")
+public class Syndication implements Timestamped{
 
+  @Id @GeneratedValue
+  @Column
+  private int syndicationId;
 
-  private String doi;
-  private String target;
+  @ManyToOne
+  @JoinColumn(name = "revisionId", nullable = false)
+  private ArticleRevision articleRevision;
+
+  @Column
+  private String targetQueue;
+
+  @Column
   private String status;
+
+  @Column
   private int submissionCount;
+
+  @Column
   private String errorMessage;
+
+  @Column
   private Date lastSubmitTimestamp;
+
+  @Generated(value= GenerationTime.INSERT)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
+  private Date created;
+
+  @Generated(value= GenerationTime.ALWAYS)
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
+  private Date lastModified;
 
   public Syndication() {
     super();
   }
 
-  public Syndication(String doi, String target) {
+  public Syndication(ArticleRevision articleRevision, String targetQueue) {
     this();
-    this.target = target;
-    this.doi = doi;
+    this.targetQueue = targetQueue;
+    this.articleRevision = articleRevision;
   }
 
-  public String getDoi() {
-    return doi;
+  public int getSyndicationId() {
+    return syndicationId;
   }
 
-  public void setDoi(String doi) {
-    this.doi = doi;
+  public void setSyndicationId(int syndicationId) {
+    this.syndicationId = syndicationId;
+  }
+
+  public ArticleRevision getArticleRevision() {
+    return articleRevision;
+  }
+
+  public void setArticleRevision(ArticleRevision articleRevision) {
+    this.articleRevision = articleRevision;
   }
 
   public String getTarget() {
-    return target;
+    return targetQueue;
   }
 
   public void setTarget(String target) {
-    this.target = target;
+    this.targetQueue = target;
   }
 
   public String getStatus() {
@@ -93,34 +122,53 @@ public class Syndication extends AmbraEntity {
     this.lastSubmitTimestamp = lastSubmitTimestamp;
   }
 
+  public Date getCreated() {
+    return created;
+  }
+
+  public void setCreated(Date created) {
+    this.created = created;
+  }
+
+  public Date getLastModified() {
+    return lastModified;
+  }
+
+  public void setLastModified(Date lastModified) {
+    this.lastModified = lastModified;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (!(o instanceof Syndication)) return false;
+    if (o == null || getClass() != o.getClass()) return false;
 
     Syndication that = (Syndication) o;
-
-    if (doi != null ? !doi.equals(that.doi) : that.doi != null) return false;
-    if (status != null ? !status.equals(that.status) : that.status != null) return false;
-    if (target != null ? !target.equals(that.target) : that.target != null) return false;
-
-    return true;
+    if (articleRevision != null ? !articleRevision.equals(that.articleRevision) : that.articleRevision != null) {
+      return false;
+    }
+    return targetQueue != null ? targetQueue.equals(that.targetQueue) : that.targetQueue == null;
   }
 
   @Override
   public int hashCode() {
-    int result = doi != null ? doi.hashCode() : 0;
-    result = 31 * result + (target != null ? target.hashCode() : 0);
-    result = 31 * result + (status != null ? status.hashCode() : 0);
+    int result = articleRevision != null ? articleRevision.hashCode() : 0;
+    result = 31 * result + (targetQueue != null ? targetQueue.hashCode() : 0);
     return result;
   }
 
   @Override
   public String toString() {
     return "Syndication{" +
-        "doi='" + doi + '\'' +
-        ", target='" + target + '\'' +
+        "syndicationId=" + syndicationId +
+        ", articleRevision=" + articleRevision +
+        ", targetQueue='" + targetQueue + '\'' +
         ", status='" + status + '\'' +
+        ", submissionCount=" + submissionCount +
+        ", errorMessage='" + errorMessage + '\'' +
+        ", lastSubmitTimestamp=" + lastSubmitTimestamp +
+        ", created=" + created +
+        ", lastModified=" + lastModified +
         '}';
   }
 }

@@ -7,26 +7,21 @@ import java.util.List;
 public class IssueInputView {
 
   // Immutable by convention, but non-final to allow Gson's reflection magic
-  private String issueUri;
+  private String doi;
   private String displayName;
-  private String imageUri;
-  private Boolean respectOrder;
+  private String imageArticleDoi;
   private List<String> articleOrder;
 
-  public String getIssueUri() {
-    return issueUri;
+  public String getDoi() {
+    return doi;
   }
 
   public String getDisplayName() {
     return displayName;
   }
 
-  public String getImageUri() {
-    return imageUri;
-  }
-
-  public Boolean getRespectOrder() {
-    return respectOrder;
+  public String getImageArticleDoi() {
+    return imageArticleDoi;
   }
 
   public List<String> getArticleOrder() {

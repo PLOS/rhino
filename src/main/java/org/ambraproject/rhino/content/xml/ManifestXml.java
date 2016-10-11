@@ -13,20 +13,50 @@
 
 package org.ambraproject.rhino.content.xml;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
+import org.ambraproject.rhino.model.ingest.AssetType;
 import org.w3c.dom.Node;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Represents the manifest of an article .zip archive.
  */
 public class ManifestXml extends AbstractXpathReader {
+
+  /**
+   * Indicates that the manifest contains invalid data.
+   */
+  public static class ManifestDataException extends RuntimeException {
+    private ManifestDataException(String message) {
+      super(message);
+    }
+  }
+
+  // Like Maps.uniqueIndex, but in case of key collision, throws ManifestDataException with a helpful message
+  private static <T, K> ImmutableMap<K, T> mapByUniqueKeys(Collection<? extends T> values,
+                                                           Function<T, K> keyFunction,
+                                                           Function<K, String> parentDescription) {
+    Map<K, T> map = Maps.newLinkedHashMapWithExpectedSize(values.size());
+    for (T value : values) {
+      K key = Objects.requireNonNull(keyFunction.apply(Objects.requireNonNull(value)));
+      T previous = map.put(key, value);
+      if (previous != null) {
+        throw new ManifestDataException(parentDescription.apply(key));
+      }
+    }
+    return ImmutableMap.copyOf(map);
+  }
+
 
   /**
    * Constructor.
@@ -37,136 +67,152 @@ public class ManifestXml extends AbstractXpathReader {
     super(xml);
   }
 
-  /**
-   * @return the name of the file in the zip archive that is the XML article
-   */
-  public String getArticleXml() {
-    return readString("//article/@main-entry");
-  }
 
-  /**
-   * @return the URI of the "striking image" associated with this article
-   */
-  public String getStrkImgURI() {
-    return readString("//object[@strkImage='True']/@uri");
-  }
-
-  private transient ImmutableMap<String, String> uriMap;
-
-  public String getUriForFile(String filename) {
-    ImmutableMap<String, String> uriMap = (this.uriMap == null) ? (this.uriMap = buildUriMap()) : this.uriMap;
-    return uriMap.get(filename);
-  }
-
-  private ImmutableMap<String, String> buildUriMap() {
-    ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
-    List<Node> objectNodes = readNodeList("//article|//object");
-    for (Node objectNode : objectNodes) {
-      // TODO: Is there an efficient way to pull this logic into an XPath query?
-      String uri = readString("@uri", objectNode);
-      List<Node> representationNode = readNodeList("child::representation", objectNode);
-      for (Node reprNode : representationNode) {
-        String filename = readString("@entry", reprNode);
-        builder.put(filename, uri);
-      }
+  private String requireAttribute(String attributeName, Node node) {
+    String value = readString("@" + attributeName, node);
+    if (value == null) {
+      throw new ManifestDataException(String.format(
+          "'%s' node must have '%s' attribute", node.getNodeName(), attributeName));
     }
-    return builder.build();
+    return value;
   }
 
+  private class Parsed {
+    private final ImmutableMap<String, Asset> assets;
+    private final ImmutableList<ManifestFile> ancillaryFiles;
 
-  private transient ImmutableList<Asset> parsedAssets;
+    private Parsed() {
+      List<Asset> assets = new ArrayList<>();
 
-  public ImmutableList<Asset> parse() {
-    if (parsedAssets != null) return parsedAssets;
+      assets.add(parseAssetNode(AssetTagName.ARTICLE, readNode("/manifest/articleBundle/article")));
+      for (Node objectNode : readNodeList("/manifest/articleBundle/object")) {
+        assets.add(parseAssetNode(AssetTagName.OBJECT, objectNode));
+      }
 
-    List<Node> assetNodes = readNodeList("//article|//object");
-    List<Asset> assets = new ArrayList<>(assetNodes.size());
+      this.assets = mapByUniqueKeys(assets, Asset::getUri,
+          assetUri -> "Manifest has assets with duplicate uri: " + assetUri
+      );
 
-    for (Node assetNode : assetNodes) {
-      String nodeName = assetNode.getNodeName();
-      String uri = readString("@uri", assetNode);
-      String mainEntry = readString("@main-entry", assetNode);
+      this.ancillaryFiles = parseAncillaryFiles(readNode("/manifest/ancillary"));
+    }
+
+    private Asset parseAssetNode(AssetTagName assetTagName, Node assetNode) {
+      String type = readString("@type", assetNode);
+      String uri = requireAttribute("uri", assetNode);
       String strkImage = readString("@strkImage", assetNode);
-
-      AssetType assetType = AssetType.fromNodeName(nodeName);
       boolean isStrikingImage = Boolean.toString(true).equalsIgnoreCase(strkImage);
 
+      List<Representation> representations = parseRepresentations(assetNode);
+      return new Asset(assetTagName, type, uri, isStrikingImage, representations);
+    }
+
+    private ImmutableList<Representation> parseRepresentations(Node assetNode) {
+      if (assetNode == null) return ImmutableList.of();
       List<Node> representationNodes = readNodeList("child::representation", assetNode);
       List<Representation> representations = new ArrayList<>(representationNodes.size());
       for (Node representationNode : representationNodes) {
-        String name = readString("@name", representationNode);
-        String entry = readString("@entry", representationNode);
-        Representation representation = new Representation(name, entry);
-        if (!isJunkXml(assetType, mainEntry, representation)) {
-          representations.add(representation);
-        }
+        ManifestFile file = parseFile(representationNode);
+        String type = requireAttribute("type", representationNode);
+        representations.add(new Representation(file, type));
       }
-
-      assets.add(new Asset(assetType, uri, mainEntry, isStrikingImage, representations));
+      return ImmutableList.copyOf(representations);
     }
 
-    return parsedAssets = ImmutableList.copyOf(assets);
-  }
-
-  /**
-   * As a special case, due to legacy reasons, the article asset may contain other versions of the XML file that we
-   * don't want to save. (In PLOS ingestibles, these show up as {@code *.xml.orig} files.)
-   * <p>
-   * Suppress all XML files in the article asset except for the one that is designated as the main entry.
-   */
-  private static boolean isJunkXml(AssetType assetType, String mainEntry, Representation representation) {
-    return (assetType == AssetType.ARTICLE) && representation.getName().equals("XML")
-        && !Objects.equals(mainEntry, representation.getEntry());
-  }
-
-  public static enum AssetType {
-    ARTICLE, OBJECT;
-
-    private static AssetType fromNodeName(String nodeName) {
-      switch (nodeName) {
-        case "article":
-          return ARTICLE;
-        case "object":
-          return OBJECT;
-        default:
-          throw new IllegalArgumentException();
-      }
+    private ImmutableList<ManifestFile> parseAncillaryFiles(Node ancillaryNode) {
+      return (ancillaryNode == null) ? ImmutableList.of() : ImmutableList.copyOf(
+          readNodeList("child::file", ancillaryNode).stream()
+              .map(this::parseFile)
+              .collect(Collectors.toList()));
     }
+
+    private ManifestFile parseFile(Node node) {
+      String entry = requireAttribute("entry", node);
+      String key = requireAttribute("key", node);
+      String mimetype = requireAttribute("mimetype", node);
+      return new ManifestFile(entry, key, mimetype);
+    }
+  }
+
+  private transient Parsed parsed;
+
+  private Parsed getParsedObject() {
+    return (this.parsed != null) ? this.parsed : (this.parsed = new Parsed());
+  }
+
+  public ImmutableList<Asset> getAssets() {
+    return getParsedObject().assets.values().asList();
+  }
+
+  public Asset getArticleAsset() {
+    return getAssets().stream()
+        .filter(asset -> asset.getAssetTagName().equals(AssetTagName.ARTICLE))
+        .findAny().orElseThrow(() ->
+            new ManifestDataException("Manifest does not have <article> element"));
+  }
+
+  public ImmutableList<ManifestFile> getAncillaryFiles() {
+    Parsed parsed = getParsedObject();
+    return parsed.ancillaryFiles;
+  }
+
+
+  public static enum AssetTagName {
+    ARTICLE, OBJECT, ANCILLARY;
   }
 
   public static class Asset {
-    private final AssetType assetType;
+    private final AssetTagName assetTagName;
+    private final AssetType type;
     private final String uri;
-    private final Optional<String> mainEntry;
     private final boolean isStrikingImage;
-    private final ImmutableList<Representation> representations;
+    private final ImmutableMap<String, Representation> representations;
 
-    private Asset(AssetType assetType, String uri, String mainEntry, boolean isStrikingImage, Iterable<Representation> representations) {
+    private Asset(AssetTagName assetTagName, String type, String uri, boolean isStrikingImage, List<Representation> representations) {
+      this.assetTagName = Objects.requireNonNull(assetTagName);
+      this.type = determineType(assetTagName, type);
+      this.uri = Objects.requireNonNull(uri);
       this.isStrikingImage = isStrikingImage;
-      this.assetType = Preconditions.checkNotNull(assetType);
-      this.uri = Preconditions.checkNotNull(uri);
-      this.mainEntry = Optional.ofNullable(mainEntry);
-      this.representations = ImmutableList.copyOf(representations);
+      this.representations = mapByUniqueKeys(representations, Representation::getType,
+          representationType -> String.format("<%s type=\"%s\" uri=\"%s\"> has representations with duplicate type: %s",
+              assetTagName, type, uri, representationType));
     }
 
-    public AssetType getAssetType() {
-      return assetType;
+    private static AssetType determineType(AssetTagName assetTagName, String type) {
+      if (assetTagName == AssetTagName.ARTICLE) {
+        if (type != null) {
+          throw new ManifestDataException("<article> element should not have 'type' attribute");
+        }
+        return AssetType.ARTICLE;
+      }
+      if (type == null) {
+        throw new ManifestDataException(String.format("'%s' node must have 'type' attribute", assetTagName));
+      }
+      return AssetType.fromIdentifier(type).orElseThrow(() ->
+          new ManifestDataException("Unrecognized asset type: " + type));
+    }
+
+    public AssetTagName getAssetTagName() {
+      return assetTagName;
+    }
+
+    public AssetType getType() {
+      return type;
     }
 
     public String getUri() {
       return uri;
     }
 
-    public Optional<String> getMainEntry() {
-      return mainEntry;
-    }
-
     public boolean isStrikingImage() {
       return isStrikingImage;
     }
 
+    public Optional<Representation> getRepresentation(String type) {
+      return Optional.ofNullable(representations.get(type));
+    }
+
     public ImmutableList<Representation> getRepresentations() {
-      return representations;
+      return representations.values().asList();
     }
 
     @Override
@@ -174,45 +220,81 @@ public class ManifestXml extends AbstractXpathReader {
       if (this == o) return true;
       if (o == null || getClass() != o.getClass()) return false;
       Asset asset = (Asset) o;
-      return isStrikingImage == asset.isStrikingImage && assetType == asset.assetType && uri.equals(asset.uri)
-          && mainEntry.equals(asset.mainEntry) && representations.equals(asset.representations);
+      return isStrikingImage == asset.isStrikingImage && assetTagName == asset.assetTagName && uri.equals(asset.uri)
+          && representations.equals(asset.representations);
     }
 
     @Override
     public int hashCode() {
-      return 31 * (31 * (31 * (31 * assetType.hashCode() + uri.hashCode()) + mainEntry.hashCode())
-          + (isStrikingImage ? 1 : 0)) + representations.hashCode();
+      return 31 * (31 * (31 * assetTagName.hashCode() + uri.hashCode())
+          + Boolean.hashCode(isStrikingImage)) + representations.hashCode();
     }
   }
 
-  public static class Representation {
-    private final String name;
+  public static class ManifestFile {
     private final String entry;
+    private final String key;
+    private final String mimetype;
 
-    private Representation(String name, String entry) {
-      this.name = Preconditions.checkNotNull(name);
-      this.entry = Preconditions.checkNotNull(entry);
-    }
-
-    public String getName() {
-      return name;
+    private ManifestFile(String entry, String key, String mimetype) {
+      this.entry = Objects.requireNonNull(entry);
+      this.key = Objects.requireNonNull(key);
+      this.mimetype = Objects.requireNonNull(mimetype);
     }
 
     public String getEntry() {
       return entry;
     }
 
+    public String getCrepoKey() {
+      return key;
+    }
+
+    public String getMimetype() {
+      return mimetype;
+    }
+
     @Override
     public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
-      Representation that = (Representation) o;
-      return name.equals(that.name) && entry.equals(that.entry);
+      return this == o || o != null && getClass() == o.getClass()
+          && entry.equals(((ManifestFile) o).entry)
+          && key.equals(((ManifestFile) o).key)
+          && mimetype.equals(((ManifestFile) o).mimetype);
     }
 
     @Override
     public int hashCode() {
-      return 31 * name.hashCode() + entry.hashCode();
+      return 31 * (31 * entry.hashCode() + key.hashCode()) + mimetype.hashCode();
+    }
+  }
+
+  public static class Representation {
+    private final ManifestFile file;
+    private final String type;
+
+    private Representation(ManifestFile file, String type) {
+      this.file = Objects.requireNonNull(file);
+      this.type = Objects.requireNonNull(type);
+    }
+
+    public ManifestFile getFile() {
+      return file;
+    }
+
+    public String getType() {
+      return type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      return this == o || o != null && getClass() == o.getClass()
+          && file.equals(((Representation) o).file)
+          && type.equals(((Representation) o).type);
+    }
+
+    @Override
+    public int hashCode() {
+      return 31 * file.hashCode() + type.hashCode();
     }
   }
 

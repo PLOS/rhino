@@ -90,6 +90,12 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
+    <repository>
+      <id>JBoss</id>
+      <name>JBoss Repsitory</name>
+      <layout>default</layout>
+      <url>http://repository.jboss.org/maven2</url>
+    </repository>
   </repositories>
 
   <distributionManagement>
@@ -182,7 +188,7 @@
     <dependency>
       <groupId>org.plos</groupId>
       <artifactId>content-repo-library</artifactId>
-      <version>1.5.0</version>
+      <version>1.6.0</version>
     </dependency>
 
     <!-- ========================= End Ambra inclusions ========================= -->
@@ -300,6 +306,12 @@
         </exclusion>
       </exclusions>
       <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate.javax.persistence</groupId>
+      <artifactId>hibernate-jpa-2.0-api</artifactId>
+      <version>1.0.1.Final</version>
     </dependency>
 
     <!-- @Inject -->
