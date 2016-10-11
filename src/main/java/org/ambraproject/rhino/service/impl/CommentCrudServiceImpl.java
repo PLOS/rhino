@@ -16,6 +16,7 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.CommentIdentifier;
 import org.ambraproject.rhino.identity.Doi;
@@ -429,5 +430,49 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
 
       return comments.stream().map(commentNodeViewFactory::create).collect(Collectors.toList());
     });
+  }
+
+  @Override
+  public Journal getJournalOf(Comment comment) {
+    List<Journal> journals = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "SELECT DISTINCT r.ingestion.journal " +
+          "FROM ArticleRevision r " +
+          "WHERE r.ingestion.article = :article");
+      query.setParameter("article", comment.getArticle());
+      return (List<Journal>) query.list();
+    });
+
+    if (journals.size() > 1) {
+      /*
+       * We select from ArticleRevision above instead of ArticleIngestion to guard against an ArticleIngestion having
+       * been written accidentally with the wrong journal's eIssn. Presumably, the client would not leave an
+       * ArticleRevision pointing at a bad ingestion like that.
+       *
+       * Although it is technically possible for distinct, valid revisions of the same article to belong to different
+       * journals, that would be a weird and unanticipated use case. If we ever really needed to support that, we could
+       * resolve to the latest revision or something. But, for now, just assume that we don't need any extra code for
+       * that corner case.
+       */
+      throw new RuntimeException(String.format("Parent article (%s) of the comment (%s) is published in more than one journal (%s)",
+          comment.getArticle().getDoi(), comment.getCommentUri(), Lists.transform(journals, Journal::getJournalKey)));
+    }
+
+    if (journals.isEmpty()) {
+      /*
+       * This also technically could be a valid data condition if an article was published and commented on, and then
+       * it was unpublished by having all its revisions deleted. In that case, we would have to somehow select an
+       * ingestion whose journal pointer we want to use. In typical conditions all ingestions would point to the same
+       * journal, but (even if we don't mind making the extra query) we would still have to worry about the case
+       * (described above) where an old, discarded ingestion accidentally had the wrong eIssn.
+       *
+       * This is also a weird and unanticipated use case, where the parent article would not be visible anyway. So,
+       * assume we don't need to support this one either.
+       */
+      throw new RuntimeException(String.format("Parent article (%s) of the comment (%s) is unpublished",
+          comment.getArticle().getDoi(), comment.getCommentUri()));
+    }
+
+    return journals.get(0);
   }
 }

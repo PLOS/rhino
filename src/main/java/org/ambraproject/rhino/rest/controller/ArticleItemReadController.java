@@ -5,6 +5,9 @@ import org.ambraproject.rhino.identity.CommentIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.identity.IssueIdentifier;
 import org.ambraproject.rhino.identity.VolumeIdentifier;
+import org.ambraproject.rhino.model.Comment;
+import org.ambraproject.rhino.model.Issue;
+import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -72,15 +75,19 @@ public class ArticleItemReadController extends RestController {
     }
 
     // Not found as an Article or ArticleItem. Check other object types that use DOIs.
-    if (commentCrudService.getComment(CommentIdentifier.create(doi)).isPresent()) {
-      return ResolvedDoiView.create(doi, ResolvedDoiView.DoiWorkType.COMMENT);
-    } else if (issueCrudService.getIssue(IssueIdentifier.create(doi)).isPresent()) {
-      return ResolvedDoiView.create(doi, ResolvedDoiView.DoiWorkType.ISSUE);
-    } else if (volumeCrudService.getVolume(VolumeIdentifier.create(doi)).isPresent()) {
-      return ResolvedDoiView.create(doi, ResolvedDoiView.DoiWorkType.VOLUME);
-    } else {
-      throw new RestClientException("DOI not found: " + doi.getName(), HttpStatus.NOT_FOUND);
+    Optional<Comment> comment = commentCrudService.getComment(CommentIdentifier.create(doi));
+    if (comment.isPresent()) {
+      return ResolvedDoiView.create(doi, ResolvedDoiView.DoiWorkType.COMMENT, commentCrudService.getJournalOf(comment.get()));
     }
+    Optional<Issue> issue = issueCrudService.getIssue(IssueIdentifier.create(doi));
+    if (issue.isPresent()) {
+      return ResolvedDoiView.create(doi, ResolvedDoiView.DoiWorkType.ISSUE, issueCrudService.getJournalOf(issue.get()));
+    }
+    Optional<Volume> volume = volumeCrudService.getVolume(VolumeIdentifier.create(doi));
+    if (volume.isPresent()) {
+      return ResolvedDoiView.create(doi, ResolvedDoiView.DoiWorkType.VOLUME, volumeCrudService.getJournalOf(volume.get()));
+    }
+    throw new RestClientException("DOI not found: " + doi.getName(), HttpStatus.NOT_FOUND);
   }
 
 }
