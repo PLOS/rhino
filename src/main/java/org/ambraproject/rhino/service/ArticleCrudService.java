@@ -23,15 +23,16 @@ import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleItemIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
-import org.ambraproject.rhino.model.ArticleRevision;
-import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleRelationship;
+import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.ResolvedDoiView;
+import org.ambraproject.rhino.view.article.ArticleOverview;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
@@ -105,6 +106,8 @@ public interface ArticleCrudService {
   public abstract Transceiver serveMetadata(ArticleIngestionIdentifier ingestionId);
 
   public abstract Transceiver serveItems(ArticleIngestionIdentifier ingestionId);
+
+  public abstract ArticleOverview buildOverview(Article article);
 
   public abstract Transceiver serveOverview(ArticleIdentifier id);
 

@@ -18,7 +18,6 @@ import org.ambraproject.rhino.identity.CommentIdentifier;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Comment;
 import org.ambraproject.rhino.model.Flag;
-import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
@@ -87,6 +86,4 @@ public interface CommentCrudService {
   public Transceiver getCommentCount(Article article);
 
   public List<CommentNodeView> getCommentsCreatedOn(LocalDate date);
-
-  public Journal getJournalOf(Comment comment);
 }
