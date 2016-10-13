@@ -167,6 +167,24 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
+  public ArticleOverview buildOverview(Article article) {
+    return hibernateTemplate.execute(session -> {
+      Query ingestionQuery = session.createQuery("FROM ArticleIngestion WHERE article = :article");
+      ingestionQuery.setParameter("article", article);
+      List<ArticleIngestion> ingestions = ingestionQuery.list();
+
+      Query revisionQuery = session.createQuery("" +
+          "FROM ArticleRevision WHERE ingestion IN " +
+          "  (FROM ArticleIngestion WHERE article = :article)");
+      revisionQuery.setParameter("article", article);
+      List<ArticleRevision> revisions = revisionQuery.list();
+
+      ArticleIdentifier id = ArticleIdentifier.create(article.getDoi());
+      return ArticleOverview.build(id, ingestions, revisions);
+    });
+  }
+
+  @Override
   public Transceiver serveOverview(ArticleIdentifier id) {
     return new Transceiver() {
       @Override
@@ -387,8 +405,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           ArticleXml relatedArticleXml = new ArticleXml(getManuscriptXml(relatedArticleRev.getIngestion()));
           Set<ArticleRelationship> inboundDbRelationships =
               getRelationshipsTo(ArticleIdentifier.create(sourceArticle.getDoi())).stream()
-              .filter(dbAr -> dbAr.getSourceArticle().equals(relatedArticle))
-              .collect(Collectors.toSet());
+                  .filter(dbAr -> dbAr.getSourceArticle().equals(relatedArticle))
+                  .collect(Collectors.toSet());
           relatedArticleXml.parseRelatedArticles().stream()
               .filter(ral -> ral.getArticleId().getDoiName().equals(sourceArticle.getDoi()))
               .map(ral -> fromRelatedArticleLink(relatedArticle, ral))

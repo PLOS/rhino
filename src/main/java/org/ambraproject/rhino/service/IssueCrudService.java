@@ -21,6 +21,7 @@ package org.ambraproject.rhino.service;
 import org.ambraproject.rhino.identity.IssueIdentifier;
 import org.ambraproject.rhino.identity.VolumeIdentifier;
 import org.ambraproject.rhino.model.Issue;
+import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.response.Transceiver;
@@ -54,4 +55,5 @@ public interface IssueCrudService {
 
   public abstract void delete(IssueIdentifier issueId);
 
+  public abstract Journal getJournalOf(Issue issue);
 }
