@@ -423,7 +423,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
             // File name within zip archive
             (RepoVersion v) -> {
               RepoObjectMetadata metadata = contentRepoService.getRepoObjectMetadata(v);
-              return metadata.getDownloadName().orElseGet(() -> extractFilenameStub(v.getId().getKey()));
+              return metadata.getDownloadName()
+                  // We must fail if we don't have a file name to write in the zip archive.
+                  // A default mode would not help, because generated file names wouldn't match the manifest.
+                  .orElseThrow(() -> new RuntimeException("Cannot repack because of a null downloadName on: " + v));
             },
 
             // File content within zip archive
