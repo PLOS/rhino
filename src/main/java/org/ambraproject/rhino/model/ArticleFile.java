@@ -131,10 +131,6 @@ public class ArticleFile implements Timestamped {
   }
 
 
-  public void setCrepoVersion(RepoVersion crepoVersion) {
-    this.crepoVersion = crepoVersion;
-  }
-
   private transient RepoVersion crepoVersion;
 
   @Transient
