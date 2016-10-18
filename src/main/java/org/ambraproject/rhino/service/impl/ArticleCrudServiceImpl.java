@@ -22,6 +22,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.io.ByteSource;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
@@ -417,25 +418,31 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       return (List<ArticleFile>) query.list();
     });
 
-    Map<String, ByteSource> archiveMap = files.stream()
-        .map(ArticleFile::getCrepoVersion)
-        .collect(Collectors.toMap(
-            // File name within zip archive
-            (RepoVersion v) -> {
-              RepoObjectMetadata metadata = contentRepoService.getRepoObjectMetadata(v);
-              return metadata.getDownloadName()
-                  // We must fail if we don't have a file name to write in the zip archive.
-                  // A default mode would not help, because generated file names wouldn't match the manifest.
-                  .orElseThrow(() -> new RuntimeException("Cannot repack because of a null downloadName on: " + v));
-            },
+    Map<String, ByteSource> archiveMap = Maps.newHashMapWithExpectedSize(files.size());
+    for (ArticleFile file : files) {
+      RepoVersion version = file.getCrepoVersion();
 
-            // File content within zip archive
-            (RepoVersion v) -> new ByteSource() {
-              @Override
-              public InputStream openStream() throws IOException {
-                return contentRepoService.getRepoObject(v);
-              }
-            }));
+      RepoObjectMetadata metadata = contentRepoService.getRepoObjectMetadata(version);
+      String filename = metadata.getDownloadName()
+          // We must fail if we don't have a file name to write in the zip archive.
+          // A default mode would not help, because generated file names wouldn't match the manifest.
+          .orElseThrow(() -> new RuntimeException("Cannot repack because of a null downloadName on: " + version));
+
+      ByteSource data = new ByteSource() {
+        @Override
+        public InputStream openStream() throws IOException {
+          return contentRepoService.getRepoObject(version);
+        }
+      };
+
+      ByteSource previous = archiveMap.put(filename, data);
+      if (previous != null) {
+        // This should not be possible if the article was ingested on a current stack, because the downloadName field
+        // is set in the first place from the unique zip archive names. This error indicates corrupt data.
+        throw new RuntimeException(String.format("Cannot repack %s because more than one file has downloadName=%s",
+            ingestionId, filename));
+      }
+    }
 
     return Archive.pack(extractFilenameStub(ingestionId.getDoiName()) + ".zip", archiveMap);
   }
