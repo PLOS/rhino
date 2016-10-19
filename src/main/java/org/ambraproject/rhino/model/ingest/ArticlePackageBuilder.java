@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class ArticlePackageBuilder {
@@ -51,42 +53,63 @@ public class ArticlePackageBuilder {
   }
 
   public ArticlePackage build() {
-    Map<String, RepoObjectInput> articleObjects = buildArticleObjects();
+    Map<String, ArticleFileInput> articleObjects = buildArticleObjects();
     List<ArticleItemInput> assetItems = buildAssetItems(article.findAllAssetNodes());
-    List<RepoObjectInput> ancillaryFiles = manifest.getAncillaryFiles().stream()
-        .map(this::buildObjectFor).collect(Collectors.toList());
+    List<ArticleFileInput> ancillaryFiles = manifest.getAncillaryFiles().stream()
+        .map(this::buildObjectForAncillary).collect(Collectors.toList());
 
     return new ArticlePackage(new ArticleItemInput(articleIdentity, articleObjects, AssetType.ARTICLE.getIdentifier()),
         assetItems, ancillaryFiles);
   }
 
-  private RepoObjectInput buildObjectFor(ManifestXml.Asset asset, ManifestXml.Representation representation) {
+  private ArticleFileInput buildObjectForAsset(ManifestXml.Asset asset, ManifestXml.Representation representation) {
     ManifestXml.ManifestFile manifestFile = representation.getFile();
     String mimetype = manifestFile.getMimetype();
-    return buildObject(manifestFile, mimetype);
+    String downloadName = generateDownloadName(asset.getUri(), representation.getFile().getEntry());
+    return buildObject(manifestFile, downloadName, mimetype);
   }
 
-  private RepoObjectInput buildObjectFor(ManifestXml.ManifestFile manifestFile) {
+  private ArticleFileInput buildObjectForAncillary(ManifestXml.ManifestFile manifestFile) {
     String mimetype = manifestFile.getMimetype();
     if (mimetype == null) {
       mimetype = ContentTypeInference.inferContentType(manifestFile.getEntry());
     }
-    return buildObject(manifestFile, mimetype);
+    return buildObject(manifestFile, manifestFile.getEntry(), mimetype);
   }
 
-  private RepoObjectInput buildObject(ManifestXml.ManifestFile manifestFile, String contentType) {
-    return RepoObjectInput.builder(destinationBucketName, manifestFile.getCrepoKey())
-        .setContentAccessor(archive.getContentAccessorFor(manifestFile.getEntry()))
+  private ArticleFileInput buildObject(ManifestXml.ManifestFile manifestFile, String downloadName, String contentType) {
+    String filename = manifestFile.getEntry();
+    RepoObjectInput repoObjectInput = RepoObjectInput.builder(destinationBucketName, manifestFile.getCrepoKey())
+        .setContentAccessor(archive.getContentAccessorFor(filename))
         .setContentType(contentType)
-        .setDownloadName(manifestFile.getEntry())
+        .setDownloadName(downloadName)
         .build();
+    return new ArticleFileInput(filename, repoObjectInput);
   }
 
-  private Map<String, RepoObjectInput> buildArticleObjects() {
-    ImmutableMap.Builder<String, RepoObjectInput> articleObjects = ImmutableMap.builder();
-    articleObjects.put("manuscript", buildObjectFor(manuscriptAsset, manuscriptRepr));
+  private static String generateDownloadName(String doi, String filename) {
+    String name = getLastToken(doi, '/');
+    String extension = getLastToken(filename, '.');
+    return name + "." + sanitizePngExtension(extension);
+  }
+
+  private static String getLastToken(String s, char delimiter) {
+    return s.substring(s.lastIndexOf(delimiter) + 1);
+  }
+
+  // TODO: Deduplicate with Wombat
+  private static final Pattern PNG_THUMBNAIL_PATTERN = Pattern.compile("(PNG)_\\w+", Pattern.CASE_INSENSITIVE);
+
+  private static String sanitizePngExtension(String extension) {
+    Matcher matcher = PNG_THUMBNAIL_PATTERN.matcher(extension);
+    return matcher.matches() ? matcher.group(1) : extension;
+  }
+
+  private Map<String, ArticleFileInput> buildArticleObjects() {
+    ImmutableMap.Builder<String, ArticleFileInput> articleObjects = ImmutableMap.builder();
+    articleObjects.put("manuscript", buildObjectForAsset(manuscriptAsset, manuscriptRepr));
     if (printableRepr.isPresent()) {
-      articleObjects.put("printable", buildObjectFor(manuscriptAsset, printableRepr.get()));
+      articleObjects.put("printable", buildObjectForAsset(manuscriptAsset, printableRepr.get()));
     }
     return articleObjects.build();
   }
@@ -102,13 +125,13 @@ public class ArticlePackageBuilder {
     for (ManifestXml.Asset asset : manifest.getAssets()) {
       AssetType assetType = findAssetType(assetNodeMap, asset);
       if (assetType == AssetType.ARTICLE) continue;
-      ImmutableMap.Builder<String, RepoObjectInput> assetObjects = ImmutableMap.builder();
-      Doi assetIdentity = Doi.create(asset.getUri());
+      ImmutableMap.Builder<String, ArticleFileInput> assetObjects = ImmutableMap.builder();
       for (ManifestXml.Representation representation : asset.getRepresentations()) {
         FileType fileType = assetType.getFileType(representation.getType());
-        assetObjects.put(fileType.getIdentifier(), buildObjectFor(representation.getFile()));
+        ArticleFileInput fileInput = buildObjectForAsset(asset, representation);
+        assetObjects.put(fileType.getIdentifier(), fileInput);
       }
-      items.add(new ArticleItemInput(assetIdentity, assetObjects.build(), assetType.getIdentifier()));
+      items.add(new ArticleItemInput(Doi.create(asset.getUri()), assetObjects.build(), assetType.getIdentifier()));
     }
     return items;
   }

@@ -47,6 +47,9 @@ public class ArticleFile implements Timestamped {
   @Column
   private long fileSize;
 
+  @Column
+  private String ingestedFileName;
+
   @Generated(value = GenerationTime.INSERT)
   @Temporal(javax.persistence.TemporalType.TIMESTAMP)
   @Column(name = "created", insertable = false, updatable = false, columnDefinition = "timestamp default current_timestamp")
@@ -116,6 +119,14 @@ public class ArticleFile implements Timestamped {
     this.fileSize = fileSize;
   }
 
+  public String getIngestedFileName() {
+    return ingestedFileName;
+  }
+
+  public void setIngestedFileName(String ingestedFileName) {
+    this.ingestedFileName = ingestedFileName;
+  }
+
   public Date getCreated() {
     return created;
   }
@@ -130,10 +141,6 @@ public class ArticleFile implements Timestamped {
     return getCreated();
   }
 
-
-  public void setCrepoVersion(RepoVersion crepoVersion) {
-    this.crepoVersion = crepoVersion;
-  }
 
   private transient RepoVersion crepoVersion;
 
