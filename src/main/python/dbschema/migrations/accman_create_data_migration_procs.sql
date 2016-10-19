@@ -24,7 +24,7 @@ DELIMITER $$
 CREATE DEFINER=`root`@`localhost` FUNCTION `get_asset_archive_name`(crepo_key VARCHAR(255)) RETURNS varchar(255) CHARSET latin1
 DETERMINISTIC
   BEGIN
-    RETURN REPLACE(crepo_key, '10.1371/journal.', '');
+    RETURN REPLACE(SUBSTRING_INDEX(crepo_key, '/', -1), 'journal.', '');
   END$$
 DELIMITER ;
 
@@ -377,7 +377,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
           END IF;
 
           INSERT INTO articleFile
-          (ingestionId, itemId, bucketName, crepoKey, crepoUuid, created, fileType, fileSize, archiveName)
+          (ingestionId, itemId, bucketName, crepoKey, crepoUuid, created, fileType, fileSize, archiveFileName)
           VALUES (ingestion_id, item_id, 'mogilefs-prod-repo', crepo_key, crepo_uuid, NOW(), file_type, file_size,
                   get_asset_archive_name(crepo_key));
 
