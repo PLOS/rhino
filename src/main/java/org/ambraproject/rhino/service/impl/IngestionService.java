@@ -15,6 +15,7 @@ import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.article.ArticleCustomMetadata;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
+import org.ambraproject.rhino.model.ingest.ArticleFileInput;
 import org.ambraproject.rhino.model.ingest.ArticleItemInput;
 import org.ambraproject.rhino.model.ingest.ArticlePackage;
 import org.ambraproject.rhino.model.ingest.ArticlePackageBuilder;
@@ -25,7 +26,6 @@ import org.ambraproject.rhino.util.Archive;
 import org.hibernate.Query;
 import org.plos.crepo.model.identity.RepoId;
 import org.plos.crepo.model.identity.RepoVersion;
-import org.plos.crepo.model.input.RepoObjectInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
@@ -33,7 +33,8 @@ import org.w3c.dom.Document;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -237,58 +238,52 @@ public class IngestionService extends AmbraService {
   }
 
   private ArticleItem createItem(ArticleItemInput itemInput, ArticleIngestion ingestion) {
-    Map<String, RepoVersion> crepoResults = new LinkedHashMap<>();
-    for (Map.Entry<String, RepoObjectInput> entry : itemInput.getObjects().entrySet()) {
-      RepoVersion result = contentRepoService.autoCreateRepoObject(entry.getValue()).getVersion();
-      crepoResults.put(entry.getKey(), result);
-    }
-
     ArticleItem item = new ArticleItem();
     item.setIngestion(ingestion);
     item.setDoi(itemInput.getDoi().getName());
     item.setItemType(itemInput.getType());
 
-    item.setFiles(crepoResults.entrySet().stream().map((Map.Entry<String, RepoVersion> entry) -> {
+    Collection<ArticleFile> files = new ArrayList<>(itemInput.getFiles().entrySet().size());
+    for (Map.Entry<String, ArticleFileInput> entry : itemInput.getFiles().entrySet()) {
+      ArticleFileInput fileInput = entry.getValue();
+      RepoVersion repoVersion = contentRepoService.autoCreateRepoObject(fileInput.getObject()).getVersion();
+
       ArticleFile file = new ArticleFile();
       file.setIngestion(ingestion);
       file.setItem(item);
       file.setFileType(entry.getKey());
 
-      RepoVersion repoVersion = entry.getValue();
       RepoId repoId = repoVersion.getId();
       file.setBucketName(repoId.getBucketName());
       file.setCrepoKey(repoId.getKey());
       file.setCrepoUuid(repoVersion.getUuid().toString());
 
       file.setFileSize(contentRepoService.getRepoObjectMetadata(repoVersion).getSize());
+      file.setArchiveName(fileInput.getFilename());
 
-      return file;
-    }).collect(Collectors.toList()));
+      files.add(file);
+    }
+    item.setFiles(files);
 
     return item;
   }
 
-  private List<ArticleFile> persistAncillaryFiles(ArticlePackage articlePackage, ArticleIngestion ingestion) {
-    List<RepoVersion> ancillaryFiles = articlePackage.getAncillaryFiles().stream()
-        .map(ancillaryFile -> contentRepoService.autoCreateRepoObject(ancillaryFile).getVersion())
-        .collect(Collectors.toList());
+  private void persistAncillaryFiles(ArticlePackage articlePackage, ArticleIngestion ingestion) {
+    for (ArticleFileInput ancillaryFile : articlePackage.getAncillaryFiles()) {
+      RepoVersion repoVersion = contentRepoService.autoCreateRepoObject(ancillaryFile.getObject()).getVersion();
 
-    List<ArticleFile> fileObjects = ancillaryFiles.stream().map(repoVersion -> {
       ArticleFile file = new ArticleFile();
       file.setIngestion(ingestion);
       file.setFileSize(contentRepoService.getRepoObjectMetadata(repoVersion).getSize());
+      file.setArchiveName(ancillaryFile.getFilename());
 
       RepoId repoId = repoVersion.getId();
       file.setBucketName(repoId.getBucketName());
       file.setCrepoKey(repoId.getKey());
       file.setCrepoUuid(repoVersion.getUuid().toString());
-      return file;
-    }).collect(Collectors.toList());
 
-    for (ArticleFile fileObject : fileObjects) {
-      hibernateTemplate.save(fileObject);
+      hibernateTemplate.save(file);
     }
-    return fileObjects;
   }
 
   private Optional<ArticleItem> linkStrikingImage(ArticleIngestion ingestion, List<ArticleItem> items, ManifestXml manifest) {

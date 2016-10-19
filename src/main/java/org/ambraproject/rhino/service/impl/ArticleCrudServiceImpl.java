@@ -22,7 +22,6 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.common.io.ByteSource;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
@@ -59,7 +58,6 @@ import org.ambraproject.rhino.view.article.author.ArticleAllAuthorsView;
 import org.ambraproject.rhino.view.article.author.AuthorView;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.hibernate.Query;
-import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -388,8 +386,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           ArticleXml relatedArticleXml = new ArticleXml(getManuscriptXml(relatedArticleRev.getIngestion()));
           Set<ArticleRelationship> inboundDbRelationships =
               getRelationshipsTo(ArticleIdentifier.create(sourceArticle.getDoi())).stream()
-              .filter(dbAr -> dbAr.getSourceArticle().equals(relatedArticle))
-              .collect(Collectors.toSet());
+                  .filter(dbAr -> dbAr.getSourceArticle().equals(relatedArticle))
+                  .collect(Collectors.toSet());
           relatedArticleXml.parseRelatedArticles().stream()
               .filter(ral -> ral.getArticleId().getDoiName().equals(sourceArticle.getDoi()))
               .map(ral -> fromRelatedArticleLink(relatedArticle, ral))
@@ -418,31 +416,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       return (List<ArticleFile>) query.list();
     });
 
-    Map<String, ByteSource> archiveMap = Maps.newHashMapWithExpectedSize(files.size());
-    for (ArticleFile file : files) {
-      RepoVersion version = file.getCrepoVersion();
-
-      RepoObjectMetadata metadata = contentRepoService.getRepoObjectMetadata(version);
-      String filename = metadata.getDownloadName()
-          // We must fail if we don't have a file name to write in the zip archive.
-          // A default mode would not help, because generated file names wouldn't match the manifest.
-          .orElseThrow(() -> new RuntimeException("Cannot repack because of a null downloadName on: " + version));
-
-      ByteSource data = new ByteSource() {
-        @Override
-        public InputStream openStream() throws IOException {
-          return contentRepoService.getRepoObject(version);
-        }
-      };
-
-      ByteSource previous = archiveMap.put(filename, data);
-      if (previous != null) {
-        // This should not be possible if the article was ingested on a current stack, because the downloadName field
-        // is set in the first place from the unique zip archive names. This error indicates corrupt data.
-        throw new RuntimeException(String.format("Cannot repack %s because more than one file has downloadName=%s",
-            ingestionId, filename));
-      }
-    }
+    Map<String, ByteSource> archiveMap = files.stream().collect(Collectors.toMap(
+        ArticleFile::getArchiveName,
+        (ArticleFile file) -> new ByteSource() {
+          @Override
+          public InputStream openStream() throws IOException {
+            return contentRepoService.getRepoObject(file.getCrepoVersion());
+          }
+        }));
 
     return Archive.pack(extractFilenameStub(ingestionId.getDoiName()) + ".zip", archiveMap);
   }

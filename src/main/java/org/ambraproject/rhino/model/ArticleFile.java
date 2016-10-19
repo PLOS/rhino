@@ -47,6 +47,9 @@ public class ArticleFile implements Timestamped {
   @Column
   private long fileSize;
 
+  @Column
+  private String archiveName;
+
   @Generated(value = GenerationTime.INSERT)
   @Temporal(javax.persistence.TemporalType.TIMESTAMP)
   @Column(name = "created", insertable = false, updatable = false, columnDefinition = "timestamp default current_timestamp")
@@ -114,6 +117,14 @@ public class ArticleFile implements Timestamped {
 
   public void setFileSize(long fileSize) {
     this.fileSize = fileSize;
+  }
+
+  public String getArchiveName() {
+    return archiveName;
+  }
+
+  public void setArchiveName(String archiveName) {
+    this.archiveName = archiveName;
   }
 
   public Date getCreated() {
