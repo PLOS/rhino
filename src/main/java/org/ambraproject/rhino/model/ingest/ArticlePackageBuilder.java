@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class ArticlePackageBuilder {
@@ -79,9 +81,17 @@ public class ArticlePackageBuilder {
     RepoObjectInput repoObjectInput = RepoObjectInput.builder(destinationBucketName, manifestFile.getCrepoKey())
         .setContentAccessor(archive.getContentAccessorFor(filename))
         .setContentType(contentType)
-        .setDownloadName(filename)
+        .setDownloadName(sanitizeDownloadName(filename))
         .build();
     return new ArticleFileInput(filename, repoObjectInput);
+  }
+
+  // TODO: Deduplicate with Wombat
+  private static final Pattern PNG_THUMBNAIL_PATTERN = Pattern.compile("(.*\\.PNG)_\\w+", Pattern.CASE_INSENSITIVE);
+
+  private static String sanitizeDownloadName(String filename) {
+    Matcher matcher = PNG_THUMBNAIL_PATTERN.matcher(filename);
+    return matcher.matches() ? matcher.group(1) : filename;
   }
 
   private Map<String, ArticleFileInput> buildArticleObjects() {
