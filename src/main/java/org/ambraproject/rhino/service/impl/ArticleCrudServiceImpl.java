@@ -417,7 +417,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     });
 
     Map<String, ByteSource> archiveMap = files.stream().collect(Collectors.toMap(
-        ArticleFile::getArchiveName,
+        ArticleFile::getIngestedFileName,
         (ArticleFile file) -> new ByteSource() {
           @Override
           public InputStream openStream() throws IOException {

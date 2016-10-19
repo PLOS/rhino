@@ -259,7 +259,7 @@ public class IngestionService extends AmbraService {
       file.setCrepoUuid(repoVersion.getUuid().toString());
 
       file.setFileSize(contentRepoService.getRepoObjectMetadata(repoVersion).getSize());
-      file.setArchiveName(fileInput.getFilename());
+      file.setIngestedFileName(fileInput.getFilename());
 
       files.add(file);
     }
@@ -275,7 +275,7 @@ public class IngestionService extends AmbraService {
       ArticleFile file = new ArticleFile();
       file.setIngestion(ingestion);
       file.setFileSize(contentRepoService.getRepoObjectMetadata(repoVersion).getSize());
-      file.setArchiveName(ancillaryFile.getFilename());
+      file.setIngestedFileName(ancillaryFile.getFilename());
 
       RepoId repoId = repoVersion.getId();
       file.setBucketName(repoId.getBucketName());

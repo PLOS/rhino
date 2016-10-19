@@ -73,11 +73,11 @@ CREATE TABLE `articleFile` (
   `crepoKey` VARCHAR(255) NOT NULL,
   `crepoUuid` VARCHAR(36) NOT NULL,
   `fileSize` BIGINT NOT NULL,
-  `archiveName` VARCHAR(255) NOT NULL,
+  `ingestedFileName` VARCHAR(255) NOT NULL,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`fileId`),
   UNIQUE KEY `ingest_item_filetype` (`ingestionId`,`itemId`,`fileType`),
-  UNIQUE KEY `ingest_archiveName` (`ingestionId`,`archiveName`),
+  UNIQUE KEY `ingest_ingestedFileName` (`ingestionId`,`ingestedFileName`),
   CONSTRAINT `fk_articleFile_1`
     FOREIGN KEY (`ingestionId`)
     REFERENCES `articleIngestion` (`ingestionId`)
