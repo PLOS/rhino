@@ -28,20 +28,19 @@ public class ArticlePackageBuilder {
   private final Archive archive;
   private final ArticleXml article;
   private final ManifestXml manifest;
-  private final ManifestXml.Asset manuscriptAsset;
   private final ManifestXml.Representation manuscriptRepr;
   private final Optional<ManifestXml.Representation> printableRepr;
   private final Doi articleIdentity;
 
   public ArticlePackageBuilder(String destinationBucketName, Archive archive,
-                               ArticleXml article, ManifestXml manifest, ManifestXml.Asset manuscriptAsset,
-                               ManifestXml.Representation manuscriptRepr, Optional<ManifestXml.Representation> printableRepr) {
+                               ArticleXml article, ManifestXml manifest,
+                               ManifestXml.Representation manuscriptRepr,
+                               Optional<ManifestXml.Representation> printableRepr) {
     this.destinationBucketName = Objects.requireNonNull(destinationBucketName);
     this.archive = Objects.requireNonNull(archive);
     this.article = Objects.requireNonNull(article);
     this.manifest = Objects.requireNonNull(manifest);
 
-    this.manuscriptAsset = Objects.requireNonNull(manuscriptAsset);
     this.manuscriptRepr = Objects.requireNonNull(manuscriptRepr);
     this.printableRepr = Objects.requireNonNull(printableRepr);
 
@@ -62,7 +61,7 @@ public class ArticlePackageBuilder {
         assetItems, ancillaryFiles);
   }
 
-  private ArticleFileInput buildObjectFor(ManifestXml.Asset asset, ManifestXml.Representation representation) {
+  private ArticleFileInput buildObjectFor(ManifestXml.Representation representation) {
     ManifestXml.ManifestFile manifestFile = representation.getFile();
     String mimetype = manifestFile.getMimetype();
     return buildObject(manifestFile, mimetype);
@@ -96,9 +95,9 @@ public class ArticlePackageBuilder {
 
   private Map<String, ArticleFileInput> buildArticleObjects() {
     ImmutableMap.Builder<String, ArticleFileInput> articleObjects = ImmutableMap.builder();
-    articleObjects.put("manuscript", buildObjectFor(manuscriptAsset, manuscriptRepr));
+    articleObjects.put("manuscript", buildObjectFor(manuscriptRepr));
     if (printableRepr.isPresent()) {
-      articleObjects.put("printable", buildObjectFor(manuscriptAsset, printableRepr.get()));
+      articleObjects.put("printable", buildObjectFor(printableRepr.get()));
     }
     return articleObjects.build();
   }
@@ -115,12 +114,11 @@ public class ArticlePackageBuilder {
       AssetType assetType = findAssetType(assetNodeMap, asset);
       if (assetType == AssetType.ARTICLE) continue;
       ImmutableMap.Builder<String, ArticleFileInput> assetObjects = ImmutableMap.builder();
-      Doi assetIdentity = Doi.create(asset.getUri());
       for (ManifestXml.Representation representation : asset.getRepresentations()) {
         FileType fileType = assetType.getFileType(representation.getType());
         assetObjects.put(fileType.getIdentifier(), buildObjectFor(representation.getFile()));
       }
-      items.add(new ArticleItemInput(assetIdentity, assetObjects.build(), assetType.getIdentifier()));
+      items.add(new ArticleItemInput(Doi.create(asset.getUri()), assetObjects.build(), assetType.getIdentifier()));
     }
     return items;
   }

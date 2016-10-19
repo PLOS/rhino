@@ -110,7 +110,7 @@ public class IngestionService extends AmbraService {
     String destinationBucketName = runtimeConfiguration.getCorpusStorage().getDefaultBucket();
 
     ArticlePackage articlePackage = new ArticlePackageBuilder(destinationBucketName, archive, parsedArticle, manifestXml,
-        manuscriptAsset, manuscriptRepr, printableRepr).build();
+        manuscriptRepr, printableRepr).build();
     validateAssetCompleteness(parsedArticle, articlePackage);
     persistAssets(articlePackage, ingestion, manifestXml);
 
