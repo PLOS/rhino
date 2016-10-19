@@ -19,6 +19,17 @@ DELIMITER ;
 
 ####################################################################################################
 
+DROP FUNCTION IF EXISTS `get_asset_archive_name`;
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `get_asset_archive_name`(crepo_key VARCHAR(255)) RETURNS varchar(255) CHARSET latin1
+DETERMINISTIC
+  BEGIN
+    RETURN REPLACE(SUBSTRING_INDEX(crepo_key, '/', -1), 'journal.', '');
+  END$$
+DELIMITER ;
+
+####################################################################################################
+
 DROP PROCEDURE IF EXISTS `drop_tables`;
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `drop_tables`()
@@ -366,8 +377,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
           END IF;
 
           INSERT INTO articleFile
-          (ingestionId, itemId, bucketName, crepoKey, crepoUuid, created, fileType, fileSize)
-          VALUES (ingestion_id, item_id, 'mogilefs-prod-repo', crepo_key, crepo_uuid, NOW(), file_type, file_size);
+          (ingestionId, itemId, bucketName, crepoKey, crepoUuid, created, fileType, fileSize, ingestedFileName)
+          VALUES (ingestion_id, item_id, 'mogilefs-prod-repo', crepo_key, crepo_uuid, NOW(), file_type, file_size,
+                  get_asset_archive_name(crepo_key));
 
           SET prev_asset_doi = asset_doi;
 
