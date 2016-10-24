@@ -1,7 +1,7 @@
 package org.ambraproject.rhino.service;
 
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import org.ambraproject.rhino.util.response.Transceiver;
 
 import java.io.IOException;
@@ -9,14 +9,7 @@ import java.util.Properties;
 
 public interface ConfigurationReadService {
 
-  public static final ImmutableList<String> CONFIG_TYPES = ImmutableList.of("ambra", "build", "repo");
-
-  /**
-   * Write all values from the Ambra configuration.
-   *
-   * @throws IOException
-   */
-  public abstract Transceiver readAmbraConfig() throws IOException;
+  public static final ImmutableSet<String> CONFIG_TYPES = ImmutableSet.of("build", "repo");
 
   /**
    * Returns a {@link Properties} instance with information about how the application was built.

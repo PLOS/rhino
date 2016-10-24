@@ -23,7 +23,6 @@ import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.DummyMessageSender;
-import org.ambraproject.rhino.service.LegacyConfiguration;
 import org.ambraproject.rhino.service.MessageSender;
 import org.ambraproject.rhino.service.SolrIndexService;
 import org.ambraproject.rhino.service.SyndicationCrudService;
@@ -94,11 +93,6 @@ public class TestConfiguration {
     HibernateTransactionManager manager = new HibernateTransactionManager();
     manager.setSessionFactory(sessionFactory);
     return manager;
-  }
-
-  @Bean
-  public org.apache.commons.configuration.Configuration ambraConfiguration() throws Exception {
-    return LegacyConfiguration.loadConfiguration(getClass().getResource("/ambra-test-config.xml"));
   }
 
   @Bean

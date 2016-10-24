@@ -33,7 +33,6 @@ import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
-import org.ambraproject.rhino.service.LegacyConfiguration;
 import org.ambraproject.rhino.service.MessageSender;
 import org.ambraproject.rhino.service.SolrIndexService;
 import org.ambraproject.rhino.service.SyndicationCrudService;
@@ -65,7 +64,6 @@ import org.ambraproject.rhino.view.article.RelationshipSetView;
 import org.ambraproject.rhino.view.comment.CommentNodeView;
 import org.ambraproject.rhino.view.journal.ArticleListView;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
-import org.apache.commons.configuration.ConfigurationException;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
@@ -173,16 +171,6 @@ public class RhinoConfiguration {
   @Bean
   public Gson crepoGson() {
     return new Gson();
-  }
-
-  @Bean
-  public org.apache.commons.configuration.Configuration ambraConfiguration() {
-    // Fetch from Ambra's custom container
-    try {
-      return LegacyConfiguration.loadDefaultConfiguration();
-    } catch (ConfigurationException e) {
-      throw new RuntimeException(e);
-    }
   }
 
   @Bean

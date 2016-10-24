@@ -34,7 +34,6 @@ import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleJsonNames;
 import org.ambraproject.rhino.view.article.SyndicationOutputView;
-import org.apache.commons.configuration.Configuration;
 import org.hibernate.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,9 +61,6 @@ import java.util.stream.Collectors;
 @SuppressWarnings({"JpaQlInspection"})
 public class SyndicationCrudServiceImpl extends AmbraService implements SyndicationCrudService {
   private static final Logger log = LoggerFactory.getLogger(SyndicationCrudServiceImpl.class);
-
-  @Autowired
-  private Configuration configuration;
 
   @Autowired
   private MessageSender messageSender;
@@ -134,8 +130,7 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
   @Transactional
   @Override
   public List<Syndication> getSyndications(final String journalKey, final List<String> statuses) {
-    Integer numDaysInPast = configuration.getInteger(
-        "ambra.virtualJournals." + journalKey + ".syndications.display.numDaysInPast", 30);
+    Integer numDaysInPast = null; // TODO
 
     LocalDate startDate = LocalDate.now().minus(numDaysInPast, ChronoUnit.DAYS);
     Instant startTime = startDate.atStartOfDay(ZoneId.systemDefault()).toInstant();
