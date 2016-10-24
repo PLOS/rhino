@@ -31,8 +31,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * Controller enabling access to the ambra ingest directory (whose location is defined by the
- * ambra.services.documentManagement.ingestSourceDir property of ambra.xml).
+ * Controller providing services related to ingestible packages.
  */
 @Controller
 public class IngestibleController extends RestController {

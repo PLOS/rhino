@@ -30,8 +30,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * Configuration for the server.  This will slowly replace the configuration values in ambra.xml and contain values that
- * are required to start up the server and its behavior.
+ * Configuration for the server.
  */
 public class YamlConfiguration implements RuntimeConfiguration {
 

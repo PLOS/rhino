@@ -21,6 +21,7 @@
 
 package org.ambraproject.rhino.service;
 
+import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.util.response.Transceiver;
@@ -94,10 +95,9 @@ public interface SyndicationCrudService {
 
   /**
    * Get Syndications (from the current journal) that each have a <code>status</code> defined in statuses and a
-   * <code>lastModified</code> within the past number of days defined by the configuration property
-   * <code>ambra.virtualJournals.JOURN AL_KEY.syndications.display.numDaysInPast</code>, where <i>JOURNAL_KEY</i> is the
-   * <code>journalKey</code> parameter.  By default, a syndication can be up to 30 days old and still appear in this
-   * list.
+   * <code>lastModified</code> within the past number of days defined by the configuration property {@link
+   * RuntimeConfiguration.QueueConfiguration#getSyndicationRange()}. By default, a syndication can be up to 30 days old
+   * and still appear in this list.
    *
    * @param journalKey Indicates which journal configuration is to be used when determining how many days in the past
    *                   the oldest Syndications can be.  This property is passed in because the Action class (which calls
