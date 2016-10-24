@@ -64,6 +64,7 @@ import org.ambraproject.rhino.view.article.RelationshipSetView;
 import org.ambraproject.rhino.view.comment.CommentNodeView;
 import org.ambraproject.rhino.view.journal.ArticleListView;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
+import org.apache.activemq.spring.ActiveMQConnectionFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
@@ -194,6 +195,13 @@ public class RhinoConfiguration {
     Objects.requireNonNull(httpClient);
 
     return new ContentRepoServiceImpl(repoServer, HttpClientFunction.from(httpClient));
+  }
+
+  @Bean
+  public ActiveMQConnectionFactory jmsConnectionFactory() {
+    ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory();
+    factory.setBrokerURL(null); // TODO
+    return factory;
   }
 
 
