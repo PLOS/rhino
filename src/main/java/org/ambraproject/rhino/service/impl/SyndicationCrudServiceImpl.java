@@ -21,6 +21,7 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.Journal;
@@ -64,6 +65,9 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
 
   @Autowired
   private MessageSender messageSender;
+
+  @Autowired
+  private RuntimeConfiguration runtimeConfiguration;
 
   @Autowired
   private JournalCrudService journalService;
@@ -130,7 +134,7 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
   @Transactional
   @Override
   public List<Syndication> getSyndications(final String journalKey, final List<String> statuses) {
-    Integer numDaysInPast = null; // TODO
+    int numDaysInPast = runtimeConfiguration.getQueueConfiguration().getSyndicationRange();
 
     LocalDate startDate = LocalDate.now().minus(numDaysInPast, ChronoUnit.DAYS);
     Instant startTime = startDate.atStartOfDay(ZoneId.systemDefault()).toInstant();

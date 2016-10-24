@@ -235,6 +235,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
   public QueueConfiguration getQueueConfiguration() {
     return (queueConfiguration != null) ? queueConfiguration : (queueConfiguration = new QueueConfiguration() {
       private static final String DEFAULT_BROKER_URL = "tcp://localhost:61616";
+      private static final int DEFAULT_SYNDICATION_RANGE = 30;
 
       @Override
       public String getBrokerUrl() {
@@ -243,12 +244,17 @@ public class YamlConfiguration implements RuntimeConfiguration {
 
       @Override
       public String getSolrUpdate() {
-        return input.queue == null ? null : input.queue.solrUpdate;
+        return input.queue != null ? input.queue.solrUpdate : null;
       }
 
       @Override
       public String getSolrDelete() {
-        return input.queue == null ? null : input.queue.solrDelete;
+        return input.queue != null ? input.queue.solrDelete : null;
+      }
+
+      @Override
+      public int getSyndicationRange() {
+        return input.queue != null && input.queue.syndicationRange != null ? input.queue.syndicationRange : DEFAULT_SYNDICATION_RANGE;
       }
     });
   }
@@ -459,6 +465,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
     private String brokerUrl;
     private String solrUpdate;
     private String solrDelete;
+    private Integer syndicationRange;
 
     @Deprecated
     public void setBrokerUrl(String brokerUrl) {
@@ -473,6 +480,11 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setSolrDelete(String solrDelete) {
       this.solrDelete = solrDelete;
+    }
+
+    @Deprecated
+    public void setSyndicationRange(Integer syndicationRange) {
+      this.syndicationRange = syndicationRange;
     }
   }
 

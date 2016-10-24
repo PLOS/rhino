@@ -126,6 +126,8 @@ public interface RuntimeConfiguration {
     String getSolrUpdate();
 
     String getSolrDelete();
+
+    int getSyndicationRange();
   }
 
   QueueConfiguration getQueueConfiguration();
