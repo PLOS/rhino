@@ -42,10 +42,10 @@ public class IngestibleZipController extends RestController {
                         @RequestParam("archive") MultipartFile requestFile)
       throws IOException {
 
-    String archiveName = requestFile.getOriginalFilename();
+    String ingestedFileName = requestFile.getOriginalFilename();
     ArticleIngestion ingestion;
     try (InputStream requestInputStream = requestFile.getInputStream();
-         Archive archive = Archive.readZipFile(archiveName, requestInputStream)) {
+         Archive archive = Archive.readZipFile(ingestedFileName, requestInputStream)) {
       ingestion = ingestionService.ingest(archive);
     } catch (ManifestXml.ManifestDataException e) {
       throw new RestClientException("Invalid manifest: " + e.getMessage(), HttpStatus.BAD_REQUEST, e);

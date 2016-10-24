@@ -58,7 +58,6 @@ import org.ambraproject.rhino.view.article.author.ArticleAllAuthorsView;
 import org.ambraproject.rhino.view.article.author.AuthorView;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.hibernate.Query;
-import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -435,22 +434,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       return (List<ArticleFile>) query.list();
     });
 
-    Map<String, ByteSource> archiveMap = files.stream()
-        .map(ArticleFile::getCrepoVersion)
-        .collect(Collectors.toMap(
-            // File name within zip archive
-            (RepoVersion v) -> {
-              RepoObjectMetadata metadata = contentRepoService.getRepoObjectMetadata(v);
-              return metadata.getDownloadName().orElseGet(() -> extractFilenameStub(v.getId().getKey()));
-            },
-
-            // File content within zip archive
-            (RepoVersion v) -> new ByteSource() {
-              @Override
-              public InputStream openStream() throws IOException {
-                return contentRepoService.getRepoObject(v);
-              }
-            }));
+    Map<String, ByteSource> archiveMap = files.stream().collect(Collectors.toMap(
+        ArticleFile::getIngestedFileName,
+        (ArticleFile file) -> new ByteSource() {
+          @Override
+          public InputStream openStream() throws IOException {
+            return contentRepoService.getRepoObject(file.getCrepoVersion());
+          }
+        }));
 
     return Archive.pack(extractFilenameStub(ingestionId.getDoiName()) + ".zip", archiveMap);
   }

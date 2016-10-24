@@ -104,6 +104,7 @@ public class ItemSetView {
       this.crepoKey = Objects.requireNonNull(file.getCrepoKey());
       this.crepoUuid = Objects.requireNonNull(file.getCrepoUuid());
       this.size = file.getFileSize();
+      // Do not expose file.ingestedFileName
     }
   }
 
