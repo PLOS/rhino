@@ -72,7 +72,6 @@ import org.hibernate.SessionFactory;
 import org.plos.crepo.config.HttpClientFunction;
 import org.plos.crepo.service.ContentRepoService;
 import org.plos.crepo.service.ContentRepoServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -101,9 +100,6 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 public class RhinoConfiguration {
-
-  @Autowired
-  private RuntimeConfiguration runtimeConfiguration;
 
   @Bean
   public AnnotationSessionFactoryBean sessionFactory(DataSource hibernateDataSource) throws IOException {
@@ -198,9 +194,9 @@ public class RhinoConfiguration {
   }
 
   @Bean
-  public ActiveMQConnectionFactory jmsConnectionFactory() {
+  public ActiveMQConnectionFactory jmsConnectionFactory(RuntimeConfiguration runtimeConfiguration) {
     ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory();
-    factory.setBrokerURL(null); // TODO
+    factory.setBrokerURL(runtimeConfiguration.getQueueConfiguration().getBrokerUrl());
     return factory;
   }
 
@@ -316,7 +312,7 @@ public class RhinoConfiguration {
   }
 
   @Bean
-  public CommentNodeView.Factory commentNodeViewFactory() {
+  public CommentNodeView.Factory commentNodeViewFactory(RuntimeConfiguration runtimeConfiguration) {
     return new CommentNodeView.Factory(runtimeConfiguration);
   }
 

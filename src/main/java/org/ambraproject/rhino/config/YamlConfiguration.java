@@ -234,6 +234,13 @@ public class YamlConfiguration implements RuntimeConfiguration {
   @Override
   public QueueConfiguration getQueueConfiguration() {
     return (queueConfiguration != null) ? queueConfiguration : (queueConfiguration = new QueueConfiguration() {
+      private static final String DEFAULT_BROKER_URL = "tcp://localhost:61616";
+
+      @Override
+      public String getBrokerUrl() {
+        return input.queue != null && input.queue.brokerUrl != null ? input.queue.brokerUrl : DEFAULT_BROKER_URL;
+      }
+
       @Override
       public String getSolrUpdate() {
         return input.queue == null ? null : input.queue.solrUpdate;
@@ -449,8 +456,14 @@ public class YamlConfiguration implements RuntimeConfiguration {
   }
 
   public static class QueueConfigurationInput {
+    private String brokerUrl;
     private String solrUpdate;
     private String solrDelete;
+
+    @Deprecated
+    public void setBrokerUrl(String brokerUrl) {
+      this.brokerUrl = brokerUrl;
+    }
 
     @Deprecated
     public void setSolrUpdate(String solrUpdate) {

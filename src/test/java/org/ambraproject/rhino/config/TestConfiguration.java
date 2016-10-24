@@ -34,6 +34,7 @@ import org.ambraproject.rhino.service.taxonomy.DummyTaxonomyClassificationServic
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyServiceImpl;
+import org.apache.activemq.spring.ActiveMQConnectionFactory;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.plos.crepo.service.ContentRepoService;
@@ -98,6 +99,11 @@ public class TestConfiguration {
   @Bean
   public ContentRepoService contentRepoService() {
     return new InMemoryContentRepoService("testBucket");
+  }
+
+  @Bean
+  public ActiveMQConnectionFactory jmsConnectionFactory(RuntimeConfiguration runtimeConfiguration) {
+    return new ActiveMQConnectionFactory();
   }
 
 
