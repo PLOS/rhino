@@ -36,9 +36,6 @@
   <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
   <resources mapping="/resources/**" location="/resources/"/>
 
-  <!-- Allow us to use "${foo}" notation to pull values from ambra configuration in this file.  -->
-  <beans:bean id="propertyConfigurer" class="org.ambraproject.rhino.config.SpringPlaceholderConfigurer" />
-
   <!-- Resolves views selected for rendering by @Controllers to resources in the /WEB-INF/views directory -->
   <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     <beans:property name="prefix" value="/WEB-INF/views/"/>
@@ -59,10 +56,6 @@
   <!-- Bean config for Hibernate -->
   <beans:bean id="hibernateDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
     <beans:property name="jndiName" value="java:comp/env/jdbc/AmbraDS"/>
-  </beans:bean>
-
-  <beans:bean id="jmsConnectionFactory" class="org.apache.activemq.spring.ActiveMQConnectionFactory">
-    <beans:property name="brokerURL" value="${ambra.services.activemq}"/>
   </beans:bean>
 
   <!-- setup spring jms TX manager -->

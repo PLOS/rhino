@@ -33,7 +33,6 @@ import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
-import org.ambraproject.rhino.service.LegacyConfiguration;
 import org.ambraproject.rhino.service.MessageSender;
 import org.ambraproject.rhino.service.SolrIndexService;
 import org.ambraproject.rhino.service.SyndicationCrudService;
@@ -65,7 +64,7 @@ import org.ambraproject.rhino.view.article.RelationshipSetView;
 import org.ambraproject.rhino.view.comment.CommentNodeView;
 import org.ambraproject.rhino.view.journal.ArticleListView;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
-import org.apache.commons.configuration.ConfigurationException;
+import org.apache.activemq.spring.ActiveMQConnectionFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
@@ -73,7 +72,6 @@ import org.hibernate.SessionFactory;
 import org.plos.crepo.config.HttpClientFunction;
 import org.plos.crepo.service.ContentRepoService;
 import org.plos.crepo.service.ContentRepoServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -102,9 +100,6 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 public class RhinoConfiguration {
-
-  @Autowired
-  private RuntimeConfiguration runtimeConfiguration;
 
   @Bean
   public AnnotationSessionFactoryBean sessionFactory(DataSource hibernateDataSource) throws IOException {
@@ -176,16 +171,6 @@ public class RhinoConfiguration {
   }
 
   @Bean
-  public org.apache.commons.configuration.Configuration ambraConfiguration() {
-    // Fetch from Ambra's custom container
-    try {
-      return LegacyConfiguration.loadDefaultConfiguration();
-    } catch (ConfigurationException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  @Bean
   public CloseableHttpClient httpClient(RuntimeConfiguration runtimeConfiguration) {
     PoolingHttpClientConnectionManager manager = new PoolingHttpClientConnectionManager();
 
@@ -206,6 +191,13 @@ public class RhinoConfiguration {
     Objects.requireNonNull(httpClient);
 
     return new ContentRepoServiceImpl(repoServer, HttpClientFunction.from(httpClient));
+  }
+
+  @Bean
+  public ActiveMQConnectionFactory jmsConnectionFactory(RuntimeConfiguration runtimeConfiguration) {
+    ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory();
+    factory.setBrokerURL(runtimeConfiguration.getQueueConfiguration().getBrokerUrl());
+    return factory;
   }
 
 
@@ -320,7 +312,7 @@ public class RhinoConfiguration {
   }
 
   @Bean
-  public CommentNodeView.Factory commentNodeViewFactory() {
+  public CommentNodeView.Factory commentNodeViewFactory(RuntimeConfiguration runtimeConfiguration) {
     return new CommentNodeView.Factory(runtimeConfiguration);
   }
 

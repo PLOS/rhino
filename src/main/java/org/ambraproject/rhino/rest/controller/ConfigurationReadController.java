@@ -47,9 +47,7 @@ public class ConfigurationReadController extends RestController {
           ConfigurationReadService.CONFIG_TYPES.toString(), HttpStatus.BAD_REQUEST);
     }
 
-    if (configType.contentEquals("ambra")) {
-      configurationReadService.readAmbraConfig().respond(request, response, entityGson);
-    } else if (configType.contentEquals("build")) {
+    if (configType.contentEquals("build")) {
       configurationReadService.readBuildConfig().respond(request, response, entityGson);
     } else if (configType.contentEquals("repo")) {
       configurationReadService.readRepoConfig().respond(request, response, entityGson);

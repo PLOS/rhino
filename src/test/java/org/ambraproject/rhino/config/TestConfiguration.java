@@ -23,7 +23,6 @@ import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.DummyMessageSender;
-import org.ambraproject.rhino.service.LegacyConfiguration;
 import org.ambraproject.rhino.service.MessageSender;
 import org.ambraproject.rhino.service.SolrIndexService;
 import org.ambraproject.rhino.service.SyndicationCrudService;
@@ -35,6 +34,7 @@ import org.ambraproject.rhino.service.taxonomy.DummyTaxonomyClassificationServic
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyServiceImpl;
+import org.apache.activemq.spring.ActiveMQConnectionFactory;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.plos.crepo.service.ContentRepoService;
@@ -97,13 +97,13 @@ public class TestConfiguration {
   }
 
   @Bean
-  public org.apache.commons.configuration.Configuration ambraConfiguration() throws Exception {
-    return LegacyConfiguration.loadConfiguration(getClass().getResource("/ambra-test-config.xml"));
+  public ContentRepoService contentRepoService() {
+    return new InMemoryContentRepoService("testBucket");
   }
 
   @Bean
-  public ContentRepoService contentRepoService() {
-    return new InMemoryContentRepoService("testBucket");
+  public ActiveMQConnectionFactory jmsConnectionFactory(RuntimeConfiguration runtimeConfiguration) {
+    return new ActiveMQConnectionFactory();
   }
 
 

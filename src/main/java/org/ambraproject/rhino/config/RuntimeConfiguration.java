@@ -121,9 +121,13 @@ public interface RuntimeConfiguration {
   LocalDate getCompetingInterestPolicyStart();
 
   interface QueueConfiguration {
+    String getBrokerUrl();
+
     String getSolrUpdate();
 
     String getSolrDelete();
+
+    int getSyndicationRange();
   }
 
   QueueConfiguration getQueueConfiguration();
