@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.collect.ImmutableMap;
+import com.wordnik.swagger.annotations.ApiImplicitParam;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
@@ -399,6 +400,8 @@ public class ArticleCrudController extends RestController {
   }
 
   @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications", method = RequestMethod.POST)
+  @ApiImplicitParam(name = "body", paramType = "body", dataType = "SyndicationInputView",
+      value= "example: {\"targetQueue\": \"activemq:plos.pmc\"}")
   public ResponseEntity<String> createSyndication(HttpServletRequest request,
                                                   @PathVariable("doi") String doi,
                                                   @PathVariable("number") int revisionNumber)
@@ -415,6 +418,8 @@ public class ArticleCrudController extends RestController {
       method = RequestMethod.POST, params = "syndicate")
   @ApiOperation(value = "syndicate", notes = "Send a syndication message to the queue for processing. " +
       "Will create and add a syndication to the database if none exist for current article and target.")
+  @ApiImplicitParam(name = "body", paramType = "body", dataType = "SyndicationInputView",
+      value= "example: {\"targetQueue\": \"activemq:plos.pmc\"}")
   public ResponseEntity<?> syndicate(HttpServletRequest request,
                                      @PathVariable("doi") String doi,
                                      @PathVariable("number") int revisionNumber)
@@ -427,6 +432,8 @@ public class ArticleCrudController extends RestController {
   }
 
   @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications", method = RequestMethod.PATCH)
+  @ApiImplicitParam(name = "body", paramType = "body", dataType = "SyndicationInputView",
+      value= "example: {\"targetQueue\": \"activemq:plos.pmc\", \"status\": \"FAILURE\", \"errorMessage\": \"failed\"}")
   public ResponseEntity<?> patchSyndication(HttpServletRequest request,
                                             @PathVariable("doi") String doi,
                                             @PathVariable("number") int revisionNumber)

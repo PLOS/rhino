@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.rest.controller;
 
+import com.wordnik.swagger.annotations.ApiImplicitParam;
 import org.ambraproject.rhino.identity.VolumeIdentifier;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
@@ -40,6 +41,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.core.Application;
+import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
@@ -91,6 +95,8 @@ public class VolumeCrudController extends RestController {
 
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/journals/{journalKey}/volumes", method = RequestMethod.POST)
+  @ApiImplicitParam(name = "body", paramType = "body", dataType = "VolumeInputView",
+      value= "example: {\"doi\": \"10.1371/volume.pmed.v01\", \"displayName\": \"2004\"}")
   public ResponseEntity<String> create(HttpServletRequest request, @PathVariable String journalKey)
       throws IOException {
     VolumeInputView input = readJsonFromRequest(request, VolumeInputView.class);
@@ -104,6 +110,9 @@ public class VolumeCrudController extends RestController {
 
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi:.+}", method = RequestMethod.PATCH)
+  @ApiImplicitParam(name = "body", paramType = "body", dataType = "VolumeInputView",
+      value= "example #1: {\"doi\": \"10.1371/volume.pmed.v01\"}<br>" +
+      "example #2: {\"displayName\": \"2004\"}")
   public ResponseEntity<?> update(HttpServletRequest request, HttpServletResponse response,
                                   @PathVariable("journalKey") String journalKey,
                                   @PathVariable("volumeDoi") String volumeDoi)

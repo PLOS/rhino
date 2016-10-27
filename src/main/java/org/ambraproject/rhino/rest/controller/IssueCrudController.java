@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.rest.controller;
 
+import com.wordnik.swagger.annotations.ApiImplicitParam;
 import org.ambraproject.rhino.identity.IssueIdentifier;
 import org.ambraproject.rhino.identity.VolumeIdentifier;
 import org.ambraproject.rhino.model.Issue;
@@ -121,6 +122,12 @@ public class IssueCrudController extends RestController {
 
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi}/issues", method = RequestMethod.POST)
+  @ApiImplicitParam(name = "body", paramType = "body", dataType = "IssueInputView",
+      value= "example: {\"doi\": \"10.1371/issue.pbio.v02.i07\", " +
+          "\"displayName\": \"July\", " +
+          "\"imageArticleDoi\": \"10.1371/image.pbio.v02.i07\", " +
+          "\"articleOrder\": [\"10.1371/journal.pbio.0020213\", \"10.1371/journal.pbio.0020214\", " +
+          "\"10.1371/journal.pbio.0020228\"]}")
   public ResponseEntity<String> create(HttpServletRequest request,
                                        @PathVariable("journalKey") String journalKey,
                                        @PathVariable("volumeDoi") String volumeDoi)
@@ -138,6 +145,11 @@ public class IssueCrudController extends RestController {
 
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi}/issues/{issueDoi:.+}", method = RequestMethod.PATCH)
+  @ApiImplicitParam(name = "body", paramType = "body", dataType = "IssueInputView",
+      value= "example #1: {\"displayName\": \"July\"}<br>" +
+          "example #2: {\"imageArticleDoi\": \"10.1371/image.pbio.v02.i07\"}<br>" +
+          "example #3: {\"articleOrder\": [\"10.1371/journal.pbio.0020213\", \"10.1371/journal.pbio.0020214\", " +
+          "\"10.1371/journal.pbio.0020228\"]}")
   public void update(HttpServletRequest request, HttpServletResponse response,
                      @PathVariable("journalKey") String journalKey,
                      @PathVariable("volumeDoi") String volumeDoi,

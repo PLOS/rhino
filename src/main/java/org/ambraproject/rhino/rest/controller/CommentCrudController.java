@@ -1,5 +1,6 @@
 package org.ambraproject.rhino.rest.controller;
 
+import com.wordnik.swagger.annotations.ApiImplicitParam;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
@@ -92,6 +93,13 @@ public class CommentCrudController extends RestController {
   }
 
   @RequestMapping(value = "/articles/{articleDoi}/comments", method = RequestMethod.POST)
+  @ApiImplicitParam(name = "body", paramType = "body", dataType = "CommentInputView",
+      value= "example: {\"creatorUserId\": 10365, " +
+          "\"parentCommentId\": \"10.1371/annotation/0043aae2-f69d-4a05-ab19-4709704eb749\", " +
+          "\"title\": \"no, really watch this\", " +
+          "\"body\": \"http://www.youtube.com/watch?v=iGQdwSAAz9I\", " +
+          "\"highlightedText\": \"whoah...\", " +
+          "\"competingInterestStatement\": \"I'm going for an Emmy\"}")
   public ResponseEntity<?> create(HttpServletRequest request,
                                   @PathVariable("articleDoi") String articleDoi)
       throws IOException {
@@ -119,6 +127,10 @@ public class CommentCrudController extends RestController {
   }
 
   @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi:.+}", method = RequestMethod.PATCH)
+  @ApiImplicitParam(name = "body", paramType = "body", dataType = "CommentInputView",
+      value= "example #1: {\"title\": \"new title\"}<br>" +
+          "example #2: {\"body\": \"comment body replacement text\"}<br>" +
+          "example #3: {\"isRemoved\": \"true\"}")
   public ResponseEntity<?> patch(HttpServletRequest request,
                                  @PathVariable("articleDoi") String articleDoi,
                                  @PathVariable("commentDoi") String commentDoi)
@@ -149,6 +161,8 @@ public class CommentCrudController extends RestController {
   }
 
   @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi}/flags", method = RequestMethod.POST)
+  @ApiImplicitParam(name = "body", paramType = "body", dataType = "CommentFlagInputView",
+      value= "example: {\"creatorUserId\": 10365, \"body\": \"oops\", \"reasonCode\": \"spam\"}")
   public ResponseEntity<String> createFlag(HttpServletRequest request,
                                            @PathVariable("articleDoi") String articleDoi,
                                            @PathVariable("commentDoi") String commentDoi)
