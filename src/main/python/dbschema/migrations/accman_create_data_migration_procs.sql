@@ -21,10 +21,18 @@ DELIMITER ;
 
 DROP FUNCTION IF EXISTS `get_asset_archive_name`;
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` FUNCTION `get_asset_archive_name`(crepo_key VARCHAR(255)) RETURNS varchar(255) CHARSET latin1
+CREATE DEFINER=`root`@`localhost` FUNCTION `get_asset_archive_name`(asset_doi VARCHAR(150), asset_extension VARCHAR(10))
+  RETURNS varchar(255) CHARSET latin1
 DETERMINISTIC
   BEGIN
-    RETURN REPLACE(SUBSTRING_INDEX(crepo_key, '/', -1), 'journal.', '');
+    DECLARE short_doi VARCHAR(150);
+    DECLARE extension VARCHAR(10);
+    SET short_doi = REPLACE(SUBSTRING_INDEX(asset_doi, '/', -1), 'journal.', '');
+    SET extension = CASE WHEN asset_extension LIKE '%PNG%'
+                      THEN asset_extension
+                      ELSE LOWER(asset_extension)
+                    END;
+    RETURN CONCAT(short_doi, '.', extension);
   END$$
 DELIMITER ;
 
@@ -157,6 +165,19 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `correct_article_asset_table`()
 
     DELETE FROM articleAsset WHERE articleAssetID IN (2868870, 2888424, 2940472, 2955664, 2184512, 3077550, 12528549);
 
+    # duplicate table original image (incorrect format of PNG)
+    DELETE FROM articleAsset WHERE articleAssetID = 18586191;
+
+    # ZIP files with article doi
+    # various contents, some complete packages, some individual assets -- OK'd by Bill for deletion
+    DELETE FROM articleAsset WHERE articleAssetID IN (4325314, 4325342, 4325344, 4325316, 4325364, 4325324, 4325350,
+      4325340, 4325328, 4325326, 4325334, 4325352, 4325332, 4325362, 6198587, 6796443, 6904247, 6915661, 7148149, 7159583,
+      7587390, 7607055, 7643375, 8391979, 10305301, 10668125, 14938507, 16700441, 16729174, 16739444, 17055092, 17055733);
+
+    # striking image assets with bogus file types (DOCX, EPS, PDF, 7Z)
+    DELETE FROM articleAsset WHERE articleAssetID IN (16793903, 16801672, 16848324, 16862097, 16884220, 17449410,
+      17622889, 17688256);
+
   END $$
 DELIMITER ;
 
@@ -221,6 +242,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
     DECLARE article_type VARCHAR(100);
     DECLARE journal_id BIGINT;
     DECLARE crepo_key VARCHAR(255);
+    DECLARE ingested_file_name VARCHAR(255);
     DECLARE crepo_uuid CHAR(36);
     DECLARE err_msg VARCHAR(1024);
     DECLARE done INT DEFAULT FALSE;
@@ -325,6 +347,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
           END IF;
 
           SET crepo_key = CONCAT(get_doi_name(asset_doi), '.', asset_extension);
+          SET ingested_file_name = get_asset_archive_name(asset_doi, asset_extension);
           SELECT uuid, size INTO crepo_uuid, file_size FROM uuid_lut WHERE objkey = crepo_key;
           IF crepo_uuid = '' THEN
             SET err_msg = CONCAT('Crepo key ', crepo_key, ' not found. Rolling back ', get_doi_name(article_doi));
@@ -348,7 +371,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
             WHEN asset_extension = 'PNG_M' THEN 'medium'
             WHEN asset_extension = 'PNG_L' THEN 'large'
             WHEN asset_extension = 'PNG_I' THEN 'inline'
-            WHEN asset_extension = 'TIFF' OR asset_extension = 'TIF' OR asset_extension = 'GIF' THEN 'original'
+            WHEN asset_extension IN ('TIFF', 'TIF', 'GIF', 'JPG', 'JPEG', 'PNG') THEN 'original'
             ELSE 'Unknown figure'
             END
           WHEN item_type = 'table' THEN
@@ -379,7 +402,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_article`(IN article_id BIGI
           INSERT INTO articleFile
           (ingestionId, itemId, bucketName, crepoKey, crepoUuid, created, fileType, fileSize, ingestedFileName)
           VALUES (ingestion_id, item_id, 'mogilefs-prod-repo', crepo_key, crepo_uuid, NOW(), file_type, file_size,
-                  get_asset_archive_name(crepo_key));
+                  ingested_file_name);
 
           SET prev_asset_doi = asset_doi;
 
@@ -490,7 +513,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `migrate_articles`()
 
     COMMIT;
     SET autocommit = 1;
-    
+
     # the insert statements below are designed to be able to run incrementally without causing
     # duplication errors in the case we need to run a secondary migration for a partial list of articles IDs
 
