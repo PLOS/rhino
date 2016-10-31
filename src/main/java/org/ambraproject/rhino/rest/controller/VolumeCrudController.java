@@ -41,9 +41,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.core.Application;
-import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
