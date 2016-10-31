@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.File;
 import java.io.FileReader;
@@ -22,7 +23,7 @@ public class ContentRepoController extends RestController {
   @Autowired
   private RuntimeConfiguration runtimeConfiguration;
 
-  @RequestMapping("repo/{key}/{version}")
+  @RequestMapping(value = "repo/{key}/{version}", method = RequestMethod.GET)
   public ResponseEntity<?> serve(@PathVariable("key") String key,
                                  @PathVariable("version") String version)
       throws IOException {

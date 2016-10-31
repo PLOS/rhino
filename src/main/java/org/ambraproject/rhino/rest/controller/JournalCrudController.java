@@ -1,5 +1,6 @@
 package org.ambraproject.rhino.rest.controller;
 
+import com.wordnik.swagger.annotations.ApiImplicitParam;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.JournalCrudService;
@@ -43,6 +44,8 @@ public class JournalCrudController extends RestController {
 
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/journals/{journalKey}", method = RequestMethod.PATCH)
+  @ApiImplicitParam(name = "body", paramType = "body", dataType = "JournalInputView",
+      value= "example: {\"currentIssueDoi\": \"10.1371/issue.pmed.v13.i09\"}")
   public void update(HttpServletRequest request, HttpServletResponse response, @PathVariable String journalKey)
       throws IOException {
     JournalInputView input = readJsonFromRequest(request, JournalInputView.class);

@@ -2,6 +2,7 @@ package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
+import com.wordnik.swagger.annotations.ApiImplicitParam;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleListIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -33,6 +34,9 @@ public class ArticleListCrudController extends RestController {
 
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/lists", method = RequestMethod.POST)
+  @ApiImplicitParam(name = "body", paramType = "body", dataType = "ListInputView",
+      value= "example: {\"journal\": \"PLoSONE\", \"type\": \"admin\", \"key\": \"plosone_news\", " +
+      "\"title\": \"test\", \"articleDois\": [\"10.1371/journal.pone.0095668\"]}")
   public ResponseEntity<?> create(HttpServletRequest request) throws IOException {
     final ListInputView inputView;
     try {
@@ -64,6 +68,9 @@ public class ArticleListCrudController extends RestController {
 
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/lists/{type}/journals/{journal}/keys/{key}", method = RequestMethod.PATCH)
+  @ApiImplicitParam(name = "body", paramType = "body", dataType = "ListInputView",
+      value= "example #1: {\"title\": \"New Title\"}<br>" +
+      "example #2: {\"articleDois\": [\"10.1371/journal.pone.0012345\", \"10.1371/journal.pone.0054321\"]}")
   public ResponseEntity<?> update(HttpServletRequest request,
                                   @PathVariable("type") String type,
                                   @PathVariable("journal") String journalKey,
