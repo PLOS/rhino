@@ -24,24 +24,27 @@ import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.rest.response.ServiceResponse;
+import org.ambraproject.rhino.rest.response.TransientServiceResponse;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.view.journal.VolumeInputView;
 import org.ambraproject.rhino.view.journal.VolumeOutputView;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -75,17 +78,18 @@ public class VolumeCrudController extends RestController {
     List<VolumeOutputView> views = journal.getVolumes().stream()
         .map(VolumeOutputView::getView)
         .collect(Collectors.toList());
-    return ServiceResponse.serveView(views).asJsonResponse(entityGson);
+    return TransientServiceResponse.serveView(views).asJsonResponse(entityGson);
   }
 
   @Transactional(readOnly = true)
   @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi:.+}", method = RequestMethod.GET)
-  public ResponseEntity<?> read(@PathVariable("journalKey") String journalKey,
+  public ResponseEntity<?> read(@RequestHeader(value = HttpHeaders.IF_MODIFIED_SINCE, required = false) Date ifModifiedSince,
+                                @PathVariable("journalKey") String journalKey,
                                 @PathVariable("volumeDoi") String volumeDoi)
       throws IOException {
     // TODO: Validate journalKey
     VolumeIdentifier volumeId = getVolumeId(volumeDoi);
-    return volumeCrudService.serveVolume(volumeId).asJsonResponse(entityGson);
+    return volumeCrudService.serveVolume(volumeId).asJsonResponse(ifModifiedSince, entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
@@ -117,7 +121,7 @@ public class VolumeCrudController extends RestController {
     VolumeInputView input = readJsonFromRequest(request, VolumeInputView.class);
     Volume updated = volumeCrudService.update(volumeId, input);
     VolumeOutputView view = VolumeOutputView.getView(updated);
-    return ServiceResponse.serveView(view).asJsonResponse(entityGson);
+    return TransientServiceResponse.serveView(view).asJsonResponse(entityGson);
   }
 
   @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi:.+}", method = RequestMethod.DELETE)

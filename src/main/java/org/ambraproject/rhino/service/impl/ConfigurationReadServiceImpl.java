@@ -1,7 +1,7 @@
 package org.ambraproject.rhino.service.impl;
 
 import org.ambraproject.rhino.config.RuntimeConfiguration;
-import org.ambraproject.rhino.rest.response.ServiceResponse;
+import org.ambraproject.rhino.rest.response.TransientServiceResponse;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.util.GitInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +21,8 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
   private GitInfo gitInfo;
 
   @Override
-  public ServiceResponse readBuildConfig() throws IOException {
-    return ServiceResponse.serveView(getBuildProperties());
+  public TransientServiceResponse readBuildConfig() throws IOException {
+    return TransientServiceResponse.serveView(getBuildProperties());
   }
 
   private static Map<String, Object> showEndpointAsMap(RuntimeConfiguration.ContentRepoEndpoint endpoint) {
@@ -37,11 +37,11 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
   }
 
   @Override
-  public ServiceResponse readRepoConfig() throws IOException {
+  public TransientServiceResponse readRepoConfig() throws IOException {
     Map<String, Object> cfgMap = new LinkedHashMap<>(4);
     cfgMap.put("editorial", showEndpointAsMap(runtimeConfiguration.getEditorialStorage()));
     cfgMap.put("corpus", showEndpointAsMap(runtimeConfiguration.getCorpusStorage()));
-    return ServiceResponse.serveView(cfgMap);
+    return TransientServiceResponse.serveView(cfgMap);
   }
 
   /**

@@ -11,7 +11,7 @@ import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.rest.response.ServiceResponse;
+import org.ambraproject.rhino.rest.response.TransientServiceResponse;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.IssueCrudService;
@@ -50,7 +50,7 @@ public class ArticleItemReadController extends RestController {
       throws IOException {
     Doi doi = DoiEscaping.unescape(escapedDoi);
     ResolvedDoiView view = findDoiTarget(doi);
-    return ServiceResponse.serveView(view).asJsonResponse(entityGson);
+    return TransientServiceResponse.serveView(view).asJsonResponse(entityGson);
   }
 
   private ResolvedDoiView findDoiTarget(Doi doi) throws IOException {

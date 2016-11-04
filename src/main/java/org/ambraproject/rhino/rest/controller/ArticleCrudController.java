@@ -31,7 +31,7 @@ import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.rest.response.ServiceResponse;
+import org.ambraproject.rhino.rest.response.TransientServiceResponse;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.ArticleRevisionWriteService;
@@ -54,6 +54,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,6 +66,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -120,11 +122,12 @@ public class ArticleCrudController extends RestController {
    */
   @Transactional(readOnly = true)
   @RequestMapping(value = "/articles/{doi}/ingestions/{number}", method = RequestMethod.GET)
-  public ResponseEntity<?> read(@PathVariable("doi") String doi,
+  public ResponseEntity<?> read(@RequestHeader(value = HttpHeaders.IF_MODIFIED_SINCE, required = false) Date ifModifiedSince,
+                                @PathVariable("doi") String doi,
                                 @PathVariable("number") int ingestionNumber)
       throws IOException {
     ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
-    return articleCrudService.serveMetadata(ingestionId).asJsonResponse(entityGson);
+    return articleCrudService.serveMetadata(ingestionId).asJsonResponse(ifModifiedSince, entityGson);
   }
 
   @Transactional(readOnly = true)
@@ -145,11 +148,12 @@ public class ArticleCrudController extends RestController {
 
   @Transactional(readOnly = true)
   @RequestMapping(value = "/articles/{doi}/revisions/{revision}", method = RequestMethod.GET)
-  public ResponseEntity<?> readRevision(@PathVariable("doi") String doi,
+  public ResponseEntity<?> readRevision(@RequestHeader(value = HttpHeaders.IF_MODIFIED_SINCE, required = false) Date ifModifiedSince,
+                                        @PathVariable("doi") String doi,
                                         @PathVariable(value = "revision") Integer revisionNumber)
       throws IOException {
     ArticleRevisionIdentifier id = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
-    return articleCrudService.serveRevision(id).asJsonResponse(entityGson);
+    return articleCrudService.serveRevision(id).asJsonResponse(ifModifiedSince, entityGson);
   }
 
   @Transactional(readOnly = false)
@@ -181,11 +185,12 @@ public class ArticleCrudController extends RestController {
   }
 
   @RequestMapping(value = "/articles/{doi}/ingestions/{number}/items", method = RequestMethod.GET)
-  public ResponseEntity<?> readItems(@PathVariable("doi") String doi,
+  public ResponseEntity<?> readItems(@RequestHeader(value = HttpHeaders.IF_MODIFIED_SINCE, required = false) Date ifModifiedSince,
+                                     @PathVariable("doi") String doi,
                                      @PathVariable("number") int ingestionNumber)
       throws IOException {
     ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
-    return articleCrudService.serveItems(ingestionId).asJsonResponse(entityGson);
+    return articleCrudService.serveItems(ingestionId).asJsonResponse(ifModifiedSince, entityGson);
   }
 
   /**
@@ -218,7 +223,7 @@ public class ArticleCrudController extends RestController {
                                              @PathVariable("doi") String doi)
       throws IOException {
     ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
-    return ServiceResponse.serveView(relationshipSetViewFactory.getSetView(id)).asJsonResponse(entityGson);
+    return TransientServiceResponse.serveView(relationshipSetViewFactory.getSetView(id)).asJsonResponse(entityGson);
   }
 
   /**
@@ -230,12 +235,13 @@ public class ArticleCrudController extends RestController {
    */
   @Transactional(readOnly = true)
   @RequestMapping(value = "/articles/{doi}/ingestions/{number}/authors", method = RequestMethod.GET)
-  public ResponseEntity<?> readAuthors(@PathVariable("doi") String doi,
+  public ResponseEntity<?> readAuthors(@RequestHeader(value = HttpHeaders.IF_MODIFIED_SINCE, required = false) Date ifModifiedSince,
+                                       @PathVariable("doi") String doi,
                                        @PathVariable("number") int ingestionNumber)
       throws IOException {
 
     ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
-    return articleCrudService.serveAuthors(ingestionId).asJsonResponse(entityGson);
+    return articleCrudService.serveAuthors(ingestionId).asJsonResponse(ifModifiedSince,entityGson);
   }
 
   /**
@@ -371,7 +377,7 @@ public class ArticleCrudController extends RestController {
     List<Syndication> syndications = syndicationCrudService.getSyndications(revisionId);
     // TODO: If revision does not exist, need to respond with 404 instead of empty list?
     List<SyndicationView> views = syndications.stream().map(SyndicationView::new).collect(Collectors.toList());
-    return ServiceResponse.serveView(views).asJsonResponse(entityGson);
+    return TransientServiceResponse.serveView(views).asJsonResponse(entityGson);
   }
 
   @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications", method = RequestMethod.POST)
@@ -418,7 +424,7 @@ public class ArticleCrudController extends RestController {
 
     Syndication patched = syndicationCrudService.updateSyndication(revisionId,
         input.getTargetQueue(), input.getStatus(), input.getErrorMessage());
-    return ServiceResponse.serveView(new SyndicationView(patched)).asJsonResponse(entityGson);
+    return TransientServiceResponse.serveView(new SyndicationView(patched)).asJsonResponse(entityGson);
   }
 
 
@@ -436,7 +442,7 @@ public class ArticleCrudController extends RestController {
     List<ArticleRevisionView> views = articleCrudService.getArticlesPublishedOn(fromDate, toDate)
         .stream().map(ArticleRevisionView::getView)
         .collect(Collectors.toList());
-    return ServiceResponse.serveView(views).asJsonResponse(entityGson);
+    return TransientServiceResponse.serveView(views).asJsonResponse(entityGson);
   }
 
   @Transactional(readOnly = true)
@@ -448,7 +454,7 @@ public class ArticleCrudController extends RestController {
     List<ArticleRevisionView> views = articleCrudService.getArticlesRevisedOn(fromDate, toDate)
         .stream().map(ArticleRevisionView::getView)
         .collect(Collectors.toList());
-    return ServiceResponse.serveView(views).asJsonResponse(entityGson);
+    return TransientServiceResponse.serveView(views).asJsonResponse(entityGson);
   }
 
 }

@@ -3,7 +3,6 @@ package org.ambraproject.rhino.service;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.response.CacheableServiceResponse;
-import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.view.journal.JournalInputView;
 
 import java.io.IOException;

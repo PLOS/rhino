@@ -25,7 +25,7 @@ import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.rest.response.ServiceResponse;
+import org.ambraproject.rhino.rest.response.TransientServiceResponse;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.view.article.ArticleRevisionView;
@@ -33,16 +33,19 @@ import org.ambraproject.rhino.view.journal.IssueInputView;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,10 +65,11 @@ public class IssueCrudController extends RestController {
 
   @Transactional(readOnly = true)
   @RequestMapping(value = "/issues/{issueDoi:.+}", method = RequestMethod.GET)
-  public ResponseEntity<?> read(@PathVariable("issueDoi") String issueDoi)
+  public ResponseEntity<?> read(@RequestHeader(value = HttpHeaders.IF_MODIFIED_SINCE, required = false) Date ifModifiedSince,
+                                @PathVariable("issueDoi") String issueDoi)
       throws IOException {
     IssueIdentifier issueId = getIssueId(issueDoi);
-    return issueCrudService.serveIssue(issueId).asJsonResponse(entityGson);
+    return issueCrudService.serveIssue(issueId).asJsonResponse(ifModifiedSince, entityGson);
 
     // TODO: Equivalent alias methods for other HTTP methods?
   }
@@ -77,7 +81,7 @@ public class IssueCrudController extends RestController {
     IssueIdentifier issueId = getIssueId(issueDoi);
     Issue issue = issueCrudService.readIssue(issueId);
     List<ArticleRevisionView> views = issueOutputViewFactory.getIssueArticlesView(issue);
-    return ServiceResponse.serveView(views).asJsonResponse(entityGson);
+    return TransientServiceResponse.serveView(views).asJsonResponse(entityGson);
   }
 
   @Transactional(readOnly = true)
@@ -91,17 +95,18 @@ public class IssueCrudController extends RestController {
     List<IssueOutputView> views = volume.getIssues().stream()
         .map(issueOutputViewFactory::getView)
         .collect(Collectors.toList());
-    return ServiceResponse.serveView(views).asJsonResponse(entityGson);
+    return TransientServiceResponse.serveView(views).asJsonResponse(entityGson);
   }
 
   @Transactional(readOnly = true)
   @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi}/issues/{issueDoi:.+}", method = RequestMethod.GET)
-  public void read(@PathVariable("journalKey") String journalKey,
+  public void read(@RequestHeader(value = HttpHeaders.IF_MODIFIED_SINCE, required = false) Date ifModifiedSince,
+                   @PathVariable("journalKey") String journalKey,
                    @PathVariable("volumeDoi") String volumeDoi,
                    @PathVariable("issueDoi") String issueDoi)
       throws IOException {
     // TODO: Validate journalKey and volumeDoi
-    read(issueDoi);
+    read(ifModifiedSince, issueDoi);
   }
 
   @Transactional(readOnly = true)
@@ -145,6 +150,7 @@ public class IssueCrudController extends RestController {
           "example #3: {\"articleOrder\": [\"10.1371/journal.pbio.0020213\", \"10.1371/journal.pbio.0020214\", " +
           "\"10.1371/journal.pbio.0020228\"]}")
   public ResponseEntity<?> update(HttpServletRequest request,
+                                  @RequestHeader(value = HttpHeaders.IF_MODIFIED_SINCE, required = false) Date ifModifiedSince,
                                   @PathVariable("journalKey") String journalKey,
                                   @PathVariable("volumeDoi") String volumeDoi,
                                   @PathVariable("issueDoi") String issueDoi)
@@ -154,7 +160,7 @@ public class IssueCrudController extends RestController {
     IssueInputView input = readJsonFromRequest(request, IssueInputView.class);
     issueCrudService.update(issueId, input);
 
-    return issueCrudService.serveIssue(issueId).asJsonResponse(entityGson);
+    return issueCrudService.serveIssue(issueId).asJsonResponse(ifModifiedSince, entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})

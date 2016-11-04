@@ -10,11 +10,12 @@ import java.io.IOException;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class CacheableServiceResponse extends ServiceResponse {
+public final class CacheableServiceResponse extends ServiceResponse {
 
   @FunctionalInterface
   public static interface ResponseSupplier {
@@ -61,31 +62,20 @@ public class CacheableServiceResponse extends ServiceResponse {
   }
 
 
+  public ResponseEntity<?> asJsonResponse(Date ifModifiedSince, Gson entityGson) throws IOException {
+    return asJsonResponse(ifModifiedSince == null ? null : ifModifiedSince.toInstant(), entityGson);
+  }
+
   public ResponseEntity<?> asJsonResponse(Instant ifModifiedSince, Gson entityGson) throws IOException {
-    if (lastModified.isAfter(ifModifiedSince)) {
+    if (ifModifiedSince != null && !lastModified.isBefore(ifModifiedSince)) {
       return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
     Object entity = Objects.requireNonNull(getResponseBody());
     String json = entityGson.toJson(entity);
     return ResponseEntity.status(status)
         .contentType(MediaType.APPLICATION_JSON)
-        .lastModified(getEpochMilliseconds(lastModified))
+        .lastModified(lastModified.toEpochMilli())
         .body(json);
-  }
-
-  private static long getEpochMilliseconds(Instant lastModified) {
-    return lastModified.getEpochSecond() * 1000 + lastModified.getNano() / 1000;
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @deprecated Use {@link #asJsonResponse(Instant, Gson)} instead.
-   */
-  @Override
-  @Deprecated
-  public ResponseEntity<?> asJsonResponse(Gson entityGson) throws IOException {
-    return super.asJsonResponse(entityGson);
   }
 
 }

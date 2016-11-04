@@ -13,10 +13,12 @@ import org.ambraproject.rhino.view.comment.CommentInputView;
 import org.ambraproject.rhino.view.comment.CommentNodeView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Optional;
 
 @Controller
@@ -177,7 +180,7 @@ public class CommentCrudController extends RestController {
   }
 
   @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi}/flags/{flagId}", method = RequestMethod.GET)
-  public void readFlag(HttpServletRequest request, HttpServletResponse response,
+  public void readFlag(@RequestHeader(value = HttpHeaders.IF_MODIFIED_SINCE, required = false) Date ifModifiedSince,
                        @PathVariable("articleDoi") String articleDoi,
                        @PathVariable("commentDoi") String commentDoi,
                        @PathVariable("flagId") long flagId)
@@ -186,7 +189,7 @@ public class CommentCrudController extends RestController {
     CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
     // TODO: Validate articleId and commentId
 
-    commentCrudService.readCommentFlag(flagId).asJsonResponse(entityGson);
+    commentCrudService.readCommentFlag(flagId).asJsonResponse(ifModifiedSince, entityGson);
   }
 
   @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi}/flags/{flagId}", method = RequestMethod.DELETE)

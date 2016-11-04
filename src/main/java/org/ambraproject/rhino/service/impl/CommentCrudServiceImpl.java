@@ -26,7 +26,7 @@ import org.ambraproject.rhino.model.FlagReasonCode;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.response.CacheableServiceResponse;
-import org.ambraproject.rhino.rest.response.ServiceResponse;
+import org.ambraproject.rhino.rest.response.TransientServiceResponse;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
@@ -72,7 +72,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   }
 
   @Override
-  public ServiceResponse serveComments(ArticleIdentifier articleId) throws IOException {
+  public TransientServiceResponse serveComments(ArticleIdentifier articleId) throws IOException {
     Article article = articleCrudService.readArticle(articleId);
     List<Comment> comments = fetchAllComments(article);
     CommentOutputView.Factory factory
@@ -82,7 +82,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
         .sorted(CommentOutputView.BY_DATE)
         .map(factory::buildView)
         .collect(Collectors.toList());
-    return ServiceResponse.serveView(views);
+    return TransientServiceResponse.serveView(views);
   }
 
   private CommentOutputView createView(Comment comment) {
@@ -92,9 +92,9 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   }
 
   @Override
-  public ServiceResponse serveComment(CommentIdentifier commentId) throws IOException {
+  public TransientServiceResponse serveComment(CommentIdentifier commentId) throws IOException {
     Comment comment = readComment(commentId);
-    return ServiceResponse.serveView(createView(comment));
+    return TransientServiceResponse.serveView(createView(comment));
   }
 
   @Override
@@ -133,7 +133,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   }
 
   @Override
-  public ServiceResponse createComment(Optional<ArticleIdentifier> articleId, CommentInputView input) {
+  public TransientServiceResponse createComment(Optional<ArticleIdentifier> articleId, CommentInputView input) {
     final Optional<String> parentCommentUri = Optional.ofNullable(input.getParentCommentId());
 
     final Article article;
@@ -184,11 +184,11 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     List<Comment> childComments = ImmutableList.of(); // the new comment can't have any children yet
     CommentOutputView.Factory viewFactory = new CommentOutputView.Factory(runtimeConfiguration, childComments, article);
     CommentOutputView view = viewFactory.buildView(created);
-    return ServiceResponse.reportCreated(view);
+    return TransientServiceResponse.reportCreated(view);
   }
 
   @Override
-  public ServiceResponse patchComment(CommentIdentifier commentId, CommentInputView input) {
+  public TransientServiceResponse patchComment(CommentIdentifier commentId, CommentInputView input) {
     Comment comment = readComment(commentId);
 
     String declaredUri = input.getAnnotationUri();
@@ -228,7 +228,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
 
     hibernateTemplate.update(comment);
 
-    return ServiceResponse.serveView(createView(comment));
+    return TransientServiceResponse.serveView(createView(comment));
   }
 
   @Override
@@ -270,10 +270,10 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   }
 
   @Override
-  public ServiceResponse readAllCommentFlags() {
+  public TransientServiceResponse readAllCommentFlags() {
     List<CommentFlagOutputView> views = getAllFlags().stream().map(commentNodeViewFactory::createFlagView)
         .collect(Collectors.toList());
-    return ServiceResponse.serveView(views);
+    return TransientServiceResponse.serveView(views);
   }
 
   private List<Flag> getAllFlags() {
@@ -300,17 +300,17 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   }
 
   @Override
-  public ServiceResponse readCommentFlagsOn(CommentIdentifier commentId) {
+  public TransientServiceResponse readCommentFlagsOn(CommentIdentifier commentId) {
     List<Flag> flags = getCommentFlagsOn(readComment(commentId));
     List<CommentFlagOutputView> views = flags.stream().map(commentNodeViewFactory::createFlagView).collect(Collectors.toList());
-    return ServiceResponse.serveView(views);
+    return TransientServiceResponse.serveView(views);
   }
 
   @Override
-  public ServiceResponse readCommentFlagsForJournal(String journalKey) {
+  public TransientServiceResponse readCommentFlagsForJournal(String journalKey) {
     List<Flag> flags = getAllFlags(journalKey);
     List<CommentFlagOutputView> views = flags.stream().map(commentNodeViewFactory::createFlagView).collect(Collectors.toList());
-    return ServiceResponse.serveView(views);
+    return TransientServiceResponse.serveView(views);
   }
 
   @Override
@@ -321,12 +321,12 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   }
 
   @Override
-  public ServiceResponse serveFlaggedComments() throws IOException {
+  public TransientServiceResponse serveFlaggedComments() throws IOException {
     HibernateCallback<List<Comment>> hibernateCallback = session ->
         session.createQuery("SELECT DISTINCT flaggedComment FROM Flag").list();
     List<Comment> flaggedComments = hibernateTemplate.execute(hibernateCallback);
     List<CommentNodeView> views = flaggedComments.stream().map(commentNodeViewFactory::create).collect(Collectors.toList());
-    return ServiceResponse.serveView(views);
+    return TransientServiceResponse.serveView(views);
   }
 
   private long getCount(Session session, Article article, String whereClause) {
@@ -336,18 +336,18 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   }
 
   @Override
-  public ServiceResponse getCommentCount(Article article) {
+  public TransientServiceResponse getCommentCount(Article article) {
     CommentCountView view = hibernateTemplate.execute((Session session) -> {
       long all = getCount(session, article, "AND isRemoved = FALSE");
       long root = getCount(session, article, "AND isRemoved = FALSE AND parent IS NULL");
       long removed = getCount(session, article, "AND isRemoved = TRUE");
       return new CommentCountView(all, root, removed);
     });
-    return ServiceResponse.serveView(view);
+    return TransientServiceResponse.serveView(view);
   }
 
   @Override
-  public ServiceResponse getCommentsCreatedOn(LocalDate date) {
+  public TransientServiceResponse getCommentsCreatedOn(LocalDate date) {
     List<CommentNodeView> views = hibernateTemplate.execute(session -> {
       Query query = session.createQuery("FROM Comment WHERE DATE(created) = :date");
       query.setParameter("date", java.sql.Date.valueOf(date));
@@ -355,6 +355,6 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
 
       return comments.stream().map(commentNodeViewFactory::create).collect(Collectors.toList());
     });
-    return ServiceResponse.serveView(views);
+    return TransientServiceResponse.serveView(views);
   }
 }

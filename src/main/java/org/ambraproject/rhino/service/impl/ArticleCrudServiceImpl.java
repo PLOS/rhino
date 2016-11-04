@@ -42,7 +42,7 @@ import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.response.CacheableServiceResponse;
-import org.ambraproject.rhino.rest.response.ServiceResponse;
+import org.ambraproject.rhino.rest.response.TransientServiceResponse;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
@@ -159,7 +159,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public ServiceResponse serveOverview(ArticleIdentifier id) {
+  public TransientServiceResponse serveOverview(ArticleIdentifier id) {
     ArticleOverview view = hibernateTemplate.execute(session -> {
       Query ingestionQuery = session.createQuery("FROM ArticleIngestion WHERE article.doi = :doi");
       ingestionQuery.setParameter("doi", id.getDoiName());
@@ -173,16 +173,16 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
       return ArticleOverview.build(id, ingestions, revisions);
     });
-    return ServiceResponse.serveView(view);
+    return TransientServiceResponse.serveView(view);
   }
 
   @Override
-  public ServiceResponse serveRevisions(ArticleIdentifier id) {
+  public TransientServiceResponse serveRevisions(ArticleIdentifier id) {
     Article article = readArticle(id);
     List<ArticleRevision> revisions = (List<ArticleRevision>) hibernateTemplate.find(
         "FROM ArticleRevision WHERE ingestion.article = ? ORDER BY revisionNumber", article);
     List<ArticleRevisionView> views = Lists.transform(revisions, ArticleRevisionView::getView);
-    return ServiceResponse.serveView(views);
+    return TransientServiceResponse.serveView(views);
   }
 
   @Override
@@ -219,13 +219,13 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * @param articleId
    */
   @Override
-  public ServiceResponse serveCategories(final ArticleIdentifier articleId) throws IOException {
+  public TransientServiceResponse serveCategories(final ArticleIdentifier articleId) throws IOException {
     Article article = readArticle(articleId);
     Collection<ArticleCategoryAssignment> categoryAssignments = taxonomyService.getCategoriesForArticle(article);
     List<CategoryAssignmentView> views = categoryAssignments.stream()
         .map(CategoryAssignmentView::new)
         .collect(Collectors.toList());
-    return ServiceResponse.serveView(views);
+    return TransientServiceResponse.serveView(views);
   }
 
 
@@ -233,7 +233,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public ServiceResponse serveRawCategories(final ArticleIdentifier articleId) throws IOException {
+  public TransientServiceResponse serveRawCategories(final ArticleIdentifier articleId) throws IOException {
     Article article = readArticle(articleId);
     ArticleRevision revision = readLatestRevision(article);
     Document manuscriptXml = getManuscriptXml(revision.getIngestion());
@@ -243,7 +243,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       term = term.replaceAll("<TERM>", "").replaceAll("</TERM>", "");
       cleanedTerms.add(term);
     }
-    return ServiceResponse.serveView(cleanedTerms);
+    return TransientServiceResponse.serveView(cleanedTerms);
   }
 
   /**

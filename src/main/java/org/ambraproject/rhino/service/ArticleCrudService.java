@@ -30,7 +30,7 @@ import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.response.CacheableServiceResponse;
-import org.ambraproject.rhino.rest.response.ServiceResponse;
+import org.ambraproject.rhino.rest.response.TransientServiceResponse;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.view.ResolvedDoiView;
 import org.ambraproject.rhino.view.article.ArticleOverview;
@@ -65,7 +65,7 @@ public interface ArticleCrudService {
    * @param articleId specifies the article
    * @throws IOException
    */
-  public abstract ServiceResponse serveCategories(ArticleIdentifier articleId)
+  public abstract TransientServiceResponse serveCategories(ArticleIdentifier articleId)
       throws IOException;
 
   /**
@@ -74,7 +74,7 @@ public interface ArticleCrudService {
    * @param articleId specifies the article
    * @throws IOException
    */
-  public abstract ServiceResponse serveRawCategories(ArticleIdentifier articleId)
+  public abstract TransientServiceResponse serveRawCategories(ArticleIdentifier articleId)
       throws IOException;
 
   /**
@@ -110,9 +110,9 @@ public interface ArticleCrudService {
 
   public abstract ArticleOverview buildOverview(Article article);
 
-  public abstract ServiceResponse serveOverview(ArticleIdentifier id);
+  public abstract TransientServiceResponse serveOverview(ArticleIdentifier id);
 
-  public abstract ServiceResponse serveRevisions(ArticleIdentifier id);
+  public abstract TransientServiceResponse serveRevisions(ArticleIdentifier id);
 
   public abstract CacheableServiceResponse serveRevision(ArticleRevisionIdentifier revisionId);
 

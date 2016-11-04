@@ -11,7 +11,7 @@ import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleList;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.rest.response.ServiceResponse;
+import org.ambraproject.rhino.rest.response.TransientServiceResponse;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.view.journal.ArticleListView;
 import org.hibernate.HibernateException;
@@ -178,8 +178,8 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
   }
 
   @Override
-  public ServiceResponse read(final ArticleListIdentity identity) {
-    return ServiceResponse.serveView(getArticleList(identity));
+  public TransientServiceResponse read(final ArticleListIdentity identity) {
+    return TransientServiceResponse.serveView(getArticleList(identity));
   }
 
   private Collection<ArticleListView> asArticleListViews(List<Object[]> results) {
@@ -193,7 +193,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
   }
 
   @Override
-  public ServiceResponse readAll(final Optional<String> listType, final Optional<String> journalKey) {
+  public TransientServiceResponse readAll(final Optional<String> listType, final Optional<String> journalKey) {
     if (!listType.isPresent() && journalKey.isPresent()) {
       throw new IllegalArgumentException();
     }
@@ -221,7 +221,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
       }
     });
     Collection<ArticleListView> views = asArticleListViews(result);
-    return ServiceResponse.serveView(views);
+    return TransientServiceResponse.serveView(views);
   }
 
   private Collection<ArticleListView> findContainingLists(final ArticleIdentifier articleId) {
@@ -240,8 +240,8 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
   }
 
   @Override
-  public ServiceResponse readContainingLists(final ArticleIdentifier articleId) {
-    return ServiceResponse.serveView(findContainingLists(articleId));
+  public TransientServiceResponse readContainingLists(final ArticleIdentifier articleId) {
+    return TransientServiceResponse.serveView(findContainingLists(articleId));
   }
 
 }
