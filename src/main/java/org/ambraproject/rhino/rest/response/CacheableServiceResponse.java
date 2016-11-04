@@ -15,15 +15,28 @@ import java.util.stream.Collectors;
 
 public class CacheableServiceResponse extends ServiceResponse {
 
-  private final Instant lastModified;
-
-  private CacheableServiceResponse(ResponseSupplier supplier, HttpStatus status, Instant lastModified) {
-    super(supplier, status);
-    this.lastModified = lastModified;
+  @FunctionalInterface
+  public static interface ResponseSupplier {
+    public abstract Object get() throws IOException;
   }
 
+  private ResponseSupplier supplier;
+  private final Instant lastModified;
+
+  private CacheableServiceResponse(HttpStatus status, ResponseSupplier supplier, Instant lastModified) {
+    super(status);
+    this.supplier = Objects.requireNonNull(supplier);
+    this.lastModified = Objects.requireNonNull(lastModified);
+  }
+
+  @Override
+  Object getResponseBody() throws IOException {
+    return supplier.get();
+  }
+
+
   public static CacheableServiceResponse serveView(Instant lastModified, ResponseSupplier supplier) {
-    return new CacheableServiceResponse(supplier, HttpStatus.OK, lastModified);
+    return new CacheableServiceResponse(HttpStatus.OK, supplier, lastModified);
   }
 
   public static <T extends Timestamped> CacheableServiceResponse serveEntity(T entity,
@@ -31,7 +44,7 @@ public class CacheableServiceResponse extends ServiceResponse {
     Objects.requireNonNull(viewFunction);
     ResponseSupplier supplier = () -> viewFunction.apply(entity);
     Instant lastModified1 = entity.getLastModified().toInstant();
-    return new CacheableServiceResponse(supplier, HttpStatus.OK, lastModified1);
+    return new CacheableServiceResponse(HttpStatus.OK, supplier, lastModified1);
   }
 
   public static <T extends Timestamped> CacheableServiceResponse serveEntities(Collection<? extends T> entities,
@@ -43,7 +56,7 @@ public class CacheableServiceResponse extends ServiceResponse {
     Instant lastModified = entities.stream()
         .map(entity -> entity.getLastModified().toInstant())
         .max(Comparator.naturalOrder()).orElse(Instant.MIN);
-    return new CacheableServiceResponse(supplier, HttpStatus.OK, lastModified);
+    return new CacheableServiceResponse(HttpStatus.OK, supplier, lastModified);
   }
 
 

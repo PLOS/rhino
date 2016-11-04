@@ -9,35 +9,30 @@ import org.springframework.http.ResponseEntity;
 import java.io.IOException;
 import java.util.Objects;
 
-public class ServiceResponse {
+public abstract class ServiceResponse {
 
-  @FunctionalInterface
-  public static interface ResponseSupplier {
-    public abstract Object get() throws IOException;
-  }
-
-  private final ResponseSupplier supplier;
   private final HttpStatus status;
 
-  ServiceResponse(ResponseSupplier supplier, HttpStatus status) {
-    this.supplier = Objects.requireNonNull(supplier);
+  ServiceResponse(HttpStatus status) {
     this.status = Objects.requireNonNull(status);
   }
 
 
   public static ServiceResponse reportCreated(Object responseBody) {
     Objects.requireNonNull(responseBody);
-    return new ServiceResponse(() -> responseBody, HttpStatus.CREATED);
+    return new SimpleServiceResponse(HttpStatus.CREATED, responseBody);
   }
 
   public static ServiceResponse serveView(Object responseBody) {
     Objects.requireNonNull(responseBody);
-    return new ServiceResponse(() -> responseBody, HttpStatus.OK);
+    return new SimpleServiceResponse(HttpStatus.OK, responseBody);
   }
 
 
+  abstract Object getResponseBody() throws IOException;
+
   public ResponseEntity<?> asJsonResponse(Gson entityGson) throws IOException {
-    Object entity = Objects.requireNonNull(supplier.get());
+    Object entity = Objects.requireNonNull(getResponseBody());
     String json = entityGson.toJson(entity);
     return ResponseEntity.status(status)
         .contentType(MediaType.APPLICATION_JSON)
@@ -52,7 +47,7 @@ public class ServiceResponse {
   public String readJson(Gson entityGson) {
     Object entity;
     try {
-      entity = Objects.requireNonNull(supplier.get());
+      entity = Objects.requireNonNull(getResponseBody());
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
