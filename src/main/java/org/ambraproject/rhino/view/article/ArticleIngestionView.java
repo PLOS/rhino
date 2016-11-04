@@ -39,8 +39,7 @@ public class ArticleIngestionView implements JsonOutputView {
     @Autowired
     private CustomMetadataExtractor.Factory customMetadataExtractorFactory;
 
-    public ArticleIngestionView getView(ArticleIngestionIdentifier ingestionId) {
-      ArticleIngestion ingestion = articleCrudService.readIngestion(ingestionId);
+    public ArticleIngestionView getView(ArticleIngestion ingestion) {
       JournalOutputView journal = JournalOutputView.getView(ingestion.getJournal());
 
       Document document = articleCrudService.getManuscriptXml(ingestion);

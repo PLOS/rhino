@@ -34,7 +34,6 @@ import org.ambraproject.rhino.service.impl.IngestionService;
 import org.ambraproject.rhino.service.taxonomy.DummyTaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
 import org.ambraproject.rhino.util.Archive;
-import org.ambraproject.rhino.util.response.Transceiver;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;

@@ -7,12 +7,12 @@ import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleListIdentity;
-import org.ambraproject.rhino.model.ArticleList;
 import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleList;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.service.ArticleListCrudService;
-import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.journal.ArticleListView;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -24,10 +24,8 @@ import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateCallback;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -180,18 +178,8 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
   }
 
   @Override
-  public Transceiver read(final ArticleListIdentity identity) {
-    return new Transceiver() {
-      @Override
-      protected ArticleListView getData() throws IOException {
-        return getArticleList(identity);
-      }
-
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return null;
-      }
-    };
+  public ServiceResponse read(final ArticleListIdentity identity) {
+    return ServiceResponse.serveView(getArticleList(identity));
   }
 
   private Collection<ArticleListView> asArticleListViews(List<Object[]> results) {
@@ -205,44 +193,35 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
   }
 
   @Override
-  public Transceiver readAll(final Optional<String> listType, final Optional<String> journalKey) {
+  public ServiceResponse readAll(final Optional<String> listType, final Optional<String> journalKey) {
     if (!listType.isPresent() && journalKey.isPresent()) {
       throw new IllegalArgumentException();
     }
-    return new Transceiver() {
+    List<Object[]> result = hibernateTemplate.execute(new HibernateCallback<List<Object[]>>() {
       @Override
-      protected Object getData() throws IOException {
-        List<Object[]> result = hibernateTemplate.execute(new HibernateCallback<List<Object[]>>() {
-          @Override
-          public List<Object[]> doInHibernate(Session session) throws HibernateException, SQLException {
-            StringBuilder queryString = new StringBuilder(125)
-                .append("select j.journalKey, l from Journal j inner join j.articleLists l");
-            if (listType.isPresent()) {
-              queryString.append(" where (l.listType=:listType)");
-              if (journalKey.isPresent()) {
-                queryString.append(" and (j.journalKey=:journalKey)");
-              }
-            }
-
-            Query query = session.createQuery(queryString.toString());
-            if (listType.isPresent()) {
-              query.setParameter("listType", listType.get());
-              if (journalKey.isPresent()) {
-                query.setParameter("journalKey", journalKey.get());
-              }
-            }
-
-            return query.list();
+      public List<Object[]> doInHibernate(Session session) throws HibernateException, SQLException {
+        StringBuilder queryString = new StringBuilder(125)
+            .append("select j.journalKey, l from Journal j inner join j.articleLists l");
+        if (listType.isPresent()) {
+          queryString.append(" where (l.listType=:listType)");
+          if (journalKey.isPresent()) {
+            queryString.append(" and (j.journalKey=:journalKey)");
           }
-        });
-        return asArticleListViews(result);
-      }
+        }
 
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return null;
+        Query query = session.createQuery(queryString.toString());
+        if (listType.isPresent()) {
+          query.setParameter("listType", listType.get());
+          if (journalKey.isPresent()) {
+            query.setParameter("journalKey", journalKey.get());
+          }
+        }
+
+        return query.list();
       }
-    };
+    });
+    Collection<ArticleListView> views = asArticleListViews(result);
+    return ServiceResponse.serveView(views);
   }
 
   private Collection<ArticleListView> findContainingLists(final ArticleIdentifier articleId) {
@@ -261,20 +240,8 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
   }
 
   @Override
-  public Transceiver readContainingLists(final ArticleIdentifier articleId) {
-    return new Transceiver() {
-      @Override
-      protected Collection<ArticleListView> getData() throws IOException {
-        return findContainingLists(articleId);
-      }
-
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        // TODO: Use maximum lastModified from findContainingLists(articleId)?
-        // Maybe we want to adapt EntityCollectionTransceiver to extract the entity (ArticleList) from a wrapping view
-        return null;
-      }
-    };
+  public ServiceResponse readContainingLists(final ArticleIdentifier articleId) {
+    return ServiceResponse.serveView(findContainingLists(articleId));
   }
 
 }

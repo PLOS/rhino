@@ -8,11 +8,9 @@ import org.ambraproject.rhino.identity.CommentIdentifier;
 import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.service.CommentCrudService;
-import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
 import org.ambraproject.rhino.view.comment.CommentNodeView;
-import org.ambraproject.rhino.view.comment.CommentOutputView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -38,30 +36,27 @@ public class CommentCrudController extends RestController {
   private CommentCrudService commentCrudService;
 
   @RequestMapping(value = "/comments/{commentDoi:.+}", method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response,
-                   @PathVariable("commentDoi") String commentDoi)
+  public ResponseEntity<?> read(@PathVariable("commentDoi") String commentDoi)
       throws IOException {
     // TODO: Consider: Look up article; redirect to main service
     CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
-    commentCrudService.serveComment(commentId).respond(request, response, entityGson);
+    return commentCrudService.serveComment(commentId).asJsonResponse(entityGson);
   }
 
   @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi:.+}", method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response,
-                   @PathVariable("articleDoi") String articleDoi,
-                   @PathVariable("commentDoi") String commentDoi)
+  public ResponseEntity<?> read(@PathVariable("articleDoi") String articleDoi,
+                                @PathVariable("commentDoi") String commentDoi)
       throws IOException {
     ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(articleDoi));
     CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
     // TODO: Validate articleId
 
-    commentCrudService.serveComment(commentId).respond(request, response, entityGson);
+    return commentCrudService.serveComment(commentId).asJsonResponse(entityGson);
   }
 
   @RequestMapping(value = "/comments", method = RequestMethod.GET, params = {"flagged"})
-  public void readAllFlaggedComments(HttpServletRequest request, HttpServletResponse response)
-      throws IOException {
-    commentCrudService.serveFlaggedComments().respond(request, response, entityGson);
+  public ResponseEntity<?> readAllFlaggedComments() throws IOException {
+    return commentCrudService.serveFlaggedComments().asJsonResponse(entityGson);
   }
 
   /**
@@ -70,31 +65,27 @@ public class CommentCrudController extends RestController {
    */
   @Transactional(readOnly = true)
   @RequestMapping(value = "/comments", method = RequestMethod.GET, params = "created")
-  public void getCommentsCreatedOn(HttpServletRequest request, HttpServletResponse response,
-                                   @ApiParam(value = "Date Format: yyyy-MM-dd")
-                                   @RequestParam(value = "date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date)
+  public ResponseEntity<?> getCommentsCreatedOn(@ApiParam(value = "Date Format: yyyy-MM-dd")
+                                                @RequestParam(value = "date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date)
       throws IOException {
-
-    Transceiver.serveUntimestampedView(() -> commentCrudService.getCommentsCreatedOn(date))
-        .respond(request, response, entityGson);
+    return commentCrudService.getCommentsCreatedOn(date).asJsonResponse(entityGson);
   }
 
   @RequestMapping(value = "/commentFlags", method = RequestMethod.GET)
-  public void readAllFlags(HttpServletRequest request, HttpServletResponse response)
+  public ResponseEntity<?> readAllFlags()
       throws IOException {
-    commentCrudService.readAllCommentFlags().respond(request, response, entityGson);
+    return commentCrudService.readAllCommentFlags().asJsonResponse(entityGson);
   }
 
   @RequestMapping(value = "/commentFlags", method = RequestMethod.GET, params = {"journal"})
-  public void readAllFlagsByJournal(HttpServletRequest request, HttpServletResponse response,
-                                    @RequestParam("journal") String journalKey)
+  public ResponseEntity<?> readAllFlagsByJournal(@RequestParam("journal") String journalKey)
       throws IOException {
-    commentCrudService.readCommentFlagsForJournal(journalKey).respond(request, response, entityGson);
+    return commentCrudService.readCommentFlagsForJournal(journalKey).asJsonResponse(entityGson);
   }
 
   @RequestMapping(value = "/articles/{articleDoi}/comments", method = RequestMethod.POST)
   @ApiImplicitParam(name = "body", paramType = "body", dataType = "CommentInputView",
-      value= "example: {\"creatorUserId\": 10365, " +
+      value = "example: {\"creatorUserId\": 10365, " +
           "\"parentCommentId\": \"10.1371/annotation/0043aae2-f69d-4a05-ab19-4709704eb749\", " +
           "\"title\": \"no, really watch this\", " +
           "\"body\": \"http://www.youtube.com/watch?v=iGQdwSAAz9I\", " +
@@ -109,13 +100,11 @@ public class CommentCrudController extends RestController {
     // TODO: Pass Optional.empty() if client POSTed to "/comments"?
     Optional<ArticleIdentifier> articleIdObj = Optional.of(articleId);
 
-    CommentOutputView created = commentCrudService.createComment(articleIdObj, input);
-    return reportCreated(created);
+    return commentCrudService.createComment(articleIdObj, input).asJsonResponse(entityGson);
   }
 
   @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi}/flags", method = RequestMethod.DELETE)
-  public ResponseEntity<?> removeAllFlags(HttpServletRequest request,
-                                          @PathVariable("articleDoi") String articleDoi,
+  public ResponseEntity<?> removeAllFlags(@PathVariable("articleDoi") String articleDoi,
                                           @PathVariable("commentDoi") String commentDoi)
       throws IOException {
     ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(articleDoi));
@@ -140,8 +129,7 @@ public class CommentCrudController extends RestController {
     // TODO: Validate articleId
 
     CommentInputView input = readJsonFromRequest(request, CommentInputView.class);
-    CommentOutputView patched = commentCrudService.patchComment(commentId, input);
-    return reportUpdated(patched);
+    return commentCrudService.patchComment(commentId, input).asJsonResponse(entityGson);
   }
 
   @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi:.+}", method = RequestMethod.DELETE)
@@ -162,7 +150,7 @@ public class CommentCrudController extends RestController {
 
   @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi}/flags", method = RequestMethod.POST)
   @ApiImplicitParam(name = "body", paramType = "body", dataType = "CommentFlagInputView",
-      value= "example: {\"creatorUserId\": 10365, \"body\": \"oops\", \"reasonCode\": \"spam\"}")
+      value = "example: {\"creatorUserId\": 10365, \"body\": \"oops\", \"reasonCode\": \"spam\"}")
   public ResponseEntity<String> createFlag(HttpServletRequest request,
                                            @PathVariable("articleDoi") String articleDoi,
                                            @PathVariable("commentDoi") String commentDoi)
@@ -185,7 +173,7 @@ public class CommentCrudController extends RestController {
     CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
     // TODO: Validate articleId
 
-    commentCrudService.readCommentFlagsOn(commentId).respond(request, response, entityGson);
+    commentCrudService.readCommentFlagsOn(commentId).asJsonResponse(entityGson);
   }
 
   @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi}/flags/{flagId}", method = RequestMethod.GET)
@@ -198,7 +186,7 @@ public class CommentCrudController extends RestController {
     CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
     // TODO: Validate articleId and commentId
 
-    commentCrudService.readCommentFlag(flagId).respond(request, response, entityGson);
+    commentCrudService.readCommentFlag(flagId).asJsonResponse(entityGson);
   }
 
   @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi}/flags/{flagId}", method = RequestMethod.DELETE)

@@ -2,7 +2,8 @@ package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
-import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.rest.response.CacheableServiceResponse;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.view.journal.JournalInputView;
 
 import java.io.IOException;
@@ -10,9 +11,9 @@ import java.util.Optional;
 
 public interface JournalCrudService {
 
-  public abstract Transceiver listJournals() throws IOException;
+  public abstract CacheableServiceResponse listJournals() throws IOException;
 
-  public abstract Transceiver serve(String journalKey) throws IOException;
+  public abstract CacheableServiceResponse serve(String journalKey) throws IOException;
 
   public abstract void update(String journalKey, JournalInputView input);
 

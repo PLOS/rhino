@@ -24,7 +24,7 @@ import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.rest.response.CacheableServiceResponse;
 import org.ambraproject.rhino.view.journal.IssueInputView;
 
 import java.io.IOException;
@@ -35,7 +35,7 @@ public interface IssueCrudService {
   /**
    * Serve issue metadata to a client.
    */
-  public abstract Transceiver serveIssue(IssueIdentifier id) throws IOException;
+  public abstract CacheableServiceResponse serveIssue(IssueIdentifier id) throws IOException;
 
   /**
    * Read a issue requested by the client, throwing {@link RestClientException} if the issue does not exist.

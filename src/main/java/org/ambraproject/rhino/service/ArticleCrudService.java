@@ -29,8 +29,9 @@ import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.rest.response.CacheableServiceResponse;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.util.Archive;
-import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.ResolvedDoiView;
 import org.ambraproject.rhino.view.article.ArticleOverview;
 import org.w3c.dom.Document;
@@ -56,7 +57,7 @@ public interface ArticleCrudService {
    * @param ingestionId specifies the article
    * @throws IOException
    */
-  public abstract Transceiver serveAuthors(ArticleIngestionIdentifier ingestionId);
+  public abstract CacheableServiceResponse serveAuthors(ArticleIngestionIdentifier ingestionId);
 
   /**
    * Read category information from the Ambra database.
@@ -64,7 +65,7 @@ public interface ArticleCrudService {
    * @param articleId specifies the article
    * @throws IOException
    */
-  public abstract Transceiver serveCategories(ArticleIdentifier articleId)
+  public abstract ServiceResponse serveCategories(ArticleIdentifier articleId)
       throws IOException;
 
   /**
@@ -73,7 +74,7 @@ public interface ArticleCrudService {
    * @param articleId specifies the article
    * @throws IOException
    */
-  public abstract Transceiver serveRawCategories(ArticleIdentifier articleId)
+  public abstract ServiceResponse serveRawCategories(ArticleIdentifier articleId)
       throws IOException;
 
   /**
@@ -103,17 +104,17 @@ public interface ArticleCrudService {
    */
   public abstract Archive repack(ArticleIngestionIdentifier ingestionId);
 
-  public abstract Transceiver serveMetadata(ArticleIngestionIdentifier ingestionId);
+  public abstract CacheableServiceResponse serveMetadata(ArticleIngestionIdentifier ingestionId);
 
-  public abstract Transceiver serveItems(ArticleIngestionIdentifier ingestionId);
+  public abstract CacheableServiceResponse serveItems(ArticleIngestionIdentifier ingestionId);
 
   public abstract ArticleOverview buildOverview(Article article);
 
-  public abstract Transceiver serveOverview(ArticleIdentifier id);
+  public abstract ServiceResponse serveOverview(ArticleIdentifier id);
 
-  public abstract Transceiver serveRevisions(ArticleIdentifier id);
+  public abstract ServiceResponse serveRevisions(ArticleIdentifier id);
 
-  public abstract Transceiver serveRevision(ArticleRevisionIdentifier revisionId);
+  public abstract CacheableServiceResponse serveRevision(ArticleRevisionIdentifier revisionId);
 
   public abstract ArticleItem getArticleItem(ArticleItemIdentifier id);
 

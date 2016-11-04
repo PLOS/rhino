@@ -94,30 +94,6 @@ public abstract class RestController {
   }
 
   /**
-   * @deprecated Pass a serializable entity, not a string
-   */
-  @Deprecated
-  protected ResponseEntity<String> reportUpdated(String updatedId) {
-    log.warn("reportUpdated should receive an entity, not a string.");
-    return reportUpdated((Object) updatedId);
-  }
-
-  /**
-   * Report that a RESTful operation to update an entity succeeded. The returned object (if returned from a {@link
-   * RequestMapping}) will cause the REST response to indicate an "OK" HTTP status and have a response body containing
-   * the serialized object.
-   *
-   * @param updated the updated entity or a serializable view of it
-   * @return a response indicating that the object was updated
-   */
-  protected ResponseEntity<String> reportUpdated(Object updated) {
-    HttpHeaders headers = new HttpHeaders();
-    headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-    String jsonContent = entityGson.toJson(updated);
-    return new ResponseEntity<>(jsonContent, headers, HttpStatus.OK);
-  }
-
-  /**
    * Report that a RESTful operation to delete an object succeeded. The returned object (if returned from a {@link
    * RequestMapping}) will cause the REST response to indicate an "OK" HTTP status and have a response body identifying
    * the deleted object.
@@ -126,15 +102,6 @@ public abstract class RestController {
    */
   protected ResponseEntity<Object> reportDeleted(String identifier) {
     return new ResponseEntity<>(identifier, HttpStatus.OK);
-  }
-
-  /**
-   * @deprecated Pass a serializable entity, not a string
-   */
-  @Deprecated
-  protected ResponseEntity<String> reportCreated(String createdId) {
-    log.warn("reportUpdated should receive an entity, not a string.");
-    return reportCreated((Object) createdId);
   }
 
   /**

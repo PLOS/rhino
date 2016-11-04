@@ -27,11 +27,10 @@ import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.rest.response.CacheableServiceResponse;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
-import org.ambraproject.rhino.util.response.EntityTransceiver;
-import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.journal.IssueInputView;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.hibernate.Query;
@@ -70,18 +69,8 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
   }
 
   @Override
-  public Transceiver serveIssue(final IssueIdentifier id) throws IOException {
-    return new EntityTransceiver<Issue>() {
-      @Override
-      protected Issue fetchEntity() {
-        return readIssue(id);
-      }
-
-      @Override
-      protected Object getView(Issue issue) {
-        return issueOutputViewFactory.getView(issue);
-      }
-    };
+  public CacheableServiceResponse serveIssue(final IssueIdentifier id) throws IOException {
+    return CacheableServiceResponse.serveEntity(readIssue(id), issueOutputViewFactory::getView);
   }
 
   private Issue applyInput(Issue issue, IssueInputView input) {
