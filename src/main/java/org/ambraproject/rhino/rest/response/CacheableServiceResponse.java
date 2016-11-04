@@ -20,7 +20,7 @@ public class CacheableServiceResponse extends ServiceResponse {
     public abstract Object get() throws IOException;
   }
 
-  private ResponseSupplier supplier;
+  private final ResponseSupplier supplier;
   private final Instant lastModified;
 
   private CacheableServiceResponse(HttpStatus status, ResponseSupplier supplier, Instant lastModified) {

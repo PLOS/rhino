@@ -16,7 +16,7 @@ class SimpleServiceResponse extends ServiceResponse {
 
   @Override
   Object getResponseBody() throws IOException {
-    return null;
+    return body;
   }
 
 }
