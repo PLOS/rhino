@@ -3,6 +3,7 @@ package org.ambraproject.rhino.rest.response;
 import com.google.gson.Gson;
 import org.ambraproject.rhino.model.Timestamped;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
@@ -61,9 +62,19 @@ public class CacheableServiceResponse extends ServiceResponse {
 
 
   public ResponseEntity<?> asJsonResponse(Instant ifModifiedSince, Gson entityGson) throws IOException {
-    return lastModified.isAfter(ifModifiedSince)
-        ? ResponseEntity.status(HttpStatus.NOT_MODIFIED).build()
-        : super.asJsonResponse(entityGson);
+    if (lastModified.isAfter(ifModifiedSince)) {
+      return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+    }
+    Object entity = Objects.requireNonNull(getResponseBody());
+    String json = entityGson.toJson(entity);
+    return ResponseEntity.status(status)
+        .contentType(MediaType.APPLICATION_JSON)
+        .lastModified(getEpochMilliseconds(lastModified))
+        .body(json);
+  }
+
+  private static long getEpochMilliseconds(Instant lastModified) {
+    return lastModified.getEpochSecond() * 1000 + lastModified.getNano() / 1000;
   }
 
   /**

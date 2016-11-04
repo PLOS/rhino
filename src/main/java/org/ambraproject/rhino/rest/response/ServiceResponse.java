@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public abstract class ServiceResponse {
 
-  private final HttpStatus status;
+  protected final HttpStatus status;
 
   ServiceResponse(HttpStatus status) {
     this.status = Objects.requireNonNull(status);
