@@ -64,8 +64,8 @@ public final class CacheableServiceResponse extends ServiceResponse {
                                                                              Function<? super T, ?> viewFunction) {
     Objects.requireNonNull(viewFunction);
     ResponseSupplier supplier = () -> viewFunction.apply(entity);
-    Instant lastModified1 = entity.getLastModified().toInstant();
-    return new CacheableServiceResponse(HttpStatus.OK, supplier, lastModified1);
+    Instant lastModified = entity.getLastModified().toInstant();
+    return new CacheableServiceResponse(HttpStatus.OK, supplier, lastModified);
   }
 
 
