@@ -7,6 +7,13 @@ import org.springframework.http.HttpStatus;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * An encapsulated view to be returned from the controller layer.
+ * <p>
+ * Instances are generally returned from service interfaces in order to wrap around and hide a view that can be
+ * serialized into JSON by {@link Gson}. It also encapsulates the HTTP response status, generally either reporting "OK"
+ * or, from services that persist data, "Created".
+ */
 public abstract class ServiceResponse {
 
   protected final HttpStatus status;
