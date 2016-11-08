@@ -8,12 +8,9 @@ import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 import java.time.Instant;
-import java.util.Collection;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.Objects;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public final class CacheableServiceResponse extends ServiceResponse {
 
@@ -47,18 +44,6 @@ public final class CacheableServiceResponse extends ServiceResponse {
     ResponseSupplier supplier = () -> viewFunction.apply(entity);
     Instant lastModified1 = entity.getLastModified().toInstant();
     return new CacheableServiceResponse(HttpStatus.OK, supplier, lastModified1);
-  }
-
-  public static <T extends Timestamped> CacheableServiceResponse serveEntities(Collection<? extends T> entities,
-                                                                               Function<? super T, ?> viewFunction) {
-    Objects.requireNonNull(viewFunction);
-    ResponseSupplier supplier = () -> entities.stream()
-        .map(viewFunction)
-        .collect(Collectors.toList());
-    Instant lastModified = entities.stream()
-        .map(entity -> entity.getLastModified().toInstant())
-        .max(Comparator.naturalOrder()).orElse(Instant.MIN);
-    return new CacheableServiceResponse(HttpStatus.OK, supplier, lastModified);
   }
 
 

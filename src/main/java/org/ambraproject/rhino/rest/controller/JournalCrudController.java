@@ -32,9 +32,9 @@ public class JournalCrudController extends RestController {
 
   @Transactional(readOnly = true)
   @RequestMapping(value = "/journals", method = RequestMethod.GET)
-  public ResponseEntity<?> listJournals(@RequestHeader(value = HttpHeaders.IF_MODIFIED_SINCE, required = false) Date ifModifiedSince)
+  public ResponseEntity<?> listJournals()
       throws IOException {
-    return journalCrudService.listJournals().asJsonResponse(ifModifiedSince, entityGson);
+    return journalCrudService.listJournals().asJsonResponse(entityGson);
   }
 
   @Transactional(readOnly = true)

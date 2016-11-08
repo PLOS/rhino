@@ -7,6 +7,7 @@ import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.response.CacheableServiceResponse;
+import org.ambraproject.rhino.rest.response.TransientServiceResponse;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.view.journal.JournalInputView;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("JpaQlInspection")
 public class JournalCrudServiceImpl extends AmbraService implements JournalCrudService {
@@ -31,11 +33,13 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
   private IssueCrudService issueCrudService;
 
   @Override
-  public CacheableServiceResponse listJournals() throws IOException {
-    return CacheableServiceResponse.serveEntities(getAllJournals(), JournalOutputView::getView);
+  public TransientServiceResponse listJournals() throws IOException {
+    Collection<Journal> journals = getAllJournals();
+    Collection<JournalOutputView> views = journals.stream().map(JournalOutputView::getView).collect(Collectors.toList());
+    return TransientServiceResponse.serveView(views);
   }
 
-  private Collection<? extends Journal> getAllJournals() {
+  private Collection<Journal> getAllJournals() {
     return (List<Journal>) hibernateTemplate
         .execute(session -> session.createCriteria(Journal.class).list());
   }

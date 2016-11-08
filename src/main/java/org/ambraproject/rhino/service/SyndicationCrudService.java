@@ -24,7 +24,7 @@ package org.ambraproject.rhino.service;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.model.Syndication;
-import org.ambraproject.rhino.rest.response.CacheableServiceResponse;
+import org.ambraproject.rhino.rest.response.TransientServiceResponse;
 
 import java.io.IOException;
 import java.util.List;
@@ -107,7 +107,7 @@ public interface SyndicationCrudService {
    */
   public List<Syndication> getSyndications(String journalKey, List<String> statuses);
 
-  public CacheableServiceResponse readSyndications(String journalKey, List<String> statuses) throws IOException;
+  public TransientServiceResponse readSyndications(String journalKey, List<String> statuses) throws IOException;
 
   /**
    * Send a message to the message queue indicating that the Article identified by <code>articleDoi</code> should be

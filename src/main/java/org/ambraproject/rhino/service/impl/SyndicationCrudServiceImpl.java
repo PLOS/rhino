@@ -27,7 +27,7 @@ import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.model.SyndicationStatus;
-import org.ambraproject.rhino.rest.response.CacheableServiceResponse;
+import org.ambraproject.rhino.rest.response.TransientServiceResponse;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.MessageSender;
@@ -47,6 +47,7 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Manage the syndication process, including creating and updating Syndication objects, as well as pushing syndication
@@ -158,9 +159,10 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
   }
 
   @Override
-  public CacheableServiceResponse readSyndications(String journalKey, List<String> statuses) throws IOException {
+  public TransientServiceResponse readSyndications(String journalKey, List<String> statuses) throws IOException {
     List<Syndication> syndications = getSyndications(journalKey, statuses);
-    return CacheableServiceResponse.serveEntities(syndications, SyndicationOutputView::createSyndicationView);
+    List<SyndicationOutputView> views = syndications.stream().map(SyndicationOutputView::createSyndicationView).collect(Collectors.toList());
+    return TransientServiceResponse.serveView(views);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
