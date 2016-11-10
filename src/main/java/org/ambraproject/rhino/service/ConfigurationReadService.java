@@ -11,7 +11,7 @@ public interface ConfigurationReadService {
 
   public static final ImmutableSet<String> CONFIG_TYPES = ImmutableSet.of("build", "repo");
 
-  Map<String, Object> getRepoConfig();
+  public abstract Map<String, Object> getRepoConfig();
 
   /**
    * Returns a {@link Properties} instance with information about how the application was built.
@@ -26,11 +26,11 @@ public interface ConfigurationReadService {
   /**
    * Respond with a JSON object containing all values from {@link #getBuildProperties()}.
    */
-  public ServiceResponse<Properties> readBuildConfig() throws IOException;
+  public abstract ServiceResponse<Properties> readBuildConfig() throws IOException;
 
 
   /**
    * Respond with a JSON object containing all content repository-related Rhino config values.
    */
-  public ServiceResponse<Map<String, Object>> readRepoConfig() throws IOException;
+  public abstract ServiceResponse<Map<String, Object>> readRepoConfig() throws IOException;
 }
