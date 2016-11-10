@@ -3,9 +3,10 @@ package org.ambraproject.rhino.service;
 import com.google.common.base.Optional;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleListIdentity;
-import org.ambraproject.rhino.rest.response.TransientServiceResponse;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.view.journal.ArticleListView;
 
+import java.util.Collection;
 import java.util.Set;
 
 public interface ArticleListCrudService {
@@ -23,9 +24,9 @@ public interface ArticleListCrudService {
   ArticleListView update(ArticleListIdentity identity, Optional<String> displayName,
                          Optional<? extends Set<ArticleIdentifier>> articleIds);
 
-  TransientServiceResponse read(ArticleListIdentity identity);
+  ServiceResponse<ArticleListView> read(ArticleListIdentity identity);
 
-  TransientServiceResponse readAll(Optional<String> listType, Optional<String> journalKey);
+  ServiceResponse<Collection<ArticleListView>> readAll(Optional<String> listType, Optional<String> journalKey);
 
   /**
    * Read all lists that contain the article.
@@ -33,6 +34,6 @@ public interface ArticleListCrudService {
    * @param articleId the identity of an article
    * @return the identities of all lists that contain the article
    */
-  TransientServiceResponse readContainingLists(ArticleIdentifier articleId);
+  ServiceResponse<Collection<ArticleListView>> readContainingLists(ArticleIdentifier articleId);
 
 }

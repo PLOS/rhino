@@ -1,9 +1,10 @@
 package org.ambraproject.rhino.service;
 
 import com.google.common.collect.ImmutableSet;
-import org.ambraproject.rhino.rest.response.TransientServiceResponse;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Properties;
 
 public interface ConfigurationReadService {
@@ -23,11 +24,11 @@ public interface ConfigurationReadService {
   /**
    * Respond with a JSON object containing all values from {@link #getBuildProperties()}.
    */
-  public TransientServiceResponse readBuildConfig() throws IOException;
+  public ServiceResponse<Properties> readBuildConfig() throws IOException;
 
 
   /**
    * Respond with a JSON object containing all content repository-related Rhino config values.
    */
-  public TransientServiceResponse readRepoConfig() throws IOException;
+  public ServiceResponse<Map<String, Object>> readRepoConfig() throws IOException;
 }

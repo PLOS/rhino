@@ -6,8 +6,8 @@ import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.rest.response.CacheableServiceResponse;
-import org.ambraproject.rhino.rest.response.TransientServiceResponse;
+import org.ambraproject.rhino.rest.response.CacheableResponse;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.view.journal.JournalInputView;
@@ -33,10 +33,10 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
   private IssueCrudService issueCrudService;
 
   @Override
-  public TransientServiceResponse listJournals() throws IOException {
+  public ServiceResponse<Collection<JournalOutputView>> listJournals() throws IOException {
     Collection<Journal> journals = getAllJournals();
     Collection<JournalOutputView> views = journals.stream().map(JournalOutputView::getView).collect(Collectors.toList());
-    return TransientServiceResponse.serveView(views);
+    return ServiceResponse.serveView(views);
   }
 
   private Collection<Journal> getAllJournals() {
@@ -45,8 +45,8 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
   }
 
   @Override
-  public CacheableServiceResponse serve(final String journalKey) throws IOException {
-    return CacheableServiceResponse.serveEntity(readJournal(journalKey), JournalOutputView::getView);
+  public CacheableResponse<JournalOutputView> serve(final String journalKey) throws IOException {
+    return CacheableResponse.serveEntity(readJournal(journalKey), JournalOutputView::getView);
   }
 
   @Override

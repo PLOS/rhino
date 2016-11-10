@@ -3,7 +3,7 @@ package org.ambraproject.rhino.rest.controller;
 import com.wordnik.swagger.annotations.ApiImplicitParam;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.rest.response.TransientServiceResponse;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.ambraproject.rhino.view.journal.JournalInputView;
@@ -42,7 +42,7 @@ public class JournalCrudController extends RestController {
   public ResponseEntity<?> read(@RequestHeader(value = HttpHeaders.IF_MODIFIED_SINCE, required = false) Date ifModifiedSince,
                                 @PathVariable String journalKey)
       throws IOException {
-    return journalCrudService.serve(journalKey).asJsonResponse(ifModifiedSince, entityGson);
+    return journalCrudService.serve(journalKey).getIfModified(ifModifiedSince).asJsonResponse(entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
@@ -55,7 +55,7 @@ public class JournalCrudController extends RestController {
     JournalInputView input = readJsonFromRequest(request, JournalInputView.class);
     journalCrudService.update(journalKey, input);
 
-    return journalCrudService.serve(journalKey).asJsonResponse(ifModifiedSince, entityGson);
+    return journalCrudService.serve(journalKey).getIfModified(ifModifiedSince).asJsonResponse(entityGson);
   }
 
   @Transactional(readOnly = true)
@@ -65,6 +65,6 @@ public class JournalCrudController extends RestController {
     Journal journal = journalCrudService.readJournal(journalKey);
     IssueOutputView view = issueOutputViewFactory.getCurrentIssueViewFor(journal)
         .orElseThrow(() -> new RestClientException("Current issue is not set for " + journalKey, HttpStatus.NOT_FOUND));
-    return TransientServiceResponse.serveView(view).asJsonResponse(entityGson);
+    return ServiceResponse.serveView(view).asJsonResponse(entityGson);
   }
 }

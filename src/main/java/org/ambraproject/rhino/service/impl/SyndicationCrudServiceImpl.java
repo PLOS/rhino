@@ -27,7 +27,7 @@ import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.model.SyndicationStatus;
-import org.ambraproject.rhino.rest.response.TransientServiceResponse;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.MessageSender;
@@ -45,6 +45,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -130,7 +131,7 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
 
   @Transactional
   @Override
-  public List<Syndication> getSyndications(final String journalKey, final List<String> statuses) {
+  public Collection<Syndication> getSyndications(final String journalKey, final List<String> statuses) {
     int numDaysInPast = runtimeConfiguration.getQueueConfiguration().getSyndicationRange();
 
     LocalDate startDate = LocalDate.now().minus(numDaysInPast, ChronoUnit.DAYS);
@@ -154,15 +155,15 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
       query.setParameter("journalKey", journalKey);
       query.setParameterList("statuses", statuses);
       query.setDate("startTime", Date.from(startTime));
-      return (List<Syndication>) query.list();
+      return (Collection<Syndication>) query.list();
     });
   }
 
   @Override
-  public TransientServiceResponse readSyndications(String journalKey, List<String> statuses) throws IOException {
-    List<Syndication> syndications = getSyndications(journalKey, statuses);
-    List<SyndicationOutputView> views = syndications.stream().map(SyndicationOutputView::createSyndicationView).collect(Collectors.toList());
-    return TransientServiceResponse.serveView(views);
+  public ServiceResponse<Collection<SyndicationOutputView>> readSyndications(String journalKey, List<String> statuses) throws IOException {
+    Collection<Syndication> syndications = getSyndications(journalKey, statuses);
+    Collection<SyndicationOutputView> views = syndications.stream().map(SyndicationOutputView::createSyndicationView).collect(Collectors.toList());
+    return ServiceResponse.serveView(views);
   }
 
   @Transactional(rollbackFor = {Throwable.class})

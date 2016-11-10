@@ -59,7 +59,7 @@ public class CommentOutputView implements JsonOutputView {
      * @param comments      all comments belonging to the parent article
      * @param parentArticle
      */
-    public Factory(RuntimeConfiguration runtimeConfiguration, List<Comment> comments,
+    public Factory(RuntimeConfiguration runtimeConfiguration, Collection<Comment> comments,
                    Article parentArticle) {
       this.competingInterestPolicy = new CompetingInterestPolicy(runtimeConfiguration);
       this.parentArticle = ArticleVisibility.create(Doi.create(parentArticle.getDoi()));

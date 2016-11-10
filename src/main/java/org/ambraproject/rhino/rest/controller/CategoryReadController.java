@@ -2,7 +2,7 @@ package org.ambraproject.rhino.rest.controller;
 
 import com.wordnik.swagger.annotations.ApiParam;
 import org.ambraproject.rhino.model.ArticleCategoryAssignmentFlag;
-import org.ambraproject.rhino.rest.response.TransientServiceResponse;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -34,6 +34,6 @@ public class CategoryReadController extends RestController {
                                              @ApiParam(value = "Date Format: yyyy-MM-dd")
                                              @RequestParam(value = "toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate) throws IOException {
     List<ArticleCategoryAssignmentFlag> flags = taxonomyService.getFlagsCreatedOn(fromDate, toDate);
-    return TransientServiceResponse.serveView(flags).asJsonResponse(entityGson);
+    return ServiceResponse.serveView(flags).asJsonResponse(entityGson);
   }
 }

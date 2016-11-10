@@ -25,7 +25,7 @@ import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.rest.response.TransientServiceResponse;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.view.article.ArticleRevisionView;
@@ -69,7 +69,7 @@ public class IssueCrudController extends RestController {
                                 @PathVariable("issueDoi") String issueDoi)
       throws IOException {
     IssueIdentifier issueId = getIssueId(issueDoi);
-    return issueCrudService.serveIssue(issueId).asJsonResponse(ifModifiedSince, entityGson);
+    return issueCrudService.serveIssue(issueId).getIfModified(ifModifiedSince).asJsonResponse(entityGson);
 
     // TODO: Equivalent alias methods for other HTTP methods?
   }
@@ -81,7 +81,7 @@ public class IssueCrudController extends RestController {
     IssueIdentifier issueId = getIssueId(issueDoi);
     Issue issue = issueCrudService.readIssue(issueId);
     List<ArticleRevisionView> views = issueOutputViewFactory.getIssueArticlesView(issue);
-    return TransientServiceResponse.serveView(views).asJsonResponse(entityGson);
+    return ServiceResponse.serveView(views).asJsonResponse(entityGson);
   }
 
   @Transactional(readOnly = true)
@@ -95,7 +95,7 @@ public class IssueCrudController extends RestController {
     List<IssueOutputView> views = volume.getIssues().stream()
         .map(issueOutputViewFactory::getView)
         .collect(Collectors.toList());
-    return TransientServiceResponse.serveView(views).asJsonResponse(entityGson);
+    return ServiceResponse.serveView(views).asJsonResponse(entityGson);
   }
 
   @Transactional(readOnly = true)
@@ -160,7 +160,7 @@ public class IssueCrudController extends RestController {
     IssueInputView input = readJsonFromRequest(request, IssueInputView.class);
     issueCrudService.update(issueId, input);
 
-    return issueCrudService.serveIssue(issueId).asJsonResponse(ifModifiedSince, entityGson);
+    return issueCrudService.serveIssue(issueId).getIfModified(ifModifiedSince).asJsonResponse(entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})

@@ -2,7 +2,7 @@ package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.rest.response.TransientServiceResponse;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,7 +36,7 @@ public class ConfigurationReadController extends RestController {
   @RequestMapping(value = CONFIG_ROOT, method = RequestMethod.GET)
   public ResponseEntity<?> readConfig(@RequestParam(value = CONFIG_TYPE_PARAM, required = true) String configType)
       throws IOException {
-    TransientServiceResponse response;
+    ServiceResponse<?> response;
     switch (configType) {
       case "build":
         response = configurationReadService.readBuildConfig();
@@ -53,7 +53,7 @@ public class ConfigurationReadController extends RestController {
 
   @RequestMapping(value = CONFIG_ROOT + "/userApi", method = RequestMethod.GET)
   public ResponseEntity<?> readUserApiConfig() throws IOException {
-    return TransientServiceResponse.serveView(runtimeConfiguration.getNedConfiguration()).asJsonResponse(entityGson);
+    return ServiceResponse.serveView(runtimeConfiguration.getNedConfiguration()).asJsonResponse(entityGson);
   }
 
 }

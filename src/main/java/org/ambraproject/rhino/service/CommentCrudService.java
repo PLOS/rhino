@@ -18,13 +18,19 @@ import org.ambraproject.rhino.identity.CommentIdentifier;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Comment;
 import org.ambraproject.rhino.model.Flag;
-import org.ambraproject.rhino.rest.response.CacheableServiceResponse;
-import org.ambraproject.rhino.rest.response.TransientServiceResponse;
+import org.ambraproject.rhino.rest.response.CacheableResponse;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
+import org.ambraproject.rhino.view.comment.CommentCountView;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
+import org.ambraproject.rhino.view.comment.CommentFlagOutputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
+import org.ambraproject.rhino.view.comment.CommentNodeView;
+import org.ambraproject.rhino.view.comment.CommentOutputView;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -40,7 +46,7 @@ public interface CommentCrudService {
    * @param articleId identifies the article
    * @throws IOException
    */
-  public TransientServiceResponse serveComments(ArticleIdentifier articleId)
+  public ServiceResponse<List<CommentOutputView>> serveComments(ArticleIdentifier articleId)
       throws IOException;
 
   /**
@@ -49,7 +55,7 @@ public interface CommentCrudService {
    * @param commentId identifies the comment
    * @throws IOException
    */
-  public TransientServiceResponse serveComment(CommentIdentifier commentId)
+  public ServiceResponse<CommentOutputView> serveComment(CommentIdentifier commentId)
       throws IOException;
 
   /**
@@ -57,13 +63,13 @@ public interface CommentCrudService {
    *
    * @throws IOException
    */
-  public TransientServiceResponse serveFlaggedComments() throws IOException;
+  public ServiceResponse<Collection<CommentNodeView>> serveFlaggedComments() throws IOException;
 
   public Optional<Comment> getComment(CommentIdentifier commentId);
 
-  public TransientServiceResponse createComment(Optional<ArticleIdentifier> articleId, CommentInputView input);
+  public ServiceResponse<CommentOutputView> createComment(Optional<ArticleIdentifier> articleId, CommentInputView input);
 
-  public TransientServiceResponse patchComment(CommentIdentifier commentId, CommentInputView input);
+  public ServiceResponse<CommentOutputView> patchComment(CommentIdentifier commentId, CommentInputView input);
 
   public String deleteComment(CommentIdentifier commentId);
 
@@ -71,17 +77,17 @@ public interface CommentCrudService {
 
   public Flag createCommentFlag(CommentIdentifier commentId, CommentFlagInputView input);
 
-  public TransientServiceResponse readAllCommentFlags();
+  public ServiceResponse<Collection<CommentFlagOutputView>> readAllCommentFlags();
 
-  public TransientServiceResponse readCommentFlagsForJournal(String journalKey);
+  public ServiceResponse<Collection<CommentFlagOutputView>> readCommentFlagsForJournal(String journalKey);
 
-  public CacheableServiceResponse readCommentFlag(long flagId);
+  public CacheableResponse<CommentFlagOutputView> readCommentFlag(long flagId);
 
-  public TransientServiceResponse readCommentFlagsOn(CommentIdentifier commentId);
+  public ServiceResponse<List<CommentFlagOutputView>> readCommentFlagsOn(CommentIdentifier commentId);
 
   public Long deleteCommentFlag(Long flagId);
 
-  public TransientServiceResponse getCommentCount(Article article);
+  public ServiceResponse<CommentCountView> getCommentCount(Article article);
 
-  public TransientServiceResponse getCommentsCreatedOn(LocalDate date);
+  public ServiceResponse<Collection<CommentNodeView>> getCommentsCreatedOn(LocalDate date);
 }

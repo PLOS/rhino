@@ -27,7 +27,7 @@ import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.rest.response.CacheableServiceResponse;
+import org.ambraproject.rhino.rest.response.CacheableResponse;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
@@ -69,8 +69,8 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
   }
 
   @Override
-  public CacheableServiceResponse serveIssue(final IssueIdentifier id) throws IOException {
-    return CacheableServiceResponse.serveEntity(readIssue(id), issueOutputViewFactory::getView);
+  public CacheableResponse<IssueOutputView> serveIssue(final IssueIdentifier id) throws IOException {
+    return CacheableResponse.serveEntity(readIssue(id), issueOutputViewFactory::getView);
   }
 
   private Issue applyInput(Issue issue, IssueInputView input) {

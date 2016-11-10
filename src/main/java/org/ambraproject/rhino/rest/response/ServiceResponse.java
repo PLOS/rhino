@@ -1,44 +1,83 @@
 package org.ambraproject.rhino.rest.response;
 
-import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Objects;
 
 /**
- * An encapsulated view to be returned from the controller layer.
- * <p>
- * Instances are generally returned from service interfaces in order to wrap around and hide a view that can be
- * serialized into JSON by {@link Gson}. It also encapsulates the HTTP response status, generally either reporting "OK"
- * or, from services that persist data, "Created".
+ * A response that does not have any timestamp data associated with it, and is reliable only at the time it is served.
  */
-public abstract class ServiceResponse {
+public class ServiceResponse<T> {
 
-  protected final HttpStatus status;
+  private final HttpStatus status;
+  private final T body;
+  private final Instant lastModified;
 
-  ServiceResponse(HttpStatus status) {
+  private ServiceResponse(HttpStatus status, T body, Instant lastModified) {
     this.status = Objects.requireNonNull(status);
+    this.body = body;
+    this.lastModified = lastModified;
+    Preconditions.checkArgument(body != null || lastModified == null);
+  }
+
+  /**
+   * Serve a view representing a newly created entity in a response.
+   *
+   * @param responseBody the view to serialize as the response
+   * @return the response
+   */
+  public static <T> ServiceResponse<T> reportCreated(T responseBody) {
+    Objects.requireNonNull(responseBody);
+    return new ServiceResponse<T>(HttpStatus.CREATED, responseBody, null);
+  }
+
+  /**
+   * Serve a view in a response.
+   *
+   * @param responseBody the view to serialize as the response
+   * @return the response
+   */
+  public static <T> ServiceResponse<T> serveView(T responseBody) {
+    Objects.requireNonNull(responseBody);
+    return new ServiceResponse<T>(HttpStatus.OK, responseBody, null);
+  }
+
+  static <T> ServiceResponse<T> serveCacheableView(T responseBody, Instant lastModified) {
+    Objects.requireNonNull(responseBody);
+    Objects.requireNonNull(lastModified);
+    return new ServiceResponse<T>(HttpStatus.OK, responseBody, lastModified);
+  }
+
+  static <T> ServiceResponse<T> reportNotModified(Instant lastModified) {
+    Objects.requireNonNull(lastModified);
+    return new ServiceResponse<T>(HttpStatus.NOT_MODIFIED, null, lastModified);
   }
 
 
-  abstract Object getResponseBody() throws IOException;
-
-
   /**
-   * @deprecated For unit tests only.
+   * Produce a response entity that represents this response to Spring.
+   *
+   * @param entityGson the service bean that produces JSON from view objects
+   * @return the Spring representation of this response
+   * @throws IOException
    */
-  @VisibleForTesting
-  @Deprecated
-  public String readJson(Gson entityGson) {
-    Object entity;
-    try {
-      entity = Objects.requireNonNull(getResponseBody());
-    } catch (IOException e) {
-      throw new RuntimeException(e);
+  public ResponseEntity<?> asJsonResponse(Gson entityGson) throws IOException {
+    ResponseEntity.BodyBuilder response = ResponseEntity.status(this.status)
+        .contentType(MediaType.APPLICATION_JSON);
+    if (lastModified != null) {
+      response = response.lastModified(lastModified.toEpochMilli());
     }
-    return entityGson.toJson(entity);
+    if (body != null) {
+      String json = entityGson.toJson(body);
+      return response.body(json);
+    }
+    return response.build();
   }
 
 }

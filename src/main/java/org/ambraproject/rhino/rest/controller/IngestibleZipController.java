@@ -3,7 +3,7 @@ package org.ambraproject.rhino.rest.controller;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.rest.response.TransientServiceResponse;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.service.impl.IngestionService;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.view.article.ArticleIngestionView;
@@ -50,7 +50,7 @@ public class IngestibleZipController extends RestController {
 
     // Report the written data, as JSON, in the response.
     ArticleIngestionView view = articleIngestionViewFactory.getView(ingestion);
-    return TransientServiceResponse.reportCreated(view).asJsonResponse(entityGson);
+    return ServiceResponse.reportCreated(view).asJsonResponse(entityGson);
   }
 
 }

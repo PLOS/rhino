@@ -23,8 +23,9 @@ import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.rest.response.CacheableServiceResponse;
+import org.ambraproject.rhino.rest.response.CacheableResponse;
 import org.ambraproject.rhino.view.journal.VolumeInputView;
+import org.ambraproject.rhino.view.journal.VolumeOutputView;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -34,7 +35,7 @@ public interface VolumeCrudService {
   /**
    * Serve volume metadata to a client.
    */
-  public abstract CacheableServiceResponse serveVolume(VolumeIdentifier id) throws IOException;
+  public abstract CacheableResponse<VolumeOutputView> serveVolume(VolumeIdentifier id) throws IOException;
 
   /**
    * Read a volume requested by the client, throwing {@link RestClientException} if the volume does not exist.

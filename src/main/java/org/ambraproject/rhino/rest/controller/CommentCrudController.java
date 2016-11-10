@@ -189,7 +189,7 @@ public class CommentCrudController extends RestController {
     CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
     // TODO: Validate articleId and commentId
 
-    commentCrudService.readCommentFlag(flagId).asJsonResponse(ifModifiedSince, entityGson);
+    commentCrudService.readCommentFlag(flagId).getIfModified(ifModifiedSince).asJsonResponse(entityGson);
   }
 
   @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi}/flags/{flagId}", method = RequestMethod.DELETE)
