@@ -38,10 +38,15 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
 
   @Override
   public ServiceResponse<Map<String, Object>> readRepoConfig() throws IOException {
+    return ServiceResponse.serveView(getRepoConfig());
+  }
+
+  @Override
+  public Map<String, Object> getRepoConfig() {
     Map<String, Object> cfgMap = new LinkedHashMap<>(4);
     cfgMap.put("editorial", showEndpointAsMap(runtimeConfiguration.getEditorialStorage()));
     cfgMap.put("corpus", showEndpointAsMap(runtimeConfiguration.getCorpusStorage()));
-    return ServiceResponse.serveView(cfgMap);
+    return cfgMap;
   }
 
   /**

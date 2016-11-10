@@ -13,13 +13,13 @@
 
 package org.ambraproject.rhino.service;
 
-import com.google.common.collect.ImmutableSet;
 import org.ambraproject.rhino.BaseRhinoTest;
+import org.ambraproject.rhino.model.Journal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.util.Map;
+import java.util.Collection;
 
 import static org.testng.Assert.assertTrue;
 
@@ -39,10 +39,8 @@ public class JournalCrudServiceTest extends BaseRhinoTest {
 
   @Test(enabled = false)
   public void testListJournals() throws IOException {
-    Map<String, ?> journals = entityGson.fromJson(journalCrudService.listJournals().readJson(entityGson), Map.class);
+    Collection<Journal> journals = journalCrudService.getAllJournals();
     assertTrue(journals.size() > 0);
-    Map<String, ?> journal = (Map<String, ?>) journals.values().iterator().next();
-    assertTrue(journal.keySet().containsAll(ImmutableSet.of("journalKey", "eIssn")));
   }
 
 }

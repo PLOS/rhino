@@ -39,7 +39,8 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
     return ServiceResponse.serveView(views);
   }
 
-  private Collection<Journal> getAllJournals() {
+  @Override
+  public Collection<Journal> getAllJournals() {
     return (List<Journal>) hibernateTemplate
         .execute(session -> session.createCriteria(Journal.class).list());
   }

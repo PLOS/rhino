@@ -13,6 +13,8 @@ import java.util.Optional;
 
 public interface JournalCrudService {
 
+  public abstract Collection<Journal> getAllJournals();
+
   public abstract ServiceResponse<Collection<JournalOutputView>> listJournals() throws IOException;
 
   public abstract CacheableResponse<JournalOutputView> serve(String journalKey) throws IOException;

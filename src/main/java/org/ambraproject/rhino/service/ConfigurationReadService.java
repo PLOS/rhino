@@ -11,6 +11,8 @@ public interface ConfigurationReadService {
 
   public static final ImmutableSet<String> CONFIG_TYPES = ImmutableSet.of("build", "repo");
 
+  Map<String, Object> getRepoConfig();
+
   /**
    * Returns a {@link Properties} instance with information about how the application was built.
    *
