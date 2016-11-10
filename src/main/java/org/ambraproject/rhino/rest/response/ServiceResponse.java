@@ -11,7 +11,12 @@ import java.time.Instant;
 import java.util.Objects;
 
 /**
- * A response that does not have any timestamp data associated with it, and is reliable only at the time it is served.
+ * An encapsulated view to be returned from the controller layer.
+ * <p>
+ * Instances are generally returned from service interfaces in order to wrap around a view that can be serialized into
+ * JSON by {@link Gson}. It also encapsulates the HTTP response status, generally either reporting "OK" or, from
+ * services that persist data, "Created". A "Not-Modified" status can be served via the {@link CacheableResponse}
+ * class.
  */
 public class ServiceResponse<T> {
 
@@ -19,6 +24,14 @@ public class ServiceResponse<T> {
   private final T body;
   private final Instant lastModified;
 
+  /**
+   * Note that only this constructor allows null arguments as a private implementation detail. Each of the public and
+   * package-private factory methods require non-null arguments.
+   *
+   * @param status       the status (non-nullable)
+   * @param body         the response body, or {@code null} if this response is indicating a cache hit
+   * @param lastModified the "Last-Modified" timestamp, or {@code null} if the service is not cacheable
+   */
   private ServiceResponse(HttpStatus status, T body, Instant lastModified) {
     this.status = Objects.requireNonNull(status);
     this.body = body;
@@ -48,12 +61,25 @@ public class ServiceResponse<T> {
     return new ServiceResponse<T>(HttpStatus.OK, responseBody, null);
   }
 
+  /**
+   * Serve a view as a response from a cacheable service. Indicates a cache miss.
+   *
+   * @param responseBody the view to serialize as the response
+   * @param lastModified the timestamp at which the represented entity was last modified
+   * @return the response
+   */
   static <T> ServiceResponse<T> serveCacheableView(T responseBody, Instant lastModified) {
     Objects.requireNonNull(responseBody);
     Objects.requireNonNull(lastModified);
     return new ServiceResponse<T>(HttpStatus.OK, responseBody, lastModified);
   }
 
+  /**
+   * Service a response from a cacheable service indicating that the cached value has not changed.
+   *
+   * @param lastModified the timestamp at which the represented entity was last modified
+   * @return the response
+   */
   static <T> ServiceResponse<T> reportNotModified(Instant lastModified) {
     Objects.requireNonNull(lastModified);
     return new ServiceResponse<T>(HttpStatus.NOT_MODIFIED, null, lastModified);
@@ -62,6 +88,10 @@ public class ServiceResponse<T> {
 
   /**
    * Produce a response entity that represents this response to Spring.
+   * <p>
+   * Implementation note: The return type is {@code ResponseEntity&lt;?>}, not {@code ResponseEntity&lt;T>}, because the
+   * returned value might be a {@code ResponseEntity&lt;Void>} if this object was constructed from a {@link
+   * CacheableResponse} where the request indicated a cache hit.
    *
    * @param entityGson the service bean that produces JSON from view objects
    * @return the Spring representation of this response

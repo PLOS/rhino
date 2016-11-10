@@ -55,6 +55,16 @@ public final class CacheableResponse<T> {
     return getIfModified(ifModifiedSince == null ? null : ifModifiedSince.toInstant());
   }
 
+  /**
+   * Compare against an "If-Modified-Since" header provided by the client and unpack into a {@link ServiceResponse} that
+   * will return a "Not-Modified" status if applicable. The unpacked response also will provide a "Last-Modified"
+   * timestamp.
+   *
+   * @param ifModifiedSince the timestamp provided by the requests's "If-Modified-Since" header, or {@code null} if the
+   *                        request had no "If-Modified-Since" header
+   * @return the unpacked response
+   * @throws IOException
+   */
   public ServiceResponse<T> getIfModified(Instant ifModifiedSince) throws IOException {
     if ((ifModifiedSince != null) && (ifModifiedSince.compareTo(lastModified) <= 0)) {
       return ServiceResponse.reportNotModified(lastModified);
@@ -63,6 +73,5 @@ public final class CacheableResponse<T> {
       return ServiceResponse.serveCacheableView(body, lastModified);
     }
   }
-
 
 }
