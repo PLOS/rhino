@@ -66,12 +66,11 @@ public final class CacheableResponse<T> {
    * @throws IOException
    */
   public ServiceResponse<T> getIfModified(Instant ifModifiedSince) throws IOException {
-    if ((ifModifiedSince != null) && (ifModifiedSince.compareTo(lastModified) <= 0)) {
+    if (ifModifiedSince != null && !ifModifiedSince.isBefore(lastModified)) {
       return ServiceResponse.reportNotModified(lastModified);
-    } else {
-      T body = Objects.requireNonNull(supplier.get());
-      return ServiceResponse.serveCacheableView(body, lastModified);
     }
+    T body = Objects.requireNonNull(supplier.get());
+    return ServiceResponse.serveCacheableView(body, lastModified);
   }
 
 }
