@@ -27,12 +27,11 @@ import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.model.SyndicationStatus;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.MessageSender;
 import org.ambraproject.rhino.service.SyndicationCrudService;
-import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
-import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleJsonNames;
 import org.ambraproject.rhino.view.article.SyndicationOutputView;
 import org.hibernate.Query;
@@ -46,7 +45,6 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -133,7 +131,7 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
 
   @Transactional
   @Override
-  public List<Syndication> getSyndications(final String journalKey, final List<String> statuses) {
+  public Collection<Syndication> getSyndications(final String journalKey, final List<String> statuses) {
     int numDaysInPast = runtimeConfiguration.getQueueConfiguration().getSyndicationRange();
 
     LocalDate startDate = LocalDate.now().minus(numDaysInPast, ChronoUnit.DAYS);
@@ -157,31 +155,15 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
       query.setParameter("journalKey", journalKey);
       query.setParameterList("statuses", statuses);
       query.setDate("startTime", Date.from(startTime));
-      return (List<Syndication>) query.list();
+      return (Collection<Syndication>) query.list();
     });
   }
 
   @Override
-  public Transceiver readSyndications(String journalKey, List<String> statuses) throws IOException {
-    return new EntityCollectionTransceiver<Syndication>() {
-
-      @Override
-      protected Object getView(Collection<? extends Syndication> syndications) {
-        return syndications.stream()
-            .map(SyndicationOutputView::createSyndicationView)
-            .collect(Collectors.toList());
-      }
-
-      @Override
-      protected Collection<? extends Syndication> fetchEntities() {
-        return getSyndications(journalKey, statuses);
-      }
-
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return null;
-      }
-    };
+  public ServiceResponse<Collection<SyndicationOutputView>> readSyndications(String journalKey, List<String> statuses) throws IOException {
+    Collection<Syndication> syndications = getSyndications(journalKey, statuses);
+    Collection<SyndicationOutputView> views = syndications.stream().map(SyndicationOutputView::createSyndicationView).collect(Collectors.toList());
+    return ServiceResponse.serveView(views);
   }
 
   @Transactional(rollbackFor = {Throwable.class})

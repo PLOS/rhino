@@ -29,10 +29,16 @@ import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.rest.response.CacheableResponse;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.util.Archive;
-import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.ResolvedDoiView;
+import org.ambraproject.rhino.view.article.ArticleIngestionView;
 import org.ambraproject.rhino.view.article.ArticleOverview;
+import org.ambraproject.rhino.view.article.ArticleRevisionView;
+import org.ambraproject.rhino.view.article.CategoryAssignmentView;
+import org.ambraproject.rhino.view.article.ItemSetView;
+import org.ambraproject.rhino.view.article.author.ArticleAllAuthorsView;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
@@ -56,7 +62,7 @@ public interface ArticleCrudService {
    * @param ingestionId specifies the article
    * @throws IOException
    */
-  public abstract Transceiver serveAuthors(ArticleIngestionIdentifier ingestionId);
+  public abstract CacheableResponse<ArticleAllAuthorsView> serveAuthors(ArticleIngestionIdentifier ingestionId);
 
   /**
    * Read category information from the Ambra database.
@@ -64,7 +70,7 @@ public interface ArticleCrudService {
    * @param articleId specifies the article
    * @throws IOException
    */
-  public abstract Transceiver serveCategories(ArticleIdentifier articleId)
+  public abstract ServiceResponse<Collection<CategoryAssignmentView>> serveCategories(ArticleIdentifier articleId)
       throws IOException;
 
   /**
@@ -73,7 +79,7 @@ public interface ArticleCrudService {
    * @param articleId specifies the article
    * @throws IOException
    */
-  public abstract Transceiver serveRawCategories(ArticleIdentifier articleId)
+  public abstract ServiceResponse<List<String>> serveRawCategories(ArticleIdentifier articleId)
       throws IOException;
 
   /**
@@ -103,17 +109,17 @@ public interface ArticleCrudService {
    */
   public abstract Archive repack(ArticleIngestionIdentifier ingestionId);
 
-  public abstract Transceiver serveMetadata(ArticleIngestionIdentifier ingestionId);
+  public abstract CacheableResponse<ArticleIngestionView> serveMetadata(ArticleIngestionIdentifier ingestionId);
 
-  public abstract Transceiver serveItems(ArticleIngestionIdentifier ingestionId);
+  public abstract CacheableResponse<ItemSetView> serveItems(ArticleIngestionIdentifier ingestionId);
 
   public abstract ArticleOverview buildOverview(Article article);
 
-  public abstract Transceiver serveOverview(ArticleIdentifier id);
+  public abstract ServiceResponse<ArticleOverview> serveOverview(ArticleIdentifier id);
 
-  public abstract Transceiver serveRevisions(ArticleIdentifier id);
+  public abstract ServiceResponse<List<ArticleRevisionView>> serveRevisions(ArticleIdentifier id);
 
-  public abstract Transceiver serveRevision(ArticleRevisionIdentifier revisionId);
+  public abstract CacheableResponse<ArticleRevisionView> serveRevision(ArticleRevisionIdentifier revisionId);
 
   public abstract ArticleItem getArticleItem(ArticleItemIdentifier id);
 

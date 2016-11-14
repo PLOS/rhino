@@ -25,11 +25,11 @@ import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.model.FlagReasonCode;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.rest.response.CacheableResponse;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
-import org.ambraproject.rhino.util.response.EntityTransceiver;
-import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.comment.CommentCountView;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentFlagOutputView;
@@ -44,7 +44,6 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -69,48 +68,34 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
    * @param article the article
    * @return the collection of annotations
    */
-  private List<Comment> fetchAllComments(Article article) {
-    return (List<Comment>) hibernateTemplate.find("FROM Comment WHERE articleId = ?", article.getArticleId());
+  private Collection<Comment> fetchAllComments(Article article) {
+    return (Collection<Comment>) hibernateTemplate.find("FROM Comment WHERE articleId = ?", article.getArticleId());
   }
 
   @Override
-  public Transceiver serveComments(ArticleIdentifier articleId) throws IOException {
-    return new Transceiver() {
-      @Override
-      protected Collection<CommentOutputView> getData() throws IOException {
-        Article article = articleCrudService.readArticle(articleId);
-        List<Comment> comments = fetchAllComments(article);
-        CommentOutputView.Factory factory
-            = new CommentOutputView.Factory(runtimeConfiguration, comments, article);
-        return comments.stream()
-            .filter(comment -> comment.getParent() == null)
-            .sorted(CommentOutputView.BY_DATE)
-            .map(factory::buildView)
-            .collect(Collectors.toList());
-      }
+  public ServiceResponse<List<CommentOutputView>> serveComments(ArticleIdentifier articleId) throws IOException {
+    Article article = articleCrudService.readArticle(articleId);
+    Collection<Comment> comments = fetchAllComments(article);
+    CommentOutputView.Factory factory
+        = new CommentOutputView.Factory(runtimeConfiguration, comments, article);
+    List<CommentOutputView> views = comments.stream()
+        .filter(comment -> comment.getParent() == null)
+        .sorted(CommentOutputView.BY_DATE)
+        .map(factory::buildView)
+        .collect(Collectors.toList());
+    return ServiceResponse.serveView(views);
+  }
 
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return null;
-      }
-    };
+  private CommentOutputView createView(Comment comment) {
+    Article article = comment.getArticle();
+    Collection<Comment> articleComments = fetchAllComments(article);
+    return new CommentOutputView.Factory(runtimeConfiguration, articleComments, article).buildView(comment);
   }
 
   @Override
-  public Transceiver serveComment(CommentIdentifier commentId) throws IOException {
-    return new Transceiver() {
-      @Override
-      protected CommentOutputView getData() throws IOException {
-        Comment comment = readComment(commentId);
-        return new CommentOutputView.Factory(runtimeConfiguration,
-            fetchAllComments(comment.getArticle()), comment.getArticle()).buildView(comment);
-      }
-
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return null;
-      }
-    };
+  public ServiceResponse<CommentOutputView> serveComment(CommentIdentifier commentId) throws IOException {
+    Comment comment = readComment(commentId);
+    return ServiceResponse.serveView(createView(comment));
   }
 
   @Override
@@ -149,7 +134,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   }
 
   @Override
-  public CommentOutputView createComment(Optional<ArticleIdentifier> articleId, CommentInputView input) {
+  public ServiceResponse<CommentOutputView> createComment(Optional<ArticleIdentifier> articleId, CommentInputView input) {
     final Optional<String> parentCommentUri = Optional.ofNullable(input.getParentCommentId());
 
     final Article article;
@@ -198,13 +183,13 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     hibernateTemplate.save(created);
 
     List<Comment> childComments = ImmutableList.of(); // the new comment can't have any children yet
-    CommentOutputView.Factory viewFactory
-        = new CommentOutputView.Factory(runtimeConfiguration, childComments, article);
-    return viewFactory.buildView(created);
+    CommentOutputView.Factory viewFactory = new CommentOutputView.Factory(runtimeConfiguration, childComments, article);
+    CommentOutputView view = viewFactory.buildView(created);
+    return ServiceResponse.reportCreated(view);
   }
 
   @Override
-  public CommentOutputView patchComment(CommentIdentifier commentId, CommentInputView input) {
+  public ServiceResponse<CommentOutputView> patchComment(CommentIdentifier commentId, CommentInputView input) {
     Comment comment = readComment(commentId);
 
     String declaredUri = input.getAnnotationUri();
@@ -244,8 +229,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
 
     hibernateTemplate.update(comment);
 
-    return new CommentOutputView.Factory(runtimeConfiguration,
-        fetchAllComments(comment.getArticle()), comment.getArticle()).buildView(comment);
+    return ServiceResponse.serveView(createView(comment));
   }
 
   @Override
@@ -255,18 +239,18 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     return commentId.getDoiName();
   }
 
-  private List<Flag> getCommentFlagsOn(Comment comment) {
+  private Collection<Flag> getCommentFlagsOn(Comment comment) {
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("FROM Flag WHERE flaggedComment = :comment");
       query.setParameter("comment", comment);
-      return (List<Flag>) query.list();
+      return (Collection<Flag>) query.list();
     });
   }
 
   @Override
   public String removeFlagsFromComment(CommentIdentifier commentId) {
     Comment comment = readComment(commentId);
-    List<Flag> flags = getCommentFlagsOn(comment);
+    Collection<Flag> flags = getCommentFlagsOn(comment);
     hibernateTemplate.deleteAll(flags);
     return commentId.getDoiName();
   }
@@ -287,19 +271,10 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   }
 
   @Override
-  public Transceiver readAllCommentFlags() {
-    return new Transceiver() {
-      @Override
-      protected List<CommentFlagOutputView> getData() throws IOException {
-        return getAllFlags().stream().map(commentNodeViewFactory::createFlagView)
-            .collect(Collectors.toList());
-      }
-
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return null;
-      }
-    };
+  public ServiceResponse<Collection<CommentFlagOutputView>> readAllCommentFlags() {
+    Collection<CommentFlagOutputView> views = getAllFlags().stream().map(commentNodeViewFactory::createFlagView)
+        .collect(Collectors.toList());
+    return ServiceResponse.serveView(views);
   }
 
   private List<Flag> getAllFlags() {
@@ -307,63 +282,36 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
         .execute(session -> session.createCriteria(Flag.class).list());
   }
 
-  private List<Flag> getAllFlags(String journalKey) {
+  private Collection<Flag> getAllFlags(String journalKey) {
     Journal journal = journalCrudService.readJournal(journalKey);
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("SELECT DISTINCT f FROM ArticleIngestion i, Flag f " +
           "WHERE f.flaggedComment.article = i.article " +
           "AND i.journal = :journal ");
       query.setParameter("journal", journal);
-      return (List<Flag>) query.list();
+      return (Collection<Flag>) query.list();
     });
   }
 
   @Override
-  public Transceiver readCommentFlag(Long flagId) {
-    return new EntityTransceiver<Flag>() {
-
-      @Override
-      protected Flag fetchEntity() {
-        return getFlag(flagId);
-      }
-
-      @Override
-      protected Object getView(Flag flag) {
-        return new CommentNodeView.Factory(runtimeConfiguration).createFlagView(flag);
-      }
-    };
+  public CacheableResponse<CommentFlagOutputView> readCommentFlag(long flagId) {
+    Flag flag = getFlag(flagId);
+    return CacheableResponse.serveEntity(flag,
+        f -> new CommentNodeView.Factory(runtimeConfiguration).createFlagView(f));
   }
 
   @Override
-  public Transceiver readCommentFlagsOn(CommentIdentifier commentId) {
-    return new Transceiver() {
-      @Override
-      protected Object getData() throws IOException {
-        List<Flag> flags = getCommentFlagsOn(readComment(commentId));
-        return flags.stream().map(commentNodeViewFactory::createFlagView).collect(Collectors.toList());
-      }
-
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return null;
-      }
-    };
+  public ServiceResponse<List<CommentFlagOutputView>> readCommentFlagsOn(CommentIdentifier commentId) {
+    Collection<Flag> flags = getCommentFlagsOn(readComment(commentId));
+    List<CommentFlagOutputView> views = flags.stream().map(commentNodeViewFactory::createFlagView).collect(Collectors.toList());
+    return ServiceResponse.serveView(views);
   }
 
   @Override
-  public Transceiver readCommentFlagsForJournal(String journalKey) {
-    return new Transceiver() {
-      @Override
-      protected Object getData() throws IOException {
-        List<Flag> flags = getAllFlags(journalKey);
-        return flags.stream().map(commentNodeViewFactory::createFlagView).collect(Collectors.toList());
-      }
-
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return null;
-      }
-    };
+  public ServiceResponse<Collection<CommentFlagOutputView>> readCommentFlagsForJournal(String journalKey) {
+    Collection<Flag> flags = getAllFlags(journalKey);
+    Collection<CommentFlagOutputView> views = flags.stream().map(commentNodeViewFactory::createFlagView).collect(Collectors.toList());
+    return ServiceResponse.serveView(views);
   }
 
   @Override
@@ -373,61 +321,41 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     return flagId;
   }
 
-  private List<CommentNodeView> readFlaggedComments(HibernateCallback<List<Comment>> hibernateCallback) {
-    List<Comment> flaggedComments = hibernateTemplate.execute(hibernateCallback);
-    return flaggedComments.stream().map(commentNodeViewFactory::create).collect(Collectors.toList());
+  @Override
+  public ServiceResponse<Collection<CommentNodeView>> serveFlaggedComments() throws IOException {
+    HibernateCallback<List<Comment>> hibernateCallback = session ->
+        session.createQuery("SELECT DISTINCT flaggedComment FROM Flag").list();
+    Collection<Comment> flaggedComments = hibernateTemplate.execute(hibernateCallback);
+    Collection<CommentNodeView> views = flaggedComments.stream().map(commentNodeViewFactory::create).collect(Collectors.toList());
+    return ServiceResponse.serveView(views);
+  }
+
+  private long getCount(Session session, Article article, String whereClause) {
+    Query query = session.createQuery("SELECT COUNT(*) FROM Comment WHERE article = :article " + whereClause);
+    query.setParameter("article", article);
+    return ((Number) query.uniqueResult()).longValue();
   }
 
   @Override
-  public Transceiver serveFlaggedComments() throws IOException {
-    return new Transceiver() {
-      @Override
-      protected List<CommentNodeView> getData() throws IOException {
-        return readFlaggedComments(session ->
-            session.createQuery("SELECT DISTINCT flaggedComment FROM Flag").list());
-      }
-
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return null;
-      }
-    };
+  public ServiceResponse<CommentCountView> getCommentCount(Article article) {
+    CommentCountView view = hibernateTemplate.execute((Session session) -> {
+      long all = getCount(session, article, "AND isRemoved = FALSE");
+      long root = getCount(session, article, "AND isRemoved = FALSE AND parent IS NULL");
+      long removed = getCount(session, article, "AND isRemoved = TRUE");
+      return new CommentCountView(all, root, removed);
+    });
+    return ServiceResponse.serveView(view);
   }
 
   @Override
-  public Transceiver getCommentCount(Article article) {
-    return new Transceiver() {
-      private long getCount(Session session, String whereClause) {
-        Query query = session.createQuery("SELECT COUNT(*) FROM Comment WHERE article = :article " + whereClause);
-        query.setParameter("article", article);
-        return ((Number) query.uniqueResult()).longValue();
-      }
-
-      @Override
-      protected CommentCountView getData() throws IOException {
-        return hibernateTemplate.execute((Session session) -> {
-          long all = getCount(session, "AND isRemoved = FALSE");
-          long root = getCount(session, "AND isRemoved = FALSE AND parent IS NULL");
-          long removed = getCount(session, "AND isRemoved = TRUE");
-          return new CommentCountView(all, root, removed);
-        });
-      }
-
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return null;
-      }
-    };
-  }
-
-  @Override
-  public List<CommentNodeView> getCommentsCreatedOn(LocalDate date) {
-    return hibernateTemplate.execute(session -> {
+  public ServiceResponse<Collection<CommentNodeView>> getCommentsCreatedOn(LocalDate date) {
+    Collection<CommentNodeView> views = hibernateTemplate.execute(session -> {
       Query query = session.createQuery("FROM Comment WHERE DATE(created) = :date");
       query.setParameter("date", java.sql.Date.valueOf(date));
-      List<Comment> comments = query.list();
+      Collection<Comment> comments = query.list();
 
       return comments.stream().map(commentNodeViewFactory::create).collect(Collectors.toList());
     });
+    return ServiceResponse.serveView(views);
   }
 }

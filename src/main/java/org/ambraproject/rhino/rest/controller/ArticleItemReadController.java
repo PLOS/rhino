@@ -11,25 +11,23 @@ import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
-import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.ResolvedDoiView;
 import org.ambraproject.rhino.view.article.ArticleOverview;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.Optional;
 
 @Controller
@@ -48,25 +46,11 @@ public class ArticleItemReadController extends RestController {
 
   @Transactional(readOnly = true)
   @RequestMapping(value = "/dois/{doi:.+}", method = RequestMethod.GET)
-  public void resolve(HttpServletRequest request, HttpServletResponse response,
-                      @PathVariable("doi") String escapedDoi)
+  public ResponseEntity<?> resolve(@PathVariable("doi") String escapedDoi)
       throws IOException {
     Doi doi = DoiEscaping.unescape(escapedDoi);
-    asTransceiver(findDoiTarget(doi)).respond(request, response, entityGson);
-  }
-
-  private Transceiver asTransceiver(ResolvedDoiView view) {
-    return new Transceiver() {
-      @Override
-      protected Object getData() throws IOException {
-        return view;
-      }
-
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return null;
-      }
-    };
+    ResolvedDoiView view = findDoiTarget(doi);
+    return ServiceResponse.serveView(view).asJsonResponse(entityGson);
   }
 
   private ResolvedDoiView findDoiTarget(Doi doi) throws IOException {

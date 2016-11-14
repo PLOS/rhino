@@ -24,7 +24,6 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.io.ByteSource;
 import org.ambraproject.rhino.content.xml.ArticleXml;
-import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
@@ -42,12 +41,12 @@ import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.rest.response.CacheableResponse;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.util.Archive;
-import org.ambraproject.rhino.util.response.EntityTransceiver;
-import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.ResolvedDoiView;
 import org.ambraproject.rhino.view.article.ArticleIngestionView;
 import org.ambraproject.rhino.view.article.ArticleOverview;
@@ -70,9 +69,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -100,8 +97,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private ArticleIngestionView.Factory articleIngestionViewFactory;
   @Autowired
   private ItemSetView.Factory itemSetViewFactory;
-  @Autowired
-  private CustomMetadataExtractor.Factory customMetadataExtractorFactory;
 
   @Override
   public void populateCategories(ArticleIdentifier articleId) throws IOException {
@@ -134,35 +129,15 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public Transceiver serveMetadata(final ArticleIngestionIdentifier ingestionId) {
+  public CacheableResponse<ArticleIngestionView> serveMetadata(final ArticleIngestionIdentifier ingestionId) {
     ArticleIngestion ingestion = readIngestion(ingestionId);
-    return new Transceiver() {
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return copyToCalendar(ingestion.getLastModified());
-      }
-
-      @Override
-      protected Object getData() throws IOException {
-        return articleIngestionViewFactory.getView(ingestionId);
-      }
-    };
+    return CacheableResponse.serveEntity(ingestion, articleIngestionViewFactory::getView);
   }
 
   @Override
-  public Transceiver serveItems(ArticleIngestionIdentifier ingestionId) {
+  public CacheableResponse<ItemSetView> serveItems(ArticleIngestionIdentifier ingestionId) {
     ArticleIngestion ingestion = readIngestion(ingestionId);
-    return new Transceiver() {
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return copyToCalendar(ingestion.getLastModified());
-      }
-
-      @Override
-      protected Object getData() throws IOException {
-        return itemSetViewFactory.getView(ingestion);
-      }
-    };
+    return CacheableResponse.serveEntity(ingestion, itemSetViewFactory::getView);
   }
 
   @Override
@@ -184,87 +159,45 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public Transceiver serveOverview(ArticleIdentifier id) {
-    return new Transceiver() {
-      @Override
-      protected ArticleOverview getData() throws IOException {
-        return hibernateTemplate.execute(session -> {
-          Query ingestionQuery = session.createQuery("FROM ArticleIngestion WHERE article.doi = :doi");
-          ingestionQuery.setParameter("doi", id.getDoiName());
-          List<ArticleIngestion> ingestions = ingestionQuery.list();
+  public ServiceResponse<ArticleOverview> serveOverview(ArticleIdentifier id) {
+    ArticleOverview view = hibernateTemplate.execute(session -> {
+      Query ingestionQuery = session.createQuery("FROM ArticleIngestion WHERE article.doi = :doi");
+      ingestionQuery.setParameter("doi", id.getDoiName());
+      List<ArticleIngestion> ingestions = ingestionQuery.list();
 
-          Query revisionQuery = session.createQuery("" +
-              "FROM ArticleRevision WHERE ingestion IN " +
-              "  (FROM ArticleIngestion WHERE article.doi = :doi)");
-          revisionQuery.setParameter("doi", id.getDoiName());
-          List<ArticleRevision> revisions = revisionQuery.list();
+      Query revisionQuery = session.createQuery("" +
+          "FROM ArticleRevision WHERE ingestion IN " +
+          "  (FROM ArticleIngestion WHERE article.doi = :doi)");
+      revisionQuery.setParameter("doi", id.getDoiName());
+      List<ArticleRevision> revisions = revisionQuery.list();
 
-          return ArticleOverview.build(id, ingestions, revisions);
-        });
-      }
-
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return null;
-      }
-    };
+      return ArticleOverview.build(id, ingestions, revisions);
+    });
+    return ServiceResponse.serveView(view);
   }
 
   @Override
-  public Transceiver serveRevisions(ArticleIdentifier id) {
+  public ServiceResponse<List<ArticleRevisionView>> serveRevisions(ArticleIdentifier id) {
     Article article = readArticle(id);
     List<ArticleRevision> revisions = (List<ArticleRevision>) hibernateTemplate.find(
         "FROM ArticleRevision WHERE ingestion.article = ? ORDER BY revisionNumber", article);
-    return new Transceiver() {
-      @Override
-      protected List<ArticleRevisionView> getData() throws IOException {
-        return Lists.transform(revisions, ArticleRevisionView::getView);
-      }
-
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return revisions.stream()
-            .map(ArticleRevision::getLastModified)
-            .max(Comparator.naturalOrder())
-            .map(Transceiver::copyToCalendar)
-            .orElse(null);
-      }
-    };
+    List<ArticleRevisionView> views = Lists.transform(revisions, ArticleRevisionView::getView);
+    return ServiceResponse.serveView(views);
   }
 
   @Override
-  public Transceiver serveRevision(ArticleRevisionIdentifier revisionId) {
-    return new EntityTransceiver<ArticleRevision>() {
-      @Override
-      protected ArticleRevision fetchEntity() {
-        return readRevision(revisionId);
-      }
-
-      @Override
-      protected Object getView(ArticleRevision entity) {
-        return ArticleRevisionView.getView(entity);
-      }
-    };
+  public CacheableResponse<ArticleRevisionView> serveRevision(ArticleRevisionIdentifier revisionId) {
+    ArticleRevision revision = readRevision(revisionId);
+    return CacheableResponse.serveEntity(revision, ArticleRevisionView::getView);
   }
 
   @Override
-  public Transceiver serveAuthors(ArticleIngestionIdentifier ingestionId) {
+  public CacheableResponse<ArticleAllAuthorsView> serveAuthors(ArticleIngestionIdentifier ingestionId) {
     ArticleIngestion articleIngestion = readIngestion(ingestionId);
-    return new Transceiver() {
-
-      @Override
-      protected Object getData() throws IOException {
-        return parseAuthors(getManuscriptXml(articleIngestion));
-      }
-
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return copyToCalendar(articleIngestion.getLastModified());
-      }
-    };
+    return CacheableResponse.serveEntity(articleIngestion, ing -> parseAuthors(getManuscriptXml(ing)));
   }
 
-  private ArticleAllAuthorsView parseAuthors(Document doc) throws IOException {
+  private ArticleAllAuthorsView parseAuthors(Document doc) {
     List<AuthorView> authors;
     List<String> authorContributions;
     List<String> competingInterests;
@@ -286,22 +219,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * @param articleId
    */
   @Override
-  public Transceiver serveCategories(final ArticleIdentifier articleId) throws IOException {
+  public ServiceResponse<Collection<CategoryAssignmentView>> serveCategories(final ArticleIdentifier articleId)
+      throws IOException {
     Article article = readArticle(articleId);
-    return new Transceiver() {
-      @Override
-      protected Collection<CategoryAssignmentView> getData() throws IOException {
-        Collection<ArticleCategoryAssignment> categoryAssignments = taxonomyService.getCategoriesForArticle(article);
-        return categoryAssignments.stream().map(CategoryAssignmentView::new).collect(Collectors.toList());
-      }
-
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        // Category changes are not necessarily reflected in article's last modified date.
-        // TODO: Check max timestamp among category objects?
-        return null;
-      }
-    };
+    Collection<ArticleCategoryAssignment> categoryAssignments = taxonomyService.getCategoriesForArticle(article);
+    Collection<CategoryAssignmentView> views = categoryAssignments.stream()
+        .map(CategoryAssignmentView::new)
+        .collect(Collectors.toList());
+    return ServiceResponse.serveView(views);
   }
 
 
@@ -309,28 +234,17 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public Transceiver serveRawCategories(final ArticleIdentifier articleId) throws IOException {
-
-    return new Transceiver() {
-      @Override
-      protected Calendar getLastModifiedDate() {
-        return null;
-      }
-
-      @Override
-      protected Object getData() throws IOException {
-        Article article = readArticle(articleId);
-        ArticleRevision revision = readLatestRevision(article);
-        Document manuscriptXml = getManuscriptXml(revision.getIngestion());
-        List<String> rawTerms = taxonomyService.getRawTerms(manuscriptXml, article, false /*isTextRequired*/);
-        List<String> cleanedTerms = new ArrayList<>();
-        for (String term : rawTerms) {
-          term = term.replaceAll("<TERM>", "").replaceAll("</TERM>", "");
-          cleanedTerms.add(term);
-        }
-        return cleanedTerms;
-      }
-    };
+  public ServiceResponse<List<String>> serveRawCategories(final ArticleIdentifier articleId) throws IOException {
+    Article article = readArticle(articleId);
+    ArticleRevision revision = readLatestRevision(article);
+    Document manuscriptXml = getManuscriptXml(revision.getIngestion());
+    List<String> rawTerms = taxonomyService.getRawTerms(manuscriptXml, article, false /*isTextRequired*/);
+    List<String> cleanedTerms = new ArrayList<>();
+    for (String term : rawTerms) {
+      term = term.replaceAll("<TERM>", "").replaceAll("</TERM>", "");
+      cleanedTerms.add(term);
+    }
+    return ServiceResponse.serveView(cleanedTerms);
   }
 
   /**

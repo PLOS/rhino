@@ -6,12 +6,10 @@ import org.ambraproject.rhino.model.Issue;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.rest.response.CacheableResponse;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
-import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
-import org.ambraproject.rhino.util.response.EntityTransceiver;
-import org.ambraproject.rhino.util.response.Transceiver;
-import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.ambraproject.rhino.view.journal.JournalInputView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
 import org.hibernate.Query;
@@ -23,7 +21,6 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -34,42 +31,23 @@ public class JournalCrudServiceImpl extends AmbraService implements JournalCrudS
   private HibernateTemplate hibernateTemplate;
   @Autowired
   private IssueCrudService issueCrudService;
-  @Autowired
-  private IssueOutputView.Factory issueOutputViewFactory;
 
   @Override
-  public Transceiver listJournals() throws IOException {
-    return new EntityCollectionTransceiver<Journal>() {
-      @Override
-      protected Collection<? extends Journal> fetchEntities() {
-        return getAllJournals();
-      }
-
-      @Override
-      protected Map<String, JournalOutputView> getView(Collection<? extends Journal> journals) {
-        return journals.stream().collect(Collectors.toMap(Journal::getJournalKey, JournalOutputView::getView));
-      }
-    };
+  public ServiceResponse<Collection<JournalOutputView>> listJournals() throws IOException {
+    Collection<Journal> journals = getAllJournals();
+    Collection<JournalOutputView> views = journals.stream().map(JournalOutputView::getView).collect(Collectors.toList());
+    return ServiceResponse.serveView(views);
   }
 
-  private Collection<? extends Journal> getAllJournals() {
+  @Override
+  public Collection<Journal> getAllJournals() {
     return (List<Journal>) hibernateTemplate
         .execute(session -> session.createCriteria(Journal.class).list());
   }
 
   @Override
-  public Transceiver serve(final String journalKey) throws IOException {
-    return new EntityTransceiver<Journal>() {
-      @Override
-      protected Journal fetchEntity() {
-        return readJournal(journalKey);
-      }
-
-      @Override
-      protected Object getView(Journal journal) {
-        return JournalOutputView.getView(journal);
-      }
-    };
+  public CacheableResponse<JournalOutputView> serve(final String journalKey) throws IOException {
+    return CacheableResponse.serveEntity(readJournal(journalKey), JournalOutputView::getView);
   }
 
   @Override

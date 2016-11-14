@@ -51,9 +51,7 @@ public class ConfigurationReadServiceTest extends BaseRhinoTest {
 
   @Test
   public void testReadRepoConfig() throws IOException {
-    String repoConfigJson = configurationReadService.readRepoConfig().readJson(entityGson);
-    assertTrue(repoConfigJson.length() > 0, "ConfigurationReadService did not return content repo configuration");
-    Map<String, Object> repoConfigMap = entityGson.fromJson(repoConfigJson, HashMap.class);
+    Map<String, Object> repoConfigMap = configurationReadService.getRepoConfig();
     Map<String, Object> editorialConfigMap = (Map<String, Object>) repoConfigMap.get("editorial");
 
     String repoAddress = editorialConfigMap.get("address").toString();

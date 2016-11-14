@@ -24,9 +24,11 @@ package org.ambraproject.rhino.service;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.model.Syndication;
-import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
+import org.ambraproject.rhino.view.article.SyndicationOutputView;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -105,9 +107,9 @@ public interface SyndicationCrudService {
    * @return Syndications which have a <code>status</code> within the statuses list and a <i>statusTimestamp</i> up to a
    * certain number of days in the past.
    */
-  public List<Syndication> getSyndications(String journalKey, List<String> statuses);
+  public Collection<Syndication> getSyndications(String journalKey, List<String> statuses);
 
-  public Transceiver readSyndications(String journalKey, List<String> statuses) throws IOException;
+  public ServiceResponse<Collection<SyndicationOutputView>> readSyndications(String journalKey, List<String> statuses) throws IOException;
 
   /**
    * Send a message to the message queue indicating that the Article identified by <code>articleDoi</code> should be
