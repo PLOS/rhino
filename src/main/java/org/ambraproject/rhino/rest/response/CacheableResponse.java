@@ -39,8 +39,9 @@ public final class CacheableResponse<T> {
    *
    * @param entity       the entity to represent in the response
    * @param viewFunction a function that converts the entity into a serializable view
-   * @param <T>          the entity's type
-   * @return the response
+   * @param <E>          the entity's type
+   * @param <T>          the view's type
+   * @return a response of the view
    */
   public static <T, E extends Timestamped> CacheableResponse<T>
   serveEntity(E entity, Function<? super E, ? extends T> viewFunction) {
