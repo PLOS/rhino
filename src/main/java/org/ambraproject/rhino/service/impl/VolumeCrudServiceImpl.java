@@ -139,4 +139,13 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
 
     return volume;
   }
+
+  @Override
+  public Journal getJournalOf(Volume volume) {
+    return hibernateTemplate.execute(session->{
+      Query query = session.createQuery("FROM Journal WHERE :volume IN ELEMENTS(volumes)");
+      query.setParameter("volume", volume);
+      return (Journal) query.uniqueResult();
+    });
+  }
 }

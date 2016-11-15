@@ -5,6 +5,10 @@ import org.ambraproject.rhino.identity.CommentIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.identity.IssueIdentifier;
 import org.ambraproject.rhino.identity.VolumeIdentifier;
+import org.ambraproject.rhino.model.Comment;
+import org.ambraproject.rhino.model.Issue;
+import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -13,6 +17,7 @@ import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.ResolvedDoiView;
+import org.ambraproject.rhino.view.article.ArticleOverview;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -72,15 +77,22 @@ public class ArticleItemReadController extends RestController {
     }
 
     // Not found as an Article or ArticleItem. Check other object types that use DOIs.
-    if (commentCrudService.getComment(CommentIdentifier.create(doi)).isPresent()) {
-      return ResolvedDoiView.create(doi, ResolvedDoiView.DoiWorkType.COMMENT);
-    } else if (issueCrudService.getIssue(IssueIdentifier.create(doi)).isPresent()) {
-      return ResolvedDoiView.create(doi, ResolvedDoiView.DoiWorkType.ISSUE);
-    } else if (volumeCrudService.getVolume(VolumeIdentifier.create(doi)).isPresent()) {
-      return ResolvedDoiView.create(doi, ResolvedDoiView.DoiWorkType.VOLUME);
-    } else {
-      throw new RestClientException("DOI not found: " + doi.getName(), HttpStatus.NOT_FOUND);
+    Optional<Comment> comment = commentCrudService.getComment(CommentIdentifier.create(doi));
+    if (comment.isPresent()) {
+      ArticleOverview article = articleCrudService.buildOverview(comment.get().getArticle());
+      return ResolvedDoiView.createForArticle(doi, ResolvedDoiView.DoiWorkType.COMMENT, article);
     }
+    Optional<Issue> issue = issueCrudService.getIssue(IssueIdentifier.create(doi));
+    if (issue.isPresent()) {
+      Journal journal = issueCrudService.getJournalOf(issue.get());
+      return ResolvedDoiView.create(doi, ResolvedDoiView.DoiWorkType.ISSUE, journal);
+    }
+    Optional<Volume> volume = volumeCrudService.getVolume(VolumeIdentifier.create(doi));
+    if (volume.isPresent()) {
+      Journal journal = volumeCrudService.getJournalOf(volume.get());
+      return ResolvedDoiView.create(doi, ResolvedDoiView.DoiWorkType.VOLUME, journal);
+    }
+    throw new RestClientException("DOI not found: " + doi.getName(), HttpStatus.NOT_FOUND);
   }
 
 }
