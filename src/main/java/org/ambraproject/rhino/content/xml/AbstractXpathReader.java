@@ -53,6 +53,9 @@ import java.util.List;
  */
 public abstract class AbstractXpathReader {
 
+  private static final ThreadLocal<XPathFactory> XPATH_FACTORY = ThreadLocal.withInitial(XPathFactory::newInstance);
+  private static final ThreadLocal<TransformerFactory> TRANSFORMER_FACTORY = ThreadLocal.withInitial(TransformerFactory::newInstance);
+
   protected Node xml;
   protected final XPath xPath;
   private final Transformer transformer;
@@ -64,10 +67,10 @@ public abstract class AbstractXpathReader {
 
   protected AbstractXpathReader() {
     // XPath isn't thread-safe, so we need one per instance of this class
-    this.xPath = XPathFactory.newInstance().newXPath();
+    this.xPath = XPATH_FACTORY.get().newXPath();
 
     try {
-      this.transformer = TransformerFactory.newInstance().newTransformer();
+      this.transformer = TRANSFORMER_FACTORY.get().newTransformer();
     } catch (TransformerConfigurationException e) {
       throw new RuntimeException(e);
     }
