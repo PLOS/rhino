@@ -166,6 +166,24 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
+  public ArticleOverview buildOverview(Article article) {
+    return hibernateTemplate.execute(session -> {
+      Query ingestionQuery = session.createQuery("FROM ArticleIngestion WHERE article = :article");
+      ingestionQuery.setParameter("article", article);
+      List<ArticleIngestion> ingestions = ingestionQuery.list();
+
+      Query revisionQuery = session.createQuery("" +
+          "FROM ArticleRevision WHERE ingestion IN " +
+          "  (FROM ArticleIngestion WHERE article = :article)");
+      revisionQuery.setParameter("article", article);
+      List<ArticleRevision> revisions = revisionQuery.list();
+
+      ArticleIdentifier id = ArticleIdentifier.create(article.getDoi());
+      return ArticleOverview.build(id, ingestions, revisions);
+    });
+  }
+
+  @Override
   public Transceiver serveOverview(ArticleIdentifier id) {
     return new Transceiver() {
       @Override

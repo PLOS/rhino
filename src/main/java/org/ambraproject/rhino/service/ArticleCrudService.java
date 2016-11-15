@@ -32,6 +32,7 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.ResolvedDoiView;
+import org.ambraproject.rhino.view.article.ArticleOverview;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
@@ -105,6 +106,8 @@ public interface ArticleCrudService {
   public abstract Transceiver serveMetadata(ArticleIngestionIdentifier ingestionId);
 
   public abstract Transceiver serveItems(ArticleIngestionIdentifier ingestionId);
+
+  public abstract ArticleOverview buildOverview(Article article);
 
   public abstract Transceiver serveOverview(ArticleIdentifier id);
 

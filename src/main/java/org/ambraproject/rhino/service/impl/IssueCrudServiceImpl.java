@@ -24,6 +24,7 @@ import org.ambraproject.rhino.identity.IssueIdentifier;
 import org.ambraproject.rhino.identity.VolumeIdentifier;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Issue;
+import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -170,4 +171,14 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
     hibernateTemplate.delete(issue);
   }
 
+  @Override
+  public Journal getJournalOf(Issue issue) {
+    return hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "SELECT j FROM Journal j, Volume v " +
+          "WHERE v IN ELEMENTS(j.volumes) AND :issue IN ELEMENTS(v.issues)");
+      query.setParameter("issue", issue);
+      return (Journal) query.uniqueResult();
+    });
+  }
 }
