@@ -276,7 +276,7 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
 
   private static String parseLanguage(String language) {
     if (language == null) {
-      log.warn("Language not specified in article XML; defaulting to English");
+      log.debug("Language not specified in article XML; defaulting to English");
       return "en"; // Formerly hard-coded for all articles, so it's the most sensible default
     }
     return language.toLowerCase();
