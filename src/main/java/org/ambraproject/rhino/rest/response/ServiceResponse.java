@@ -1,6 +1,5 @@
 package org.ambraproject.rhino.rest.response;
 
-import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,7 +35,6 @@ public class ServiceResponse<T> {
     this.status = Objects.requireNonNull(status);
     this.body = body;
     this.lastModified = lastModified;
-    Preconditions.checkArgument(body != null || lastModified == null);
   }
 
   /**
