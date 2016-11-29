@@ -127,9 +127,9 @@ public class IssueCrudController extends RestController {
           "\"imageArticleDoi\": \"10.1371/image.pbio.v02.i07\", " +
           "\"articleOrder\": [\"10.1371/journal.pbio.0020213\", \"10.1371/journal.pbio.0020214\", " +
           "\"10.1371/journal.pbio.0020228\"]}")
-  public ResponseEntity<String> create(HttpServletRequest request,
-                                       @PathVariable("journalKey") String journalKey,
-                                       @PathVariable("volumeDoi") String volumeDoi)
+  public ResponseEntity<?> create(HttpServletRequest request,
+                                  @PathVariable("journalKey") String journalKey,
+                                  @PathVariable("volumeDoi") String volumeDoi)
       throws IOException {
     // TODO: Validate journalKey
     VolumeIdentifier volumeId = VolumeIdentifier.create(DoiEscaping.unescape(volumeDoi));
@@ -139,7 +139,7 @@ public class IssueCrudController extends RestController {
     }
 
     Issue issue = issueCrudService.create(volumeId, input);
-    return reportCreated(issueOutputViewFactory.getView(issue));
+    return ServiceResponse.reportCreated(issueOutputViewFactory.getView(issue)).asJsonResponse(entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})

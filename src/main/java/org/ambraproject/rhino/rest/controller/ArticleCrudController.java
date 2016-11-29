@@ -160,7 +160,8 @@ public class ArticleCrudController extends RestController {
   @RequestMapping(value = "/articles/{doi}/revisions", method = RequestMethod.POST)
   public ResponseEntity<?> writeRevision(@PathVariable("doi") String doi,
                                          @RequestParam(value = "revision", required = false) Integer revisionNumber,
-                                         @RequestParam(value = "ingestion", required = true) Integer ingestionNumber) {
+                                         @RequestParam(value = "ingestion", required = true) Integer ingestionNumber)
+      throws IOException {
     ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(articleId, ingestionNumber);
 
@@ -172,7 +173,7 @@ public class ArticleCrudController extends RestController {
       revision = articleRevisionWriteService.writeRevision(revisionId, ingestionId);
     }
 
-    return reportCreated(ArticleRevisionView.getView(revision));
+    return ServiceResponse.reportCreated(ArticleRevisionView.getView(revision)).asJsonResponse(entityGson);
   }
 
   @Transactional(readOnly = false)
@@ -383,15 +384,15 @@ public class ArticleCrudController extends RestController {
   @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications", method = RequestMethod.POST)
   @ApiImplicitParam(name = "body", paramType = "body", dataType = "SyndicationInputView",
       value = "example: {\"targetQueue\": \"activemq:plos.pmc\"}")
-  public ResponseEntity<String> createSyndication(HttpServletRequest request,
-                                                  @PathVariable("doi") String doi,
-                                                  @PathVariable("number") int revisionNumber)
+  public ResponseEntity<?> createSyndication(HttpServletRequest request,
+                                             @PathVariable("doi") String doi,
+                                             @PathVariable("number") int revisionNumber)
       throws IOException {
     ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
 
     Syndication syndication = syndicationCrudService.createSyndication(revisionId, input.getTargetQueue());
-    return reportCreated(new SyndicationView(syndication));
+    return ServiceResponse.reportCreated(new SyndicationView(syndication)).asJsonResponse(entityGson);
   }
 
   @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications",
@@ -409,7 +410,7 @@ public class ArticleCrudController extends RestController {
     SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
 
     Syndication created = syndicationCrudService.syndicate(revisionId, input.getTargetQueue());
-    return reportCreated(new SyndicationView(created));
+    return ServiceResponse.reportCreated(new SyndicationView(created)).asJsonResponse(entityGson);
   }
 
   @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications", method = RequestMethod.PATCH)
