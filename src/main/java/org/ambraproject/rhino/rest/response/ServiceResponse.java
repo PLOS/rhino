@@ -1,11 +1,13 @@
 package org.ambraproject.rhino.rest.response;
 
+import com.google.common.base.Charsets;
 import com.google.gson.Gson;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -84,6 +86,9 @@ public class ServiceResponse<T> {
   }
 
 
+  private static final Charset JSON_CHARSET = Charsets.UTF_8;
+  private static final MediaType JSON_TYPE = new MediaType("application", "json", JSON_CHARSET);
+
   /**
    * Produce a response entity that represents this response to Spring.
    * <p>
@@ -97,13 +102,13 @@ public class ServiceResponse<T> {
    */
   public ResponseEntity<?> asJsonResponse(Gson entityGson) throws IOException {
     ResponseEntity.BodyBuilder response = ResponseEntity.status(this.status)
-        .contentType(MediaType.APPLICATION_JSON);
+        .contentType(JSON_TYPE);
     if (lastModified != null) {
       response = response.lastModified(lastModified.toEpochMilli());
     }
     if (body != null) {
       String json = entityGson.toJson(body);
-      return response.body(json);
+      return response.body(json.getBytes(JSON_CHARSET));
     }
     return response.build();
   }
