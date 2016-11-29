@@ -96,7 +96,7 @@ public class VolumeCrudController extends RestController {
   @RequestMapping(value = "/journals/{journalKey}/volumes", method = RequestMethod.POST)
   @ApiImplicitParam(name = "body", paramType = "body", dataType = "VolumeInputView",
       value= "example: {\"doi\": \"10.1371/volume.pmed.v01\", \"displayName\": \"2004\"}")
-  public ResponseEntity<String> create(HttpServletRequest request, @PathVariable String journalKey)
+  public ResponseEntity<?> create(HttpServletRequest request, @PathVariable String journalKey)
       throws IOException {
     VolumeInputView input = readJsonFromRequest(request, VolumeInputView.class);
     if (StringUtils.isBlank(input.getDoi())) {
@@ -104,7 +104,7 @@ public class VolumeCrudController extends RestController {
     }
 
     Volume volume = volumeCrudService.create(journalKey, input);
-    return reportCreated(VolumeOutputView.getView(volume));
+    return ServiceResponse.reportCreated(VolumeOutputView.getView(volume)).asJsonResponse(entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})

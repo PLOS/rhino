@@ -7,6 +7,7 @@ import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.CommentIdentifier;
 import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.rest.DoiEscaping;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
@@ -154,9 +155,9 @@ public class CommentCrudController extends RestController {
   @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi}/flags", method = RequestMethod.POST)
   @ApiImplicitParam(name = "body", paramType = "body", dataType = "CommentFlagInputView",
       value = "example: {\"creatorUserId\": 10365, \"body\": \"oops\", \"reasonCode\": \"spam\"}")
-  public ResponseEntity<String> createFlag(HttpServletRequest request,
-                                           @PathVariable("articleDoi") String articleDoi,
-                                           @PathVariable("commentDoi") String commentDoi)
+  public ResponseEntity<?> createFlag(HttpServletRequest request,
+                                      @PathVariable("articleDoi") String articleDoi,
+                                      @PathVariable("commentDoi") String commentDoi)
       throws IOException {
     ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(articleDoi));
     CommentIdentifier commentId = CommentIdentifier.create(DoiEscaping.unescape(commentDoi));
@@ -164,7 +165,7 @@ public class CommentCrudController extends RestController {
 
     CommentFlagInputView input = readJsonFromRequest(request, CommentFlagInputView.class);
     Flag commentFlag = commentCrudService.createCommentFlag(commentId, input);
-    return reportCreated(commentNodeViewFactory.createFlagView(commentFlag));
+    return ServiceResponse.reportCreated(commentNodeViewFactory.createFlagView(commentFlag)).asJsonResponse(entityGson);
   }
 
   @RequestMapping(value = "/articles/{articleDoi}/comments/{commentDoi}/flags", method = RequestMethod.GET)

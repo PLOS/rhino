@@ -6,6 +6,7 @@ import com.wordnik.swagger.annotations.ApiImplicitParam;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleListIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.view.article.ListInputView;
 import org.ambraproject.rhino.view.journal.ArticleListView;
@@ -58,7 +59,7 @@ public class ArticleListCrudController extends RestController {
     }
 
     ArticleListView listView = articleListCrudService.create(identity.get(), title.get(), articleDois.get());
-    return reportCreated(listView);
+    return ServiceResponse.reportCreated(listView).asJsonResponse(entityGson);
   }
 
   private static RestClientException complainAboutListIdentityOnPatch(Exception cause) {
