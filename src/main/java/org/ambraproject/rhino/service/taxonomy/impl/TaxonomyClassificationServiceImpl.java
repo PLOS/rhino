@@ -6,10 +6,10 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleCategoryAssignment;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleRevision;
-import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
@@ -242,15 +242,16 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     if (!isAmendment) {
       terms = classifyArticle(article, xml);
       if (terms != null && terms.size() > 0) {
-        List<WeightedTerm> leadNodes = getDistinctLeadNodes(terms);
-        persistCategories(leadNodes, article);
+        List<WeightedTerm> leafNodes = getDistinctLeafNodes(CATEGORY_COUNT, terms);
+        persistCategories(leafNodes, article);
       } else {
         log.error("Taxonomy server returned 0 terms. Cannot populate Categories. " + doi);
       }
     }
   }
 
-  private List<WeightedTerm> getDistinctLeadNodes(List<WeightedTerm> weightedTerms) {
+  @VisibleForTesting
+  static List<WeightedTerm> getDistinctLeafNodes(int leafCount, List<WeightedTerm> weightedTerms) {
     weightedTerms = WeightedTerm.BY_DESCENDING_WEIGHT.immutableSortedCopy(weightedTerms);
 
     List<WeightedTerm> results = new ArrayList<>(weightedTerms.size());
@@ -265,7 +266,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
       //Reaches eight stop.  Note the second check, we can be at
       //eight uniqueLeafs, but still finding different paths.  Stop
       //Adding when a new unique leaf is found.  Yes, a little confusing
-      if (uniqueLeafs.size() == CATEGORY_COUNT && !uniqueLeafs.contains(s.getLeafTerm())) {
+      if (uniqueLeafs.size() == leafCount && !uniqueLeafs.contains(s.getLeafTerm())) {
         break;
       } else {
         //getSubCategory returns leaf node of the path
