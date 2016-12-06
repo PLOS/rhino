@@ -6,10 +6,10 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleCategoryAssignment;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleRevision;
-import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
@@ -38,7 +38,8 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -197,7 +198,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   }
 
   @Override
-  public Collection<ArticleCategoryAssignment> getCategoriesForArticle(Article article) {
+  public Collection<ArticleCategoryAssignment> getAssignmentsForArticle(Article article) {
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "FROM ArticleCategoryAssignment aca " +
@@ -216,7 +217,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   @Override
   public Collection<Category> getArticleCategoriesWithTerm(Article article, String term) {
     Objects.requireNonNull(term);
-    return getCategoriesForArticle(article).stream()
+    return getAssignmentsForArticle(article).stream()
         .filter((ArticleCategoryAssignment aca) -> {
           String path = aca.getCategory().getPath();
           return getTermFromPath(path).equals(term);
@@ -242,38 +243,36 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     if (!isAmendment) {
       terms = classifyArticle(article, xml);
       if (terms != null && terms.size() > 0) {
-        List<WeightedTerm> leadNodes = getDistinctLeadNodes(terms);
-        persistCategories(leadNodes, article);
+        List<WeightedTerm> leafNodes = getDistinctLeafNodes(CATEGORY_COUNT, terms);
+        persistCategories(leafNodes, article);
       } else {
         log.error("Taxonomy server returned 0 terms. Cannot populate Categories. " + doi);
       }
     }
   }
 
-  private List<WeightedTerm> getDistinctLeadNodes(List<WeightedTerm> weightedTerms) {
-    weightedTerms = WeightedTerm.BY_DESCENDING_WEIGHT.immutableSortedCopy(weightedTerms);
-
-    List<WeightedTerm> results = new ArrayList<>(weightedTerms.size());
-    Set<String> uniqueLeafs = new HashSet<>();
-
-    for (WeightedTerm s : weightedTerms) {
-      if (s.getPath().charAt(0) != '/') {
-        throw new IllegalArgumentException("Bad category: " + s);
-      }
-
-      //We want a count of distinct lead nodes.  When this
-      //Reaches eight stop.  Note the second check, we can be at
-      //eight uniqueLeafs, but still finding different paths.  Stop
-      //Adding when a new unique leaf is found.  Yes, a little confusing
-      if (uniqueLeafs.size() == CATEGORY_COUNT && !uniqueLeafs.contains(s.getLeafTerm())) {
-        break;
-      } else {
-        //getSubCategory returns leaf node of the path
-        uniqueLeafs.add(s.getLeafTerm());
-        results.add(s);
-      }
-    }
-    return results;
+  /**
+   * Determine the most heavily weighted leaf nodes, then return all terms that have one of those leaf nodes.
+   * <p>
+   * The returned list is in descending order by weight. The order of terms with equal weight is stably preserved from
+   * the input list.
+   *
+   * @param leafCount     the number of distinct leaf nodes to search for
+   * @param weightedTerms all weighted category terms on an article
+   * @return a list, in descending order by weight, of all terms whose leaf node is among the most heavily weighted
+   */
+  @VisibleForTesting
+  static List<WeightedTerm> getDistinctLeafNodes(int leafCount, List<WeightedTerm> weightedTerms) {
+    List<WeightedTerm> orderedTerms = weightedTerms.stream()
+        .sorted(Comparator.comparing(WeightedTerm::getWeight).reversed())
+        .collect(Collectors.toList());
+    Set<String> mostWeightedLeaves = orderedTerms.stream()
+        .map(WeightedTerm::getLeafTerm)
+        .distinct().limit(leafCount)
+        .collect(Collectors.toSet());
+    return orderedTerms.stream()
+        .filter(term -> mostWeightedLeaves.contains(term.getLeafTerm()))
+        .collect(Collectors.toList());
   }
 
   private void persistCategories(List<WeightedTerm> terms, Article article) {
@@ -288,8 +287,10 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     });
 
     Map<String, Category> existingCategoryMap = Maps.uniqueIndex(existingCategories, Category::getPath);
-    Map<String, ArticleCategoryAssignment> categoriesForArticle = Maps.uniqueIndex(getCategoriesForArticle(article),
-        (ArticleCategoryAssignment a) -> a.getCategory().getPath());
+
+    Collection<ArticleCategoryAssignment> existingAssignments = getAssignmentsForArticle(article);
+    Map<Category, ArticleCategoryAssignment> assignmentMap = Maps.uniqueIndex(existingAssignments, ArticleCategoryAssignment::getCategory);
+    assignmentMap = new HashMap<>(assignmentMap); // Make it mutable. We will remove assignments as they are updated.
 
     for (WeightedTerm term : terms) {
       Category category = existingCategoryMap.get(term.getPath());
@@ -305,7 +306,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
         hibernateTemplate.save(category);
       }
 
-      ArticleCategoryAssignment assignment = categoriesForArticle.get(category.getPath());
+      ArticleCategoryAssignment assignment = assignmentMap.remove(category);
       if (assignment == null) {
         hibernateTemplate.save(new ArticleCategoryAssignment(category, article, term.getWeight()));
       } else {
@@ -313,6 +314,9 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
         hibernateTemplate.update(assignment);
       }
     }
+
+    // Each assignment that was not removed from assignmentMap is not among the new terms, so it should be deleted.
+    assignmentMap.values().forEach(hibernateTemplate::delete);
   }
 
   // There appears to be a bug in the AI getSuggestedTermsFullPath method.

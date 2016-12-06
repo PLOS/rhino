@@ -18,10 +18,13 @@
  */
 package org.ambraproject.rhino.service.taxonomy.impl;
 
+import com.google.common.collect.ImmutableList;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyRemoteServiceInvalidBehaviorException;
 import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.w3c.dom.Document;
 
@@ -29,6 +32,9 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Stream;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -168,4 +174,86 @@ public class TaxonomyClassificationServiceImplTest {
     TaxonomyClassificationServiceImpl.parseVectorElement(
         "<TERM>Background noise (acoustics)|(1) background noise(1)</TERM>");
   }
+
+
+  @DataProvider
+  public Iterator<Object[]> getDistinctLeafNodesTestCases() {
+    Object[][] cases = new Object[][]{
+        {0, new WeightedTerm[]{}, new WeightedTerm[]{}},
+        {1, new WeightedTerm[]{}, new WeightedTerm[]{}},
+        {1, new WeightedTerm[]{new WeightedTerm("/a", 1)}, new WeightedTerm[]{new WeightedTerm("/a", 1)}},
+        {2, new WeightedTerm[]{new WeightedTerm("/a", 1)}, new WeightedTerm[]{new WeightedTerm("/a", 1)}},
+
+        {2,
+            new WeightedTerm[]{
+                new WeightedTerm("/a", 2),
+                new WeightedTerm("/b", 3),
+                new WeightedTerm("/c", 1),
+            },
+            new WeightedTerm[]{
+                new WeightedTerm("/b", 3),
+                new WeightedTerm("/a", 2),
+            }
+        },
+
+        // Ensure that sort is stable on equal weights
+        {2,
+            new WeightedTerm[]{new WeightedTerm("/a", 2), new WeightedTerm("/b", 2), new WeightedTerm("/c", 1),},
+            new WeightedTerm[]{new WeightedTerm("/a", 2), new WeightedTerm("/b", 2),}
+        },
+        {2,
+            new WeightedTerm[]{new WeightedTerm("/b", 2), new WeightedTerm("/a", 2), new WeightedTerm("/c", 1),},
+            new WeightedTerm[]{new WeightedTerm("/b", 2), new WeightedTerm("/a", 2),}
+        },
+
+        {2,
+            new WeightedTerm[]{
+                new WeightedTerm("/a/x", 6),
+                new WeightedTerm("/b/x", 5),
+                new WeightedTerm("/c/y", 4),
+                new WeightedTerm("/d/y", 3),
+                new WeightedTerm("/e/z", 2),
+                new WeightedTerm("/f/z", 1),
+            },
+            new WeightedTerm[]{
+                new WeightedTerm("/a/x", 6),
+                new WeightedTerm("/b/x", 5),
+                new WeightedTerm("/c/y", 4),
+                new WeightedTerm("/d/y", 3),
+            }
+        },
+
+        {2,
+            new WeightedTerm[]{
+                new WeightedTerm("/a/x", 6),
+                new WeightedTerm("/b/x", 5),
+                new WeightedTerm("/c/y", 4),
+                new WeightedTerm("/d/y", 3),
+                new WeightedTerm("/e/z", 2),
+                new WeightedTerm("/f/x", 1),
+            },
+            new WeightedTerm[]{
+                new WeightedTerm("/a/x", 6),
+                new WeightedTerm("/b/x", 5),
+                new WeightedTerm("/c/y", 4),
+                new WeightedTerm("/d/y", 3),
+                new WeightedTerm("/f/x", 1),
+            }
+        },
+
+    };
+    return Stream.of(cases).map((Object[] values) -> {
+      int leafCount = (Integer) values[0];
+      List<WeightedTerm> input = ImmutableList.copyOf((WeightedTerm[]) values[1]);
+      List<WeightedTerm> expected = ImmutableList.copyOf((WeightedTerm[]) values[2]);
+      return new Object[]{leafCount, input, expected};
+    }).iterator();
+  }
+
+  @Test(dataProvider = "getDistinctLeafNodesTestCases")
+  public void testGetDistinctLeafNodes(int leafCount, List<WeightedTerm> input, List<WeightedTerm> expected) {
+    List<WeightedTerm> actual = TaxonomyClassificationServiceImpl.getDistinctLeafNodes(leafCount, input);
+    Assert.assertEquals(actual, expected);
+  }
+
 }
