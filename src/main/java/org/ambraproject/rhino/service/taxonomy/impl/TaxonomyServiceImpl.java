@@ -88,20 +88,20 @@ public class TaxonomyServiceImpl extends AmbraService implements TaxonomyService
   @Override
   public void deflagArticleCategory(Article article, Category category, Optional<Long> userProfileId) throws IOException {
     List<ArticleCategoryAssignmentFlag> flags = getArticleCategoryAssignmentFlags(article, category, userProfileId);
-    if (flags.isEmpty()) {
-      throw new RestClientException("Flag does not exist", HttpStatus.NOT_FOUND);
-    }
-
-    if (userProfileId.isPresent()) {
-      // An individual user deflagged the category. Under normal circumstances, they should have only one flag.
-      // In case there are multiple flags for the same user, delete all of them.
-      hibernateTemplate.deleteAll(flags);
-    } else {
-      // An anonymous user deflagged the category, in the same session in which they flagged it.
-      // Delete a single anonymous flag, chosen arbitrarily, assuming that this will balance out the flag they created.
-      // There is a small security vulnerability here: a user could submit many bogus "deflag" requests
-      // and delete everyone else's anonymous flags.
-      hibernateTemplate.delete(flags.get(0));
+    //we expect an empty list here if no flags have been added for this category/user. In this case, do nothing.
+    // TODO: only allow removal of flags if there is a currently existing flag for that category
+    if (!flags.isEmpty()) {
+      if (userProfileId.isPresent()) {
+        // An individual user deflagged the category. Under normal circumstances, they should have only one flag.
+        // In case there are multiple flags for the same user, delete all of them.
+        hibernateTemplate.deleteAll(flags);
+      } else {
+        // An anonymous user deflagged the category, in the same session in which they flagged it.
+        // Delete a single anonymous flag, chosen arbitrarily, assuming that this will balance out the flag they created.
+        // There is a small security vulnerability here: a user could submit many bogus "deflag" requests
+        // and delete everyone else's anonymous flags.
+        hibernateTemplate.delete(flags.get(0));
+      }
     }
   }
 
