@@ -38,7 +38,7 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -250,31 +250,28 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     }
   }
 
+  /**
+   * Determine the most heavily weighted leaf nodes, then return all terms that have one of those leaf nodes.
+   * <p>
+   * The returned list is in descending order by weight. The order of terms with equal weight is stably preserved from
+   * the input list.
+   *
+   * @param leafCount     the number of distinct leaf nodes to search for
+   * @param weightedTerms all weighted category terms on an article
+   * @return a list, in descending order by weight, of all terms whose leaf node is among the most heavily weighted
+   */
   @VisibleForTesting
   static List<WeightedTerm> getDistinctLeafNodes(int leafCount, List<WeightedTerm> weightedTerms) {
-    weightedTerms = WeightedTerm.BY_DESCENDING_WEIGHT.immutableSortedCopy(weightedTerms);
-
-    List<WeightedTerm> results = new ArrayList<>(weightedTerms.size());
-    Set<String> uniqueLeafs = new HashSet<>();
-
-    for (WeightedTerm s : weightedTerms) {
-      if (s.getPath().charAt(0) != '/') {
-        throw new IllegalArgumentException("Bad category: " + s);
-      }
-
-      //We want a count of distinct lead nodes.  When this
-      //Reaches eight stop.  Note the second check, we can be at
-      //eight uniqueLeafs, but still finding different paths.  Stop
-      //Adding when a new unique leaf is found.  Yes, a little confusing
-      if (uniqueLeafs.size() == leafCount && !uniqueLeafs.contains(s.getLeafTerm())) {
-        break;
-      } else {
-        //getSubCategory returns leaf node of the path
-        uniqueLeafs.add(s.getLeafTerm());
-        results.add(s);
-      }
-    }
-    return results;
+    List<WeightedTerm> orderedTerms = weightedTerms.stream()
+        .sorted(Comparator.comparing(WeightedTerm::getWeight).reversed())
+        .collect(Collectors.toList());
+    Set<String> mostWeightedLeaves = orderedTerms.stream()
+        .map(WeightedTerm::getLeafTerm)
+        .distinct().limit(leafCount)
+        .collect(Collectors.toSet());
+    return orderedTerms.stream()
+        .filter(term -> mostWeightedLeaves.contains(term.getLeafTerm()))
+        .collect(Collectors.toList());
   }
 
   private void persistCategories(List<WeightedTerm> terms, Article article) {
