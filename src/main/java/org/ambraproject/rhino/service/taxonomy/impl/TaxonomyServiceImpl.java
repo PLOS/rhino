@@ -5,14 +5,12 @@ import org.ambraproject.rhino.model.ArticleCategoryAssignmentFlag;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Category;
-import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.AmbraService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
 import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
@@ -42,8 +40,8 @@ public class TaxonomyServiceImpl extends AmbraService implements TaxonomyService
   }
 
   @Override
-  public Collection<ArticleCategoryAssignment> getCategoriesForArticle(Article article) {
-    return taxonomyClassificationService.getCategoriesForArticle(article);
+  public Collection<ArticleCategoryAssignment> getAssignmentsForArticle(Article article) {
+    return taxonomyClassificationService.getAssignmentsForArticle(article);
   }
 
   @Override

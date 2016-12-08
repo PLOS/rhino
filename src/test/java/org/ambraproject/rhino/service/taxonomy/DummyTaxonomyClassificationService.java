@@ -38,7 +38,7 @@ public class DummyTaxonomyClassificationService implements TaxonomyClassificatio
   }
 
   @Override
-  public Collection<ArticleCategoryAssignment> getCategoriesForArticle(Article article) {
+  public Collection<ArticleCategoryAssignment> getAssignmentsForArticle(Article article) {
     return null;
   }
 

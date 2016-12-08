@@ -222,7 +222,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public ServiceResponse<Collection<CategoryAssignmentView>> serveCategories(final ArticleIdentifier articleId)
       throws IOException {
     Article article = readArticle(articleId);
-    Collection<ArticleCategoryAssignment> categoryAssignments = taxonomyService.getCategoriesForArticle(article);
+    Collection<ArticleCategoryAssignment> categoryAssignments = taxonomyService.getAssignmentsForArticle(article);
     Collection<CategoryAssignmentView> views = categoryAssignments.stream()
         .map(CategoryAssignmentView::new)
         .collect(Collectors.toList());
