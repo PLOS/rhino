@@ -42,6 +42,8 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
 
   @Autowired
   private JournalCrudService journalCrudService;
+  @Autowired
+  private VolumeOutputView.Factory volumeOutputViewFactory;
 
   @Override
   public Volume readVolume(VolumeIdentifier volumeId) {
@@ -98,7 +100,7 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
 
   @Override
   public CacheableResponse<VolumeOutputView> serveVolume(final VolumeIdentifier id) throws IOException {
-    return CacheableResponse.serveEntity(readVolume(id), VolumeOutputView::getView);
+    return CacheableResponse.serveEntity(readVolume(id), volumeOutputViewFactory::getView);
   }
 
   @Override
