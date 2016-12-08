@@ -39,6 +39,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -197,7 +198,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   }
 
   @Override
-  public Collection<ArticleCategoryAssignment> getCategoriesForArticle(Article article) {
+  public Collection<ArticleCategoryAssignment> getAssignmentsForArticle(Article article) {
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
           "FROM ArticleCategoryAssignment aca " +
@@ -216,7 +217,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   @Override
   public Collection<Category> getArticleCategoriesWithTerm(Article article, String term) {
     Objects.requireNonNull(term);
-    return getCategoriesForArticle(article).stream()
+    return getAssignmentsForArticle(article).stream()
         .filter((ArticleCategoryAssignment aca) -> {
           String path = aca.getCategory().getPath();
           return getTermFromPath(path).equals(term);
@@ -286,8 +287,10 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     });
 
     Map<String, Category> existingCategoryMap = Maps.uniqueIndex(existingCategories, Category::getPath);
-    Map<String, ArticleCategoryAssignment> categoriesForArticle = Maps.uniqueIndex(getCategoriesForArticle(article),
-        (ArticleCategoryAssignment a) -> a.getCategory().getPath());
+
+    Collection<ArticleCategoryAssignment> existingAssignments = getAssignmentsForArticle(article);
+    Map<Category, ArticleCategoryAssignment> assignmentMap = Maps.uniqueIndex(existingAssignments, ArticleCategoryAssignment::getCategory);
+    assignmentMap = new HashMap<>(assignmentMap); // Make it mutable. We will remove assignments as they are updated.
 
     for (WeightedTerm term : terms) {
       Category category = existingCategoryMap.get(term.getPath());
@@ -303,7 +306,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
         hibernateTemplate.save(category);
       }
 
-      ArticleCategoryAssignment assignment = categoriesForArticle.get(category.getPath());
+      ArticleCategoryAssignment assignment = assignmentMap.remove(category);
       if (assignment == null) {
         hibernateTemplate.save(new ArticleCategoryAssignment(category, article, term.getWeight()));
       } else {
@@ -311,6 +314,9 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
         hibernateTemplate.update(assignment);
       }
     }
+
+    // Each assignment that was not removed from assignmentMap is not among the new terms, so it should be deleted.
+    assignmentMap.values().forEach(hibernateTemplate::delete);
   }
 
   // There appears to be a bug in the AI getSuggestedTermsFullPath method.

@@ -51,7 +51,7 @@ public interface TaxonomyClassificationService {
    */
   public void populateCategories(ArticleRevision revision);
 
-  public Collection<ArticleCategoryAssignment> getCategoriesForArticle(Article article);
+  public Collection<ArticleCategoryAssignment> getAssignmentsForArticle(Article article);
 
   public Collection<Category> getArticleCategoriesWithTerm(Article article, String term);
 
