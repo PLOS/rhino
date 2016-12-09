@@ -49,7 +49,7 @@ public class IssueOutputView implements JsonOutputView {
     }
 
     public IssueOutputView getView(Issue issue, Volume parentVolume) {
-      return new IssueOutputView(issue, parentVolume, this, volumeOutputViewFactory);
+      return new IssueOutputView(issue, parentVolume, this);
     }
 
     public Optional<IssueOutputView> getCurrentIssueViewFor(Journal journal) {
@@ -59,15 +59,12 @@ public class IssueOutputView implements JsonOutputView {
 
   private final Issue issue;
   private final Volume parentVolume;
-  private final IssueOutputView.Factory issueOutputViewFactory;
-  private final VolumeOutputView.Factory volumeOutputViewFactory;
+  private final IssueOutputView.Factory factory;
 
-  private IssueOutputView(Issue issue, Volume parentVolume, Factory issueOutputViewFactory,
-                          VolumeOutputView.Factory volumeOutputViewFactory) {
+  private IssueOutputView(Issue issue, Volume parentVolume, Factory issueOutputViewFactory) {
     this.issue = Objects.requireNonNull(issue);
     this.parentVolume = Objects.requireNonNull(parentVolume);
-    this.issueOutputViewFactory = Objects.requireNonNull(issueOutputViewFactory);
-    this.volumeOutputViewFactory = Objects.requireNonNull(volumeOutputViewFactory);
+    this.factory = Objects.requireNonNull(issueOutputViewFactory);
   }
 
   @Override
@@ -75,12 +72,12 @@ public class IssueOutputView implements JsonOutputView {
     JsonObject serialized = new JsonObject();
     serialized.addProperty("doi", issue.getDoi());
     serialized.addProperty("displayName", issue.getDisplayName());
-    serialized.add("parentVolume", context.serialize(volumeOutputViewFactory.getView(parentVolume)));
+    serialized.add("parentVolume", context.serialize(factory.volumeOutputViewFactory.getView(parentVolume)));
 
     Article imageArticle = issue.getImageArticle();
     if (imageArticle != null) {
       JsonObject serializedImageArticle = new JsonObject();
-      String figureImageDoi = getIssueImageFigureDoi(issueOutputViewFactory.articleCrudService, imageArticle);
+      String figureImageDoi = getIssueImageFigureDoi(factory.articleCrudService, imageArticle);
 
       serializedImageArticle.addProperty("doi", imageArticle.getDoi());
       serializedImageArticle.addProperty("figureImageDoi", figureImageDoi);
