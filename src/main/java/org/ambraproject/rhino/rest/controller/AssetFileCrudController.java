@@ -19,30 +19,21 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Joiner;
-import com.google.common.base.Optional;
 import com.google.common.io.ByteStreams;
 import com.google.common.net.HttpHeaders;
-import org.ambraproject.rhino.model.ArticleAsset;
-import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.AssetFileIdentity;
-import org.ambraproject.rhino.identity.AssetIdentity;
+import org.ambraproject.rhino.identity.ArticleFileIdentifier;
+import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.AssetCrudService;
-import org.ambraproject.rhino.service.WriteResult;
-import org.plos.crepo.exceptions.ContentRepoException;
-import org.plos.crepo.exceptions.ErrorType;
-import org.plos.crepo.model.RepoObjectMetadata;
+import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,75 +45,30 @@ import java.sql.Timestamp;
 import java.util.Enumeration;
 import java.util.List;
 
-import static org.ambraproject.rhino.service.impl.AmbraService.reportNotFound;
-
 @Controller
-public class AssetFileCrudController extends DoiBasedCrudController {
-
-  private static final String ASSET_ROOT = "/assetfiles";
-  private static final String ASSET_NAMESPACE = ASSET_ROOT + "/";
-  private static final String ASSET_TEMPLATE = ASSET_NAMESPACE + "**";
+public class AssetFileCrudController extends RestController {
 
   @Autowired
   private AssetCrudService assetCrudService;
   @Autowired
   private ContentRepoService contentRepoService;
 
-  @Override
-  protected String getNamespacePrefix() {
-    return ASSET_NAMESPACE;
-  }
-
-  @Override
-  protected AssetFileIdentity parse(HttpServletRequest request) {
-    return AssetFileIdentity.parse(getIdentifier(request));
-  }
-
-
-  private static final String METADATA_PARAM = "metadata";
 
   private static final Joiner REPROXY_URL_JOINER = Joiner.on(' ');
   private static final int REPROXY_CACHE_FOR_VALUE = 6 * 60 * 60; // TODO: Make configurable
   private static final String REPROXY_CACHE_FOR_HEADER =
       REPROXY_CACHE_FOR_VALUE + "; Last-Modified Content-Type Content-Disposition";
 
-  /**
-   * Serve an identified asset file.
-   */
-  @Transactional(readOnly = true)
-  @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response)
+  private void serve(HttpServletRequest request, HttpServletResponse response, RepoObjectMetadata objMeta)
       throws IOException {
-    read(request, response, parse(request));
-  }
+    objMeta.getContentType().ifPresent((String contentType) -> {
+      response.setHeader(HttpHeaders.CONTENT_TYPE, contentType);
+    });
 
-  void read(HttpServletRequest request, HttpServletResponse response, AssetFileIdentity id)
-      throws IOException {
-    RepoObjectMetadata objMeta;
-    try {
-      objMeta = contentRepoService.getLatestRepoObjectMetadata(id.toString());
-    } catch (ContentRepoException e) {
-      if (e.getErrorType() == ErrorType.ErrorFetchingObjectMeta) {
-        throw reportNotFound(id);
-      } else {
-        throw e;
-      }
-    }
-
-    serve(request, response, id, objMeta);
-  }
-
-  private void serve(HttpServletRequest request, HttpServletResponse response,
-                     AssetFileIdentity id, RepoObjectMetadata objMeta)
-      throws IOException {
-    Optional<String> contentType = objMeta.getContentType();
-    // In case contentType field is empty, default to what we would have written at ingestion
-    response.setHeader(HttpHeaders.CONTENT_TYPE, contentType.or(id.inferContentType().toString()));
-
-    Optional<String> filename = objMeta.getDownloadName();
-    // In case downloadName field is empty, default to what we would have written at ingestion
-    String contentDisposition = "attachment; filename=" + filename.or(id.getFileName()); // TODO: 'attachment' is not always correct
-    response.setHeader(HttpHeaders.CONTENT_DISPOSITION, contentDisposition);
+    objMeta.getDownloadName().ifPresent((String downloadName) -> {
+      String contentDisposition = "attachment; filename=" + downloadName;
+      response.setHeader(HttpHeaders.CONTENT_DISPOSITION, contentDisposition);
+    });
 
     Timestamp timestamp = objMeta.getTimestamp();
     setLastModifiedHeader(response, timestamp);
@@ -160,37 +106,34 @@ public class AssetFileCrudController extends DoiBasedCrudController {
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET, params = {METADATA_PARAM})
-  public void readMetadata(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = "/articles/{articleDoi}/ingestions/{number}/items/{itemDoi}/files/{filetype}", method = RequestMethod.GET)
+  public void readMetadata(HttpServletRequest request, HttpServletResponse response,
+                           @PathVariable("articleDoi") String articleDoi,
+                           @PathVariable("number") int ingestionNumber,
+                           @PathVariable("itemDoi") String itemDoi,
+                           @PathVariable("filetype") String fileType)
       throws IOException {
-    AssetFileIdentity id = parse(request);
-    assetCrudService.readFileMetadata(id).respond(request, response, entityGson);
+    ArticleFileIdentifier fileId = ArticleFileIdentifier.create(DoiEscaping.unescape(itemDoi), ingestionNumber, fileType);
+    // TODO: Validate that articleDoi belongs to item's parent
+
+    // TODO: Add support for serving metadata about individual files?
+    throw new RestClientException("File metadata not supported (URL reserved)", HttpStatus.NOT_FOUND);
   }
 
-  /**
-   * @deprecated <em>TEMPORARY.</em> To be removed when the versioned data model is fully supported.
-   */
-  @Deprecated
   @Transactional(readOnly = true)
-  @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET, params = "versionedPreview")
-  public void previewFileFromVersionedModel(
-      HttpServletRequest request, HttpServletResponse response,
-      @RequestParam(value = "type", required = true) String fileType,
-      @RequestParam(value = "version", required = false) Integer versionNumber)
+  @RequestMapping(value = "/articles/{articleDoi}/ingestions/{number}/items/{itemDoi}/files/{filetype}",
+      params = "download", method = RequestMethod.GET)
+  public void serveFile(HttpServletRequest request, HttpServletResponse response,
+                        @PathVariable("articleDoi") String articleDoi,
+                        @PathVariable("number") int ingestionNumber,
+                        @PathVariable("itemDoi") String itemDoi,
+                        @PathVariable("filetype") String fileType)
       throws IOException {
-    AssetIdentity assetId = AssetIdentity.create(getIdentifier(request));
-    ArticleIdentity parentArticle = assetCrudService.getParentArticle(assetId);
-    if (parentArticle == null) {
-      throw new RestClientException("Asset ID not mapped to article", HttpStatus.NOT_FOUND);
-    }
+    ArticleFileIdentifier fileId = ArticleFileIdentifier.create(DoiEscaping.unescape(itemDoi), ingestionNumber, fileType);
+    // TODO: Validate that articleDoi belongs to item's parent
 
-    RepoObjectMetadata assetObject = assetCrudService.getAssetObject(
-        parentArticle, assetId, Optional.fromNullable(versionNumber), fileType);
-
-    // TODO: Factor out of 'serve'. This shouldn't need to exist.
-    AssetFileIdentity dummyAssetFileIdentity = AssetFileIdentity.parse(assetObject.getDownloadName().get());
-
-    serve(request, response, dummyAssetFileIdentity, assetObject);
+    RepoObjectMetadata objectMetadata = assetCrudService.getArticleItemFile(fileId);
+    serve(request, response, objectMetadata);
   }
 
 }

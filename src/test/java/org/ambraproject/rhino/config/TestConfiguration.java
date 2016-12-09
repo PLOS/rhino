@@ -20,22 +20,21 @@ package org.ambraproject.rhino.config;
 
 import com.google.common.io.Closeables;
 import org.ambraproject.rhino.content.xml.XpathReader;
-import org.ambraproject.rhino.service.AnnotationCrudService;
-import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.AssetCrudService;
+import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.DummyMessageSender;
-import org.ambraproject.rhino.service.LegacyConfiguration;
 import org.ambraproject.rhino.service.MessageSender;
-import org.ambraproject.rhino.service.SyndicationService;
-import org.ambraproject.rhino.service.impl.AnnotationCrudServiceImpl;
-import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
+import org.ambraproject.rhino.service.SolrIndexService;
+import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
-import org.ambraproject.rhino.service.impl.SyndicationServiceImpl;
+import org.ambraproject.rhino.service.impl.CommentCrudServiceImpl;
+import org.ambraproject.rhino.service.impl.SolrIndexServiceImpl;
+import org.ambraproject.rhino.service.impl.SyndicationCrudServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.DummyTaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyServiceImpl;
-import org.apache.commons.configuration.CombinedConfiguration;
+import org.apache.activemq.spring.ActiveMQConnectionFactory;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.plos.crepo.service.ContentRepoService;
@@ -50,7 +49,6 @@ import org.yaml.snakeyaml.Yaml;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.Properties;
 
 @Configuration
@@ -58,7 +56,7 @@ import java.util.Properties;
 
 // TODO: get tests to work transactionally
 /* @EnableTransactionManagement(proxyTargetClass = true) */
-public class TestConfiguration extends BaseConfiguration {
+public class TestConfiguration {
 
   /**
    * Dummy object for sanity-checking the unit test configuration.
@@ -83,7 +81,6 @@ public class TestConfiguration extends BaseConfiguration {
     LocalSessionFactoryBean bean = new LocalSessionFactoryBean();
     bean.setDataSource(dataSource);
     bean.setSchemaUpdate(true);
-    setHibernateMappings(bean);
 
     Properties hibernateProperties = new Properties();
     hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
@@ -100,13 +97,13 @@ public class TestConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public org.apache.commons.configuration.Configuration ambraConfiguration() throws Exception {
-    return LegacyConfiguration.loadConfiguration(getClass().getResource("/ambra-test-config.xml"));
+  public ContentRepoService contentRepoService() {
+    return new InMemoryContentRepoService("testBucket");
   }
 
   @Bean
-  public ContentRepoService contentRepoService() {
-    return new InMemoryContentRepoService("testBucket");
+  public ActiveMQConnectionFactory jmsConnectionFactory(RuntimeConfiguration runtimeConfiguration) {
+    return new ActiveMQConnectionFactory();
   }
 
 
@@ -126,18 +123,18 @@ public class TestConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public SyndicationService syndicationService() throws Exception {
-    return new SyndicationServiceImpl();
+  public SyndicationCrudService syndicationService() throws Exception {
+    return new SyndicationCrudServiceImpl();
   }
 
   @Bean
-  public ArticleStateService articleStateService() {
-    return new ArticleStateServiceImpl();
+  public SolrIndexService solrIndexService() {
+    return new SolrIndexServiceImpl();
   }
 
   @Bean
-  public AnnotationCrudService annotationCrudService() {
-    return new AnnotationCrudServiceImpl();
+  public CommentCrudService annotationCrudService() {
+    return new CommentCrudServiceImpl();
   }
 
   @Bean

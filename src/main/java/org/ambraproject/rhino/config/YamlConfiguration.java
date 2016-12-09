@@ -26,11 +26,11 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
- * Configuration for the server.  This will slowly replace the configuration values in ambra.xml and contain values that
- * are required to start up the server and its behavior.
+ * Configuration for the server.
  */
 public class YamlConfiguration implements RuntimeConfiguration {
 
@@ -59,47 +59,78 @@ public class YamlConfiguration implements RuntimeConfiguration {
   }
 
 
-  private static final ContentRepoEndpoint NULL_CONTENT_REPO_ENDPOINT = new ContentRepoEndpoint() {
+  private static final MultiBucketContentRepoEndpoint NULL_CONTENT_REPO_ENDPOINT = new MultiBucketContentRepoEndpoint() {
     @Override
     public URI getAddress() {
       return null;
     }
 
     @Override
-    public String getBucket() {
+    public String getDefaultBucket() {
+      return null;
+    }
+
+    @Override
+    public ImmutableSet<String> getAllBuckets() {
       return null;
     }
   };
 
-  private static ContentRepoEndpoint buildContentRepoEndpointView(final ContentRepoEndpointInput input) {
-    return (input == null) ? NULL_CONTENT_REPO_ENDPOINT
-        : new ContentRepoEndpoint() {
+  private transient MultiBucketContentRepoEndpoint corpusStorageView;
+
+  @Override
+  public MultiBucketContentRepoEndpoint getCorpusStorage() {
+    return (corpusStorageView != null) ? corpusStorageView
+        : (input.contentRepo == null) ? NULL_CONTENT_REPO_ENDPOINT
+        : (input.contentRepo.corpus == null) ? NULL_CONTENT_REPO_ENDPOINT
+        : (corpusStorageView = new MultiBucketContentRepoEndpoint() {
+
+      private final ImmutableSet<String> buckets;
+
+      {
+        ImmutableSet.Builder<String> buckets = ImmutableSet.builder();
+        buckets.add(getDefaultBucket());
+        if (input.contentRepo.corpus.secondaryBuckets != null) {
+          buckets.addAll(input.contentRepo.corpus.secondaryBuckets);
+        }
+        this.buckets = buckets.build();
+      }
+
       @Override
       public URI getAddress() {
-        return input.address;
+        return input.contentRepo.corpus.address;
       }
 
       @Override
-      public String getBucket() {
-        return input.bucket;
+      public String getDefaultBucket() {
+        return input.contentRepo.corpus.bucket;
       }
-    };
+
+      @Override
+      public ImmutableSet<String> getAllBuckets() {
+        return buckets;
+      }
+    });
   }
 
-  @Override
-  public ContentRepoEndpoint getCorpusBucket() {
-    return buildContentRepoEndpointView(
-        (input.contentRepo == null) ? null
-            : (input.contentRepo.corpus == null) ? null
-            : input.contentRepo.corpus);
-  }
+  private transient ContentRepoEndpoint editorialStorageView;
 
   @Override
-  public ContentRepoEndpoint getEditorialBucket() {
-    return buildContentRepoEndpointView(
-        (input.contentRepo == null) ? null
-            : (input.contentRepo.editorial == null) ? null
-            : input.contentRepo.editorial);
+  public ContentRepoEndpoint getEditorialStorage() {
+    return (editorialStorageView != null) ? editorialStorageView
+        : (input.contentRepo == null) ? NULL_CONTENT_REPO_ENDPOINT
+        : (input.contentRepo.editorial == null) ? NULL_CONTENT_REPO_ENDPOINT
+        : (editorialStorageView = new ContentRepoEndpoint() {
+      @Override
+      public URI getAddress() {
+        return input.contentRepo.editorial.address;
+      }
+
+      @Override
+      public String getDefaultBucket() {
+        return input.contentRepo.editorial.bucket;
+      }
+    });
   }
 
 
@@ -196,13 +227,49 @@ public class YamlConfiguration implements RuntimeConfiguration {
    */
   private static final LocalDate DEFAULT_COMPETING_INTEREST_POLICY_START = LocalDate.of(2009, Month.MARCH, 20);
 
-  /**
-   * @deprecated Temporary; to be removed when versioned ingestion data model is stable.
-   */
-  @Deprecated
+
+  private transient QueueConfiguration queueConfiguration;
+
   @Override
-  public boolean isUsingVersionedIngestion() {
-    return input.usingVersionedIngestion;
+  public QueueConfiguration getQueueConfiguration() {
+    return (queueConfiguration != null) ? queueConfiguration : (queueConfiguration = new QueueConfiguration() {
+      private static final String DEFAULT_BROKER_URL = "tcp://localhost:61616";
+      private static final int DEFAULT_SYNDICATION_RANGE = 30;
+
+      @Override
+      public String getBrokerUrl() {
+        return input.queue != null && input.queue.brokerUrl != null ? input.queue.brokerUrl : DEFAULT_BROKER_URL;
+      }
+
+      @Override
+      public String getSolrUpdate() {
+        return input.queue != null ? input.queue.solrUpdate : null;
+      }
+
+      @Override
+      public String getSolrDelete() {
+        return input.queue != null ? input.queue.solrDelete : null;
+      }
+
+      @Override
+      public int getSyndicationRange() {
+        return input.queue != null && input.queue.syndicationRange != null ? input.queue.syndicationRange : DEFAULT_SYNDICATION_RANGE;
+      }
+    });
+  }
+
+  @Override
+  public String getManuscriptCustomMetaName(ManuscriptCustomMetaAttribute attribute) {
+    Objects.requireNonNull(attribute);
+    if (input.manuscriptCustomMeta == null) return null;
+    switch (attribute) {
+      case REVISION_DATE:
+        return input.manuscriptCustomMeta.revisionDate;
+      case PUBLICATION_STAGE:
+        return input.manuscriptCustomMeta.publicationStage;
+      default:
+        throw new AssertionError();
+    }
   }
 
 
@@ -213,8 +280,9 @@ public class YamlConfiguration implements RuntimeConfiguration {
     private HttpConnectionPoolConfigurationInput httpConnectionPool;
     private TaxonomyConfigurationInput taxonomy;
     private UserApiConfigurationInput userApi;
-    private boolean usingVersionedIngestion = false; // default is false
     private String competingInterestPolicyStart;
+    private QueueConfigurationInput queue;
+    private ManuscriptCustomMetaInput manuscriptCustomMeta;
 
     /**
      * @deprecated For reflective access by SnakeYAML only
@@ -265,20 +333,25 @@ public class YamlConfiguration implements RuntimeConfiguration {
     }
 
     /**
-     * This one will likely be removed in the future, when versioned ingestion is stable and/or the only data schema in
-     * use.
-     *
-     * @deprecated Temporary; for reflective access by SnakeYAML only.
+     * @deprecated For reflective access by SnakeYAML only
      */
     @Deprecated
-    public void setUsingVersionedIngestion(boolean usingVersionedIngestion) {
-      this.usingVersionedIngestion = usingVersionedIngestion;
+    public void setQueue(QueueConfigurationInput queue) {
+      this.queue = queue;
+    }
+
+    /**
+     * @deprecated For reflective access by SnakeYAML only
+     */
+    @Deprecated
+    public void setManuscriptCustomMeta(ManuscriptCustomMetaInput manuscriptCustomMeta) {
+      this.manuscriptCustomMeta = manuscriptCustomMeta;
     }
   }
 
   public static class ContentRepoInput {
     private ContentRepoEndpointInput editorial; // upstairs
-    private ContentRepoEndpointInput corpus;  // downstairs
+    private MultibucketContentRepoEndpointInput corpus;  // downstairs
 
     /**
      * @deprecated For reflective access by SnakeYAML only
@@ -292,14 +365,14 @@ public class YamlConfiguration implements RuntimeConfiguration {
      * @deprecated For reflective access by SnakeYAML only
      */
     @Deprecated
-    public void setCorpus(ContentRepoEndpointInput corpus) {
+    public void setCorpus(MultibucketContentRepoEndpointInput corpus) {
       this.corpus = corpus;
     }
   }
 
   public static class ContentRepoEndpointInput {
-    private URI address;
-    private String bucket;
+    protected URI address;
+    protected String bucket;
 
     /**
      * @deprecated For reflective access by SnakeYAML only
@@ -316,18 +389,18 @@ public class YamlConfiguration implements RuntimeConfiguration {
     public void setBucket(String bucket) {
       this.bucket = bucket;
     }
+  }
 
-    private final ContentRepoEndpoint immutableView = new ContentRepoEndpoint() {
-      @Override
-      public URI getAddress() {
-        return address;
-      }
+  public static class MultibucketContentRepoEndpointInput extends ContentRepoEndpointInput {
+    private List<String> secondaryBuckets;
 
-      @Override
-      public String getBucket() {
-        return bucket;
-      }
-    };
+    /**
+     * @deprecated For reflective access by SnakeYAML only
+     */
+    @Deprecated
+    public void setSecondaryBuckets(List<String> secondaryBuckets) {
+      this.secondaryBuckets = secondaryBuckets;
+    }
   }
 
   public static class HttpConnectionPoolConfigurationInput {
@@ -384,6 +457,48 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setAuthorizationPassword(String authorizationPassword) {
       this.authorizationPassword = authorizationPassword;
+    }
+  }
+
+  public static class QueueConfigurationInput {
+    private String brokerUrl;
+    private String solrUpdate;
+    private String solrDelete;
+    private Integer syndicationRange;
+
+    @Deprecated
+    public void setBrokerUrl(String brokerUrl) {
+      this.brokerUrl = brokerUrl;
+    }
+
+    @Deprecated
+    public void setSolrUpdate(String solrUpdate) {
+      this.solrUpdate = solrUpdate;
+    }
+
+    @Deprecated
+    public void setSolrDelete(String solrDelete) {
+      this.solrDelete = solrDelete;
+    }
+
+    @Deprecated
+    public void setSyndicationRange(Integer syndicationRange) {
+      this.syndicationRange = syndicationRange;
+    }
+  }
+
+  public static class ManuscriptCustomMetaInput {
+    private String revisionDate;
+    private String publicationStage;
+
+    @Deprecated
+    public void setRevisionDate(String revisionDate) {
+      this.revisionDate = revisionDate;
+    }
+
+    @Deprecated
+    public void setPublicationStage(String publicationStage) {
+      this.publicationStage = publicationStage;
     }
   }
 

@@ -1,7 +1,6 @@
 package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.config.RuntimeConfiguration;
-import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -10,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.File;
 import java.io.FileReader;
@@ -23,16 +23,16 @@ public class ContentRepoController extends RestController {
   @Autowired
   private RuntimeConfiguration runtimeConfiguration;
 
-  @RequestMapping("repo/{key}/{version}")
+  @RequestMapping(value = "repo/{key}/{version}", method = RequestMethod.GET)
   public ResponseEntity<?> serve(@PathVariable("key") String key,
                                  @PathVariable("version") String version)
       throws IOException {
-    RuntimeConfiguration.ContentRepoEndpoint editorialBucket = runtimeConfiguration.getEditorialBucket();
+    RuntimeConfiguration.ContentRepoEndpoint editorialBucket = runtimeConfiguration.getEditorialStorage();
     URI address;
     String bucketName;
     if (editorialBucket == null
         || (address = editorialBucket.getAddress()) == null
-        || (bucketName = editorialBucket.getBucket()) == null) {
+        || (bucketName = editorialBucket.getDefaultBucket()) == null) {
       throw new RuntimeException("contentRepo.editorial is not configured");
     }
     if ("file".equals(address.getScheme())) {

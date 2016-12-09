@@ -2,11 +2,16 @@ package org.ambraproject.rhino.service.taxonomy.impl;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Charsets;
+import com.google.common.base.Splitter;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Maps;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleCategoryAssignment;
+import org.ambraproject.rhino.model.ArticleIngestion;
+import org.ambraproject.rhino.model.ArticleRevision;
+import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyRemoteServiceInvalidBehaviorException;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyRemoteServiceNotAvailableException;
@@ -18,9 +23,11 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.hibernate.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -30,9 +37,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static org.ambraproject.rhino.service.impl.AmbraService.newDocumentBuilder;
 
@@ -42,6 +56,7 @@ import static org.ambraproject.rhino.service.impl.AmbraService.newDocumentBuilde
  *
  * @author Alex Kudlick Date: 7/3/12
  */
+@SuppressWarnings("JpaQlInspection")
 public class TaxonomyClassificationServiceImpl implements TaxonomyClassificationService {
 
   private static final Logger log = LoggerFactory.getLogger(TaxonomyClassificationServiceImpl.class);
@@ -72,24 +87,27 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
       "  </VectorParam>\n" +
       "</TMMAI>";
 
+  // Number of most-weighted category leaf nodes to associate with each article
+  // TODO: Make configurable?
+  private static final int CATEGORY_COUNT = 8;
 
   @Autowired
   private CloseableHttpClient httpClient;
   @Autowired
   private RuntimeConfiguration runtimeConfiguration;
   @Autowired
-  private ArticleTypeService articleTypeService;
-  @Autowired
   private ArticleCrudService articleCrudService;
+  @Autowired
+  protected HibernateTemplate hibernateTemplate;
 
   /**
    * @inheritDoc
    */
   @Override
-  public List<WeightedTerm> classifyArticle(Document articleXml, Article article)  {
+  public List<WeightedTerm> classifyArticle(Article article, Document articleXml)  {
     RuntimeConfiguration.TaxonomyConfiguration configuration = getTaxonomyConfiguration();
 
-    List<String> rawTerms = getRawTerms(articleXml, article, false);
+    List<String> rawTerms = getRawTerms(articleXml, article, false /*isTextRequired*/);
     List<WeightedTerm> results = new ArrayList<>(rawTerms.size());
 
     for (String rawTerm : rawTerms) {
@@ -125,17 +143,18 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
    * @inheritDoc
    */
   @Override
-  public List<String> getRawTerms(Document articleXml, Article article,
-                                  boolean isTextRequired) {
+  public List<String> getRawTerms(Document articleXml, Article article, boolean isTextRequired) {
     RuntimeConfiguration.TaxonomyConfiguration configuration = getTaxonomyConfiguration();
+
 
     String toCategorize = getCategorizationContent(articleXml);
 
+    ArticleIngestion latest = articleCrudService.readLatestRevision(article).getIngestion();
     String header = String.format(MESSAGE_HEADER,
-        new SimpleDateFormat("yyyy-MM-dd").format(article.getDate()),
-        articleCrudService.getPublicationJournal(article).getTitle(),
-        articleTypeService.getArticleType(article).getHeading(),
-        ArticleIdentity.create(article).getIdentifier());
+        new SimpleDateFormat("yyyy-MM-dd").format(latest.getPublicationDate()),
+        latest.getJournal().getTitle(),
+        latest.getArticleType(),
+        article.getDoi());
 
     String aiMessage = String.format(MESSAGE_BEGIN, configuration.getThesaurus())
         + StringEscapeUtils.escapeXml10(String.format(MESSAGE_DOC_ELEMENT, header, toCategorize))
@@ -176,6 +195,128 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     }
 
     return results;
+  }
+
+  @Override
+  public Collection<ArticleCategoryAssignment> getAssignmentsForArticle(Article article) {
+    return hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "FROM ArticleCategoryAssignment aca " +
+          "WHERE aca.article = :article");
+      query.setParameter("article", article);
+      return (Collection<ArticleCategoryAssignment>) query.list();
+    });
+  }
+
+  private static final Splitter TAXONOMY_PATH_SPLITTER = Splitter.on('/');
+
+  private static String getTermFromPath(String path) {
+    return Iterables.getLast(TAXONOMY_PATH_SPLITTER.split(path));
+  }
+
+  @Override
+  public Collection<Category> getArticleCategoriesWithTerm(Article article, String term) {
+    Objects.requireNonNull(term);
+    return getAssignmentsForArticle(article).stream()
+        .filter((ArticleCategoryAssignment aca) -> {
+          String path = aca.getCategory().getPath();
+          return getTermFromPath(path).equals(term);
+        })
+        .map(ArticleCategoryAssignment::getCategory)
+        .collect(Collectors.toList());
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void populateCategories(ArticleRevision revision) {
+    ArticleIngestion ingestion = revision.getIngestion();
+    Article article = ingestion.getArticle();
+    Document xml = articleCrudService.getManuscriptXml(ingestion);
+
+    List<WeightedTerm> terms;
+    String doi = article.getDoi();
+
+    boolean isAmendment = false; //todo: fix or remove this when we find a home for article types
+
+    if (!isAmendment) {
+      terms = classifyArticle(article, xml);
+      if (terms != null && terms.size() > 0) {
+        List<WeightedTerm> leafNodes = getDistinctLeafNodes(CATEGORY_COUNT, terms);
+        persistCategories(leafNodes, article);
+      } else {
+        log.error("Taxonomy server returned 0 terms. Cannot populate Categories. " + doi);
+      }
+    }
+  }
+
+  /**
+   * Determine the most heavily weighted leaf nodes, then return all terms that have one of those leaf nodes.
+   * <p>
+   * The returned list is in descending order by weight. The order of terms with equal weight is stably preserved from
+   * the input list.
+   *
+   * @param leafCount     the number of distinct leaf nodes to search for
+   * @param weightedTerms all weighted category terms on an article
+   * @return a list, in descending order by weight, of all terms whose leaf node is among the most heavily weighted
+   */
+  @VisibleForTesting
+  static List<WeightedTerm> getDistinctLeafNodes(int leafCount, List<WeightedTerm> weightedTerms) {
+    List<WeightedTerm> orderedTerms = weightedTerms.stream()
+        .sorted(Comparator.comparing(WeightedTerm::getWeight).reversed())
+        .collect(Collectors.toList());
+    Set<String> mostWeightedLeaves = orderedTerms.stream()
+        .map(WeightedTerm::getLeafTerm)
+        .distinct().limit(leafCount)
+        .collect(Collectors.toSet());
+    return orderedTerms.stream()
+        .filter(term -> mostWeightedLeaves.contains(term.getLeafTerm()))
+        .collect(Collectors.toList());
+  }
+
+  private void persistCategories(List<WeightedTerm> terms, Article article) {
+    Set<String> termStrings = terms.stream()
+        .map(WeightedTerm::getPath)
+        .collect(Collectors.toSet());
+
+    Collection<Category> existingCategories = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM Category WHERE path IN (:terms)");
+      query.setParameterList("terms", termStrings);
+      return (Collection<Category>) query.list();
+    });
+
+    Map<String, Category> existingCategoryMap = Maps.uniqueIndex(existingCategories, Category::getPath);
+
+    Collection<ArticleCategoryAssignment> existingAssignments = getAssignmentsForArticle(article);
+    Map<Category, ArticleCategoryAssignment> assignmentMap = Maps.uniqueIndex(existingAssignments, ArticleCategoryAssignment::getCategory);
+    assignmentMap = new HashMap<>(assignmentMap); // Make it mutable. We will remove assignments as they are updated.
+
+    for (WeightedTerm term : terms) {
+      Category category = existingCategoryMap.get(term.getPath());
+      if (category == null) {
+        /*
+         * A new category from the taxonomy server, which is not yet persisted in our system. Create it now.
+         *
+         * This risks a race condition if two articles are being populated concurrently and both have the same new
+         * category, which can cause a "MySQLIntegrityConstraintViolationException: Duplicate entry" error.
+         */
+        category = new Category();
+        category.setPath(term.getPath());
+        hibernateTemplate.save(category);
+      }
+
+      ArticleCategoryAssignment assignment = assignmentMap.remove(category);
+      if (assignment == null) {
+        hibernateTemplate.save(new ArticleCategoryAssignment(category, article, term.getWeight()));
+      } else {
+        assignment.setWeight(term.getWeight());
+        hibernateTemplate.update(assignment);
+      }
+    }
+
+    // Each assignment that was not removed from assignmentMap is not among the new terms, so it should be deleted.
+    assignmentMap.values().forEach(hibernateTemplate::delete);
   }
 
   // There appears to be a bug in the AI getSuggestedTermsFullPath method.

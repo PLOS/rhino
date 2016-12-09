@@ -19,6 +19,8 @@
 
 package org.ambraproject.rhino.config;
 
+import com.google.common.collect.ImmutableSet;
+
 import java.net.URI;
 import java.net.URL;
 import java.time.LocalDate;
@@ -46,9 +48,16 @@ public interface RuntimeConfiguration {
     URI getAddress();
 
     /**
-     * @return the name of the bucket on that server to use
+     * @return the name of the bucket on that server to use when none is specified
      */
-    String getBucket();
+    String getDefaultBucket();
+  }
+
+  interface MultiBucketContentRepoEndpoint extends ContentRepoEndpoint {
+    /**
+     * @return the names of all buckets that may be specified to use
+     */
+    ImmutableSet<String> getAllBuckets();
   }
 
   /**
@@ -58,7 +67,7 @@ public interface RuntimeConfiguration {
    *
    * @return the corpus bucket name
    */
-  ContentRepoEndpoint getCorpusBucket();
+  MultiBucketContentRepoEndpoint getCorpusStorage();
 
   /**
    * Return the content repository bucket from which the system should pick up editorial (non-article) content. Returns
@@ -66,7 +75,7 @@ public interface RuntimeConfiguration {
    *
    * @return the homepage bucket name
    */
-  ContentRepoEndpoint getEditorialBucket();
+  ContentRepoEndpoint getEditorialStorage();
 
   interface HttpConnectionPoolConfiguration {
     /**
@@ -111,10 +120,47 @@ public interface RuntimeConfiguration {
    */
   LocalDate getCompetingInterestPolicyStart();
 
+  interface QueueConfiguration {
+    String getBrokerUrl();
+
+    String getSolrUpdate();
+
+    String getSolrDelete();
+
+    int getSyndicationRange();
+  }
+
+  QueueConfiguration getQueueConfiguration();
+
   /**
-   * @deprecated Temporary; to be removed when versioned ingestion data model is stable.
+   * Article attributes that may be parsed from {@code &lt;custom-meta&rt;} elements, whose {@code &lt;meta-name&rt;}
+   * values are provided as configuration.
    */
-  @Deprecated
-  boolean isUsingVersionedIngestion();
+  static enum ManuscriptCustomMetaAttribute {
+    REVISION_DATE("revisionDate"),
+    PUBLICATION_STAGE("publicationStage");
+
+    private final String configKey;
+
+    private ManuscriptCustomMetaAttribute(String configKey) {
+      this.configKey = configKey;
+    }
+
+    /**
+     * @return the configuration key used to match the attribute to its {@code &lt;meta-name&rt;} value
+     */
+    public String getConfigKey() {
+      return configKey;
+    }
+  }
+
+  /**
+   * Get the {@code &lt;meta-name&rt;} value that will be matched to a {@code &lt;meta-value&rt;} element to populate
+   * article metadata.
+   *
+   * @param attribute an attribute in article metadata
+   * @return the &lt;meta-name&rt; value to find in a manuscript
+   */
+  String getManuscriptCustomMetaName(ManuscriptCustomMetaAttribute attribute);
 
 }

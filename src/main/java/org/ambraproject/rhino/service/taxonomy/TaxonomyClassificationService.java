@@ -1,9 +1,13 @@
 package org.ambraproject.rhino.service.taxonomy;
 
+import org.ambraproject.rhino.model.ArticleCategoryAssignment;
+import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.Category;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -14,14 +18,14 @@ public interface TaxonomyClassificationService {
   /**
    * Classify an article from its xml.
    *
-   * @param articleXml the article xml
    * @param article article object from Ambra
+   * @param articleXml the article xml
    * @return a map of categories to which the article belongs. Each entry should use <code>/</code>s to delimit subject
    * hierarchy.  Categories are returned in descending order of the strength of the match paired with the strength
    * value
    * @throws TaxonomyRemoteServiceNotConfiguredException if a remote service is required but not configured
    */
-  public List<WeightedTerm> classifyArticle(Document articleXml, Article article);
+  public List<WeightedTerm> classifyArticle(Article article, Document articleXml);
 
   /**
    * Queries the MAI server for taxonomic terms for a given article, and returns a list of the raw results.
@@ -37,5 +41,18 @@ public interface TaxonomyClassificationService {
    */
   public List<String> getRawTerms(Document articleXml, Article article,
                                   boolean isTextRequired) throws IOException;
+
+  /**
+   * Populates article category information by making a call to the taxonomy server. Will not throw
+   * an exception if we cannot communicate or get results from the taxonomy server. Will not
+   * request categories for amendments.
+   *
+   * @param revision the article revision model instance
+   */
+  public void populateCategories(ArticleRevision revision);
+
+  public Collection<ArticleCategoryAssignment> getAssignmentsForArticle(Article article);
+
+  public Collection<Category> getArticleCategoriesWithTerm(Article article, String term);
 
 }

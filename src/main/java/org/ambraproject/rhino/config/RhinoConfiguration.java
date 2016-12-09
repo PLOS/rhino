@@ -23,54 +23,55 @@ import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.ambraproject.rhino.config.json.AdapterRegistry;
-import org.ambraproject.rhino.config.json.DoiBasedIdentitySerializer;
-import org.ambraproject.rhino.config.json.ExclusionSpecialCase;
+import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
 import org.ambraproject.rhino.content.xml.XpathReader;
-import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleListCrudService;
-import org.ambraproject.rhino.service.ArticleStateService;
-import org.ambraproject.rhino.service.ArticleTypeService;
+import org.ambraproject.rhino.service.ArticleRevisionWriteService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.CamelSender;
+import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.ConfigurationReadService;
-import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
-import org.ambraproject.rhino.service.LegacyArticleTypeService;
-import org.ambraproject.rhino.service.LegacyConfiguration;
 import org.ambraproject.rhino.service.MessageSender;
-import org.ambraproject.rhino.service.PingbackReadService;
-import org.ambraproject.rhino.service.SyndicationService;
+import org.ambraproject.rhino.service.SolrIndexService;
+import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
-import org.ambraproject.rhino.service.impl.AnnotationCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleListCrudServiceImpl;
-import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
+import org.ambraproject.rhino.service.impl.ArticleRevisionWriteServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
+import org.ambraproject.rhino.service.impl.CommentCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
-import org.ambraproject.rhino.service.impl.IngestibleServiceImpl;
+import org.ambraproject.rhino.service.impl.IngestionService;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.JournalCrudServiceImpl;
-import org.ambraproject.rhino.service.impl.PingbackReadServiceImpl;
-import org.ambraproject.rhino.service.impl.SyndicationServiceImpl;
+import org.ambraproject.rhino.service.impl.SolrIndexServiceImpl;
+import org.ambraproject.rhino.service.impl.SyndicationCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyClassificationServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyServiceImpl;
 import org.ambraproject.rhino.util.GitInfo;
+import org.ambraproject.rhino.util.Java8TimeGsonAdapters;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
-import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpUriRequest;
+import org.ambraproject.rhino.view.article.ArticleIngestionView;
+import org.ambraproject.rhino.view.article.ArticleRevisionView;
+import org.ambraproject.rhino.view.article.ItemSetView;
+import org.ambraproject.rhino.view.article.RelationshipSetView;
+import org.ambraproject.rhino.view.comment.CommentNodeView;
+import org.ambraproject.rhino.view.journal.ArticleListView;
+import org.ambraproject.rhino.view.journal.IssueOutputView;
+import org.ambraproject.rhino.view.journal.VolumeOutputView;
+import org.apache.activemq.spring.ActiveMQConnectionFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.hibernate.SessionFactory;
-import org.plos.crepo.config.ContentRepoAccessConfig;
+import org.plos.crepo.config.HttpClientFunction;
 import org.plos.crepo.service.ContentRepoService;
 import org.plos.crepo.service.ContentRepoServiceImpl;
 import org.springframework.context.annotation.Bean;
@@ -78,7 +79,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
-import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.yaml.snakeyaml.Yaml;
 
@@ -90,6 +91,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 
 /**
@@ -99,23 +101,24 @@ import java.util.Properties;
  */
 @Configuration
 @EnableTransactionManagement
-public class RhinoConfiguration extends BaseConfiguration {
+public class RhinoConfiguration {
 
   @Bean
-  public LocalSessionFactoryBean sessionFactory(DataSource hibernateDataSource) throws IOException {
+  public AnnotationSessionFactoryBean sessionFactory(DataSource hibernateDataSource) throws IOException {
     // May be switched to true in a dev environment to log SQL code generated by Hibernate.
     // Could be replaced with environmental config if needed.
     final boolean hibernateIsInDebugMode = false;
 
-    LocalSessionFactoryBean bean = new LocalSessionFactoryBean();
+    AnnotationSessionFactoryBean bean = new AnnotationSessionFactoryBean();
     bean.setDataSource(hibernateDataSource);
-    setHibernateMappings(bean);
 
     Properties hibernateProperties = new Properties();
     hibernateProperties.setProperty("hibernate.dialect", org.hibernate.dialect.MySQLDialect.class.getName());
     hibernateProperties.setProperty("hibernate.show_sql", Boolean.toString(hibernateIsInDebugMode));
     hibernateProperties.setProperty("hibernate.format_sql", Boolean.toString(hibernateIsInDebugMode));
     bean.setHibernateProperties(hibernateProperties);
+
+    bean.setPackagesToScan("org.ambraproject.rhino.model");
 
     return bean;
   }
@@ -148,14 +151,13 @@ public class RhinoConfiguration extends BaseConfiguration {
     }
 
     // Bulk-apply special cases defined in org.ambraproject.rhino.config.json
-    builder.setExclusionStrategies(ExclusionSpecialCase.values());
     for (Class<? extends JsonOutputView> viewClass : AdapterRegistry.getOutputViewClasses()) {
       builder.registerTypeAdapter(viewClass, JsonOutputView.SERIALIZER);
     }
     for (Map.Entry<Type, Object> entry : AdapterRegistry.getCustomAdapters().entrySet()) {
       builder.registerTypeAdapter(entry.getKey(), entry.getValue());
     }
-    DoiBasedIdentitySerializer.INSTANCE.register(builder);
+    Java8TimeGsonAdapters.register(builder);
 
     return builder.create();
   }
@@ -168,17 +170,6 @@ public class RhinoConfiguration extends BaseConfiguration {
   @Bean
   public Gson crepoGson() {
     return new Gson();
-  }
-
-  @Bean
-  public org.apache.commons.configuration.Configuration ambraConfiguration()
-      throws IOException {
-    // Fetch from Ambra's custom container
-    try {
-      return new LegacyConfiguration(getConfigDirectory()).loadDefaultConfiguration();
-    } catch (ConfigurationException e) {
-      throw new RuntimeException(e);
-    }
   }
 
   @Bean
@@ -197,37 +188,24 @@ public class RhinoConfiguration extends BaseConfiguration {
   @Bean
   public ContentRepoService contentRepoService(RuntimeConfiguration runtimeConfiguration,
                                                final CloseableHttpClient httpClient) {
-    RuntimeConfiguration.ContentRepoEndpoint corpus = runtimeConfiguration.getCorpusBucket();
+    RuntimeConfiguration.ContentRepoEndpoint corpus = runtimeConfiguration.getCorpusStorage();
     final String repoServer = Preconditions.checkNotNull(corpus.getAddress().toString());
-    final String bucketName = Preconditions.checkNotNull(corpus.getBucket());
-    Preconditions.checkNotNull(httpClient);
+    Objects.requireNonNull(httpClient);
 
-    ContentRepoAccessConfig accessConfig = new ContentRepoAccessConfig() {
-      @Override
-      public String getRepoServer() {
-        return repoServer;
-      }
+    return new ContentRepoServiceImpl(repoServer, HttpClientFunction.from(httpClient));
+  }
 
-      @Override
-      public String getBucketName() {
-        return bucketName;
-      }
-
-      @Override
-      public CloseableHttpResponse open(HttpUriRequest request) throws IOException {
-        return httpClient.execute(request);
-      }
-    };
-
-    return new ContentRepoServiceImpl(accessConfig);
+  @Bean
+  public ActiveMQConnectionFactory jmsConnectionFactory(RuntimeConfiguration runtimeConfiguration) {
+    ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory();
+    factory.setBrokerURL(runtimeConfiguration.getQueueConfiguration().getBrokerUrl());
+    return factory;
   }
 
 
   @Bean
   public ArticleCrudService articleCrudService() {
-    ArticleCrudService service = new ArticleCrudServiceImpl();
-    service.setAssetService(assetCrudService());
-    return service;
+    return new ArticleCrudServiceImpl();
   }
 
   @Bean
@@ -246,13 +224,8 @@ public class RhinoConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public IngestibleService ingestibleService() {
-    return new IngestibleServiceImpl();
-  }
-
-  @Bean
-  public ArticleStateService articleStateService() {
-    return new ArticleStateServiceImpl();
+  public SolrIndexService solrIndexService() {
+    return new SolrIndexServiceImpl();
   }
 
   @Bean
@@ -261,18 +234,13 @@ public class RhinoConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public PingbackReadService pingbackReadService() {
-    return new PingbackReadServiceImpl();
-  }
-
-  @Bean
   public JournalCrudService journalCrudService() {
     return new JournalCrudServiceImpl();
   }
 
   @Bean
-  public AnnotationCrudService annotationCrudService() {
-    return new AnnotationCrudServiceImpl();
+  public CommentCrudService annotationCrudService() {
+    return new CommentCrudServiceImpl();
   }
 
   @Bean
@@ -286,18 +254,23 @@ public class RhinoConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public ArticleTypeService articleTypeService(org.apache.commons.configuration.Configuration ambraConfiguration) {
-    return new LegacyArticleTypeService(ambraConfiguration);
-  }
-
-  @Bean
   public ArticleListCrudService collectionCrudService() {
     return new ArticleListCrudServiceImpl();
   }
 
   @Bean
-  public SyndicationService syndicationService() {
-    return new SyndicationServiceImpl();
+  public SyndicationCrudService syndicationService() {
+    return new SyndicationCrudServiceImpl();
+  }
+
+  @Bean
+  public IngestionService ingestionService() {
+    return new IngestionService();
+  }
+
+  @Bean
+  public ArticleRevisionWriteService articleRevisionWriteService() {
+    return new ArticleRevisionWriteServiceImpl();
   }
 
   @Bean
@@ -306,8 +279,48 @@ public class RhinoConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public ArticleOutputViewFactory articleOutputViewFactory() {
-    return new ArticleOutputViewFactory();
+  public CustomMetadataExtractor.Factory customMetadataExtractorFactory() {
+    return new CustomMetadataExtractor.Factory();
+  }
+
+  @Bean
+  public ArticleIngestionView.Factory articleIngestionViewFactory() {
+    return new ArticleIngestionView.Factory();
+  }
+
+  @Bean
+  public RelationshipSetView.Factory relationshipSetViewFactory() {
+    return new RelationshipSetView.Factory();
+  }
+
+  @Bean
+  public IssueOutputView.Factory issueOutputViewFactory() {
+    return new IssueOutputView.Factory();
+  }
+
+  @Bean
+  public VolumeOutputView.Factory volumeOutputViewFactory() {
+    return new VolumeOutputView.Factory();
+  }
+
+  @Bean
+  public ItemSetView.Factory itemSetViewFactory() {
+    return new ItemSetView.Factory();
+  }
+
+  @Bean
+  public ArticleRevisionView.Factory articleRevisionViewFactory() {
+    return new ArticleRevisionView.Factory();
+  }
+
+  @Bean
+  public ArticleListView.Factory articleListViewFactory() {
+    return new ArticleListView.Factory();
+  }
+
+  @Bean
+  public CommentNodeView.Factory commentNodeViewFactory(RuntimeConfiguration runtimeConfiguration) {
+    return new CommentNodeView.Factory(runtimeConfiguration);
   }
 
   @Bean

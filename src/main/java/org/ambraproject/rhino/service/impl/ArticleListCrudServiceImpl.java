@@ -5,28 +5,27 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
+import org.ambraproject.rhino.identity.ArticleIdentifier;
+import org.ambraproject.rhino.identity.ArticleListIdentity;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleList;
 import org.ambraproject.rhino.model.Journal;
-import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.ArticleListIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.service.ArticleListCrudService;
-import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.journal.ArticleListView;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateCallback;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -36,6 +35,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class ArticleListCrudServiceImpl extends AmbraService implements ArticleListCrudService {
+
+  @Autowired
+  private ArticleListView.Factory articleListViewFactory;
 
   private static Query queryFor(Session hibernateSession, String selectClause, ArticleListIdentity identity) {
     Query query = hibernateSession.createQuery(selectClause +
@@ -59,7 +61,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
   }
 
   @Override
-  public ArticleListView create(ArticleListIdentity identity, String displayName, Set<ArticleIdentity> articleIds) {
+  public ArticleListView create(ArticleListIdentity identity, String displayName, Set<ArticleIdentifier> articleIds) {
     if (listExists(identity)) {
       throw new RestClientException("List already exists: " + identity, HttpStatus.BAD_REQUEST);
     }
@@ -84,7 +86,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     journalLists.add(list);
     hibernateTemplate.update(journal);
 
-    return new ArticleListView(journal.getJournalKey(), list);
+    return articleListViewFactory.getView(list, journal.getJournalKey());
   }
 
   private ArticleListView getArticleList(final ArticleListIdentity identity) {
@@ -101,7 +103,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
 
     String journalKey = (String) result[0];
     ArticleList articleList = (ArticleList) result[1];
-    return new ArticleListView(journalKey, articleList);
+    return articleListViewFactory.getView(articleList, journalKey);
   }
 
   private static RuntimeException nonexistentList(ArticleListIdentity identity) {
@@ -110,7 +112,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
 
   @Override
   public ArticleListView update(ArticleListIdentity identity, Optional<String> displayName,
-                                Optional<? extends Set<ArticleIdentity>> articleIds) {
+                                Optional<? extends Set<ArticleIdentifier>> articleIds) {
     ArticleListView listView = getArticleList(identity);
     ArticleList list = listView.getArticleList();
 
@@ -136,12 +138,12 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
    * @return the articles in the same order, if all exist
    * @throws RestClientException if not every article ID belongs to an existing article
    */
-  private List<Article> fetchArticles(Set<ArticleIdentity> articleIds) {
+  private List<Article> fetchArticles(Set<ArticleIdentifier> articleIds) {
     if (articleIds.isEmpty()) return ImmutableList.of();
     final Map<String, Integer> articleKeys = new HashMap<>();
     int i = 0;
-    for (ArticleIdentity articleId : articleIds) {
-      articleKeys.put(articleId.getKey(), i++);
+    for (ArticleIdentifier articleId : articleIds) {
+      articleKeys.put(articleId.getDoiName(), i++);
     }
 
     List<Article> articles = (List<Article>) hibernateTemplate.findByNamedParam(
@@ -176,72 +178,53 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
   }
 
   @Override
-  public Transceiver read(final ArticleListIdentity identity) {
-    return new Transceiver() {
-      @Override
-      protected ArticleListView getData() throws IOException {
-        return getArticleList(identity);
-      }
-
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return null;
-      }
-    };
+  public ServiceResponse<ArticleListView> read(final ArticleListIdentity identity) {
+    return ServiceResponse.serveView(getArticleList(identity));
   }
 
-  private static Collection<ArticleListView> asArticleListViews(List<Object[]> results) {
+  private Collection<ArticleListView> asArticleListViews(List<Object[]> results) {
     Collection<ArticleListView> views = new ArrayList<>(results.size());
     for (Object[] result : results) {
       String journalKey = (String) result[0];
       ArticleList articleList = (ArticleList) result[1];
-      views.add(new ArticleListView(journalKey, articleList));
+      views.add(articleListViewFactory.getView(articleList, journalKey));
     }
     return views;
   }
 
   @Override
-  public Transceiver readAll(final Optional<String> listType, final Optional<String> journalKey) {
+  public ServiceResponse<Collection<ArticleListView>> readAll(final Optional<String> listType, final Optional<String> journalKey) {
     if (!listType.isPresent() && journalKey.isPresent()) {
       throw new IllegalArgumentException();
     }
-    return new Transceiver() {
+    List<Object[]> result = hibernateTemplate.execute(new HibernateCallback<List<Object[]>>() {
       @Override
-      protected Object getData() throws IOException {
-        List<Object[]> result = hibernateTemplate.execute(new HibernateCallback<List<Object[]>>() {
-          @Override
-          public List<Object[]> doInHibernate(Session session) throws HibernateException, SQLException {
-            StringBuilder queryString = new StringBuilder(125)
-                .append("select j.journalKey, l from Journal j inner join j.articleLists l");
-            if (listType.isPresent()) {
-              queryString.append(" where (l.listType=:listType)");
-              if (journalKey.isPresent()) {
-                queryString.append(" and (j.journalKey=:journalKey)");
-              }
-            }
-
-            Query query = session.createQuery(queryString.toString());
-            if (listType.isPresent()) {
-              query.setParameter("listType", listType.get());
-              if (journalKey.isPresent()) {
-                query.setParameter("journalKey", journalKey.get());
-              }
-            }
-
-            return query.list();
+      public List<Object[]> doInHibernate(Session session) throws HibernateException, SQLException {
+        StringBuilder queryString = new StringBuilder(125)
+            .append("select j.journalKey, l from Journal j inner join j.articleLists l");
+        if (listType.isPresent()) {
+          queryString.append(" where (l.listType=:listType)");
+          if (journalKey.isPresent()) {
+            queryString.append(" and (j.journalKey=:journalKey)");
           }
-        });
-        return asArticleListViews(result);
-      }
+        }
 
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return null;
+        Query query = session.createQuery(queryString.toString());
+        if (listType.isPresent()) {
+          query.setParameter("listType", listType.get());
+          if (journalKey.isPresent()) {
+            query.setParameter("journalKey", journalKey.get());
+          }
+        }
+
+        return query.list();
       }
-    };
+    });
+    Collection<ArticleListView> views = asArticleListViews(result);
+    return ServiceResponse.serveView(views);
   }
 
-  private Collection<ArticleListView> findContainingLists(final ArticleIdentity articleId) {
+  private Collection<ArticleListView> findContainingLists(final ArticleIdentifier articleId) {
     return hibernateTemplate.execute(new HibernateCallback<Collection<ArticleListView>>() {
       @Override
       public Collection<ArticleListView> doInHibernate(Session session) {
@@ -249,7 +232,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
             "select j.journalKey, l " +
             "from Journal j join j.articleLists l join l.articles a " +
             "where a.doi=:doi");
-        query.setString("doi", articleId.getKey());
+        query.setString("doi", articleId.getDoiName());
         List<Object[]> results = query.list();
         return asArticleListViews(results);
       }
@@ -257,20 +240,8 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
   }
 
   @Override
-  public Transceiver readContainingLists(final ArticleIdentity articleId) {
-    return new Transceiver() {
-      @Override
-      protected Collection<ArticleListView> getData() throws IOException {
-        return findContainingLists(articleId);
-      }
-
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        // TODO: Use maximum lastModified from findContainingLists(articleId)?
-        // Maybe we want to adapt EntityCollectionTransceiver to extract the entity (ArticleList) from a wrapping view
-        return null;
-      }
-    };
+  public ServiceResponse<Collection<ArticleListView>> readContainingLists(final ArticleIdentifier articleId) {
+    return ServiceResponse.serveView(findContainingLists(articleId));
   }
 
 }

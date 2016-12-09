@@ -30,6 +30,7 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -39,6 +40,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import java.io.ByteArrayOutputStream;
+import java.io.StringWriter;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
@@ -46,12 +48,17 @@ import java.util.List;
 /**
  * A container for a node of XML data that reads it with XPath queries.
  * <p/>
- * Instances of this class are not thread-safe because they hold an instance of {@link XPath} to use.
+ * Instances of this class are not thread-safe because they hold instances of {@link XPath} and {@link Transformer} to
+ * use.
  */
 public abstract class AbstractXpathReader {
 
+  private static final ThreadLocal<XPathFactory> XPATH_FACTORY = ThreadLocal.withInitial(XPathFactory::newInstance);
+  private static final ThreadLocal<TransformerFactory> TRANSFORMER_FACTORY = ThreadLocal.withInitial(TransformerFactory::newInstance);
+
   protected Node xml;
   protected final XPath xPath;
+  private final Transformer transformer;
 
   protected AbstractXpathReader(Node xml) {
     this();
@@ -59,9 +66,25 @@ public abstract class AbstractXpathReader {
   }
 
   protected AbstractXpathReader() {
-
     // XPath isn't thread-safe, so we need one per instance of this class
-    this.xPath = XPathFactory.newInstance().newXPath();
+    this.xPath = XPATH_FACTORY.get().newXPath();
+
+    try {
+      this.transformer = TRANSFORMER_FACTORY.get().newTransformer();
+    } catch (TransformerConfigurationException e) {
+      throw new RuntimeException(e);
+    }
+
+    // The output will be stored in a character-encoded context (JSON or the database),
+    // so declaring the encoding as part of the string doesn't make sense.
+    transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+  }
+
+  /**
+   * Define default text formatting for this object.
+   */
+  protected String sanitize(String text) {
+    return text;
   }
 
   /**
@@ -71,8 +94,19 @@ public abstract class AbstractXpathReader {
    * @param node an XML node
    * @return the node's text content with optional formatting
    */
-  protected String getTextFromNode(Node node) {
-    return (node == null) ? null : node.getTextContent();
+  protected final String getTextFromNode(Node node) {
+    return (node == null) ? null : sanitize(node.getTextContent());
+  }
+
+  protected final String getXmlFromNode(Node node) {
+    if (node == null) return null;
+    StringWriter writer = new StringWriter();
+    try {
+      transformer.transform(new DOMSource(node), new StreamResult(writer));
+    } catch (TransformerException e) {
+      throw new RuntimeException(e);
+    }
+    return sanitize(writer.toString());
   }
 
   protected String readString(String query) {

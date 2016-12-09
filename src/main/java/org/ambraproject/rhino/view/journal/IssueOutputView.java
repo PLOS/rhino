@@ -1,44 +1,105 @@
 package org.ambraproject.rhino.view.journal;
 
-import com.google.common.base.Optional;
-import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
+import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleIngestion;
+import org.ambraproject.rhino.model.ArticleItem;
+import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.Issue;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.Volume;
+import org.ambraproject.rhino.service.ArticleCrudService;
+import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.view.JsonOutputView;
+import org.ambraproject.rhino.view.article.ArticleRevisionView;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class IssueOutputView implements JsonOutputView {
 
-  private final Issue issue;
-  private final Optional<VolumeNonAssocView> parentVolumeView;
+  public static class Factory {
+    @Autowired
+    private ArticleCrudService articleCrudService;
+    @Autowired
+    private IssueCrudService issueCrudService;
+    @Autowired
+    private ArticleRevisionView.Factory articleRevisionViewFactory;
+    @Autowired
+    private VolumeOutputView.Factory volumeOutputViewFactory;
 
-  public IssueOutputView(Issue issue) {
-    this(issue, null);
+    public List<ArticleRevisionView> getIssueArticlesView(Issue issue) {
+      List<Article> articles = issue.getArticles();
+      if (articles == null) return ImmutableList.of();
+      return articles.stream()
+          .map(articleRevisionViewFactory::getLatestRevisionView)
+          .collect(Collectors.toList());
+    }
+
+    public IssueOutputView getView(Issue issue) {
+      return getView(issue, issueCrudService.getParentVolume(issue));
+    }
+
+    public IssueOutputView getView(Issue issue, Volume parentVolume) {
+      return new IssueOutputView(issue, parentVolume, this);
+    }
+
+    public Optional<IssueOutputView> getCurrentIssueViewFor(Journal journal) {
+      return Optional.ofNullable(journal.getCurrentIssue()).map(this::getView);
+    }
   }
 
-  public IssueOutputView(Issue issue, VolumeNonAssocView parentVolumeView) {
-    this.issue = Preconditions.checkNotNull(issue);
-    this.parentVolumeView = Optional.fromNullable(parentVolumeView);
+  private final Issue issue;
+  private final Volume parentVolume;
+  private final IssueOutputView.Factory factory;
+
+  private IssueOutputView(Issue issue, Volume parentVolume, Factory issueOutputViewFactory) {
+    this.issue = Objects.requireNonNull(issue);
+    this.parentVolume = Objects.requireNonNull(parentVolume);
+    this.factory = Objects.requireNonNull(issueOutputViewFactory);
   }
 
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
-    JsonObject serialized = context.serialize(issue).getAsJsonObject();
+    JsonObject serialized = new JsonObject();
+    serialized.addProperty("doi", issue.getDoi());
+    serialized.addProperty("displayName", issue.getDisplayName());
+    serialized.add("parentVolume", context.serialize(factory.volumeOutputViewFactory.getView(parentVolume)));
 
-    serialized.remove("articleDois");
-    List<String> articleDois = issue.getArticleDois();
-    articleDois = DoiBasedIdentity.asIdentifiers(articleDois);
-    serialized.add("articleOrder", context.serialize(articleDois));
+    Article imageArticle = issue.getImageArticle();
+    if (imageArticle != null) {
+      JsonObject serializedImageArticle = new JsonObject();
+      String figureImageDoi = getIssueImageFigureDoi(factory.articleCrudService, imageArticle);
 
-    if (parentVolumeView.isPresent()) {
-      serialized.add("parentVolume", context.serialize(parentVolumeView.get()));
+      serializedImageArticle.addProperty("doi", imageArticle.getDoi());
+      serializedImageArticle.addProperty("figureImageDoi", figureImageDoi);
+      serialized.add("imageArticle", serializedImageArticle);
     }
 
     return serialized;
+  }
+
+  private static final ImmutableSet<String> FIGURE_IMAGE_TYPES = ImmutableSet.of("figure", "table");
+
+  private static String getIssueImageFigureDoi(ArticleCrudService articleCrudService, Article imageArticle) {
+    ArticleRevision latestArticleRevision = articleCrudService.getLatestRevision(imageArticle).orElseThrow(
+        () -> new RuntimeException("Image article has no published revisions. " + imageArticle.getDoi()));
+    ArticleIngestion ingestion = latestArticleRevision.getIngestion();
+    Collection<ArticleItem> allArticleItems = articleCrudService.getAllArticleItems(ingestion);
+    List<ArticleItem> figureImageItems = allArticleItems.stream()
+        .filter(item -> FIGURE_IMAGE_TYPES.contains(item.getItemType())).collect(Collectors.toList());
+    if (figureImageItems.size() != 1) {
+      throw new RuntimeException("Image article does not contain exactly one image file. " + imageArticle.getDoi());
+    }
+    return figureImageItems.get(0).getDoi();
   }
 
 }

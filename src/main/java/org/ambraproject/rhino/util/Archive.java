@@ -1,16 +1,11 @@
 package org.ambraproject.rhino.util;
 
-import com.google.common.base.Function;
-import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.io.ByteSource;
 import com.google.common.io.ByteStreams;
-import org.plos.crepo.model.RepoCollectionList;
-import org.plos.crepo.model.RepoObject;
-import org.plos.crepo.model.RepoObjectMetadata;
-import org.plos.crepo.model.RepoVersion;
-import org.plos.crepo.service.ContentRepoService;
+import org.plos.crepo.model.input.RepoObjectInput;
 
 import java.io.ByteArrayInputStream;
 import java.io.Closeable;
@@ -87,16 +82,11 @@ public abstract class Archive implements Closeable {
 
   protected abstract InputStream openFileFrom(Object fileObj);
 
-  public final RepoObject.ContentAccessor getContentAccessorFor(final String entryName) {
+  public final RepoObjectInput.ContentAccessor getContentAccessorFor(final String entryName) {
     if (!files.containsKey(Preconditions.checkNotNull(entryName))) {
       throw new IllegalArgumentException("Archive does not contain an entry named: " + entryName);
     }
-    return new RepoObject.ContentAccessor() {
-      @Override
-      public InputStream open() throws IOException {
-        return openFile(entryName);
-      }
-    };
+    return () -> openFile(entryName);
   }
 
   /**
@@ -204,58 +194,13 @@ public abstract class Archive implements Closeable {
     };
   }
 
-  /**
-   * Represent an archive from a content repo collection, equivalent to the actual zip archive that would have been
-   * ingested to create the collection.
-   *
-   * @param service            a content repo service that can be used to read objects in the collection
-   * @param archiveName        the name of the .zip file being represented
-   * @param collection         the collection version
-   * @param entryNameExtractor logic for recovering a zip entry name from a content repo object (may return null, in
-   *                           which case the object downloadName is required and used)
-   * @return the archive representation
-   */
-  public static Archive readRepoCollection(final ContentRepoService service, String archiveName,
-                                           RepoCollectionList collection,
-                                           Function<? super RepoObjectMetadata, String> entryNameExtractor) {
-    Preconditions.checkNotNull(service);
-
-    ImmutableMap.Builder<String, RepoVersion> objects = ImmutableMap.builder();
-    for (RepoObjectMetadata objectMetadata : collection.getObjects()) {
-      RepoVersion version = objectMetadata.getVersion();
-
-      String entryName = entryNameExtractor.apply(objectMetadata);
-      if (entryName == null) {
-        Optional<String> downloadName = objectMetadata.getDownloadName();
-        if (downloadName.isPresent()) {
-          entryName = downloadName.get();
-        } else {
-          String message = "Could not find archive entry name for object: " + version;
-          throw new RuntimeException(message);
-        }
-      }
-      objects.put(entryName, version);
-    }
-
-    return new Archive(archiveName, objects.build()) {
-      @Override
-      protected InputStream openFileFrom(Object repoVersion) {
-        return service.getRepoObject((RepoVersion) repoVersion);
-      }
-    };
-  }
-
-  public static interface InputStreamSource {
-    public abstract InputStream open() throws IOException;
-  }
-
-  public static Archive pack(String archiveName, Map<String, ? extends InputStreamSource> files) {
-    final ImmutableMap<String, InputStreamSource> defensiveFiles = ImmutableMap.copyOf(files);
+  public static Archive pack(String archiveName, Map<String, ? extends ByteSource> files) {
+    final ImmutableMap<String, ByteSource> defensiveFiles = ImmutableMap.copyOf(files);
     return new Archive(archiveName, defensiveFiles) {
       @Override
       protected InputStream openFileFrom(Object source) {
         try {
-          return ((InputStreamSource) source).open();
+          return ((ByteSource) source).openStream();
         } catch (IOException e) {
           throw new RuntimeException(e);
         }

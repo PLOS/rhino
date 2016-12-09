@@ -1,28 +1,41 @@
 package org.ambraproject.rhino.view.journal;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
+import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Volume;
+import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.view.JsonOutputView;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
+import java.util.Objects;
 
 public class VolumeOutputView implements JsonOutputView {
 
-  private final Volume volume;
+  public static class Factory {
+    @Autowired
+    private JournalCrudService journalCrudService;
 
-  public VolumeOutputView(Volume volume) {
-    this.volume = Preconditions.checkNotNull(volume);
+    public VolumeOutputView getView(Volume volume) {
+      return new VolumeOutputView(volume, journalCrudService.readJournalByVolume(volume));
+    }
+  }
+
+  private final Volume volume;
+  private final Journal journal;
+
+  private VolumeOutputView(Volume volume, Journal journal) {
+    this.volume = Objects.requireNonNull(volume);
+    this.journal = journal;
   }
 
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
-    JsonObject serialized = context.serialize(volume).getAsJsonObject();
-    List<IssueOutputView> issueViews = Lists.transform(volume.getIssues(), IssueOutputView::new);
-    serialized.add("issues", context.serialize(issueViews));
+    JsonObject serialized = new JsonObject();
+    serialized.addProperty("doi", volume.getDoi());
+    serialized.addProperty("displayName", volume.getDisplayName());
+    serialized.addProperty("journalKey", journal.getJournalKey());
     return serialized;
   }
 

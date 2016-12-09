@@ -18,65 +18,11 @@
 
 package org.ambraproject.rhino.service;
 
-import com.google.common.base.Optional;
-import org.ambraproject.rhino.model.ArticleAsset;
-import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.AssetFileIdentity;
-import org.ambraproject.rhino.identity.AssetIdentity;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.util.response.Transceiver;
-import org.plos.crepo.model.RepoObjectMetadata;
+import org.ambraproject.rhino.identity.ArticleFileIdentifier;
+import org.plos.crepo.model.metadata.RepoObjectMetadata;
 
-import java.io.IOException;
-import java.io.InputStream;
+public interface AssetCrudService {
 
-public interface AssetCrudService extends DoiBasedCrudService {
-
-  /**
-   * Read the file associated with an asset.
-   *
-   * @param id the identifier of the asset whose file is to be read
-   * @return a stream containing the file data
-   */
-  public abstract InputStream read(AssetFileIdentity id);
-
-  /**
-   * Read the metadata of an asset. The output may contain multiple asset objects, one for each file associated with the
-   * asset.
-   *
-   * @param id the identity of the asset to read
-   */
-  public abstract Transceiver readMetadata(AssetIdentity id)
-      throws IOException;
-
-  /**
-   * Read the metadata of a figure asset. The output contains the figure metadata, as defined by the "original" asset
-   * file, plus the individual asset file objects.
-   *
-   * @param id the identity of the asset to read
-   */
-  public abstract Transceiver readFigureMetadata(AssetIdentity id)
-      throws IOException;
-
-  /**
-   * Read the metadata of a single asset file.
-   *
-   * @param id the identity of the asset file to read
-   */
-  public Transceiver readFileMetadata(AssetFileIdentity id)
-      throws IOException;
-
-  /**
-   * Find the parent article of an asset. If the argument identifies an article, the same identity is returned.
-   *
-   * @param identity the identity of an article or an article asset
-   * @return the parent article
-   */
-  public abstract ArticleIdentity getParentArticle(DoiBasedIdentity identity);
-
-  public abstract RepoObjectMetadata getAssetObject(ArticleIdentity parentArticleId,
-                                                    AssetIdentity assetId,
-                                                    Optional<Integer> versionNumber,
-                                                    String fileType);
+  public abstract RepoObjectMetadata getArticleItemFile(ArticleFileIdentifier fileId);
 
 }

@@ -7,8 +7,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
-import org.ambraproject.rhino.model.Annotation;
+import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.Comment;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.article.ArticleVisibility;
 import org.ambraproject.rhino.view.user.UserIdView;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
 public class CommentOutputView implements JsonOutputView {
 
   private final ArticleVisibility parentArticle;
-  private final Annotation comment;
+  private final Comment comment;
   private final CompetingInterestStatement competingInterestStatement;
 
   private final ImmutableList<CommentOutputView> replies;
@@ -35,7 +36,7 @@ public class CommentOutputView implements JsonOutputView {
   private final Date mostRecentActivity;
 
   private CommentOutputView(ArticleVisibility parentArticle,
-                            Annotation comment,
+                            Comment comment,
                             CompetingInterestStatement competingInterestStatement,
                             List<CommentOutputView> replies,
                             int replyTreeSize, Date mostRecentActivity) {
@@ -49,30 +50,30 @@ public class CommentOutputView implements JsonOutputView {
     this.mostRecentActivity = Objects.requireNonNull(mostRecentActivity);
   }
 
-
   public static class Factory {
     private final CompetingInterestPolicy competingInterestPolicy;
     private final ArticleVisibility parentArticle;
-    private final Map<Long, List<Annotation>> commentsByParent;
+    private final Map<Long, List<Comment>> commentsByParent;
 
     /**
-     * @param parentArticle an article
      * @param comments      all comments belonging to the parent article
+     * @param parentArticle
      */
-    public Factory(RuntimeConfiguration runtimeConfiguration, Article parentArticle, Collection<Annotation> comments) {
+    public Factory(RuntimeConfiguration runtimeConfiguration, Collection<Comment> comments,
+                   Article parentArticle) {
       this.competingInterestPolicy = new CompetingInterestPolicy(runtimeConfiguration);
-      this.parentArticle = ArticleVisibility.create(parentArticle);
+      this.parentArticle = ArticleVisibility.create(Doi.create(parentArticle.getDoi()));
       this.commentsByParent = comments.stream()
-          .filter(comment -> comment.getParentID() != null)
-          .collect(Collectors.groupingBy(Annotation::getParentID));
+          .filter(comment -> comment.getParent() != null)
+          .collect(Collectors.groupingBy(Comment::getParentId));
     }
 
     /**
      * @param comment a comment belonging to this object's parent article
      * @return a view of the comment and all its children
      */
-    public CommentOutputView buildView(Annotation comment) {
-      List<Annotation> childObjects = commentsByParent.getOrDefault(comment.getID(), ImmutableList.of());
+    public CommentOutputView buildView(Comment comment) {
+      List<Comment> childObjects = commentsByParent.getOrDefault(comment.getCommentId(), ImmutableList.of());
       List<CommentOutputView> childViews = childObjects.stream()
           .sorted(BY_DATE)
           .map(this::buildView) // recursion (terminal case is when childObjects is empty)
@@ -90,7 +91,7 @@ public class CommentOutputView implements JsonOutputView {
       return childViews.size() + childViews.stream().mapToInt(view -> view.replyTreeSize).sum();
     }
 
-    private static Date findMostRecentActivity(Annotation comment, Collection<CommentOutputView> childViews) {
+    private static Date findMostRecentActivity(Comment comment, Collection<CommentOutputView> childViews) {
       return childViews.stream()
           .map(view -> view.mostRecentActivity)
           .max(Comparator.naturalOrder())
@@ -98,7 +99,7 @@ public class CommentOutputView implements JsonOutputView {
     }
   }
 
-  public static final Comparator<Annotation> BY_DATE = Comparator.comparing(Annotation::getCreated);
+  public static final Comparator<Comment> BY_DATE = Comparator.comparing(Comment::getCreated);
 
 
   /**
@@ -114,7 +115,7 @@ public class CommentOutputView implements JsonOutputView {
   private static final JsonElement EMPTY_STRING = new JsonPrimitive("");
 
   static JsonObject serializeBase(JsonSerializationContext context,
-                                  Annotation comment,
+                                  Comment comment,
                                   CompetingInterestStatement competingInterestStatement) {
     JsonObject serialized = context.serialize(comment).getAsJsonObject();
     serialized.remove("userProfileID");
@@ -128,7 +129,6 @@ public class CommentOutputView implements JsonOutputView {
 
     serialized.remove("competingInterestBody");
     serialized.add("competingInterestStatement", context.serialize(competingInterestStatement));
-    serialized.add("isRemoved", context.serialize(comment.getIsRemoved()));
     return serialized;
   }
 

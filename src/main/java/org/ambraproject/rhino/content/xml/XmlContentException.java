@@ -21,7 +21,7 @@ package org.ambraproject.rhino.content.xml;
 /**
  * Indicates that client-submitted XML has an error, omission, or invalid structure.
  */
-public class XmlContentException extends Exception {
+public class XmlContentException extends RuntimeException {
 
   public XmlContentException() {
   }
