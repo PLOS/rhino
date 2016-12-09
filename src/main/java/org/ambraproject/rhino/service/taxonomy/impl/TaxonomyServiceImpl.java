@@ -1,9 +1,9 @@
 package org.ambraproject.rhino.service.taxonomy.impl;
 
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleCategoryAssignment;
 import org.ambraproject.rhino.model.ArticleCategoryAssignmentFlag;
 import org.ambraproject.rhino.model.ArticleRevision;
-import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Category;
 import org.ambraproject.rhino.service.impl.AmbraService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
