@@ -33,6 +33,8 @@ public class IssueOutputView implements JsonOutputView {
     private IssueCrudService issueCrudService;
     @Autowired
     private ArticleRevisionView.Factory articleRevisionViewFactory;
+    @Autowired
+    private VolumeOutputView.Factory volumeOutputViewFactory;
 
     public List<ArticleRevisionView> getIssueArticlesView(Issue issue) {
       List<Article> articles = issue.getArticles();
@@ -59,10 +61,10 @@ public class IssueOutputView implements JsonOutputView {
   private final Volume parentVolume;
   private final IssueOutputView.Factory factory;
 
-  private IssueOutputView(Issue issue, Volume parentVolume, Factory factory) {
+  private IssueOutputView(Issue issue, Volume parentVolume, Factory issueOutputViewFactory) {
     this.issue = Objects.requireNonNull(issue);
     this.parentVolume = Objects.requireNonNull(parentVolume);
-    this.factory = Objects.requireNonNull(factory);
+    this.factory = Objects.requireNonNull(issueOutputViewFactory);
   }
 
   @Override
@@ -70,7 +72,7 @@ public class IssueOutputView implements JsonOutputView {
     JsonObject serialized = new JsonObject();
     serialized.addProperty("doi", issue.getDoi());
     serialized.addProperty("displayName", issue.getDisplayName());
-    serialized.add("parentVolume", context.serialize(VolumeOutputView.getView(parentVolume)));
+    serialized.add("parentVolume", context.serialize(factory.volumeOutputViewFactory.getView(parentVolume)));
 
     Article imageArticle = issue.getImageArticle();
     if (imageArticle != null) {

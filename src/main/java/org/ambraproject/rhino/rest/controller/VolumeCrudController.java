@@ -55,6 +55,8 @@ public class VolumeCrudController extends RestController {
   private VolumeCrudService volumeCrudService;
   @Autowired
   private JournalCrudService journalCrudService;
+  @Autowired
+  private VolumeOutputView.Factory volumeOutputViewFactory;
 
   private static VolumeIdentifier getVolumeId(String volumeDoi) {
     return VolumeIdentifier.create(DoiEscaping.unescape(volumeDoi));
@@ -62,12 +64,12 @@ public class VolumeCrudController extends RestController {
 
   @Transactional(readOnly = true)
   @RequestMapping(value = "/volumes/{volumeDoi:.+}", method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response,
+  public ResponseEntity<?> read(@RequestHeader(value = HttpHeaders.IF_MODIFIED_SINCE, required = false) Date ifModifiedSince,
+                   HttpServletRequest request, HttpServletResponse response,
                    @PathVariable("volumeDoi") String volumeDoi)
       throws IOException {
     VolumeIdentifier volumeId = getVolumeId(volumeDoi);
-    // TODO: Look up journal; redirect to main service
-    // TODO: Equivalent alias methods for other HTTP methods?
+    return volumeCrudService.serveVolume(volumeId).getIfModified(ifModifiedSince).asJsonResponse(entityGson);
   }
 
   @Transactional(readOnly = true)
@@ -76,7 +78,7 @@ public class VolumeCrudController extends RestController {
       throws IOException {
     Journal journal = journalCrudService.readJournal(journalKey);
     List<VolumeOutputView> views = journal.getVolumes().stream()
-        .map(VolumeOutputView::getView)
+        .map(volumeOutputViewFactory::getView)
         .collect(Collectors.toList());
     return ServiceResponse.serveView(views).asJsonResponse(entityGson);
   }
@@ -95,7 +97,7 @@ public class VolumeCrudController extends RestController {
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/journals/{journalKey}/volumes", method = RequestMethod.POST)
   @ApiImplicitParam(name = "body", paramType = "body", dataType = "VolumeInputView",
-      value= "example: {\"doi\": \"10.1371/volume.pmed.v01\", \"displayName\": \"2004\"}")
+      value = "example: {\"doi\": \"10.1371/volume.pmed.v01\", \"displayName\": \"2004\"}")
   public ResponseEntity<?> create(HttpServletRequest request, @PathVariable String journalKey)
       throws IOException {
     VolumeInputView input = readJsonFromRequest(request, VolumeInputView.class);
@@ -104,14 +106,14 @@ public class VolumeCrudController extends RestController {
     }
 
     Volume volume = volumeCrudService.create(journalKey, input);
-    return ServiceResponse.reportCreated(VolumeOutputView.getView(volume)).asJsonResponse(entityGson);
+    return ServiceResponse.reportCreated(volumeOutputViewFactory.getView(volume)).asJsonResponse(entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/journals/{journalKey}/volumes/{volumeDoi:.+}", method = RequestMethod.PATCH)
   @ApiImplicitParam(name = "body", paramType = "body", dataType = "VolumeInputView",
-      value= "example #1: {\"doi\": \"10.1371/volume.pmed.v01\"}<br>" +
-      "example #2: {\"displayName\": \"2004\"}")
+      value = "example #1: {\"doi\": \"10.1371/volume.pmed.v01\"}<br>" +
+          "example #2: {\"displayName\": \"2004\"}")
   public ResponseEntity<?> update(HttpServletRequest request,
                                   @PathVariable("journalKey") String journalKey,
                                   @PathVariable("volumeDoi") String volumeDoi)
@@ -120,7 +122,7 @@ public class VolumeCrudController extends RestController {
     VolumeIdentifier volumeId = getVolumeId(volumeDoi);
     VolumeInputView input = readJsonFromRequest(request, VolumeInputView.class);
     Volume updated = volumeCrudService.update(volumeId, input);
-    VolumeOutputView view = VolumeOutputView.getView(updated);
+    VolumeOutputView view = volumeOutputViewFactory.getView(updated);
     return ServiceResponse.serveView(view).asJsonResponse(entityGson);
   }
 
