@@ -1,6 +1,5 @@
 package org.ambraproject.rhino.service.impl;
 
-import com.google.common.collect.ImmutableList;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
 import org.ambraproject.rhino.content.xml.ManifestXml;
@@ -9,11 +8,14 @@ import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleIngestion;
+import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.article.ArticleCustomMetadata;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.model.ingest.ArticlePackage;
 import org.ambraproject.rhino.model.ingest.ArticlePackageBuilder;
+import org.ambraproject.rhino.model.ingest.IngestPackage;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.util.Archive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,11 +31,11 @@ public class IngestionService extends AmbraService {
   @Autowired
   private CustomMetadataExtractor.Factory customMetadataExtractorFactory;
   @Autowired
-  private ArticleValidationService articleValidationService;
-  @Autowired
   private HibernatePersistenceService hibernatePersistenceService;
+  @Autowired
+  private ArticleCrudService articleCrudService;
 
-  public ArticleIngestion ingest(Archive archive) throws IOException, XmlContentException {
+  public IngestPackage createIngestPackage(Archive archive) throws IOException, XmlContentException {
     String manifestEntry = null;
     for (String entryName : archive.getEntryNames()) {
       if (entryName.equalsIgnoreCase("manifest.xml")) {
@@ -49,9 +51,8 @@ public class IngestionService extends AmbraService {
       manifestXml = new ManifestXml(AmbraService.parseXml(manifestStream));
     }
 
-    articleValidationService.validateManifestCompleteness(manifestXml, archive);
+    manifestXml.validateManifestCompleteness(archive);
 
-    ImmutableList<ManifestXml.Asset> assets = manifestXml.getAssets();
     ManifestXml.Asset manuscriptAsset = manifestXml.getArticleAsset();
     ManifestXml.Representation manuscriptRepr = manuscriptAsset.getRepresentation("manuscript")
         .orElseThrow(() -> new RestClientException("Manuscript entry not found in manifest", HttpStatus.BAD_REQUEST));
@@ -69,35 +70,56 @@ public class IngestionService extends AmbraService {
       parsedArticle = new ArticleXml(document);
       customMetadataExtractor = customMetadataExtractorFactory.parse(document);
     }
-    final ArticleMetadata articleMetadata = parsedArticle.build();
+    // TODO: Allow bucket name to be specified as an ingestion parameter
+    String destinationBucketName = runtimeConfiguration.getCorpusStorage().getDefaultBucket();
+
+    ArticlePackage articlePackage = new ArticlePackageBuilder(destinationBucketName, archive,
+        parsedArticle, manifestXml, manuscriptAsset, manuscriptRepr, printableRepr).build();
+    articlePackage.validateAssetCompleteness();
+
+    ArticleMetadata articleMetadata = parsedArticle.build();
     ArticleCustomMetadata customMetadata = customMetadataExtractor.build();
-    ArticleIdentifier articleIdentifier = ArticleIdentifier.create(articleMetadata.getDoi());
+    return new IngestPackage(articlePackage, articleMetadata, customMetadata);
+  }
+
+  public ArticleIngestion ingest(IngestPackage ingestPackage) {
+    ArticleIdentifier articleIdentifier = ArticleIdentifier.create(ingestPackage.getArticleMetadata().getDoi());
     Doi doi = articleIdentifier.getDoi();
 
-    for (ManifestXml.Asset asset : assets) {
-      articleValidationService.validateAssetUniqueness(asset, doi);
+    ArticlePackage articlePackage = ingestPackage.getArticlePackage();
+    ManifestXml manifestXml = articlePackage.getManifest();
+    for (ManifestXml.Asset asset : manifestXml.getAssets()) {
+      validateAssetUniqueness(asset, doi);
     }
 
-    if (!doi.equals(Doi.create(manuscriptAsset.getUri()))) {
+    String manuscriptAssetUri = manifestXml.getArticleAsset().getUri();
+    if (!doi.equals(Doi.create(manuscriptAssetUri))) {
       String message = String.format("Article DOI is inconsistent. From manifest: \"%s\" From manuscript: \"%s\"",
-          manuscriptAsset.getUri(), doi.getName());
+          manuscriptAssetUri, doi.getName());
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
 
     Article article = hibernatePersistenceService.persistArticle(articleIdentifier);
     ArticleIngestion ingestion = hibernatePersistenceService.persistIngestion(article,
-        articleMetadata, customMetadata);
+        ingestPackage.getArticleMetadata(), ingestPackage.getArticleCustomMetadata());
 
-    // TODO: Allow bucket name to be specified as an ingestion parameter
-    String destinationBucketName = runtimeConfiguration.getCorpusStorage().getDefaultBucket();
-
-    ArticlePackage articlePackage = new ArticlePackageBuilder(destinationBucketName, archive, parsedArticle, manifestXml,
-        manuscriptAsset, manuscriptRepr, printableRepr).build();
-    articleValidationService.validateAssetCompleteness(parsedArticle, articlePackage);
     hibernatePersistenceService.persistAssets(articlePackage, ingestion, manifestXml);
 
     hibernateTemplate.flush();
     hibernateTemplate.refresh(ingestion); // Pick up auto-persisted timestamp
     return ingestion;
+  }
+
+  private void validateAssetUniqueness(ManifestXml.Asset asset, Doi articleDoi) {
+    Doi assetDoi = Doi.create(asset.getUri());
+    for (ArticleItem existingItem : articleCrudService.getAllArticleItems(assetDoi)) {
+      Article existingParentArticle = existingItem.getIngestion().getArticle();
+      if (!Doi.create(existingParentArticle.getDoi()).equals(articleDoi)) {
+        String errorMessage = String.format("Incoming article ingestion (doi:%s) has a duplicate " +
+                "article asset (doi:%s). Duplicate asset belongs to article doi: %s.",
+            articleDoi.getName(), assetDoi, existingParentArticle.getDoi());
+        throw new RestClientException(errorMessage, HttpStatus.BAD_REQUEST);
+      }
+    }
   }
 }

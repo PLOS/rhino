@@ -16,7 +16,11 @@ package org.ambraproject.rhino.content.xml;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import org.ambraproject.rhino.model.ingest.AssetType;
+import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.util.Archive;
+import org.springframework.http.HttpStatus;
 import org.w3c.dom.Node;
 
 import java.util.ArrayList;
@@ -25,8 +29,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Represents the manifest of an article .zip archive.
@@ -153,6 +159,29 @@ public class ManifestXml extends AbstractXpathReader {
   public ImmutableList<ManifestFile> getAncillaryFiles() {
     Parsed parsed = getParsedObject();
     return parsed.ancillaryFiles;
+  }
+
+  public void validateManifestCompleteness(Archive archive) {
+    Set<String> archiveEntryNames = archive.getEntryNames();
+
+    Stream<ManifestFile> manifestFiles = Stream.concat(
+        getAssets().stream()
+            .flatMap(asset -> asset.getRepresentations().stream())
+            .map(ManifestXml.Representation::getFile),
+        getAncillaryFiles().stream());
+    Set<String> manifestEntryNames = manifestFiles
+        .map(ManifestXml.ManifestFile::getEntry)
+        .collect(Collectors.toSet());
+
+    Set<String> missingFromArchive = Sets.difference(manifestEntryNames, archiveEntryNames).immutableCopy();
+    Set<String> missingFromManifest = Sets.difference(archiveEntryNames, manifestEntryNames).immutableCopy();
+    if (!missingFromArchive.isEmpty() || !missingFromManifest.isEmpty()) {
+      String message = "Manifest is not consistent with files in archive."
+          + (missingFromArchive.isEmpty() ? "" : (" Files in manifest not included in archive: " + missingFromArchive))
+          + (missingFromManifest.isEmpty() ? "" : (" Files in archive not described in manifest: " + missingFromManifest));
+
+      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+    }
   }
 
 

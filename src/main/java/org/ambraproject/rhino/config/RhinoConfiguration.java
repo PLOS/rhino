@@ -40,8 +40,6 @@ import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleListCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleRevisionWriteServiceImpl;
-import org.ambraproject.rhino.service.impl.ArticleValidationService;
-import org.ambraproject.rhino.service.impl.ArticleValidationServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.CommentCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
@@ -276,11 +274,6 @@ public class RhinoConfiguration {
   @Bean
   public ArticleRevisionWriteService articleRevisionWriteService() {
     return new ArticleRevisionWriteServiceImpl();
-  }
-
-  @Bean
-  public ArticleValidationService articleValidationService() {
-    return new ArticleValidationServiceImpl();
   }
 
   @Bean

@@ -58,8 +58,8 @@ public class ArticlePackageBuilder {
     List<ArticleFileInput> ancillaryFiles = manifest.getAncillaryFiles().stream()
         .map(this::buildObjectForAncillary).collect(Collectors.toList());
 
-    return new ArticlePackage(new ArticleItemInput(articleIdentity, articleObjects, AssetType.ARTICLE.getIdentifier()),
-        assetItems, ancillaryFiles);
+    return new ArticlePackage(new ArticleItemInput(articleIdentity, articleObjects,
+        AssetType.ARTICLE.getIdentifier()), assetItems, ancillaryFiles, article, manifest);
   }
 
   private ArticleFileInput buildObjectForAsset(ManifestXml.Asset asset, ManifestXml.Representation representation) {
