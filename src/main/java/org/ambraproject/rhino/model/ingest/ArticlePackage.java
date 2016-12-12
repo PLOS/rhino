@@ -15,23 +15,21 @@ import java.util.stream.Collectors;
 
 public class ArticlePackage {
 
-  private final ArticleXml manuscript;
   private final ManifestXml manifest;
   private final ArticleItemInput articleItem;
   private final ImmutableList<ArticleItemInput> allItems;
   private final ImmutableList<ArticleFileInput> ancillaryFiles;
 
   ArticlePackage(ArticleItemInput articleItem, List<ArticleItemInput> assetItems,
-                 List<ArticleFileInput> ancillaryFiles, ArticleXml manuscript, ManifestXml manifest) {
+                 List<ArticleFileInput> ancillaryFiles, ManifestXml manifest) {
     this.articleItem = Objects.requireNonNull(articleItem);
     this.allItems = ImmutableList.<ArticleItemInput>builder()
         .add(articleItem).addAll(assetItems).build();
     this.ancillaryFiles = ImmutableList.copyOf(ancillaryFiles);
-    this.manuscript = manuscript;
     this.manifest = manifest;
   }
 
-  public void validateAssetCompleteness() {
+  public void validateAssetCompleteness(ArticleXml manuscript) {
     Set<Doi> manuscriptDois = manuscript.findAllAssetNodes().getDois();
     Set<Doi> packageDois = getAllItems().stream()
         .map(ArticleItemInput::getDoi)

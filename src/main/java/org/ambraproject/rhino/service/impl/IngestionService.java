@@ -75,7 +75,7 @@ public class IngestionService extends AmbraService {
 
     ArticlePackage articlePackage = new ArticlePackageBuilder(destinationBucketName, archive,
         parsedArticle, manifestXml, manuscriptAsset, manuscriptRepr, printableRepr).build();
-    articlePackage.validateAssetCompleteness();
+    articlePackage.validateAssetCompleteness(parsedArticle);
 
     ArticleMetadata articleMetadata = parsedArticle.build();
     ArticleCustomMetadata customMetadata = customMetadataExtractor.build();

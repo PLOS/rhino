@@ -59,7 +59,7 @@ public class ArticlePackageBuilder {
         .map(this::buildObjectForAncillary).collect(Collectors.toList());
 
     return new ArticlePackage(new ArticleItemInput(articleIdentity, articleObjects,
-        AssetType.ARTICLE.getIdentifier()), assetItems, ancillaryFiles, article, manifest);
+        AssetType.ARTICLE.getIdentifier()), assetItems, ancillaryFiles, manifest);
   }
 
   private ArticleFileInput buildObjectForAsset(ManifestXml.Asset asset, ManifestXml.Representation representation) {
