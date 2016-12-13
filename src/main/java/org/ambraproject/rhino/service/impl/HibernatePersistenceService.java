@@ -1,7 +1,7 @@
 package org.ambraproject.rhino.service.impl;
 
 import org.ambraproject.rhino.content.xml.ManifestXml;
-import org.ambraproject.rhino.identity.ArticleIdentifier;
+import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
@@ -17,9 +17,9 @@ public interface HibernatePersistenceService {
   /**
    * Get the article object for a DOI if it exists, and save it if it doesn't.
    *
-   * @param articleIdentifier
+   * @param doi
    */
-  public Article persistArticle(ArticleIdentifier articleIdentifier);
+  public Article persistArticle(Doi doi);
 
   public ArticleIngestion persistIngestion(Article article, ArticleMetadata articleMetadata,
                                            ArticleCustomMetadata customMetadata);
@@ -27,8 +27,7 @@ public interface HibernatePersistenceService {
   /**
    * Persist items, items' file representations, ancillary files, and the link to the striking image.
    */
-  public void persistAssets(ArticlePackage articlePackage, ArticleIngestion ingestion,
-                            ManifestXml manifest);
+  public void persistAssets(ArticlePackage articlePackage, ArticleIngestion ingestion);
 
   public Optional<ArticleItem> persistStrikingImage(ArticleIngestion ingestion,
                                                     List<ArticleItem> items, ManifestXml manifest);

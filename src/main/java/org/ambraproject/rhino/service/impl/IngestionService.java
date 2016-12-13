@@ -24,7 +24,6 @@ import org.w3c.dom.Document;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Optional;
 
 public class IngestionService extends AmbraService {
 
@@ -35,7 +34,73 @@ public class IngestionService extends AmbraService {
   @Autowired
   private ArticleCrudService articleCrudService;
 
-  public IngestPackage createIngestPackage(Archive archive) throws IOException, XmlContentException {
+  public ArticleIngestion ingest(Archive archive) throws IOException, XmlContentException {
+    IngestPackage ingestPackage = createIngestPackage(archive);
+    return processIngestPackage(ingestPackage);
+  }
+
+  private IngestPackage createIngestPackage(Archive archive) throws IOException {
+    ManifestXml manifestXml = getManifestXml(archive);
+
+    validateManifest(archive, manifestXml);
+
+    String manuscriptEntry = getManuscriptEntry(archive, manifestXml);
+
+    Document document = getDocument(archive, manuscriptEntry);
+
+    ArticleXml parsedArticle = new ArticleXml(document);
+    ArticleCustomMetadata customMetadata = customMetadataExtractorFactory.parse(document).build();
+
+    // TODO: Allow bucket name to be specified as an ingestion parameter
+    String destinationBucketName = runtimeConfiguration.getCorpusStorage().getDefaultBucket();
+
+    ArticlePackage articlePackage = new ArticlePackageBuilder(destinationBucketName, archive,
+        parsedArticle, manifestXml).build();
+
+    articlePackage.validateAssetCompleteness(parsedArticle);
+
+    ArticleMetadata articleMetadata = parsedArticle.build();
+    return new IngestPackage(articlePackage, articleMetadata, customMetadata);
+  }
+
+  private ArticleIngestion processIngestPackage(IngestPackage ingestPackage) {
+    Doi doi = ArticleIdentifier.create(ingestPackage.getArticleMetadata().getDoi()).getDoi();
+
+    ArticlePackage articlePackage = ingestPackage.getArticlePackage();
+
+    validateAssets(articlePackage, doi);
+    validateManuscript(doi, articlePackage);
+
+    return persistArticle(ingestPackage, doi, articlePackage);
+  }
+
+  private Document getDocument(Archive archive, String manuscriptEntry) throws IOException {
+    Document document;
+    try (InputStream manuscriptStream = new BufferedInputStream(archive.openFile(manuscriptEntry))) {
+      document = AmbraService.parseXml(manuscriptStream);
+    }
+    return document;
+  }
+
+  private String getManuscriptEntry(Archive archive, ManifestXml manifestXml) {
+    ManifestXml.Representation manuscriptRepr = manifestXml.getArticleAsset()
+        .getRepresentation("manuscript")
+        .orElseThrow(() -> new RestClientException("Manuscript entry not found in manifest",
+            HttpStatus.BAD_REQUEST));
+
+    String manuscriptEntry = manuscriptRepr.getFile().getEntry();
+    if (!archive.getEntryNames().contains(manuscriptEntry)) {
+      throw new RestClientException("Manuscript file not found in archive: " + manuscriptEntry,
+          HttpStatus.BAD_REQUEST);
+    }
+    return manuscriptEntry;
+  }
+
+  private void validateManifest(Archive archive, ManifestXml manifestXml) {
+    manifestXml.validateManifestCompleteness(archive);
+  }
+
+  private ManifestXml getManifestXml(Archive archive) throws IOException {
     String manifestEntry = null;
     for (String entryName : archive.getEntryNames()) {
       if (entryName.equalsIgnoreCase("manifest.xml")) {
@@ -50,67 +115,38 @@ public class IngestionService extends AmbraService {
     try (InputStream manifestStream = new BufferedInputStream(archive.openFile(manifestEntry))) {
       manifestXml = new ManifestXml(AmbraService.parseXml(manifestStream));
     }
-
-    manifestXml.validateManifestCompleteness(archive);
-
-    ManifestXml.Asset manuscriptAsset = manifestXml.getArticleAsset();
-    ManifestXml.Representation manuscriptRepr = manuscriptAsset.getRepresentation("manuscript")
-        .orElseThrow(() -> new RestClientException("Manuscript entry not found in manifest", HttpStatus.BAD_REQUEST));
-    Optional<ManifestXml.Representation> printableRepr = manuscriptAsset.getRepresentation("printable");
-
-    String manuscriptEntry = manuscriptRepr.getFile().getEntry();
-    if (!archive.getEntryNames().contains(manifestEntry)) {
-      throw new RestClientException("Manuscript file not found in archive: " + manuscriptEntry, HttpStatus.BAD_REQUEST);
-    }
-
-    ArticleXml parsedArticle;
-    CustomMetadataExtractor customMetadataExtractor;
-    try (InputStream manuscriptStream = new BufferedInputStream(archive.openFile(manuscriptEntry))) {
-      Document document = AmbraService.parseXml(manuscriptStream);
-      parsedArticle = new ArticleXml(document);
-      customMetadataExtractor = customMetadataExtractorFactory.parse(document);
-    }
-    // TODO: Allow bucket name to be specified as an ingestion parameter
-    String destinationBucketName = runtimeConfiguration.getCorpusStorage().getDefaultBucket();
-
-    ArticlePackage articlePackage = new ArticlePackageBuilder(destinationBucketName, archive,
-        parsedArticle, manifestXml, manuscriptAsset, manuscriptRepr, printableRepr).build();
-    articlePackage.validateAssetCompleteness(parsedArticle);
-
-    ArticleMetadata articleMetadata = parsedArticle.build();
-    ArticleCustomMetadata customMetadata = customMetadataExtractor.build();
-    return new IngestPackage(articlePackage, articleMetadata, customMetadata);
+    return manifestXml;
   }
 
-  public ArticleIngestion ingest(IngestPackage ingestPackage) {
-    ArticleIdentifier articleIdentifier = ArticleIdentifier.create(ingestPackage.getArticleMetadata().getDoi());
-    Doi doi = articleIdentifier.getDoi();
-
-    ArticlePackage articlePackage = ingestPackage.getArticlePackage();
-    ManifestXml manifestXml = articlePackage.getManifest();
-    for (ManifestXml.Asset asset : manifestXml.getAssets()) {
-      validateAssetUniqueness(asset, doi);
-    }
-
-    String manuscriptAssetUri = manifestXml.getArticleAsset().getUri();
+  private void validateManuscript(Doi doi, ArticlePackage articlePackage) {
+    String manuscriptAssetUri = articlePackage.getManifest().getArticleAsset().getUri();
     if (!doi.equals(Doi.create(manuscriptAssetUri))) {
       String message = String.format("Article DOI is inconsistent. From manifest: \"%s\" From manuscript: \"%s\"",
           manuscriptAssetUri, doi.getName());
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
+  }
 
-    Article article = hibernatePersistenceService.persistArticle(articleIdentifier);
+  private ArticleIngestion persistArticle(IngestPackage ingestPackage, Doi doi,
+                                          ArticlePackage articlePackage) {
+    Article article = hibernatePersistenceService.persistArticle(doi);
     ArticleIngestion ingestion = hibernatePersistenceService.persistIngestion(article,
         ingestPackage.getArticleMetadata(), ingestPackage.getArticleCustomMetadata());
 
-    hibernatePersistenceService.persistAssets(articlePackage, ingestion, manifestXml);
+    hibernatePersistenceService.persistAssets(articlePackage, ingestion);
 
     hibernateTemplate.flush();
     hibernateTemplate.refresh(ingestion); // Pick up auto-persisted timestamp
     return ingestion;
   }
 
-  private void validateAssetUniqueness(ManifestXml.Asset asset, Doi articleDoi) {
+  private void validateAssets(ArticlePackage articlePackage, Doi articleDoi) {
+    for (ManifestXml.Asset asset : articlePackage.getManifest().getAssets()) {
+      validateAssetUniqueness(articleDoi, asset);
+    }
+  }
+
+  private void validateAssetUniqueness(Doi articleDoi, ManifestXml.Asset asset) {
     Doi assetDoi = Doi.create(asset.getUri());
     for (ArticleItem existingItem : articleCrudService.getAllArticleItems(assetDoi)) {
       Article existingParentArticle = existingItem.getIngestion().getArticle();

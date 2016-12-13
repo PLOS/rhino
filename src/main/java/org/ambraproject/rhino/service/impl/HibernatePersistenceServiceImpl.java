@@ -1,7 +1,6 @@
 package org.ambraproject.rhino.service.impl;
 
 import org.ambraproject.rhino.content.xml.ManifestXml;
-import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleFile;
@@ -36,8 +35,8 @@ public class HibernatePersistenceServiceImpl implements HibernatePersistenceServ
   private static final int FIRST_INGESTION_NUMBER = 1;
 
   @Override
-  public Article persistArticle(ArticleIdentifier articleIdentifier) {
-    String articleDoi = articleIdentifier.getDoiName();
+  public Article persistArticle(Doi doi) {
+    String articleDoi = doi.getName();
     Article article = hibernateTemplate.execute(session -> {
       Query selectQuery = session.createQuery("FROM Article WHERE doi = :doi");
       selectQuery.setParameter("doi", articleDoi);
@@ -82,8 +81,7 @@ public class HibernatePersistenceServiceImpl implements HibernatePersistenceServ
   }
 
   @Override
-  public void persistAssets(ArticlePackage articlePackage, ArticleIngestion ingestion,
-                            ManifestXml manifest) {
+  public void persistAssets(ArticlePackage articlePackage, ArticleIngestion ingestion) {
     List<ArticleItem> items = articlePackage.getAllItems().stream()
         .map((ArticleItemInput item) -> contentRepoPersistenceService.createItem(item, ingestion))
         .collect(Collectors.toList());
@@ -97,7 +95,7 @@ public class HibernatePersistenceServiceImpl implements HibernatePersistenceServ
       hibernateTemplate.save(file);
     }
 
-    persistStrikingImage(ingestion, items, manifest);
+    persistStrikingImage(ingestion, items, articlePackage.getManifest());
   }
 
   @Override
