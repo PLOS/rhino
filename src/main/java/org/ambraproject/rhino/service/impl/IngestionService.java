@@ -1,5 +1,7 @@
 package org.ambraproject.rhino.service.impl;
 
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.ImmutableSet;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
 import org.ambraproject.rhino.content.xml.ManifestXml;
@@ -24,6 +26,7 @@ import org.w3c.dom.Document;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 
 public class IngestionService extends AmbraService {
 
@@ -42,9 +45,10 @@ public class IngestionService extends AmbraService {
   private IngestPackage createIngestPackage(Archive archive) throws IOException {
     ManifestXml manifestXml = getManifestXml(archive);
 
-    validateManifest(archive, manifestXml);
+    ImmutableSet<String> entryNames = archive.getEntryNames();
+    manifestXml.validateManifestCompleteness(entryNames);
 
-    String manuscriptEntry = getManuscriptEntry(archive, manifestXml);
+    String manuscriptEntry = getManuscriptEntry(entryNames, manifestXml);
 
     Document document = getDocument(archive, manuscriptEntry);
 
@@ -57,7 +61,7 @@ public class IngestionService extends AmbraService {
     ArticlePackage articlePackage = new ArticlePackageBuilder(destinationBucketName, archive,
         parsedArticle, manifestXml).build();
 
-    articlePackage.validateAssetCompleteness(parsedArticle);
+    articlePackage.validateAssetCompleteness(parsedArticle.findAllAssetNodes().getDois());
 
     ArticleMetadata articleMetadata = parsedArticle.build();
     return new IngestPackage(articlePackage, articleMetadata, customMetadata);
@@ -68,8 +72,11 @@ public class IngestionService extends AmbraService {
 
     ArticlePackage articlePackage = ingestPackage.getArticlePackage();
 
-    validateAssets(articlePackage, doi);
-    validateManuscript(doi, articlePackage);
+    for (ManifestXml.Asset asset : articlePackage.getManifest().getAssets()) {
+      Doi assetDoi = Doi.create(asset.getUri());
+      validateAssetUniqueness(doi, articleCrudService.getAllArticleItems(assetDoi));
+    }
+    validateManuscript(doi, articlePackage.getManifest().getArticleAsset().getUri());
 
     return persistArticle(ingestPackage, doi, articlePackage);
   }
@@ -82,25 +89,22 @@ public class IngestionService extends AmbraService {
     return document;
   }
 
-  private String getManuscriptEntry(Archive archive, ManifestXml manifestXml) {
+  private String getManuscriptEntry(ImmutableSet<String> entryNames, ManifestXml manifestXml) {
     ManifestXml.Representation manuscriptRepr = manifestXml.getArticleAsset()
         .getRepresentation("manuscript")
         .orElseThrow(() -> new RestClientException("Manuscript entry not found in manifest",
             HttpStatus.BAD_REQUEST));
 
     String manuscriptEntry = manuscriptRepr.getFile().getEntry();
-    if (!archive.getEntryNames().contains(manuscriptEntry)) {
+    if (!entryNames.contains(manuscriptEntry)) {
       throw new RestClientException("Manuscript file not found in archive: " + manuscriptEntry,
           HttpStatus.BAD_REQUEST);
     }
     return manuscriptEntry;
   }
 
-  private void validateManifest(Archive archive, ManifestXml manifestXml) {
-    manifestXml.validateManifestCompleteness(archive);
-  }
-
-  private ManifestXml getManifestXml(Archive archive) throws IOException {
+  @VisibleForTesting
+  ManifestXml getManifestXml(Archive archive) throws IOException {
     String manifestEntry = null;
     for (String entryName : archive.getEntryNames()) {
       if (entryName.equalsIgnoreCase("manifest.xml")) {
@@ -118,8 +122,8 @@ public class IngestionService extends AmbraService {
     return manifestXml;
   }
 
-  private void validateManuscript(Doi doi, ArticlePackage articlePackage) {
-    String manuscriptAssetUri = articlePackage.getManifest().getArticleAsset().getUri();
+  @VisibleForTesting
+  void validateManuscript(Doi doi, String manuscriptAssetUri) {
     if (!doi.equals(Doi.create(manuscriptAssetUri))) {
       String message = String.format("Article DOI is inconsistent. From manifest: \"%s\" From manuscript: \"%s\"",
           manuscriptAssetUri, doi.getName());
@@ -140,20 +144,14 @@ public class IngestionService extends AmbraService {
     return ingestion;
   }
 
-  private void validateAssets(ArticlePackage articlePackage, Doi articleDoi) {
-    for (ManifestXml.Asset asset : articlePackage.getManifest().getAssets()) {
-      validateAssetUniqueness(articleDoi, asset);
-    }
-  }
-
-  private void validateAssetUniqueness(Doi articleDoi, ManifestXml.Asset asset) {
-    Doi assetDoi = Doi.create(asset.getUri());
-    for (ArticleItem existingItem : articleCrudService.getAllArticleItems(assetDoi)) {
+  @VisibleForTesting
+  void validateAssetUniqueness(Doi articleDoi, Collection<ArticleItem> articleItems) {
+    for (ArticleItem existingItem : articleItems) {
       Article existingParentArticle = existingItem.getIngestion().getArticle();
       if (!Doi.create(existingParentArticle.getDoi()).equals(articleDoi)) {
         String errorMessage = String.format("Incoming article ingestion (doi:%s) has a duplicate " +
-                "article asset (doi:%s). Duplicate asset belongs to article doi: %s.",
-            articleDoi.getName(), assetDoi, existingParentArticle.getDoi());
+                "article asset. Duplicate asset belongs to article doi: %s.",
+            articleDoi.getName(), existingParentArticle.getDoi());
         throw new RestClientException(errorMessage, HttpStatus.BAD_REQUEST);
       }
     }

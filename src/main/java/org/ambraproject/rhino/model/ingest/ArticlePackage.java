@@ -2,7 +2,6 @@ package org.ambraproject.rhino.model.ingest;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
-import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -29,8 +28,7 @@ public class ArticlePackage {
     this.manifest = manifest;
   }
 
-  public void validateAssetCompleteness(ArticleXml manuscript) {
-    Set<Doi> manuscriptDois = manuscript.findAllAssetNodes().getDois();
+  public void validateAssetCompleteness(Set<Doi> manuscriptDois) {
     Set<Doi> packageDois = getAllItems().stream()
         .map(ArticleItemInput::getDoi)
         .collect(Collectors.toSet());

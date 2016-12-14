@@ -19,7 +19,6 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.ambraproject.rhino.model.ingest.AssetType;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.util.Archive;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Node;
 
@@ -161,9 +160,7 @@ public class ManifestXml extends AbstractXpathReader {
     return parsed.ancillaryFiles;
   }
 
-  public void validateManifestCompleteness(Archive archive) {
-    Set<String> archiveEntryNames = archive.getEntryNames();
-
+  public void validateManifestCompleteness(Set<String> archiveEntryNames) {
     Stream<ManifestFile> manifestFiles = Stream.concat(
         getAssets().stream()
             .flatMap(asset -> asset.getRepresentations().stream())

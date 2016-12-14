@@ -1,35 +1,34 @@
 package org.ambraproject.rhino.service.impl;
 
-import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableList;
 import com.google.common.io.ByteSource;
-import org.ambraproject.rhino.BaseRhinoTransactionalTest;
+import org.ambraproject.rhino.identity.Doi;
+import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleIngestion;
+import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.Archive;
-import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.stream.Stream;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.AssertJUnit.fail;
+public class IngestionServiceTest {
 
-public class IngestionServiceTest extends BaseRhinoTransactionalTest {
-
-  @Autowired
   private IngestionService ingestionService;
 
   @BeforeMethod
   public void init() {
-    MockitoAnnotations.initMocks(this);
+    ingestionService = new IngestionService();
   }
 
-  private Archive getTestArchive(byte[] manifestXml, ImmutableSet<String> entryNames) {
+  private static Archive createStubArchive(byte[] manifestXml, Collection<String> entryNames) {
     Map<String, ByteSource> fileMap = new HashMap<>();
 
     for (String entryName : entryNames) {
@@ -43,61 +42,76 @@ public class IngestionServiceTest extends BaseRhinoTransactionalTest {
     return Archive.pack("test", fileMap);
   }
 
-  private ImmutableSet<String> getValidEntryNames() {
-    ImmutableSet.Builder<String> entryNameBuilder = new ImmutableSet.Builder<>();
-    entryNameBuilder.add("manifest.xml");
-    entryNameBuilder.add("pone.0000001.xml");
-    entryNameBuilder.add("pone.0000001.g001.PNG");
-    entryNameBuilder.add("pone.0000001.g001.tif");
-    entryNameBuilder.add("pone.0000001.g001.PNG_I");
-    entryNameBuilder.add("pone.0000001.g001.PNG_L");
-    entryNameBuilder.add("pone.0000001.g001.PNG_M");
-    entryNameBuilder.add("pone.0000001.g001.PNG_S");
-    return entryNameBuilder.build();
+  private static ArticleItem createStubArticleItem() {
+    ArticleItem articleItem = new ArticleItem();
+    ArticleIngestion articleIngestion = new ArticleIngestion();
+    Article article = new Article();
+    article.setDoi("test");
+    articleItem.setIngestion(articleIngestion);
+    articleIngestion.setArticle(article);
+    return articleItem;
   }
 
-  private ImmutableSet<String> getInvalidEntryNames_MissingManifest() {
-    ImmutableSet.Builder<String> entryNameBuilder = new ImmutableSet.Builder<>();
-    entryNameBuilder.add("pone.0000001.xml");
-    entryNameBuilder.add("pone.0000001.g001.PNG");
-    entryNameBuilder.add("pone.0000001.g001.tif");
-    entryNameBuilder.add("pone.0000001.g001.PNG_I");
-    entryNameBuilder.add("pone.0000001.g001.PNG_L");
-    entryNameBuilder.add("pone.0000001.g001.PNG_M");
-    entryNameBuilder.add("pone.0000001.g001.PNG_S");
-    return entryNameBuilder.build();
+  @DataProvider
+  private Iterator<Object[]> getPackageEntryNames() {
+
+    Object[][] cases = new Object[][]{
+        {getBaseEntryNames()}
+    };
+    return Stream.of(cases).map(c -> {
+      Collection<String> entryNames = (Collection<String>) c[0];
+      return new Object[]{entryNames};
+    }).iterator();
+  }
+
+  private Collection<String> getBaseEntryNames() {
+    Collection<String> entryNames = new ArrayList<>();
+    entryNames.add("manifest.xml");
+    entryNames.add("pone.0000001.xml");
+    entryNames.add("pone.0000001.g001.PNG");
+    entryNames.add("pone.0000001.g001.tif");
+    entryNames.add("pone.0000001.g001.PNG_I");
+    entryNames.add("pone.0000001.g001.PNG_L");
+    entryNames.add("pone.0000001.g001.PNG_M");
+    entryNames.add("pone.0000001.g001.PNG_S");
+    return entryNames;
+  }
+
+  @Test(dataProvider = "getPackageEntryNames", expectedExceptions = RestClientException.class,
+      expectedExceptionsMessageRegExp = ".*Invalid XML: Premature end of file.")
+  public void testGetManifestXml(Collection<String> entryNames) throws Exception {
+    Archive invalidTestArchive = createStubArchive(new byte[]{}, entryNames);
+    ingestionService.getManifestXml(invalidTestArchive);
+  }
+
+  @Test(dataProvider = "getPackageEntryNames", expectedExceptions = RestClientException.class,
+      expectedExceptionsMessageRegExp = "Archive has no manifest file")
+  public void testGetManifestXml_missingManifest(Collection<String> entryNames) throws Exception {
+    entryNames.remove("manifest.xml");
+    Archive invalidTestArchive = createStubArchive(null, entryNames);
+    ingestionService.getManifestXml(invalidTestArchive);
   }
 
   @Test
-  public void testServiceAutowiring() {
-    assertNotNull(ingestionService);
+  public void testValidateManuscript() {
+    ingestionService.validateManuscript(Doi.create("test"), "test");
+  }
+
+  @Test(expectedExceptions = RestClientException.class)
+  public void testValidateManuscript_invalid() {
+    ingestionService.validateManuscript(Doi.create("test"), "test2");
   }
 
   @Test
-  public void testCreateIngestPackage_valid() throws Exception {
-
-    Archive validTestArchive = getTestArchive(new byte[]{}, getValidEntryNames());
-    ArticleIngestion articleIngestion = ingestionService.ingest(validTestArchive);
-
-    assertNotNull(articleIngestion);
+  public void testValidateAssetUniqueness() {
+    ingestionService.validateAssetUniqueness(Doi.create("test"),
+        ImmutableList.of(createStubArticleItem()));
   }
 
-  @Test
-  public void testCreateIngestPackage_invalid_missingManifest() throws Exception {
-
-    Archive invalidTestArchive = getTestArchive(null, getInvalidEntryNames_MissingManifest());
-    try {
-      ingestionService.ingest(invalidTestArchive);
-    } catch (RestClientException e) {
-      assertEquals(e.getResponseStatus(), HttpStatus.BAD_REQUEST);
-      return;
-    }
-    fail("Expected RestClientException if no manifest file is included in archive");
-  }
-
-  @Test
-  public void ingest() throws Exception {
-
+  @Test(expectedExceptions = RestClientException.class)
+  public void testValidateAssetUniqueness_invalid() {
+    ingestionService.validateAssetUniqueness(Doi.create("test2"),
+        ImmutableList.of(createStubArticleItem()));
   }
 
 }
