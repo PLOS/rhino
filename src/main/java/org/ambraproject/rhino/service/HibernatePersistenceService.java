@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.service.impl;
+package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.identity.Doi;

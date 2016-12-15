@@ -18,6 +18,7 @@ import org.ambraproject.rhino.model.ingest.ArticlePackageBuilder;
 import org.ambraproject.rhino.model.ingest.IngestPackage;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
+import org.ambraproject.rhino.service.HibernatePersistenceService;
 import org.ambraproject.rhino.util.Archive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

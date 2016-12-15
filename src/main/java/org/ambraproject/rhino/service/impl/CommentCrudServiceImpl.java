@@ -36,6 +36,7 @@ import org.ambraproject.rhino.view.comment.CommentFlagOutputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
 import org.ambraproject.rhino.view.comment.CommentNodeView;
 import org.ambraproject.rhino.view.comment.CommentOutputView;
+import org.ambraproject.rhino.view.comment.CompetingInterestPolicy;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +78,8 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     Article article = articleCrudService.readArticle(articleId);
     Collection<Comment> comments = fetchAllComments(article);
     CommentOutputView.Factory factory
-        = new CommentOutputView.Factory(runtimeConfiguration, comments, article);
+        = new CommentOutputView.Factory(new CompetingInterestPolicy(runtimeConfiguration),
+        comments, article);
     List<CommentOutputView> views = comments.stream()
         .filter(comment -> comment.getParent() == null)
         .sorted(CommentOutputView.BY_DATE)
@@ -89,7 +91,8 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   private CommentOutputView createView(Comment comment) {
     Article article = comment.getArticle();
     Collection<Comment> articleComments = fetchAllComments(article);
-    return new CommentOutputView.Factory(runtimeConfiguration, articleComments, article).buildView(comment);
+    return new CommentOutputView.Factory(new CompetingInterestPolicy(runtimeConfiguration),
+        articleComments, article).buildView(comment);
   }
 
   @Override
@@ -183,7 +186,9 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     hibernateTemplate.save(created);
 
     List<Comment> childComments = ImmutableList.of(); // the new comment can't have any children yet
-    CommentOutputView.Factory viewFactory = new CommentOutputView.Factory(runtimeConfiguration, childComments, article);
+    CompetingInterestPolicy competingInterestPolicy = new CompetingInterestPolicy(runtimeConfiguration);
+    CommentOutputView.Factory viewFactory = new CommentOutputView.Factory(competingInterestPolicy,
+        childComments, article);
     CommentOutputView view = viewFactory.buildView(created);
     return ServiceResponse.reportCreated(view);
   }

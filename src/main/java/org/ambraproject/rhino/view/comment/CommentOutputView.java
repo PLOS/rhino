@@ -6,7 +6,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
-import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Comment;
@@ -59,9 +58,9 @@ public class CommentOutputView implements JsonOutputView {
      * @param comments      all comments belonging to the parent article
      * @param parentArticle
      */
-    public Factory(RuntimeConfiguration runtimeConfiguration, Collection<Comment> comments,
+    public Factory(CompetingInterestPolicy competingInterestPolicy, Collection<Comment> comments,
                    Article parentArticle) {
-      this.competingInterestPolicy = new CompetingInterestPolicy(runtimeConfiguration);
+      this.competingInterestPolicy = competingInterestPolicy;
       this.parentArticle = ArticleVisibility.create(Doi.create(parentArticle.getDoi()));
       this.commentsByParent = comments.stream()
           .filter(comment -> comment.getParent() != null)

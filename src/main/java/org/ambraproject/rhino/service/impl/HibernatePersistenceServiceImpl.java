@@ -12,6 +12,8 @@ import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.model.ingest.ArticleItemInput;
 import org.ambraproject.rhino.model.ingest.ArticlePackage;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.service.ContentRepoPersistenceService;
+import org.ambraproject.rhino.service.HibernatePersistenceService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -10,11 +10,11 @@ import java.util.Date;
 /**
  * Factory object for {@link CompetingInterestStatement} objects.
  */
-class CompetingInterestPolicy {
+public class CompetingInterestPolicy {
 
   private final Date startDate;
 
-  CompetingInterestPolicy(RuntimeConfiguration runtimeConfiguration) {
+  public CompetingInterestPolicy(RuntimeConfiguration runtimeConfiguration) {
     this.startDate = Date.from(runtimeConfiguration.getCompetingInterestPolicyStart()
         .atStartOfDay(ZoneId.systemDefault()).toInstant());
   }

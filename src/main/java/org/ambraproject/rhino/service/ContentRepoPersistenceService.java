@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.service.impl;
+package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.model.ArticleFile;
 import org.ambraproject.rhino.model.ArticleIngestion;
