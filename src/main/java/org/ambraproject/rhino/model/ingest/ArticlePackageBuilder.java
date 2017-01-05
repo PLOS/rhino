@@ -34,16 +34,15 @@ public class ArticlePackageBuilder {
   private final Doi articleIdentity;
 
   public ArticlePackageBuilder(String destinationBucketName, Archive archive,
-                               ArticleXml article, ManifestXml manifest, ManifestXml.Asset manuscriptAsset,
-                               ManifestXml.Representation manuscriptRepr, Optional<ManifestXml.Representation> printableRepr) {
+                               ArticleXml article, ManifestXml manifest) {
     this.destinationBucketName = Objects.requireNonNull(destinationBucketName);
     this.archive = Objects.requireNonNull(archive);
     this.article = Objects.requireNonNull(article);
     this.manifest = Objects.requireNonNull(manifest);
 
-    this.manuscriptAsset = Objects.requireNonNull(manuscriptAsset);
-    this.manuscriptRepr = Objects.requireNonNull(manuscriptRepr);
-    this.printableRepr = Objects.requireNonNull(printableRepr);
+    this.manuscriptAsset = Objects.requireNonNull(manifest.getArticleAsset());
+    this.manuscriptRepr = Objects.requireNonNull(manuscriptAsset.getRepresentation("manuscript").get());
+    this.printableRepr = Objects.requireNonNull(manuscriptAsset.getRepresentation("printable"));
 
     try {
       this.articleIdentity = article.readDoi();
@@ -58,8 +57,8 @@ public class ArticlePackageBuilder {
     List<ArticleFileInput> ancillaryFiles = manifest.getAncillaryFiles().stream()
         .map(this::buildObjectForAncillary).collect(Collectors.toList());
 
-    return new ArticlePackage(new ArticleItemInput(articleIdentity, articleObjects, AssetType.ARTICLE.getIdentifier()),
-        assetItems, ancillaryFiles);
+    return new ArticlePackage(new ArticleItemInput(articleIdentity, articleObjects,
+        AssetType.ARTICLE.getIdentifier()), assetItems, ancillaryFiles, manifest);
   }
 
   private ArticleFileInput buildObjectForAsset(ManifestXml.Asset asset, ManifestXml.Representation representation) {

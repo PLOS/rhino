@@ -23,17 +23,9 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
-import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.apache.commons.io.IOUtils;
-import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
 import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.w3c.dom.Document;
@@ -44,7 +36,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 public abstract class AmbraService {
 
@@ -59,51 +50,6 @@ public abstract class AmbraService {
 
   @Autowired
   protected RuntimeConfiguration runtimeConfiguration;
-
-  /**
-   * Check whether a distinct entity exists.
-   *
-   * @param criteria the criteria describing a distinct entity
-   * @return {@code true} if the described entity exists and {@code false} otherwise
-   */
-  protected boolean exists(DetachedCriteria criteria) {
-    long count = (Long) DataAccessUtils.requiredSingleResult((List<?>)
-        hibernateTemplate.findByCriteria(criteria
-                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-                .setProjection(Projections.rowCount())
-        ));
-    return count > 0L;
-  }
-
-  protected static DetachedCriteria journalCriteria() {
-    return DetachedCriteria.forClass(Journal.class)
-        .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        .setFetchMode("volumes", FetchMode.JOIN)
-        .setFetchMode("volumes.issues", FetchMode.JOIN)
-        .setFetchMode("articleLists", FetchMode.JOIN)
-        .addOrder(Order.asc("journalKey"));
-  }
-
-  /**
-   * Read a client-provided stream into memory. Report it as a client error if the stream cannot be read. Closes the
-   * stream.
-   *
-   * @param input an input stream from a RESTful request
-   * @return a byte array of the input stream contents
-   */
-  protected static byte[] readClientInput(InputStream input) {
-    Preconditions.checkNotNull(input);
-    try {
-      try {
-        return IOUtils.toByteArray(input);
-      } finally {
-        input.close();
-      }
-    } catch (IOException e) {
-      String message = "Error reading provided file: " + e.getMessage();
-      throw new RestClientException(message, HttpStatus.BAD_REQUEST, e);
-    }
-  }
 
   /**
    * Parse client-provided XML. Errors are handled according to whether they most likely were caused by the client or
@@ -153,27 +99,4 @@ public abstract class AmbraService {
   }
 
 
-  /**
-   * Loads a single entity from the datastore based on some unique property.
-   *
-   * @param hql Hibernate Query Language string specifying the select.  Should have a single parameter corresponding to
-   *            id.  Example: "from Foo where fooID = ?"
-   * @param id  unique identifier for the entity
-   * @param <S> type of the identifier
-   * @param <T> type of the entity being queried/returned
-   * @return the retrieved entity
-   * @throws RestClientException if no entity is found matching the given ID
-   */
-  protected <S, T> T findSingleEntity(String hql, S id) {
-    List<T> results = (List<T>) hibernateTemplate.find(hql, id);
-    if (results.isEmpty()) {
-      String message = "Item not found at the provided ID: " + id;
-      throw new RestClientException(message, HttpStatus.NOT_FOUND);
-    } else if (results.size() > 1) {
-
-      // Should never happen.
-      throw new RuntimeException("Multiple entities found for " + id);
-    }
-    return results.get(0);
-  }
 }
