@@ -30,6 +30,8 @@ COLLECTIONS_API = CREPO_BASE_URL + '/collections'
 #Article DOI
 ARTICLE_DOI = '10.1371++journal.pone.0155391'
 
+NOT_SCAPE_ARTICLE_DOI= '10.1371/journal.pone.0155391'
+
 #ZIP files
 ZIP_ARTICLE = 'pone.0155391.zip'
 

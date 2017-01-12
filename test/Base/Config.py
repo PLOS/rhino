@@ -54,14 +54,14 @@ Create a DB Configuration for use in MySQL.py
 
 dbconfig = {'user': 'root',
             'password': '',
-            'host': 'devstack04.sfo.plos.org',
+            'host': 'db-ambra-201.sfo.plos.org',
             'port': 3306,
             'database': 'ambra',
             'connection_timeout': 10,
             }
 
 repo_config = {'transport': 'http',
-               'host': 'devstack04.sfo.plos.org',
+               'host': 'contentrepo-201.sfo.plos.org',
                'port': 8016,
                'path': '/v1',
                }

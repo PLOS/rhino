@@ -34,6 +34,7 @@ class ZipIngestionTest(ZIPIngestionJson):
     self.verify_http_code_is(resources.CREATED)
     # Validate response with database tables
     self.verify_zip_ingestion()
+    self.delete_article_sql_doi(resources.NOT_SCAPE_ARTICLE_DOI)
 
 
   def test_zip_ingestion_without_file(self):
@@ -54,7 +55,7 @@ class ZipIngestionTest(ZIPIngestionJson):
     # # Validate response with Syndication table
     # self.verify_syndications(resources.ZIP_ARTICLE)
     # # Validate response with Journal table
-    self.verify_journals(resources.ARTICLE_ID)
+    self.verify_journals()
     # # Validate response with CitedArticle and CitedPerson tables
     # self.verify_citedArticles(resources.ARTICLE_ID)
     # # Validate response with ArticleAsset table

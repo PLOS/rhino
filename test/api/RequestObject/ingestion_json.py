@@ -19,7 +19,9 @@ class Ingestion(BaseServiceTest):
     """
     Validate ingestion with Article table
     """
-    article = self.get_article_sql_archiveName(resources.ARTICLE_ID)
+    article_id = self.get_article_id_sql_doi(resources.NOT_SCAPE_ARTICLE_DOI)
+    print (article_id)
+    article = self.get_article_sql_archiveName(article_id)
     # # Verify uploaded DOI against the one stored in DB
     # self.verify_ingestion_text_expected_only(article[0], 'doi')
     # # Verify uploaded FORMAT against the one stored in DB
@@ -59,11 +61,12 @@ class Ingestion(BaseServiceTest):
         self.verify_ingestion_attribute(syndications_json[target]['submissionCount'], syndication[3], target + '.submissionCount')
 
   @needs('parsed', 'parse_response_as_json()')
-  def verify_journals(self,article_id):
+  def verify_journals(self):
     """
     Validate ingestion with articlePublishedJournals  table
     """
     print 'Verify Journals'
+    article_id = self.get_article_id_sql_doi(resources.NOT_SCAPE_ARTICLE_DOI)
     journals = self.get_journals_sql_archiveName(article_id)
     journals_json = self.parsed.get_attribute('journal')
     self.verify_array(journals, journals_json)
@@ -191,6 +194,21 @@ class Ingestion(BaseServiceTest):
     self.assertIsNotNone(actual_array)
     self.assertIsNotNone(expected_array)
     #self.assertEquals(len(actual_array), len(expected_array), 'The arrays have a different size')
+
+  """
+  Below SQL statements will get article id from ambra db given doi  example 10.1371/journal.pone.0155391
+  """
+  def get_article_id_sql_doi (self,not_scape_doi):
+    current_articles_id = MySQL().query('SELECT articleId FROM article WHERE doi = %s', [not_scape_doi])
+    return current_articles_id[0][0]
+
+  """
+  Below SQL statements will delete article from ambra db given doi  example 10.1371/journal.pone.0155391
+  """
+  def delete_article_sql_doi (self,not_scape_doi):
+    current_articles_id = self.get_article_id_sql_doi (not_scape_doi)
+    print (current_articles_id)
+    response = MySQL().query('CALL migrate_article_rollback(%s)', [current_articles_id])
 
   """
   Below SQL statements will query ambra articleIngestion table given articleId
