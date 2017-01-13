@@ -23,6 +23,7 @@ class ZipIngestionTest(ZIPIngestionJson):
     # Delete article and crepo objects
     self.delete_test_article()
 
+
   def test_zip_ingestion(self):
     """
     POST zips: Forced ingestion of ZIP archive
@@ -34,7 +35,7 @@ class ZipIngestionTest(ZIPIngestionJson):
     self.verify_http_code_is(resources.CREATED)
     # Validate response with database tables
     self.verify_zip_ingestion()
-    self.delete_article_sql_doi(resources.NOT_SCAPE_ARTICLE_DOI)
+
 
 
   def test_zip_ingestion_without_file(self):
@@ -68,6 +69,7 @@ class ZipIngestionTest(ZIPIngestionJson):
     try:
       self.get_article(resources.ARTICLE_DOI)
       if self.get_http_response().status_code == resources.OK:
+        self.delete_article_sql_doi(resources.NOT_SCAPE_ARTICLE_DOI)
         #Delete article
         self.delete_article(resources.ARTICLE_DOI)
         self.verify_http_code_is(resources.OK)
@@ -75,6 +77,7 @@ class ZipIngestionTest(ZIPIngestionJson):
         self.delete_test_collections()
         #Delete CRepo objects
         self.delete_test_objects()
+
       else:
         print self.parsed.get_attribute('message')
     except:

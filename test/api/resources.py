@@ -35,10 +35,6 @@ NOT_SCAPE_ARTICLE_DOI= '10.1371/journal.pone.0155391'
 #ZIP files
 ZIP_ARTICLE = 'pone.0155391.zip'
 
-#Article id
-# A better solution will be find with https://developer.plos.org/jira/browse/DPRO-3259
-ARTICLE_ID = 342505
-
 # Http Codes
 OK = 200
 CREATED = 201

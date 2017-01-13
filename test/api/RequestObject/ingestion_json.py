@@ -20,7 +20,6 @@ class Ingestion(BaseServiceTest):
     Validate ingestion with Article table
     """
     article_id = self.get_article_id_sql_doi(resources.NOT_SCAPE_ARTICLE_DOI)
-    print (article_id)
     article = self.get_article_sql_archiveName(article_id)
     # # Verify uploaded DOI against the one stored in DB
     # self.verify_ingestion_text_expected_only(article[0], 'doi')
@@ -207,8 +206,9 @@ class Ingestion(BaseServiceTest):
   """
   def delete_article_sql_doi (self,not_scape_doi):
     current_articles_id = self.get_article_id_sql_doi (not_scape_doi)
-    print (current_articles_id)
-    response = MySQL().query('CALL migrate_article_rollback(%s)', [current_articles_id])
+    MySQL().modify('CALL migrate_article_rollback(%s)', [current_articles_id])
+    return self
+
 
   """
   Below SQL statements will query ambra articleIngestion table given articleId
