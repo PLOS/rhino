@@ -5,8 +5,8 @@ from os import getenv
 from selenium.webdriver import DesiredCapabilities
 
 # Set API_BASE_URL environment variable to desired URL in order to run suite against it
-API_BASE_URL = os.getenv('API_BASE_URL', 'http://devstack04.sfo.plos.org:8006/v1')
-INGESTION_HOST = os.getenv('INGESTION_HOST', 'devstack04.sfo.plos.org')
+API_BASE_URL = os.getenv('API_BASE_URL', 'http://rhino-201.sfo.plos.org:8006/v2')
+INGESTION_HOST = os.getenv('INGESTION_HOST', 'rhino-201.sfo.plos.org')
 INGEST_USER = os.getenv('INGEST_USER', 'rinotest')
 RHINO_INGEST_PATH = os.getenv('RHINO_INGEST_PATH', '/var/spool/ambra/ingestion-queue')
 SSH_PASSWORD = os.getenv('SSH_PASSWORD', 'Shoh1yar')
@@ -54,14 +54,14 @@ Create a DB Configuration for use in MySQL.py
 
 dbconfig = {'user': 'root',
             'password': '',
-            'host': 'devstack04.sfo.plos.org',
+            'host': 'db-ambra-201.sfo.plos.org',
             'port': 3306,
             'database': 'ambra',
             'connection_timeout': 10,
             }
 
 repo_config = {'transport': 'http',
-               'host': 'devstack04.sfo.plos.org',
+               'host': 'contentrepo-201.sfo.plos.org',
                'port': 8016,
                'path': '/v1',
                }

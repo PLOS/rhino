@@ -12,13 +12,13 @@ from ..resources import *
 
 class ZIPIngestionJson(Ingestion):
 
-  def post_ingestible_zip(self, archive, force_reingest=None):
+  def post_ingestible_zip(self, archive):
     """
     Calls article API to ingest a zip article file
     POST /zips
-    :param archive, force_reingest
+    :param archive
     """
-    self.doPost(ZIP_INGESTION_API, {"force_reingest": force_reingest}, {'archive': open(self.find_file(archive), 'rb')})
+    self.doPost(ZIP_INGESTION_API, {'archive': open(self.find_file(archive), 'rb')})
     self.parse_response_as_json()
 
   #Article API
@@ -28,7 +28,7 @@ class ZIPIngestionJson(Ingestion):
     GET /articles/{article_doi}...
     :param article_doi
     """
-    self.doGet('%s/%s' % (ARTICLE_API, article_doi), None, headers=DEFAULT_HEADERS)
+    self.doGet('%s/%s/%s' % (ARTICLE_API, article_doi, 'ingestions/1'), None, headers=DEFAULT_HEADERS)
     self.parse_response_as_json()
 
   def delete_article(self, article_doi=None):
