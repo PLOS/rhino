@@ -1,6 +1,5 @@
 package org.ambraproject.rhino.view.article;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonDeserializationContext;
@@ -12,6 +11,7 @@ import org.ambraproject.rhino.identity.ArticleListIdentity;
 
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Set;
 
 public class ListInputView {
@@ -21,10 +21,9 @@ public class ListInputView {
   private final Optional<ImmutableSet<ArticleIdentifier>> articleIds;
 
   private ListInputView(ArticleListIdentity identity, String title, Set<ArticleIdentifier> articleIds) {
-    this.identity = Optional.fromNullable(identity);
-    this.title = Optional.fromNullable(title);
-    this.articleIds = (articleIds == null) ? Optional.<ImmutableSet<ArticleIdentifier>>absent()
-        : Optional.of(ImmutableSet.copyOf(articleIds));
+    this.identity = Optional.ofNullable(identity);
+    this.title = Optional.ofNullable(title);
+    this.articleIds = Optional.ofNullable(articleIds).map(ImmutableSet::copyOf);
   }
 
   public Optional<ArticleListIdentity> getIdentity() {

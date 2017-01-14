@@ -18,14 +18,12 @@
 
 package org.ambraproject.rhino.rest;
 
-import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterators;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Enumeration;
@@ -46,24 +44,21 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
     return super.preHandle(request, response, handler);
   }
 
-  private static final Function<Object, String> STRING_LITERAL = new Function<Object, String>() {
-    @Override
-    public String apply(@Nullable Object input) {
-      String text = String.valueOf(input);
-      if (input == null) {
-        return text;
-      }
-
-      /*
-       * TODO: Use org.apache.commons.lang.StringEscapeUtils?
-       * StringEscapeUtils is a little funny with forward-slashes, which makes these values hard to read. So for now,
-       * just handle some simple cases by hand. The returned values are not guaranteed to be parsable in any particular
-       * context; this is just for human readability.
-       */
-      text = text.replace("\\", "\\\\").replace("\"", "\\\"");
-      return '"' + text + '"';
+  private static String asStringLiteral(Object input) {
+    String text = String.valueOf(input);
+    if (input == null) {
+      return text;
     }
-  };
+
+    /*
+     * TODO: Use org.apache.commons.lang.StringEscapeUtils?
+     * StringEscapeUtils is a little funny with forward-slashes, which makes these values hard to read. So for now,
+     * just handle some simple cases by hand. The returned values are not guaranteed to be parsable in any particular
+     * context; this is just for human readability.
+     */
+    text = text.replace("\\", "\\\\").replace("\"", "\\\"");
+    return '"' + text + '"';
+  }
 
   private static final Joiner JOINER = Joiner.on(", ");
   private static final String INDENT = "  ";
@@ -86,9 +81,9 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
     // Append a list of headers
     for (Enumeration headerNames = request.getHeaderNames(); headerNames.hasMoreElements(); ) {
       String headerName = (String) headerNames.nextElement();
-      message.append(INDENT).append(STRING_LITERAL.apply(headerName)).append(": ");
+      message.append(INDENT).append(asStringLiteral(headerName)).append(": ");
       Enumeration<?> headers = request.getHeaders(headerName);
-      Iterator<String> headerStrings = Iterators.transform(Iterators.forEnumeration(headers), STRING_LITERAL);
+      Iterator<String> headerStrings = Iterators.transform(Iterators.forEnumeration(headers), LoggingInterceptor::asStringLiteral);
       JOINER.appendTo(message, headerStrings);
       message.append('\n');
     }
