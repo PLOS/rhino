@@ -40,15 +40,15 @@ public class ItemSetView {
         .filter(file -> file.getItem() != null)
         .collect(Collectors.groupingBy(ArticleFile::getItem));
     validateItemParentage(ingestion, itemFileGroups.keySet());
-    this.items = ImmutableMap.copyOf(itemFileGroups.entrySet().stream()
-        .collect(Collectors.toMap(
+    this.items = itemFileGroups.entrySet().stream()
+        .collect(ImmutableMap.toImmutableMap(
             entry -> entry.getKey().getDoi(),
-            entry -> new ItemView(entry.getKey(), entry.getValue()))));
+            entry -> new ItemView(entry.getKey(), entry.getValue())));
 
-    this.ancillary = ImmutableList.copyOf(files.stream()
+    this.ancillary = files.stream()
         .filter(file -> file.getItem() == null)
         .map(FileView::new)
-        .collect(Collectors.toList()));
+        .collect(ImmutableList.toImmutableList());
   }
 
   /**

@@ -11,7 +11,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.EnumSet;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 /**
  * A Digital Object Identifier.
@@ -64,8 +63,8 @@ public final class Doi {
     protected abstract URI convert(String doiName) throws URISyntaxException, MalformedURLException;
   }
 
-  private static final ImmutableSet<String> PREFIXES = ImmutableSet.copyOf(
-      EnumSet.allOf(UriStyle.class).stream().map(s -> s.prefix).collect(Collectors.toList()));
+  private static final ImmutableSet<String> PREFIXES = EnumSet.allOf(UriStyle.class).stream()
+      .map(s -> s.prefix).collect(ImmutableSet.toImmutableSet());
 
 
   private final String doiName;
