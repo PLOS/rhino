@@ -51,4 +51,10 @@ class JSONResponse(AbstractResponse):
   def get_list(self):
     return self.jpath('$[*]')
 
+  def get_article_doi(self):
+    return self.jpath('$..doi')
+
+  def get_article_revision_number(self):
+    return self.jpath('$..revisionNumber')
+
 

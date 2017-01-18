@@ -28,3 +28,11 @@ class AbstractResponse(object):
   def get_journalTitle(self):
     pass
 
+  @abstractmethod
+  def get_article_doi(self):
+    pass
+
+  @abstractmethod
+  def get_article_revision_number(self):
+    pass
+
