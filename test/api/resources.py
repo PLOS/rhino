@@ -35,6 +35,10 @@ NOT_SCAPE_ARTICLE_DOI= '10.1371/journal.pone.0155391'
 #ZIP files
 ZIP_ARTICLE = 'pone.0155391.zip'
 
+#Variables used to verify article revisions
+REVISION = 1
+INGESTION_NUMBER = 1
+
 # Http Codes
 OK = 200
 CREATED = 201
