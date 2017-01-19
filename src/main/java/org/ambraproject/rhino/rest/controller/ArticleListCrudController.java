@@ -1,6 +1,5 @@
 package org.ambraproject.rhino.rest.controller;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import com.wordnik.swagger.annotations.ApiImplicitParam;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Optional;
 
 @Controller
 public class ArticleListCrudController extends RestController {
@@ -94,14 +94,14 @@ public class ArticleListCrudController extends RestController {
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/lists", method = RequestMethod.GET)
   public ResponseEntity<?> listAll() throws IOException {
-    return articleListCrudService.readAll(Optional.<String>absent(), Optional.<String>absent()).asJsonResponse(entityGson);
+    return articleListCrudService.readAll(Optional.empty(), Optional.empty()).asJsonResponse(entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/lists/{type}", method = RequestMethod.GET)
   public ResponseEntity<?> listAll(@PathVariable("type") String type)
       throws IOException {
-    return articleListCrudService.readAll(Optional.of(type), Optional.<String>absent()).asJsonResponse(entityGson);
+    return articleListCrudService.readAll(Optional.of(type), Optional.empty()).asJsonResponse(entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
