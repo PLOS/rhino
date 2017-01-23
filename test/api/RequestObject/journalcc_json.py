@@ -13,7 +13,7 @@ from ...Base.api import needs
 JOURNALS_API = API_BASE_URL + '/journals'
 DEFAULT_HEADERS = {'Accept': 'application/json'}
 HEADER = '-H'
-EXPECTED_KEYS = [u'PLoSBiology', u'PLoSPathogens', u'PLoSDefault', u'PLoSMedicine', u'PLoSNTD', u'PLoSCompBiol', u'PLoSCollections', u'PLoSClinicalTrials', u'PLoSGenetics', u'PLoSONE']
+EXPECTED_KEYS = [u'PLoSMedicine', u'PLoSONE', u'PLoSGenetics', u'PLoSCompBiol', u'PLoSCollections', u'PLoSDefault', u'PLoSNTD', u'PLoSBiology', u'PLoSClinicalTrials', u'PLoSPathogens']
 
 
 class JournalCCJson(BaseServiceTest):
