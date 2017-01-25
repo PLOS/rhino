@@ -172,10 +172,14 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     article.setDoi(readDoi().getName());
 
     article.setTitle(getXmlFromNode(readNode("/article/front/article-meta/title-group/article-title")));
-    article.seteIssn(checkEissn(readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]")));
+    String eissn = readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]");
+    if (Strings.isNullOrEmpty(eissn)) {
+      eissn = readString("/article/front/journal-meta/issn");
+    }
+    article.seteIssn(checkEissn(eissn));
     article.setDescription(getXmlFromNode(findAbstractNode()));
 
-    String rights = readString("/article/front/article-meta/copyright-statement");
+    String rights = readString("/article/front/article-meta/permissions/copyright-statement");
     if (rights == null) {
       rights = buildRights(
           readString("/article/front/article-meta/permissions/copyright-holder"),
@@ -190,7 +194,11 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     article.setPublisherName(readString("/article/front/journal-meta/publisher/publisher-name"));
     article.setPublisherLocation(readString("/article/front/journal-meta/publisher/publisher-loc"));
     article.setLanguage(parseLanguage(readString("/article/@xml:lang")));
-    article.setPublicationDate(parseDate(readNode("/article/front/article-meta/pub-date[@pub-type=\"epub\"]")));
+    Node dateNode = readNode("/article/front/article-meta/pub-date[@pub-type=\"epub\"]");
+    if (dateNode == null) {
+      dateNode = readNode("/article/front/article-meta/pub-date[@publication-format=\"electronic\"]");
+    }
+    article.setPublicationDate(parseDate(dateNode));
 
     article.setNlmArticleType(readString("/article/@article-type"));
     article.setArticleType(parseArticleHeading());
