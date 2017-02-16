@@ -32,7 +32,7 @@ import json
 from ...Base.MySQL import MySQL
 
 ARTICLE_LIST_API = API_BASE_URL + '/lists/'
-ARTICLE_LIST_PATCH_API = ARTICLE_LIST_API + 'collection/PLoSCollections/'
+ARTICLE_LIST_PATCH_API = ARTICLE_LIST_API + 'collection/journals/PLoSCollections/keys/'
 
 class ArticlesListJSON(BaseServiceTest):
 
@@ -52,7 +52,7 @@ class ArticlesListJSON(BaseServiceTest):
                    "10.1371/journal.pone.0012369"
                    ]
            })
-    self.doPost(ARTICLE_LIST_API, daData)
+    self.doPostData(ARTICLE_LIST_API, daData)
     self.verify_http_code_is(expected_response_code)
 
   def patch_article_list(self, expected_response_code, article_list_key, use_bogus_data=False):
