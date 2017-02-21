@@ -592,6 +592,7 @@
       </plugin>
 
         <plugin>
+          <!-- See src/deb/README.md -->
             <artifactId>jdeb</artifactId>
             <groupId>org.vafer</groupId>
             <version>1.5</version>
