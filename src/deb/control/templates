@@ -1,0 +1,44 @@
+Template: [[artifactId]]/ned_db_host
+Type: string
+Default: localhost
+Description: The host that provides the NED database
+
+Template: [[artifactId]]/ned_db_user
+Type: string
+Default: ned
+Description: The user name in mysql to access the NED database
+
+Template: [[artifactId]]/ned_db_password
+Type: password
+Default:
+Description: The password for the user that will access the NED database
+
+Template: [[artifactId]]/ringgold_db_host
+Type: string
+Default: localhost
+Description: The host that provides the Ringgold database
+
+Template: [[artifactId]]/ringgold_db_user
+Type: string
+Default: ned
+Description: The user name in mysql to access the Ringgold database
+
+Template: [[artifactId]]/ringgold_db_password
+Type: password
+Default:
+Description: The password for the user that will access the Ringgold database
+
+Template: [[artifactId]]/ringgold_import_dir
+Type: string
+Default: /tmp/ringgold
+Description: The location of the Ringgold archive to import (optional)
+
+Template: [[artifactId]]/http_port
+Type: string
+Default: 8080
+Description: The HTTP port you would like NED to be accessible from
+
+Template: [[artifactId]]/control_port
+Type: string
+Default: 8005
+Description: The TCP port to use for Tomcat shutdown control port
