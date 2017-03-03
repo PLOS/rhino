@@ -321,8 +321,13 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     for (Node relatedArticleNode : relatedArticleNodes) {
       String type = readString("attribute::related-article-type", relatedArticleNode);
       String doi = readHrefAttribute(relatedArticleNode);
-      RelatedArticleLink relatedArticle = new RelatedArticleLink(type, ArticleIdentifier.create(doi));
-      relatedArticles.add(relatedArticle);
+      if (doi != null) {
+        RelatedArticleLink relatedArticle = new RelatedArticleLink(type, ArticleIdentifier.create(doi));
+        relatedArticles.add(relatedArticle);
+      } else {
+        throw new XmlContentException("Related article has no doi. node "
+            + relatedArticleNode.getAttributes().getNamedItem("id"));
+      }
     }
     return relatedArticles;
   }
