@@ -21,28 +21,18 @@
     <!-- Default set of monitored resources -->
     <WatchedResource>WEB-INF/web.xml</WatchedResource>
 
-    <Resource name="jdbc/ned"
+    <Resource name="jdbc/AmbraDS"
               auth="Container"
               type="javax.sql.DataSource"
               factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
               validationQuery="SELECT 1"
               testOnBorrow="true"
               driverClassName="com.mysql.jdbc.Driver"
-              username="${NED_DB_USER}"
-              password="${NED_DB_PASSWORD}"
-              url="jdbc:mysql://${NED_DB_HOST}:3306/namedEntities"
-              closeMethod="close" />
+              username="${RHINO_DB_USER}"
+              password="${RHINO_DB_PASSWORD}"
+              url="jdbc:mysql://${RHINO_DB_HOST}:3306/${RHINO_DB_USER}"
+              maxActive="300"
+    />
 
-    <Resource name="jdbc/ringgold"
-              auth="Container"
-              type="javax.sql.DataSource"
-              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
-              validationQuery="SELECT 1"
-              testOnBorrow="true"
-              driverClassName="com.mysql.jdbc.Driver"
-              username="${RINGGOLD_DB_USER}"
-              password="${RINGGOLD_DB_PASSWORD}"
-              url="jdbc:mysql://${RINGGOLD_DB_HOST}:3306/ringgold"
-              closeMethod="close" />
 
 </Context>

@@ -7,14 +7,12 @@
 
 INPUT="db_input high [[artifactId]]"
 
-$INPUT/ned_db_host || true
-$INPUT/ned_db_user || true
-$INPUT/ned_db_password || true
-$INPUT/ringgold_db_host || true
-$INPUT/ringgold_db_user || true
-$INPUT/ringgold_db_password || true
-$INPUT/ringgold_import_dir || true
-$INPUT/http_port || true
+$INPUT/rhino_db_host || true
+$INPUT/rhino_db_user || true
+$INPUT/rhino_db_password || true
+$INPUT/rhino_port || true
 $INPUT/control_port || true
+$INPUT/tomcat_admin_user || true
+$INPUT/tomcat_admin_password || true
 
 db_go || true

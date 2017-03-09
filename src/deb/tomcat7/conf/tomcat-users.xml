@@ -1,4 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
+
+<!--
+
+This file managed by salt. Local changes will be overwritten.
+
+-->
+
 <!--
   Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
@@ -16,7 +23,7 @@
   limitations under the License.
 -->
 <tomcat-users>
-<!--
+<!--  
   NOTE:  By default, no user is included in the "manager-gui" role required
   to operate the "/manager/html" web application.  If you wish to use this app,
   you must define such a user - the username and password are arbitrary.
@@ -26,11 +33,8 @@
   and thus are ignored when reading this file. Do not forget to remove
   <!.. ..> that surrounds them.
 -->
-<!--
-  <role rolename="tomcat"/>
-  <role rolename="role1"/>
-  <user username="tomcat" password="tomcat" roles="tomcat"/>
-  <user username="both" password="tomcat" roles="tomcat,role1"/>
-  <user username="role1" password="tomcat" roles="role1"/>
--->
+<role rolename="manager-gui"/>
+<user username="${TOMCAT_ADMIN_USER}" password="${TOMCAT_ADMIN_PASSWORD}" roles="manager-gui"/>
+<!-- placeholder for application specific users -->
+
 </tomcat-users>

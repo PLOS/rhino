@@ -1,42 +1,32 @@
-Template: [[artifactId]]/ned_db_host
+Template: [[artifactId]]/rhino_db_host
 Type: string
 Default: localhost
-Description: The host that provides the NED database
+Description: The host that provides the Ambra database
 
-Template: [[artifactId]]/ned_db_user
+Template: [[artifactId]]/rhino_db_user
 Type: string
-Default: ned
-Description: The user name in mysql to access the NED database
+Default: ambra
+Description: The user name in mysql to access the Ambra database
 
-Template: [[artifactId]]/ned_db_password
+Template: [[artifactId]]/rhino_db_password
 Type: password
 Default:
-Description: The password for the user that will access the NED database
+Description: The password for the user that will access the Ambra database
 
-Template: [[artifactId]]/ringgold_db_host
+Template: [[artifactId]]/tomcat_admin_user
 Type: string
-Default: localhost
-Description: The host that provides the Ringgold database
+Default: [[artifactId]]
+Description: The Tomcat admin user name
 
-Template: [[artifactId]]/ringgold_db_user
-Type: string
-Default: ned
-Description: The user name in mysql to access the Ringgold database
-
-Template: [[artifactId]]/ringgold_db_password
+Template: [[artifactId]]/tomcat_admin_password
 Type: password
 Default:
-Description: The password for the user that will access the Ringgold database
+Description: The password for the Tomcat admin user
 
-Template: [[artifactId]]/ringgold_import_dir
+Template: [[artifactId]]/rhino_port
 Type: string
-Default: /tmp/ringgold
-Description: The location of the Ringgold archive to import (optional)
-
-Template: [[artifactId]]/http_port
-Type: string
-Default: 8080
-Description: The HTTP port you would like NED to be accessible from
+Default: 8006
+Description: The HTTP port you would like Rhino to be accessible from
 
 Template: [[artifactId]]/control_port
 Type: string

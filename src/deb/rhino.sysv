@@ -24,8 +24,8 @@
 set -e
 
 PATH=/bin:/usr/bin:/sbin:/usr/sbin
-NAME=ned
-DESC="Tomcat ned servlet engine"
+NAME=rhino
+DESC="Tomcat rhino servlet engine"
 DEFAULT=/etc/default/$NAME
 JVM_TMP=/tmp/tomcat7-$NAME-tmp
 
@@ -49,8 +49,8 @@ fi
 # The following variables can be overwritten in $DEFAULT
 
 # Run Tomcat 7 as this user ID and group ID
-TOMCAT7_USER=ned
-TOMCAT7_GROUP=ned
+TOMCAT7_USER=rhino
+TOMCAT7_GROUP=rhino
 
 #JAVA_OPTS="-Djava.awt.headless=true -Xmx8196m -XX:-HeapDumpOnOutOfMemoryError -Dsun.net.inetaddr.ttl=30 -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
 

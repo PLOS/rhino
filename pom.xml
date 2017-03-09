@@ -607,6 +607,15 @@
                         <snapshotExpand>true</snapshotExpand>
                         <dataSet>
                             <data>
+                                <src>${project.basedir}/src/deb/tomcat7</src>
+                                <type>directory</type>
+                                <mapper>
+                                    <type>perm</type>
+                                    <prefix>${rhino.debInstallDir}</prefix>
+                                </mapper>
+                            </data>
+
+                            <data>
                                 <src>${project.build.directory}/${project.build.finalName}.war</src>
                                 <type>file</type>
                                 <mapper>
@@ -614,6 +623,17 @@
                                     <prefix>${rhino.debInstallDir}</prefix>
                                 </mapper>
                             </data>
+
+                            <data>
+                                <src>${project.basedir}/src/deb/${artifactId}.sysv</src>
+                                <type>file</type>
+                                <dst>/etc/init.d/${artifactId}</dst>
+                                <mapper>
+                                    <type>perm</type>
+                                    <filemode>755</filemode>
+                                </mapper>
+                            </data>
+
                         </dataSet>
                     </configuration>
                 </execution>

@@ -10,16 +10,16 @@ TOMCAT7_GROUP=[[artifactId]]
 HOME=[[rhino.debInstallDir]]
 
 function process_env_template {
-	CONTEXT_TEMPALTE=$1
+	CONTEXT_TEMPLATE=$1
 
-  ls -lh $CONTEXT_TEMPALTE
+  ls -lh $CONTEXT_TEMPLATE
 
-	echo "Processing template $CONTEXT_TEMPALTE"
+	echo "Processing template $CONTEXT_TEMPLATE"
 
   eval "cat <<EOF
-$(<$CONTEXT_TEMPALTE)
+$(<$CONTEXT_TEMPLATE)
 EOF
-" > $CONTEXT_TEMPALTE
+" > $CONTEXT_TEMPLATE
 }
 
 case "$1" in
@@ -43,15 +43,13 @@ case "$1" in
 
   # Fetching configuration from debconf
 
-  $GET/ned_db_host && export NED_DB_HOST=$RET
-  $GET/ned_db_user && export NED_DB_USER=$RET
-  $GET/ned_db_password && export NED_DB_PASSWORD=$RET
-  $GET/ringgold_db_host && export RINGGOLD_DB_HOST=$RET
-  $GET/ringgold_db_user && export RINGGOLD_DB_USER=$RET
-  $GET/ringgold_db_password && export RINGGOLD_DB_PASSWORD=$RET
-  $GET/ringgold_import_dir && export RINGGOLD_DIR=$RET
-  $GET/http_port && export HTTP_PORT=$RET
+  $GET/rhino_db_host && export RHINO_DB_HOST=$RET
+  $GET/rhino_db_user && export RHINO_DB_USER=$RET
+  $GET/rhino_db_password && export RHINO_DB_PASSWORD=$RET
+  $GET/rhino_port && export RHINO_PORT=$RET
   $GET/control_port && export CONTROL_PORT=$RET
+  $GET/tomcat_admin_user && export TOMCAT_ADMIN_USER=$RET
+  $GET/tomcat_admin_password && export TOMCAT_ADMIN_PASSWORD=$RET
 
   # removes the saved values, so they need to be re-entered the next time around
   db_purge
@@ -66,11 +64,10 @@ case "$1" in
 esac
 
 
-# Automatically added by dh_installinit
-#if [ -x "/etc/init.d/[[artifactId]]" ] || [ -e "/etc/init/[[artifactId]].conf" ]; then
-#	if [ ! -e "/etc/init/[[artifactId]].conf" ]; then
-#		update-rc.d ned defaults 92 08 >/dev/null
-#	fi
-#	invoke-rc.d [[artifactId]] start || true
-#fi
-# End automatically added section
+if [ -x "/etc/init.d/[[artifactId]]" ] || [ -e "/etc/init/[[artifactId]].conf" ]; then
+	if [ ! -e "/etc/init/[[artifactId]].conf" ]; then
+		update-rc.d [[artifactId]] defaults 92 08 >/dev/null
+	fi
+	invoke-rc.d [[artifactId]] start || true
+fi
+

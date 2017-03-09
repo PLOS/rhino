@@ -20,7 +20,6 @@
      Documentation at /docs/config/server.html
  -->
 <Server port="${CONTROL_PORT}" shutdown="SHUTDOWN">
-  <Listener className="org.apache.catalina.startup.VersionLoggerListener" />
   <!-- Security listener. Documentation at /docs/config/listeners.html
   <Listener className="org.apache.catalina.security.SecurityListener" />
   -->
@@ -35,9 +34,14 @@
   <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
   <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
 
-  <!-- Global JNDI resources
-       Documentation at /docs/jndi-resources-howto.html
-  -->
+    <!-- JMX Support for the Tomcat server.-->
+    <Listener className="org.apache.catalina.mbeans.JmxRemoteLifecycleListener"
+              rmiRegistryPortPlatform="21212" rmiServerPortPlatform="21213"
+              useLocalPorts="true" />
+
+    <!-- Global JNDI resources
+         Documentation at /docs/jndi-resources-howto.html
+    -->
   <GlobalNamingResources>
     <!-- Editable user database that can also be used by
          UserDatabaseRealm to authenticate users
@@ -70,10 +74,13 @@
          APR (HTTP/AJP) Connector: /docs/apr.html
          Define a non-SSL HTTP/1.1 Connector on port 8080
     -->
-    <Connector port="${HTTP_PORT}" protocol="HTTP/1.1"
-               connectionTimeout="20000"
-               URIEncoding="UTF-8"
-    />
+      <Connector port="${RHINO_PORT}"
+                 connectionTimeout="20000"
+                 enableLookups="false"
+                 maxParameterCount="5000"
+                 scheme="http" URIEncoding="UTF-8"
+                 minSpareThreads="5" maxThreads="250"/>
+
     <!-- A "Connector" using the shared thread pool-->
     <!--
     <Connector executor="tomcatThreadPool"
