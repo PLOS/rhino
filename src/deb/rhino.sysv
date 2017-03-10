@@ -194,6 +194,8 @@ case "$1" in
 		exit 1
 	fi
 
+    log_daemon_msg "JAVA_OPTS= $JAVA_OPTS"
+
 	log_daemon_msg "Starting $DESC" "$NAME"
 	if start-stop-daemon --test --start --pidfile "$CATALINA_PID" \
 		--user $TOMCAT7_USER --exec "$JAVA_HOME/bin/java" \
