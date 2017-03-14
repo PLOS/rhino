@@ -46,28 +46,51 @@ import java.util.Locale;
 public final class Doi {
 
   public static enum UriStyle {
+    /**
+     * Formerly the standard Ambra style. Required by some legacy code.
+     */
     INFO_DOI("info:doi/") {
       @Override
       protected URI convert(String doiName) throws URISyntaxException {
         return new URI("info", "doi/" + doiName, null);
       }
     },
+
     DOI_SCHEME("doi:") {
       @Override
       protected URI convert(String doiName) throws URISyntaxException {
         return new URI("doi", doiName, null);
       }
     },
-    HTTP_RESOLVER("http://dx.doi.org/") {
+
+    /**
+     * Currently Crossref's standard style.
+     */
+    HTTPS_DOI_RESOLVER("https://doi.org/") {
       @Override
       protected URI convert(String doiName) throws URISyntaxException, MalformedURLException {
-        return new URL("http", "dx.doi.org/", doiName).toURI();
+        return new URL("https", "doi.org/", doiName).toURI();
       }
     },
-    HTTPS_RESOLVER("https://dx.doi.org/") {
+
+    HTTP_DOI_RESOLVER("http://doi.org/") {
+      @Override
+      protected URI convert(String doiName) throws URISyntaxException, MalformedURLException {
+        return new URL("http", "doi.org/", doiName).toURI();
+      }
+    },
+
+    HTTPS_DX_RESOLVER("https://dx.doi.org/") {
       @Override
       protected URI convert(String doiName) throws URISyntaxException, MalformedURLException {
         return new URL("https", "dx.doi.org/", doiName).toURI();
+      }
+    },
+
+    HTTP_DX_RESOLVER("http://dx.doi.org/") {
+      @Override
+      protected URI convert(String doiName) throws URISyntaxException, MalformedURLException {
+        return new URL("http", "dx.doi.org/", doiName).toURI();
       }
     };
 
