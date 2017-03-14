@@ -622,7 +622,7 @@
                                 <type>file</type>
                                 <mapper>
                                     <type>perm</type>
-                                    <prefix>${rhino.debInstallDir}</prefix>
+                                    <prefix>${rhino.debInstallDir}/webapps</prefix>
                                 </mapper>
                             </data>
 

@@ -52,7 +52,7 @@ fi
 TOMCAT7_USER=rhino
 TOMCAT7_GROUP=rhino
 
-#JAVA_OPTS="-Djava.awt.headless=true -Xmx8196m -XX:-HeapDumpOnOutOfMemoryError -Dsun.net.inetaddr.ttl=30 -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
+JAVA_OPTS="-Djava.awt.headless=true -Xmx8196m -XX:-HeapDumpOnOutOfMemoryError -Dsun.net.inetaddr.ttl=30 -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
 
 # placeholder for additional env vars
 
