@@ -43,6 +43,7 @@ case "$1" in
 
   # Fetching configuration from debconf
 
+  $GET/rhino_db_name && export RHINO_DB_NAME=$RET
   $GET/rhino_db_host && export RHINO_DB_HOST=$RET
   $GET/rhino_db_user && export RHINO_DB_USER=$RET
   $GET/rhino_db_password && export RHINO_DB_PASSWORD=$RET
@@ -62,12 +63,4 @@ case "$1" in
   cat $HOME/conf/server.xml
 
 esac
-
-
-if [ -x "/etc/init.d/[[artifactId]]" ] || [ -e "/etc/init/[[artifactId]].conf" ]; then
-	if [ ! -e "/etc/init/[[artifactId]].conf" ]; then
-		update-rc.d [[artifactId]] defaults 92 08 >/dev/null
-	fi
-	invoke-rc.d [[artifactId]] start || true
-fi
 

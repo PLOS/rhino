@@ -3,6 +3,11 @@ Type: string
 Default: localhost
 Description: The host that provides the Ambra database
 
+Template: [[artifactId]]/rhino_db_name
+Type: string
+Default: ambra
+Description: The Ambra database name
+
 Template: [[artifactId]]/rhino_db_user
 Type: string
 Default: ambra
