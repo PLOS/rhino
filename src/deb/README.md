@@ -37,11 +37,12 @@ control of the jdeb Maven plugin.
 * control:      package metadata including the version (which needs to match the version and suffix string format defined
                 in pom.xml) and any package dependencies (most notably, tomcat7-common and debconf)
 * preinst:      contains the input commands to use for the debconf wizard of format `dbinput [priority] [question]`
-                (e.g. db_input high rhino/rhino_db_password) where [question] is a reference to a template (see below)
+                (e.g. `db_input high rhino/rhino_db_user`) where [question] is a reference to a template (see below)
 * templates:    contains the questions for the debconf wizard to ask during the install, and default values
 * postinst:     retrieves the answers to the wizard questions and sets environment variables used for rendering the
                 tomcat config files (see below)
 * prerm/postrm: scripts that run prior to and after package removal
+
 
 ## src/deb/tomcat7 directory ##
 
@@ -51,3 +52,12 @@ Config files and directory structure required for the Tomcat7 private instance.
                 variables provided by the debconf wizard
 
 NOTE: the remaining directories contain only .keep files used to prevent removal by git
+
+## debconf wizard preconfiguration file ##
+
+In order to use a file instead of interactive wizard-based entry, use the `debconf-set-selections [path]` command to set
+the path of the preconfiguration file, which has entries with the following format:
+`<owner> <question name> <question type> <value>` (e.g. `rhino rhino/rhino_db_user	string ambra`).
+
+NOTE: In the case of PLOS deployment via Saltstack, this file is generated outside the context of this repository code
+      and is placed in /etc/rhino.debconf. This file is ultimately purged as part of the src/deb/control/postinst script.
