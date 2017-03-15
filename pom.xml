@@ -608,6 +608,7 @@
                     <configuration>
                         <deb>${project.build.directory}/${project.artifactId}_[[version]]+${build.datestamp}-plos${build.counter}.deb</deb>
                         <dataSet>
+                            <!-- extract rendered tomcat7 files to install directory  -->
                             <data>
                                 <src>${project.basedir}/src/deb/tomcat7</src>
                                 <type>directory</type>
@@ -616,7 +617,7 @@
                                     <prefix>${rhino.debInstallDir}</prefix>
                                 </mapper>
                             </data>
-
+                            <!-- place built war file into webapps directory  -->
                             <data>
                                 <src>${project.build.directory}/${project.build.finalName}.war</src>
                                 <type>file</type>
@@ -625,7 +626,7 @@
                                     <prefix>${rhino.debInstallDir}/webapps</prefix>
                                 </mapper>
                             </data>
-
+                            <!-- move the init script to /etc/init.d directory  -->
                             <data>
                                 <src>${project.basedir}/src/deb/${artifactId}.sysv</src>
                                 <type>file</type>

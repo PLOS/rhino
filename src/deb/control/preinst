@@ -7,6 +7,9 @@
 
 INPUT="db_input high [[artifactId]]"
 
+########### BEGIN app-specific code ###########
+
+# parameters provided by the debconf wizard
 $INPUT/rhino_db_host || true
 $INPUT/rhino_db_user || true
 $INPUT/rhino_db_password || true
@@ -14,5 +17,7 @@ $INPUT/rhino_port || true
 $INPUT/control_port || true
 $INPUT/tomcat_admin_user || true
 $INPUT/tomcat_admin_password || true
+
+########### END app-specific code ###########
 
 db_go || true
