@@ -60,7 +60,7 @@
     <activemq.version>5.2.0</activemq.version>
     <ehcache.version>2.7.0</ehcache.version>
     <maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
-    <build.timestamp>${maven.build.timestamp}</build.timestamp>
+    <build.datestamp>${maven.build.timestamp}</build.datestamp>
     <build.counter>0</build.counter>
   </properties>
 
@@ -606,7 +606,7 @@
                         <goal>jdeb</goal>
                     </goals>
                     <configuration>
-                        <deb>${project.build.directory}/${project.artifactId}_[[version]]+${build.timestamp}-plos${build.counter}.deb</deb>
+                        <deb>${project.build.directory}/${project.artifactId}_[[version]]+${build.datestamp}-plos${build.counter}.deb</deb>
                         <dataSet>
                             <data>
                                 <src>${project.basedir}/src/deb/tomcat7</src>
