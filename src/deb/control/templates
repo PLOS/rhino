@@ -1,0 +1,39 @@
+Template: [[artifactId]]/rhino_db_host
+Type: string
+Default: localhost
+Description: The host that provides the Ambra database
+
+Template: [[artifactId]]/rhino_db_name
+Type: string
+Default: ambra
+Description: The Ambra database name
+
+Template: [[artifactId]]/rhino_db_user
+Type: string
+Default: ambra
+Description: The user name in mysql to access the Ambra database
+
+Template: [[artifactId]]/rhino_db_password
+Type: password
+Default:
+Description: The password for the user that will access the Ambra database
+
+Template: [[artifactId]]/tomcat_admin_user
+Type: string
+Default: [[artifactId]]
+Description: The Tomcat admin user name
+
+Template: [[artifactId]]/tomcat_admin_password
+Type: password
+Default:
+Description: The password for the Tomcat admin user
+
+Template: [[artifactId]]/rhino_port
+Type: string
+Default: 8006
+Description: The HTTP port you would like Rhino to be accessible from
+
+Template: [[artifactId]]/control_port
+Type: string
+Default: 8005
+Description: The TCP port to use for Tomcat shutdown control port
