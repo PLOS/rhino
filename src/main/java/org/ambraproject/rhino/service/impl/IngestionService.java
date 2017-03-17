@@ -50,6 +50,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.Optional;
 
 public class IngestionService extends AmbraService {
 
@@ -60,12 +61,14 @@ public class IngestionService extends AmbraService {
   @Autowired
   private ArticleCrudService articleCrudService;
 
-  public ArticleIngestion ingest(Archive archive) throws IOException, XmlContentException {
-    IngestPackage ingestPackage = createIngestPackage(archive);
+  public ArticleIngestion ingest(Archive archive, Optional<String> bucketName)
+      throws IOException, XmlContentException {
+    IngestPackage ingestPackage = createIngestPackage(archive, bucketName);
     return processIngestPackage(ingestPackage);
   }
 
-  private IngestPackage createIngestPackage(Archive archive) throws IOException {
+  private IngestPackage createIngestPackage(Archive archive, Optional<String> bucketName)
+      throws IOException {
     ManifestXml manifestXml = getManifestXml(archive);
 
     ImmutableSet<String> entryNames = archive.getEntryNames();
@@ -78,11 +81,9 @@ public class IngestionService extends AmbraService {
     ArticleXml parsedArticle = new ArticleXml(document);
     ArticleCustomMetadata customMetadata = customMetadataExtractorFactory.parse(document).build();
 
-    // TODO: Allow bucket name to be specified as an ingestion parameter
-    String destinationBucketName = runtimeConfiguration.getCorpusStorage().getDefaultBucket();
-
-    ArticlePackage articlePackage = new ArticlePackageBuilder(destinationBucketName, archive,
-        parsedArticle, manifestXml).build();
+    ArticlePackage articlePackage = new ArticlePackageBuilder(
+        bucketName.orElse(runtimeConfiguration.getCorpusStorage().getDefaultBucket()),
+        archive, parsedArticle, manifestXml).build();
 
     articlePackage.validateAssetCompleteness(parsedArticle.findAllAssetNodes().getDois());
 

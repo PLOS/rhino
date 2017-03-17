@@ -41,6 +41,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 
 @Controller
 public class IngestibleZipController extends RestController {
@@ -58,14 +59,15 @@ public class IngestibleZipController extends RestController {
    */
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/articles", method = RequestMethod.POST)
-  public ResponseEntity<?> zipUpload(@RequestParam("archive") MultipartFile requestFile)
+  public ResponseEntity<?> zipUpload(@RequestParam(value = "archive", required = true) MultipartFile requestFile,
+                                     @RequestParam(value = "bucket", required = false) String bucket)
       throws IOException {
 
     String ingestedFileName = requestFile.getOriginalFilename();
     ArticleIngestion ingestion;
     try (InputStream requestInputStream = requestFile.getInputStream();
-        Archive archive = Archive.readZipFile(ingestedFileName, requestInputStream)) {
-      ingestion = ingestionService.ingest(archive);
+         Archive archive = Archive.readZipFile(ingestedFileName, requestInputStream)) {
+      ingestion = ingestionService.ingest(archive, Optional.ofNullable(bucket));
     } catch (ManifestXml.ManifestDataException e) {
       throw new RestClientException("Invalid manifest: " + e.getMessage(), HttpStatus.BAD_REQUEST, e);
     }
