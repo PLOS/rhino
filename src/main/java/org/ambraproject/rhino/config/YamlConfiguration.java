@@ -22,6 +22,7 @@
 
 package org.ambraproject.rhino.config;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableSet;
 
 import java.net.URI;
@@ -75,7 +76,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
 
     @Override
     public ImmutableSet<String> getAllBuckets() {
-      return null;
+      return ImmutableSet.of();
     }
   };
 
