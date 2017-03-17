@@ -63,7 +63,56 @@ public class YamlConfiguration implements RuntimeConfiguration {
   }
 
 
-  private static final MultiBucketContentRepoEndpoint NULL_CONTENT_REPO_ENDPOINT = new MultiBucketContentRepoEndpoint() {
+  private transient MultiBucketContentRepoEndpoint corpusStorageView;
+
+  @Override
+  public MultiBucketContentRepoEndpoint getCorpusStorage() {
+    if (corpusStorageView != null) return corpusStorageView;
+    if (input.contentRepo == null || input.contentRepo.corpus == null) {
+      throw new RuntimeException("contentRepo.corpus must be configured");
+    }
+    return corpusStorageView = parseCorpusStorage(input.contentRepo.corpus);
+  }
+
+  /**
+   * For corpus storage, unlike for editorial storage, enforce non-null values and set up collection of all buckets.
+   */
+  private MultiBucketContentRepoEndpoint parseCorpusStorage(MultibucketContentRepoEndpointInput corpus) {
+    URI address = corpus.address;
+    if (address == null) {
+      throw new RuntimeException("contentRepo.corpus.address must be configured");
+    }
+
+    String defaultBucket = corpus.bucket;
+    if (defaultBucket == null) {
+      throw new RuntimeException("contentRepo.corpus.bucket must be configured");
+    }
+
+    ImmutableSet<String> allBuckets = ImmutableSet.<String>builder()
+        .add(defaultBucket)
+        .addAll(MoreObjects.firstNonNull(corpus.secondaryBuckets, ImmutableSet.of()))
+        .build();
+
+    return new MultiBucketContentRepoEndpoint() {
+      @Override
+      public URI getAddress() {
+        return address;
+      }
+
+      @Override
+      public String getDefaultBucket() {
+        return defaultBucket;
+      }
+
+      @Override
+      public ImmutableSet<String> getAllBuckets() {
+        return allBuckets;
+      }
+    };
+  }
+
+
+  private static final ContentRepoEndpoint NULL_CONTENT_REPO_ENDPOINT = new ContentRepoEndpoint() {
     @Override
     public URI getAddress() {
       return null;
@@ -73,50 +122,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
     public String getDefaultBucket() {
       return null;
     }
-
-    @Override
-    public ImmutableSet<String> getAllBuckets() {
-      return ImmutableSet.of();
-    }
   };
-
-  private transient MultiBucketContentRepoEndpoint corpusStorageView;
-
-  @Override
-  public MultiBucketContentRepoEndpoint getCorpusStorage() {
-    return (corpusStorageView != null) ? corpusStorageView
-        : (input.contentRepo == null) ? NULL_CONTENT_REPO_ENDPOINT
-        : (input.contentRepo.corpus == null) ? NULL_CONTENT_REPO_ENDPOINT
-        : (corpusStorageView = new MultiBucketContentRepoEndpoint() {
-
-      private final ImmutableSet<String> buckets;
-
-      {
-        ImmutableSet.Builder<String> buckets = ImmutableSet.builder();
-        buckets.add(getDefaultBucket());
-        if (input.contentRepo.corpus.secondaryBuckets != null) {
-          buckets.addAll(input.contentRepo.corpus.secondaryBuckets);
-        }
-        this.buckets = buckets.build();
-      }
-
-      @Override
-      public URI getAddress() {
-        return input.contentRepo.corpus.address;
-      }
-
-      @Override
-      public String getDefaultBucket() {
-        return input.contentRepo.corpus.bucket;
-      }
-
-      @Override
-      public ImmutableSet<String> getAllBuckets() {
-        return buckets;
-      }
-    });
-  }
-
   private transient ContentRepoEndpoint editorialStorageView;
 
   @Override
