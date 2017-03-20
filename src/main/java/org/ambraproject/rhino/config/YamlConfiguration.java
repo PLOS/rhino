@@ -77,7 +77,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
   /**
    * For corpus storage, unlike for editorial storage, enforce non-null values and set up collection of all buckets.
    */
-  private MultiBucketContentRepoEndpoint parseCorpusStorage(MultibucketContentRepoEndpointInput corpus) {
+  private static MultiBucketContentRepoEndpoint parseCorpusStorage(MultibucketContentRepoEndpointInput corpus) {
     URI address = corpus.address;
     if (address == null) {
       throw new RuntimeException("contentRepo.corpus.address must be configured");
