@@ -53,7 +53,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 @Controller
-public class ArticleItemReadController extends RestController {
+public class DoiController extends RestController {
 
   @Autowired
   private ArticleCrudService articleCrudService;
