@@ -103,6 +103,10 @@ class BaseServiceTest(unittest.TestCase):
   def parse_response_as_json(self):
     self.parsed = JSONResponse(self.get_http_response().text)
 
+  def steam_data_to_file(self, filename):
+    f = open (filename, 'wb')
+    f.close()
+
   def verify_http_code_is(self, httpCode):
     print 'Validating HTTP Response code to be %s...' % httpCode,
     self.assertEquals(self.__response.status_code, httpCode)

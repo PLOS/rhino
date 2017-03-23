@@ -48,13 +48,23 @@ CREPO_BASE_URL =  str(repo_config['transport']) + '://' + str(repo_config['host'
 OBJECTS_API = CREPO_BASE_URL + '/objects'
 COLLECTIONS_API = CREPO_BASE_URL + '/collections'
 
-#Article DOI
-ARTICLE_DOI = '10.1371++journal.pone.0155391'
+# #Article DOI
+# ARTICLE_DOI = '10.1371++journal.pone.0155391'
+#
+# NOT_SCAPE_ARTICLE_DOI= '10.1371/journal.pone.0155391'
+#
+# #ZIP files
+# ZIP_ARTICLE = 'pone.0155391.zip'
 
-NOT_SCAPE_ARTICLE_DOI= '10.1371/journal.pone.0155391'
+
+
+#Article DOI
+ARTICLE_DOI = '10.1371++journal.pone.0163190'
+
+NOT_SCAPE_ARTICLE_DOI= '10.1371/journal.pone.0163190'
 
 #ZIP files
-ZIP_ARTICLE = 'pone.0155391.zip'
+ZIP_ARTICLE = 'pone.0163190.zip'
 
 #Variables used to verify article revisions
 REVISION = 1
