@@ -110,7 +110,10 @@ public class IngestionService extends AmbraService {
     String configuredName = bucketName.get();
     Set<String> allowedBuckets = corpusStorage.getAllBuckets();
     if (!allowedBuckets.contains(configuredName)) {
-      String message = String.format("Invalid bucket name: %s. Allowed values are: %s", configuredName, allowedBuckets);
+      String message = String.format("" +
+              "Invalid bucket name: %s. Allowed values are: %s. " +
+              "(Allowed values are specified by rhino.yaml.)",
+          configuredName, allowedBuckets);
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
     return configuredName;
