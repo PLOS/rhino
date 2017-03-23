@@ -84,7 +84,7 @@ public class IngestionService extends AmbraService {
     ArticleCustomMetadata customMetadata = customMetadataExtractorFactory.parse(document).build();
 
 
-    ArticlePackage articlePackage = new ArticlePackageBuilder(checkBucketName(bucketName),
+    ArticlePackage articlePackage = new ArticlePackageBuilder(resolveBucketName(bucketName),
         archive, parsedArticle, manifestXml).build();
 
     articlePackage.validateAssetCompleteness(parsedArticle.findAllAssetNodes().getDois());
@@ -93,7 +93,15 @@ public class IngestionService extends AmbraService {
     return new IngestPackage(articlePackage, articleMetadata, customMetadata);
   }
 
-  private String checkBucketName(Optional<String> bucketName) {
+  /**
+   * Validate the bucket name against the set of allowed buckets and supply the default if needed.
+   *
+   * @param bucketName the bucket name specified as the destination for this ingestion, or empty if the client did not
+   *                   specify a bucket name
+   * @return the specified bucket name, or the default if the client did not specify a bucket name
+   * @throws RestClientException if the clietn specified a disallowed (or nonexistent) bucket name
+   */
+  private String resolveBucketName(Optional<String> bucketName) {
     RuntimeConfiguration.MultiBucketContentRepoEndpoint corpusStorage = runtimeConfiguration.getCorpusStorage();
     if (!bucketName.isPresent()) {
       return corpusStorage.getDefaultBucket();
