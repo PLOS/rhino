@@ -29,8 +29,6 @@ from test.api import resources
 __author__ = 'fcabrales@plos.org'
 
 from ...Base.base_service_test import BaseServiceTest
-from ...Base.api import needs
-from ...Base.MySQL import MySQL
 from ..resources import *
 
 class IngestibleJSON(BaseServiceTest):
@@ -42,4 +40,3 @@ class IngestibleJSON(BaseServiceTest):
     :param article_doi
     """
     self.doGet('%s/%s/%s' % (ARTICLE_API, article_doi, 'ingestions/1/ingestible'), None, headers=DEFAULT_HEADERS)
-    self.steam_data_to_file(ZIP_ARTICLE)

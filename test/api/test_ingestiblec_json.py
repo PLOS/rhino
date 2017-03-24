@@ -48,6 +48,7 @@ class ZipIngestibleTest(IngestibleJSON):
     print('\nTesting GET  ingestibles/\n')
     # Invoke ingestibles API
     self.get_ingestible(resources.ARTICLE_DOI)
+    self.verify_http_code_is(resources.OK)
 
 if __name__ == '__main__':
   IngestibleJSON._run_tests_randomly()

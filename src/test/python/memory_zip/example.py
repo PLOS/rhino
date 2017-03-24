@@ -24,7 +24,7 @@ __author__ = 'rskonnord'
 
 import requests
 
-from memory_zip import *
+from test.Base.MemoryZip import *
 
 EMPTY_PNG_FILE = bytes(
     '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x01'
