@@ -25,7 +25,7 @@ Base class for Rhino's Ingest API service tests.
 """
 from test.api import resources
 
-__author__ = 'jkrzemien@plos.org; gfilomeno@plos.org'
+__author__ = 'jkrzemien@plos.org; gfilomeno@plos.org; fcabrales@plos.org'
 
 from ...Base.base_service_test import BaseServiceTest
 from ...Base.api import needs
@@ -105,14 +105,18 @@ class Ingestion(BaseServiceTest):
     self.assertIsNotNone(expected_array)
 
   """
-  Below SQL statements will query ambra article table given doi  example 10.1371/journal.pone.0155391 for article id
+  Executes SQL statement against ambra article table to get article id
+  :param not_scapted_doi: String. Such as '10.1371/journal.pone.0155391'
+  :return: Int Article id
   """
   def get_article_id_sql_doi (self,not_scape_doi):
     current_articles_id = MySQL().query('SELECT articleId FROM article WHERE doi = %s', [not_scape_doi])
     return current_articles_id[0][0]
 
   """
-  Below SQL statements will delete article from ambra db given doi  example 10.1371/journal.pone.0155391
+  Executes SQL statement which deletes article from ambra db
+  :param not_scapted_doi: String. Such as '10.1371/journal.pone.0155391'
+  :return: none
   """
   def delete_article_sql_doi (self,not_scape_doi):
     current_articles_id = self.get_article_id_sql_doi (not_scape_doi)
@@ -120,28 +124,36 @@ class Ingestion(BaseServiceTest):
     return self
 
   """
-  Below SQL statements will query ambra articleIngestion table given articleId for article title
+  Executes SQL statement against ambra articleIngestion table to get article title
+  :param article_id: String. Such as '55391'
+  :return: String article_title
   """
   def get_article_sql_archiveName (self,article_id):
     article_title = MySQL().query('SELECT title FROM articleIngestion WHERE articleId = %s', [article_id])
     return article_title[0]
 
   """
-  Below SQL statements will query ambra articleIngestion table given articleId for articleType
+  Executes SQL statement against ambra articleIngestion table to get article type
+  :param article_id: String. Such as '55391'
+  :return: String article_type
   """
   def get_article_sql_type (self,article_id):
     article_type = MySQL().query('SELECT articleType FROM articleIngestion WHERE articleId = %s', [article_id])
     return article_type[0]
 
   """
-  Below SQL statements will query ambra articleIngestion table given articleId for publication date
+  Executes SQL statement against ambra articleIngestion table to get article publication date
+  :param article_id: String. Such as '55391'
+  :return: String article_publication_date
   """
   def get_article_sql_pubdate (self,article_id):
     article_publication_date = MySQL().query('SELECT publicationDate FROM articleIngestion WHERE articleId = %s', [article_id])
     return article_publication_date[0]
 
   """
-  Below SQL statements will query ambra journal table given article id for journalkey, eissn and title
+  Executes SQL statement joins ambra journal and articleIngestion table to get journalKey, eIssn and title
+  :param article_id: String. Such as '55391'
+  :return: List bytearray  journalKey,eIssn,title
   """
   def get_journals_sql_archiveName(self, article_id):
     journals = MySQL().query('SELECT j.journalKey, j.eIssn, j.title '
@@ -151,7 +163,9 @@ class Ingestion(BaseServiceTest):
     return journals
 
   """
-  Below SQL statements will query ambra articleItem table given ingestionId for figures
+  Executes SQL statement against ambra articleItem table to get article assets given ingestion_id
+  :param article_id: String. Such as '55391'
+  :return: List tuples assets
   """
   def get_asset_figures_graphics(self, article_id):
     ingestion_id = MySQL().query('SELECT ingestionId FROM articleIngestion WHERE articleId = %s', [article_id])
