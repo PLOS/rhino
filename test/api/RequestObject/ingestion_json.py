@@ -76,13 +76,13 @@ class Ingestion(BaseServiceTest):
     article_id = self.get_article_id_sql_doi(resources.NOT_SCAPE_ARTICLE_DOI)
     self.verify_article_assets(article_id, 'assetsLinkedFromManuscript')
 
-  """
-  Executes SQL statement against ambra articleItem table and compares to rhino get article json response
-  :param article_id: String. Such as '55391'
-  :param assets_json_name: String. Such as 'assetsLinkedFromManuscript'
-  :return: none
-  """
   def verify_article_assets(self, article_id, assets_json_name):
+    """
+    Executes SQL statement against ambra articleItem table and compares to rhino get article json response
+    :param article_id: String. Such as '55391'
+    :param assets_json_name: String. Such as 'assetsLinkedFromManuscript'
+    :return: none
+    """
     assets = self.get_asset_figures_graphics(article_id)
     assets_json = self.parsed.get_attribute(assets_json_name)
     i = 0
@@ -110,70 +110,70 @@ class Ingestion(BaseServiceTest):
     self.assertIsNotNone(actual_array)
     self.assertIsNotNone(expected_array)
 
-  """
-  Executes SQL statement against ambra article table to get article id
-  :param not_scapted_doi: String. Such as '10.1371/journal.pone.0155391'
-  :return: Int Article id
-  """
   def get_article_id_sql_doi (self,not_scape_doi):
+    """
+    Executes SQL statement against ambra article table to get article id
+    :param not_scapted_doi: String. Such as '10.1371/journal.pone.0155391'
+    :return: Int Article id
+    """
     current_articles_id = MySQL().query('SELECT articleId FROM article WHERE doi = %s', [not_scape_doi])
     return current_articles_id[0][0]
 
-  """
-  Executes SQL statement which deletes article from ambra db
-  :param not_scapted_doi: String. Such as '10.1371/journal.pone.0155391'
-  :return: none
-  """
   def delete_article_sql_doi (self,not_scape_doi):
+    """
+    Executes SQL statement which deletes article from ambra db
+    :param not_scapted_doi: String. Such as '10.1371/journal.pone.0155391'
+    :return: none
+    """
     current_articles_id = self.get_article_id_sql_doi (not_scape_doi)
     MySQL().modify('CALL migrate_article_rollback(%s)', [current_articles_id])
     return self
 
-  """
-  Executes SQL statement against ambra articleIngestion table to get article title
-  :param article_id: String. Such as '55391'
-  :return: String article_title
-  """
   def get_article_sql_archiveName (self,article_id):
+    """
+    Executes SQL statement against ambra articleIngestion table to get article title
+    :param article_id: String. Such as '55391'
+    :return: String article_title
+    """
     article_title = MySQL().query('SELECT title FROM articleIngestion WHERE articleId = %s', [article_id])
     return article_title[0]
 
-  """
-  Executes SQL statement against ambra articleIngestion table to get article type
-  :param article_id: String. Such as '55391'
-  :return: String article_type
-  """
   def get_article_sql_type (self,article_id):
+    """
+    Executes SQL statement against ambra articleIngestion table to get article type
+    :param article_id: String. Such as '55391'
+    :return: String article_type
+    """
     article_type = MySQL().query('SELECT articleType FROM articleIngestion WHERE articleId = %s', [article_id])
     return article_type[0]
 
-  """
-  Executes SQL statement against ambra articleIngestion table to get article publication date
-  :param article_id: String. Such as '55391'
-  :return: String article_publication_date
-  """
   def get_article_sql_pubdate (self,article_id):
+    """
+    Executes SQL statement against ambra articleIngestion table to get article publication date
+    :param article_id: String. Such as '55391'
+    :return: String article_publication_date
+    """
     article_publication_date = MySQL().query('SELECT publicationDate FROM articleIngestion WHERE articleId = %s', [article_id])
     return article_publication_date[0]
 
-  """
-  Executes SQL statement joins ambra journal and articleIngestion table to get journalKey, eIssn and title
-  :param article_id: String. Such as '55391'
-  :return: List bytearray  journalKey,eIssn,title
-  """
   def get_journals_sql_archiveName(self, article_id):
+    """
+    Executes SQL statement joins ambra journal and articleIngestion table to get journalKey, eIssn and title
+    :param article_id: String. Such as '55391'
+    :return: List bytearray  journalKey,eIssn,title
+    """
     journals = MySQL().query('SELECT j.journalKey, j.eIssn, j.title '
                               'FROM journal AS j JOIN articleIngestion aj ON  j.journalID = aj.journalID '
                               'JOIN articleIngestion as a ON aj.articleID = a.articleID '
                               'WHERE a.articleid = %s ORDER BY j.journalID', [article_id])
     return journals
 
-  """
-  Executes SQL statement against ambra articleItem table to get article assets given ingestion_id
-  :param article_id: String. Such as '55391'
-  :return: List tuples assets
-  """
   def get_asset_figures_graphics(self, article_id):
+    """
+    Executes SQL statement against ambra articleItem table to get article assets given ingestion_id
+    :param article_id: String. Such as '55391'
+    :return: List tuples assets
+    """
     ingestion_id = MySQL().query('SELECT ingestionId FROM articleIngestion WHERE articleId = %s', [article_id])
     assets = MySQL().query('SELECT doi FROM articleItem '
                             'WHERE ingestionId = %s and articleItemType != "article"'
