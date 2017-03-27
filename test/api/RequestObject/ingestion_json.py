@@ -76,6 +76,12 @@ class Ingestion(BaseServiceTest):
     article_id = self.get_article_id_sql_doi(resources.NOT_SCAPE_ARTICLE_DOI)
     self.verify_article_assets(article_id, 'assetsLinkedFromManuscript')
 
+  """
+  Executes SQL statement against ambra articleItem table and compares to rhino get article json response
+  :param article_id: String. Such as '55391'
+  :param assets_json_name: String. Such as 'assetsLinkedFromManuscript'
+  :return: none
+  """
   def verify_article_assets(self, article_id, assets_json_name):
     assets = self.get_asset_figures_graphics(article_id)
     assets_json = self.parsed.get_attribute(assets_json_name)
