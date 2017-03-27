@@ -73,17 +73,10 @@ class ZipIngestionTest(ZIPIngestionJson):
     # All below verifications will be fix with https://developer.plos.org/jira/browse/DPRO-3259
     # Validate response with Article table
     self.verify_article()
-    # # Validate response with Syndication table
-    # self.verify_syndications(resources.ZIP_ARTICLE)
-    # # Validate response with Journal table
+    # Validate response with Journal table
     self.verify_journals()
-    # # Validate response with CitedArticle and CitedPerson tables
-    # self.verify_citedArticles(resources.ARTICLE_ID)
-    # # Validate response with ArticleAsset table
-    # self.verify_article_file(resources.ARTICLE_ID, resources.PDF_CONTENT_TYPE, 'articlePdf')
-    # self.verify_article_file(resources.ZIP_ARTICLE, resources.XML_CONTENT_TYPE, 'articleXml')
-    # self.verify_article_figures()
-    # self.verify_article_graphics(resources.ARTICLE_ID)
+    # Validate article figures
+    self.verify_article_figures()
 
   def delete_test_article(self):
     try:
