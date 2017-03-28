@@ -40,7 +40,6 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Comparator;
@@ -169,7 +168,8 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
   }
 
   private void setFromXml(final ArticleMetadata.Builder article) throws XmlContentException {
-    article.setDoi(readDoi().getName());
+    Doi doi = readDoi();
+    article.setDoi(doi.getName());
 
     article.setTitle(getXmlFromNode(readNode("/article/front/article-meta/title-group/article-title")));
     String eissn = readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]");
@@ -206,7 +206,7 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     article.setEditors(readPersons(readNodeList(
         "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"editor\"]/name")));
 
-    article.setUrl(buildUrl(readString("/article/front/article-meta/article-id[@pub-id-type = 'doi']")));
+    article.setUrl(buildUrl(doi));
 
     article.setRelatedArticles(parseRelatedArticles());
 
@@ -270,10 +270,10 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
   }
 
   /**
-   * @return a valid URL to the article (base on the DOI)
+   * @return a valid URL to the article (based on the DOI)
    */
-  private static String buildUrl(String doi) {
-    return "http://dx.doi.org/" + URLEncoder.encode(doi);
+  private static String buildUrl(Doi doi) {
+    return doi.asUri(Doi.UriStyle.HTTPS_DOI_RESOLVER).toString();
   }
 
   private String parseArticleHeading() {
