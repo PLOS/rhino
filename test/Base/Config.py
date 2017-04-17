@@ -25,12 +25,14 @@ from os import getenv
 from selenium.webdriver import DesiredCapabilities
 
 # Set API_BASE_URL environment variable to desired URL in order to run suite against it
-API_BASE_URL = os.getenv('API_BASE_URL', 'http://rhino-201.sfo.plos.org:8006/v2')
-INGESTION_HOST = os.getenv('INGESTION_HOST', 'rhino-201.sfo.plos.org')
+API_BASE_URL = os.getenv('API_BASE_URL', 'http://rhino-201.soma.plos.org:8006/v2')
+INGESTION_HOST = os.getenv('INGESTION_HOST', 'rhino-201.soma.plos.org')
 INGEST_USER = os.getenv('INGEST_USER', 'rinotest')
 RHINO_INGEST_PATH = os.getenv('RHINO_INGEST_PATH', '/var/spool/ambra/ingestion-queue')
 SSH_PASSWORD = os.getenv('SSH_PASSWORD', 'Shoh1yar')
-
+mysql_host = getenv('WEBDRIVER_MYSQL_HOST', 'db-ambra-201.soma.plos.org')
+mysql_user = getenv('WEBDRIVER_MYSQL_USER', 'root')
+mysql_password = getenv('WEBDRIVER_MYSQL_PASSWORD', '')
 
 PRINT_DEBUG = False
 TIMEOUT = 60         # API call timeout, in seconds
@@ -72,16 +74,16 @@ base_url = getenv('WEBDRIVER_TARGET_URL', 'http://one-dpro.plosjournals.org/womb
 Create a DB Configuration for use in MySQL.py
 """
 
-dbconfig = {'user': 'root',
-            'password': '',
-            'host': 'db-ambra-201.sfo.plos.org',
+dbconfig = {'user': mysql_user,
+            'password': mysql_password,
+            'host': mysql_host,
             'port': 3306,
             'database': 'ambra',
             'connection_timeout': 10,
             }
 
 repo_config = {'transport': 'http',
-               'host': 'contentrepo-201.sfo.plos.org',
+               'host': 'contentrepo-201.soma.plos.org',
                'port': 8016,
                'path': '/v1',
                }
