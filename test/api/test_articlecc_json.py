@@ -27,14 +27,16 @@ This test case validates Rhino's article crud controller.
 """
 
 from ..api.RequestObject.articlecc_json import ArticlesJSON
+from ..api.RequestObject.memory_zip_json import MemoryZipJSON
 import resources
 
 
-class ArticlesTest(ArticlesJSON):
+class ArticlesTest(ArticlesJSON,MemoryZipJSON):
   def setUp(self):
     print('\nTesting POST zips/\n')
-    # Invoke ZIP API
-    self.post_ingestible_zip(resources.ZIP_ARTICLE)
+    # Invoke ZIP API to generate in memory ingestible zip
+    zip_file = self.create_ingestible()
+    self.post_ingestible_zip(zip_file)
     # Validate HTTP code in the response is 201 (CREATED)
     self.verify_http_code_is(resources.CREATED)
 

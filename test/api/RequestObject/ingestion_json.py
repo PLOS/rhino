@@ -30,7 +30,6 @@ __author__ = 'jkrzemien@plos.org; gfilomeno@plos.org; fcabrales@plos.org'
 from ...Base.base_service_test import BaseServiceTest
 from ...Base.api import needs
 from ...Base.MySQL import MySQL
-from ..resources import *
 
 class Ingestion(BaseServiceTest):
 
@@ -176,7 +175,7 @@ class Ingestion(BaseServiceTest):
     """
     ingestion_id = MySQL().query('SELECT ingestionId FROM articleIngestion WHERE articleId = %s', [article_id])
     assets = MySQL().query('SELECT doi FROM articleItem '
-                            'WHERE ingestionId = %s and articleItemType != "article"'
+                            'WHERE ingestionId = %s and articleItemType = "figure"'
                             'ORDER BY doi', [ingestion_id[0][0]])
     return assets
 

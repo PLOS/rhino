@@ -33,6 +33,8 @@ SSH_PASSWORD = os.getenv('SSH_PASSWORD', 'Shoh1yar')
 mysql_host = getenv('WEBDRIVER_MYSQL_HOST', 'db-ambra-201.soma.plos.org')
 mysql_user = getenv('WEBDRIVER_MYSQL_USER', 'root')
 mysql_password = getenv('WEBDRIVER_MYSQL_PASSWORD', '')
+crepo_host = getenv('WEBDRIVER_CREPO_HOST', 'contentrepo-301.soma.plos.org')
+crepo_port = getenv('WEBDRIVER_CREPO_PORT', '8002')
 
 PRINT_DEBUG = False
 TIMEOUT = 60         # API call timeout, in seconds
@@ -67,7 +69,7 @@ when **WEBDRIVER_ENVIRONMENT** is `dev`
 """
 
 environment = getenv('WEBDRIVER_ENVIRONMENT', 'dev')
-base_url = getenv('WEBDRIVER_TARGET_URL', 'http://one-dpro.plosjournals.org/wombat')
+base_url = getenv('WEBDRIVER_TARGET_URL', 'http://journals.plos.org/')
 
 
 """
@@ -83,8 +85,8 @@ dbconfig = {'user': mysql_user,
             }
 
 repo_config = {'transport': 'http',
-               'host': 'contentrepo-201.soma.plos.org',
-               'port': 8016,
+               'host': crepo_host,
+               'port': crepo_port,
                'path': '/v1',
                }
 

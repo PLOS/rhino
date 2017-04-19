@@ -38,7 +38,7 @@ class ZIPIngestionJson(Ingestion):
     POST /zips
     :param archive
     """
-    self.doPost(ZIP_INGESTION_API, {'archive': open(self.find_file(archive), 'rb')})
+    self.doPost(ZIP_INGESTION_API, {'archive': archive})
     self.parse_response_as_json()
 
   #Article API

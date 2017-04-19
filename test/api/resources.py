@@ -33,10 +33,8 @@ from ..Base.Config import repo_config
 # Default headers
 DEFAULT_HEADERS = {'Accept': 'application/json'}
 
-#Get BUCKET_NAME based on whether API_BASE_URL is on prod or not.
+#Get BUCKET_NAME
 BUCKET_NAME = u'mogilefs-prod-repo'
-#if API_BASE_URL.split('/')[2] in ('sfo-perf-plosrepo01.int.plos.org:8002', 'rwc-prod-plosrepo.int.plos.org:8002'):
-#  BUCKET_NAME = u'mogilefs-prod-repo'
 
 #URL's API
 ZIP_INGESTION_API = API_BASE_URL + '/articles'
@@ -48,23 +46,13 @@ CREPO_BASE_URL =  str(repo_config['transport']) + '://' + str(repo_config['host'
 OBJECTS_API = CREPO_BASE_URL + '/objects'
 COLLECTIONS_API = CREPO_BASE_URL + '/collections'
 
-# #Article DOI
-# ARTICLE_DOI = '10.1371++journal.pone.0155391'
-#
-# NOT_SCAPE_ARTICLE_DOI= '10.1371/journal.pone.0155391'
-#
-# #ZIP files
-# ZIP_ARTICLE = 'pone.0155391.zip'
-
-
-
 #Article DOI
-ARTICLE_DOI = '10.1371++journal.pone.0163190'
+ARTICLE_DOI = '10.1371++journal.pone.0170224'
 
-NOT_SCAPE_ARTICLE_DOI= '10.1371/journal.pone.0163190'
+NOT_SCAPE_ARTICLE_DOI= '10.1371/journal.pone.0170224'
 
 #ZIP files
-ZIP_ARTICLE = 'pone.0163190.zip'
+ZIP_ARTICLE = 'pone.0170224.zip'
 
 #Variables used to verify article revisions
 REVISION = 1

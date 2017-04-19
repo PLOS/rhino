@@ -28,27 +28,72 @@ This test case validates Rhino's article repack service.
 """
 
 from ..api.RequestObject.ingestiblec_json import IngestibleJSON
+from ..api.RequestObject.memory_zip_json import MemoryZipJSON
+from ..api.RequestObject.articlecc_json import ArticlesJSON
 import resources
 
-class ZipIngestibleTest(IngestibleJSON):
+class ZipIngestibleTest(IngestibleJSON,MemoryZipJSON,ArticlesJSON):
 
   def setUp(self):
-    self.already_done = 0
+    print('\nTesting POST zips/\n')
+    # Invoke ZIP API
+    zip_file = self.create_ingestible()
+    self.post_ingestible_zip(zip_file)
+    # Validate HTTP code in the response is 201 (CREATED)
+    self.verify_http_code_is(resources.CREATED)
 
   def tearDown(self):
     """
     Purge all objects and collections created in the test case
     """
-    if self.already_done > 0: return
+    self.delete_test_article()
 
   def test_ingestible(self):
     """
     GET ingestibles
     """
-    print('\nTesting GET  ingestibles/\n')
+    print('\nTesting GET ingestibles/\n')
     # Invoke ingestibles API
     self.get_ingestible(resources.ARTICLE_DOI)
     self.verify_http_code_is(resources.OK)
+
+  def delete_test_article(self):
+    try:
+      self.get_article(resources.ARTICLE_DOI)
+      if self.get_http_response().status_code == resources.OK:
+        self.delete_article_sql_doi(resources.NOT_SCAPE_ARTICLE_DOI)
+        #Delete article
+        self.delete_article(resources.ARTICLE_DOI)
+        self.verify_http_code_is(resources.OK)
+        #Delete CRepo collections
+        self.delete_test_collections()
+        #Delete CRepo objects
+        self.delete_test_objects()
+
+      else:
+        print (self.parsed.get_attribute('message'))
+    except:
+      pass
+
+  def delete_test_collections(self):
+    self.get_collection_versions(bucketName=resources.BUCKET_NAME, key=resources.ARTICLE_DOI)
+    collections = self.parsed.get_list()
+    if collections:
+      for coll in collections:
+        self.delete_collection(bucketName=resources.BUCKET_NAME, key=coll['key'], version=coll['versionNumber'])
+        self.verify_http_code_is(resources.OK)
+
+
+  def delete_test_objects(self):
+    self.get_crepo_objets(bucketName=resources.BUCKET_NAME)
+    self.verify_http_code_is(resources.OK)
+    objects = self.parsed.get_list()
+    if objects:
+      for object in objects:
+        if resources.ARTICLE_DOI in object['key']:
+          self.delete_object(bucketName=resources.BUCKET_NAME, key=object['key'], version=object['versionNumber'],
+                             purge=True)
+          self.verify_http_code_is(resources.OK)
 
 if __name__ == '__main__':
   IngestibleJSON._run_tests_randomly()
