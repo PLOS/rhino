@@ -28,9 +28,10 @@ This test case validates Rhino's convenience zipUpload Tests for ZIP ingestion.
 """
 
 from ..api.RequestObject.zip_ingestion_json import ZIPIngestionJson
+from ..api.RequestObject.memory_zip_json import MemoryZipJSON
 import resources
 
-class ZipIngestionTest(ZIPIngestionJson):
+class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
 
   def setUp(self):
     self.already_done = 0
@@ -50,7 +51,8 @@ class ZipIngestionTest(ZIPIngestionJson):
     """
     print('\nTesting POST zips/\n')
     # Invoke ZIP API
-    self.post_ingestible_zip(resources.ZIP_ARTICLE)
+    zip_file = self.create_ingestible()
+    self.post_ingestible_zip(zip_file)
     # Validate HTTP code in the response is 201 (CREATED)
     self.verify_http_code_is(resources.CREATED)
     # Validate response with database tables

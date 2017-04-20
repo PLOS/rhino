@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE manifest SYSTEM "/Users/fernando/repo_plos/rhino/test/data/manifest.dtd">
+<manifest>
+ <articleBundle>
+  <article uri="info:doi/10.1371/journal.pone.0170224">
+   <representation entry="pone.0170224.xml" key="10.1371/journal.pone.0170224.XML" mimetype="application/xml" type="manuscript"/>
+   <representation entry="pone.0170224.pdf" key="10.1371/journal.pone.0170224.pdf" mimetype="application/pdf" type="printable"/>
+  </article>
+  <object strkImage="True" type="standaloneStrikingImage" uri="info:doi/10.1371/journal.pone.0170224.strk">
+   <representation entry="pone.0170224.strk.tif" key="10.1371/journal.pone.0170224.strk.tif" mimetype="image/tiff" type="original"/>
+   <representation entry="pone.0170224.strk.PNG_M" key="10.1371/journal.pone.0170224.strk.PNG_M" mimetype="image/png" type="medium"/>
+   <representation entry="pone.0170224.strk.PNG_L" key="10.1371/journal.pone.0170224.strk.PNG_L" mimetype="image/png" type="large"/>
+   <representation entry="pone.0170224.strk.PNG_I" key="10.1371/journal.pone.0170224.strk.PNG_I" mimetype="image/png" type="inline"/>
+   <representation entry="pone.0170224.strk.PNG_S" key="10.1371/journal.pone.0170224.strk.PNG_S" mimetype="image/png" type="small"/>
+  </object>
+  <object type="figure" uri="info:doi/10.1371/journal.pone.0170224.g001">
+   <representation entry="pone.0170224.g001.tif" key="10.1371/journal.pone.0170224.g001.tif" mimetype="image/tiff" type="original"/>
+   <representation entry="pone.0170224.g001.PNG_M" key="10.1371/journal.pone.0170224.g001.PNG_M" mimetype="image/png" type="medium"/>
+   <representation entry="pone.0170224.g001.PNG_L" key="10.1371/journal.pone.0170224.g001.PNG_L" mimetype="image/png" type="large"/>
+   <representation entry="pone.0170224.g001.PNG_I" key="10.1371/journal.pone.0170224.g001.PNG_I" mimetype="image/png" type="inline"/>
+   <representation entry="pone.0170224.g001.PNG_S" key="10.1371/journal.pone.0170224.g001.PNG_S" mimetype="image/png" type="small"/>
+  </object>
+  <object type="figure" uri="info:doi/10.1371/journal.pone.0170224.g002">
+   <representation entry="pone.0170224.g002.tif" key="10.1371/journal.pone.0170224.g002.tif" mimetype="image/tiff" type="original"/>
+   <representation entry="pone.0170224.g002.PNG_M" key="10.1371/journal.pone.0170224.g002.PNG_M" mimetype="image/png" type="medium"/>
+   <representation entry="pone.0170224.g002.PNG_L" key="10.1371/journal.pone.0170224.g002.PNG_L" mimetype="image/png" type="large"/>
+   <representation entry="pone.0170224.g002.PNG_I" key="10.1371/journal.pone.0170224.g002.PNG_I" mimetype="image/png" type="inline"/>
+   <representation entry="pone.0170224.g002.PNG_S" key="10.1371/journal.pone.0170224.g002.PNG_S" mimetype="image/png" type="small"/>
+  </object>
+  <object type="figure" uri="info:doi/10.1371/journal.pone.0170224.g003">
+   <representation entry="pone.0170224.g003.tif" key="10.1371/journal.pone.0170224.g003.tif" mimetype="image/tiff" type="original"/>
+   <representation entry="pone.0170224.g003.PNG_M" key="10.1371/journal.pone.0170224.g003.PNG_M" mimetype="image/png" type="medium"/>
+   <representation entry="pone.0170224.g003.PNG_L" key="10.1371/journal.pone.0170224.g003.PNG_L" mimetype="image/png" type="large"/>
+   <representation entry="pone.0170224.g003.PNG_I" key="10.1371/journal.pone.0170224.g003.PNG_I" mimetype="image/png" type="inline"/>
+   <representation entry="pone.0170224.g003.PNG_S" key="10.1371/journal.pone.0170224.g003.PNG_S" mimetype="image/png" type="small"/>
+  </object>
+  <object type="figure" uri="info:doi/10.1371/journal.pone.0170224.g004">
+   <representation entry="pone.0170224.g004.tif" key="10.1371/journal.pone.0170224.g004.tif" mimetype="image/tiff" type="original"/>
+   <representation entry="pone.0170224.g004.PNG_M" key="10.1371/journal.pone.0170224.g004.PNG_M" mimetype="image/png" type="medium"/>
+   <representation entry="pone.0170224.g004.PNG_L" key="10.1371/journal.pone.0170224.g004.PNG_L" mimetype="image/png" type="large"/>
+   <representation entry="pone.0170224.g004.PNG_I" key="10.1371/journal.pone.0170224.g004.PNG_I" mimetype="image/png" type="inline"/>
+   <representation entry="pone.0170224.g004.PNG_S" key="10.1371/journal.pone.0170224.g004.PNG_S" mimetype="image/png" type="small"/>
+  </object>
+ </articleBundle>
+ <ancillary>
+  <file entry="manifest.xml" key="10.1371/journal.pone.0170224.manifest.xml" mimetype="application/xml"/>
+  <file entry="manifest.dtd" key="10.1371/journal.pone.0170224.manifest.dtd" mimetype="application/xml-dtd"/>
+  <file entry="pone.0170224.xml.orig" key="10.1371/journal.pone.0170224.xml.orig" mimetype="application/xml"/>
+ </ancillary>
+</manifest>

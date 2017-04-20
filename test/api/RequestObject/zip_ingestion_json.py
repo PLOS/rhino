@@ -28,7 +28,7 @@ __author__ = 'gfilomeno@plos.org'
 
 
 from ingestion_json import Ingestion
-from ..resources import *
+from ..resources import ZIP_INGESTION_API, ARTICLE_API, COLLECTIONS_API, OBJECTS_API
 
 class ZIPIngestionJson(Ingestion):
 
@@ -38,7 +38,7 @@ class ZIPIngestionJson(Ingestion):
     POST /zips
     :param archive
     """
-    self.doPost(ZIP_INGESTION_API, {'archive': open(self.find_file(archive), 'rb')})
+    self.doPost(ZIP_INGESTION_API, {'archive': archive})
     self.parse_response_as_json()
 
   #Article API
