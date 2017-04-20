@@ -28,7 +28,7 @@ __author__ = 'gfilomeno@plos.org'
 
 
 from ingestion_json import Ingestion
-from ..resources import *
+from ..resources import ZIP_INGESTION_API, ARTICLE_API, COLLECTIONS_API, OBJECTS_API
 
 class ZIPIngestionJson(Ingestion):
 

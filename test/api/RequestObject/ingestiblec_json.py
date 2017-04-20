@@ -29,7 +29,7 @@ from test.api import resources
 __author__ = 'fcabrales@plos.org'
 
 from ...Base.base_service_test import BaseServiceTest
-from ..resources import *
+from ..resources import ARTICLE_API
 
 class IngestibleJSON(BaseServiceTest):
 
@@ -39,4 +39,4 @@ class IngestibleJSON(BaseServiceTest):
     GET /articles/{article_doi}/ingestions/{ingestion_number}/ingestible
     :param article_doi
     """
-    self.doGet('%s/%s/%s' % (ARTICLE_API, article_doi, 'ingestions/1/ingestible'), None, headers=DEFAULT_HEADERS)
+    self.doGet('{0}/{1}/{2}'.format(ARTICLE_API, article_doi, 'ingestions/1/ingestible'), None, headers=DEFAULT_HEADERS)

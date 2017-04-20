@@ -31,7 +31,7 @@ from ..api.RequestObject.memory_zip_json import MemoryZipJSON
 import resources
 
 
-class ArticlesTest(ArticlesJSON,MemoryZipJSON):
+class ArticlesTest(ArticlesJSON, MemoryZipJSON):
   def setUp(self):
     print('\nTesting POST zips/\n')
     # Invoke ZIP API to generate in memory ingestible zip

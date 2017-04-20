@@ -34,6 +34,11 @@ class MemoryZipEntry(object):
         self.name = name
 
     def get_file(self):
+        """
+        Streams data by calling _get_file_bytes()
+        :param None
+        :return: Stream data return from _get_file_bytes()
+        """
         return io.BytesIO(self._get_file_bytes())
 
 class MemoryZipData(MemoryZipEntry):
@@ -44,6 +49,11 @@ class MemoryZipData(MemoryZipEntry):
         self._data = data
 
     def _get_file_bytes(self):
+        """
+        Returns data that is ready in memory
+        :param None
+        :return: Return data store in memory in _data
+        """
         if isinstance(self._data, str):
             return bytearray(self._data)
         return self._data
@@ -56,17 +66,20 @@ class MemoryZipFile(MemoryZipEntry):
         self._filename = filename
 
     def _get_file_bytes(self):
+        """
+        Entry point to a file in disk
+        :param None
+        :return: Return file read handler
+        """
         with open(self._filename) as f:
             return f.read()
 
 def build_zip_file_in_memory(entries):
-    """Build a zip file in memory.
-
-    The argument is an iterable of MemoryZipEntry objects with distinct
-    names. The return value is a file-like object containing the zip file,
-    backed by memory.
     """
-
+    Creates a zip file by writes files and data to a zip file
+    :param entries is compose of MemoryZipFile objects and MemoryZipData 
+    :return: File-like object containing a zip file, backed in memory.
+    """
     zip_bin = io.BytesIO()
     with zipfile.ZipFile(zip_bin, 'w') as zip_file:
         for entry in entries:

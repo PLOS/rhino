@@ -32,7 +32,7 @@ from ..api.RequestObject.memory_zip_json import MemoryZipJSON
 from ..api.RequestObject.articlecc_json import ArticlesJSON
 import resources
 
-class ZipIngestibleTest(IngestibleJSON,MemoryZipJSON,ArticlesJSON):
+class ZipIngestibleTest(IngestibleJSON, MemoryZipJSON, ArticlesJSON):
 
   def setUp(self):
     print('\nTesting POST zips/\n')
@@ -58,24 +58,34 @@ class ZipIngestibleTest(IngestibleJSON,MemoryZipJSON,ArticlesJSON):
     self.verify_http_code_is(resources.OK)
 
   def delete_test_article(self):
-    try:
-      self.get_article(resources.ARTICLE_DOI)
-      if self.get_http_response().status_code == resources.OK:
-        self.delete_article_sql_doi(resources.NOT_SCAPE_ARTICLE_DOI)
-        #Delete article
-        self.delete_article(resources.ARTICLE_DOI)
-        self.verify_http_code_is(resources.OK)
-        #Delete CRepo collections
-        self.delete_test_collections()
-        #Delete CRepo objects
-        self.delete_test_objects()
+    """
+    Gets article information for rhino then proceeds to delete article records from ambra db
+    and content repo database
+    :param None
+    :return: None
+    """
+    self.get_article(resources.ARTICLE_DOI)
+    if self.get_http_response().status_code == resources.OK:
+      # Deletes article from ambra database
+      self.delete_article_sql_doi(resources.NOT_SCAPE_ARTICLE_DOI)
+      #Delete article using rhino api call
+      self.delete_article(resources.ARTICLE_DOI)
+      self.verify_http_code_is(resources.OK)
+      #Delete CRepo collections
+      self.delete_test_collections()
+      #Delete CRepo objects
+      self.delete_test_objects()
+    else:
+      print (self.parsed.get_attribute('message'))
 
-      else:
-        print (self.parsed.get_attribute('message'))
-    except:
-      pass
 
   def delete_test_collections(self):
+    """
+    Get collection information from content repo using bucket name and article doi, then
+    proceeded to call content repo delete collection endpoint
+    :param None
+    :return: None
+    """
     self.get_collection_versions(bucketName=resources.BUCKET_NAME, key=resources.ARTICLE_DOI)
     collections = self.parsed.get_list()
     if collections:
@@ -85,6 +95,12 @@ class ZipIngestibleTest(IngestibleJSON,MemoryZipJSON,ArticlesJSON):
 
 
   def delete_test_objects(self):
+    """
+    Get object information from content repo using bucket name, then
+    proceeded to call content repo delete object endpoint
+    :param None
+    :return: None
+    """
     self.get_crepo_objets(bucketName=resources.BUCKET_NAME)
     self.verify_http_code_is(resources.OK)
     objects = self.parsed.get_list()

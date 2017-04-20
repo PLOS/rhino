@@ -31,7 +31,7 @@ from ..api.RequestObject.zip_ingestion_json import ZIPIngestionJson
 from ..api.RequestObject.memory_zip_json import MemoryZipJSON
 import resources
 
-class ZipIngestionTest(ZIPIngestionJson,MemoryZipJSON):
+class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
 
   def setUp(self):
     self.already_done = 0
