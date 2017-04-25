@@ -48,7 +48,17 @@ public interface ArticleListCrudService {
 
   ServiceResponse<ArticleListView> read(ArticleListIdentity identity);
 
-  ServiceResponse<Collection<ArticleListView>> readAll(Optional<String> listType, Optional<String> journalKey);
+  /**
+   * @return the identities of all lists, excluding article metadata
+   */
+  ServiceResponse<Collection<ArticleListView>> readAll();
+
+  /**
+   * @param listType   the type of list to create
+   * @param journalKey the journal the list belongs to
+   * @return the identities of all lists, and all article metadata for all returned lists
+   */
+  ServiceResponse<Collection<ArticleListView>> readAll(String listType, Optional<String> journalKey);
 
   /**
    * Read all lists that contain the article.
