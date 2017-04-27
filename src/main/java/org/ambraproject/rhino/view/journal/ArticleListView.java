@@ -43,17 +43,31 @@ public class ArticleListView implements JsonOutputView {
     public ArticleListView getView(ArticleList articleList, String journalKey) {
       return new ArticleListView(journalKey, articleList, articleRevisionViewFactory);
     }
+
+    public ArticleListView getView(ArticleList articleList, String journalKey, boolean excludeArticleMetadata) {
+      return new ArticleListView(journalKey, articleList, articleRevisionViewFactory, excludeArticleMetadata);
+    }
   }
 
   private final String journalKey;
   private final ArticleList articleList;
   private final ArticleRevisionView.Factory articleFactory;
+  private final boolean excludeArticleMetadata;
 
   private ArticleListView(String journalKey, ArticleList articleList,
                           ArticleRevisionView.Factory articleFactory) {
     this.journalKey = Objects.requireNonNull(journalKey);
     this.articleList = Objects.requireNonNull(articleList);
     this.articleFactory = Objects.requireNonNull(articleFactory);
+    this.excludeArticleMetadata = false;
+  }
+
+  private ArticleListView(String journalKey, ArticleList articleList,
+                          ArticleRevisionView.Factory articleFactory, boolean excludeArticleMetadata) {
+    this.journalKey = Objects.requireNonNull(journalKey);
+    this.articleList = Objects.requireNonNull(articleList);
+    this.articleFactory = Objects.requireNonNull(articleFactory);
+    this.excludeArticleMetadata = excludeArticleMetadata;
   }
 
   public ArticleListIdentity getIdentity() {
@@ -72,9 +86,11 @@ public class ArticleListView implements JsonOutputView {
     JsonObject serialized = context.serialize(getIdentity()).getAsJsonObject();
     serialized.addProperty("title", articleList.getDisplayName());
 
-    List<ArticleRevisionView> articleViews = Lists.transform(articleList.getArticles(),
-        articleFactory::getLatestRevisionView);
-    serialized.add("articles", context.serialize(articleViews));
+    if (!excludeArticleMetadata) {
+      List<ArticleRevisionView> articleViews = Lists.transform(articleList.getArticles(),
+          articleFactory::getLatestRevisionView);
+      serialized.add("articles", context.serialize(articleViews));
+    }
     return serialized;
   }
 

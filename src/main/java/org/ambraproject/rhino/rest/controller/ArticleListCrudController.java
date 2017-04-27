@@ -116,14 +116,14 @@ public class ArticleListCrudController extends RestController {
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/lists", method = RequestMethod.GET)
   public ResponseEntity<?> listAll() throws IOException {
-    return articleListCrudService.readAll(Optional.empty(), Optional.empty()).asJsonResponse(entityGson);
+    return articleListCrudService.readAll().asJsonResponse(entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/lists/{type}", method = RequestMethod.GET)
   public ResponseEntity<?> listAll(@PathVariable("type") String type)
       throws IOException {
-    return articleListCrudService.readAll(Optional.of(type), Optional.empty()).asJsonResponse(entityGson);
+    return articleListCrudService.readAll(type, Optional.empty()).asJsonResponse(entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
@@ -131,7 +131,7 @@ public class ArticleListCrudController extends RestController {
   public ResponseEntity<?> listAll(@PathVariable("type") String type,
                                    @PathVariable("journal") String journalKey)
       throws IOException {
-    return articleListCrudService.readAll(Optional.of(type), Optional.of(journalKey)).asJsonResponse(entityGson);
+    return articleListCrudService.readAll(type, Optional.of(journalKey)).asJsonResponse(entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
