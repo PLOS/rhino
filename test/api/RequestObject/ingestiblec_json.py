@@ -29,7 +29,7 @@ from test.api import resources
 __author__ = 'fcabrales@plos.org'
 
 from ...Base.base_service_test import BaseServiceTest
-from ..resources import ARTICLE_API
+from ..resources import ARTICLE_API, DEFAULT_HEADERS
 
 class IngestibleJSON(BaseServiceTest):
 
