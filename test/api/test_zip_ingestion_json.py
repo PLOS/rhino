@@ -68,6 +68,7 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
     # Ingest a ZIP file
     try:
       self.post_ingestible_zip(None)
+      self.already_done = 1
     except:
       pass
 
