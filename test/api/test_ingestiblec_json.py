@@ -68,9 +68,6 @@ class ZipIngestibleTest(IngestibleJSON, MemoryZipJSON, ArticlesJSON):
     if self.get_http_response().status_code == resources.OK:
       # Deletes article from ambra database
       self.delete_article_sql_doi(resources.NOT_SCAPE_ARTICLE_DOI)
-      #Delete article using rhino api call
-      self.delete_article(resources.ARTICLE_DOI)
-      self.verify_http_code_is(resources.OK)
       #Delete CRepo collections
       self.delete_test_collections()
       #Delete CRepo objects
