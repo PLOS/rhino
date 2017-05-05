@@ -44,7 +44,6 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
     # Delete article and crepo objects
     self.delete_test_article()
 
-
   def test_zip_ingestion(self):
     """
     POST zips: Forced ingestion of ZIP archive
@@ -58,8 +57,6 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
     # Validate response with database tables
     self.verify_zip_ingestion()
 
-
-
   def test_zip_ingestion_without_file(self):
     """
     POST zips: Try to ingest of ZIP archive without file name
@@ -67,8 +64,8 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
     print('\nTesting POST zips/ without parameters\n')
     # Ingest a ZIP file
     try:
-      self.post_ingestible_zip(None)
       self.already_done = 1
+      self.post_ingestible_zip(None)
     except:
       pass
 
