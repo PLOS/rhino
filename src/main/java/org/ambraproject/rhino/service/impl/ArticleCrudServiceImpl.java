@@ -110,16 +110,26 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public Document getManuscriptXml(ArticleIngestion ingestion) {
-    Doi articleDoi = Doi.create(ingestion.getArticle().getDoi());
-    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(articleDoi, ingestion.getIngestionNumber());
-    ArticleItemIdentifier articleItemId = ingestionId.getItemFor();
-    ArticleFileIdentifier manuscriptId = ArticleFileIdentifier.create(articleItemId, "manuscript");
-    RepoObjectMetadata objectMetadata = assetCrudService.getArticleItemFile(manuscriptId);
+    return getManuscriptXml(getManuscriptMetadata(ingestion));
+  }
+
+  @Override
+  public Document getManuscriptXml(RepoObjectMetadata objectMetadata) {
     try (InputStream manuscriptInputStream = contentRepoService.getRepoObject(objectMetadata.getVersion())) {
       return parseXml(manuscriptInputStream);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  @Override
+  public RepoObjectMetadata getManuscriptMetadata(ArticleIngestion ingestion) {
+    Doi articleDoi = Doi.create(ingestion.getArticle().getDoi());
+    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(articleDoi, ingestion.getIngestionNumber());
+    ArticleItemIdentifier articleItemId = ingestionId.getItemFor();
+    ArticleFileIdentifier manuscriptId = ArticleFileIdentifier.create(articleItemId, "manuscript");
+    RepoObjectMetadata objectMetadata = assetCrudService.getArticleItemFile(manuscriptId);
+    return objectMetadata;
   }
 
   static RestClientException complainAboutXml(XmlContentException e) {

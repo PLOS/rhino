@@ -43,9 +43,11 @@ import org.ambraproject.rhino.view.article.ArticleRevisionView;
 import org.ambraproject.rhino.view.article.CategoryAssignmentView;
 import org.ambraproject.rhino.view.article.ItemSetView;
 import org.ambraproject.rhino.view.article.author.ArticleAllAuthorsView;
+import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
@@ -175,6 +177,10 @@ public interface ArticleCrudService {
   public abstract Article readArticle(ArticleIdentifier articleIdentifier);
 
   public abstract Document getManuscriptXml(ArticleIngestion articleIngestion);
+
+  public abstract Document getManuscriptXml(RepoObjectMetadata objectMetadata);
+
+  public abstract RepoObjectMetadata getManuscriptMetadata(ArticleIngestion ingestion);
 
   /**
    * Get all the article revisions published within a given date range
