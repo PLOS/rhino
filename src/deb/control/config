@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# set -x
+set -e
+
+case "$1" in
+  configure|reconfigure)
+
+    . /usr/share/debconf/confmodule
+
+    INPUT="db_input high [[artifactId]]"
+
+    $INPUT/rhino_db_name || true
+    $INPUT/rhino_db_host || true
+    $INPUT/rhino_db_user || true
+    $INPUT/rhino_db_password || true
+    $INPUT/rhino_port || true
+    $INPUT/control_port || true
+    $INPUT/tomcat_admin_user || true
+    $INPUT/tomcat_admin_password || true
+
+    db_go || true
+
+  ;;
+
+  abort-upgrade)
+  ;;
+
+  *)
+      echo "config called with unknown argument \`$1'" >&2
+      exit 1
+  ;;
+esac
+
