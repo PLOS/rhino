@@ -39,6 +39,7 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
+import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.Document;
 
@@ -64,7 +65,8 @@ public class ArticleIngestionView implements JsonOutputView {
     public ArticleIngestionView getView(ArticleIngestion ingestion) {
       JournalOutputView journal = JournalOutputView.getView(ingestion.getJournal());
 
-      Document document = articleCrudService.getManuscriptXml(ingestion);
+      RepoObjectMetadata objectMetadata = articleCrudService.getManuscriptMetadata(ingestion);
+      Document document = articleCrudService.getManuscriptXml(objectMetadata);
       ArticleMetadata metadata;
       ArticleCustomMetadata customMetadata;
       try {
@@ -74,7 +76,8 @@ public class ArticleIngestionView implements JsonOutputView {
         throw new RuntimeException(e);
       }
 
-      return new ArticleIngestionView(ingestion, metadata, customMetadata, journal);
+      String bucketName = objectMetadata.getVersion().getId().getBucketName();
+      return new ArticleIngestionView(ingestion, metadata, customMetadata, journal, bucketName);
     }
 
   }
@@ -83,17 +86,20 @@ public class ArticleIngestionView implements JsonOutputView {
   private final ArticleMetadata metadata;
   private final ArticleCustomMetadata customMetadata;
   private final JournalOutputView journal;
+  private final String bucketName;
 
   private ArticleIngestionView(ArticleIngestion ingestion,
                                ArticleMetadata metadata,
                                ArticleCustomMetadata customMetadata,
-                               JournalOutputView journal) {
+                               JournalOutputView journal,
+                               String bucketName) {
     Preconditions.checkArgument(ingestion.getArticle().getDoi().equals(metadata.getDoi()));
     this.ingestion = ingestion;
     this.metadata = metadata;
 
     this.customMetadata = Objects.requireNonNull(customMetadata);
     this.journal = Objects.requireNonNull(journal);
+    this.bucketName = bucketName;
   }
 
   @Override
@@ -102,6 +108,7 @@ public class ArticleIngestionView implements JsonOutputView {
     serialized.addProperty("doi", ingestion.getArticle().getDoi());
     serialized.addProperty("ingestionNumber", ingestion.getIngestionNumber());
     serialized.add("journal", context.serialize(journal));
+    serialized.addProperty("bucketName", bucketName);
 
     ArticleItem strikingImage = ingestion.getStrikingImage();
     if (strikingImage != null) {
