@@ -23,7 +23,7 @@ EOF
 }
 
 case "$1" in
-    configure)
+    configure|reconfigure)
 
   # create user/group
 
