@@ -60,7 +60,7 @@
     <activemq.version>5.2.0</activemq.version>
     <ehcache.version>2.7.0</ehcache.version>
     <maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
-    <build.datestamp>${maven.build.timestamp}</build.datestamp>
+    <build.timestamp>${maven.build.timestamp}</build.timestamp>
     <build.counter>0</build.counter>
   </properties>
 
@@ -594,54 +594,52 @@
         </executions>
       </plugin>
 
-        <plugin>
-          <!-- See src/deb/README.md -->
-            <artifactId>jdeb</artifactId>
-            <groupId>org.vafer</groupId>
-            <version>1.5</version>
-            <executions>
-                <execution>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>jdeb</goal>
-                    </goals>
-                    <configuration>
-                        <deb>${project.build.directory}/${project.artifactId}_[[version]]+${build.datestamp}-plos${build.counter}.deb</deb>
-                        <dataSet>
-                            <!-- extract rendered tomcat7 files to install directory  -->
-                            <data>
-                                <src>${project.basedir}/src/deb/tomcat7</src>
-                                <type>directory</type>
-                                <mapper>
-                                    <type>perm</type>
-                                    <prefix>${rhino.debInstallDir}</prefix>
-                                </mapper>
-                            </data>
-                            <!-- place built war file into webapps directory  -->
-                            <data>
-                                <src>${project.build.directory}/${project.build.finalName}.war</src>
-                                <type>file</type>
-                                <mapper>
-                                    <type>perm</type>
-                                    <prefix>${rhino.debInstallDir}/webapps</prefix>
-                                </mapper>
-                            </data>
-                            <!-- move the init script to /etc/init.d directory  -->
-                            <data>
-                                <src>${project.basedir}/src/deb/${artifactId}.sysv</src>
-                                <type>file</type>
-                                <dst>/etc/init.d/${artifactId}</dst>
-                                <mapper>
-                                    <type>perm</type>
-                                    <filemode>755</filemode>
-                                </mapper>
-                            </data>
+      <plugin>
+        <artifactId>jdeb</artifactId>
+        <groupId>org.vafer</groupId>
+        <version>1.5</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>jdeb</goal>
+            </goals>
+            <configuration>
+              <deb>${project.build.directory}/${project.artifactId}_[[version]]+${build.timestamp}-plos${build.counter}.deb</deb>
+              <!-- <snapshotExpand>true</snapshotExpand> -->
+              <controlDir>${project.basedir}/src/deb/control</controlDir>
+              <dataSet>
 
-                        </dataSet>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
+                <data>
+                  <src>${project.build.directory}/${project.build.finalName}.war</src>
+                  <type>file</type>
+                  <dst>/opt/plos/rhino/webapps/rhino.war</dst>
+                </data>
+
+                <data>
+                  <src>${project.basedir}/src/deb/tomcat7</src>
+                  <type>directory</type>
+                  <mapper>
+                    <type>perm</type>
+                    <prefix>/opt/plos/rhino</prefix>
+                  </mapper>
+                </data>
+
+                <data>
+                  <src>${project.basedir}/src/deb/rhino.sysv</src>
+                  <type>file</type>
+                  <dst>/etc/init.d/rhino</dst>
+                  <mapper>
+                    <type>perm</type>
+                    <filemode>755</filemode>
+                  </mapper>
+                </data>
+
+              </dataSet>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
 
     </plugins>
 
