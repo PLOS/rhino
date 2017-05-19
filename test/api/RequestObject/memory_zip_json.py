@@ -31,7 +31,7 @@ from ...Base.MemoryZip import MemoryZipFile, MemoryZipData, build_zip_file_in_me
 
 class MemoryZipJSON(BaseServiceTest):
 
-  def create_ingestible(self):
+  def create_ingestible(self, article_doi, data_sub_directory):
     EMPTY_PNG_FILE = bytes(
       '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x01'
       '\x03\x00\x00\x00%\xdbV\xca\x00\x00\x00\x03PLTE\x00\x00\x00\xa7z=\xda\x00'
@@ -41,37 +41,37 @@ class MemoryZipJSON(BaseServiceTest):
     REAL_FILES = [
       "manifest.dtd",
       "manifest.xml",
-      "pone.0170224.xml",
+      article_doi + ".xml",
     ]
 
     DUMMY_FILES = [
-      "pone.0170224.g001.PNG_I",
-      "pone.0170224.g001.PNG_L",
-      "pone.0170224.g001.PNG_M",
-      "pone.0170224.g001.PNG_S",
-      "pone.0170224.g001.tif",
-      "pone.0170224.g002.PNG_I",
-      "pone.0170224.g002.PNG_L",
-      "pone.0170224.g002.PNG_M",
-      "pone.0170224.g002.PNG_S",
-      "pone.0170224.g002.tif",
-      "pone.0170224.g003.PNG_I",
-      "pone.0170224.g003.PNG_L",
-      "pone.0170224.g003.PNG_M",
-      "pone.0170224.g003.PNG_S",
-      "pone.0170224.g003.tif",
-      "pone.0170224.g004.PNG_I",
-      "pone.0170224.g004.PNG_L",
-      "pone.0170224.g004.PNG_M",
-      "pone.0170224.g004.PNG_S",
-      "pone.0170224.g004.tif",
-      "pone.0170224.pdf",
-      "pone.0170224.strk.PNG_I",
-      "pone.0170224.strk.PNG_L",
-      "pone.0170224.strk.PNG_M",
-      "pone.0170224.strk.PNG_S",
-      "pone.0170224.strk.tif",
-      "pone.0170224.xml.orig",
+      article_doi + ".g001.PNG_I",
+      article_doi + ".g001.PNG_L",
+      article_doi + ".g001.PNG_M",
+      article_doi + ".g001.PNG_S",
+      article_doi + ".g001.tif",
+      article_doi + ".g002.PNG_I",
+      article_doi + ".g002.PNG_L",
+      article_doi + ".g002.PNG_M",
+      article_doi + ".g002.PNG_S",
+      article_doi + ".g002.tif",
+      article_doi + ".g003.PNG_I",
+      article_doi + ".g003.PNG_L",
+      article_doi + ".g003.PNG_M",
+      article_doi + ".g003.PNG_S",
+      article_doi + ".g003.tif",
+      article_doi + ".g004.PNG_I",
+      article_doi + ".g004.PNG_L",
+      article_doi + ".g004.PNG_M",
+      article_doi + ".g004.PNG_S",
+      article_doi + ".g004.tif",
+      article_doi + ".pdf",
+      article_doi + ".strk.PNG_I",
+      article_doi + ".strk.PNG_L",
+      article_doi + ".strk.PNG_M",
+      article_doi + ".strk.PNG_S",
+      article_doi + ".strk.tif",
+      article_doi + ".xml.orig",
     ]
 
     """
@@ -79,7 +79,7 @@ class MemoryZipJSON(BaseServiceTest):
     """
     # Build MemoryZipFile objects from files containing actual test data.
     # This way we ONLY have to check in manifests and manuscripts.
-    real_entries = [MemoryZipFile(f, 'test/data/' + f) for f in REAL_FILES]
+    real_entries = [MemoryZipFile(f, 'test/data/'+ data_sub_directory + f) for f in REAL_FILES]
 
     # For large binary blobs whose contents don't matter to the test, we don't
     # want to check the files into Git. Instead, use MemoryZipData to mock them

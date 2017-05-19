@@ -44,13 +44,13 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
     # Delete article and crepo objects
     self.delete_test_article()
 
-  def test_zip_ingestion(self):
+  def test_zip_ingestion_related_article(self):
     """
     POST zips: Forced ingestion of ZIP archive
     """
     print('\nTesting POST zips/\n')
     # Invoke ZIP API
-    zip_file = self.create_ingestible()
+    zip_file = self.create_ingestible(resources.RA_DOI, resources.RA_SUB_DIR)
     self.post_ingestible_zip(zip_file)
     # Validate HTTP code in the response is 201 (CREATED)
     self.verify_http_code_is(resources.CREATED)

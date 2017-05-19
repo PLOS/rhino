@@ -54,6 +54,17 @@ NOT_SCAPE_ARTICLE_DOI= '10.1371/journal.pone.0170224'
 #ZIP files
 ZIP_ARTICLE = 'pone.0170224.zip'
 
+#related article doi
+RA_DOI = 'pone.0170224'
+
+#Related article sub data directory
+RA_SUB_DIR = 'RelatedArticle'
+
+#preprint article doi
+PP_DOI = 'oarx.20001421'
+
+
+
 #Variables used to verify article revisions
 REVISION = 1
 INGESTION_NUMBER = 1

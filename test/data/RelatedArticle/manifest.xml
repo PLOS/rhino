@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE manifest SYSTEM "/Users/fernando/repo_plos/rhino/test/data/manifest.dtd">
+<!DOCTYPE manifest SYSTEM "/home/fcabrales/repo-plos/rhino/test/data/RelatedArticle/manifest.dtd">
 <manifest>
  <articleBundle>
   <article uri="info:doi/10.1371/journal.pone.0170224">
