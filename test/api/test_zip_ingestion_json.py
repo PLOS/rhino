@@ -50,7 +50,7 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
     """
     print('\nTesting POST zips/\n')
     # Invoke ZIP API
-    zip_file = self.create_ingestible(resources.RA_DOI, resources.RA_SUB_DIR)
+    zip_file = self.create_ingestible(resources.RA_DOI)
     self.post_ingestible_zip(zip_file)
     # Validate HTTP code in the response is 201 (CREATED)
     self.verify_http_code_is(resources.CREATED)
