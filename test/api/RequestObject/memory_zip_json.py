@@ -31,7 +31,7 @@ from ...Base.MemoryZip import MemoryZipFile, MemoryZipData, build_zip_file_in_me
 
 class MemoryZipJSON(BaseServiceTest):
 
-  def create_ingestible(self, article_doi):
+  def create_ingestible(self, article_doi, sub_dir):
     EMPTY_PNG_FILE = bytes(
       '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x01'
       '\x03\x00\x00\x00%\xdbV\xca\x00\x00\x00\x03PLTE\x00\x00\x00\xa7z=\xda\x00'
@@ -79,7 +79,7 @@ class MemoryZipJSON(BaseServiceTest):
     """
     # Build MemoryZipFile objects from files containing actual test data.
     # This way we ONLY have to check in manifests and manuscripts.
-    real_entries = [MemoryZipFile(f, 'test/data/' + f) for f in REAL_FILES]
+    real_entries = [MemoryZipFile(f, 'test/data/'+ sub_dir + f) for f in REAL_FILES]
 
     # For large binary blobs whose contents don't matter to the test, we don't
     # want to check the files into Git. Instead, use MemoryZipData to mock them

@@ -34,7 +34,8 @@ from ..Base.Config import repo_config
 DEFAULT_HEADERS = {'Accept': 'application/json'}
 
 #Get BUCKET_NAME
-BUCKET_NAME = u'mogilefs-prod-repo'
+RELATED_ARTICLE_BUCKET_NAME = u'mogilefs-prod-repo'
+PREPRINT_ARTICLE_BUCKET_NAME = u'preprints'
 
 #URL's API
 ZIP_INGESTION_API = API_BASE_URL + '/articles'
@@ -46,10 +47,13 @@ CREPO_BASE_URL =  str(repo_config['transport']) + '://' + str(repo_config['host'
 OBJECTS_API = CREPO_BASE_URL + '/objects'
 COLLECTIONS_API = CREPO_BASE_URL + '/collections'
 
-#Article DOI
-ARTICLE_DOI = '10.1371++journal.pone.0170224'
+#Related article DOI
+RELATED_ARTICLE_DOI = '10.1371++journal.pone.0170224'
+NOT_SCAPE_RELATED_ARTICLE_DOI= '10.1371/journal.pone.0170224'
 
-NOT_SCAPE_ARTICLE_DOI= '10.1371/journal.pone.0170224'
+#Preprint article DOI
+PREPRINT_ARTICLE_DOI = '10.1371++journal.oarx.20001421'
+NOT_SCAPE_PREPRINT_ARTICLE_DOI= '10.1371/journal.oarx.20001421'
 
 #ZIP files
 ZIP_ARTICLE = 'pone.0170224.zip'
@@ -57,11 +61,8 @@ ZIP_ARTICLE = 'pone.0170224.zip'
 #related article doi
 RA_DOI = 'pone.0170224'
 
-#Related article sub data directory
-RA_SUB_DIR = 'RelatedArticle'
-
 #preprint article doi
-PP_DOI = 'oarx.20001421'
+PP_DOI = 'oarx.2001421'
 
 
 

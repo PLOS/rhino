@@ -29,18 +29,18 @@ __author__ = 'jkrzemien@plos.org; gfilomeno@plos.org; fcabrales@plos.org'
 
 from ...Base.base_service_test import BaseServiceTest
 from ...Base.api import needs
-#from ...Base.MySQL import MySQL
+from ...Base.MySQL import MySQL
 
 class Ingestion(BaseServiceTest):
 
   @needs('parsed', 'parse_response_as_json()')
-  def verify_article(self):
+  def verify_article(self, not_scaped_article_doi):
     """
     Validate ingestion with Article table
     """
-    article_id = self.get_article_id_sql_doi(resources.NOT_SCAPE_ARTICLE_DOI)
+    article_id = self.get_article_id_sql_doi(not_scaped_article_doi)
     # # Verify uploaded DOI against the one stored in DB
-    self.verify_ingestion_text_expected_only(resources.NOT_SCAPE_ARTICLE_DOI, 'doi')
+    self.verify_ingestion_text_expected_only(not_scaped_article_doi, 'doi')
     #Verify article title stored in DB
     article_title = self.get_article_sql_archiveName(article_id)
     self.verify_ingestion_text_expected_only(article_title[0], 'title')
@@ -52,12 +52,12 @@ class Ingestion(BaseServiceTest):
     self.verify_ingestion_text_expected_only(str(article_pubdate[0]), 'publicationDate')
 
   @needs('parsed', 'parse_response_as_json()')
-  def verify_journals(self):
+  def verify_journals(self, not_scaped_article_doi):
     """
     Validate ingestion with articlePublishedJournals  table
     """
     print 'Verify Journals'
-    article_id = self.get_article_id_sql_doi(resources.NOT_SCAPE_ARTICLE_DOI)
+    article_id = self.get_article_id_sql_doi(not_scaped_article_doi)
     journals = self.get_journals_sql_archiveName(article_id)
     journals_json = self.parsed.get_attribute('journal')
     self.verify_array(journals, journals_json)
@@ -67,12 +67,12 @@ class Ingestion(BaseServiceTest):
       self.verify_ingestion_text(journals_json['eIssn'], journal[1], journal_name + '.eIssn')
       self.verify_ingestion_text(journals_json['title'], journal[2], journal_name + '.title')
 
-  def verify_article_figures(self):
+  def verify_article_figures(self, not_scaped_article_doi):
     """
     Validate ingestion's figures with Assert table
     """
     print 'Verify Article\'s figures'
-    article_id = self.get_article_id_sql_doi(resources.NOT_SCAPE_ARTICLE_DOI)
+    article_id = self.get_article_id_sql_doi(not_scaped_article_doi)
     self.verify_article_assets(article_id, 'assetsLinkedFromManuscript')
 
   def verify_article_assets(self, article_id, assets_json_name):

@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.1d3 20150301//EN" "http://jats.nlm.nih.gov/publishing/1.1d3/JATS-journalpublishing1.dtd">
+<article article-type="research-article" dtd-version="1.1d3" xml:lang="en" xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">OpenArXiv</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-title-group>
+<journal-title>Open Archive</journal-title>
+</journal-title-group>
+<issn pub-type="epub">1111-1111</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="doi">10.1371/journal.oarx.2001421</article-id>
+<article-id pub-id-type="publisher-id">oarx.2001421</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+<subj-group subj-group-type="Discipline-v3"><subject>Physical sciences</subject><subj-group><subject>Physics</subject><subj-group><subject>Electromagnetic radiation</subject><subj-group><subject>Light</subject><subj-group><subject>Light pulses</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Physiology</subject><subj-group><subject>Electrophysiology</subject><subj-group><subject>Membrane potential</subject><subj-group><subject>Action potentials</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Medicine and health sciences</subject><subj-group><subject>Physiology</subject><subj-group><subject>Electrophysiology</subject><subj-group><subject>Membrane potential</subject><subj-group><subject>Action potentials</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Physiology</subject><subj-group><subject>Electrophysiology</subject><subj-group><subject>Neurophysiology</subject><subj-group><subject>Action potentials</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Medicine and health sciences</subject><subj-group><subject>Physiology</subject><subj-group><subject>Electrophysiology</subject><subj-group><subject>Neurophysiology</subject><subj-group><subject>Action potentials</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Neuroscience</subject><subj-group><subject>Neurophysiology</subject><subj-group><subject>Action potentials</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Cell biology</subject><subj-group><subject>Cellular types</subject><subj-group><subject>Animal cells</subject><subj-group><subject>Neurons</subject><subj-group><subject>Interneurons</subject></subj-group></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Neuroscience</subject><subj-group><subject>Cellular neuroscience</subject><subj-group><subject>Neurons</subject><subj-group><subject>Interneurons</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Anatomy</subject><subj-group><subject>Brain</subject><subj-group><subject>Amygdala</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Medicine and health sciences</subject><subj-group><subject>Anatomy</subject><subj-group><subject>Brain</subject><subj-group><subject>Amygdala</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Physical sciences</subject><subj-group><subject>Mathematics</subject><subj-group><subject>Statistics (mathematics)</subject><subj-group><subject>Statistical data</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Physiology</subject><subj-group><subject>Electrophysiology</subject><subj-group><subject>Membrane potential</subject><subj-group><subject>Excitatory postsynaptic potentials</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Medicine and health sciences</subject><subj-group><subject>Physiology</subject><subj-group><subject>Electrophysiology</subject><subj-group><subject>Membrane potential</subject><subj-group><subject>Excitatory postsynaptic potentials</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Anatomy</subject><subj-group><subject>Brain</subject><subj-group><subject>Piriform cortex</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Medicine and health sciences</subject><subj-group><subject>Anatomy</subject><subj-group><subject>Brain</subject><subj-group><subject>Piriform cortex</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Engineering and technology</subject><subj-group><subject>Equipment</subject><subj-group><subject>Optical equipment</subject><subj-group><subject>Lasers</subject></subj-group></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>Differential excitatory control of 2 parallel basket cell networks in amygdala microcircuits</article-title>
+</title-group>
+<contrib-group><contrib contrib-type="author">
+<contrib-id contrib-id-type="internal">placeholder</contrib-id><name name-style="western">
+<surname>Andrási</surname>
+<given-names>Tibor</given-names>
+</name><role content-type="http://credit.casrai.org/">Conceptualization</role><role content-type="http://credit.casrai.org/">Investigation</role><role content-type="http://credit.casrai.org/">Supervision</role><role content-type="http://credit.casrai.org/">Writing - Review and Editing</role><xref ref-type="aff" rid="aff1"/>
+</contrib><contrib contrib-type="author">
+<contrib-id contrib-id-type="internal">placeholder</contrib-id><name name-style="western">
+<surname>Veres</surname>
+<given-names>Judit M.</given-names>
+</name><role content-type="http://credit.casrai.org/">Conceptualization</role><role content-type="http://credit.casrai.org/">Investigation</role><role content-type="http://credit.casrai.org/">Supervision</role><role content-type="http://credit.casrai.org/">Writing - Review and Editing</role><xref ref-type="aff" rid="aff1"/>
+</contrib><contrib contrib-type="author">
+<contrib-id contrib-id-type="internal">placeholder</contrib-id><name name-style="western">
+<surname>Rovira-Esteban</surname>
+<given-names>Laura</given-names>
+</name><role content-type="http://credit.casrai.org/">Investigation</role><role content-type="http://credit.casrai.org/">Supervision</role><role content-type="http://credit.casrai.org/">Writing - Review and Editing</role><xref ref-type="aff" rid="aff1"/>
+</contrib><contrib contrib-type="author">
+<contrib-id contrib-id-type="internal">placeholder</contrib-id><name name-style="western">
+<surname>Kozma</surname>
+<given-names>Richárd</given-names>
+</name><role content-type="http://credit.casrai.org/">Investigation</role><xref ref-type="aff" rid="aff1"/>
+</contrib><contrib contrib-type="author">
+<contrib-id contrib-id-type="internal">placeholder</contrib-id><name name-style="western">
+<surname>Vikór</surname>
+<given-names>Attila</given-names>
+</name><role content-type="http://credit.casrai.org/">Investigation</role><xref ref-type="aff" rid="aff1"/>
+</contrib><contrib contrib-type="author">
+<contrib-id contrib-id-type="internal">placeholder</contrib-id><name name-style="western">
+<surname>Gregori</surname>
+<given-names>Erzsébet</given-names>
+</name><role content-type="http://credit.casrai.org/">Investigation</role><xref ref-type="aff" rid="aff1"/>
+</contrib><contrib contrib-type="author" corresp="yes">
+<contrib-id contrib-id-type="orcid" specific-use="authenticated">0000-0002-4582-2708</contrib-id><name name-style="western">
+<surname>Hájos</surname>
+<given-names>Norbert</given-names>
+</name><role content-type="http://credit.casrai.org/">Conceptualization</role><role content-type="http://credit.casrai.org/">Funding Acquisition</role><role content-type="http://credit.casrai.org/">Investigation</role><role content-type="http://credit.casrai.org/">Supervision</role><role content-type="http://credit.casrai.org/">Writing - Original Draft</role><role content-type="http://credit.casrai.org/">Writing - Review and Editing</role><xref ref-type="aff" rid="aff1"/><xref ref-type="corresp" rid="cor001">*</xref>
+</contrib></contrib-group>
+<aff id="aff1"><label>1</label><addr-line>Institute of Experimental Medicine</addr-line></aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001"><p>The authors have declared that no competing interests exist.</p></fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">hajos@koki.hu</email></corresp>
+</author-notes>
+<pub-date pub-type="epub">
+<day>18</day>
+<month>5</month>
+<year>2017</year>
+</pub-date>
+<history>
+<date date-type="received">
+<day>25</day>
+<month>10</month>
+<year>2016</year>
+</date>
+</history>
+<permissions><copyright-year>2017</copyright-year><copyright-holder>Andrási et al</copyright-holder><license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open-access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+</license></permissions>
+<funding-group>
+<funding-statement>National Research, Development, and Innovation Office  (grant number K 119742). The funder had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.;
+European Research Council  (grant number ERC-2011-ADG-294313, SERRACO). The funder had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.;
+Momentum Programme of the Hungarian Academy of Sciences  (grant number LP2012-23). The funder had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<custom-meta-group>
+<custom-meta id="data-availability">
+<meta-name>Data Availability</meta-name>
+<meta-value>All relevant data are within the paper and its Supporting Information files.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body><sec><title>Supporting Information</title><supplementary-material id="s001" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s001"><label>S1 Data</label><caption>
+<title>Data for Fig 1G-H</title>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="s002" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s002"><label>S1 Fig</label><caption>
+<title><b><span style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family: Calibri;mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language: AR-SA'>Properties of synaptic connections between perisomatic inhibitory cells
+in the BA. </span></b></title>
+<p>
+<p class="MsoNormal" style="line-height:150%"><span style='font-size:12.0pt;font-family:"Times New Roman",serif; mso-fareast-font-family:Calibri;mso-ansi-language:EN-US;mso-fareast-language: EN-US;mso-bidi-language:AR-SA'>(A) Interneuron→interneuron whole-cell paired recordings were done in horizontal amygdalar slices prepared from PV-eGFP x CCK-DsRed double transgenic mice. (Ce, central amygdala; BA, basal amygdala; Pir, piriform cortex) (B, C) Comparison of the basic properties of IPSCs originating from CCKBCs and PVBCs, including the synaptic failure rate (Kruskal-Wallis ANOVA p &lt; 0.001, CCKBC→CCKBC: 0.60 ± 0.09, n = 11; CCKBC→AAC: 0.50 ± 0.09, n = 9; PVBC→PVBC: 0.10 ± 0.05, n = 6; PVBC→AAC: 0.11 ± 0.05, n = 6), potency (Kruskal-Wallis ANOVA p = 0.7,  CCKBC→CCKBC: 29.9 ± 6.7 pA, n = 11; CCKBC→AAC:
+43.2 ± 17.2 pA, n = 9; PVBC→PVBC: 34.1 ± 8.9 pA, n = 6; PVBC→AAC: 22.8 ± 4.2 pA, n = 6), latency (Kruskal-Wallis ANOVA p &lt; 0.001, CCKBC→CCKBC: 1.64 ± 0.17 ms, n = 10; CCKBC→AAC: 1.38 ± 0.05 ms, n = 9; PVBC→PVBC: 0 .73 ± 0.05 ms, n = 6; PVBC→AAC: 0.90 ± 0.13 ms, n = 6), rise time 10-90% (Kruskal-Wallis ANOVA p = 0.009,  CCKBC→CCKBC: 1.00 ± 0.19 ms, n = 10; CCKBC→AAC: 0.54 ± 0.05 ms, n = 9; PVBC→PVBC: 0.71 ± 0.08 ms, n = 6; PVBC→AAC: 0.61 ± 0.07 ms, n = 6), and decay time constant (Kruskal-Wallis ANOVA p = 0.047, CCKBC→CCKBC: 3.8 ± 0.4 ms, n = 10; CCKBC→AAC: 2.5 ± 0.08 ms, n = 9; PVBC→PVBC: 3.1 ± 0.6 ms, n = 4; PVBC→AAC: 2.9
+± 0.7 ms, n = 6)(S9 Data). Mann-Whitney U test: *p &lt; 0.05; **p &lt; 0.01. Each data point on the plots represents an average obtained in a pair recording, lines represent means. </span><br/></p><p>(TIF)</p>
+</p></caption></supplementary-material><supplementary-material id="s003" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s003"><label>S10 Data</label><caption>
+<title>Data for S2B Fig</title>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="s004" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s004"><label>S10 Fig Fig</label><caption>
+<title><b><span style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family: Calibri;color:black;mso-themecolor:text1;mso-ansi-language:EN-US;mso-fareast-language: EN-US;mso-bidi-language:AR-SA'>Illustration of spatial stimulation profile of a
+ChR2-expressing PN in response to sub-, near-, and over-threshold stimulation
+in the basal amygdala.</span></b></title>
+<p>
+<p class="MsoNormal" style="line-height:150%"><span style="font-size:12.0pt; line-height:150%;color:black;mso-themecolor:text1">(A) Schematic illustration
+of the stimulation pattern. Squares were illuminated with 447 nm laser light
+sequentially in a “scanning”-like manner. (B) DIC image of a ChR2-eYFP-expressing
+PN in the BA (left), and epifluorescent image of the eYFP expression in the
+same cell (right). Scale: 10</span><span style="font-size:12.0pt;line-height: 150%"> µm. (C) Example threshold calibration of the ChR2-expressing PN shown in
+(B). (left) Loose patch recordings, overlaid with DIC image showing the area
+covered by the illumination pattern, show that at the activation threshold PN
+fire an action potential in response to light stimulation only in that square,
+which fully cover its somatic region.<span style="color:black;mso-themecolor: text1"> (right) Light evoked spatial EPSC profile of the same cell recorded in
+whole-cell voltage-clamp mode indicates that the largest response could be measured
+in the same square where PN fired an action potential in response to light
+stimulation. Scale: 50 </span>µm. (D) Spatial profiles of the same PN
+activation (number of light evoked AP(s)/square) (left), and light evoked EPSC
+amplitudes (pA) (right) using sub-threshold stimulation parameters (light pulse
+length: 1 ms, light intensity 100%). With sub-threshold stimulation parameters
+no light evoked action potential could be detected. (E, left) Increasing the
+light pulse length (light pulse length: 2 ms, light intensity: 100%) readily
+activates the same PN. Near-threshold stimulation parameters evoke firing in
+the PN, if the light beam targets only the square, which covers the somatic
+region of the PN. (right) Spatial near-threshold stimulation evoked EPSC
+profile recorded in the PN. (F) Increasing further the stimulation light pulse
+length (light pulse length: 5 ms, light intensity: 100%) extended the area
+where the PN could be activated. (left) Targeting the somatic region covering
+square with over-threshold stimulation parameters evokes multiple spikes in the
+PN, but stimulating the neighboring area can also activate the PN. (right) Spatial
+over-threshold stimulation evoked EPSC profile in the PN. <p/></span></p>
+</p><p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="s005" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s005"><label>S11 Data</label><caption>
+<title>Data for S4A-F Fig</title>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="s006" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s006"><label>S12 Data</label><caption>
+<title>Data for S5A-C Fig</title>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="s007" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s007"><label>S13 Data</label><caption>
+<title>Data for S6A-G Fig</title>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="s008" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s008"><label>S14 Data</label><caption>
+<title>Data for S7E-J Fig</title>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="s009" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s009"><label>S15 Data</label><caption>
+<title>Data for S8A and S8C Fig</title>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="s010" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s010"><label>S16 Data</label><caption>
+<title>Data for S9A-B Fig</title>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="s011" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s011"><label>S2 Data</label><caption>
+<title>Data for Fig 2B</title>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="s012" mimetype="image/jpeg" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s012"><label>S2 Fig</label><caption>
+<title><b><span style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family: Calibri;mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language: AR-SA'>Electrical coupling between perisomatic inhibitory cells in the BA.</span></b></title>
+<p><p class="MsoNormal" style="line-height:150%"><span style="font-size:12.0pt;line-height:150%">(A) Diagram and representative traces
+of two electrically coupled AACs. Representative traces showing the voltage
+response to a -100 pA hyperpolarizing current injected in AAC1, and monitored
+simultaneously in AAC1 and AAC2. Scale in AAC1: y: 5 mV, x: 100 ms; AAC2: y:
+0.2 mV, x: 100 ms. (B) Electrical coupling efficacy between AAC→AAC, calculated
+as the % of voltage change observed in the AAC2 compared to the AAC1 in which
+the current was injected (1.05 <span style="color:black;mso-themecolor:text1">±
+0.18%, </span>n= 10)(S10 Data). Line represents mean. (C) Electrical coupling probability
+matrix of different interneuron→interneuron pairs obtained by dual recordings.
+In parentheses the number of coupled cells/ the number of dual recordings
+tested for electrical coupling are shown.<p/></span></p>
+</p><p>(JPG)</p>
+</caption></supplementary-material><supplementary-material id="s013" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s013"><label>S3 Data</label><caption>
+<title>Data for Fig 3E-F and 3I</title>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="s014" mimetype="image/jpeg" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s014"><label>S3 Fig</label><caption>
+<title><b><span style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family: Calibri;mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language: AR-SA'>Quantification of somatic CB1-expressing and PV-containing inhibitory
+inputs on CCKBCs, PVBCs and AACs using multicolor fluorescent immunostainings
+against gephyrin, CB1, PV and VGAT+panGAD.</span></b><span style='font-size: 12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family:Calibri; mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA'> </span><br/>
+<p>
+<p class="MsoNormal" style="line-height:150%"><span style="font-size:12.0pt; line-height:150%">Appositions were only identified as contacts (arrows) if the
+postsynaptic scaffolding protein gephyrin was localized on the side of the
+immunolabeled terminal which faced the somatic membrane, otherwise the
+terminals were regarded to form contacts on neighboring structures
+(arrowheads). Calbindin (Calb) immunostaining was used to separate PVBCs and
+AACs (see Vereczki et al., 2016 </span><span style='font-family: "Times New Roman", serif; font-size: 12pt;'>[</span><span style="font-size: 16px;">34</span><span style='font-family: "Times New Roman", serif; font-size: 12pt;'>]</span><span style="font-size: 12pt;">). Scale: </span></p><p class="MsoNormal" style="line-height:150%"><span style="font-size:12.0pt; line-height:150%">5 µm<p/></span></p>
+</p><p>(JPG)</p>
+</title></caption></supplementary-material><supplementary-material id="s015" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s015"><label>S4 Data</label><caption>
+<title>Data for Fig 4C</title>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="s016" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s016"><label>S4 Fig</label><caption>
+<title><b><span style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family: Calibri;mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language: AR-SA'>Properties of the output synapses of perisomatic region-targeting
+interneurons in the BA. </span></b></title>
+<p>
+<p class="MsoNormal" style="line-height:150%"><span style="font-size:12.0pt; line-height:150%">Comparison of the basic synaptic properties of IPSCs
+originating from CCKBCs and PVBCs. (A) Failure rate: 0.21 ± 0.07, n = 13 for
+CCKBC→PN pairs; 0.01 ± 0.01, n = 13 for PVBC→PN pairs; (B) IPSC latency: 1.32 ±
+0.09 ms, n = 12 for CCKBC→PN pairs, 0.69 ± 0.03 ms, n = 13 for PVBC→PN pairs; (C)
+IPSC potency: 86.93 ± 17.32 pA, n = 13 for CCKBC→PN pairs, 150.86 ± 30.08 pA, n
+= 13 for PVBC→PN pairs; (D) IPSC rise time 10-90%: 1.38 ± 0.15 ms, n = 12 for
+CCKBC→PN pairs, 0.53 ± 0.01 ms, n = 13 for PVBC→PN pairs; (E) IPSC decay tau:
+3.77 ± 0.26 ms, n = 10 for CCKBC→PN pairs, 3.33 ± 0.15 ms, n = 10 for PVBC→PN
+pairs; (F) IPSC p3/p1: 1.06 ± 0.09 ms, n = 13 for CCKBC→PN pairs, 0.7 ± 0.04
+ms, n = 13 for PVBC→PN pairs<span style="color:black;mso-themecolor:text1">, </span>Mann-Whitney
+U test, * p &lt; 0.05. The underlying data are shown in S11 Data. </span><span style="font-size: 12pt;">Each data point on the plots represents an average</span></p><p class="MsoNormal" style="line-height:150%"><span style="font-size:12.0pt; line-height:150%">obtained in a pair recording, lines represent mean. <p/></span></p>
+</p><p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="s017" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s017"><label>S5 Data</label><caption>
+<title>Data for Fig 5B and 5E</title>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="s018" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s018"><label>S5 Fig</label><caption>
+<title><b><span style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family: Calibri;mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language: AR-SA'>Comparison of the properties of synaptic transmission obtained in amygdala slices prepared from young (P18-24) and adult (P&gt;45) mice.</span></b></title>
+<p><p class="MsoNormal" style="line-height:150%"><span style="font-size:12.0pt;line-height:150%">No significant difference was  observed in the peak amplitude (A), 3 IPSP integral (B) and inhibitory efficacy (C) recorded in CCKBC→PN (blue) and PVBC→PN (orange) pairs in the two age groups (adult data, present study; young data, Veres et al., 2017 [37]). The data are available in S12 Data. Each data point on the plots represents an average obtained in a pair recording, lines represent means<span style="color:black; mso-themecolor:text1;mso-bidi-font-style:italic">. p values are the results of
+statistical comparison using two sample t test. </span><p/></span></p>
+</p><p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="s019" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s019"><label>S6 Data</label><caption>
+<title>Data for Fig 6C and 6E-F</title>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="s020" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s020"><label>S6 Fig</label><caption>
+<title><b><span style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family: Calibri;mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language: AR-SA'>C<span style="color:black;mso-themecolor:text1">onnection probability and the basic properties of unitary EPSCs recorded in CCKBCs and PVBCs are different.</span></span></b><span style='font-size:12.0pt;font-family:"Times New Roman",serif; mso-fareast-font-family:Calibri;color:black;mso-themecolor:text1;mso-ansi-language: EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA'> </span></title>
+<p><p class="MsoNormal" style="line-height:150%"><span style="font-size:12.0pt; line-height:150%;color:black;mso-themecolor:text1">(A) Comparison of the connection probability between the two BC types shows that local PNs target CCKBCs with a relatively low likelihood in comparison to PVBCs. Data obtained in paired recordings and with light stimulation are pooled (see S7 Fig). Number of connections shown in gray indicates where no detectable EPSCs could be observed in the postsynaptic interneurons in response to action potentials evoked in the presynaptic PNs in a time window of less than 4 ms. Monosynaptic connections between the PNs and interneurons are shown in color. (CCKBC and PVBC in blue and orange, respectively). The number of tested pairs is shown. The potency (B)(CCKBC: 21.5 <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">± 1.65 pA, PVBC: 94.25 ± 15.08 pA) and the </span>peak amplitude <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">(C) </span>of the unitary EPSCs in CCKBCs are significantly smaller than those recorded in PVBCs (CCKBC: 10.16 <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">± 2.02 pA, PVBC: 81.78 ± 15.68 pA). (D) The </span>failure rate of the unitary EPSCs in CCKBCs are significantly larger than those recorded in PVBCs (CCKBC: 0.58<span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"> ± 0.05, PVBC: 0.25 ± 0.04). The </span>rise time 10-90% <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">(E)</span>(CCKBC: 0.77 <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">± 0.07 ms, PVBC: 0.4 ± 0.03 ms), the latency (F)(</span>CCKBC: 1.75 <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">± 0.09 ms, PVBC: 0.92 ± 0.07 ms) and the decay tau (G)</span>(CCKBC: 3 <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">± 0.23 ms, PVBC: 1.41 ± 0.1 ms</span>) <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">of the unitary EPSCs in CCKBCs are also significantly different than those recorded in PVBCs </span>Mean <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">± SEM.</span> Mann-Whitney U test, ***p  0.001. The underlying data are available in S13 Data. <p/></span></p>
+</p><p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="s021" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s021"><label>S7 Data</label><caption>
+<title>Data for Fig 7J and 7M</title>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="s022" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s022"><label>S7 Fig</label><caption>
+<title><b><span style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family: Calibri;color:black;mso-themecolor:text1;mso-ansi-language:EN-US;mso-fareast-language: EN-US;mso-bidi-language:AR-SA'>Basic properties of the unitary EPSCs in CCKBCs (blue) and PVBCs (orange) evoked by light stimulation of single PNs and by electrical stimulation of the same PNs in whole-cell mode are not different.</span></b><span style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family: Calibri;color:black;mso-themecolor:text1;mso-ansi-language:EN-US;mso-fareast-language: EN-US;mso-bidi-language:AR-SA'> </span></title>
+<p><p class="MsoNormal" style="line-height:150%"><span style="font-size:12.0pt; line-height:150%;color:black;mso-themecolor:text1">(A) Low magnification confocal image shows the ChR2-mCherry expression site in the BA after AAV injection. Scale: 0.5 mm. (Pir.ctx, piriform cortex; Ce, central amygdala) (B) Schematic illustration of the experiment design to record unitary EPSCs using blue light stimulation. (C) Representative traces showing light evoked action
+potentials (APs) in a single PN recorded in loose-patch mode, a potential synaptic partner to a CCKBC recorded in whole-cell voltage clamp mode (left). Peak alignment of the light evoked APs revealed a monosynaptic excitatory connection to the postsynaptic CCKBC (middle). Whole-cell paired recording of the same monosynaptically coupled PN→CCKBC pair shows similar characteristics of the EPSCs compared with the light stimulation method (right). n = 50 traces; Scales: y: 50 pA/25 pA, loose-patch/whole-cell; y: 50 mV/25 pA whole-cell/whole-cell; x (left): 10 ms, x (middle, right): 2 ms. (D) Representative traces showing light evoked APs in a single PN recorded in loose-patch mode, a potential synaptic partner to a PVBC recorded in whole-cell voltage clamp mode (left). Peak alignment of the light evoked APs revealed a monosynaptic excitatory connection to the
+postsynaptic PVBC (middle). Whole-cell paired recording of the same PN→PVBC
+pair shows similar characteristics of EPSCs compared to the light evoked events
+(right). n = 50 traces; Scales: y: 50 pA/25 pA, loose-patch/whole-cell; y: 50 mV/25 pA whole-cell/whole-cell; x (left): 10 ms, x (middle, right): 2 ms. Comparison between the light stimulation method and the paired whole-cell recording shows no significant difference in the potency (E)(CCKBC: ChR2 stim: 18.52 <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">± 1.43 pA, Pair. rec.: 17.23 ± 1.62 pA;</span> Paired Sample Wilcoxon Signed Rank Test, p = 0.53; PVBC: ChR2stim: 82.39 <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">± 13.44 pA, Pair. rec.: 82.51 ± 14.02 pA; </span>Paired Sample Wilcoxon Signed Rank Test, p = 0.75),
+in the peak amplitude (F)(CCKBC: ChR2 stim: 6.24 <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">± 1.23 pA, Pair. rec.: 6.42 ± 1.51 pA;</span> Paired Sample Wilcoxon Signed Rank Test, p = 1; PVBC: ChR2 stim: 70.66 <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">± 14.39 pA,
+Pair. rec.: 67.9 ± 14.38 pA; </span>Paired Sample Wilcoxon Signed Rank Test, p = 0.2), (G)(CCKBC: ChR2 stim: 0.65 <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">± 0.07, Pair. rec.: 0.63± 0.08;</span> Paired Sample Wilcoxon Signed Rank Test, p = 1; PVBC: ChR2 stim: 0.22 <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">± 0.05, Pair. rec.: 0.26 ± 0.05; </span>Paired Sample Wilcoxon Signed Rank Test, p = 0.06), in the rise time 10-90% (H)(CCKBC: ChR2 stim: 0.74 <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">± 0.09 ms,
+Pair. rec.: 0.83 ± 0.06 ms;</span> Paired Sample Wilcoxon Signed Rank Test, p = 0.06; PVBC: ChR2 stim: 0.39 <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">± 0.04 ms, Pair. rec.: 0.4 ± 0.04 ms; </span>Paired Sample Wilcoxon Signed Rank Test, p = 0.97), in the decay tau (I)(CCKBC: ChR2 stim: 2.76 <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">± 0.23 ms, Pair. rec.: 2.99 ± 0.34 ms;</span> Paired Sample Wilcoxon Signed Rank Test, p = 0.67; PVBC: ChR2 stim: 1.57 <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">± 0.21 </span>ms<span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">, Pair. rec.: 1.41 ± 0.15 </span>ms<span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">; </span>Paired Sample Wilcoxon Signed Rank Test, p = 0.2) of unitary EPSCs either in CCKBCs or in PVBCs. (J) The data obtained by light stimulation (ChR2 stim.) normalized to those collected in paired recordings (Pair. rec.) show no major difference. The underlying data are shown in S14 Data. </span><span style="font-size:12.0pt;line-height:150%">Each pair of data points represents an average obtained in paired recordings. Mean ± SEM
+is shown in black.<p/></span></p>
+</p><p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="s023" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s023"><label>S8 Data</label><caption>
+<title>Data for Fig 8C-D</title>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="s024" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s024"><label>S8 Fig</label><caption>
+<title><b><span style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family: Calibri;color:black;mso-themecolor:text1;mso-ansi-language:EN-US;mso-fareast-language: EN-US;mso-bidi-language:AR-SA'>Mapping connectivity between single PNs and a
+CCKBC using optogenetics.</span></b><span style='font-size:12.0pt;font-family: "Times New Roman",serif;mso-fareast-font-family:Calibri;color:black;mso-themecolor: text1;mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language: AR-SA'> </span></title>
+<p>
+<p class="MsoNormal" style="line-height:150%"><span style="font-size:12.0pt; line-height:150%;color:black;mso-themecolor:text1">(A) Example experiment
+(t150422-01), where potential synaptic coupling between thirteen randomly
+selected PNs and the CCKBC (center, in blue) was tested. Two of the tested PNs
+innervated the CCKBC (red dots), while no response could be measured by activation
+of the remaining PNs (gray dots). Concentric circles indicate Δ100 µm distance
+from the CCKBC in the center. (B) DIC image shows the position and the distance
+of the recorded PN→CCKBC pair (PN #11). Red circle illustrates the size of the
+laser illumination spot over a PN soma. Insets, DIC and epifluorescent images
+taken from the soma of the postsynaptic CCKBC. Scales: 50 </span><span style="font-size:12.0pt;line-height:150%">µm, insets: 10 µm.<span style="color:black;mso-themecolor:text1"> (C) Representative traces show
+recordings from all tested PNs (left panels). Ten consecutive traces (in gray)
+and averages (in blue). Scales: y: 50 pA/20 pA loose-patch/whole-cell; x: 2 ms.
+Peri-stimulus histogram was plotted for all tested PNs to reveal a monosynaptic
+connection between the PNs and the CCKBC (right panels). Arrows (PN #11, PN
+#13) indicate two monosynaptic connections out of thirteen PNs tested. The data are shown in S15 Data.<p/></span></span></p>
+</p><p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="s025" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s025"><label>S9 Data</label><caption>
+<title>Data for S1B-C Fig</title>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="s026" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.oarx.2001421.s026"><label>S9 Fig</label><caption>
+<title><b><span style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family: Calibri;color:black;mso-themecolor:text1;mso-ansi-language:EN-US;mso-fareast-language: EN-US;mso-bidi-language:AR-SA'>PV-expressing interneurons discharge action
+potentials at lower levels of PN activation than CCKBCs</span></b><span style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family: Calibri;color:black;mso-themecolor:text1;mso-ansi-language:EN-US;mso-fareast-language: EN-US;mso-bidi-language:AR-SA'>. </span></title>
+<p>
+<p class="MsoNormal" style="line-height:150%"><span style="font-size:12.0pt; line-height:150%;color:black;mso-themecolor:text1">(A) Comparison of the firing
+threshold in PV-expressing interneurons (PVeGFP+) and CCKBCs upon the light
+stimulation of ChR2-expressing PNs in the BA. (Left) PV-expressing cells at a
+population level have a significantly lower activation threshold compared to
+the simultaneously recorded CCKBCs (<span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">PVeGFP+:
+9.55 ± 2.55%, </span>CCKBC: 36 <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">± 5.43%; </span>Paired
+Sample Wilcoxon Signed Rank Test). (Right) PVBCs identified <i>post hoc</i> by the calbindin content showed
+significantly lower spiking threshold compared to the simultaneously recorded
+CCKBCs. (<span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">PVBC: 3.47 ± 0.5%; </span>CCKBC: 26.11 <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">± 6%, </span>Sample Wilcoxon Signed Rank Test). (B)
+(Left) At the firing threshold PVeGFP+ interneurons received significantly
+larger light evoked EPSCs (both peak amplitude and area) compared to CCKBCs
+tested with the same stimulation protocol as in panel (A) (Peak amplitude,
+upper row): <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">PVeGFP+: 754.9 ± 98.1 pA, </span>CCKBC: 275.1 <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">± 53.3 pA; Mann-Whitney U test</span>)(Area, lower
+row): <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">PVeGFP+: 8.15 ± 1.78 nA*ms, </span>CCKBC:
+2.96 <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">± 0.59 nA*ms; Mann-Whitney U test</span>).
+(Right) PVBCs displayed at their spiking threshold significantly larger EPSC
+amplitude and area compared to CCKBCs (Peak amplitude, upper row): <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">PVBC: 914.1 ± 91.3 pA, </span>CCKBC: 210.1 <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">± 54.7pA; Mann-Whitney U test</span>)(Area, lower
+row): <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">PVBC: 9.51 ± 2.53 nA*ms, </span>CCKBC:
+2.07 <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">± 0.45 nA*ms; Mann-Whitney U test</span>). <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">***p  0.001, **p  0.01, *p  0.05. Mean ±
+SEM are shown in black. The Data are available in S16 Data. </span></span><span style="color: black; font-size: 12pt;">In B, results of whole cell recordings obtained only</span></p><p class="MsoNormal" style="line-height:150%"><span style="font-size:12.0pt; line-height:150%;color:black;mso-themecolor:text1"><span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">for single interneurons were also included. </span></span><span style="font-size: 12pt; line-height: 150%; color: black; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><p/></span></p>
+</p><p>(TIF)</p>
+</caption></supplementary-material></sec></body>
+<back/>
+</article>

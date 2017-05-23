@@ -32,13 +32,14 @@ from ..resources import ZIP_INGESTION_API, ARTICLE_API, COLLECTIONS_API, OBJECTS
 
 class ZIPIngestionJson(Ingestion):
 
-  def post_ingestible_zip(self, archive):
+  def post_ingestible_zip(self, archive, bucketName=None):
     """
     Calls article API to ingest a zip article file
     POST /zips
-    :param archive
+    :param archive, optional bucketName
     """
-    self.doPost(ZIP_INGESTION_API, {'archive': archive})
+    da_data = {'bucket': bucketName}
+    self.doPost(ZIP_INGESTION_API, {'archive': archive}, da_data)
     self.parse_response_as_json()
 
   #Article API
