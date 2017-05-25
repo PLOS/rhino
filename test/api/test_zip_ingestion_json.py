@@ -109,6 +109,12 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
     self.verify_article_figures(not_scaped_article_doi)
 
   def delete_test_article(self, article_doi, not_scaped_article_doi, bucket_name):
+    """
+    Gets article information for rhino then proceeds to delete article records from ambra db
+    and content repo database
+    :param None
+    :return: None
+    """
     try:
       self.get_article(article_doi)
       if self.get_http_response().status_code == resources.OK:
@@ -127,6 +133,12 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
       pass
 
   def delete_test_collections(self, article_doi, bucket_name):
+    """
+    Get collection information from content repo using bucket name and article doi, then
+    proceeded to call content repo delete collection endpoint
+    :param None
+    :return: None
+    """
     self.get_collection_versions(bucketName=bucket_name, key=article_doi)
     collections = self.parsed.get_list()
     if collections:
@@ -135,6 +147,12 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
         self.verify_http_code_is(resources.OK)
 
   def delete_test_objects(self,  article_doi, bucket_name):
+    """
+    Get object information from content repo using bucket name, then
+    proceeded to call content repo delete object endpoint
+    :param None
+    :return: None
+    """
     self.get_crepo_objets(bucketName=bucket_name)
     self.verify_http_code_is(resources.OK)
     objects = self.parsed.get_list()

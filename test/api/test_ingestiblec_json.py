@@ -37,7 +37,7 @@ class ZipIngestibleTest(IngestibleJSON, MemoryZipJSON, ArticlesJSON):
   def setUp(self):
     print('\nTesting POST zips/\n')
     # Invoke ZIP API
-    zip_file = self.create_ingestible()
+    zip_file = self.create_ingestible(resources.RA_DOI, 'RelatedArticle/')
     self.post_ingestible_zip(zip_file)
     # Validate HTTP code in the response is 201 (CREATED)
     self.verify_http_code_is(resources.CREATED)
@@ -46,7 +46,7 @@ class ZipIngestibleTest(IngestibleJSON, MemoryZipJSON, ArticlesJSON):
     """
     Purge all objects and collections created in the test case
     """
-    self.delete_test_article()
+    #self.delete_test_article()
 
   def test_ingestible(self):
     """
@@ -54,57 +54,64 @@ class ZipIngestibleTest(IngestibleJSON, MemoryZipJSON, ArticlesJSON):
     """
     print('\nTesting GET ingestibles/\n')
     # Invoke ingestibles API
-    self.get_ingestible(resources.ARTICLE_DOI)
+    self.get_ingestible(resources.RELATED_ARTICLE_DOI)
     self.verify_http_code_is(resources.OK)
+    self.delete_test_article(resources.RELATED_ARTICLE_DOI, resources.NOT_SCAPE_RELATED_ARTICLE_DOI,
+                             resources.RELATED_ARTICLE_BUCKET_NAME)
 
-  def delete_test_article(self):
+  def delete_test_article(self, article_doi, not_scaped_article_doi, bucket_name):
     """
     Gets article information for rhino then proceeds to delete article records from ambra db
     and content repo database
     :param None
     :return: None
     """
-    self.get_article(resources.ARTICLE_DOI)
-    if self.get_http_response().status_code == resources.OK:
-      # Deletes article from ambra database
-      self.delete_article_sql_doi(resources.NOT_SCAPE_ARTICLE_DOI)
-      #Delete CRepo collections
-      self.delete_test_collections()
-      #Delete CRepo objects
-      self.delete_test_objects()
-    else:
-      print (self.parsed.get_attribute('message'))
+    try:
+      self.get_article(article_doi)
+      if self.get_http_response().status_code == resources.OK:
+        self.delete_article_sql_doi(not_scaped_article_doi)
+        #Delete article
+        self.delete_article(article_doi)
+        self.verify_http_code_is(resources.OK)
+        #Delete CRepo collections
+        self.delete_test_collections(article_doi,bucket_name)
+        #Delete CRepo objects
+        self.delete_test_objects(article_doi,bucket_name)
+
+      else:
+        print self.parsed.get_attribute('message')
+    except:
+      pass
 
 
-  def delete_test_collections(self):
+  def delete_test_collections(self, article_doi, bucket_name):
     """
     Get collection information from content repo using bucket name and article doi, then
     proceeded to call content repo delete collection endpoint
     :param None
     :return: None
     """
-    self.get_collection_versions(bucketName=resources.BUCKET_NAME, key=resources.ARTICLE_DOI)
+    self.get_collection_versions(bucketName=bucket_name, key=article_doi)
     collections = self.parsed.get_list()
     if collections:
       for coll in collections:
-        self.delete_collection(bucketName=resources.BUCKET_NAME, key=coll['key'], version=coll['versionNumber'])
+        self.delete_collection(bucketName=bucket_name, key=coll['key'], version=coll['versionNumber'])
         self.verify_http_code_is(resources.OK)
 
-
-  def delete_test_objects(self):
+  def delete_test_objects(self,  article_doi, bucket_name):
     """
     Get object information from content repo using bucket name, then
     proceeded to call content repo delete object endpoint
     :param None
     :return: None
     """
-    self.get_crepo_objets(bucketName=resources.BUCKET_NAME)
+    self.get_crepo_objets(bucketName=bucket_name)
     self.verify_http_code_is(resources.OK)
     objects = self.parsed.get_list()
     if objects:
       for object in objects:
-        if resources.ARTICLE_DOI in object['key']:
-          self.delete_object(bucketName=resources.BUCKET_NAME, key=object['key'], version=object['versionNumber'],
+        if article_doi in object['key']:
+          self.delete_object(bucketName=bucket_name, key=object['key'], version=object['versionNumber'],
                              purge=True)
           self.verify_http_code_is(resources.OK)
 
