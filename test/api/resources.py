@@ -25,8 +25,8 @@ This Resource File sets variables that are used in individual
 test cases.
 '''
 
-from ..Base.Config import API_BASE_URL
-from ..Base.Config import repo_config
+from Base.Config import API_BASE_URL
+from Base.Config import repo_config
 
 # General resources
 

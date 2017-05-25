@@ -23,11 +23,11 @@
 """
 Base class for Rhino's Ingest API service tests.
 """
-from test.api import resources
+from .. import resources
 
 __author__ = 'jkrzemien@plos.org; gfilomeno@plos.org; fcabrales@plos.org'
 
-from ...Base.base_service_test import BaseServiceTest
+from Base.base_service_test import BaseServiceTest
 from ...Base.api import needs
 from ...Base.MySQL import MySQL
 
@@ -56,7 +56,7 @@ class Ingestion(BaseServiceTest):
     """
     Validate ingestion with articlePublishedJournals  table
     """
-    print 'Verify Journals'
+    print('Verify Journals')
     article_id = self.get_article_id_sql_doi(resources.NOT_SCAPE_ARTICLE_DOI)
     journals = self.get_journals_sql_archiveName(article_id)
     journals_json = self.parsed.get_attribute('journal')
@@ -71,7 +71,7 @@ class Ingestion(BaseServiceTest):
     """
     Validate ingestion's figures with Assert table
     """
-    print 'Verify Article\'s figures'
+    print('Verify Article\'s figures')
     article_id = self.get_article_id_sql_doi(resources.NOT_SCAPE_ARTICLE_DOI)
     self.verify_article_assets(article_id, 'assetsLinkedFromManuscript')
 
@@ -87,7 +87,7 @@ class Ingestion(BaseServiceTest):
     i = 0
     for asset in assets:
       self.verify_ingestion_text(assets_json[i]['doi'],asset[0], 'doi')
-      i = i + 1
+      i+=1
 
   @needs('parsed', 'parse_response_as_json()')
   def verify_ingestion_text_expected_only(self, expected_results, attribute):

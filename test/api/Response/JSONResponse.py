@@ -41,8 +41,8 @@ class JSONResponse(AbstractResponse):
     try:
       self._json = json.loads(response)
     except Exception as e:
-      print 'Error while trying to parse response as JSON!'
-      print 'Actual response was: "%s"' % response
+      print('Error while trying to parse response as JSON!')
+      print('Actual response was: "%s"' % response)
       raise e
 
   def get_json(self, printvalue=True):

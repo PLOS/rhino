@@ -29,7 +29,7 @@ __author__ = 'jgray@plos.org'
 import unittest
 import json
 import random
-from ..api.Response.JSONResponse import JSONResponse
+from api.Response.JSONResponse import JSONResponse
 from api import timeit
 from Config import TIMEOUT, PRINT_DEBUG
 from inspect import getfile
@@ -60,8 +60,8 @@ class BaseServiceTest(unittest.TestCase):
 
   def _debug(self):
     if PRINT_DEBUG:
-      print 'API Response = %s' % self.__response.text
-      print 'API Response Code = %s' % self.__response.status_code
+      print('API Response = %s' % self.__response.text)
+      print('API Response Code = %s' % self.__response.status_code)
 
   @timeit
   def doGet(self, url, params=None, headers=None):
@@ -104,9 +104,9 @@ class BaseServiceTest(unittest.TestCase):
     self.parsed = JSONResponse(self.get_http_response().text)
 
   def verify_http_code_is(self, httpCode):
-    print 'Validating HTTP Response code to be %s...' % httpCode,
+    print('Validating HTTP Response code to be %s...' % httpCode)
     self.assertEquals(self.__response.status_code, httpCode)
-    print 'OK'
+    print('OK')
 
   def find_file(self, filename):
     path = dirname(abspath(getfile(BaseServiceTest))) + '/../../'
