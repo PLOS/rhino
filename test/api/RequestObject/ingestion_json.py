@@ -28,8 +28,8 @@ from .. import resources
 __author__ = 'jkrzemien@plos.org; gfilomeno@plos.org; fcabrales@plos.org'
 
 from Base.base_service_test import BaseServiceTest
-from ...Base.api import needs
-from ...Base.MySQL import MySQL
+from Base.api import needs
+from Base.MySQL import MySQL
 
 class Ingestion(BaseServiceTest):
 

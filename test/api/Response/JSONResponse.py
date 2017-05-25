@@ -29,8 +29,10 @@ Python's JSONPath can be installed via the following command:
 __author__ = 'jgray@plos.org'
 
 import json
+
 from jsonpath import jsonpath
-from AbstractResponse import AbstractResponse
+
+from api.Response.AbstractResponse import AbstractResponse
 
 
 class JSONResponse(AbstractResponse):

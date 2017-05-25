@@ -30,12 +30,14 @@ import unittest
 import json
 import random
 from api.Response.JSONResponse import JSONResponse
-from api import timeit
-from Config import TIMEOUT, PRINT_DEBUG
+from .api import timeit
+from .Config import TIMEOUT, PRINT_DEBUG
 from inspect import getfile
 from os import walk
 from os.path import dirname, abspath
+
 from requests import get, post, patch, put, delete
+
 from teamcity import is_running_under_teamcity
 from teamcity.unittestpy import TeamcityTestRunner
 
