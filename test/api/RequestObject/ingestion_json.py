@@ -38,6 +38,7 @@ class Ingestion(BaseServiceTest):
     """
     Validate ingestion with Article table
     """
+    print (not_scaped_article_doi)
     article_id = self.get_article_id_sql_doi(not_scaped_article_doi)
     # # Verify uploaded DOI against the one stored in DB
     self.verify_ingestion_text_expected_only(not_scaped_article_doi, 'doi')

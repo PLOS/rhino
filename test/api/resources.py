@@ -52,8 +52,8 @@ RELATED_ARTICLE_DOI = '10.1371++journal.pone.0170224'
 NOT_SCAPE_RELATED_ARTICLE_DOI= '10.1371/journal.pone.0170224'
 
 #Preprint article DOI
-PREPRINT_ARTICLE_DOI = '10.1371++journal.oarx.20001421'
-NOT_SCAPE_PREPRINT_ARTICLE_DOI= '10.1371/journal.oarx.20001421'
+PREPRINT_ARTICLE_DOI = '10.1371++journal.oarx.2001421'
+NOT_SCAPE_PREPRINT_ARTICLE_DOI= '10.1371/journal.oarx.2001421'
 
 #ZIP files
 ZIP_ARTICLE = 'pone.0170224.zip'
@@ -63,8 +63,6 @@ RA_DOI = 'pone.0170224'
 
 #preprint article doi
 PP_DOI = 'oarx.2001421'
-
-
 
 #Variables used to verify article revisions
 REVISION = 1

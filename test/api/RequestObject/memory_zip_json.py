@@ -44,7 +44,8 @@ class MemoryZipJSON(BaseServiceTest):
       article_doi + ".xml",
     ]
 
-    DUMMY_FILES = [
+    if (sub_dir == 'RelatedArticle/'):
+      DUMMY_FILES = [
       article_doi + ".g001.PNG_I",
       article_doi + ".g001.PNG_L",
       article_doi + ".g001.PNG_M",
@@ -72,6 +73,37 @@ class MemoryZipJSON(BaseServiceTest):
       article_doi + ".strk.PNG_S",
       article_doi + ".strk.tif",
       article_doi + ".xml.orig",
+    ]
+    else:
+      DUMMY_FILES = [
+      article_doi + ".pdf",
+      article_doi + ".xml.orig",
+      article_doi + ".s001.xlsx",
+      article_doi + ".s002.tif",
+      article_doi + ".s003.xlsx",
+      article_doi + ".s004.tif",
+      article_doi + ".s005.xlsx",
+      article_doi + ".s006.xlsx",
+      article_doi + ".s007.xlsx",
+      article_doi + ".s008.xlsx",
+      article_doi + ".s009.xlsx",
+      article_doi + ".s010.xlsx",
+      article_doi + ".s011.xlsx",
+      article_doi + ".s012.jpg",
+      article_doi + ".s013.xlsx",
+      article_doi + ".s014.jpg",
+      article_doi + ".s015.xlsx",
+      article_doi + ".s016.tif",
+      article_doi + ".s017.xlsx",
+      article_doi + ".s018.tif",
+      article_doi + ".s019.xlsx",
+      article_doi + ".s020.tif",
+      article_doi + ".s021.xlsx",
+      article_doi + ".s022.tif",
+      article_doi + ".s023.xlsx",
+      article_doi + ".s024.tif",
+      article_doi + ".s025.xlsx",
+      article_doi + ".s026.tif",
     ]
 
     """

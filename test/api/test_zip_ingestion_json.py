@@ -57,47 +57,47 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
     self.delete_test_article(resources.RELATED_ARTICLE_DOI, resources.NOT_SCAPE_RELATED_ARTICLE_DOI,
                              resources.RELATED_ARTICLE_BUCKET_NAME)
 
-  # def test_zip_ingestion_related_article_no_bucket(self):
-  #   """
-  #   POST zips: Forced ingestion of ZIP archive
-  #   """
-  #   print('\nTesting POST zips for related article no bucket/\n')
-  #   # Invoke ZIP API
-  #   zip_file = self.create_ingestible(resources.RA_DOI)
-  #   self.post_ingestible_zip(zip_file)
-  #   # Validate HTTP code in the response is 201 (CREATED)
-  #   self.verify_http_code_is(resources.CREATED)
-  #   # Validate response with database tables
-  #   self.verify_zip_ingestion(resources.NOT_SCAPE_RELATED_ARTICLE_DOI)
-  #   self.delete_test_article(resources.RELATED_ARTICLE_DOI, resources.NOT_SCAPE_RELATED_ARTICLE_DOI,
-  #                            resources.RELATED_ARTICLE_BUCKET_NAME)
+  def test_zip_ingestion_related_article_no_bucket(self):
+    """
+    POST zips: Forced ingestion of ZIP archive
+    """
+    print('\nTesting POST zips for related article no bucket/\n')
+    # Invoke ZIP API
+    zip_file = self.create_ingestible(resources.RA_DOI, 'RelatedArticle/')
+    self.post_ingestible_zip(zip_file)
+    # Validate HTTP code in the response is 201 (CREATED)
+    self.verify_http_code_is(resources.CREATED)
+    # Validate response with database tables
+    self.verify_zip_ingestion(resources.NOT_SCAPE_RELATED_ARTICLE_DOI)
+    self.delete_test_article(resources.RELATED_ARTICLE_DOI, resources.NOT_SCAPE_RELATED_ARTICLE_DOI,
+                             resources.RELATED_ARTICLE_BUCKET_NAME)
 
-  # def test_zip_ingestion_preprint_article(self):
-  #   """
-  #   POST zips: Forced ingestion of ZIP archive
-  #   """
-  #   print('\nTesting POST zips for preprint article/\n')
-  #   # Invoke ZIP API
-  #   zip_file = self.create_ingestible(resources.PP_DOI, 'PrePrint/')
-  #   self.post_ingestible_zip(zip_file, resources.PREPRINT_ARTICLE_BUCKET_NAME)
-  #   # Validate HTTP code in the response is 201 (CREATED)
-  #   self.verify_http_code_is(resources.CREATED)
-  #   # Validate response with database tables
-  #   self.verify_zip_ingestion(resources.NOT_SCAPE_PREPRINT_ARTICLE_DOI)
-  #   self.delete_test_article(resources.PREPRINT_ARTICLE_DOI, resources.NOT_SCAPE_PREPRINT_ARTICLE_DOI,
-  #                            resources.PREPRINT_ARTICLE_BUCKET_NAME)
+  def test_zip_ingestion_preprint_article(self):
+    """
+    POST zips: Forced ingestion of ZIP archive
+    """
+    print('\nTesting POST zips for preprint article/\n')
+    # Invoke ZIP API
+    zip_file = self.create_ingestible(resources.PP_DOI, 'PrePrint/')
+    self.post_ingestible_zip(zip_file, resources.PREPRINT_ARTICLE_BUCKET_NAME)
+    # Validate HTTP code in the response is 201 (CREATED)
+    self.verify_http_code_is(resources.CREATED)
+    # Validate response with database tables
+    self.verify_zip_ingestion(resources.NOT_SCAPE_PREPRINT_ARTICLE_DOI)
+    self.delete_test_article(resources.PREPRINT_ARTICLE_DOI, resources.NOT_SCAPE_PREPRINT_ARTICLE_DOI,
+                             resources.PREPRINT_ARTICLE_BUCKET_NAME)
 
-  # def test_zip_ingestion_without_file(self):
-  #   """
-  #   POST zips: Try to ingest of ZIP archive without file name
-  #   """
-  #   print('\nTesting POST zips/ without parameters\n')
-  #   # Ingest a ZIP file
-  #   try:
-  #     self.already_done = 1
-  #     self.post_ingestible_zip(None)
-  #   except:
-  #     pass
+  def test_zip_ingestion_without_file(self):
+    """
+    POST zips: Try to ingest of ZIP archive without file name
+    """
+    print('\nTesting POST zips/ without parameters\n')
+    # Ingest a ZIP file
+    try:
+      self.already_done = 1
+      self.post_ingestible_zip(None)
+    except:
+      pass
 
   def verify_zip_ingestion(self, not_scaped_article_doi):
     # All below verifications will be fix with https://developer.plos.org/jira/browse/DPRO-3259
