@@ -26,10 +26,10 @@ Base class for Article list crud controller  JSON related services
 
 __author__ = 'fcabrales@plos.org'
 
-from .Base.base_service_test import BaseServiceTest
+from ...Base.base_service_test import BaseServiceTest
 from ..resources import *
 import json
-from .Base.MySQL import MySQL
+from ...Base.MySQL import MySQL
 
 ARTICLE_LIST_API = API_BASE_URL + '/lists/'
 ARTICLE_LIST_PATCH_API = ARTICLE_LIST_API + 'collection/journals/PLoSCollections/keys/'

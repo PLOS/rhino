@@ -92,7 +92,11 @@ class Ingestion(BaseServiceTest):
   @needs('parsed', 'parse_response_as_json()')
   def verify_ingestion_text_expected_only(self, expected_results, attribute):
     actual_results = self.parsed.get_attribute(attribute)
-    assert actual_results.encode('utf-8') == expected_results, \
+    if isinstance(actual_results, str):
+      actual_results = bytes(actual_results, 'utf-8')
+    if isinstance(expected_results, str):
+      expected_results = bytes(expected_results, 'utf-8')
+    assert actual_results == expected_results, \
       ('%s is not correct! actual: %s expected: %s' % (attribute, actual_results, expected_results))
 
   @needs('parsed', 'parse_response_as_json()')

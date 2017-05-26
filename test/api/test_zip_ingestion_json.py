@@ -27,9 +27,9 @@ __author__ = 'jkrzemien@plos.org; gfilomeno@plos.org'
 This test case validates Rhino's convenience zipUpload Tests for ZIP ingestion.
 """
 
-from ..api.RequestObject.zip_ingestion_json import ZIPIngestionJson
-from ..api.RequestObject.memory_zip_json import MemoryZipJSON
-import resources
+from .RequestObject.zip_ingestion_json import ZIPIngestionJson
+from .RequestObject.memory_zip_json import MemoryZipJSON
+from test.api import resources
 
 class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
 
@@ -92,7 +92,7 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
         self.delete_test_objects()
 
       else:
-        print self.parsed.get_attribute('message')
+        print(self.parsed.get_attribute('message'))
     except:
       pass
 
