@@ -26,8 +26,8 @@ Class for creating an ingestible zip in memory.
 
 __author__ = 'rskonnord'
 
-from ...Base.base_service_test import BaseServiceTest
-from ...Base.MemoryZip import MemoryZipFile, MemoryZipData, build_zip_file_in_memory
+from test.Base.base_service_test import BaseServiceTest
+from test.Base.MemoryZip import MemoryZipFile, MemoryZipData, build_zip_file_in_memory
 
 class MemoryZipJSON(BaseServiceTest):
 
@@ -36,7 +36,7 @@ class MemoryZipJSON(BaseServiceTest):
       '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x01'
       '\x03\x00\x00\x00%\xdbV\xca\x00\x00\x00\x03PLTE\x00\x00\x00\xa7z=\xda\x00'
       '\x00\x00\x01tRNS\x00@\xe6\xd8f\x00\x00\x00\nIDAT\x08\xd7c`\x00\x00\x00'
-      '\x02\x00\x01\xe2!\xbc3\x00\x00\x00\x00IEND\xaeB`\x82')
+      '\x02\x00\x01\xe2!\xbc3\x00\x00\x00\x00IEND\xaeB`\x82', 'utf8')
 
     REAL_FILES = [
       "manifest.dtd",

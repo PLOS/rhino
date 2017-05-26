@@ -28,8 +28,8 @@ __author__ = 'fcabrales@plos.org'
 
 from .zip_ingestion_json import ZIPIngestionJson
 from ..resources import *
-from ...Base.api import needs
-from ...Base.MySQL import MySQL
+from test.Base.api import needs
+from test.Base.MySQL import MySQL
 from ..resources import NOT_SCAPE_ARTICLE_DOI
 
 ARTICLE_API = API_BASE_URL + '/articles/'

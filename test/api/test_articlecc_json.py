@@ -28,6 +28,8 @@ This test case validates Rhino's article crud controller.
 
 from .RequestObject.articlecc_json import ArticlesJSON
 from .RequestObject.memory_zip_json import MemoryZipJSON
+import test.api.resources
+from test.api import resources
 
 
 class ArticlesTest(ArticlesJSON, MemoryZipJSON):

@@ -32,7 +32,7 @@ import json
 
 from jsonpath import jsonpath
 
-from api.Response.AbstractResponse import AbstractResponse
+from test.api.Response.AbstractResponse import AbstractResponse
 
 
 class JSONResponse(AbstractResponse):

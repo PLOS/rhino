@@ -29,7 +29,7 @@ __author__ = 'jgray@plos.org'
 import unittest
 import json
 import random
-from api.Response.JSONResponse import JSONResponse
+from test.api.Response.JSONResponse import JSONResponse
 from .api import timeit
 from .Config import TIMEOUT, PRINT_DEBUG
 from inspect import getfile
