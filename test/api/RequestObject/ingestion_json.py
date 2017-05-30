@@ -27,6 +27,7 @@ from .. import resources
 
 __author__ = 'jkrzemien@plos.org; gfilomeno@plos.org; fcabrales@plos.org'
 
+import sys
 from test.Base.base_service_test import BaseServiceTest
 from test.Base.api import needs
 from test.Base.MySQL import MySQL
@@ -90,14 +91,19 @@ class Ingestion(BaseServiceTest):
       i+=1
 
   @needs('parsed', 'parse_response_as_json()')
-  def verify_ingestion_text_expected_only(self, expected_results, attribute):
-    actual_results = self.parsed.get_attribute(attribute)
-    if isinstance(actual_results, str):
-      actual_results = bytes(actual_results, 'utf-8')
-    if isinstance(expected_results, str):
-      expected_results = bytes(expected_results, 'utf-8')
-    assert actual_results == expected_results, \
-      ('%s is not correct! actual: %s expected: %s' % (attribute, actual_results, expected_results))
+  def verify_ingestion_text_expected_only(self, expected, attribute):
+    actual = self.parsed.get_attribute(attribute)
+    if isinstance(actual, str) and sys.version_info[0]>=3:
+      actual = bytes(actual, 'utf-8')
+    elif sys.version_info[0]==2 and isinstance(actual, unicode):
+      actual = bytearray(actual, 'utf-8')
+    if isinstance(expected, str) and sys.version_info[0]>=3:
+      #if sys.version_info[0]>=3:
+      expected = bytes(expected, 'utf-8')
+    elif sys.version_info[0]==2 and isinstance(expected, unicode):
+      expected = bytearray(expected, 'utf-8')
+    assert actual == expected, ('%s is not correct! actual: %s expected: %s' % (
+                                attribute, actual, expected))
 
   @needs('parsed', 'parse_response_as_json()')
   def verify_ingestion_text(self, actual_results, expected_results, attribute):
