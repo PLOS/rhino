@@ -39,10 +39,6 @@ class MemoryZipEntry(object):
         :param None
         :return: Stream data return from _get_file_bytes()
         """
-        self._get_file_bytes()
-        #import pdb;pdb.set_trace()
-
-        #.encode(encoding='utf-8')
         try:
             output = io.BytesIO(self._get_file_bytes())
         except TypeError:
