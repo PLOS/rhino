@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 # Copyright (c) 2017 Public Library of Science
 #
@@ -26,9 +26,9 @@ __author__ = 'fcabrales@plos.org'
 This test case validates Rhino's article crud controller.
 """
 
-from ..api.RequestObject.articlecc_json import ArticlesJSON
-from ..api.RequestObject.memory_zip_json import MemoryZipJSON
-import resources
+from .RequestObject.articlecc_json import ArticlesJSON
+from .RequestObject.memory_zip_json import MemoryZipJSON
+from test.api import resources
 
 
 class ArticlesTest(ArticlesJSON, MemoryZipJSON):
@@ -49,7 +49,7 @@ class ArticlesTest(ArticlesJSON, MemoryZipJSON):
       if self.get_http_response().raise_for_status() is None:
         self.delete_article_sql_doi(resources.NOT_SCAPE_RELATED_ARTICLE_DOI)
       else:
-        print self.parsed.get_attribute('message')
+        print(self.parsed.get_attribute('message'))
     except:
       pass
 

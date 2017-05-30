@@ -34,13 +34,14 @@ __author__ = 'jgray@plos.org'
 
 from mysql.connector.pooling import MySQLConnectionPool
 from contextlib import closing
-import Config
+
+from test.Base.Config import dbconfig
 
 
 class MySQL(object):
 
   def __init__(self):
-    self._cnxpool = MySQLConnectionPool(pool_name="mysqlPool", pool_size=3, **Config.dbconfig)
+    self._cnxpool = MySQLConnectionPool(pool_name="mysqlPool", pool_size=3, **dbconfig)
 
   def _getConnection(self):
     return self._cnxpool.get_connection()

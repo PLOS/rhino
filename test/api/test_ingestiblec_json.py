@@ -27,10 +27,10 @@ __author__ = 'fcabrales@plos.org'
 This test case validates Rhino's article repack service.
 """
 
-from ..api.RequestObject.ingestiblec_json import IngestibleJSON
-from ..api.RequestObject.memory_zip_json import MemoryZipJSON
-from ..api.RequestObject.articlecc_json import ArticlesJSON
-import resources
+from .RequestObject.articlecc_json import ArticlesJSON
+from .RequestObject.ingestiblec_json import IngestibleJSON
+from .RequestObject.memory_zip_json import MemoryZipJSON
+from test.api import resources
 
 class ZipIngestibleTest(IngestibleJSON, MemoryZipJSON, ArticlesJSON):
 

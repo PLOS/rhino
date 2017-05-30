@@ -1,0 +1,17 @@
+appdirs==1.4.3
+beautifulsoup4==4.6.0
+certifi==2017.4.17
+chardet==3.0.3
+idna==2.5
+jsonpath==0.75
+mysql-connector==2.1.4
+packaging==16.8
+pkg-resources==0.0.0
+pyparsing==2.2.0
+requests==2.17.3
+selenium==3.4.2
+six==1.10.0
+teamcity-messages==1.21
+termcolor==1.1.0
+urllib3==1.21.1
+Wand==0.4.4
