@@ -100,6 +100,11 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
       pass
 
   def verify_zip_ingestion(self, not_scaped_article_doi):
+    """
+    Verifies article, journal and figure inforamtion from ambra db
+    :param not_scapted_article_doi: String. Such as '10.1371/journal.pone.0155391'
+    :return: none
+    """
     # All below verifications will be fix with https://developer.plos.org/jira/browse/DPRO-3259
     # Validate response with Article table
     self.verify_article(not_scaped_article_doi)
@@ -128,7 +133,7 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
         self.delete_test_objects(article_doi,bucket_name)
 
       else:
-        print self.parsed.get_attribute('message')
+        print (self.parsed.get_attribute('message'))
     except:
       pass
 

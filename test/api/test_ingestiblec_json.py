@@ -79,7 +79,7 @@ class ZipIngestibleTest(IngestibleJSON, MemoryZipJSON, ArticlesJSON):
         self.delete_test_objects(article_doi,bucket_name)
 
       else:
-        print self.parsed.get_attribute('message')
+        print (self.parsed.get_attribute('message'))
     except:
       pass
 

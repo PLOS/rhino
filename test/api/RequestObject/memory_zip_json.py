@@ -32,6 +32,13 @@ from ...Base.MemoryZip import MemoryZipFile, MemoryZipData, build_zip_file_in_me
 class MemoryZipJSON(BaseServiceTest):
 
   def create_ingestible(self, article_doi, sub_dir):
+    """
+    Creates ingestible zip in memory by giving article doi and sub directory to find 
+    mock data
+    :param article_doi: String. Such as 'pone.0155391', 
+           sub_dir: String as PrePrint/RelatedArticle
+    :return: none
+    """
     EMPTY_PNG_FILE = bytes(
       '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x01'
       '\x03\x00\x00\x00%\xdbV\xca\x00\x00\x00\x03PLTE\x00\x00\x00\xa7z=\xda\x00'
