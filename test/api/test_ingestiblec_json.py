@@ -68,7 +68,6 @@ class ZipIngestibleTest(IngestibleJSON, MemoryZipJSON, ArticlesJSON):
     :param bucket_name: String. Such as 'preprint'
     :return: None
     """
-
     try:
       self.get_article(article_doi)
       status_code = self.get_http_response().status_code
