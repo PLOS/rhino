@@ -76,8 +76,8 @@ class BaseServiceTest(unittest.TestCase):
     self._debug()
 
   @timeit
-  def doPost(self, url, files=None, headers=None):
-    self.__response = post(url, headers=headers, files=files, verify=False, timeout=TIMEOUT, allow_redirects=True)
+  def doPost(self, url, files=None, data=None, headers=None):
+    self.__response = post(url, headers=headers, files=files, data=data, verify=False, timeout=TIMEOUT, allow_redirects=True)
     self._debug()
 
   @timeit

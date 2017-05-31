@@ -28,12 +28,13 @@ __author__ = 'fcabrales@plos.org'
 
 from .zip_ingestion_json import ZIPIngestionJson
 from ..resources import *
+
 from test.Base.api import needs
 from test.Base.MySQL import MySQL
-from ..resources import NOT_SCAPE_ARTICLE_DOI
+from ..resources import NOT_SCAPE_RELATED_ARTICLE_DOI
 
 ARTICLE_API = API_BASE_URL + '/articles/'
-ARTICLE_REVISION_API = ARTICLE_API + ARTICLE_DOI + '/revisions'
+ARTICLE_REVISION_API = ARTICLE_API + RELATED_ARTICLE_DOI + '/revisions'
 
 
 class ArticlesJSON(ZIPIngestionJson):
@@ -43,7 +44,7 @@ class ArticlesJSON(ZIPIngestionJson):
     """
     Validate setting article revision using articleRevision table
     """
-    db_article_revision = self.get_article_sql_revision(NOT_SCAPE_ARTICLE_DOI)
+    db_article_revision = self.get_article_sql_revision(NOT_SCAPE_RELATED_ARTICLE_DOI)
     self.get_article_revisions()
     self.verify_article_revision_db_expected(db_article_revision[0], 'revisionNumber')
 

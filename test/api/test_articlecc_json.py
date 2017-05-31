@@ -35,8 +35,8 @@ class ArticlesTest(ArticlesJSON, MemoryZipJSON):
   def setUp(self):
     print('\nTesting POST zips/\n')
     # Invoke ZIP API to generate in memory ingestible zip
-    zip_file = self.create_ingestible()
-    self.post_ingestible_zip(zip_file)
+    zip_file = self.create_ingestible(resources.RA_DOI, 'RelatedArticle/')
+    self.post_ingestible_zip(zip_file, resources.RELATED_ARTICLE_BUCKET_NAME)
     # Validate HTTP code in the response is 201 (CREATED)
     self.verify_http_code_is(resources.CREATED)
 
@@ -45,9 +45,9 @@ class ArticlesTest(ArticlesJSON, MemoryZipJSON):
     Purge all records from the db for test article
     """
     try:
-      self.get_article(resources.ARTICLE_DOI)
+      self.get_article(resources.RELATED_ARTICLE_DOI)
       if self.get_http_response().raise_for_status() is None:
-        self.delete_article_sql_doi(resources.NOT_SCAPE_ARTICLE_DOI)
+        self.delete_article_sql_doi(resources.NOT_SCAPE_RELATED_ARTICLE_DOI)
       else:
         print(self.parsed.get_attribute('message'))
     except:

@@ -32,13 +32,16 @@ from ..resources import ZIP_INGESTION_API, ARTICLE_API, COLLECTIONS_API, OBJECTS
 
 class ZIPIngestionJson(Ingestion):
 
-  def post_ingestible_zip(self, archive):
+  def post_ingestible_zip(self, archive, bucketName=None):
     """
     Calls article API to ingest a zip article file
     POST /zips
-    :param archive
+    :param archive: zip. Ingestible zip package containing article XML,manifest XML and images
+    :param bucketName: String. Optional paramenter
+    :return: None
     """
-    self.doPost(ZIP_INGESTION_API, {'archive': archive})
+    da_data = {'bucket': bucketName}
+    self.doPost(ZIP_INGESTION_API, {'archive': archive}, da_data)
     self.parse_response_as_json()
 
   #Article API
@@ -54,10 +57,10 @@ class ZIPIngestionJson(Ingestion):
   def delete_article(self, article_doi=None):
     """
     Calls article API to delete an article
-    DELETE /articles/{article_doi}...
+    DELETE /articles/{article_doi}/revisions/1
     :param article_doi
     """
-    self.doDelete('%s/%s' % (ARTICLE_API, article_doi), None, headers=DEFAULT_HEADERS)
+    self.doDelete('%s/%s/%s' % (ARTICLE_API, article_doi, 'revisions/1'), None, headers=DEFAULT_HEADERS)
 
   #Content Repo API
   def get_collection_versions(self, bucketName=None, **kwargs):
