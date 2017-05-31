@@ -36,7 +36,9 @@ class ZIPIngestionJson(Ingestion):
     """
     Calls article API to ingest a zip article file
     POST /zips
-    :param archive, optional bucketName
+    :param archive: zip. Ingestible zip package containing article XML,manifest XML and images
+    :param bucketName: String. Optional paramenter
+    :return: None
     """
     da_data = {'bucket': bucketName}
     self.doPost(ZIP_INGESTION_API, {'archive': archive}, da_data)
