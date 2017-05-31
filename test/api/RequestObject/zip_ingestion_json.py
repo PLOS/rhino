@@ -55,10 +55,10 @@ class ZIPIngestionJson(Ingestion):
   def delete_article(self, article_doi=None):
     """
     Calls article API to delete an article
-    DELETE /articles/{article_doi}...
+    DELETE /articles/{article_doi}/revisions/1
     :param article_doi
     """
-    self.doDelete('%s/%s' % (ARTICLE_API, article_doi), None, headers=DEFAULT_HEADERS)
+    self.doDelete('%s/%s/%s' % (ARTICLE_API, article_doi, 'revisions/1'), None, headers=DEFAULT_HEADERS)
 
   #Content Repo API
   def get_collection_versions(self, bucketName=None, **kwargs):

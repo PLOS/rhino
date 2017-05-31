@@ -38,8 +38,8 @@ class MemoryZipJSON(BaseServiceTest):
     """
     Creates ingestible zip in memory by giving article doi and sub directory to find 
     mock data
-    :param article_doi: String. Such as 'pone.0155391', 
-    sub_dir: String as PrePrint/RelatedArticle
+    :param article_doi: String. Such as 'pone.0155391' 
+    :param sub_dir: String. Such as "RelatedArticle/" to find mock data
     :return: none
     """
     if sys.version_info[0]>=3:

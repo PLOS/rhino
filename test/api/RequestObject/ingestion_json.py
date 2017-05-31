@@ -38,6 +38,8 @@ class Ingestion(BaseServiceTest):
   def verify_article(self, not_scaped_article_doi):
     """
     Validate ingestion with Article table
+    :param not_scapted_article_doi: String. Such as '10.1371/journal.pone.0155391'  
+    :return: None
     """
     print (not_scaped_article_doi)
     article_id = self.get_article_id_sql_doi(not_scaped_article_doi)
@@ -57,6 +59,8 @@ class Ingestion(BaseServiceTest):
   def verify_journals(self, not_scaped_article_doi):
     """
     Validate ingestion with articlePublishedJournals  table
+    :param not_scapted_article_doi: String. Such as '10.1371/journal.pone.0155391'  
+    :return: None
     """
 
     article_id = self.get_article_id_sql_doi(not_scaped_article_doi)
@@ -74,6 +78,8 @@ class Ingestion(BaseServiceTest):
   def verify_article_figures(self, not_scaped_article_doi):
     """
     Validate ingestion's figures with Assert table
+    :param not_scapted_article_doi: String. Such as '10.1371/journal.pone.0155391'  
+    :return: None
     """
     print('Verify Article\'s figures')
     article_id = self.get_article_id_sql_doi(not_scaped_article_doi)
