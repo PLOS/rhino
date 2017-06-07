@@ -42,6 +42,15 @@
     </layout>
   </appender>
 
+  <appender name="syslog" class="org.apache.log4j.net.SyslogAppender">
+    <param name="SyslogHost" value="127.0.0.1" />
+    <param name="Facility" value="local1" />
+    <param name="FacilityPrinting" value="true"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d{ISO8601} %-5p: [%t] %c{2} %x - %m%n"/>
+    </layout>
+  </appender>
+
   <!-- Application Loggers -->
   <logger name="org.ambraproject.rhino">
     <level value="info"/>
@@ -66,8 +75,9 @@
 
   <!-- Root Logger -->
   <root>
-    <priority value="error"/>
-    <appender-ref ref="drfa"/>
+    <priority value="info"/>
+    <!--<appender-ref ref="drfa"/>-->
+    <appender-ref ref="syslog"/>
     <!--<appender-ref ref="console"/>-->
   </root>
 
