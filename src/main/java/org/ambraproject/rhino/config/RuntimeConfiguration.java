@@ -128,6 +128,8 @@ public interface RuntimeConfiguration {
 
     String getSolrUpdate();
 
+    String getLiteSolrUpdate();
+
     String getSolrDelete();
 
     int getSyndicationRange();
