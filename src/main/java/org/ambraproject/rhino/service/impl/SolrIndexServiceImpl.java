@@ -116,7 +116,7 @@ public class SolrIndexServiceImpl extends AmbraService implements SolrIndexServi
   }
 
   @Override
-  public void updateSolrIndex(ArticleIdentifier articleId) {
+  public void updateSolrIndex(ArticleIdentifier articleId, boolean isLiteIndex) {
     Article article = articleCrudService.readArticle(articleId);
     ArticleIngestion ingestion = articleCrudService.readLatestRevision(article).getIngestion();
     Document doc = articleCrudService.getManuscriptXml(ingestion);
@@ -124,11 +124,14 @@ public class SolrIndexServiceImpl extends AmbraService implements SolrIndexServi
     doc = appendJournals(doc, ingestion);
     doc = appendStrikingImage(doc, ingestion);
 
-    String destination = runtimeConfiguration.getQueueConfiguration().getSolrUpdate();
-    if (destination == null) {
+    String destinationQueue = isLiteIndex
+        ? runtimeConfiguration.getQueueConfiguration().getLiteSolrUpdate()
+        : runtimeConfiguration.getQueueConfiguration().getSolrUpdate();
+
+    if (destinationQueue == null) {
       throw new RuntimeException("solrUpdate is not configured");
     }
-    messageSender.sendBody(destination, doc);
+    messageSender.sendBody(destinationQueue, doc);
   }
 
   @Override

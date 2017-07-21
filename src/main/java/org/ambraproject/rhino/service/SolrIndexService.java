@@ -33,8 +33,9 @@ public interface SolrIndexService {
    * Push a message to the queue that will update an article's Solr index.
    *
    * @param articleId the article to be indexed
+   * @param isLiteIndex a lite index does not request data from ALM or Counter
    */
-  public abstract void updateSolrIndex(ArticleIdentifier articleId);
+  public abstract void updateSolrIndex(ArticleIdentifier articleId, boolean isLiteIndex);
 
   /**
    * Push a message to the queue that will remove an article from the Solr index.
