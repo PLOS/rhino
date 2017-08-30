@@ -93,9 +93,8 @@ public class YamlConfiguration implements RuntimeConfiguration {
         .addAll(MoreObjects.firstNonNull(corpus.secondaryBuckets, ImmutableSet.of()))
         .build();
 
-    ImmutableSet<String> secondaryBuckets = ImmutableSet.<String>builder()
-        .addAll(MoreObjects.firstNonNull(corpus.secondaryBuckets, ImmutableSet.of()))
-        .build();
+    ImmutableSet<String> secondaryBuckets =
+        ImmutableSet.copyOf(MoreObjects.firstNonNull(corpus.secondaryBuckets, ImmutableSet.of()));
 
     return new MultiBucketContentRepoEndpoint() {
       @Override
