@@ -53,7 +53,7 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
     map.put("address", endpoint.getAddress());
     map.put("bucket", endpoint.getDefaultBucket());
     if (endpoint instanceof RuntimeConfiguration.MultiBucketContentRepoEndpoint) {
-      map.put("secondaryBuckets", ((RuntimeConfiguration.MultiBucketContentRepoEndpoint) endpoint).getAllBuckets());
+      map.put("secondaryBuckets", ((RuntimeConfiguration.MultiBucketContentRepoEndpoint) endpoint).getSecondaryBuckets());
     }
     return map;
   }

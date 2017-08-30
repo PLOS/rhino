@@ -6,3 +6,5 @@ contentRepo:
   corpus:
     address: http://path/to/content/repo
     bucket:  bucket_name
+    secondaryBuckets:
+      - secondary_bucket

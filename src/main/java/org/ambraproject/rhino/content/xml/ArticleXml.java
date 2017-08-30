@@ -172,11 +172,15 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     article.setDoi(doi.getName());
 
     article.setTitle(getXmlFromNode(readNode("/article/front/article-meta/title-group/article-title")));
-    String eissn = readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]");
-    if (Strings.isNullOrEmpty(eissn)) {
-      eissn = readString("/article/front/journal-meta/issn");
+
+    if (isEissnTagPresent()) {
+      String eissn = readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]");
+      if (Strings.isNullOrEmpty(eissn)) {
+        eissn = readString("/article/front/journal-meta/issn");
+      }
+      article.setEissn(eissn);
     }
-    article.seteIssn(checkEissn(eissn));
+    article.setJournalName(readString("/article/front/journal-meta/journal-title-group/journal-title"));
     article.setDescription(getXmlFromNode(findAbstractNode()));
 
     String rights = readString("/article/front/article-meta/permissions/copyright-statement");
@@ -235,11 +239,15 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     return null;
   }
 
-  private static String checkEissn(String eissn) throws XmlContentException {
-    if (eissn == null) {
-      throw new XmlContentException("Required eIssn is omitted");
+  /**
+   * @throws XmlContentException if the required issn tag is omitted. The value can be blank.
+   */
+  private boolean isEissnTagPresent() throws XmlContentException {
+    final Node issnNode = readNode("/article/front/journal-meta/issn");
+    if (issnNode == null) {
+      throw new XmlContentException("Required eIssn tag is omitted");
     }
-    return eissn;
+    return true;
   }
 
   /**

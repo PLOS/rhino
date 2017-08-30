@@ -93,6 +93,10 @@ public class YamlConfiguration implements RuntimeConfiguration {
         .addAll(MoreObjects.firstNonNull(corpus.secondaryBuckets, ImmutableSet.of()))
         .build();
 
+    ImmutableSet<String> secondaryBuckets = ImmutableSet.<String>builder()
+        .addAll(MoreObjects.firstNonNull(corpus.secondaryBuckets, ImmutableSet.of()))
+        .build();
+
     return new MultiBucketContentRepoEndpoint() {
       @Override
       public URI getAddress() {
@@ -107,6 +111,11 @@ public class YamlConfiguration implements RuntimeConfiguration {
       @Override
       public ImmutableSet<String> getAllBuckets() {
         return allBuckets;
+      }
+
+      @Override
+      public ImmutableSet<String> getSecondaryBuckets() {
+        return secondaryBuckets;
       }
     };
   }

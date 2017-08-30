@@ -22,15 +22,14 @@
 
 package org.ambraproject.rhino.service;
 
-import com.google.gson.Gson;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -39,9 +38,6 @@ import static org.testng.Assert.assertTrue;
 public class ConfigurationReadServiceTest extends BaseRhinoTest {
   @Autowired
   private ConfigurationReadService configurationReadService;
-
-  @Autowired
-  protected Gson entityGson;
 
   @Test
   public void testGetBuildProperties() throws IOException {
@@ -62,6 +58,10 @@ public class ConfigurationReadServiceTest extends BaseRhinoTest {
     assertEquals(repoAddress, "http://path/to/content/repo", "Invalid/missing content repo URL");
     String repoBucket = editorialConfigMap.get("bucket").toString();
     assertEquals(repoBucket, "bucket_name", "Invalid/missing content repo bucket name");
+
+    Map<String, Object> corpusConfigMap = (Map<String, Object>) repoConfigMap.get("corpus");
+    final Set<String> secondaryBuckets = (Set<String>) corpusConfigMap.get("secondaryBuckets");
+    assertEquals(secondaryBuckets.iterator().next(), "secondary_bucket");
   }
 
 }

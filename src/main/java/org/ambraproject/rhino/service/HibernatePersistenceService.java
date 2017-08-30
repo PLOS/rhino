@@ -27,9 +27,8 @@ import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
-import org.ambraproject.rhino.model.article.ArticleCustomMetadata;
-import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.model.ingest.ArticlePackage;
+import org.ambraproject.rhino.model.ingest.IngestPackage;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,8 +42,7 @@ public interface HibernatePersistenceService {
    */
   public Article persistArticle(Doi doi);
 
-  public ArticleIngestion persistIngestion(Article article, ArticleMetadata articleMetadata,
-                                           ArticleCustomMetadata customMetadata);
+  public ArticleIngestion persistIngestion(Article article, IngestPackage ingestPackage);
 
   /**
    * Persist items, items' file representations, ancillary files, and the link to the striking image.
