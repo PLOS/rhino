@@ -158,20 +158,36 @@ public class HibernatePersistenceServiceImpl implements HibernatePersistenceServ
     final String eissn = articleMetadata.getEissn();
     final String bucketName = ingestPackage.getArticlePackage().getBucketName();
 
+    Optional<Journal> journal;
     if (isSecondaryBucket(bucketName)) {
-      final String journalName = articleMetadata.getJournalName();
-      return journalCrudService.getJournal(journalName).orElseThrow(() -> {
-        String msg = "Journal key from XML was not matched to a journal: " + journalName;
-        return new RestClientException(msg, HttpStatus.BAD_REQUEST);
-      });
-    } else if (eissn == null) {
-      String msg = "eIssn not set for article: " + articleMetadata.getDoi();
+      journal = getJournalFromName(articleMetadata.getJournalName());
+    } else if (eissn != null) {
+      journal = getJournalFromEissn(eissn);
+    } else {
+      throw new RestClientException("eIssn not set for article: " + articleMetadata.getDoi(),
+          HttpStatus.BAD_REQUEST);
+    }
+    return journal.orElse(null);
+  }
+
+  private Optional<Journal> getJournalFromEissn(String eissn) {
+    Optional<Journal> journal;
+    journal = journalCrudService.getJournalByEissn(eissn);
+    if (!journal.isPresent()) {
+      String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
       throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
     }
-    return journalCrudService.getJournalByEissn(eissn).orElseThrow(() -> {
-      String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
-      return new RestClientException(msg, HttpStatus.BAD_REQUEST);
-    });
+    return journal;
+  }
+
+  private Optional<Journal> getJournalFromName(String journalName) {
+    Optional<Journal> journal;
+    journal = journalCrudService.getJournal(journalName);
+    if (!journal.isPresent()) {
+      String msg = "Journal key from XML was not matched to a journal: " + journalName;
+      throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
+    }
+    return journal;
   }
 
   private boolean isSecondaryBucket(String bucketName) {
