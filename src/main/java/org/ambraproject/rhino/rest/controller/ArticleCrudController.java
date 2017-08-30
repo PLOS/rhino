@@ -361,9 +361,11 @@ public class ArticleCrudController extends RestController {
   }
 
   @RequestMapping(value = "/articles/{doi:.+}", params = {"solrIndex"}, method = RequestMethod.POST)
-  public ResponseEntity<?> updateSolrIndex(@PathVariable("doi") String doi) {
+  public ResponseEntity<?> updateSolrIndex(@PathVariable("doi") String doi,
+                                           @ApiParam(value = "Enter 'lite' to perform a lite index. Any other value will perform a standard, full index")
+                                           @RequestParam(value = "solrIndex", defaultValue = "standard") String solrIndexMode) {
     ArticleIdentifier identifier = ArticleIdentifier.create(DoiEscaping.unescape(doi));
-    solrIndexService.updateSolrIndex(identifier);
+    solrIndexService.updateSolrIndex(identifier, solrIndexMode.equals("lite"));
     return new ResponseEntity<>(HttpStatus.OK);
   }
 

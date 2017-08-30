@@ -266,6 +266,11 @@ public class YamlConfiguration implements RuntimeConfiguration {
       }
 
       @Override
+      public String getLiteSolrUpdate() {
+        return input.queue != null ? input.queue.liteSolrUpdate : null;
+      }
+
+      @Override
       public String getSolrDelete() {
         return input.queue != null ? input.queue.solrDelete : null;
       }
@@ -482,6 +487,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
   public static class QueueConfigurationInput {
     private String brokerUrl;
     private String solrUpdate;
+    private String liteSolrUpdate;
     private String solrDelete;
     private Integer syndicationRange;
 
@@ -493,6 +499,11 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setSolrUpdate(String solrUpdate) {
       this.solrUpdate = solrUpdate;
+    }
+
+    @Deprecated
+    public void setLiteSolrUpdate(String liteSolrUpdate) {
+      this.liteSolrUpdate = liteSolrUpdate;
     }
 
     @Deprecated

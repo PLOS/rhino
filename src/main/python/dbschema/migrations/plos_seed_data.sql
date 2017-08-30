@@ -31,4 +31,4 @@ INSERT INTO journal (eissn, journalKey, title) VALUES ("1555-5887", "PLoSClinica
 INSERT INTO journal (eissn, journalKey, title) VALUES ("1932-6203", "PLoSONE",            "PLOS ONE"                        );
 INSERT INTO journal (eissn, journalKey, title) VALUES ("1935-2735", "PLoSNTD",            "PLOS Neglected Tropical Diseases");
 INSERT INTO journal (eissn, journalKey, title) VALUES ("3333-3333", "PLoSCollections",    "PLOS Collections"                );
-INSERT INTO journal (eissn, journalKey, title) VALUES ("",          "ApertaRxiv",         "Aperta Archive"                  );
+INSERT INTO journal (eissn, journalKey, title) VALUES ("",          "ApertaRxiv",         "ApertaRxiv"                  );
