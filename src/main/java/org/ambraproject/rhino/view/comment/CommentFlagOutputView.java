@@ -53,8 +53,10 @@ public class CommentFlagOutputView implements JsonOutputView {
     // Should match the field name used for org.ambraproject.rhino.view.comment.CommentFlagInputView.body.
     serialized.add("body", serialized.remove("comment"));
 
-    serialized.remove("userProfileID");
-    serialized.add("creator", context.serialize(new UserIdView(flag.getUserProfileId())));
+    if (flag.getUserProfileId() != null) {
+      serialized.remove("userProfileID");
+      serialized.add("creator", context.serialize(new UserIdView(flag.getUserProfileId())));
+    }
 
     serialized.add("flaggedComment", context.serialize(flaggedComment));
 

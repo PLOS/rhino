@@ -141,7 +141,11 @@ public class CommentOutputView implements JsonOutputView {
     JsonObject serialized = context.serialize(comment).getAsJsonObject();
     serialized.remove("userProfileID");
 
-    serialized.add("creator", context.serialize(new UserIdView(comment.getUserProfileID())));
+    final UserIdView userIdView;
+    if (comment.getUserProfileID() != null) {
+      userIdView = new UserIdView(comment.getUserProfileID());
+      serialized.add("creator", context.serialize(userIdView));
+    }
 
     serialized.remove("articleID");
     normalizeField(serialized, "title");
