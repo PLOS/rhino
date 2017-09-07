@@ -185,7 +185,9 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     created.setArticle(article);
     created.setParent(parentComment);
     created.setCommentUri(createdCommentUri.getName());
-    created.setUserProfileID(Long.valueOf(Strings.nullToEmpty(input.getCreatorUserId())));
+    if (!Strings.isNullOrEmpty(input.getCreatorUserId())) {
+      created.setUserProfileID(Long.valueOf(Strings.nullToEmpty(input.getCreatorUserId())));
+    }
     created.setTitle(Strings.nullToEmpty(input.getTitle()));
     created.setBody(Strings.nullToEmpty(input.getBody()));
     created.setHighlightedText(Strings.nullToEmpty(input.getHighlightedText()));
@@ -272,11 +274,14 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   @Override
   public Flag createCommentFlag(CommentIdentifier commentId, CommentFlagInputView input) {
     Comment comment = readComment(commentId);
-    Long flagCreator = Long.valueOf(input.getCreatorUserId());
 
     Flag flag = new Flag();
     flag.setFlaggedComment(comment);
-    flag.setUserProfileId(flagCreator);
+
+    if (!Strings.isNullOrEmpty(input.getCreatorUserId())) {
+      flag.setUserProfileId(Long.valueOf(input.getCreatorUserId()));
+    }
+
     flag.setComment(input.getBody());
     flag.setReason(FlagReasonCode.fromString(input.getReasonCode()));
 

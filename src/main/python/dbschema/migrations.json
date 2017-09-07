@@ -1,5 +1,13 @@
 [
   {
+    "number": 1101,
+    "scripts": [
+      "versioning-prototype-old-renames.sql",
+      "versioning-prototype.sql",
+      "plos_seed_data.sql"
+    ]
+  },
+  {
     "number": 1100,
     "scripts": [
       "versioning-prototype-old-renames.sql",
