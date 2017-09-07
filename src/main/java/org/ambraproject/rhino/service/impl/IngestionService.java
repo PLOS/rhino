@@ -186,8 +186,7 @@ public class IngestionService extends AmbraService {
   private ArticleIngestion persistArticle(IngestPackage ingestPackage, Doi doi,
                                           ArticlePackage articlePackage) {
     Article article = hibernatePersistenceService.persistArticle(doi);
-    ArticleIngestion ingestion = hibernatePersistenceService.persistIngestion(article,
-        ingestPackage.getArticleMetadata(), ingestPackage.getArticleCustomMetadata());
+    ArticleIngestion ingestion = hibernatePersistenceService.persistIngestion(article, ingestPackage);
 
     hibernatePersistenceService.persistAssets(articlePackage, ingestion);
 

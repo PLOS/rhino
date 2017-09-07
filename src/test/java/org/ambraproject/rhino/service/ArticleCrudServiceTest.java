@@ -21,47 +21,20 @@
  */
 package org.ambraproject.rhino.service;
 
-import com.google.common.collect.Collections2;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
-import com.google.common.primitives.Bytes;
-import com.google.gson.Gson;
 import org.ambraproject.rhino.BaseRhinoTransactionalTest;
-import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.model.Article;
-import org.ambraproject.rhino.model.Category;
-import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.IngestionService;
-import org.ambraproject.rhino.service.taxonomy.DummyTaxonomyClassificationService;
-import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
-import org.ambraproject.rhino.util.Archive;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Restrictions;
-import org.plos.crepo.exceptions.NotFoundException;
 import org.plos.crepo.service.ContentRepoService;
 import org.plos.crepo.service.InMemoryContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.support.DataAccessUtils;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertNull;
-import static org.testng.Assert.assertTrue;
 
 public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 

@@ -40,14 +40,17 @@ public class ArticlePackage {
   private final ArticleItemInput articleItem;
   private final ImmutableList<ArticleItemInput> allItems;
   private final ImmutableList<ArticleFileInput> ancillaryFiles;
+  private final String bucketName;
 
   ArticlePackage(ArticleItemInput articleItem, List<ArticleItemInput> assetItems,
-                 List<ArticleFileInput> ancillaryFiles, ManifestXml manifest) {
+                 List<ArticleFileInput> ancillaryFiles, ManifestXml manifest,
+                 String bucketName) {
     this.articleItem = Objects.requireNonNull(articleItem);
     this.allItems = ImmutableList.<ArticleItemInput>builder()
         .add(articleItem).addAll(assetItems).build();
     this.ancillaryFiles = ImmutableList.copyOf(ancillaryFiles);
     this.manifest = manifest;
+    this.bucketName = bucketName;
   }
 
   public void validateAssetCompleteness(Set<Doi> manuscriptDois) {
@@ -76,5 +79,9 @@ public class ArticlePackage {
 
   public ManifestXml getManifest() {
     return manifest;
+  }
+
+  public String getBucketName() {
+    return bucketName;
   }
 }

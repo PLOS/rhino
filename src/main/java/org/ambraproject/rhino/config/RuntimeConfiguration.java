@@ -61,6 +61,8 @@ public interface RuntimeConfiguration {
      * @return the names of all buckets that may be specified to use
      */
     ImmutableSet<String> getAllBuckets();
+
+    ImmutableSet<String> getSecondaryBuckets();
   }
 
   /**

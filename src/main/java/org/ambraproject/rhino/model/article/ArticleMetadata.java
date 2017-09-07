@@ -34,6 +34,7 @@ public class ArticleMetadata {
 
   private final String title;
   private final String eIssn;
+  private final String journalName;
   private final String description;
   private final String rights;
   private final String language;
@@ -61,6 +62,7 @@ public class ArticleMetadata {
     this.doi = Objects.requireNonNull(builder.doi);
     this.title = builder.title;
     this.eIssn = builder.eIssn;
+    this.journalName = builder.journalName;
     this.description = builder.description;
     this.rights = builder.rights;
     this.language = builder.language;
@@ -88,8 +90,12 @@ public class ArticleMetadata {
     return title;
   }
 
-  public String geteIssn() {
+  public String getEissn() {
     return eIssn;
+  }
+
+  public String getJournalName() {
+    return journalName;
   }
 
   public String getDescription() {
@@ -173,6 +179,7 @@ public class ArticleMetadata {
 
     private String title;
     private String eIssn;
+    private String journalName;
     private String description;
     private String rights;
     private String language;
@@ -210,9 +217,13 @@ public class ArticleMetadata {
       return this;
     }
 
-    public Builder seteIssn(String eIssn) {
+    public Builder setEissn(String eIssn) {
       this.eIssn = eIssn;
       return this;
+    }
+
+    public void setJournalName(String journalName) {
+      this.journalName = journalName;
     }
 
     public Builder setDescription(String description) {
@@ -311,32 +322,34 @@ public class ArticleMetadata {
     if (doi != null ? !doi.equals(that.doi) : that.doi != null) return false;
     if (title != null ? !title.equals(that.title) : that.title != null) return false;
     if (eIssn != null ? !eIssn.equals(that.eIssn) : that.eIssn != null) return false;
-    if (description != null ? !description.equals(that.description) : that.description != null) return false;
+    if (journalName != null ? !journalName.equals(that.journalName) : that.journalName != null)
+      return false;
+    if (description != null ? !description.equals(that.description) : that.description != null)
+      return false;
     if (rights != null ? !rights.equals(that.rights) : that.rights != null) return false;
     if (language != null ? !language.equals(that.language) : that.language != null) return false;
     if (format != null ? !format.equals(that.format) : that.format != null) return false;
-    if (pageCount != null ? !pageCount.equals(that.pageCount) : that.pageCount != null) return false;
-    if (eLocationId != null ? !eLocationId.equals(that.eLocationId) : that.eLocationId != null) return false;
-    if (publicationDate != null ? !publicationDate.equals(that.publicationDate) : that.publicationDate != null) {
+    if (pageCount != null ? !pageCount.equals(that.pageCount) : that.pageCount != null)
       return false;
-    }
+    if (eLocationId != null ? !eLocationId.equals(that.eLocationId) : that.eLocationId != null)
+      return false;
+    if (publicationDate != null ? !publicationDate.equals(that.publicationDate) : that.publicationDate != null)
+      return false;
     if (volume != null ? !volume.equals(that.volume) : that.volume != null) return false;
     if (issue != null ? !issue.equals(that.issue) : that.issue != null) return false;
-    if (publisherLocation != null ? !publisherLocation.equals(that.publisherLocation) : that.publisherLocation != null) {
+    if (publisherLocation != null ? !publisherLocation.equals(that.publisherLocation) : that.publisherLocation != null)
       return false;
-    }
-    if (publisherName != null ? !publisherName.equals(that.publisherName) : that.publisherName != null) return false;
+    if (publisherName != null ? !publisherName.equals(that.publisherName) : that.publisherName != null)
+      return false;
     if (url != null ? !url.equals(that.url) : that.url != null) return false;
-    if (nlmArticleType != null ? !nlmArticleType.equals(that.nlmArticleType) : that.nlmArticleType != null) {
+    if (nlmArticleType != null ? !nlmArticleType.equals(that.nlmArticleType) : that.nlmArticleType != null)
       return false;
-    }
-    if (articleType != null ? !articleType.equals(that.articleType) : that.articleType != null) return false;
+    if (articleType != null ? !articleType.equals(that.articleType) : that.articleType != null)
+      return false;
     if (assets != null ? !assets.equals(that.assets) : that.assets != null) return false;
-    if (relatedArticles != null ? !relatedArticles.equals(that.relatedArticles) : that.relatedArticles != null) {
+    if (relatedArticles != null ? !relatedArticles.equals(that.relatedArticles) : that.relatedArticles != null)
       return false;
-    }
     return editors != null ? editors.equals(that.editors) : that.editors == null;
-
   }
 
   @Override
@@ -344,6 +357,7 @@ public class ArticleMetadata {
     int result = doi != null ? doi.hashCode() : 0;
     result = 31 * result + (title != null ? title.hashCode() : 0);
     result = 31 * result + (eIssn != null ? eIssn.hashCode() : 0);
+    result = 31 * result + (journalName != null ? journalName.hashCode() : 0);
     result = 31 * result + (description != null ? description.hashCode() : 0);
     result = 31 * result + (rights != null ? rights.hashCode() : 0);
     result = 31 * result + (language != null ? language.hashCode() : 0);

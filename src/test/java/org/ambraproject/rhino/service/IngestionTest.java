@@ -444,7 +444,7 @@ public class IngestionTest extends BaseRhinoTest {
   private void compareArticleFields(AssertionCollector results, ArticleMetadata actual, ArticleMetadata expected) {
     compare(results, Article.class, "doi", actual.getDoi(), expected.getDoi());
     compareMarkupText(results, Article.class, "title", actual.getTitle(), expected.getTitle());
-    compare(results, Article.class, "eIssn", actual.geteIssn(), expected.geteIssn());
+    compare(results, Article.class, "eIssn", actual.getEissn(), expected.getEissn());
     compareMarkupText(results, Article.class, "description", actual.getDescription(), expected.getDescription());
     compareRights(results, actual.getRights(), expected.getRights());
     compare(results, Article.class, "language", actual.getLanguage(), expected.getLanguage());

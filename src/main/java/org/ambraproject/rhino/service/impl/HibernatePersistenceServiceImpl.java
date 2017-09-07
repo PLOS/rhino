@@ -33,7 +33,9 @@ import org.ambraproject.rhino.model.article.ArticleCustomMetadata;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.model.ingest.ArticleItemInput;
 import org.ambraproject.rhino.model.ingest.ArticlePackage;
+import org.ambraproject.rhino.model.ingest.IngestPackage;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.ContentRepoPersistenceService;
 import org.ambraproject.rhino.service.HibernatePersistenceService;
 import org.ambraproject.rhino.service.JournalCrudService;
@@ -44,7 +46,9 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class HibernatePersistenceServiceImpl implements HibernatePersistenceService {
@@ -55,6 +59,8 @@ public class HibernatePersistenceServiceImpl implements HibernatePersistenceServ
   private JournalCrudService journalCrudService;
   @Autowired
   private ContentRepoPersistenceService contentRepoPersistenceService;
+  @Autowired
+  private ConfigurationReadService configurationReadService;
 
   private static final int FIRST_INGESTION_NUMBER = 1;
 
@@ -75,9 +81,8 @@ public class HibernatePersistenceServiceImpl implements HibernatePersistenceServ
   }
 
   @Override
-  public ArticleIngestion persistIngestion(Article article, ArticleMetadata articleMetadata,
-                                           ArticleCustomMetadata customMetadata) {
-    Journal journal = fetchJournal(articleMetadata);
+  public ArticleIngestion persistIngestion(Article article, IngestPackage ingestPackage) {
+    Journal journal = fetchJournal(ingestPackage);
 
     int nextIngestionNumber = hibernateTemplate.execute(session -> {
       Query findNextIngestionNumber = session.createQuery(
@@ -91,11 +96,14 @@ public class HibernatePersistenceServiceImpl implements HibernatePersistenceServ
     ArticleIngestion ingestion = new ArticleIngestion();
     ingestion.setArticle(article);
     ingestion.setIngestionNumber(nextIngestionNumber);
+
+    ArticleMetadata articleMetadata = ingestPackage.getArticleMetadata();
     ingestion.setTitle(articleMetadata.getTitle());
     ingestion.setPublicationDate(java.sql.Date.valueOf(articleMetadata.getPublicationDate()));
     ingestion.setArticleType(articleMetadata.getArticleType());
     ingestion.setJournal(journal);
 
+    ArticleCustomMetadata customMetadata = ingestPackage.getArticleCustomMetadata();
     ingestion.setRevisionDate((customMetadata.getRevisionDate() == null ? null
         : java.sql.Date.valueOf(customMetadata.getRevisionDate())));
     ingestion.setPublicationStage(customMetadata.getPublicationStage());
@@ -145,15 +153,47 @@ public class HibernatePersistenceServiceImpl implements HibernatePersistenceServ
     return strikingImageItem;
   }
 
-  private Journal fetchJournal(ArticleMetadata article) {
-    String eissn = article.geteIssn();
-    if (eissn == null) {
-      String msg = "eIssn not set for article: " + article.getDoi();
+  private Journal fetchJournal(IngestPackage ingestPackage) {
+    final ArticleMetadata articleMetadata = ingestPackage.getArticleMetadata();
+    final String eissn = articleMetadata.getEissn();
+    final String bucketName = ingestPackage.getArticlePackage().getBucketName();
+
+    Optional<Journal> journal;
+    if (isSecondaryBucket(bucketName)) {
+      journal = getJournalFromName(articleMetadata.getJournalName());
+    } else if (eissn != null) {
+      journal = getJournalFromEissn(eissn);
+    } else {
+      throw new RestClientException("eIssn not set for article: " + articleMetadata.getDoi(),
+          HttpStatus.BAD_REQUEST);
+    }
+    return journal.orElse(null);
+  }
+
+  private Optional<Journal> getJournalFromEissn(String eissn) {
+    Optional<Journal> journal;
+    journal = journalCrudService.getJournalByEissn(eissn);
+    if (!journal.isPresent()) {
+      String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
       throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
     }
-    return journalCrudService.getJournalByEissn(eissn).orElseThrow(() -> {
-      String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
-      return new RestClientException(msg, HttpStatus.BAD_REQUEST);
-    });
+    return journal;
+  }
+
+  private Optional<Journal> getJournalFromName(String journalName) {
+    Optional<Journal> journal;
+    journal = journalCrudService.getJournal(journalName);
+    if (!journal.isPresent()) {
+      String msg = "Journal key from XML was not matched to a journal: " + journalName;
+      throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
+    }
+    return journal;
+  }
+
+  private boolean isSecondaryBucket(String bucketName) {
+    Map<String, Object> repoConfigMap = configurationReadService.getRepoConfig();
+    Map<String, Object> corpusConfigMap = (Map<String, Object>) repoConfigMap.get("corpus");
+    final Set<String> secondaryBuckets = (Set<String>) corpusConfigMap.get("secondaryBuckets");
+    return secondaryBuckets.contains(bucketName);
   }
 }
