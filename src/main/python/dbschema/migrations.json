@@ -2,8 +2,7 @@
   {
     "number": 1101,
     "scripts": [
-      "versioning-prototype-old-renames.sql",
-      "versioning-prototype.sql",
+      "migrate_ambra_1101.sql",
       "plos_seed_data.sql"
     ]
   },
