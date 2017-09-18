@@ -81,6 +81,8 @@ public class CommentCrudController extends RestController {
   }
 
   @RequestMapping(value = "/comments", method = RequestMethod.GET, params = {"flagged"})
+  @ApiImplicitParam(name = "flagged", value = "flagged flag (any value)", required = true,
+      defaultValue = "flagged", paramType = "query", dataType = "string")
   public ResponseEntity<?> readAllFlaggedComments() throws IOException {
     return commentCrudService.serveFlaggedComments().asJsonResponse(entityGson);
   }
