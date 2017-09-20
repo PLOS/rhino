@@ -324,7 +324,7 @@ public class ArticleCrudController extends RestController {
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/articles/{doi}/categories", params = {"flag"}, method = RequestMethod.POST)
   @ResponseBody
-  @ApiImplicitParam(name = "flag", value = "comment flag flag (any value)", required = true,
+  @ApiImplicitParam(name = "flag", value = "category flagged flag (any value)", required = true,
       defaultValue = "flag", paramType = "query", dataType = "string")
   public Map<String, String> flagArticleCategory(@PathVariable("doi") String articleDoi,
                                                  @RequestParam(value = "categoryTerm") String categoryTerm,
@@ -380,9 +380,9 @@ public class ArticleCrudController extends RestController {
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  @RequestMapping(value = "/articles/{doi:.+}", params = {"solrDelete"}, method = RequestMethod.DELETE)
-  @ApiImplicitParam(name = "solrDelete", value = "solrDelete flag (any value)", required = true,
-      defaultValue = "solrDelete", paramType = "query", dataType = "string")
+  @RequestMapping(value = "/articles/{doi:.+}", params = {"solrIndex"}, method = RequestMethod.DELETE)
+  @ApiImplicitParam(name = "solrIndex", value = "solrIndex flag (any value)", required = true,
+      defaultValue = "solrIndex", paramType = "query", dataType = "string")
   public ResponseEntity<?> removeSolrIndex(@PathVariable("doi") String doi) {
     ArticleIdentifier identifier = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     solrIndexService.removeSolrIndex(identifier);
