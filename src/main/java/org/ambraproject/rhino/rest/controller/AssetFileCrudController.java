@@ -25,6 +25,7 @@ package org.ambraproject.rhino.rest.controller;
 import com.google.common.base.Joiner;
 import com.google.common.io.ByteStreams;
 import com.google.common.net.HttpHeaders;
+import com.wordnik.swagger.annotations.ApiImplicitParam;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -127,6 +128,8 @@ public class AssetFileCrudController extends RestController {
   @Transactional(readOnly = true)
   @RequestMapping(value = "/articles/{articleDoi}/ingestions/{number}/items/{itemDoi}/files/{filetype}",
       params = "download", method = RequestMethod.GET)
+  @ApiImplicitParam(name = "download", value = "download flag (any value)", required = true,
+      defaultValue = "download", paramType = "query", dataType = "string")
   public void serveFile(HttpServletRequest request, HttpServletResponse response,
                         @PathVariable("articleDoi") String articleDoi,
                         @PathVariable("number") int ingestionNumber,

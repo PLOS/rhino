@@ -24,6 +24,7 @@ package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.collect.ImmutableMap;
 import com.wordnik.swagger.annotations.ApiImplicitParam;
+import com.wordnik.swagger.annotations.ApiImplicitParams;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
@@ -215,6 +216,8 @@ public class ArticleCrudController extends RestController {
   // TODO: Get rid of this?
   @Transactional(readOnly = true)
   @RequestMapping(value = "/articles/{doi:.+}/comments", method = RequestMethod.GET, params = "count")
+  @ApiImplicitParam(name = "count", value = "count flag (any value)", required = true,
+      defaultValue = "count", paramType = "query", dataType = "string")
   public ResponseEntity<?> getCommentCount(@PathVariable("doi") String doi)
       throws IOException {
     ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
@@ -286,6 +289,8 @@ public class ArticleCrudController extends RestController {
   // TODO: Get rid of this?
   @Transactional(readOnly = true)
   @RequestMapping(value = "/articles/{doi}/categories", method = RequestMethod.GET, params = "raw")
+  @ApiImplicitParam(name = "raw", value = "raw flag (any value)", required = true,
+      defaultValue = "raw", paramType = "query", dataType = "string")
   public ResponseEntity<?> getRawCategories(@PathVariable("doi") String doi)
       throws IOException {
     ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(doi));
@@ -303,6 +308,8 @@ public class ArticleCrudController extends RestController {
   // TODO: Get rid of this?
   @Transactional(readOnly = true)
   @RequestMapping(value = "/articles/{doi}/categories", method = RequestMethod.GET, params = "rawCategoriesAndText")
+  @ApiImplicitParam(name = "rawCategoriesAndText", value = "rawCategoriesAndText flag (any value)", required = true,
+      defaultValue = "rawCategoriesAndText", paramType = "query", dataType = "string")
   public ResponseEntity<String> getRawCategoriesAndText(HttpServletRequest request,
                                                         @PathVariable("doi") String doi)
       throws IOException {
@@ -317,10 +324,12 @@ public class ArticleCrudController extends RestController {
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/articles/{doi}/categories", params = {"flag"}, method = RequestMethod.POST)
   @ResponseBody
+  @ApiImplicitParam(name = "flag", value = "category flagged flag (any value)", required = true,
+      defaultValue = "flag", paramType = "query", dataType = "string")
   public Map<String, String> flagArticleCategory(@PathVariable("doi") String articleDoi,
-                                                 @RequestParam(value = "categoryTerm", required = true) String categoryTerm,
+                                                 @RequestParam(value = "categoryTerm") String categoryTerm,
                                                  @RequestParam(value = "userId", required = false) String userId,
-                                                 @RequestParam(value = "flag", required = true) String action)
+                                                 @RequestParam(value = "flag") String action)
       throws IOException {
     ArticleIdentifier articleId = ArticleIdentifier.create(DoiEscaping.unescape(articleDoi));
     Article article = articleCrudService.readArticle(articleId);
@@ -354,6 +363,8 @@ public class ArticleCrudController extends RestController {
   @RequestMapping(
       // Not "/articles/{doi}/lists" because a list isn't a child object of the article. This is kind of a search query.
       value = "/articles/{doi:.+}", method = RequestMethod.GET, params = "lists")
+  @ApiImplicitParam(name = "lists", value = "lists flag (any value)", required = true,
+      defaultValue = "lists", paramType = "query", dataType = "string")
   public ResponseEntity<?> getContainingLists(@PathVariable("doi") String doi)
       throws IOException {
     ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
@@ -370,6 +381,8 @@ public class ArticleCrudController extends RestController {
   }
 
   @RequestMapping(value = "/articles/{doi:.+}", params = {"solrIndex"}, method = RequestMethod.DELETE)
+  @ApiImplicitParam(name = "solrIndex", value = "solrIndex flag (any value)", required = true,
+      defaultValue = "solrIndex", paramType = "query", dataType = "string")
   public ResponseEntity<?> removeSolrIndex(@PathVariable("doi") String doi) {
     ArticleIdentifier identifier = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     solrIndexService.removeSolrIndex(identifier);
@@ -406,8 +419,12 @@ public class ArticleCrudController extends RestController {
       method = RequestMethod.POST, params = "syndicate")
   @ApiOperation(value = "syndicate", notes = "Send a syndication message to the queue for processing. " +
       "Will create and add a syndication to the database if none exist for current article and target.")
-  @ApiImplicitParam(name = "body", paramType = "body", dataType = "SyndicationInputView",
-      value = "example: {\"targetQueue\": \"activemq:plos.pmc\"}")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "syndicate", value = "syndicate flag (any value)", required = true,
+          defaultValue = "syndicate", paramType = "query", dataType = "string"),
+      @ApiImplicitParam(name = "body", paramType = "body", dataType = "SyndicationInputView",
+          value = "example: {\"targetQueue\": \"activemq:plos.pmc\"}")
+  })
   public ResponseEntity<?> syndicate(HttpServletRequest request,
                                      @PathVariable("doi") String doi,
                                      @PathVariable("number") int revisionNumber)
@@ -442,6 +459,8 @@ public class ArticleCrudController extends RestController {
    */
   @Transactional(readOnly = true)
   @RequestMapping(value = "/articles", method = RequestMethod.GET, params = "published")
+  @ApiImplicitParam(name = "published", value = "published flag (any value)", required = true,
+      defaultValue = "published", paramType = "query", dataType = "string")
   public ResponseEntity<?> getDoisPublishedOn(@ApiParam(value = "Date Format: yyyy-MM-dd")
                                               @RequestParam(value = "fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fromDate,
                                               @ApiParam(value = "Date Format: yyyy-MM-dd")
@@ -454,6 +473,8 @@ public class ArticleCrudController extends RestController {
 
   @Transactional(readOnly = true)
   @RequestMapping(value = "/articles", method = RequestMethod.GET, params = "revised")
+  @ApiImplicitParam(name = "revised", value = "revised flag (any value)", required = true,
+      defaultValue = "revised", paramType = "query", dataType = "string")
   public ResponseEntity<?> getDoisRevisedOn(@ApiParam(value = "Date Format: yyyy-MM-dd")
                                             @RequestParam(value = "fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fromDate,
                                             @ApiParam(value = "Date Format: yyyy-MM-dd")
