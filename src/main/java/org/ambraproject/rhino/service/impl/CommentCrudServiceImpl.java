@@ -193,6 +193,8 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     created.setHighlightedText(Strings.nullToEmpty(input.getHighlightedText()));
     created.setCompetingInterestBody(Strings.nullToEmpty(input.getCompetingInterestStatement()));
     created.setIsRemoved(Boolean.valueOf(Strings.nullToEmpty(input.getIsRemoved())));
+    created.setAuthorEmailAddress(Strings.nullToEmpty(input.getAuthorEmailAddress()));
+    created.setAuthorName(Strings.nullToEmpty(input.getAuthorName()));
 
     hibernateTemplate.save(created);
 

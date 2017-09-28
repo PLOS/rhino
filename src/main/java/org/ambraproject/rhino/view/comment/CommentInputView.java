@@ -32,6 +32,8 @@ public class CommentInputView {
   private String highlightedText;
   private String competingInterestStatement;
   private String isRemoved;
+  private String authorEmailAddress;
+  private String authorName;
 
   /**
    * @deprecated For deserializer only
@@ -134,5 +136,29 @@ public class CommentInputView {
   @Deprecated
   public void setAnnotationUri(String annotationUri) {
     this.annotationUri = annotationUri;
+  }
+
+  public String getAuthorEmailAddress() {
+    return authorEmailAddress;
+  }
+
+  /**
+   * @deprecated For deserializer only
+   */
+  @Deprecated
+  public void setAuthorEmailAddress(String authorEmailAddress) {
+    this.authorEmailAddress = authorEmailAddress;
+  }
+
+  public String getAuthorName() {
+    return authorName;
+  }
+
+  /**
+   * @deprecated For deserializer only
+   */
+  @Deprecated
+  public void setAuthorName(String authorName) {
+    this.authorName = authorName;
   }
 }

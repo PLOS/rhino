@@ -151,6 +151,8 @@ public class CommentOutputView implements JsonOutputView {
     normalizeField(serialized, "title");
     normalizeField(serialized, "body");
     normalizeField(serialized, "highlightedText");
+    normalizeField(serialized, "authorEmailAddress");
+    normalizeField(serialized, "authorName");
 
     serialized.remove("competingInterestBody");
     serialized.add("competingInterestStatement", context.serialize(competingInterestStatement));
