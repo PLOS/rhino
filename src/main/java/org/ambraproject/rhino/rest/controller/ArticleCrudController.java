@@ -150,6 +150,19 @@ public class ArticleCrudController extends RestController {
     return articleCrudService.serveMetadata(ingestionId).getIfModified(ifModifiedSince).asJsonResponse(entityGson);
   }
 
+  @Transactional()
+  @RequestMapping(value = "/articles/{doi}/ingestions/{number}", method = RequestMethod.DELETE)
+  public ResponseEntity<?> removeIsPreprintOfUrl(@PathVariable("doi") String doi,
+                                                 @PathVariable("number") int ingestionNumber)
+      throws IOException {
+    ArticleIngestionIdentifier ingestionId =
+        ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
+
+    articleCrudService.updateIsPreprintOfUrl(ingestionId, null);
+
+    return reportDeleted(doi);
+  }
+
   @Transactional(readOnly = true)
   @RequestMapping(value = "/articles/{doi:.+}", method = RequestMethod.GET)
   public ResponseEntity<?> getRevisions(@PathVariable("doi") String doi)
