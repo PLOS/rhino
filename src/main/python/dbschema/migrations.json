@@ -2,7 +2,7 @@
   {
     "number": 1103,
     "scripts": [
-      "migrate_ambra_1103.sql",
+      "migrate_ambra_1103.sql"
     ]
   },
   {
