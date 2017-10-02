@@ -160,7 +160,7 @@ public class ArticleCrudController extends RestController {
 
     articleCrudService.updateIsPreprintOfUrl(ingestionId, null);
 
-    return reportDeleted(doi);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
   @Transactional(readOnly = true)
