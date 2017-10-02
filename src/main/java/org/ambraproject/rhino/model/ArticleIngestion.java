@@ -80,6 +80,8 @@ public class ArticleIngestion implements Timestamped {
   @Column(insertable = false, updatable = false, columnDefinition = "timestamp default current_timestamp")
   private java.util.Date lastModified;
 
+  @Column
+  private String isPreprintOfUrl;
 
   public long getVersionId() {
     return ingestionId;
@@ -170,6 +172,13 @@ public class ArticleIngestion implements Timestamped {
     this.lastModified = lastModified;
   }
 
+  public String getIsPreprintOfUrl() {
+    return isPreprintOfUrl;
+  }
+
+  public void setIsPreprintOfUrl(String isPreprintOfUrl) {
+    this.isPreprintOfUrl = isPreprintOfUrl;
+  }
 
   @Override
   public boolean equals(Object o) {

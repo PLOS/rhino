@@ -556,4 +556,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     });
   }
 
+  @Override
+  public void updateIsPreprintOfUrl(ArticleIngestionIdentifier articleId, String preprintOfUrl) throws IOException {
+    final ArticleIngestion articleIngestion = readIngestion(articleId);
+    articleIngestion.setIsPreprintOfUrl(preprintOfUrl);
+    hibernateTemplate.save(articleIngestion);
+  }
 }

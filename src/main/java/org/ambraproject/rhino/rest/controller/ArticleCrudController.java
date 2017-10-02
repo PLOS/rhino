@@ -135,6 +135,21 @@ public class ArticleCrudController extends RestController {
     return articleCrudService.serveMetadata(ingestionId).getIfModified(ifModifiedSince).asJsonResponse(entityGson);
   }
 
+  @Transactional()
+  @RequestMapping(value = "/articles/{doi}/ingestions/{number}", method = RequestMethod.POST)
+  public ResponseEntity<?> updateIsPreprintOfUrl(@RequestHeader(value = HttpHeaders.IF_MODIFIED_SINCE, required = false) Date ifModifiedSince,
+                                                 @PathVariable("doi") String doi,
+                                                 @PathVariable("number") int ingestionNumber,
+                                                 @RequestParam("preprintOfUrl") String preprintOfUrl)
+      throws IOException {
+    ArticleIngestionIdentifier ingestionId =
+        ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
+
+    articleCrudService.updateIsPreprintOfUrl(ingestionId, preprintOfUrl);
+
+    return articleCrudService.serveMetadata(ingestionId).getIfModified(ifModifiedSince).asJsonResponse(entityGson);
+  }
+
   @Transactional(readOnly = true)
   @RequestMapping(value = "/articles/{doi:.+}", method = RequestMethod.GET)
   public ResponseEntity<?> getRevisions(@PathVariable("doi") String doi)
