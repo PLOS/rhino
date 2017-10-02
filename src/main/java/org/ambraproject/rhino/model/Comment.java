@@ -73,18 +73,24 @@ public class Comment {
   @Column
   private String competingInterestBody;
 
-  @Generated(value= GenerationTime.INSERT)
+  @Generated(value = GenerationTime.INSERT)
   @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-  @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
+  @Column(insertable = false, updatable = false, columnDefinition = "timestamp default current_timestamp")
   private Date created;
 
-  @Generated(value= GenerationTime.ALWAYS)
+  @Generated(value = GenerationTime.ALWAYS)
   @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-  @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp")
+  @Column(insertable = false, updatable = false, columnDefinition = "timestamp default current_timestamp")
   private Date lastModified;
-  
+
   @Column
   private boolean isRemoved;
+
+  @Column
+  private String authorEmailAddress;
+
+  @Column
+  private String authorName;
 
   public Comment() {
     super();
@@ -190,25 +196,66 @@ public class Comment {
     isRemoved = removed;
   }
 
+  public String getAuthorEmailAddress() {
+    return authorEmailAddress;
+  }
+
+  public void setAuthorEmailAddress(String authorEmailAddress) {
+    this.authorEmailAddress = authorEmailAddress;
+  }
+
+  public String getAuthorName() {
+    return authorName;
+  }
+
+  public void setAuthorName(String authorName) {
+    this.authorName = authorName;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (!(o instanceof Comment)) return false;
+    if (o == null || getClass() != o.getClass()) return false;
 
-    Comment that = (Comment) o;
+    Comment comment = (Comment) o;
 
-    if (article != null ? !article.equals(that.article) : that.article != null) return false;
-    if (body != null ? !body.equals(that.body) : that.body != null) return false;
-    if (title != null ? !title.equals(that.title) : that.title != null) return false;
-
-    return true;
+    if (isRemoved != comment.isRemoved) return false;
+    if (!commentId.equals(comment.commentId)) return false;
+    if (userProfileID != null ? !userProfileID.equals(comment.userProfileID) : comment.userProfileID != null)
+      return false;
+    if (!article.equals(comment.article)) return false;
+    if (parent != null ? !parent.equals(comment.parent) : comment.parent != null) return false;
+    if (commentUri != null ? !commentUri.equals(comment.commentUri) : comment.commentUri != null)
+      return false;
+    if (title != null ? !title.equals(comment.title) : comment.title != null) return false;
+    if (body != null ? !body.equals(comment.body) : comment.body != null) return false;
+    if (highlightedText != null ? !highlightedText.equals(comment.highlightedText) : comment.highlightedText != null)
+      return false;
+    if (competingInterestBody != null ? !competingInterestBody.equals(comment.competingInterestBody) : comment.competingInterestBody != null)
+      return false;
+    if (!created.equals(comment.created)) return false;
+    if (!lastModified.equals(comment.lastModified)) return false;
+    if (authorEmailAddress != null ? !authorEmailAddress.equals(comment.authorEmailAddress) : comment.authorEmailAddress != null)
+      return false;
+    return authorName != null ? authorName.equals(comment.authorName) : comment.authorName == null;
   }
 
   @Override
   public int hashCode() {
-    int result = article != null ? article.hashCode() : 0;
+    int result = commentId.hashCode();
+    result = 31 * result + (userProfileID != null ? userProfileID.hashCode() : 0);
+    result = 31 * result + article.hashCode();
+    result = 31 * result + (parent != null ? parent.hashCode() : 0);
+    result = 31 * result + (commentUri != null ? commentUri.hashCode() : 0);
     result = 31 * result + (title != null ? title.hashCode() : 0);
     result = 31 * result + (body != null ? body.hashCode() : 0);
+    result = 31 * result + (highlightedText != null ? highlightedText.hashCode() : 0);
+    result = 31 * result + (competingInterestBody != null ? competingInterestBody.hashCode() : 0);
+    result = 31 * result + created.hashCode();
+    result = 31 * result + lastModified.hashCode();
+    result = 31 * result + (isRemoved ? 1 : 0);
+    result = 31 * result + (authorEmailAddress != null ? authorEmailAddress.hashCode() : 0);
+    result = 31 * result + (authorName != null ? authorName.hashCode() : 0);
     return result;
   }
 
