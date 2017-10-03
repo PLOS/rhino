@@ -8,8 +8,7 @@
   {
     "number": 1101,
     "scripts": [
-      "migrate_ambra_1101.sql",
-      "plos_seed_data.sql"
+      "migrate_ambra_1101.sql"
     ]
   },
   {
