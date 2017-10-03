@@ -23,13 +23,13 @@
 package org.ambraproject.rhino.view.article;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
 import org.ambraproject.rhino.content.xml.XmlContentException;
-import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.article.ArticleCustomMetadata;
@@ -110,6 +110,10 @@ public class ArticleIngestionView implements JsonOutputView {
     serialized.add("journal", context.serialize(journal));
     serialized.addProperty("bucketName", bucketName);
 
+    if (!Strings.isNullOrEmpty(ingestion.getIsPreprintOfUrl())) {
+      serialized.addProperty("isPreprintOfUrl", ingestion.getIsPreprintOfUrl());
+    }
+
     ArticleItem strikingImage = ingestion.getStrikingImage();
     if (strikingImage != null) {
       serialized.add("strikingImage", context.serialize(ItemSetView.getItemView(strikingImage)));
@@ -119,7 +123,8 @@ public class ArticleIngestionView implements JsonOutputView {
     JsonAdapterUtil.copyWithoutOverwriting(context.serialize(customMetadata).getAsJsonObject(), serialized);
 
     serialized.remove("assets");
-    List<AssetMetadataView> assetViews = metadata.getAssets().stream().map(AssetMetadataView::new).collect(Collectors.toList());
+    List<AssetMetadataView> assetViews = metadata.getAssets().stream().map(AssetMetadataView::new)
+        .collect(Collectors.toList());
     serialized.add("assetsLinkedFromManuscript", context.serialize(assetViews));
 
     return serialized;

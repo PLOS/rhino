@@ -47,7 +47,6 @@ import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
@@ -192,5 +191,12 @@ public interface ArticleCrudService {
    */
   public abstract Collection<ArticleRevision> getArticlesRevisedOn(LocalDate fromDate, LocalDate toDate);
 
+  /**
+   * Sets the "isPreprintOfUrl" field on the article ingestion.
+   *
+   * @param articleId the identifier of the article
+   * @param preprintOfUrl
+   */
+  public abstract void updateIsPreprintOfUrl(ArticleIngestionIdentifier articleId, String preprintOfUrl) throws IOException;
 
 }
