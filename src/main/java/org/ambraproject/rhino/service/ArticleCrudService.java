@@ -192,11 +192,11 @@ public interface ArticleCrudService {
   public abstract Collection<ArticleRevision> getArticlesRevisedOn(LocalDate fromDate, LocalDate toDate);
 
   /**
-   * Sets the "isPreprintOfUrl" field on the article ingestion.
+   * Sets the "isPreprintOfDoi" field on the article ingestion.
    *
    * @param articleId the identifier of the article
    * @param preprintOfUrl
    */
-  public abstract void updateIsPreprintOfUrl(ArticleIngestionIdentifier articleId, String preprintOfUrl) throws IOException;
+  public abstract void updateIsPreprintOfDoi(ArticleIngestionIdentifier articleId, String preprintOfUrl) throws IOException;
 
 }

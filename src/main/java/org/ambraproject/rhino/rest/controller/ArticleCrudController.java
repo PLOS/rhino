@@ -137,7 +137,7 @@ public class ArticleCrudController extends RestController {
 
   @Transactional()
   @RequestMapping(value = "/articles/{doi}/ingestions/{number}", method = RequestMethod.POST)
-  public ResponseEntity<?> updateIsPreprintOfUrl(@RequestHeader(value = HttpHeaders.IF_MODIFIED_SINCE, required = false) Date ifModifiedSince,
+  public ResponseEntity<?> updateIsPreprintOfDoi(@RequestHeader(value = HttpHeaders.IF_MODIFIED_SINCE, required = false) Date ifModifiedSince,
                                                  @PathVariable("doi") String doi,
                                                  @PathVariable("number") int ingestionNumber,
                                                  @RequestParam("preprintOfUrl") String preprintOfUrl)
@@ -145,20 +145,20 @@ public class ArticleCrudController extends RestController {
     ArticleIngestionIdentifier ingestionId =
         ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
 
-    articleCrudService.updateIsPreprintOfUrl(ingestionId, preprintOfUrl);
+    articleCrudService.updateIsPreprintOfDoi(ingestionId, preprintOfUrl);
 
     return articleCrudService.serveMetadata(ingestionId).getIfModified(ifModifiedSince).asJsonResponse(entityGson);
   }
 
   @Transactional()
   @RequestMapping(value = "/articles/{doi}/ingestions/{number}", method = RequestMethod.DELETE)
-  public ResponseEntity<?> removeIsPreprintOfUrl(@PathVariable("doi") String doi,
+  public ResponseEntity<?> removeIsPreprintOfDoi(@PathVariable("doi") String doi,
                                                  @PathVariable("number") int ingestionNumber)
       throws IOException {
     ArticleIngestionIdentifier ingestionId =
         ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
 
-    articleCrudService.updateIsPreprintOfUrl(ingestionId, null);
+    articleCrudService.updateIsPreprintOfDoi(ingestionId, null);
 
     return new ResponseEntity<>(HttpStatus.OK);
   }
