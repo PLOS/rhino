@@ -110,8 +110,8 @@ public class ArticleIngestionView implements JsonOutputView {
     serialized.add("journal", context.serialize(journal));
     serialized.addProperty("bucketName", bucketName);
 
-    if (!Strings.isNullOrEmpty(ingestion.getIsPreprintOfUrl())) {
-      serialized.addProperty("isPreprintOfUrl", ingestion.getIsPreprintOfUrl());
+    if (!Strings.isNullOrEmpty(ingestion.getIsPreprintOfDoi())) {
+      serialized.addProperty("isPreprintOfDoi", ingestion.getIsPreprintOfDoi());
     }
 
     ArticleItem strikingImage = ingestion.getStrikingImage();

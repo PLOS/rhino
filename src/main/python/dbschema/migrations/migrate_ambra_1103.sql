@@ -21,4 +21,4 @@
  */
 
 ALTER TABLE `ambra`.`articleIngestion`
-  ADD COLUMN `isPreprintOfUrl` VARCHAR(250) NULL DEFAULT NULL AFTER `lastModified`;
+  ADD COLUMN `isPreprintOfDoi` VARCHAR(250) NULL DEFAULT NULL AFTER `lastModified`;
