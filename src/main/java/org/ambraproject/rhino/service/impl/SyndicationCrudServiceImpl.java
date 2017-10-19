@@ -147,7 +147,7 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
   public Collection<Syndication> getSyndications(final String journalKey, final List<String> statuses) {
     int numDaysInPast = runtimeConfiguration.getQueueConfiguration().getSyndicationRange();
 
-    LocalDate startDate = LocalDate.now().minus(365, ChronoUnit.DAYS);
+    LocalDate startDate = LocalDate.now().minus(numDaysInPast, ChronoUnit.DAYS);
     Instant startTime = startDate.atStartOfDay(ZoneId.systemDefault()).toInstant();
 
     final Journal journal = journalService.readJournal(journalKey);
