@@ -22,6 +22,13 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.model.ArticleRevision;
@@ -35,7 +42,12 @@ import org.ambraproject.rhino.service.MessageSender;
 import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.ambraproject.rhino.view.article.ArticleJsonNames;
 import org.ambraproject.rhino.view.article.SyndicationOutputView;
+import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
+import org.hibernate.proxy.HibernateProxy;
+import org.hibernate.transform.Transformers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -135,7 +147,7 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
   public Collection<Syndication> getSyndications(final String journalKey, final List<String> statuses) {
     int numDaysInPast = runtimeConfiguration.getQueueConfiguration().getSyndicationRange();
 
-    LocalDate startDate = LocalDate.now().minus(numDaysInPast, ChronoUnit.DAYS);
+    LocalDate startDate = LocalDate.now().minus(365, ChronoUnit.DAYS);
     Instant startTime = startDate.atStartOfDay(ZoneId.systemDefault()).toInstant();
 
     final Journal journal = journalService.readJournal(journalKey);
@@ -145,18 +157,25 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
     }
 
     return hibernateTemplate.execute(session -> {
-      Query query = session.createQuery("" +
-          "SELECT s " +
-          "FROM Syndication s " +
-          "JOIN s.articleVersion av " +
-          "JOIN av.journals j " +
-          "WHERE j.journalKey = :journalKey " +
-          "AND s.status in (:statuses)" +
-          "AND s.lastModified > :startTime");
-      query.setParameter("journalKey", journalKey);
-      query.setParameterList("statuses", statuses);
-      query.setDate("startTime", Date.from(startTime));
-      return (Collection<Syndication>) query.list();
+      Query query = session.createQuery(
+          "SELECT s FROM Syndication s " +
+              "JOIN s.articleRevision ar " +
+              "JOIN ar.ingestion ai " +
+              "JOIN ai.journal j " +
+              "WHERE j.journalKey = :journalKey " +
+              "AND s.status in (:statuses) " +
+              "AND s.lastModified > :startTime")
+          .setParameter("journalKey", journalKey)
+          .setParameterList("statuses", statuses)
+          .setDate("startTime", Date.from(startTime));
+
+      Collection<Syndication> result = (Collection<Syndication>) query.list();
+      // strikingImage causes gson serialization to go in a loop.
+      for (Syndication item: result) {
+        item.getArticleRevision().getIngestion().setStrikingImage(null);
+      }
+      return result;
+
     });
   }
 
