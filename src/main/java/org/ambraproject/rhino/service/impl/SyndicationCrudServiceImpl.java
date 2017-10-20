@@ -157,13 +157,7 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
           .setParameterList("statuses", statuses)
           .setDate("startTime", Date.from(startTime));
 
-      Collection<Syndication> result = (Collection<Syndication>) query.list();
-      // strikingImage causes gson serialization to go in a loop.
-      for (Syndication item: result) {
-        item.getArticleRevision().getIngestion().setStrikingImage(null);
-      }
-      return result;
-
+      return (Collection<Syndication>) query.list();
     });
   }
 
