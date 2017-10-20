@@ -145,17 +145,18 @@ public class SyndicationCrudServiceImpl extends AmbraService implements Syndicat
     }
 
     return hibernateTemplate.execute(session -> {
-      Query query = session.createQuery("" +
-          "SELECT s " +
-          "FROM Syndication s " +
-          "JOIN s.articleVersion av " +
-          "JOIN av.journals j " +
-          "WHERE j.journalKey = :journalKey " +
-          "AND s.status in (:statuses)" +
-          "AND s.lastModified > :startTime");
-      query.setParameter("journalKey", journalKey);
-      query.setParameterList("statuses", statuses);
-      query.setDate("startTime", Date.from(startTime));
+      Query query = session.createQuery(
+          "SELECT s FROM Syndication s " +
+              "JOIN s.articleRevision ar " +
+              "JOIN ar.ingestion ai " +
+              "JOIN ai.journal j " +
+              "WHERE j.journalKey = :journalKey " +
+              "AND s.status in (:statuses) " +
+              "AND s.lastModified > :startTime")
+          .setParameter("journalKey", journalKey)
+          .setParameterList("statuses", statuses)
+          .setDate("startTime", Date.from(startTime));
+
       return (Collection<Syndication>) query.list();
     });
   }

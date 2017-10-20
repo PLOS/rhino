@@ -39,6 +39,8 @@ public class SyndicationOutputView implements JsonOutputView {
   }
 
   public static SyndicationOutputView createSyndicationView(Syndication syndication) {
+    // strikingImage causes gson serialization to go in a loop.
+    syndication.getArticleRevision().getIngestion().setStrikingImage(null);
     return new SyndicationOutputView(syndication);
   }
 
