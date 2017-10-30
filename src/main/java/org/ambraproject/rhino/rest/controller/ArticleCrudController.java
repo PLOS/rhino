@@ -75,6 +75,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -492,9 +493,16 @@ public class ArticleCrudController extends RestController {
   public ResponseEntity<?> getDoisPublishedOn(@ApiParam(value = "Date Format: yyyy-MM-dd")
                                               @RequestParam(value = "fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fromDate,
                                               @ApiParam(value = "Date Format: yyyy-MM-dd")
-                                              @RequestParam(value = "toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate) throws IOException {
+                                              @RequestParam(value = "toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate,
+                                              @RequestParam(value = "excludeJournalKey", required = false) String excludeJournalKey) throws IOException {
     List<ArticleRevisionView> views = articleCrudService.getArticlesPublishedOn(fromDate, toDate)
-        .stream().map(ArticleRevisionView::getView)
+        .stream().filter(new Predicate<ArticleRevision>() {
+          @Override
+          public boolean test(ArticleRevision articleRevision) {
+            return excludeJournalKey == null
+                || !excludeJournalKey.equalsIgnoreCase(articleRevision.getIngestion().getJournal().getJournalKey());
+          }
+        }).map(ArticleRevisionView::getView)
         .collect(Collectors.toList());
     return ServiceResponse.serveView(views).asJsonResponse(entityGson);
   }
@@ -506,9 +514,16 @@ public class ArticleCrudController extends RestController {
   public ResponseEntity<?> getDoisRevisedOn(@ApiParam(value = "Date Format: yyyy-MM-dd")
                                             @RequestParam(value = "fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fromDate,
                                             @ApiParam(value = "Date Format: yyyy-MM-dd")
-                                            @RequestParam(value = "toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate) throws IOException {
+                                            @RequestParam(value = "toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate,
+                                            @RequestParam(value = "excludeJournalKey", required = false) String excludeJournalKey) throws IOException {
     List<ArticleRevisionView> views = articleCrudService.getArticlesRevisedOn(fromDate, toDate)
-        .stream().map(ArticleRevisionView::getView)
+        .stream().filter(new Predicate<ArticleRevision>() {
+          @Override
+          public boolean test(ArticleRevision articleRevision) {
+            return excludeJournalKey == null
+                || !excludeJournalKey.equalsIgnoreCase(articleRevision.getIngestion().getJournal().getJournalKey());
+          }
+        }).map(ArticleRevisionView::getView)
         .collect(Collectors.toList());
     return ServiceResponse.serveView(views).asJsonResponse(entityGson);
   }
