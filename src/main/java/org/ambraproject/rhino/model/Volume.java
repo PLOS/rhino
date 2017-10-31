@@ -34,7 +34,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -72,7 +71,7 @@ public class Volume implements Timestamped {
   private Date lastModified;
 
   @Cascade(CascadeType.SAVE_UPDATE)
-  @OneToMany(fetch = FetchType.LAZY)
+  @OneToMany(fetch = FetchType.EAGER)
   @JoinColumn(name = "volumeId", nullable = false)
   @OrderColumn(name="volumeSortOrder")
   private List<Issue> issues;
