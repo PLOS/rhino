@@ -494,15 +494,9 @@ public class ArticleCrudController extends RestController {
                                               @RequestParam(value = "fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fromDate,
                                               @ApiParam(value = "Date Format: yyyy-MM-dd")
                                               @RequestParam(value = "toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate,
-                                              @RequestParam(value = "excludeJournalKey", required = false) String excludeJournalKey) throws IOException {
-    List<ArticleRevisionView> views = articleCrudService.getArticlesPublishedOn(fromDate, toDate)
-        .stream().filter(new Predicate<ArticleRevision>() {
-          @Override
-          public boolean test(ArticleRevision articleRevision) {
-            return excludeJournalKey == null
-                || !excludeJournalKey.equalsIgnoreCase(articleRevision.getIngestion().getJournal().getJournalKey());
-          }
-        }).map(ArticleRevisionView::getView)
+                                              @RequestParam(value = "bucketName", required = false) String bucketName) throws IOException {
+    List<ArticleRevisionView> views = articleCrudService.getArticlesPublishedOn(fromDate, toDate, bucketName)
+        .stream().map(ArticleRevisionView::getView)
         .collect(Collectors.toList());
     return ServiceResponse.serveView(views).asJsonResponse(entityGson);
   }
@@ -515,15 +509,9 @@ public class ArticleCrudController extends RestController {
                                             @RequestParam(value = "fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fromDate,
                                             @ApiParam(value = "Date Format: yyyy-MM-dd")
                                             @RequestParam(value = "toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate,
-                                            @RequestParam(value = "excludeJournalKey", required = false) String excludeJournalKey) throws IOException {
-    List<ArticleRevisionView> views = articleCrudService.getArticlesRevisedOn(fromDate, toDate)
-        .stream().filter(new Predicate<ArticleRevision>() {
-          @Override
-          public boolean test(ArticleRevision articleRevision) {
-            return excludeJournalKey == null
-                || !excludeJournalKey.equalsIgnoreCase(articleRevision.getIngestion().getJournal().getJournalKey());
-          }
-        }).map(ArticleRevisionView::getView)
+                                            @RequestParam(value = "bucketName", required = false) String bucketName) throws IOException {
+    List<ArticleRevisionView> views = articleCrudService.getArticlesRevisedOn(fromDate, toDate, bucketName)
+        .stream().map(ArticleRevisionView::getView)
         .collect(Collectors.toList());
     return ServiceResponse.serveView(views).asJsonResponse(entityGson);
   }

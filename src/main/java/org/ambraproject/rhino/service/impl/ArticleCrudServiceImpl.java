@@ -526,32 +526,66 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public Collection<ArticleRevision> getArticlesPublishedOn(LocalDate fromDate, LocalDate toDate) {
+    return getArticlesPublishedOn(fromDate, toDate, null);
+  }
+
+  @Override
+  public Collection<ArticleRevision> getArticlesPublishedOn(LocalDate fromDate, LocalDate toDate, String bucketName) {
     return hibernateTemplate.execute(session -> {
-      Query query = session.createQuery("" +
-          "SELECT ar " +
+      String queryString = bucketName == null
+          ? "SELECT ar " +
           "FROM ArticleRevision ar " +
           "INNER JOIN ar.ingestion ai " +
           "INNER JOIN  ar.ingestion.article at " +
           "WHERE ai.publicationDate >= :fromDate AND ai.publicationDate <= :toDate " +
-          "AND ar.revisionId IS NOT NULL");
+          "AND ar.revisionId IS NOT NULL"
+          : "SELECT ar " +
+          "FROM ArticleRevision ar, ArticleFile file " +
+          "INNER JOIN ar.ingestion ai " +
+          "INNER JOIN ar.ingestion.article at " +
+          "WHERE ai.publicationDate >= :fromDate AND ai.publicationDate <= :toDate " +
+          "AND ar.revisionId IS NOT NULL " +
+          "AND file.ingestion = ai " +
+          "AND file.bucketName = :bucketName";
+      Query query = session.createQuery(queryString);
       query.setParameter("fromDate", java.sql.Date.valueOf(fromDate));
       query.setParameter("toDate", java.sql.Date.valueOf(toDate));
+      if (bucketName != null) {
+        query.setParameter("bucketName", bucketName);
+      }
       return (Collection<ArticleRevision>) query.list();
     });
   }
 
   @Override
   public Collection<ArticleRevision> getArticlesRevisedOn(LocalDate fromDate, LocalDate toDate) {
+    return getArticlesRevisedOn(fromDate, toDate, null);
+  }
+
+  @Override
+  public Collection<ArticleRevision> getArticlesRevisedOn(LocalDate fromDate, LocalDate toDate, String bucketName) {
     return hibernateTemplate.execute(session -> {
-      Query query = session.createQuery("" +
-          "SELECT ar " +
+      String queryString = bucketName != null
+          ? "SELECT ar " +
           "FROM ArticleRevision ar " +
           "INNER JOIN ar.ingestion ai " +
           "INNER JOIN  ar.ingestion.article at " +
           "WHERE ai.revisionDate >= :fromDate AND ai.revisionDate <= :toDate " +
-          "AND ar.revisionId IS NOT NULL");
+          "AND ar.revisionId IS NOT NULL"
+          : "SELECT ar " +
+          "FROM ArticleRevision ar, ArticleFile file " +
+          "INNER JOIN ar.ingestion ai " +
+          "INNER JOIN ar.ingestion.article at " +
+          "WHERE ai.revisionDate >= :fromDate AND ai.revisionDate <= :toDate " +
+          "AND ar.revisionId IS NOT NULL " +
+          "AND file.ingestion = ai " +
+          "AND file.bucketName = :bucketName";
+      Query query = session.createQuery(queryString);
       query.setParameter("fromDate", java.sql.Date.valueOf(fromDate));
       query.setParameter("toDate", java.sql.Date.valueOf(toDate));
+      if (bucketName != null) {
+        query.setParameter("bucketName", bucketName);
+      }
       return (Collection<ArticleRevision>) query.list();
     });
   }
