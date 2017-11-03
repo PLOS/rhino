@@ -565,7 +565,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public Collection<ArticleRevision> getArticlesRevisedOn(LocalDate fromDate, LocalDate toDate, String bucketName) {
     return hibernateTemplate.execute(session -> {
-      String queryString = bucketName != null
+      String queryString = bucketName == null
           ? "SELECT ar " +
           "FROM ArticleRevision ar " +
           "INNER JOIN ar.ingestion ai " +
