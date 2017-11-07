@@ -75,7 +75,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -511,6 +510,18 @@ public class ArticleCrudController extends RestController {
                                             @RequestParam(value = "toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate,
                                             @RequestParam(value = "bucketName", required = false) String bucketName) throws IOException {
     List<ArticleRevisionView> views = articleCrudService.getArticlesRevisedOn(fromDate, toDate, bucketName)
+        .stream().map(ArticleRevisionView::getView)
+        .collect(Collectors.toList());
+    return ServiceResponse.serveView(views).asJsonResponse(entityGson);
+  }
+
+
+  @Transactional(readOnly = true)
+  @RequestMapping(value = "/articles", method = RequestMethod.GET, params = "preprintsWithoutVor")
+  @ApiImplicitParam(name = "preprintsWithoutVor", value = "preprintsWithoutVor flag (any value)", required = true,
+      defaultValue = "preprintsWithoutVor", paramType = "query", dataType = "string")
+  public ResponseEntity<?> getPreprintsWithoutVor() throws IOException {
+    List<ArticleRevisionView> views = articleCrudService.getPreprintArticlesWithoutVor()
         .stream().map(ArticleRevisionView::getView)
         .collect(Collectors.toList());
     return ServiceResponse.serveView(views).asJsonResponse(entityGson);

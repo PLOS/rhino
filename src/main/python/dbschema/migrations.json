@@ -1,5 +1,11 @@
 [
   {
+    "number": 1104,
+    "scripts": [
+      "migrate_ambra_1104.sql"
+    ]
+  },
+  {
     "number": 1103,
     "scripts": [
       "migrate_ambra_1103.sql"
