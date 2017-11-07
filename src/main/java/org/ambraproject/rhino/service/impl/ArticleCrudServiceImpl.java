@@ -594,7 +594,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public Collection<ArticleRevision> getPreprintArticlesWithoutVor() {
     return hibernateTemplate.execute(session -> {
       String subQuery = "" +
-          "SELECT DISTINCT fi.ingestion " +
+          "SELECT fi.ingestion " +
           "FROM ArticleFile fi " +
           "INNER JOIN fi.ingestion ai " +
           "WHERE fi.bucketName = 'preprints' " +
@@ -602,7 +602,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       String queryString = "" +
           "SELECT DISTINCT ar " +
           "FROM ArticleRevision ar " +
-          "WHERE ar.ingestion IN (" + subQuery + ")";
+          "WHERE ar.ingestion EXISTS (" + subQuery + ")";
       Query query = session.createQuery(queryString);
       final Collection<ArticleRevision> revisions = query.list();
       return revisions;
