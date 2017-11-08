@@ -600,9 +600,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           "WHERE fi.bucketName = 'preprints' " +
           "AND ai.isPreprintOfDoi IS NULL";
       String queryString = "" +
-          "SELECT DISTINCT ar " +
+          "SELECT ar " +
           "FROM ArticleRevision ar " +
-          "WHERE ar.ingestion EXISTS (" + subQuery + ")";
+          "INNER JOIN ar.ingestion ai " +
+          "WHERE EXISTS (" + subQuery + ")";
       Query query = session.createQuery(queryString);
       final Collection<ArticleRevision> revisions = query.list();
       return revisions;
