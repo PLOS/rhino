@@ -140,12 +140,12 @@ public class ArticleCrudController extends RestController {
   public ResponseEntity<?> updateIsPreprintOfDoi(@RequestHeader(value = HttpHeaders.IF_MODIFIED_SINCE, required = false) Date ifModifiedSince,
                                                  @PathVariable("doi") String doi,
                                                  @PathVariable("number") int ingestionNumber,
-                                                 @RequestParam("preprintOfUrl") String preprintOfUrl)
+                                                 @RequestParam("preprintOfDoi") String preprintOfDoi)
       throws IOException {
     ArticleIngestionIdentifier ingestionId =
         ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
 
-    articleCrudService.updateIsPreprintOfDoi(ingestionId, preprintOfUrl);
+    articleCrudService.updateIsPreprintOfDoi(ingestionId, preprintOfDoi);
 
     return articleCrudService.serveMetadata(ingestionId).getIfModified(ifModifiedSince).asJsonResponse(entityGson);
   }
