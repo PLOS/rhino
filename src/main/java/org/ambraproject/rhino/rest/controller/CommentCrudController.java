@@ -52,6 +52,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 @Controller
 public class CommentCrudController extends RestController {
@@ -97,6 +98,15 @@ public class CommentCrudController extends RestController {
                                                 @RequestParam(value = "date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date)
       throws IOException {
     return commentCrudService.getCommentsCreatedOn(date).asJsonResponse(entityGson);
+  }
+
+  @Transactional(readOnly = true)
+  @RequestMapping(value = "/comments", method = RequestMethod.GET, params = "journal")
+  public ResponseEntity<?> getRecentComments(@RequestParam(value = "journal") String journalKey,
+                                @RequestParam(value = "limit", required = false) Integer limit)
+      throws IOException {
+    OptionalInt limitObj = (limit == null) ? OptionalInt.empty() : OptionalInt.of(limit);
+    return commentCrudService.readRecentComments(journalKey, limitObj).asJsonResponse(entityGson);
   }
 
   @RequestMapping(value = "/commentFlags", method = RequestMethod.GET)
