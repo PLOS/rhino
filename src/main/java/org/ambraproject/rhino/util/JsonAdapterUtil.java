@@ -70,7 +70,6 @@ public final class JsonAdapterUtil {
     Iso8601CalendarAdapter calendarAdapter = new Iso8601CalendarAdapter();
     builder.registerTypeAdapter(Calendar.class, calendarAdapter);
     builder.registerTypeAdapter(GregorianCalendar.class, calendarAdapter);
-    builder.setDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'");
 
     return builder;
   }

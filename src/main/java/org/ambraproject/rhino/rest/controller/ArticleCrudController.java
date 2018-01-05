@@ -141,12 +141,12 @@ public class ArticleCrudController extends RestController {
   public ResponseEntity<?> updateIsPreprintOfDoi(@RequestHeader(value = HttpHeaders.IF_MODIFIED_SINCE, required = false) Date ifModifiedSince,
                                                  @PathVariable("doi") String doi,
                                                  @PathVariable("number") int ingestionNumber,
-                                                 @RequestParam("preprintOfUrl") String preprintOfUrl)
+                                                 @RequestParam("preprintOfDoi") String preprintOfDoi)
       throws IOException {
     ArticleIngestionIdentifier ingestionId =
         ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
 
-    articleCrudService.updateIsPreprintOfDoi(ingestionId, preprintOfUrl);
+    articleCrudService.updateIsPreprintOfDoi(ingestionId, preprintOfDoi);
 
     return articleCrudService.serveMetadata(ingestionId).getIfModified(ifModifiedSince).asJsonResponse(entityGson);
   }
@@ -494,15 +494,9 @@ public class ArticleCrudController extends RestController {
                                               @RequestParam(value = "fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fromDate,
                                               @ApiParam(value = "Date Format: yyyy-MM-dd")
                                               @RequestParam(value = "toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate,
-                                              @RequestParam(value = "excludeJournalKey", required = false) String excludeJournalKey) throws IOException {
-    List<ArticleRevisionView> views = articleCrudService.getArticlesPublishedOn(fromDate, toDate)
-        .stream().filter(new Predicate<ArticleRevision>() {
-          @Override
-          public boolean test(ArticleRevision articleRevision) {
-            return excludeJournalKey == null
-                || !excludeJournalKey.equalsIgnoreCase(articleRevision.getIngestion().getJournal().getJournalKey());
-          }
-        }).map(ArticleRevisionView::getView)
+                                              @RequestParam(value = "bucketName", required = false) String bucketName) throws IOException {
+    List<ArticleRevisionView> views = articleCrudService.getArticlesPublishedOn(fromDate, toDate, bucketName)
+        .stream().map(ArticleRevisionView::getView)
         .collect(Collectors.toList());
     return ServiceResponse.serveView(views).asJsonResponse(entityGson);
   }
@@ -515,15 +509,21 @@ public class ArticleCrudController extends RestController {
                                             @RequestParam(value = "fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fromDate,
                                             @ApiParam(value = "Date Format: yyyy-MM-dd")
                                             @RequestParam(value = "toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate,
-                                            @RequestParam(value = "excludeJournalKey", required = false) String excludeJournalKey) throws IOException {
-    List<ArticleRevisionView> views = articleCrudService.getArticlesRevisedOn(fromDate, toDate)
-        .stream().filter(new Predicate<ArticleRevision>() {
-          @Override
-          public boolean test(ArticleRevision articleRevision) {
-            return excludeJournalKey == null
-                || !excludeJournalKey.equalsIgnoreCase(articleRevision.getIngestion().getJournal().getJournalKey());
-          }
-        }).map(ArticleRevisionView::getView)
+                                            @RequestParam(value = "bucketName", required = false) String bucketName) throws IOException {
+    List<ArticleRevisionView> views = articleCrudService.getArticlesRevisedOn(fromDate, toDate, bucketName)
+        .stream().map(ArticleRevisionView::getView)
+        .collect(Collectors.toList());
+    return ServiceResponse.serveView(views).asJsonResponse(entityGson);
+  }
+
+
+  @Transactional(readOnly = true)
+  @RequestMapping(value = "/articles", method = RequestMethod.GET, params = "preprintsWithoutVor")
+  @ApiImplicitParam(name = "preprintsWithoutVor", value = "preprintsWithoutVor flag (any value)", required = true,
+      defaultValue = "preprintsWithoutVor", paramType = "query", dataType = "string")
+  public ResponseEntity<?> getPreprintsWithoutVor() throws IOException {
+    List<ArticleRevisionView> views = articleCrudService.getPreprintArticlesWithoutVor()
+        .stream().map(ArticleRevisionView::getView)
         .collect(Collectors.toList());
     return ServiceResponse.serveView(views).asJsonResponse(entityGson);
   }

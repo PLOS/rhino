@@ -187,16 +187,31 @@ public interface ArticleCrudService {
   public abstract Collection<ArticleRevision> getArticlesPublishedOn(LocalDate fromDate, LocalDate toDate);
 
   /**
+   * Get all the article revisions published in the given bucket within a given date range
+   */
+  public abstract Collection<ArticleRevision> getArticlesPublishedOn(LocalDate fromDate, LocalDate toDate, String bucketName);
+
+  /**
    * Get all the article revisions revised within a given date range
    */
   public abstract Collection<ArticleRevision> getArticlesRevisedOn(LocalDate fromDate, LocalDate toDate);
 
   /**
+   * Get all the article revisions revised in the given bucket within a given date range
+   */
+  public abstract Collection<ArticleRevision> getArticlesRevisedOn(LocalDate fromDate, LocalDate toDate, String bucketName);
+
+  /**
+   * Get all article revisions that are a preprint and do not yet have a linked VOR
+   */
+  public abstract Collection<ArticleRevision> getPreprintArticlesWithoutVor();
+
+  /**
    * Sets the "isPreprintOfDoi" field on the article ingestion.
    *
    * @param articleId the identifier of the article
-   * @param preprintOfUrl
+   * @param preprintOfDoi doi of the VOR for this preprint
    */
-  public abstract void updateIsPreprintOfDoi(ArticleIngestionIdentifier articleId, String preprintOfUrl) throws IOException;
+  public abstract void updateIsPreprintOfDoi(ArticleIngestionIdentifier articleId, String preprintOfDoi) throws IOException;
 
 }
