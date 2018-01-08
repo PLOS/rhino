@@ -57,6 +57,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -378,5 +379,25 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
       return comments.stream().map(commentNodeViewFactory::create).collect(Collectors.toList());
     });
     return ServiceResponse.serveView(views);
+  }
+
+  @Override
+  public ServiceResponse<Collection<CommentNodeView>> readRecentComments(String journalKey, OptionalInt limit) {
+    Collection<CommentNodeView> views = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("" +
+          "SELECT DISTINCT com " +
+          "FROM Comment com, ArticleIngestion art, Journal j " +
+          "WHERE com.article = art.article " +
+          "  AND j = art.journal " +
+          "  AND j.journalKey = :journalKey " +
+          "ORDER BY com.created DESC");
+      query.setParameter("journalKey", journalKey);
+      limit.ifPresent(query::setMaxResults);
+      Collection<Comment> comments = query.list();
+
+      return comments.stream().map(commentNodeViewFactory::create).collect(Collectors.toList());
+    });
+    return ServiceResponse.serveView(views);
+
   }
 }

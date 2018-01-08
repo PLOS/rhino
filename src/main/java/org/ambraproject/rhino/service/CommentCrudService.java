@@ -41,6 +41,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 /**
  * Service that handles comments and replies associated with articles. For legacy reasons, these are referred to
@@ -99,4 +100,7 @@ public interface CommentCrudService {
   public ServiceResponse<CommentCountView> getCommentCount(Article article);
 
   public ServiceResponse<Collection<CommentNodeView>> getCommentsCreatedOn(LocalDate date);
-}
+
+  public ServiceResponse<Collection<CommentNodeView>> readRecentComments(String journalKey, OptionalInt limit);
+
+  }
