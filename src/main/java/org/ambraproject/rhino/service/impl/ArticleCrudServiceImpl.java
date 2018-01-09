@@ -21,6 +21,7 @@
  */
 package org.ambraproject.rhino.service.impl;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
@@ -89,6 +90,8 @@ import java.util.stream.Collectors;
 public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudService {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudServiceImpl.class);
+
+  private static final Joiner SPACE_JOINER = Joiner.on(' ');
 
   @Autowired
   AssetCrudService assetCrudService;
@@ -532,21 +535,24 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public Collection<ArticleRevision> getArticlesPublishedOn(LocalDate fromDate, LocalDate toDate, String bucketName) {
     return hibernateTemplate.execute(session -> {
-      String queryString = bucketName == null
-          ? "SELECT ar " +
-          "FROM ArticleRevision ar " +
-          "INNER JOIN ar.ingestion ai " +
-          "INNER JOIN  ar.ingestion.article at " +
-          "WHERE ai.publicationDate >= :fromDate AND ai.publicationDate <= :toDate " +
-          "AND ar.revisionId IS NOT NULL"
-          : "SELECT ar " +
-          "FROM ArticleRevision ar, ArticleFile file " +
-          "INNER JOIN ar.ingestion ai " +
-          "INNER JOIN ar.ingestion.article at " +
-          "WHERE ai.publicationDate >= :fromDate AND ai.publicationDate <= :toDate " +
-          "AND ar.revisionId IS NOT NULL " +
-          "AND file.ingestion = ai " +
-          "AND file.bucketName = :bucketName";
+      final String queryString;
+      if (bucketName == null) {
+        queryString = SPACE_JOINER.join("SELECT DISTINCT ar",
+            "FROM ArticleRevision ar",
+            "INNER JOIN ar.ingestion ai",
+            "INNER JOIN  ar.ingestion.article at",
+            "WHERE ai.publicationDate >= :fromDate AND ai.publicationDate <= :toDate",
+            "AND ar.revisionId IS NOT NULL");
+      } else {
+        queryString = SPACE_JOINER.join("SELECT DISTINCT ar",
+            "FROM ArticleRevision ar, ArticleFile file",
+            "INNER JOIN ar.ingestion ai",
+            "INNER JOIN ar.ingestion.article at",
+            "WHERE ai.publicationDate >= :fromDate AND ai.publicationDate <= :toDate",
+            "AND ar.revisionId IS NOT NULL",
+            "AND file.ingestion = ai",
+            "AND file.bucketName = :bucketName");
+      }
       Query query = session.createQuery(queryString);
       query.setParameter("fromDate", java.sql.Date.valueOf(fromDate));
       query.setParameter("toDate", java.sql.Date.valueOf(toDate));
@@ -565,21 +571,24 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public Collection<ArticleRevision> getArticlesRevisedOn(LocalDate fromDate, LocalDate toDate, String bucketName) {
     return hibernateTemplate.execute(session -> {
-      String queryString = bucketName == null
-          ? "SELECT ar " +
-          "FROM ArticleRevision ar " +
-          "INNER JOIN ar.ingestion ai " +
-          "INNER JOIN  ar.ingestion.article at " +
-          "WHERE ai.revisionDate >= :fromDate AND ai.revisionDate <= :toDate " +
-          "AND ar.revisionId IS NOT NULL"
-          : "SELECT ar " +
-          "FROM ArticleRevision ar, ArticleFile file " +
-          "INNER JOIN ar.ingestion ai " +
-          "INNER JOIN ar.ingestion.article at " +
-          "WHERE ai.revisionDate >= :fromDate AND ai.revisionDate <= :toDate " +
-          "AND ar.revisionId IS NOT NULL " +
-          "AND file.ingestion = ai " +
-          "AND file.bucketName = :bucketName";
+      final String queryString;
+      if (bucketName == null) {
+        queryString = SPACE_JOINER.join("SELECT DISTINCT ar",
+            "FROM ArticleRevision ar",
+            "INNER JOIN ar.ingestion ai",
+            "INNER JOIN  ar.ingestion.article at",
+            "WHERE ai.revisionDate >= :fromDate AND ai.revisionDate <= :toDate",
+            "AND ar.revisionId IS NOT NULL");
+      } else {
+        queryString = SPACE_JOINER.join("SELECT DISTINCT ar",
+            "FROM ArticleRevision ar, ArticleFile file",
+            "INNER JOIN ar.ingestion ai",
+            "INNER JOIN ar.ingestion.article at",
+            "WHERE ai.revisionDate >= :fromDate AND ai.revisionDate <= :toDate",
+            "AND ar.revisionId IS NOT NULL",
+            "AND file.ingestion = ai",
+            "AND file.bucketName = :bucketName");
+      }
       Query query = session.createQuery(queryString);
       query.setParameter("fromDate", java.sql.Date.valueOf(fromDate));
       query.setParameter("toDate", java.sql.Date.valueOf(toDate));
