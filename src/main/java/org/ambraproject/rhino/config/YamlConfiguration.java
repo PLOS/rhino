@@ -281,6 +281,21 @@ public class YamlConfiguration implements RuntimeConfiguration {
     });
   }
 
+  private transient KafkaConfiguration kafkaConfiguration;
+
+  @Override
+  public KafkaConfiguration getKafkaConfiguration() {
+    return (kafkaConfiguration != null) ? kafkaConfiguration : (kafkaConfiguration = new KafkaConfiguration() {
+      public final ImmutableSet<String> DEFAULT_SERVER = ImmutableSet.of("localhost:9092");
+
+      @Override
+      public Set<String> getServers() {
+        return input.kafka != null && input.kafka.servers != null
+            ? ImmutableSet.copyOf(input.kafka.servers) : DEFAULT_SERVER;
+      }
+    });
+  }
+
   @Override
   public String getManuscriptCustomMetaName(ManuscriptCustomMetaAttribute attribute) {
     Objects.requireNonNull(attribute);
@@ -305,6 +320,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
     private UserApiConfigurationInput userApi;
     private String competingInterestPolicyStart;
     private QueueConfigurationInput queue;
+    private KafkaConfigurationInput kafka;
     private ManuscriptCustomMetaInput manuscriptCustomMeta;
 
     /**
@@ -361,6 +377,14 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setQueue(QueueConfigurationInput queue) {
       this.queue = queue;
+    }
+
+    /**
+     * @deprecated For reflective access by SnakeYAML only
+     */
+    @Deprecated
+    public void setKafka(KafkaConfigurationInput kafka) {
+      this.kafka = kafka;
     }
 
     /**
@@ -513,6 +537,15 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setSyndicationRange(Integer syndicationRange) {
       this.syndicationRange = syndicationRange;
+    }
+  }
+
+  public static class KafkaConfigurationInput {
+    private List<String> servers;
+
+    @Deprecated
+    public void setServers(List<String> servers) {
+      this.servers = servers;
     }
   }
 
