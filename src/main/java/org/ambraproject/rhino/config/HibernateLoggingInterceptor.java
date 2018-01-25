@@ -39,7 +39,7 @@ import java.util.Set;
 
 public class HibernateLoggingInterceptor extends EmptyInterceptor {
 
-  private Producer<String, Object> eventProducer;
+  final private Producer<String, Object> eventProducer;
 
   public HibernateLoggingInterceptor(RuntimeConfiguration runtimeConfiguration) {
     super();
