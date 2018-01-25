@@ -56,8 +56,7 @@ public class HibernateLoggingInterceptor extends EmptyInterceptor {
   public boolean onSave(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
     if (entity instanceof Comment) {
       Comment comment = (Comment) entity;
-      final String commentCreationMessage = String.format("Comment created: %s on article %s.",
-          comment.getCommentUri(), comment.getArticle().getDoi());
+      final String commentCreationMessage = String.format("Comment created. URI: %s ", comment.getCommentUri());
       final ProducerRecord<String, Object> producerRecord = new ProducerRecord<>("ambra-comment-created",
           commentCreationMessage);
       eventProducer.send(producerRecord);
