@@ -24,6 +24,7 @@ package org.ambraproject.rhino.config;
 
 import com.google.common.base.Joiner;
 import org.ambraproject.rhino.model.Comment;
+import org.ambraproject.rhino.model.Flag;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -58,6 +59,10 @@ public class HibernateLoggingInterceptor extends EmptyInterceptor {
       Comment comment = (Comment) entity;
       String commentCreationMessage = String.format("Comment created. URI: %s ", comment.getCommentUri());
       kafkaEventProducer.send(new ProducerRecord<>("ambra-comment-created", commentCreationMessage));
+    } else if (entity instanceof Flag) {
+      Flag flag = (Flag) entity;
+      String flagCreationMessage = String.format("Comment flagged. URI: %s ", flag.getFlaggedComment().getCommentUri());
+      kafkaEventProducer.send(new ProducerRecord<>("ambra-flag-created", flagCreationMessage));
     }
     return super.onSave(entity, id, state, propertyNames, types);
   }
@@ -68,6 +73,10 @@ public class HibernateLoggingInterceptor extends EmptyInterceptor {
       Comment comment = (Comment) entity;
       String commentDeletionMessage = String.format("Comment deleted. URI: %s ", comment.getCommentUri());
       kafkaEventProducer.send(new ProducerRecord<>("ambra-comment-deleted", commentDeletionMessage));
+    } else if (entity instanceof Flag) {
+      Flag flag = (Flag) entity;
+      String flagDeletionMessage = String.format("Comment unflagged. URI: %s ", flag.getFlaggedComment().getCommentUri());
+      kafkaEventProducer.send(new ProducerRecord<>("ambra-flag-deleted", flagDeletionMessage));
     }
     super.onDelete(entity, id, state, propertyNames, types);
   }
