@@ -23,6 +23,7 @@
 package org.ambraproject.rhino.config;
 
 import com.google.common.base.Joiner;
+import org.ambraproject.rhino.model.ArticleCategoryAssignmentFlag;
 import org.ambraproject.rhino.model.Comment;
 import org.ambraproject.rhino.model.Flag;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -63,6 +64,11 @@ public class HibernateLoggingInterceptor extends EmptyInterceptor {
       Flag flag = (Flag) entity;
       String flagCreationMessage = String.format("Comment flagged. URI: %s ", flag.getFlaggedComment().getCommentUri());
       kafkaEventProducer.send(new ProducerRecord<>("ambra-flag-created", flagCreationMessage));
+    } else if (entity instanceof ArticleCategoryAssignmentFlag) {
+      ArticleCategoryAssignmentFlag flag = (ArticleCategoryAssignmentFlag) entity;
+      String flagCreationMessage = String.format("Category flagged. Article DOI: %s , Category: %s",
+          flag.getArticle().getDoi(), flag.getCategory());
+      kafkaEventProducer.send(new ProducerRecord<>("ambra-category-flag-created", flagCreationMessage));
     }
     return super.onSave(entity, id, state, propertyNames, types);
   }
@@ -77,6 +83,11 @@ public class HibernateLoggingInterceptor extends EmptyInterceptor {
       Flag flag = (Flag) entity;
       String flagDeletionMessage = String.format("Comment unflagged. URI: %s ", flag.getFlaggedComment().getCommentUri());
       kafkaEventProducer.send(new ProducerRecord<>("ambra-flag-deleted", flagDeletionMessage));
+    } else if (entity instanceof ArticleCategoryAssignmentFlag) {
+      ArticleCategoryAssignmentFlag flag = (ArticleCategoryAssignmentFlag) entity;
+      String flagDeletionMessage = String.format("Category unflagged. Article DOI: %s , Category: %s",
+          flag.getArticle().getDoi(), flag.getCategory());
+      kafkaEventProducer.send(new ProducerRecord<>("ambra-category-flag-deleted", flagDeletionMessage));
     }
     super.onDelete(entity, id, state, propertyNames, types);
   }
