@@ -39,28 +39,36 @@ import java.util.Set;
 
 public class HibernateLoggingInterceptor extends EmptyInterceptor {
 
-  final private Producer<String, Object> eventProducer;
+  final private Producer<String, Object> kafkaEventProducer;
 
   public HibernateLoggingInterceptor(RuntimeConfiguration runtimeConfiguration) {
     super();
     Properties props = new Properties();
-    final Set<String> servers = runtimeConfiguration.getKafkaConfiguration().getServers();
+    Set<String> servers = runtimeConfiguration.getKafkaConfiguration().getServers();
     props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, Joiner.on(',').join(servers));
     props.put(ProducerConfig.CLIENT_ID_CONFIG, "RhinoEventProducerService");
     props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, LongSerializer.class.getName());
     props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-    eventProducer = new KafkaProducer<>(props);
+    kafkaEventProducer = new KafkaProducer<>(props);
   }
 
   @Override
   public boolean onSave(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
     if (entity instanceof Comment) {
       Comment comment = (Comment) entity;
-      final String commentCreationMessage = String.format("Comment created. URI: %s ", comment.getCommentUri());
-      final ProducerRecord<String, Object> producerRecord = new ProducerRecord<>("ambra-comment-created",
-          commentCreationMessage);
-      eventProducer.send(producerRecord);
+      String commentCreationMessage = String.format("Comment created. URI: %s ", comment.getCommentUri());
+      kafkaEventProducer.send(new ProducerRecord<>("ambra-comment-created", commentCreationMessage));
     }
     return super.onSave(entity, id, state, propertyNames, types);
+  }
+
+  @Override
+  public void onDelete(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
+    if (entity instanceof Comment) {
+      Comment comment = (Comment) entity;
+      String commentDeletionMessage = String.format("Comment deleted. URI: %s ", comment.getCommentUri());
+      kafkaEventProducer.send(new ProducerRecord<>("ambra-comment-deleted", commentDeletionMessage));
+    }
+    super.onDelete(entity, id, state, propertyNames, types);
   }
 }
