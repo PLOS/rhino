@@ -23,7 +23,9 @@
 package org.ambraproject.rhino.config;
 
 import com.google.common.base.Joiner;
+import org.ambraproject.rhino.model.ArticleCategoryAssignmentFlag;
 import org.ambraproject.rhino.model.Comment;
+import org.ambraproject.rhino.model.Flag;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -57,7 +59,16 @@ public class HibernateLoggingInterceptor extends EmptyInterceptor {
     if (entity instanceof Comment) {
       Comment comment = (Comment) entity;
       String commentCreationMessage = String.format("Comment created. URI: %s ", comment.getCommentUri());
-      kafkaEventProducer.send(new ProducerRecord<>("ambra-comment-created", commentCreationMessage));
+      sendMessage("ambra-comment-created", commentCreationMessage);
+    } else if (entity instanceof Flag) {
+      Flag flag = (Flag) entity;
+      String flagCreationMessage = String.format("Comment flagged. URI: %s ", flag.getFlaggedComment().getCommentUri());
+      sendMessage("ambra-flag-created", flagCreationMessage);
+    } else if (entity instanceof ArticleCategoryAssignmentFlag) {
+      ArticleCategoryAssignmentFlag flag = (ArticleCategoryAssignmentFlag) entity;
+      String flagCreationMessage = String.format("Category flagged. Article DOI: %s , Category: %s",
+          flag.getArticle().getDoi(), flag.getCategory());
+      sendMessage("ambra-category-flag-created", flagCreationMessage);
     }
     return super.onSave(entity, id, state, propertyNames, types);
   }
@@ -67,8 +78,21 @@ public class HibernateLoggingInterceptor extends EmptyInterceptor {
     if (entity instanceof Comment) {
       Comment comment = (Comment) entity;
       String commentDeletionMessage = String.format("Comment deleted. URI: %s ", comment.getCommentUri());
-      kafkaEventProducer.send(new ProducerRecord<>("ambra-comment-deleted", commentDeletionMessage));
+      sendMessage("ambra-comment-deleted", commentDeletionMessage);
+    } else if (entity instanceof Flag) {
+      Flag flag = (Flag) entity;
+      String flagDeletionMessage = String.format("Comment unflagged. URI: %s ", flag.getFlaggedComment().getCommentUri());
+      sendMessage("ambra-flag-deleted", flagDeletionMessage);
+    } else if (entity instanceof ArticleCategoryAssignmentFlag) {
+      ArticleCategoryAssignmentFlag flag = (ArticleCategoryAssignmentFlag) entity;
+      String flagDeletionMessage = String.format("Category unflagged. Article DOI: %s , Category: %s",
+          flag.getArticle().getDoi(), flag.getCategory());
+      sendMessage("ambra-category-flag-deleted", flagDeletionMessage);
     }
     super.onDelete(entity, id, state, propertyNames, types);
+  }
+
+  public void sendMessage(String topic, String message) {
+    kafkaEventProducer.send(new ProducerRecord<>(topic, message));
   }
 }
