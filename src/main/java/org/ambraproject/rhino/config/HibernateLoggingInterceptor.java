@@ -23,9 +23,8 @@
 package org.ambraproject.rhino.config;
 
 import com.google.common.base.Joiner;
-import org.ambraproject.rhino.model.ArticleCategoryAssignmentFlag;
+import com.google.gson.Gson;
 import org.ambraproject.rhino.model.Comment;
-import org.ambraproject.rhino.model.Flag;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -36,15 +35,45 @@ import org.hibernate.EmptyInterceptor;
 import org.hibernate.type.Type;
 
 import java.io.Serializable;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Date;
 import java.util.Properties;
 import java.util.Set;
 
 public class HibernateLoggingInterceptor extends EmptyInterceptor {
 
+  private enum KafkaEventType {
+    ADD, DELETE
+  }
+
+  private class KafkaJsonOutput {
+
+    private Date timestamp;
+    private double version = 1.0;
+    private String hostname;
+    private String message;
+    private KafkaEventType event;
+
+    public KafkaJsonOutput(String message, KafkaEventType event) {
+      this.timestamp = new Date();
+      this.event = event;
+      this.message = message;
+      try {
+        this.hostname = InetAddress.getLocalHost().getHostName();
+      } catch (UnknownHostException e) {
+        throw new RuntimeException(e);
+      }
+    }
+  }
+
+  final private Gson entityGson;
+
   final private Producer<String, Object> kafkaEventProducer;
 
-  public HibernateLoggingInterceptor(RuntimeConfiguration runtimeConfiguration) {
+  public HibernateLoggingInterceptor(RuntimeConfiguration runtimeConfiguration, Gson entityGson) {
     super();
+    this.entityGson = entityGson;
     Properties props = new Properties();
     Set<String> servers = runtimeConfiguration.getKafkaConfiguration().getServers();
     props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, Joiner.on(',').join(servers));
@@ -58,17 +87,7 @@ public class HibernateLoggingInterceptor extends EmptyInterceptor {
   public boolean onSave(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
     if (entity instanceof Comment) {
       Comment comment = (Comment) entity;
-      String commentCreationMessage = String.format("Comment created. URI: %s ", comment.getCommentUri());
-      sendMessage("ambra-comment-created", commentCreationMessage);
-    } else if (entity instanceof Flag) {
-      Flag flag = (Flag) entity;
-      String flagCreationMessage = String.format("Comment flagged. URI: %s ", flag.getFlaggedComment().getCommentUri());
-      sendMessage("ambra-flag-created", flagCreationMessage);
-    } else if (entity instanceof ArticleCategoryAssignmentFlag) {
-      ArticleCategoryAssignmentFlag flag = (ArticleCategoryAssignmentFlag) entity;
-      String flagCreationMessage = String.format("Category flagged. Article DOI: %s , Category: %s",
-          flag.getArticle().getDoi(), flag.getCategory());
-      sendMessage("ambra-category-flag-created", flagCreationMessage);
+      sendMessage("ambra-comment", comment.getCommentUri(), KafkaEventType.ADD);
     }
     return super.onSave(entity, id, state, propertyNames, types);
   }
@@ -77,22 +96,13 @@ public class HibernateLoggingInterceptor extends EmptyInterceptor {
   public void onDelete(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
     if (entity instanceof Comment) {
       Comment comment = (Comment) entity;
-      String commentDeletionMessage = String.format("Comment deleted. URI: %s ", comment.getCommentUri());
-      sendMessage("ambra-comment-deleted", commentDeletionMessage);
-    } else if (entity instanceof Flag) {
-      Flag flag = (Flag) entity;
-      String flagDeletionMessage = String.format("Comment unflagged. URI: %s ", flag.getFlaggedComment().getCommentUri());
-      sendMessage("ambra-flag-deleted", flagDeletionMessage);
-    } else if (entity instanceof ArticleCategoryAssignmentFlag) {
-      ArticleCategoryAssignmentFlag flag = (ArticleCategoryAssignmentFlag) entity;
-      String flagDeletionMessage = String.format("Category unflagged. Article DOI: %s , Category: %s",
-          flag.getArticle().getDoi(), flag.getCategory());
-      sendMessage("ambra-category-flag-deleted", flagDeletionMessage);
+      sendMessage("ambra-comment", comment.getCommentUri(), KafkaEventType.DELETE);
     }
     super.onDelete(entity, id, state, propertyNames, types);
   }
 
-  public void sendMessage(String topic, String message) {
-    kafkaEventProducer.send(new ProducerRecord<>(topic, message));
+  private void sendMessage(String topic, String message, KafkaEventType eventType) {
+    final KafkaJsonOutput output = new KafkaJsonOutput(message, eventType);
+    kafkaEventProducer.send(new ProducerRecord<>(topic, entityGson.toJson(output)));
   }
 }
