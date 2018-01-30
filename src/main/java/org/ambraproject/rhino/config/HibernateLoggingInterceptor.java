@@ -87,8 +87,7 @@ public class HibernateLoggingInterceptor extends EmptyInterceptor {
   public boolean onSave(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
     if (entity instanceof Comment) {
       Comment comment = (Comment) entity;
-      KafkaJsonOutput output = new KafkaJsonOutput(comment.getCommentUri(), KafkaEventType.ADD);
-      sendMessage("ambra-comment", output);
+      sendMessage("ambra-comment", comment.getCommentUri(), KafkaEventType.ADD);
     }
     return super.onSave(entity, id, state, propertyNames, types);
   }
@@ -97,13 +96,13 @@ public class HibernateLoggingInterceptor extends EmptyInterceptor {
   public void onDelete(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
     if (entity instanceof Comment) {
       Comment comment = (Comment) entity;
-      KafkaJsonOutput output = new KafkaJsonOutput(comment.getCommentUri(), KafkaEventType.DELETE);
-      sendMessage("ambra-comment", output);
+      sendMessage("ambra-comment", comment.getCommentUri(), KafkaEventType.DELETE);
     }
     super.onDelete(entity, id, state, propertyNames, types);
   }
 
-  private void sendMessage(String topic, KafkaJsonOutput message) {
-    kafkaEventProducer.send(new ProducerRecord<>(topic, entityGson.toJson(message)));
+  private void sendMessage(String topic, String message, KafkaEventType eventType) {
+    final KafkaJsonOutput output = new KafkaJsonOutput(message, eventType);
+    kafkaEventProducer.send(new ProducerRecord<>(topic, entityGson.toJson(output)));
   }
 }
