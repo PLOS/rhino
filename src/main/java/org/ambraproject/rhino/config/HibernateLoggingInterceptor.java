@@ -24,6 +24,7 @@ package org.ambraproject.rhino.config;
 
 import com.google.common.base.Joiner;
 import com.google.gson.Gson;
+import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.Comment;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -88,17 +89,11 @@ public class HibernateLoggingInterceptor extends EmptyInterceptor {
     if (entity instanceof Comment) {
       Comment comment = (Comment) entity;
       sendMessage("ambra-comment", comment.getCommentUri(), KafkaEventType.ADD);
+    } else if (entity instanceof ArticleRevision) {
+      ArticleRevision revision = (ArticleRevision) entity;
+      sendMessage("ambra-article", revision.getIngestion().getArticle().getDoi(), KafkaEventType.ADD);
     }
     return super.onSave(entity, id, state, propertyNames, types);
-  }
-
-  @Override
-  public void onDelete(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
-    if (entity instanceof Comment) {
-      Comment comment = (Comment) entity;
-      sendMessage("ambra-comment", comment.getCommentUri(), KafkaEventType.DELETE);
-    }
-    super.onDelete(entity, id, state, propertyNames, types);
   }
 
   private void sendMessage(String topic, String message, KafkaEventType eventType) {
