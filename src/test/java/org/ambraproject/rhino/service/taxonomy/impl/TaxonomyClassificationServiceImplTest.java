@@ -245,7 +245,7 @@ public class TaxonomyClassificationServiceImplTest {
         },
 
     };
-    return Stream.of(cases).map((Object[] values) -> {
+    return Stream.of(cases).<Object[]>map((Object[] values) -> {
       int leafCount = (Integer) values[0];
       List<WeightedTerm> input = ImmutableList.copyOf((WeightedTerm[]) values[1]);
       List<WeightedTerm> expected = ImmutableList.copyOf((WeightedTerm[]) values[2]);

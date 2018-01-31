@@ -50,7 +50,7 @@ public class ArticleXmlTest {
         {asset("title", ""), asset("", "")},
         {asset("", "description"), asset("", "")},
     };
-    return Stream.of(cases).map((AssetMetadata[] metadataCases) -> {
+    return Stream.of(cases).<Object[]>map((AssetMetadata[] metadataCases) -> {
       AssetMetadata goodNode = metadataCases[0];
       AssetMetadata[] badNodes = Arrays.copyOfRange(metadataCases, 1, metadataCases.length);
       return new Object[]{goodNode, badNodes};
@@ -79,11 +79,11 @@ public class ArticleXmlTest {
         {asset("", "description1"), asset("", "description2")},
     };
     return Stream.of(cases)
-        .flatMap((AssetMetadata[] nodes) -> {
+        .<ImmutableList<AssetMetadata>>flatMap((AssetMetadata[] nodes) -> {
           ImmutableList<AssetMetadata> nodeList = ImmutableList.copyOf(nodes);
           return Stream.of(nodeList, nodeList.reverse());
         })
-        .map((Collection<AssetMetadata> nodeList) -> new Object[]{nodeList})
+        .<Object[]>map((Collection<AssetMetadata> nodeList) -> new Object[]{nodeList})
         .iterator();
   }
 
