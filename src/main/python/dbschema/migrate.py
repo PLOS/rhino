@@ -51,6 +51,7 @@ from __future__ import print_function
 import MySQLdb  # may require `apt-get install python-mysqldb`
 import argparse
 import json
+import subprocess
 
 log = print
 
@@ -69,6 +70,8 @@ def parse_database_args():
                       help='port to use with MySQL host (default: 3307)')
   parser.add_argument('--force_clear', action='store_true',
                       help='Clear migrations in progress')
+  parser.add_argument('--dump', action='store_true',
+                      help='Dump schema to ambra-schema.sql')
 
   return parser.parse_args()
 
@@ -215,8 +218,14 @@ def run_migrations(db_client):
   for m in mt.get_migrations(version):
     m.apply(db_client)
 
+def dump_schema(host, username, password, name):
+  subprocess.call("mysqldump --host=%s --user=%s --password=%s --no-data %s > ambra-schema.sql"%(host, username, password, name), shell=True)
+  subprocess.call("mysqldump --host=%s --user=%s --password=%s %s version >> ambra-schema.sql"%(host, username, password, name), shell=True)
+
 args = parse_database_args()
 db_client = DatabaseClient(args)
 if args.force_clear:
   force_clear(db_client)
 run_migrations(db_client)
+if args.dump:
+  dump_schema(host=args.dbHost, username=args.dbUser, password=args.dbPass, name=args.dbName)
