@@ -75,7 +75,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -138,28 +137,28 @@ public class ArticleCrudController extends RestController {
 
   @Transactional()
   @RequestMapping(value = "/articles/{doi}/ingestions/{number}", method = RequestMethod.POST)
-  public ResponseEntity<?> updateIsPreprintOfDoi(@RequestHeader(value = HttpHeaders.IF_MODIFIED_SINCE, required = false) Date ifModifiedSince,
-                                                 @PathVariable("doi") String doi,
-                                                 @PathVariable("number") int ingestionNumber,
-                                                 @RequestParam("preprintOfDoi") String preprintOfDoi)
+  public ResponseEntity<?> updatePreprintDoi(@RequestHeader(value = HttpHeaders.IF_MODIFIED_SINCE, required = false) Date ifModifiedSince,
+                                             @PathVariable("doi") String doi,
+                                             @PathVariable("number") int ingestionNumber,
+                                             @RequestParam("preprintOfDoi") String preprintOfDoi)
       throws IOException {
     ArticleIngestionIdentifier ingestionId =
         ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
 
-    articleCrudService.updateIsPreprintOfDoi(ingestionId, preprintOfDoi);
+    articleCrudService.updatePreprintDoi(ingestionId, preprintOfDoi);
 
     return articleCrudService.serveMetadata(ingestionId).getIfModified(ifModifiedSince).asJsonResponse(entityGson);
   }
 
   @Transactional()
   @RequestMapping(value = "/articles/{doi}/ingestions/{number}", method = RequestMethod.DELETE)
-  public ResponseEntity<?> removeIsPreprintOfDoi(@PathVariable("doi") String doi,
-                                                 @PathVariable("number") int ingestionNumber)
+  public ResponseEntity<?> removePreprintDoi(@PathVariable("doi") String doi,
+                                             @PathVariable("number") int ingestionNumber)
       throws IOException {
     ArticleIngestionIdentifier ingestionId =
         ArticleIngestionIdentifier.create(DoiEscaping.unescape(doi), ingestionNumber);
 
-    articleCrudService.updateIsPreprintOfDoi(ingestionId, null);
+    articleCrudService.updatePreprintDoi(ingestionId, null);
 
     return new ResponseEntity<>(HttpStatus.OK);
   }
@@ -515,17 +514,4 @@ public class ArticleCrudController extends RestController {
         .collect(Collectors.toList());
     return ServiceResponse.serveView(views).asJsonResponse(entityGson);
   }
-
-
-  @Transactional(readOnly = true)
-  @RequestMapping(value = "/articles", method = RequestMethod.GET, params = "preprintsWithoutVor")
-  @ApiImplicitParam(name = "preprintsWithoutVor", value = "preprintsWithoutVor flag (any value)", required = true,
-      defaultValue = "preprintsWithoutVor", paramType = "query", dataType = "string")
-  public ResponseEntity<?> getPreprintsWithoutVor() throws IOException {
-    List<ArticleRevisionView> views = articleCrudService.getPreprintArticlesWithoutVor()
-        .stream().map(ArticleRevisionView::getView)
-        .collect(Collectors.toList());
-    return ServiceResponse.serveView(views).asJsonResponse(entityGson);
-  }
-
 }
