@@ -33,11 +33,11 @@ import javax.annotation.Nullable;
 public abstract class ArticleMetadata {
 
   @Nullable public abstract String getDoi();
-
   @Nullable public abstract String getTitle();
   @Nullable public abstract String getEissn();
   @Nullable public abstract String getJournalName();
   @Nullable public abstract String getDescription();
+  @Nullable public abstract String getAbstractText();
   @Nullable public abstract String getRights();
   @Nullable public abstract String getLanguage();
   @Nullable public abstract String getFormat();
@@ -61,7 +61,7 @@ public abstract class ArticleMetadata {
   @Nullable public abstract ImmutableList<NlmPerson> getEditors();
 
   public static Builder builder() {
-	return new AutoValue_ArticleMetadata.Builder();
+    return new AutoValue_ArticleMetadata.Builder();
   }
   
   @AutoValue.Builder
@@ -73,6 +73,7 @@ public abstract class ArticleMetadata {
     public abstract Builder setEissn(String eIssn);
     public abstract Builder setJournalName(String journalName);
     public abstract Builder setDescription(String description);
+    public abstract Builder setAbstractText(String abstractText);
     public abstract Builder setRights(String rights);
     public abstract Builder setLanguage(String language);
     public abstract Builder setFormat(String format);
