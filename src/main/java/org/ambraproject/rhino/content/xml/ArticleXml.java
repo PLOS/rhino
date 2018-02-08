@@ -182,6 +182,7 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     }
     article.setJournalName(readString("/article/front/journal-meta/journal-title-group/journal-title"));
     article.setDescription(getXmlFromNode(findAbstractNode()));
+    article.setAbstractText(getXmlFromNode(findFirstAbstractNode()));
 
     String rights = readString("/article/front/article-meta/permissions/copyright-statement");
     if (rights == null) {
@@ -237,6 +238,13 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
       }
     }
     return null;
+  }
+
+  /**
+   * @return the node containing the article abstract
+   */
+  private Node findFirstAbstractNode() {
+    return readNode("/article/front/article-meta/abstract");
   }
 
   /**

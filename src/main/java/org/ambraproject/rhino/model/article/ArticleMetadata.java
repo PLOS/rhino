@@ -36,6 +36,7 @@ public class ArticleMetadata {
   private final String eIssn;
   private final String journalName;
   private final String description;
+  private final String abstractText;
   private final String rights;
   private final String language;
   private final String format;
@@ -64,6 +65,7 @@ public class ArticleMetadata {
     this.eIssn = builder.eIssn;
     this.journalName = builder.journalName;
     this.description = builder.description;
+    this.abstractText = builder.abstractText;
     this.rights = builder.rights;
     this.language = builder.language;
     this.format = builder.format;
@@ -100,6 +102,10 @@ public class ArticleMetadata {
 
   public String getDescription() {
     return description;
+  }
+
+  public String getAbstractText() {
+    return abstractText;
   }
 
   public String getRights() {
@@ -181,6 +187,7 @@ public class ArticleMetadata {
     private String eIssn;
     private String journalName;
     private String description;
+    private String abstractText;
     private String rights;
     private String language;
     private String format;
@@ -228,6 +235,11 @@ public class ArticleMetadata {
 
     public Builder setDescription(String description) {
       this.description = description;
+      return this;
+    }
+
+    public Builder setAbstractText(String abstractText) {
+      this.abstractText = abstractText;
       return this;
     }
 
@@ -326,6 +338,8 @@ public class ArticleMetadata {
       return false;
     if (description != null ? !description.equals(that.description) : that.description != null)
       return false;
+    if (abstractText != null ? !abstractText.equals(that.abstractText) : that.abstractText != null)
+      return false;
     if (rights != null ? !rights.equals(that.rights) : that.rights != null) return false;
     if (language != null ? !language.equals(that.language) : that.language != null) return false;
     if (format != null ? !format.equals(that.format) : that.format != null) return false;
@@ -359,6 +373,7 @@ public class ArticleMetadata {
     result = 31 * result + (eIssn != null ? eIssn.hashCode() : 0);
     result = 31 * result + (journalName != null ? journalName.hashCode() : 0);
     result = 31 * result + (description != null ? description.hashCode() : 0);
+    result = 31 * result + (abstractText != null ? abstractText.hashCode() : 0);
     result = 31 * result + (rights != null ? rights.hashCode() : 0);
     result = 31 * result + (language != null ? language.hashCode() : 0);
     result = 31 * result + (format != null ? format.hashCode() : 0);
