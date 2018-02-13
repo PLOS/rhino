@@ -134,10 +134,13 @@ public class RhinoConfiguration {
 
     bean.setPackagesToScan("org.ambraproject.rhino.model");
 
-    try {
-      bean.setEntityInterceptor(new HibernateLoggingInterceptor(runtimeConfiguration, entityGson));
-    } catch (RuntimeException e) {
-      log.error("Error initializing HibernateLoggingInterceptor:", e);
+    if (runtimeConfiguration.getEnabledDevFeatures().contains("kafka")) {
+      try {
+        log.info("Kafka feature-flag is present, initializing Kafka");
+        bean.setEntityInterceptor(new HibernateLoggingInterceptor(runtimeConfiguration, entityGson));
+      } catch (RuntimeException e) {
+        log.error("Error initializing HibernateLoggingInterceptor:", e);
+      }
     }
 
     return bean;

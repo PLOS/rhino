@@ -177,4 +177,9 @@ public interface RuntimeConfiguration {
    */
   String getManuscriptCustomMetaName(ManuscriptCustomMetaAttribute attribute);
 
+  /**
+   * @return the set of enabled dev features, configured in wombat.yaml.
+   */
+  ImmutableSet<String> getEnabledDevFeatures();
+
 }
