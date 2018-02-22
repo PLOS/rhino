@@ -49,13 +49,10 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
 
   private String hostname = "unknown";
 
-  private Date startTime;
+  private final Date startTime = new Date();
 
   @PostConstruct
   public void init() {
-
-    startTime = new Date();
-
     try {
       hostname = InetAddress.getLocalHost().getHostName();
     } catch (UnknownHostException e) {
