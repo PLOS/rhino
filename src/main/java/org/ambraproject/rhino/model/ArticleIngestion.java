@@ -81,7 +81,7 @@ public class ArticleIngestion implements Timestamped {
   private java.util.Date lastModified;
 
   @Column
-  private String isPreprintOfDoi;
+  private String preprintDoi;
 
   public long getVersionId() {
     return ingestionId;
@@ -172,12 +172,12 @@ public class ArticleIngestion implements Timestamped {
     this.lastModified = lastModified;
   }
 
-  public String getIsPreprintOfDoi() {
-    return isPreprintOfDoi;
+  public String getPreprintDoi() {
+    return preprintDoi;
   }
 
-  public void setIsPreprintOfDoi(String isPreprintOfDoi) {
-    this.isPreprintOfDoi = isPreprintOfDoi;
+  public void setPreprintDoi(String preprintDoi) {
+    this.preprintDoi = preprintDoi;
   }
 
   @Override

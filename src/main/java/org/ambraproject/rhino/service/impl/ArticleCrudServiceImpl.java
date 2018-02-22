@@ -600,28 +600,9 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public Collection<ArticleRevision> getPreprintArticlesWithoutVor() {
-    return hibernateTemplate.execute(session -> {
-      String subQuery = "" +
-          "SELECT DISTINCT fi.ingestion " +
-          "FROM ArticleFile fi " +
-          "INNER JOIN fi.ingestion ai " +
-          "WHERE fi.bucketName = 'preprints' " +
-          "AND ai.isPreprintOfDoi IS NULL";
-      String queryString = "" +
-          "SELECT DISTINCT ar " +
-          "FROM ArticleRevision ar " +
-          "WHERE ar.ingestion IN (" + subQuery + ")";
-      Query query = session.createQuery(queryString);
-      final Collection<ArticleRevision> revisions = query.list();
-      return revisions;
-    });
-  }
-
-  @Override
-  public void updateIsPreprintOfDoi(ArticleIngestionIdentifier articleId, String preprintOfDoi) throws IOException {
+  public void updatePreprintDoi(ArticleIngestionIdentifier articleId, String preprintOfDoi) throws IOException {
     final ArticleIngestion articleIngestion = readIngestion(articleId);
-    articleIngestion.setIsPreprintOfDoi(preprintOfDoi);
+    articleIngestion.setPreprintDoi(preprintOfDoi);
     hibernateTemplate.save(articleIngestion);
   }
 }
