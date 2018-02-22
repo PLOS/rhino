@@ -22,6 +22,7 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import com.google.common.collect.ImmutableMap;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.service.ConfigurationReadService;
@@ -30,9 +31,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.UnknownHostException;
+import java.net.InetAddress;
 import java.util.LinkedHashMap;
+import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
+import javax.annotation.PostConstruct;
 
 public class ConfigurationReadServiceImpl extends AmbraService implements ConfigurationReadService {
 
@@ -41,6 +46,18 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
 
   @Autowired
   private GitInfo gitInfo;
+
+  private String hostname = "unknown";
+
+  private final Date startTime = new Date();
+
+  @PostConstruct
+  public void init() {
+    try {
+      hostname = InetAddress.getLocalHost().getHostName();
+    } catch (UnknownHostException e) {
+    }
+  }
 
   @Override
   public ServiceResponse<Properties> readBuildConfig() throws IOException {
@@ -69,6 +86,12 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
     cfgMap.put("editorial", showEndpointAsMap(runtimeConfiguration.getEditorialStorage()));
     cfgMap.put("corpus", showEndpointAsMap(runtimeConfiguration.getCorpusStorage()));
     return cfgMap;
+  }
+
+  @Override
+  public ServiceResponse<Map<String, String>> readRunInfo() {
+    Map<String, String> cfgMap = ImmutableMap.of("host", hostname, "started", startTime.toString());
+    return ServiceResponse.serveView(cfgMap);
   }
 
   /**

@@ -66,6 +66,9 @@ public class ConfigurationReadController extends RestController {
       case "repo":
         response = configurationReadService.readRepoConfig();
         break;
+      case "run":
+        response = configurationReadService.readRunInfo();
+        break;
       default:
         throw new RestClientException("Invalid configuration type parameter. Options are: " +
             ConfigurationReadService.CONFIG_TYPES.toString(), HttpStatus.BAD_REQUEST);
