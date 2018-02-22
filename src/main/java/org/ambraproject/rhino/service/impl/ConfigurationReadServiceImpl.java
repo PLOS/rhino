@@ -22,6 +22,7 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import com.google.common.collect.ImmutableMap;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.service.ConfigurationReadService;
@@ -92,9 +93,7 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
 
   @Override
   public ServiceResponse<Map<String, String>> readRunInfo() {
-    Map<String, String> cfgMap = new LinkedHashMap<>(2);
-    cfgMap.put("host", hostname);
-    cfgMap.put("started", startTime.toString());
+    Map<String, String> cfgMap = ImmutableMap.of("host", hostname, "started", startTime.toString());
     return ServiceResponse.serveView(cfgMap);
   }
 
