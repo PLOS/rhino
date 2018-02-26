@@ -653,8 +653,23 @@
         </executions>
       </plugin>
 
+      <plugin>
+        <artifactId>apt-repo</artifactId>
+        <groupId>org.m1theo</groupId>
+        <version>0.3.0</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>apt-repo</goal>
+            </goals>
+            <configuration>
+              <repoDir>/var/tmp/apt</repoDir>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
-
   </build>
 
   <reporting>
