@@ -61,7 +61,7 @@
     <ehcache.version>2.7.0</ehcache.version>
     <testng.version>6.9.10</testng.version>
     <google.truth.version>0.39</google.truth.version>
-    <maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
+    <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
     <build.timestamp>${maven.build.timestamp}</build.timestamp>
     <build.counter>0</build.counter>
   </properties>
