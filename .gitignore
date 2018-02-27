@@ -13,6 +13,11 @@ target/
 
 # Project metadata #
 .idea/
+.classpath
+.project
+.pydevproject
+.settings/
+test-output/
 *.iml
 *.ipr
 *.iws

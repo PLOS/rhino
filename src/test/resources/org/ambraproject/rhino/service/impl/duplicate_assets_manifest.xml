@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE manifest SYSTEM "manifest.dtd">
+<manifest>
+	<articleBundle>
+		<article uri="info:doi/10.1111/dupp.0000001">
+			<representation entry="dupp.0000001.xml" key="10.1111/dupp.0000001.XML"
+				mimetype="application/xml" type="manuscript" />
+			<representation entry="dupp.0000001.pdf" key="10.1111/dupp.0000001.pdf"
+				mimetype="application/pdf" type="printable" />
+		</article>
+		<object type="supplementaryMaterial" uri="info:doi/10.1111/dupp.0000001.s001" strkImage="true">
+			<representation entry="dupp.0000001.s001.png" key="10.1111/dupp.0000001.s001.png"
+				mimetype="image/ext" type="supplementary" />
+		</object>
+		<object type="supplementaryMaterial" uri="info:doi/10.1111/dupp.0000001.s001">
+			<representation entry="dupp.0000001.s002.jpg" key="10.1111/dupp.0000001.s002.jpg"
+				mimetype="image/ext" type="supplementary" />
+		</object>
+	</articleBundle>
+	<ancillary>
+		<file entry="manifest.xml" key="10.1111/dupp.0000001.manifest.xml"
+			mimetype="application/xml" />
+		<file entry="manifest.dtd" key="10.1111/dupp.0000001.manifest.dtd"
+			mimetype="application/xml-dtd" />
+	</ancillary>
+</manifest>
