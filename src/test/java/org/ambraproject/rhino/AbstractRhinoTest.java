@@ -1,13 +1,11 @@
 package org.ambraproject.rhino;
 
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 
 import java.io.InputStream;
 
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.config.YamlConfiguration;
-import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
 import org.ambraproject.rhino.service.HibernatePersistenceService;
 import org.plos.crepo.service.ContentRepoService;
 import org.slf4j.Logger;
