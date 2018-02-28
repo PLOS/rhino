@@ -21,7 +21,18 @@
  */
 package org.ambraproject.rhino.service.taxonomy.impl;
 
-import com.google.common.collect.ImmutableList;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
+
+import java.io.File;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyRemoteServiceInvalidBehaviorException;
 import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
@@ -31,17 +42,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.w3c.dom.Document;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Stream;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import com.google.common.collect.ImmutableList;
 
 /**
  * @author Alex Kudlick Date: 7/3/12
@@ -181,76 +182,71 @@ public class TaxonomyClassificationServiceImplTest {
 
   @DataProvider
   public Iterator<Object[]> getDistinctLeafNodesTestCases() {
-    Object[][] cases = new Object[][]{
-        {0, new WeightedTerm[]{}, new WeightedTerm[]{}},
-        {1, new WeightedTerm[]{}, new WeightedTerm[]{}},
-        {1, new WeightedTerm[]{new WeightedTerm("/a", 1)}, new WeightedTerm[]{new WeightedTerm("/a", 1)}},
-        {2, new WeightedTerm[]{new WeightedTerm("/a", 1)}, new WeightedTerm[]{new WeightedTerm("/a", 1)}},
+    final ImmutableList<Object[]> cases = ImmutableList.of(
+        new Object[] {0, ImmutableList.of(), ImmutableList.of()},
 
-        {2,
-            new WeightedTerm[]{
+        new Object[] {1, ImmutableList.of(), ImmutableList.of()},
+
+        new Object[] {1, ImmutableList.of(new WeightedTerm("/a", 1)),
+            ImmutableList.of(new WeightedTerm("/a", 1))},
+
+        new Object[] {2, ImmutableList.of(new WeightedTerm("/a", 1)),
+            ImmutableList.of(new WeightedTerm("/a", 1))},
+
+        new Object [] {2,
+            ImmutableList.of(
                 new WeightedTerm("/a", 2),
                 new WeightedTerm("/b", 3),
-                new WeightedTerm("/c", 1),
-            },
-            new WeightedTerm[]{
+                new WeightedTerm("/c", 1)),
+            ImmutableList.of(
                 new WeightedTerm("/b", 3),
-                new WeightedTerm("/a", 2),
-            }
+                new WeightedTerm("/a", 2))
         },
 
         // Ensure that sort is stable on equal weights
-        {2,
-            new WeightedTerm[]{new WeightedTerm("/a", 2), new WeightedTerm("/b", 2), new WeightedTerm("/c", 1),},
-            new WeightedTerm[]{new WeightedTerm("/a", 2), new WeightedTerm("/b", 2),}
-        },
-        {2,
-            new WeightedTerm[]{new WeightedTerm("/b", 2), new WeightedTerm("/a", 2), new WeightedTerm("/c", 1),},
-            new WeightedTerm[]{new WeightedTerm("/b", 2), new WeightedTerm("/a", 2),}
+        new Object [] {2,
+            ImmutableList.of(new WeightedTerm("/a", 2), new WeightedTerm("/b", 2),
+                new WeightedTerm("/c", 1)),
+            ImmutableList.of(new WeightedTerm("/a", 2), new WeightedTerm("/b", 2))
         },
 
-        {2,
-            new WeightedTerm[]{
+        new Object [] {2,
+            ImmutableList.of(new WeightedTerm("/b", 2), new WeightedTerm("/a", 2),
+                new WeightedTerm("/c", 1)),
+            ImmutableList.of(new WeightedTerm("/b", 2), new WeightedTerm("/a", 2))
+        },
+
+        new Object [] {2,
+            ImmutableList.of(
                 new WeightedTerm("/a/x", 6),
                 new WeightedTerm("/b/x", 5),
                 new WeightedTerm("/c/y", 4),
                 new WeightedTerm("/d/y", 3),
                 new WeightedTerm("/e/z", 2),
-                new WeightedTerm("/f/z", 1),
-            },
-            new WeightedTerm[]{
+                new WeightedTerm("/f/z", 1)),
+            ImmutableList.of(
                 new WeightedTerm("/a/x", 6),
                 new WeightedTerm("/b/x", 5),
                 new WeightedTerm("/c/y", 4),
-                new WeightedTerm("/d/y", 3),
-            }
+                new WeightedTerm("/d/y", 3))
         },
 
-        {2,
-            new WeightedTerm[]{
+        new Object [] {2,
+            ImmutableList.of(
                 new WeightedTerm("/a/x", 6),
                 new WeightedTerm("/b/x", 5),
                 new WeightedTerm("/c/y", 4),
                 new WeightedTerm("/d/y", 3),
                 new WeightedTerm("/e/z", 2),
-                new WeightedTerm("/f/x", 1),
-            },
-            new WeightedTerm[]{
+                new WeightedTerm("/f/x", 1)),
+            ImmutableList.of(
                 new WeightedTerm("/a/x", 6),
                 new WeightedTerm("/b/x", 5),
                 new WeightedTerm("/c/y", 4),
                 new WeightedTerm("/d/y", 3),
-                new WeightedTerm("/f/x", 1),
-            }
-        },
-
-    };
-    return Stream.of(cases).map((Object[] values) -> {
-      int leafCount = (Integer) values[0];
-      List<WeightedTerm> input = ImmutableList.copyOf((WeightedTerm[]) values[1]);
-      List<WeightedTerm> expected = ImmutableList.copyOf((WeightedTerm[]) values[2]);
-      return new Object[]{leafCount, input, expected};
-    }).iterator();
+                new WeightedTerm("/f/x", 1))
+        });
+    return cases.iterator();
   }
 
   @Test(dataProvider = "getDistinctLeafNodesTestCases")

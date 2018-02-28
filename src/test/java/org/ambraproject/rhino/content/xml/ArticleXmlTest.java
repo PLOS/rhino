@@ -22,19 +22,28 @@
 
 package org.ambraproject.rhino.content.xml;
 
-import com.google.common.collect.ImmutableList;
-import org.ambraproject.rhino.model.article.AssetMetadata;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import static org.testng.Assert.assertEquals;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
-import static org.testng.Assert.assertEquals;
+import org.ambraproject.rhino.model.article.AssetMetadata;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+import com.google.common.collect.ImmutableList;
 
 public class ArticleXmlTest {
+
+  private static final ImmutableList<Object[]> ASSET_NODE_CASES = ImmutableList.of(
+      new Object[] {asset("title", "description"), new AssetMetadata[] {asset("", "")}},
+      new Object[] {asset("title", "description"), new AssetMetadata[] {asset("title", "")}},
+      new Object[] {asset("title", "description"), new AssetMetadata[] {asset("", "description")}},
+      new Object[] {asset("title", "description"),
+          new AssetMetadata[] {asset("title", ""), asset("", "description")}},
+      new Object[] {asset("title", ""), new AssetMetadata[] {asset("", "")}},
+      new Object[] {asset("", "description"), new AssetMetadata[] {asset("", "")}});
 
   private static AssetMetadata asset(String title, String description) {
     return new AssetMetadata("testAssetDoi", title, description);
@@ -42,19 +51,7 @@ public class ArticleXmlTest {
 
   @DataProvider
   public Iterator<Object[]> assetNodeCases() {
-    AssetMetadata[][] cases = {
-        {asset("title", "description"), asset("", "")},
-        {asset("title", "description"), asset("title", "")},
-        {asset("title", "description"), asset("", "description")},
-        {asset("title", "description"), asset("title", ""), asset("", "description")},
-        {asset("title", ""), asset("", "")},
-        {asset("", "description"), asset("", "")},
-    };
-    return Stream.of(cases).map((AssetMetadata[] metadataCases) -> {
-      AssetMetadata goodNode = metadataCases[0];
-      AssetMetadata[] badNodes = Arrays.copyOfRange(metadataCases, 1, metadataCases.length);
-      return new Object[]{goodNode, badNodes};
-    }).iterator();
+    return ASSET_NODE_CASES.iterator();
   }
 
   @Test(dataProvider = "assetNodeCases")
@@ -79,11 +76,11 @@ public class ArticleXmlTest {
         {asset("", "description1"), asset("", "description2")},
     };
     return Stream.of(cases)
-        .flatMap((AssetMetadata[] nodes) -> {
+        .<ImmutableList<AssetMetadata>>flatMap((AssetMetadata[] nodes) -> {
           ImmutableList<AssetMetadata> nodeList = ImmutableList.copyOf(nodes);
           return Stream.of(nodeList, nodeList.reverse());
         })
-        .map((Collection<AssetMetadata> nodeList) -> new Object[]{nodeList})
+        .<Object[]>map((Collection<AssetMetadata> nodeList) -> new Object[] {nodeList})
         .iterator();
   }
 
