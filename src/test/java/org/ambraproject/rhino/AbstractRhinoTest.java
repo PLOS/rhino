@@ -1,6 +1,7 @@
 package org.ambraproject.rhino;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 
 import java.io.InputStream;
 
@@ -66,11 +67,11 @@ public class AbstractRhinoTest extends AbstractTestNGSpringContextTests {
       final YamlConfiguration runtimeConfiguration =
           new YamlConfiguration(yaml.loadAs(is, YamlConfiguration.Input.class));
       LOG.debug("runtimeConfiguration: Loaded {}", TEST_RHINO_YAML);
-      return runtimeConfiguration;
+      return spy(runtimeConfiguration);
     } catch (Exception exception) {
       LOG.warn("runtimeConfiguration: Caught exception: {}", exception);
     }
-    return null;
+    return mock(YamlConfiguration.class);
   }
 
   @Bean

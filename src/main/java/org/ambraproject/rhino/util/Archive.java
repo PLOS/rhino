@@ -28,8 +28,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.io.ByteSource;
 import com.google.common.io.ByteStreams;
 import org.plos.crepo.model.input.RepoObjectInput;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.Closeable;
@@ -51,8 +49,6 @@ import java.util.zip.ZipOutputStream;
  * Abstraction over a .zip archive or equivalent structure.
  */
 public abstract class Archive implements Closeable {
-
-  private static final Logger LOG = LoggerFactory.getLogger(Archive.class);
 
   private final String archiveName;
 
@@ -101,7 +97,6 @@ public abstract class Archive implements Closeable {
    * @throws IllegalArgumentException if no entry with that name is in the archive
    */
   public final InputStream openFile(String entryName) {
-    LOG.info("openFile() Requested opening of: {}", entryName);
     Object fileObj = files.get(Objects.requireNonNull(entryName));
     if (fileObj == null) throw new IllegalArgumentException();
     return openFileFrom(fileObj);

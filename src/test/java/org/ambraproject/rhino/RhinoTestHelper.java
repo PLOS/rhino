@@ -27,15 +27,20 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.net.URI;
 import java.net.URL;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.Syndication;
@@ -47,6 +52,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import com.beust.jcommander.internal.Nullable;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -148,7 +154,6 @@ public final class RhinoTestHelper {
 
     public TestFile(File fileLocation) {
       this.fileLocation = fileLocation;
-      boolean threw = true;
       try (InputStream stream = new FileInputStream(this.fileLocation)) {
         fileData = IOUtils.toByteArray(stream);
       } catch (IOException e) {
@@ -162,6 +167,83 @@ public final class RhinoTestHelper {
 
     public byte[] getData() {
       return fileData.clone();
+    }
+  }
+
+  /**
+   * Class to implement a {@link RuntimeConfiguration.MultiBucketContentRepoEndpoint
+   * MultiBucketContentRepoEndpoint}, which can be used for unit tests.
+   */
+  public static class TestMultiBucketContentRepoEndpoint
+      implements RuntimeConfiguration.MultiBucketContentRepoEndpoint {
+
+    private final ImmutableSet<String> allBuckets;
+
+    private final ImmutableSet<String> secondaryBuckets;
+
+    private Optional<String> defaultBucket = Optional.empty();
+
+    private Optional<URI> address = Optional.empty();
+
+    /**
+     * Creates an instance of <code>TestMultiBucketContentRepoEndpoint</code>.
+     *
+     * @param buckets The list of <b>all</b> buckets
+     */
+    public TestMultiBucketContentRepoEndpoint(String... buckets) {
+      this(ImmutableSet.copyOf(buckets), Collections.emptySet() /* secondaryBuckets */);
+    }
+
+    /**
+     * Creates an instance of <code>TestMultiBucketContentRepoEndpoint</code>.
+     *
+     * @param buckets The list of <b>all</b> buckets
+     */
+    public TestMultiBucketContentRepoEndpoint(Set<String> buckets, Set<String> secondaryBuckets) {
+      this(buckets, secondaryBuckets, null /* defaultBucket */, null /* address */);
+    }
+
+    /**
+     * Creates an instance of <code>TestMultiBucketContentRepoEndpoint</code>.
+     *
+     * @param buckets The list of <b>all</b> buckets
+     * @param secondaryBuckets The list of secondary buckets
+     * @param defaultBucket The default bucket
+     * @param address The URI address
+     */
+    public TestMultiBucketContentRepoEndpoint(Set<String> buckets, Set<String> secondaryBuckets,
+        @Nullable String defaultBucket, @Nullable URI address) {
+      Preconditions.checkNotNull(buckets, "'buckets' must be specified.");
+      Preconditions.checkNotNull(secondaryBuckets, "'secondaryBuckets' must be specified.");
+
+      this.allBuckets = ImmutableSet.copyOf(buckets);
+      this.secondaryBuckets = ImmutableSet.copyOf(secondaryBuckets);
+      this.defaultBucket = Optional.ofNullable(defaultBucket);
+      this.address = Optional.ofNullable(address);
+    }
+
+    /** Returns the URI. */
+    @Override
+    public URI getAddress() {
+      return address.orElse(null);
+    }
+
+    /** Returns the default bucket. */
+    @Override
+    public String getDefaultBucket() {
+      return defaultBucket.orElse("");
+    }
+
+    /** Returns the set of buckets. */
+    @Override
+    public ImmutableSet<String> getAllBuckets() {
+      return allBuckets;
+    }
+
+    /** Returns the set of secondary buckets. */
+    @Override
+    public ImmutableSet<String> getSecondaryBuckets() {
+      return secondaryBuckets;
     }
   }
 

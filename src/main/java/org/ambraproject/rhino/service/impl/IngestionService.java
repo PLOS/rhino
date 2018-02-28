@@ -121,7 +121,8 @@ public class IngestionService extends AmbraService {
     return configuredName;
   }
 
-  private ArticleIngestion processIngestPackage(IngestPackage ingestPackage) {
+  @VisibleForTesting
+  ArticleIngestion processIngestPackage(IngestPackage ingestPackage) {
     Doi doi = ArticleIdentifier.create(ingestPackage.getArticleMetadata().getDoi()).getDoi();
 
     ArticlePackage articlePackage = ingestPackage.getArticlePackage();
