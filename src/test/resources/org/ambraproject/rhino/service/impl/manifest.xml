@@ -26,6 +26,21 @@
 				mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 				type="supplementary" />
 		</object>
+		<object type="supplementaryMaterial" uri="info:doi/10.1111/dupp.0000001.s005">
+			<representation entry="dupp.0000001.s005.docx" key="10.1111/dupp.0000001.s005.docx"
+				mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+				type="supplementary" />
+		</object>
+		<object type="supplementaryMaterial" uri="info:doi/10.1111/dupp.0000001.s006">
+			<representation entry="dupp.0000001.s006.docx" key="10.1111/dupp.0000001.s006.docx"
+				mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+				type="supplementary" />
+		</object>
+		<object type="supplementaryMaterial" uri="info:doi/10.1111/dupp.0000001.s007">
+			<representation entry="dupp.0000001.s007.docx" key="10.1111/dupp.0000001.s007.docx"
+				mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+				type="supplementary" />
+		</object>
 	</articleBundle>
 	<ancillary>
 		<file entry="manifest.xml" key="10.1111/dupp.0000001.manifest.xml"

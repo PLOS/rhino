@@ -14,8 +14,10 @@ target/
 # Project metadata #
 .idea/
 .classpath
+.factorypath
 .project
 .pydevproject
+.apt_generated/
 .settings/
 test-output/
 *.iml

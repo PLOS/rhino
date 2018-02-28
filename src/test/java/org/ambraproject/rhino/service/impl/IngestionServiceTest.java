@@ -24,9 +24,12 @@ package org.ambraproject.rhino.service.impl;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockingDetails;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.testng.Assert.fail;
 
 import java.io.File;
@@ -56,6 +59,7 @@ import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ingest.AssetType;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
+import org.ambraproject.rhino.service.HibernatePersistenceService;
 import org.ambraproject.rhino.util.Archive;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -80,33 +84,31 @@ public class IngestionServiceTest extends AbstractRhinoTest {
 
   private static final String MANIFEST_XML = "manifest.xml";
 
+  private static final String INGESTED_DOI_URI = "info:doi/10.1111/dupp.0000001";
+
   private static final ImmutableList<String> ARTICLE_INGEST_ENTRIES = ImmutableList.of(MANIFEST_XML,
       MANIFEST_DTD, "dupp.0000001.s002.jpg", "dupp.0000001.pdf", "dupp.0000001.xml", "manifest.dtd",
       "dupp.0000001.s001.png", "dupp.0000001.s004.docx", "dupp.0000001.s003.xlsx",
       "dupp.0000001.s005.docx", "dupp.0000001.s006.docx", "dupp.0000001.s007.docx");
 
-  private ArticleCrudService mockArticleCrudService;
-
-  private CustomMetadataExtractor.Factory customMetadataExtractorFactory;
-
   private IngestionService ingestionService;
 
-  @BeforeMethod
-  public void initMocks() {
+  @BeforeMethod(alwaysRun = true)
+  public void init() {
     ingestionService = new IngestionService();
-    // MockitoAnnotations.initMocks(this);
   }
 
   @Bean
   public CustomMetadataExtractor.Factory customMetadataExtractorFactory() {
-    LOG.debug("customMetadataExtractorFactory() *");
-    customMetadataExtractorFactory = spy(CustomMetadataExtractor.Factory.class);
-    return customMetadataExtractorFactory;
+    CustomMetadataExtractor.Factory mockMetadataExtractorFactory =
+        spy(CustomMetadataExtractor.Factory.class);
+    LOG.debug("customMetadataExtractorFactory() * {}", mockMetadataExtractorFactory);
+    return mockMetadataExtractorFactory;
   }
 
   @Bean
   public ArticleCrudService articleCrudService() {
-    mockArticleCrudService = spy(ArticleCrudService.class);
+    final ArticleCrudService mockArticleCrudService = mock(ArticleCrudService.class);
     LOG.debug("articleCrudService() * --> {}", mockArticleCrudService);
     return mockArticleCrudService;
   }
@@ -228,7 +230,7 @@ public class IngestionServiceTest extends AbstractRhinoTest {
     assertThat(presentationManifest.getCrepoKey()).isEqualTo("10.1111/dupp.0000001.pdf");
 
     final ImmutableList<Asset> assets = actualManifest.getAssets();
-    assertThat(assets).hasSize(5);
+    assertThat(assets).hasSize(8);
     final MutableInt supplementary_count = new MutableInt();
     assets.forEach(asset -> {
       final AssetTagName assetTag = asset.getAssetTagName();
@@ -353,10 +355,51 @@ public class IngestionServiceTest extends AbstractRhinoTest {
         Resources.getResource(IngestionServiceTest.class, manuscriptEntry);
     final Document manuscript = RhinoTestHelper.loadXMLFromString(manuscriptResource);
 
+    final Article expectedArticle = new Article();
+    expectedArticle.setDoi("10.1111/dupp.0000001");
+
+    final ArticleIngestion expectedIngestion = new ArticleIngestion();
+    expectedIngestion.setArticle(expectedArticle);
+    expectedIngestion.setIngestionNumber(1);
+
+    final Doi expectedArticleDoi = Doi.create(INGESTED_DOI_URI);
+
+    final HibernatePersistenceService mockPersistenceService =
+        applicationContext.getBean(HibernatePersistenceService.class);
+    when(mockPersistenceService.persistArticle(expectedArticleDoi)).thenReturn(expectedArticle);
+    when(mockPersistenceService.persistIngestion(any(), any())).thenReturn(expectedIngestion);
+
     final IngestionService mockIngestionService =
         applicationContext.getBean(IngestionService.class);
-    doReturn(manuscript).when(mockIngestionService).getDocument(any(), anyString());
+    doReturn(manuscript).when(mockIngestionService).getDocument(testArchive, manuscriptEntry);
 
-    final ArticleIngestion article = mockIngestionService.ingest(testArchive, bucketName);
+    final ArticleIngestion actualIngestion = mockIngestionService.ingest(testArchive, bucketName);
+
+    assertThat(actualIngestion).isNotNull();
+    assertThat(actualIngestion).isEqualTo(expectedIngestion);
+    assertThat(actualIngestion.getArticle()).isEqualTo(expectedArticle);
+
+    final CustomMetadataExtractor.Factory mockMetadataExtractorFactory =
+        applicationContext.getBean(CustomMetadataExtractor.Factory.class);
+    final ArticleCrudService mockArticleCrudService =
+        applicationContext.getBean(ArticleCrudService.class);
+
+    verify(mockIngestionService).getDocument(testArchive, manuscriptEntry);
+    verify(mockMetadataExtractorFactory).parse(manuscript);
+
+    final ImmutableList<String> expectedDois =
+        ImmutableList.of(INGESTED_DOI_URI, "info:doi/10.1111/dupp.0000001.s001",
+            "info:doi/10.1111/dupp.0000001.s002", "info:doi/10.1111/dupp.0000001.s003",
+            "info:doi/10.1111/dupp.0000001.s004", "info:doi/10.1111/dupp.0000001.s005",
+            "info:doi/10.1111/dupp.0000001.s006", "info:doi/10.1111/dupp.0000001.s007");
+    final int callCount = mockingDetails(mockArticleCrudService).getInvocations().size();
+    assertThat(callCount).isEqualTo(expectedDois.size());
+    expectedDois.forEach(doiUri -> {
+      final Doi assetDoi = Doi.create(doiUri);
+      verify(mockArticleCrudService).getAllArticleItems(assetDoi);
+    });
+
+    verify(mockPersistenceService).persistArticle(expectedArticleDoi);
+    verify(mockPersistenceService).persistIngestion(any(), any());
   }
 }

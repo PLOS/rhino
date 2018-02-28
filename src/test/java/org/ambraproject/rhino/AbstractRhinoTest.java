@@ -7,16 +7,18 @@ import java.io.InputStream;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.config.YamlConfiguration;
 import org.ambraproject.rhino.service.HibernatePersistenceService;
+import org.ambraproject.rhino.util.Java8TimeGsonAdapters;
+import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.plos.crepo.service.ContentRepoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.BeforeClass;
 import org.yaml.snakeyaml.Yaml;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * Abstract base class for Rhino unit tests.
@@ -27,43 +29,33 @@ public class AbstractRhinoTest extends AbstractTestNGSpringContextTests {
 
   public static final String TEST_RHINO_YAML = "rhino-test.yaml";
 
-  protected HibernateTemplate hibernateTemplate;
-
-  protected HibernatePersistenceService hibernatePersistenceService;
-
-  protected ContentRepoService contentRepoService;
-
-  protected Gson entityGson;
-
-  @BeforeClass(alwaysRun = true)
-  public void initMocks() {
-    hibernateTemplate = mock(HibernateTemplate.class);
-    hibernatePersistenceService = mock(HibernatePersistenceService.class);
-    contentRepoService = mock(ContentRepoService.class);
-    entityGson = mock(Gson.class);
-  }
-
   @Bean
   public HibernateTemplate hibernateTemplate() {
     LOG.debug("hibernateTemplate() *");
+    final HibernateTemplate hibernateTemplate = mock(HibernateTemplate.class);
     return hibernateTemplate;
   }
 
   @Bean
   public HibernatePersistenceService hibernatePersistenceService() {
     LOG.debug("HibernatePersistenceService() *");
+    final HibernatePersistenceService hibernatePersistenceService =
+        mock(HibernatePersistenceService.class);
     return hibernatePersistenceService;
   }
 
   @Bean
   public Gson entityGson() {
     LOG.debug("entityGson() *");
-    return entityGson;
+    final GsonBuilder builder = JsonAdapterUtil.makeGsonBuilder().setPrettyPrinting();
+    Java8TimeGsonAdapters.register(builder);
+    return builder.create();
   }
 
   @Bean
   public ContentRepoService contentRepoService() {
     LOG.debug("contentRepoService() *");
+    final ContentRepoService contentRepoService = mock(ContentRepoService.class);
     return contentRepoService;
   }
 
