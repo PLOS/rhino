@@ -80,7 +80,7 @@ public class ArticleXmlTest {
           ImmutableList<AssetMetadata> nodeList = ImmutableList.copyOf(nodes);
           return Stream.of(nodeList, nodeList.reverse());
         })
-        .<Object[]>map((Collection<AssetMetadata> nodeList) -> new Object[] {nodeList})
+        .<Object[]>map((Collection<AssetMetadata> nodeList) -> new Object[]{nodeList})
         .iterator();
   }
 
