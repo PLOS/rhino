@@ -25,7 +25,7 @@ import com.google.gson.GsonBuilder;
 /**
  * Abstract base class for Rhino unit tests.
  */
-public class AbstractRhinoTest extends AbstractTestNGSpringContextTests {
+public abstract class AbstractRhinoTest extends AbstractTestNGSpringContextTests {
 
   protected static final Logger LOG = LoggerFactory.getLogger(AbstractRhinoTest.class);
 
