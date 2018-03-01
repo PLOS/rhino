@@ -28,6 +28,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockingDetails;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.testng.Assert.fail;
@@ -371,7 +372,8 @@ public class IngestionServiceTest extends AbstractRhinoTest {
     final HibernatePersistenceService mockPersistenceService =
         applicationContext.getBean(HibernatePersistenceService.class);
     when(mockPersistenceService.persistArticle(expectedArticleDoi)).thenReturn(expectedArticle);
-    when(mockPersistenceService.persistIngestion(any(), any())).thenReturn(expectedIngestion);
+    when(mockPersistenceService.persistIngestion(any(Article.class), any(IngestPackage.class)))
+        .thenReturn(expectedIngestion);
 
     final IngestionService mockIngestionService =
         applicationContext.getBean(IngestionService.class);
@@ -404,7 +406,7 @@ public class IngestionServiceTest extends AbstractRhinoTest {
     });
 
     verify(mockPersistenceService).persistArticle(expectedArticleDoi);
-    verify(mockPersistenceService).persistIngestion(any(), any());
+    verify(mockPersistenceService).persistIngestion(any(Article.class), any(IngestPackage.class));
   }
 
   /**
@@ -431,7 +433,6 @@ public class IngestionServiceTest extends AbstractRhinoTest {
         applicationContext.getBean(RuntimeConfiguration.class);
     doReturn(mockRepoEndpoint).when(mockRuntimeConfiguration).getCorpusStorage();
 
-    // Prepare the data needed to create an `IngestPackage`.
     final String manuscriptEntry = "dupp.0000001.xml";
     final URL manuscriptResource =
         Resources.getResource(IngestionServiceTest.class, manuscriptEntry);
@@ -468,15 +469,7 @@ public class IngestionServiceTest extends AbstractRhinoTest {
     final byte[] manifestData = FileUtils.readFileToByteArray(manifestFile);
     final Archive testArchive = createStubArchive(manifestData, ARTICLE_INGEST_ENTRIES);
 
-    final Optional<String> bucketName = Optional.of("corpus");
-    final RuntimeConfiguration.MultiBucketContentRepoEndpoint mockRepoEndpoint =
-        new RhinoTestHelper.TestMultiBucketContentRepoEndpoint(bucketName.get());
-
-    final RuntimeConfiguration mockRuntimeConfiguration =
-        applicationContext.getBean(RuntimeConfiguration.class);
-    doReturn(mockRepoEndpoint).when(mockRuntimeConfiguration).getCorpusStorage();
-
-    // Prepare the data needed to create an `IngestPackage`.
+    final Optional<String> bucketName = Optional.of("unknown");
     final String manuscriptEntry = "dupp.0000001.xml";
     final URL manuscriptResource =
         Resources.getResource(IngestionServiceTest.class, manuscriptEntry);
@@ -487,13 +480,17 @@ public class IngestionServiceTest extends AbstractRhinoTest {
 
     doReturn(manuscript).when(mockIngestionService).getDocument(testArchive, manuscriptEntry);
 
-    final ArticleIngestion expectedIngestion = new ArticleIngestion();
+    try {
+      mockIngestionService.ingest(testArchive, bucketName);
+      fail("Expecting exception, but nothing was thrown.");
+    } catch (Exception exception) {
+      assertThat(exception).isInstanceOf(RestClientException.class);
+      final String message =
+          NO_SPACE_JOINER.join("Invalid bucket name: ", bucketName.get(), ". Allowed values are: ",
+              "[bucket_name, secondary_bucket]. ", "(Allowed values are specified by rhino.yaml.)");
+      assertThat(exception).hasMessageThat().isEqualTo(message);
+    }
 
-    doReturn(expectedIngestion).when(mockIngestionService)
-        .processIngestPackage(any(IngestPackage.class));
-
-    mockIngestionService.ingest(testArchive, bucketName); // Ingest the archive to the bucket.
-
-    verify(mockIngestionService).processIngestPackage(any(IngestPackage.class));
+    verify(mockIngestionService, times(0)).processIngestPackage(any(IngestPackage.class));
   }
 }

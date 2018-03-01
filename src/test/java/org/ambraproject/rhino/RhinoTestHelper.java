@@ -188,7 +188,7 @@ public final class RhinoTestHelper {
     /**
      * Creates an instance of <code>TestMultiBucketContentRepoEndpoint</code>.
      *
-     * @param buckets The list of <b>all</b> buckets
+     * @param buckets The list of <b>all</b> the buckets
      */
     public TestMultiBucketContentRepoEndpoint(String... buckets) {
       this(ImmutableSet.copyOf(buckets), Collections.emptySet() /* secondaryBuckets */);
@@ -197,7 +197,8 @@ public final class RhinoTestHelper {
     /**
      * Creates an instance of <code>TestMultiBucketContentRepoEndpoint</code>.
      *
-     * @param buckets The list of <b>all</b> buckets
+     * @param buckets The list of <b>all</b> the buckets
+     * @param secondaryBuckets The list of secondary buckets
      */
     public TestMultiBucketContentRepoEndpoint(Set<String> buckets, Set<String> secondaryBuckets) {
       this(buckets, secondaryBuckets, null /* defaultBucket */, null /* address */);
@@ -206,7 +207,7 @@ public final class RhinoTestHelper {
     /**
      * Creates an instance of <code>TestMultiBucketContentRepoEndpoint</code>.
      *
-     * @param buckets The list of <b>all</b> buckets
+     * @param buckets The list of <b>all</b> the buckets
      * @param secondaryBuckets The list of secondary buckets
      * @param defaultBucket The default bucket
      * @param address The URI address
@@ -247,20 +248,18 @@ public final class RhinoTestHelper {
     }
   }
 
-  public static final ImmutableList<String> SAMPLE_ARTICLES =
-      ImmutableList.copyOf(new String[] {"pone.0038869",
+  public static final ImmutableList<String> SAMPLE_ARTICLES = ImmutableList.of("pone.0038869"
       // More can be filled in here
-      });
+      );
 
   /*
    * Each of these must belong to an article in SAMPLE_ARTICLES.
    */
-  private static final ImmutableList<String> SAMPLE_ASSETS =
-      ImmutableList.copyOf(new String[] {"pone.0038869.g002.tif",
+  public static final ImmutableList<String> SAMPLE_ASSETS = ImmutableList.of("pone.0038869.g002.tif"
       // More can be filled in here
-      });
+  );
 
-  private static final Pattern ASSET_PATTERN = Pattern.compile("((.*)\\.[^.]+?)\\.([^.]+?)");
+  public static final Pattern ASSET_PATTERN = Pattern.compile("((.*)\\.[^.]+?)\\.([^.]+?)");
 
   public static final String prefixed(String doi) {
     return "10.1371/journal." + doi;

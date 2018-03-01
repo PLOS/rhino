@@ -18,6 +18,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.yaml.snakeyaml.Yaml;
 
+import com.google.common.base.Joiner;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -27,6 +28,8 @@ import com.google.gson.GsonBuilder;
 public class AbstractRhinoTest extends AbstractTestNGSpringContextTests {
 
   protected static final Logger LOG = LoggerFactory.getLogger(AbstractRhinoTest.class);
+
+  protected static final Joiner NO_SPACE_JOINER = Joiner.on("").skipNulls();
 
   public static final String TEST_RHINO_YAML = "rhino-test.yaml";
 
