@@ -7,6 +7,7 @@ import java.io.InputStream;
 
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.config.YamlConfiguration;
+import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.HibernatePersistenceService;
 import org.ambraproject.rhino.util.Java8TimeGsonAdapters;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
@@ -41,8 +42,15 @@ public abstract class AbstractRhinoTest extends AbstractTestNGSpringContextTests
   }
 
   @Bean
+  public ConfigurationReadService configurationReadService() {
+    LOG.debug("configurationReadService() *");
+    final ConfigurationReadService configurationReadService = mock(ConfigurationReadService.class);
+    return configurationReadService;
+  }
+
+  @Bean
   public HibernatePersistenceService hibernatePersistenceService() {
-    LOG.debug("HibernatePersistenceService() *");
+    LOG.debug("hibernatePersistenceService() *");
     final HibernatePersistenceService hibernatePersistenceService =
         mock(HibernatePersistenceService.class);
     return hibernatePersistenceService;
@@ -69,7 +77,7 @@ public abstract class AbstractRhinoTest extends AbstractTestNGSpringContextTests
         AbstractRhinoTest.class.getClassLoader().getResourceAsStream(TEST_RHINO_YAML)) {
       final YamlConfiguration runtimeConfiguration =
           new YamlConfiguration(yaml.loadAs(is, YamlConfiguration.Input.class));
-      LOG.debug("runtimeConfiguration: Loaded {}", TEST_RHINO_YAML);
+      LOG.info("runtimeConfiguration: Loaded {}", TEST_RHINO_YAML);
       return spy(runtimeConfiguration);
     } catch (Exception exception) {
       LOG.warn("runtimeConfiguration: Caught exception: {}", exception);
@@ -79,6 +87,7 @@ public abstract class AbstractRhinoTest extends AbstractTestNGSpringContextTests
 
   @Bean
   public Yaml yaml() {
-    return new Yaml();
+    final Yaml mockYaml = spy(new Yaml());
+    return mockYaml;
   }
 }
