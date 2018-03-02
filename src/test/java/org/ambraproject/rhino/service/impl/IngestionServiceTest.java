@@ -88,9 +88,9 @@ public class IngestionServiceTest extends AbstractRhinoTest {
 
   private static final String MANIFEST_XML = "manifest.xml";
 
-  private static final String INGESTED_DOI_URI = "info:doi/10.1111/dupp.0000001";
+  public static final String INGESTED_DOI_URI = "info:doi/10.1111/dupp.0000001";
 
-  private static final ImmutableList<String> ARTICLE_INGEST_ENTRIES = ImmutableList.of(MANIFEST_XML,
+  public static final ImmutableList<String> ARTICLE_INGEST_ENTRIES = ImmutableList.of(MANIFEST_XML,
       MANIFEST_DTD, "dupp.0000001.s002.jpg", "dupp.0000001.pdf", "dupp.0000001.xml", "manifest.dtd",
       "dupp.0000001.s001.png", "dupp.0000001.s004.docx", "dupp.0000001.s003.xlsx",
       "dupp.0000001.s005.docx", "dupp.0000001.s006.docx", "dupp.0000001.s007.docx");
@@ -124,7 +124,7 @@ public class IngestionServiceTest extends AbstractRhinoTest {
     return mockIngestionService;
   }
 
-  private static Archive createStubArchive(byte[] manifestXml, Collection<String> entryNames) {
+  public static Archive createStubArchive(byte[] manifestXml, Collection<String> entryNames) {
     Map<String, ByteSource> fileMap = new HashMap<>();
 
     for (String entryName : entryNames) {
