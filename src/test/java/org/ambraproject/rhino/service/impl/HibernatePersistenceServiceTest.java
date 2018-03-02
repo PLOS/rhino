@@ -30,6 +30,7 @@ import org.ambraproject.rhino.service.ContentRepoPersistenceService;
 import org.ambraproject.rhino.service.HibernatePersistenceService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.util.Archive;
+import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.model.input.RepoObjectInput;
 import org.plos.crepo.service.ContentRepoService;
 import org.springframework.context.annotation.Bean;
@@ -78,6 +79,8 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
 
   private ManifestXml.ManifestFile mockManifestFile;
 
+  private ManifestXml.ManifestFile mockAncillaryFile;
+
   private ManifestXml.Representation mockRepresentation;
 
   private ArticlePackage expectedArticlePackage;
@@ -107,6 +110,7 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
 
     mockArticleXml = mock(ArticleXml.class);
     mockManifestFile = mock(ManifestXml.ManifestFile.class);
+    mockAncillaryFile = mock(ManifestXml.ManifestFile.class);
     mockRepresentation = mock(ManifestXml.Representation.class);
     mockManuscriptAsset = mock(ManifestXml.Asset.class);
     mockManifest = mock(ManifestXml.class);
@@ -117,6 +121,10 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
     when(mockManifestFile.getEntry()).thenReturn("dupp.0000001.pdf");
     when(mockManifestFile.getMimetype()).thenReturn("application/pdf");
 
+    when(mockAncillaryFile.getCrepoKey()).thenReturn("10.1111/dupp.0000001.s001.png");
+    when(mockAncillaryFile.getEntry()).thenReturn("dupp.0000001.s001.png");
+    when(mockAncillaryFile.getMimetype()).thenReturn("image/ext");
+
     when(mockRepresentation.getFile()).thenReturn(mockManifestFile);
 
     when(mockManuscriptAsset.getRepresentation("manuscript"))
@@ -126,7 +134,7 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
 
     when(mockManifest.getArticleAsset()).thenReturn(mockManuscriptAsset);
     when(mockManifest.getAssets()).thenReturn(ImmutableList.of());
-    when(mockManifest.getAncillaryFiles()).thenReturn(ImmutableList.of());
+    when(mockManifest.getAncillaryFiles()).thenReturn(ImmutableList.of(mockAncillaryFile));
 
     expectedArticlePackage =
         new ArticlePackageBuilder(DESTINATION_BUCKET, mockArchive, mockArticleXml, mockManifest)
@@ -325,8 +333,7 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
 
     verify(mockHibernateTemplate).save(expectedArticleItem);
 
-    // Only 1 item in article package.
-    verify(mockContentRepoService, times(1)).autoCreateRepoObject(any(RepoObjectInput.class));
-    verify(mockHibernateTemplate, times(1)).save(any());
+    verify(mockContentRepoService, times(2)).autoCreateRepoObject(any(RepoObjectInput.class));
+    verify(mockContentRepoService, times(2)).getRepoObjectMetadata(any(RepoVersion.class));
   }
 }
