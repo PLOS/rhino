@@ -25,9 +25,7 @@ import org.ambraproject.rhino.BaseRhinoTransactionalTest;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.service.impl.IngestionService;
 import org.plos.crepo.service.ContentRepoService;
-import org.plos.crepo.service.InMemoryContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -46,44 +44,6 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
   private ContentRepoService contentRepoService;
   @Autowired
   private IngestionService ingestionService;
-
-  /**
-   * In addition to checking the existence of the service, this will throw an exception under certain error conditions
-   * in the configuration of the Hibernate environment.
-   */
-  @Test
-  public void testServiceAutowiring() {
-    assertNotNull(articleCrudService);
-  }
-
-  /**
-   * Create journals with all eIssn values mentioned in test cases' XML files.
-   */
-  @BeforeMethod
-  public void addJournal() {
-    addExpectedJournals();
-  }
-
-  /**
-   * Empty all data from the mock ContentRepoService.
-   */
-  @BeforeMethod
-  public void clearMockRepo() {
-    ((InMemoryContentRepoService) contentRepoService).clear();
-  }
-
-//  private void assertArticleExistence(ArticleIdentity id, boolean expectedToExist) {
-//    boolean received404 = false;
-//    try {
-//      articleCrudService.readXml(id);
-//    } catch (InMemoryContentRepoService.InMemoryContentRepoServiceException|NotFoundException nfe) {
-//      received404 = true;
-//    } catch (RestClientException e) {
-//      throw e;
-//    }
-//    assertEquals(received404, !expectedToExist,
-//        (expectedToExist ? "Article expected to exist but doesn't" : "Article expected not to exist but does"));
-//  }
 
   private void assertGoodText(String text) {
     assertNotNull(text, "Text field was not set");
