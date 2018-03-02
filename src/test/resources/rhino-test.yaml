@@ -8,3 +8,6 @@ contentRepo:
     bucket:  bucket_name
     secondaryBuckets:
       - secondary_bucket
+manuscriptCustomMeta:
+  revisionDate:     "Publication Update"
+  publicationStage: "PLOS Publication Stage"

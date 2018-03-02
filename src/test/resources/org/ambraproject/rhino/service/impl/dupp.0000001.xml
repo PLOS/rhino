@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.1d3 20150301//EN" "http://jats.nlm.nih.gov/publishing/1.1d3/JATS-journalpublishing1.dtd">
+
+<article article-type="research-article" dtd-version="1.1d3"
+	xml:lang="en" xmlns:mml="http://www.w3.org/1998/Math/MathML"
+	xmlns:xlink="http://www.w3.org/1999/xlink">
+	<front>
+		<journal-meta>
+			<journal-id journal-id-type="nlm-ta">dupp</journal-id>
+			<journal-id journal-id-type="publisher-id">PLOS</journal-id>
+			<journal-title-group>
+				<journal-title>Open Archive</journal-title>
+			</journal-title-group>
+			<issn pub-type="epub">1111-1111</issn>
+			<publisher>
+				<publisher-name>Public Library of Science</publisher-name>
+				<publisher-loc>San Francisco, CA USA</publisher-loc>
+			</publisher>
+		</journal-meta>
+		<article-meta>
+			<article-id pub-id-type="doi">10.1111/dupp.0000001</article-id>
+			<article-id pub-id-type="publisher-id">dupp.0000001</article-id>
+			<article-categories>
+				<subj-group subj-group-type="heading">
+					<subject>Research Article</subject>
+				</subj-group>
+			</article-categories>
+			<title-group>
+				<article-title>Id quod autem maiores aspernatur. Corporis corrupti
+					sequi molestias eaque natus.</article-title>
+			</title-group>
+			<contrib-group>
+				<contrib contrib-type="author" corresp="yes">
+					<contrib-id contrib-id-type="orcid" specific-use="authenticated">0000-3474-0133-0910</contrib-id>
+					<name name-style="western">
+						<surname>Christine</surname>
+						<given-names>Williams</given-names>
+					</name>
+					<role content-type="http://credit.casrai.org/">Conceptualization</role>
+					<role content-type="http://credit.casrai.org/">Formal Analysis</role>
+					<role content-type="http://credit.casrai.org/">Methodology</role>
+					<role content-type="http://credit.casrai.org/">Software</role>
+					<role content-type="http://credit.casrai.org/">Supervision</role>
+					<role content-type="http://credit.casrai.org/">Visualization</role>
+					<role content-type="http://credit.casrai.org/">Writing - Original Draft</role>
+					<role content-type="http://credit.casrai.org/">Writing - Review and Editing</role>
+					<xref ref-type="aff" rid="aff1"></xref>
+					<xref ref-type="corresp" rid="cor001">*</xref>
+				</contrib>
+				<contrib contrib-type="author">
+					<contrib-id contrib-id-type="internal">placeholder</contrib-id>
+					<name name-style="western">
+						<surname>Patricia</surname>
+						<given-name>Galvan</given-name>
+					</name>
+					<role content-type="http://credit.casrai.org/">Conceptualization</role>
+					<role content-type="http://credit.casrai.org/">Formal Analysis</role>
+				</contrib>
+				<contrib contrib-type="author">
+					<contrib-id contrib-id-type="internal">placeholder</contrib-id>
+					<name name-style="western">
+						<surname>Ryan</surname>
+						<given-name>Davis</given-name>
+					</name>
+					<role content-type="http://credit.casrai.org/">Conceptualization</role>
+					<role content-type="http://credit.casrai.org/">Formal Analysis</role>
+				</contrib>
+				<contrib contrib-type="author">
+					<contrib-id contrib-id-type="internal">placeholder</contrib-id>
+					<name name-style="western">
+						<surname>Jennifer</surname>
+						<given-name>Holmes</given-name>
+					</name>
+					<role content-type="http://credit.casrai.org/">Conceptualization</role>
+					<role content-type="http://credit.casrai.org/">Formal Analysis</role>
+				</contrib>
+				<contrib contrib-type="author">
+					<contrib-id contrib-id-type="internal">placeholder</contrib-id>
+					<name name-style="western">
+						<surname>Amanda</surname>
+						<given-name>Rodriguez</given-name>
+					</name>
+					<role content-type="http://credit.casrai.org/">Conceptualization</role>
+					<role content-type="http://credit.casrai.org/">Formal Analysis</role>
+				</contrib>
+				<contrib contrib-type="author">
+					<contrib-id contrib-id-type="internal">placeholder</contrib-id>
+					<name name-style="western">
+						<surname>Anthony</surname>
+						<given-name>Cherry</given-name>
+					</name>
+					<role content-type="http://credit.casrai.org/">Conceptualization</role>
+					<role content-type="http://credit.casrai.org/">Formal Analysis</role>
+				</contrib>
+				<contrib contrib-type="author">
+					<contrib-id contrib-id-type="internal">placeholder</contrib-id>
+					<name name-style="western">
+						<surname>Crystal</surname>
+						<given-name>Davenport</given-name>
+					</name>
+					<role content-type="http://credit.casrai.org/">Conceptualization</role>
+					<role content-type="http://credit.casrai.org/">Formal Analysis</role>
+				</contrib>
+				<contrib contrib-type="author">
+					<contrib-id contrib-id-type="internal">placeholder</contrib-id>
+					<name name-style="western">
+						<surname>Ronald</surname>
+						<given-name>Romero</given-name>
+					</name>
+					<role content-type="http://credit.casrai.org/">Conceptualization</role>
+					<role content-type="http://credit.casrai.org/">Formal Analysis</role>
+				</contrib>
+				<contrib contrib-type="author">
+					<contrib-id contrib-id-type="internal">placeholder</contrib-id>
+					<name name-style="western">
+						<surname>Darrell</surname>
+						<given-name>Smith</given-name>
+					</name>
+					<role content-type="http://credit.casrai.org/">Conceptualization</role>
+					<role content-type="http://credit.casrai.org/">Formal Analysis</role>
+				</contrib>
+				<contrib contrib-type="author">
+					<contrib-id contrib-id-type="internal">placeholder</contrib-id>
+					<name name-style="western">
+						<surname>Gary</surname>
+						<given-name>Simmons</given-name>
+					</name>
+					<role content-type="http://credit.casrai.org/">Conceptualization</role>
+					<role content-type="http://credit.casrai.org/">Formal Analysis</role>
+				</contrib>
+				<contrib contrib-type="author">
+					<contrib-id contrib-id-type="internal">placeholder</contrib-id>
+					<name name-style="western">
+						<surname>Sarah</surname>
+						<given-name>Kim</given-name>
+					</name>
+					<role content-type="http://credit.casrai.org/">Conceptualization</role>
+					<role content-type="http://credit.casrai.org/">Formal Analysis</role>
+				</contrib>
+				<contrib contrib-type="author">
+					<contrib-id contrib-id-type="internal">placeholder</contrib-id>
+					<name name-style="western">
+						<surname>Debra</surname>
+						<given-name>Phillips</given-name>
+					</name>
+					<role content-type="http://credit.casrai.org/">Conceptualization</role>
+					<role content-type="http://credit.casrai.org/">Formal Analysis</role>
+				</contrib>
+			</contrib-group>
+			<aff id="aff1">
+				<label>1</label>
+				<addr-line>PSC 3137, Box 9794 APO AA 86456</addr-line>
+			</aff>
+			<author-notes>
+				<fn fn-type="conflict" id="coi001">
+					<p>The authors have declared that no competing interests exist.</p>
+				</fn>
+				<corresp id="cor001">
+					* E-mail:
+					<email xlink:type="simple">jamesdavis@hotmail.com</email>
+					(CW)
+				</corresp>
+			</author-notes>
+			<pub-date pub-type="epub">
+				<day>5</day>
+				<month>1</month>
+				<year>2018</year>
+			</pub-date>
+			<history>
+				<date date-type="received">
+					<day>23</day>
+					<month>12</month>
+					<year>2017</year>
+				</date>
+			</history>
+			<permissions>
+				<copyright-year>2017</copyright-year>
+				<copyright-holder>Christine et al</copyright-holder>
+				<license xlink:href="http://creativecommons.org/licenses/by/4.0/"
+					xlink:type="simple">
+					<license-p>
+						This is an open-access article distributed under the terms of the
+						<ext-link ext-link-type="uri"
+							xlink:href="http://creativecommons.org/licenses/by/4.0/"
+							xlink:type="simple">Creative Commons Attribution License</ext-link>
+						, which permits unrestricted use, distribution, and reproduction
+						in any medium, provided the original author and source are
+						credited.
+					</license-p>
+				</license>
+			</permissions>
+			<funding-group>
+				<funding-statement>Minus similique atque modi in occaecati. Harum
+					officiis libero id debitis accusamus qui maiores. Expedita dolores
+					doloremque excepturi recusandae. Aliquid itaque autem voluptatibus
+					id.</funding-statement>
+			</funding-group>
+			<custom-meta-group>
+				<custom-meta id="data-availability">
+					<meta-name>Data Availability</meta-name>
+					<meta-value>All data files are available from the figshare public
+						repository (DOI: https://doi.org/10.6084/facilis.v1 )</meta-value>
+				</custom-meta>
+			</custom-meta-group>
+		</article-meta>
+	</front>
+	<body>
+		<sec>
+			<title>Supporting Information</title>
+			<supplementary-material id="s001" mimetype="image/png"
+				position="float" xlink:href="info:doi/10.1111/dupp.0000001.s001">
+				<label>S0 Fig</label>
+				<caption>
+					<title>Enim ex asperiores neque esse. Nulla modi quas nulla totam.
+						Ut voluptatibus ipsa magni blanditiis aspernatur ut. Atque enim
+						rem tenetur doloribus assumenda amet. Quaerat dolore omnis neque.</title>
+					<p>Accusantium magni eaque veniam ex. At at provident repellendus
+						quisquam officia mollitia nisi accusantium. Consectetur provident
+						at aperiam. Commodi hic quibusdam ducimus ut debitis.</p>
+					<p>(PNG)</p>
+				</caption>
+			</supplementary-material>
+			<supplementary-material id="s002" mimetype="image/jpg"
+				position="float" xlink:href="info:doi/10.1111/dupp.0000001.s002">
+				<label>S1 Fig</label>
+				<caption>
+					<title>Harum quibusdam voluptates beatae impedit molestiae aliquam.
+						Eos ullam cum doloremque omnis a. In ipsam expedita perferendis
+						labore.</title>
+					<p>Dolor dignissimos ducimus nisi accusantium consequatur qui id
+						necessitatibus. Ut itaque commodi mollitia corporis architecto
+						odit rerum eos. Exercitationem doloribus nemo voluptas amet velit
+						eos.</p>
+					<p>(JPG)</p>
+				</caption>
+			</supplementary-material>
+			<supplementary-material id="s003"
+				mimetype="application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+				position="float" xlink:href="info:doi/10.1111/dupp.0000001.s003">
+				<label>S2 Table</label>
+				<caption>
+					<title>Facilis quis consequatur nostrum debitis. Esse consequuntur
+						dolores dignissimos saepe nostrum illum. Dolore sunt porro
+						dignissimos modi vel blanditiis dolores.</title>
+					<p>Architecto fugit dicta alias officiis. Consectetur dolorum
+						similique rem soluta quo ea. Dolor sed eveniet distinctio quaerat
+						assumenda occaecati.</p>
+					<p>(XLSX)</p>
+				</caption>
+			</supplementary-material>
+			<supplementary-material id="s004"
+				mimetype="application/application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+				position="float" xlink:href="info:doi/10.1111/dupp.0000001.s004">
+				<label>S3 Text</label>
+				<caption>
+					<title>Velit vero repellendus vel enim unde officiis accusantium.
+						Suscipit aspernatur explicabo vitae cupiditate vero minima ipsa
+						ducimus. Cumque eligendi fugit vel ea fugiat possimus quo.</title>
+					<p>Reiciendis ad corporis molestiae quibusdam iste consectetur
+						adipisci. Reprehenderit eveniet quisquam error. Enim doloremque
+						dignissimos optio.</p>
+					<p>(XLSX)</p>
+				</caption>
+			</supplementary-material>
+			<supplementary-material id="s005"
+				mimetype="application/application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+				position="float" xlink:href="info:doi/10.1111/dupp.0000001.s005">
+				<label>S4 Text</label>
+				<caption>
+					<title>Possimus eveniet similique facilis autem natus consectetur.
+						Amet minima eius porro culpa. Expedita eos eos at facere corporis
+						natus.</title>
+					<p>Vero nemo optio et iusto. Temporibus nam reprehenderit labore
+						quaerat. Nisi voluptatibus sit quae nam deleniti. Quos accusamus
+						dicta facilis. Ad iure ipsum laudantium minima.</p>
+					<p>(DOCX)</p>
+				</caption>
+			</supplementary-material>
+			<supplementary-material id="s006"
+				mimetype="application/application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+				position="float" xlink:href="info:doi/10.1111/dupp.0000001.s006">
+				<label>S5 Text</label>
+				<caption>
+					<title>Ad omnis facere aliquam voluptates vel quaerat rerum velit.
+						Pariatur ut iste quia expedita debitis voluptatum. Repellat
+						dignissimos nesciunt aliquid quam tempora itaque.</title>
+					<p>Dicta quod porro amet. Libero vel qui dolore fugit eligendi. At
+						provident aliquid delectus similique velit expedita explicabo
+						architecto. Quidem reiciendis possimus necessitatibus laudantium.</p>
+					<p>(DOCX)</p>
+				</caption>
+			</supplementary-material>
+			<supplementary-material id="s007"
+				mimetype="application/application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+				position="float" xlink:href="info:doi/10.1111/dupp.0000001.s007">
+				<label>S6 Text</label>
+				<caption>
+					<title>In praesentium veniam rerum accusamus earum dolorum eius. Et
+						fugit sapiente consequuntur dolore. Minima laborum facilis
+						corrupti inventore ipsam magnam.</title>
+					<p>Eaque asperiores placeat ducimus voluptate sunt recusandae odit
+						soluta. Velit cum assumenda nulla debitis perferendis ex
+						laudantium. Consectetur nam sed esse ducimus.</p>
+					<p>(DOCX)</p>
+				</caption>
+			</supplementary-material>
+		</sec>
+	</body>
+	<back></back>
+</article>

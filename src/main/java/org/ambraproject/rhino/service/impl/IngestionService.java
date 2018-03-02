@@ -22,8 +22,13 @@
 
 package org.ambraproject.rhino.service.impl;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.ImmutableSet;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.Optional;
+import java.util.Set;
+
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
@@ -47,14 +52,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Collection;
-import java.util.Optional;
-import java.util.Set;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.ImmutableSet;
 
 public class IngestionService extends AmbraService {
+
+  public static final String MANIFEST_XML = "manifest.xml";
 
   @Autowired
   private CustomMetadataExtractor.Factory customMetadataExtractorFactory;
@@ -82,7 +85,6 @@ public class IngestionService extends AmbraService {
 
     ArticleXml parsedArticle = new ArticleXml(document);
     ArticleCustomMetadata customMetadata = customMetadataExtractorFactory.parse(document).build();
-
 
     ArticlePackage articlePackage = new ArticlePackageBuilder(resolveBucketName(bucketName),
         archive, parsedArticle, manifestXml).build();
@@ -119,7 +121,8 @@ public class IngestionService extends AmbraService {
     return configuredName;
   }
 
-  private ArticleIngestion processIngestPackage(IngestPackage ingestPackage) {
+  @VisibleForTesting
+  ArticleIngestion processIngestPackage(IngestPackage ingestPackage) {
     Doi doi = ArticleIdentifier.create(ingestPackage.getArticleMetadata().getDoi()).getDoi();
 
     ArticlePackage articlePackage = ingestPackage.getArticlePackage();
@@ -133,7 +136,18 @@ public class IngestionService extends AmbraService {
     return persistArticle(ingestPackage, doi, articlePackage);
   }
 
-  private Document getDocument(Archive archive, String manuscriptEntry) throws IOException {
+  /**
+   * Loads the manuscript referenced in the archive.
+   *
+   * @param archive The archive
+   * @param manuscriptEntry The manuscript entry
+   *
+   * @return The manuscript
+   *
+   * @throws IOException if unable to load manuscript
+   */
+  @VisibleForTesting
+  Document getDocument(Archive archive, String manuscriptEntry) throws IOException {
     Document document;
     try (InputStream manuscriptStream = new BufferedInputStream(archive.openFile(manuscriptEntry))) {
       document = AmbraService.parseXml(manuscriptStream);
@@ -157,18 +171,14 @@ public class IngestionService extends AmbraService {
 
   @VisibleForTesting
   ManifestXml getManifestXml(Archive archive) throws IOException {
-    String manifestEntry = null;
-    for (String entryName : archive.getEntryNames()) {
-      if (entryName.equalsIgnoreCase("manifest.xml")) {
-        manifestEntry = entryName;
-      }
-    }
-    if (manifestEntry == null) {
+    final ImmutableSet<String> entryNames = archive.getEntryNames();
+    if (!entryNames.contains(MANIFEST_XML)) {
       throw new RestClientException("Archive has no manifest file", HttpStatus.BAD_REQUEST);
     }
 
     ManifestXml manifestXml;
-    try (InputStream manifestStream = new BufferedInputStream(archive.openFile(manifestEntry))) {
+    try (InputStream manifestStream =
+        new BufferedInputStream(archive.openFile(MANIFEST_XML))) {
       manifestXml = new ManifestXml(AmbraService.parseXml(manifestStream));
     }
     return manifestXml;
