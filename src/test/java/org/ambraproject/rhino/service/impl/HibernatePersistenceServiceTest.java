@@ -17,9 +17,11 @@ import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleIngestion;
+import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.article.ArticleCustomMetadata;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
+import org.ambraproject.rhino.model.ingest.ArticleItemInput;
 import org.ambraproject.rhino.model.ingest.ArticlePackage;
 import org.ambraproject.rhino.model.ingest.ArticlePackageBuilder;
 import org.ambraproject.rhino.model.ingest.IngestPackage;
@@ -28,6 +30,8 @@ import org.ambraproject.rhino.service.ContentRepoPersistenceService;
 import org.ambraproject.rhino.service.HibernatePersistenceService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.util.Archive;
+import org.plos.crepo.model.input.RepoObjectInput;
+import org.plos.crepo.service.ContentRepoService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -157,7 +161,7 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
   public ContentRepoPersistenceService contentRepoPersistenceService() {
     LOG.debug("contentRepoPersistenceService() *");
     final ContentRepoPersistenceService contentRepoPersistenceService =
-        mock(ContentRepoPersistenceService.class);
+        spy(ContentRepoPersistenceServiceImpl.class);
     return contentRepoPersistenceService;
   }
 
@@ -281,19 +285,17 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
   /**
    * Test successful persisting of assets.
    */
+  @Test
   @DirtiesContext
   public void testPersistAssetsShouldSucceed() {
     final HibernateTemplate mockHibernateTemplate =
         applicationContext.getBean(HibernateTemplate.class);
-    when(mockHibernateTemplate.execute(any())).thenReturn(NEXT_INGESTION_NUMBER);
 
-    final ConfigurationReadService mockConfigurationReadService =
-        applicationContext.getBean(ConfigurationReadService.class);
-    when(mockConfigurationReadService.getRepoConfig()).thenReturn(REPO_CONFIG);
+    final ContentRepoService mockContentRepoService =
+        buildMockContentRepoService(DESTINATION_BUCKET);
 
-    final JournalCrudService mockJournalCrudService =
-        applicationContext.getBean(JournalCrudService.class);
-    when(mockJournalCrudService.getJournal(META_JOURNAL_NAME)).thenReturn(expectedJournal);
+    final ContentRepoPersistenceService mockContentRepoPersistenceService =
+        applicationContext.getBean(ContentRepoPersistenceService.class);
 
     final HibernatePersistenceService mockPersistenceService =
         applicationContext.getBean(HibernatePersistenceService.class);
@@ -310,12 +312,21 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
         .setRevisionDate(java.sql.Date.valueOf(expectedCustomMetadata.getRevisionDate()));
     expectedIngestion.setPublicationStage(expectedCustomMetadata.getPublicationStage());
 
-    final ArticleIngestion actualIngestion =
-        mockPersistenceService.persistIngestion(expectedArticle, expectedIngestPackage);
+    mockPersistenceService.persistAssets(expectedArticlePackage, expectedIngestion);
 
-    assertThat(actualIngestion).isEqualTo(expectedIngestion);
-    verify(mockConfigurationReadService).getRepoConfig();
-    verify(mockJournalCrudService).getJournal(META_JOURNAL_NAME);
-    verify(mockHibernateTemplate).save(expectedIngestion);
+    final ImmutableList<ArticleItemInput> assets = expectedArticlePackage.getAllItems();
+    assets.forEach(itemInput -> {
+      verify(mockContentRepoPersistenceService).createItem(itemInput, expectedIngestion);
+    });
+
+    final ArticleItem expectedArticleItem = new ArticleItem();
+    expectedArticleItem.setDoi(articleDoi.getName());
+    expectedArticleItem.setIngestion(expectedIngestion);
+
+    verify(mockHibernateTemplate).save(expectedArticleItem);
+
+    // Only 1 item in article package.
+    verify(mockContentRepoService, times(1)).autoCreateRepoObject(any(RepoObjectInput.class));
+    verify(mockHibernateTemplate, times(1)).save(any());
   }
 }
