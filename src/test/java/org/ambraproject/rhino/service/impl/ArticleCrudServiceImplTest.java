@@ -9,7 +9,7 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.orm.hibernate4.HibernateTemplate;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.BeforeMethod;
@@ -48,32 +48,31 @@ public class ArticleCrudServiceImplTest extends AbstractRhinoTest {
     LOG.debug("articleCrudService() * --> {}", mockArticleCrudService);
     return mockArticleCrudService;
   }
-  
+
   @Test
   @DirtiesContext
   public void testPopulateCategories() throws Exception {
-    final ArticleIdentifier articleId = ArticleIdentifier.create(Doi.create("0"));
-    mockArticleCrudService.populateCategories(articleId);
-    final Article article = new Article();
-    article.setArticleId(0L);
 
     final HibernateTemplate mockHibernateTemplate =
         applicationContext.getBean(HibernateTemplate.class);
 
+    final ArticleIdentifier articleId = ArticleIdentifier.create(Doi.create("0"));
+    final Article article = new Article();
+    article.setArticleId(0L);
     when(mockHibernateTemplate.execute(any())).thenReturn(article);
     when(mockHibernateTemplate.execute(any())).thenReturn(1);
+
     ArticleRevision articleRevision = new ArticleRevision();
     when(mockHibernateTemplate.execute(any())).thenReturn(articleRevision);
 
-    verify(mockHibernateTemplate).execute(any());
+    mockArticleCrudService.populateCategories(articleId);
+
+    mockTaxonomyService = applicationContext.getBean(TaxonomyService.class);
+    verify(mockTaxonomyService).populateCategories(any());
   }
 
   @Test
   public void testGetManuscriptXml() throws Exception {
-  }
-
-  @Test
-  public void testGetManuscriptXml1() throws Exception {
   }
 
   @Test
