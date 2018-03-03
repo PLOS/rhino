@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.service.impl;
 
 import static com.google.common.truth.Truth.assertThat;
+import static com.google.common.truth.Truth8.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -14,6 +15,7 @@ import java.util.Optional;
 import org.ambraproject.rhino.AbstractRhinoTest;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
+import org.ambraproject.rhino.content.xml.ManifestXml.AssetTagName;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleIngestion;
@@ -52,7 +54,7 @@ import com.google.common.collect.ImmutableSet;
 @Configuration
 public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
 
-  private static final String ARTICLE_DOI_URI = "info:doi/10.1371/journal.pbio.0040019";
+  private static final String ARTICLE_DOI_URI = "info:doi/10.1111/dupp.0000001";
 
   private static final String DESTINATION_BUCKET = "water_bucket";
 
@@ -78,6 +80,8 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
   private ManifestXml.Asset mockManuscriptAsset;
 
   private ManifestXml.ManifestFile mockManifestFile;
+
+  private ManifestXml.Asset mockManifestAsset;
 
   private ManifestXml.ManifestFile mockAncillaryFile;
 
@@ -110,6 +114,7 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
 
     mockArticleXml = mock(ArticleXml.class);
     mockManifestFile = mock(ManifestXml.ManifestFile.class);
+    mockManifestAsset = mock(ManifestXml.Asset.class);
     mockAncillaryFile = mock(ManifestXml.ManifestFile.class);
     mockRepresentation = mock(ManifestXml.Representation.class);
     mockManuscriptAsset = mock(ManifestXml.Asset.class);
@@ -117,9 +122,13 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
 
     when(mockArticleXml.readDoi()).thenReturn(articleDoi);
 
-    when(mockManifestFile.getCrepoKey()).thenReturn("10.1371/dupp.0000001.pdf");
+    when(mockManifestFile.getCrepoKey()).thenReturn("10.1111/dupp.0000001.pdf");
     when(mockManifestFile.getEntry()).thenReturn("dupp.0000001.pdf");
     when(mockManifestFile.getMimetype()).thenReturn("application/pdf");
+
+    when(mockManifestAsset.getAssetTagName()).thenReturn(AssetTagName.OBJECT);
+    when(mockManifestAsset.getUri()).thenReturn("info:doi/10.1111/dupp.0000001");
+    when(mockManifestAsset.isStrikingImage()).thenReturn(Boolean.TRUE);
 
     when(mockAncillaryFile.getCrepoKey()).thenReturn("10.1111/dupp.0000001.s001.png");
     when(mockAncillaryFile.getEntry()).thenReturn("dupp.0000001.s001.png");
@@ -335,5 +344,46 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
 
     verify(mockContentRepoService, times(2)).autoCreateRepoObject(any(RepoObjectInput.class));
     verify(mockContentRepoService, times(2)).getRepoObjectMetadata(any(RepoVersion.class));
+  }
+
+  /**
+   * Test successful persisting of striking image.
+   */
+  @Test
+  @DirtiesContext
+  public void testPersistStrikingImageShouldSucceed() {
+    final HibernateTemplate mockHibernateTemplate =
+        applicationContext.getBean(HibernateTemplate.class);
+
+    final ManifestXml mockManifest = mock(ManifestXml.class);
+    when(mockManifest.getAssets()).thenReturn(ImmutableList.of(mockManifestAsset));
+
+    final HibernatePersistenceService mockPersistenceService =
+        applicationContext.getBean(HibernatePersistenceService.class);
+
+    final ArticleIngestion expectedIngestion = new ArticleIngestion();
+    expectedIngestion.setArticle(expectedArticle);
+    expectedIngestion.setIngestionNumber(NEXT_INGESTION_NUMBER);
+    expectedIngestion.setTitle(expectedArticleMetadata.getTitle());
+    expectedIngestion
+        .setPublicationDate(java.sql.Date.valueOf(expectedArticleMetadata.getPublicationDate()));
+    expectedIngestion.setArticleType(expectedArticleMetadata.getArticleType());
+    expectedIngestion.setJournal(expectedJournal.get());
+    expectedIngestion
+        .setRevisionDate(java.sql.Date.valueOf(expectedCustomMetadata.getRevisionDate()));
+    expectedIngestion.setPublicationStage(expectedCustomMetadata.getPublicationStage());
+
+    final ArticleItem expectedArticleItem = new ArticleItem();
+    expectedArticleItem.setDoi(articleDoi.getName());
+    expectedArticleItem.setIngestion(expectedIngestion);
+
+    final ImmutableList<ArticleItem> articleItems = ImmutableList.of(expectedArticleItem);
+
+    final Optional<ArticleItem> actualStrikingImage =
+        mockPersistenceService.persistStrikingImage(expectedIngestion, articleItems, mockManifest);
+
+    assertThat(actualStrikingImage).isPresent();
+    assertThat(actualStrikingImage.get()).isEqualTo(expectedArticleItem);
+    verify(mockHibernateTemplate).update(expectedIngestion);
   }
 }
