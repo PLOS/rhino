@@ -364,14 +364,6 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
     final ArticleIngestion expectedIngestion = new ArticleIngestion();
     expectedIngestion.setArticle(expectedArticle);
     expectedIngestion.setIngestionNumber(NEXT_INGESTION_NUMBER);
-    expectedIngestion.setTitle(expectedArticleMetadata.getTitle());
-    expectedIngestion
-        .setPublicationDate(java.sql.Date.valueOf(expectedArticleMetadata.getPublicationDate()));
-    expectedIngestion.setArticleType(expectedArticleMetadata.getArticleType());
-    expectedIngestion.setJournal(expectedJournal.get());
-    expectedIngestion
-        .setRevisionDate(java.sql.Date.valueOf(expectedCustomMetadata.getRevisionDate()));
-    expectedIngestion.setPublicationStage(expectedCustomMetadata.getPublicationStage());
 
     final ArticleItem expectedArticleItem = new ArticleItem();
     expectedArticleItem.setDoi(articleDoi.getName());
