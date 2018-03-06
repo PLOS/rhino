@@ -1,24 +1,43 @@
 package org.ambraproject.rhino;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.withSettings;
 
 import java.io.InputStream;
+import java.util.UUID;
 
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.config.YamlConfiguration;
+import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.HibernatePersistenceService;
 import org.ambraproject.rhino.util.Java8TimeGsonAdapters;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
+import org.hibernate.FlushMode;
+import org.hibernate.Query;
+import org.hibernate.SessionFactory;
+import org.hibernate.classic.Session;
+import org.hibernate.dialect.MySQL5Dialect;
+import org.hibernate.dialect.function.SQLFunctionRegistry;
+import org.hibernate.engine.SessionFactoryImplementor;
+import org.plos.crepo.model.identity.RepoVersion;
+import org.plos.crepo.model.input.RepoObjectInput;
+import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.plos.crepo.service.ContentRepoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.context.annotation.Bean;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.yaml.snakeyaml.Yaml;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -33,16 +52,69 @@ public abstract class AbstractRhinoTest extends AbstractTestNGSpringContextTests
 
   public static final String TEST_RHINO_YAML = "rhino-test.yaml";
 
+  /**
+   * Flag to determine if <b>spying</b> on the
+   * {@link org.springframework.orm.hibernate3.HibernateTemplate HibernateTemplate}.
+   */
+  private boolean spyOnHibernateTemplate;
+
+  /**
+   * Creates an instance of <code>HibernatePersistenceServiceTest</code>.
+   */
+  protected AbstractRhinoTest() {
+  }
+
+  /**
+   * Creates an instance of <code>HibernatePersistenceServiceTest</code>.
+   *
+   * @param spyOnHibernateTemplate Flag to determine if spying on <code>HibernateTemplate</code>
+   */
+  protected AbstractRhinoTest(boolean spyOnHibernateTemplate) {
+    this.spyOnHibernateTemplate = spyOnHibernateTemplate;
+  }
+
   @Bean
+  public SessionFactory sessionFactory() {
+    final SessionFactory hibernateSessionFactory;
+    if (spyOnHibernateTemplate) {
+      LOG.info("hibernateSessionFactory() * Full mocking");
+      hibernateSessionFactory = mock(
+          SessionFactory.class, withSettings().extraInterfaces(SessionFactoryImplementor.class));
+
+      final SessionFactoryImplementor factoryImplementor =
+          (SessionFactoryImplementor) hibernateSessionFactory;
+      when(factoryImplementor.getSqlFunctionRegistry())
+          .thenReturn(new SQLFunctionRegistry(new MySQL5Dialect(), ImmutableMap.of()));
+    } else {
+      LOG.info("hibernateSessionFactory() * Simple mocking");
+      hibernateSessionFactory = mock(SessionFactory.class);
+    }
+    return hibernateSessionFactory;
+  }
+
+  @Bean(autowire = Autowire.BY_TYPE)
   public HibernateTemplate hibernateTemplate() {
-    LOG.debug("hibernateTemplate() *");
-    final HibernateTemplate hibernateTemplate = mock(HibernateTemplate.class);
+    final HibernateTemplate hibernateTemplate;
+    if (spyOnHibernateTemplate) {
+      LOG.info("hibernateTemplate() * Using SPY");
+      hibernateTemplate = spy(new HibernateTemplate());
+    } else {
+      LOG.info("hibernateTemplate() *");
+      hibernateTemplate = mock(HibernateTemplate.class);
+    }
     return hibernateTemplate;
   }
 
   @Bean
+  public ConfigurationReadService configurationReadService() {
+    LOG.debug("configurationReadService() *");
+    final ConfigurationReadService configurationReadService = mock(ConfigurationReadService.class);
+    return configurationReadService;
+  }
+
+  @Bean(autowire = Autowire.BY_TYPE)
   public HibernatePersistenceService hibernatePersistenceService() {
-    LOG.debug("HibernatePersistenceService() *");
+    LOG.debug("hibernatePersistenceService() *");
     final HibernatePersistenceService hibernatePersistenceService =
         mock(HibernatePersistenceService.class);
     return hibernatePersistenceService;
@@ -69,7 +141,7 @@ public abstract class AbstractRhinoTest extends AbstractTestNGSpringContextTests
         AbstractRhinoTest.class.getClassLoader().getResourceAsStream(TEST_RHINO_YAML)) {
       final YamlConfiguration runtimeConfiguration =
           new YamlConfiguration(yaml.loadAs(is, YamlConfiguration.Input.class));
-      LOG.debug("runtimeConfiguration: Loaded {}", TEST_RHINO_YAML);
+      LOG.info("runtimeConfiguration: Loaded {}", TEST_RHINO_YAML);
       return spy(runtimeConfiguration);
     } catch (Exception exception) {
       LOG.warn("runtimeConfiguration: Caught exception: {}", exception);
@@ -79,6 +151,98 @@ public abstract class AbstractRhinoTest extends AbstractTestNGSpringContextTests
 
   @Bean
   public Yaml yaml() {
-    return new Yaml();
+    final Yaml mockYaml = spy(new Yaml());
+    return mockYaml;
+  }
+
+  /**
+   * Method to mock a
+   * {@link org.springframework.orm.hibernate3.HibernateTemplate HibernateTemplate},
+   * using a simple mock of {@link org.hibernate.Query Query}.
+   *
+   * @return The {@link org.springframework.orm.hibernate3.HibernateTemplate HibernateTemplate}
+   */
+  public HibernateTemplate buildMockHibernateTemplate() {
+    final HibernateTemplate hibernateTemplate = buildMockHibernateTemplate(mock(Query.class));
+    return hibernateTemplate;
+  }
+
+  /**
+   * Method to mock a
+   * {@link org.springframework.orm.hibernate3.HibernateTemplate HibernateTemplate}.
+   *
+   * @param query The {@link org.hibernate.Query Query} to associate with
+   *              {@link org.hibernate.classic.Session#createQuery(String) createQuery()}
+   *
+   * @return The {@link org.springframework.orm.hibernate3.HibernateTemplate HibernateTemplate}
+   */
+  public HibernateTemplate buildMockHibernateTemplate(Query query) {
+    Preconditions.checkNotNull(query, "Query reference cannot be null");
+
+    final SessionFactory sessionFactory = applicationContext.getBean(SessionFactory.class);
+    if (spyOnHibernateTemplate) {
+      final Session mockSession = mock(Session.class);
+      when(mockSession.getFlushMode()).thenReturn(FlushMode.AUTO);
+      when(mockSession.createQuery(anyString())).thenReturn(query);
+
+      when(sessionFactory.openSession()).thenReturn(mockSession);
+    }
+
+    final HibernateTemplate hibernateTemplate =
+        applicationContext.getBean(HibernateTemplate.class);
+    return hibernateTemplate;
+  }
+
+  /**
+   * Method to get the {@link org.plos.crepo.service.ContentRepoService ContentRepoService} from the
+   * <b>application context</b>, and mock the following methods:
+   *
+   * <ul>
+   * <li>autoCreateRepoObject</li>
+   * </ul>
+   *
+   * @param bucketName the object bucket name
+   *
+   * @return The mocked {@link org.plos.crepo.service.ContentRepoService ContentRepoService}
+   */
+  public ContentRepoService buildMockContentRepoService(String bucketName) {
+    final String key = UUID.randomUUID().toString();
+    final String uuid = UUID.randomUUID().toString();
+    final ContentRepoService mockContentRepoService =
+        buildMockContentRepoService(bucketName, key, uuid);
+    return mockContentRepoService;
+  }
+
+  /**
+   * Method to get the {@link org.plos.crepo.service.ContentRepoService ContentRepoService} from the
+   * <b>application context</b>, and mock the following methods:
+   *
+   * <ul>
+   * <li>autoCreateRepoObject</li>
+   * <li>getRepoObjectMetadata</li>
+   * </ul>
+   *
+   * @param bucketName the object bucket name
+   * @param key the object key
+   * @param uuid the version's UUID as a string
+   *
+   * @return The mocked {@link org.plos.crepo.service.ContentRepoService ContentRepoService}
+   */
+  public ContentRepoService buildMockContentRepoService(String bucketName, String key,
+      String uuid) {
+    final ContentRepoService mockContentRepoService =
+        applicationContext.getBean(ContentRepoService.class);
+
+    final RepoVersion repoVersion = RepoVersion.create(bucketName, key, uuid);
+    final RepoObjectMetadata mockRepoMetadata = mock(RepoObjectMetadata.class);
+    when(mockRepoMetadata.getVersion()).thenReturn(repoVersion);
+    when(mockRepoMetadata.getSize()).thenReturn(5L);
+
+    when(mockContentRepoService.autoCreateRepoObject(any(RepoObjectInput.class)))
+        .thenReturn(mockRepoMetadata);
+    when(mockContentRepoService.getRepoObjectMetadata(any(RepoVersion.class)))
+        .thenReturn(mockRepoMetadata);
+
+    return mockContentRepoService;
   }
 }
