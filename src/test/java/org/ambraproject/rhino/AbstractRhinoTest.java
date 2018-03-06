@@ -8,8 +8,6 @@ import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.withSettings;
 
 import java.io.InputStream;
-import java.lang.reflect.Method;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.ambraproject.rhino.config.RuntimeConfiguration;
@@ -25,8 +23,6 @@ import org.hibernate.classic.Session;
 import org.hibernate.dialect.MySQL5Dialect;
 import org.hibernate.dialect.function.SQLFunctionRegistry;
 import org.hibernate.engine.SessionFactoryImplementor;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.model.input.RepoObjectInput;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
@@ -37,10 +33,10 @@ import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.context.annotation.Bean;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.BeforeMethod;
 import org.yaml.snakeyaml.Yaml;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -56,52 +52,56 @@ public abstract class AbstractRhinoTest extends AbstractTestNGSpringContextTests
 
   public static final String TEST_RHINO_YAML = "rhino-test.yaml";
 
-  protected String currentTestMethod;
+  /**
+   * Flag to determine if <b>spying</b> on the
+   * {@link org.springframework.orm.hibernate3.HibernateTemplate HibernateTemplate}.
+   */
+  private boolean spyOnHibernateTemplate;
 
-  @BeforeMethod(alwaysRun = true)
-  @Override
-  protected void springTestContextBeforeTestMethod(Method testMethod) throws Exception {
-    currentTestMethod = testMethod.getName();
-    LOG.info("springTestContextBeforeTestMethod() * {}", currentTestMethod);
-    super.springTestContextBeforeTestMethod(testMethod);
+  /**
+   * Creates an instance of <code>HibernatePersistenceServiceTest</code>.
+   */
+  protected AbstractRhinoTest() {
   }
 
-  /** Returns a query. */
-  protected Query createQuery(InvocationOnMock invocation) {
-    final Query mockQuery = mock(Query.class);
-    return mockQuery;
+  /**
+   * Creates an instance of <code>HibernatePersistenceServiceTest</code>.
+   *
+   * @param spyOnHibernateTemplate Flag to determine if spying on <code>HibernateTemplate</code>
+   */
+  protected AbstractRhinoTest(boolean spyOnHibernateTemplate) {
+    this.spyOnHibernateTemplate = spyOnHibernateTemplate;
   }
 
   @Bean
   public SessionFactory sessionFactory() {
-    LOG.info("hibernateSessionFactory() *");
-    final SessionFactory hibernateSessionFactory = mock(
-        SessionFactory.class, withSettings().extraInterfaces(SessionFactoryImplementor.class));
+    final SessionFactory hibernateSessionFactory;
+    if (spyOnHibernateTemplate) {
+      LOG.info("hibernateSessionFactory() * Full mocking");
+      hibernateSessionFactory = mock(
+          SessionFactory.class, withSettings().extraInterfaces(SessionFactoryImplementor.class));
 
-    final Session mockSession = mock(Session.class);
-    when(mockSession.getFlushMode()).thenReturn(FlushMode.AUTO);
-    when(mockSession.createQuery(anyString())).thenAnswer(new Answer<Query>() {
-
-      @Override
-      public Query answer(InvocationOnMock invocation) throws Throwable {
-        return createQuery(invocation);
-      }
-
-    });
-
-    when(hibernateSessionFactory.openSession()).thenReturn(mockSession);
-
-    final SessionFactoryImplementor factoryImplementor =
-        (SessionFactoryImplementor) hibernateSessionFactory;
-    when(factoryImplementor.getSqlFunctionRegistry())
-        .thenReturn(new SQLFunctionRegistry(new MySQL5Dialect(), ImmutableMap.of()));
+      final SessionFactoryImplementor factoryImplementor =
+          (SessionFactoryImplementor) hibernateSessionFactory;
+      when(factoryImplementor.getSqlFunctionRegistry())
+          .thenReturn(new SQLFunctionRegistry(new MySQL5Dialect(), ImmutableMap.of()));
+    } else {
+      LOG.info("hibernateSessionFactory() * Simple mocking");
+      hibernateSessionFactory = mock(SessionFactory.class);
+    }
     return hibernateSessionFactory;
   }
 
   @Bean(autowire = Autowire.BY_TYPE)
   public HibernateTemplate hibernateTemplate() {
-    LOG.info("hibernateTemplate() *");
-    final HibernateTemplate hibernateTemplate = spy(new HibernateTemplate());
+    final HibernateTemplate hibernateTemplate;
+    if (spyOnHibernateTemplate) {
+      LOG.info("hibernateTemplate() * Using SPY");
+      hibernateTemplate = spy(new HibernateTemplate());
+    } else {
+      LOG.info("hibernateTemplate() *");
+      hibernateTemplate = mock(HibernateTemplate.class);
+    }
     return hibernateTemplate;
   }
 
@@ -156,28 +156,41 @@ public abstract class AbstractRhinoTest extends AbstractTestNGSpringContextTests
   }
 
   /**
-   * Method to mock a {@link org.hibernate.SessionFactory Hibernate Session Factor}.
+   * Method to mock a
+   * {@link org.springframework.orm.hibernate3.HibernateTemplate HibernateTemplate},
+   * using a simple mock of {@link org.hibernate.Query Query}.
+   *
+   * @return The {@link org.springframework.orm.hibernate3.HibernateTemplate HibernateTemplate}
+   */
+  public HibernateTemplate buildMockHibernateTemplate() {
+    final HibernateTemplate hibernateTemplate = buildMockHibernateTemplate(mock(Query.class));
+    return hibernateTemplate;
+  }
+
+  /**
+   * Method to mock a
+   * {@link org.springframework.orm.hibernate3.HibernateTemplate HibernateTemplate}.
    *
    * @param query The {@link org.hibernate.Query Query} to associate with
    *              {@link org.hibernate.classic.Session#createQuery(String) createQuery()}
    *
-   * @return The {@link org.hibernate.SessionFactory Hibernate Session Factor}
+   * @return The {@link org.springframework.orm.hibernate3.HibernateTemplate HibernateTemplate}
    */
-  public SessionFactory buildMockHibernateSessionFactory(Optional<Query> query) {
+  public HibernateTemplate buildMockHibernateTemplate(Query query) {
+    Preconditions.checkNotNull(query, "Query reference cannot be null");
+
     final SessionFactory sessionFactory = applicationContext.getBean(SessionFactory.class);
+    if (spyOnHibernateTemplate) {
+      final Session mockSession = mock(Session.class);
+      when(mockSession.getFlushMode()).thenReturn(FlushMode.AUTO);
+      when(mockSession.createQuery(anyString())).thenReturn(query);
 
-    final Session mockSession = mock(Session.class);
-    when(mockSession.getFlushMode()).thenReturn(FlushMode.AUTO);
-
-    if (query.isPresent()) {
-      when(mockSession.createQuery(anyString())).thenReturn(query.get());
-    } else {
-      when(mockSession.createQuery(anyString())).thenReturn(mock(Query.class));
+      when(sessionFactory.openSession()).thenReturn(mockSession);
     }
 
-    when(sessionFactory.openSession()).thenReturn(mockSession);
-
-    return sessionFactory;
+    final HibernateTemplate hibernateTemplate =
+        applicationContext.getBean(HibernateTemplate.class);
+    return hibernateTemplate;
   }
 
   /**
