@@ -164,7 +164,7 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
         .setJournalName(META_JOURNAL_NAME)
         .setPublicationDate(publishedOn).build();
 
-    expectedCustomMetadata = ArticleCustomMetadata.builder().setPublicationStage("pubtage")
+    expectedCustomMetadata = ArticleCustomMetadata.builder().setPublicationStage("pubstage")
         .setRevisionDate(publishedOn).build();
 
     expectedIngestPackage =
