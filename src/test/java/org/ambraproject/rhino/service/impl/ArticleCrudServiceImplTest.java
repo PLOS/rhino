@@ -2,8 +2,6 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.collect.ImmutableList;
 import org.ambraproject.rhino.AbstractRhinoTest;
-import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
-import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleItemIdentifier;
@@ -20,9 +18,7 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.view.ResolvedDoiView;
-import org.ambraproject.rhino.view.article.ArticleIngestionView;
 import org.ambraproject.rhino.view.article.ArticleOverview;
-import org.ambraproject.rhino.view.article.ItemSetView;
 import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.plos.crepo.service.ContentRepoService;
@@ -58,7 +54,6 @@ import java.util.Optional;
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -67,23 +62,11 @@ import static org.mockito.Mockito.when;
 @Configuration
 public class ArticleCrudServiceImplTest extends AbstractRhinoTest {
 
-  private AssetCrudService mockAssetCrudService;
-
-  private XpathReader mockXpathReader;
-
-  private TaxonomyService mockTaxonomyService;
-
-  private ArticleIngestionView.Factory mockArticleIngestionViewFactory;
-
-  private ItemSetView.Factory mockItemSetViewFactory;
-
   private ArticleCrudService mockArticleCrudService;
 
   private HibernateTemplate mockHibernateTemplate;
 
   private Article stubArticle = null;
-
-  private ArticleRevision stubArticleRevision = null;
 
   private final ArticleIdentifier stubArticleId = ArticleIdentifier.create(Doi.create("0"));
 
@@ -95,60 +78,10 @@ public class ArticleCrudServiceImplTest extends AbstractRhinoTest {
   }
 
   @Bean
-  public TaxonomyService taxonomyService() {
-    mockTaxonomyService = mock(TaxonomyService.class);
-    LOG.debug("taxonomyService() * --> {}", mockTaxonomyService);
-    return mockTaxonomyService;
-  }
-
-  @Bean
-  public AssetCrudService assetCrudService() {
-    mockAssetCrudService = mock(AssetCrudService.class);
-    LOG.debug("assetCrudService() * --> {}", mockAssetCrudService);
-    return mockAssetCrudService;
-  }
-
-  @Bean
-  public XpathReader xpathReader() {
-    mockXpathReader = mock(XpathReader.class);
-    LOG.debug("xpathReader() * --> {}", mockXpathReader);
-    return mockXpathReader;
-  }
-
-  @Bean
-  public ArticleIngestionView.Factory articleIngestionViewFactory() {
-    mockArticleIngestionViewFactory = mock(ArticleIngestionView.Factory.class);
-    LOG.debug("articleIngestionView.Factory() * --> {}", mockArticleIngestionViewFactory);
-    return mockArticleIngestionViewFactory;
-  }
-
-  @Bean
-  public ItemSetView.Factory itemSetViewFactory() {
-    mockItemSetViewFactory = mock(ItemSetView.Factory.class);
-    LOG.debug("itemSetViewFactory() * --> {}", mockItemSetViewFactory);
-    return mockItemSetViewFactory;
-  }
-
-  @Bean
-  public CustomMetadataExtractor.Factory customMetadataExtractorFactory() {
-    CustomMetadataExtractor.Factory mockMetadataExtractorFactory =
-        spy(CustomMetadataExtractor.Factory.class);
-    LOG.debug("customMetadataExtractorFactory() * {}", mockMetadataExtractorFactory);
-    return mockMetadataExtractorFactory;
-  }
-
-  @Bean
   public ArticleCrudService articleCrudService() {
     mockArticleCrudService = spy(ArticleCrudServiceImpl.class);
     LOG.debug("articleCrudService() * --> {}", mockArticleCrudService);
     return mockArticleCrudService;
-  }
-
-  private Article createStubArticle() {
-    final Article article = new Article();
-    article.setArticleId(0L);
-    article.setDoi("0");
-    return article;
   }
 
   private ArticleRevision createStubArticleRevision() {
@@ -203,7 +136,7 @@ public class ArticleCrudServiceImplTest extends AbstractRhinoTest {
 
     mockArticleCrudService.populateCategories(stubArticleId);
 
-    mockTaxonomyService = applicationContext.getBean(TaxonomyService.class);
+    TaxonomyService mockTaxonomyService = applicationContext.getBean(TaxonomyService.class);
     verify(mockTaxonomyService).populateCategories(articleRevision);
   }
 
@@ -250,7 +183,7 @@ public class ArticleCrudServiceImplTest extends AbstractRhinoTest {
     final ArrayList<String> categoryList = new ArrayList<>();
     categoryList.add("test/test");
 
-    mockTaxonomyService = applicationContext.getBean(TaxonomyService.class);
+    TaxonomyService mockTaxonomyService = applicationContext.getBean(TaxonomyService.class);
     when(mockTaxonomyService.getRawTerms(any(Document.class), eq(stubArticle), eq(true)))
         .thenReturn(categoryList);
 
