@@ -31,7 +31,7 @@ public class ArticleFileInput {
   private final String filename;
   private final RepoObjectInput object;
 
-  ArticleFileInput(String filename, RepoObjectInput object) {
+  public ArticleFileInput(String filename, RepoObjectInput object) {
     this.filename = Objects.requireNonNull(filename);
     this.object = Objects.requireNonNull(object);
   }

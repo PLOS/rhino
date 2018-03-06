@@ -34,7 +34,7 @@ public class ArticleItemInput {
   private final ImmutableMap<String, ArticleFileInput> files;
   private final String type;
 
-  ArticleItemInput(Doi doi, Map<String, ArticleFileInput> files, String type) {
+  public ArticleItemInput(Doi doi, Map<String, ArticleFileInput> files, String type) {
     this.doi = Objects.requireNonNull(doi);
     this.files = ImmutableMap.copyOf(files);
     this.type = Objects.requireNonNull(type);
