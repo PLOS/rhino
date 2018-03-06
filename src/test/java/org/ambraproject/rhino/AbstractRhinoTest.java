@@ -48,6 +48,8 @@ public abstract class AbstractRhinoTest extends AbstractTestNGSpringContextTests
 
   protected static final Logger LOG = LoggerFactory.getLogger(AbstractRhinoTest.class);
 
+  protected static final String DESTINATION_BUCKET = "water_bucket";
+
   protected static final Joiner NO_SPACE_JOINER = Joiner.on("").skipNulls();
 
   public static final String TEST_RHINO_YAML = "rhino-test.yaml";
@@ -201,7 +203,7 @@ public abstract class AbstractRhinoTest extends AbstractTestNGSpringContextTests
    * <li>autoCreateRepoObject</li>
    * </ul>
    *
-   * @param bucketName the object bucket name
+   * @param bucketName The object bucket name
    *
    * @return The mocked {@link org.plos.crepo.service.ContentRepoService ContentRepoService}
    */
@@ -219,24 +221,68 @@ public abstract class AbstractRhinoTest extends AbstractTestNGSpringContextTests
    *
    * <ul>
    * <li>autoCreateRepoObject</li>
+   * </ul>
+   *
+   * @param bucketName The object bucket name
+   * @param fileSize The <b>file size</b> to return with <code>mockRepoMetadata.getSize()</code>
+   *
+   * @return The mocked {@link org.plos.crepo.service.ContentRepoService ContentRepoService}
+   */
+  public ContentRepoService buildMockContentRepoService(String bucketName, long fileSize) {
+    final String key = UUID.randomUUID().toString();
+    final String uuid = UUID.randomUUID().toString();
+    final ContentRepoService mockContentRepoService =
+        buildMockContentRepoService(bucketName, key, uuid, fileSize);
+    return mockContentRepoService;
+  }
+
+  /**
+   * Method to get the {@link org.plos.crepo.service.ContentRepoService ContentRepoService} from the
+   * <b>application context</b>, and mock the following methods:
+   *
+   * <ul>
+   * <li>autoCreateRepoObject</li>
    * <li>getRepoObjectMetadata</li>
    * </ul>
    *
-   * @param bucketName the object bucket name
-   * @param key the object key
-   * @param uuid the version's UUID as a string
+   * @param bucketName The object bucket name
+   * @param key The object key
+   * @param uuid The version's UUID as a string
    *
    * @return The mocked {@link org.plos.crepo.service.ContentRepoService ContentRepoService}
    */
   public ContentRepoService buildMockContentRepoService(String bucketName, String key,
       String uuid) {
     final ContentRepoService mockContentRepoService =
+        buildMockContentRepoService(bucketName, key, uuid, 5L /* fileSize */);
+    return mockContentRepoService;
+  }
+
+  /**
+   * Method to get the {@link org.plos.crepo.service.ContentRepoService ContentRepoService} from the
+   * <b>application context</b>, and mock the following methods:
+   *
+   * <ul>
+   * <li>autoCreateRepoObject</li>
+   * <li>getRepoObjectMetadata</li>
+   * </ul>
+   *
+   * @param bucketName The object bucket name
+   * @param key The object key
+   * @param uuid The version's UUID as a string
+   * @param fileSize The <b>file size</b> to return with <code>mockRepoMetadata.getSize()</code>
+   *
+   * @return The mocked {@link org.plos.crepo.service.ContentRepoService ContentRepoService}
+   */
+  public ContentRepoService buildMockContentRepoService(String bucketName, String key,
+      String uuid, long fileSize) {
+    final ContentRepoService mockContentRepoService =
         applicationContext.getBean(ContentRepoService.class);
 
     final RepoVersion repoVersion = RepoVersion.create(bucketName, key, uuid);
     final RepoObjectMetadata mockRepoMetadata = mock(RepoObjectMetadata.class);
     when(mockRepoMetadata.getVersion()).thenReturn(repoVersion);
-    when(mockRepoMetadata.getSize()).thenReturn(5L);
+    when(mockRepoMetadata.getSize()).thenReturn(Long.valueOf(fileSize));
 
     when(mockContentRepoService.autoCreateRepoObject(any(RepoObjectInput.class)))
         .thenReturn(mockRepoMetadata);
