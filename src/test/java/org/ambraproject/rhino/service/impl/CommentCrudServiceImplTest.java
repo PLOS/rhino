@@ -7,9 +7,14 @@ import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.CommentIdentifier;
 import org.ambraproject.rhino.model.Comment;
+import org.ambraproject.rhino.model.Flag;
+import org.ambraproject.rhino.model.FlagReasonCode;
+import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
+import org.ambraproject.rhino.view.comment.CommentCountView;
+import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
 import org.ambraproject.rhino.view.comment.CommentNodeView;
 import org.mockito.internal.stubbing.answers.Returns;
@@ -50,9 +55,15 @@ public class CommentCrudServiceImplTest extends AbstractRhinoTest {
 
   private List<Comment> stubComments = ImmutableList.of(createStubComment());
 
+  private List<Flag> stubFlags = ImmutableList.of(createStubFlag());
+
   private CommentInputView stubCommentInputView;
 
   private final String COMMENT_CREATION_JSON = "{\"creatorUserId\": 10365, \"parentCommentId\": \"10.1371/annotation/0043aae2-f69d-4a05-ab19-4709704eb749\", \"title\": \"no, really watch this\", \"body\": \"http://www.youtube.com/watch?v=iGQdwSAAz9I\", \"highlightedText\": \"whoah...\", \"competingInterestStatement\": \"I'm going for an Emmy\"}";
+
+  private CommentFlagInputView stubFlagInputView;
+
+  private final String FLAG_CREATION_JSON = "{\"creatorUserId\": 10365, \"body\": \"oops\", \"reasonCode\": \"spam\"}";
 
   @BeforeMethod
   public void initMocks() throws IllegalAccessException, NoSuchFieldException {
@@ -60,8 +71,10 @@ public class CommentCrudServiceImplTest extends AbstractRhinoTest {
     mockArticleCrudService = applicationContext.getBean(ArticleCrudService.class);
     mockHibernateTemplate = applicationContext.getBean(HibernateTemplate.class);
     mockRuntimeConfiguration = applicationContext.getBean(RuntimeConfiguration.class);
+    mockJournalCrudService = applicationContext.getBean(JournalCrudService.class);
     Gson mockEntityGson = applicationContext.getBean(Gson.class);
     stubCommentInputView = mockEntityGson.fromJson(COMMENT_CREATION_JSON, CommentInputView.class);
+    stubFlagInputView = mockEntityGson.fromJson(FLAG_CREATION_JSON, CommentFlagInputView.class);
   }
 
   @Bean
@@ -97,6 +110,12 @@ public class CommentCrudServiceImplTest extends AbstractRhinoTest {
     comment.setArticle(createStubArticle());
     comment.setCreated(new Date());
     return comment;
+  }
+
+  private Flag createStubFlag() {
+    final Flag flag = new Flag(0L, FlagReasonCode.OTHER, createStubComment());
+    flag.setLastModified(new Date());
+    return flag;
   }
 
   @Test
@@ -158,46 +177,87 @@ public class CommentCrudServiceImplTest extends AbstractRhinoTest {
 
   @Test
   public void testRemoveFlagsFromComment() throws Exception {
+    when(mockHibernateTemplate.execute(any())).thenReturn(createStubComment()).thenAnswer(new Returns(stubFlags));
+
+    mockCommentCrudService.removeFlagsFromComment(CommentIdentifier.create("0"));
+
+    verify(mockHibernateTemplate).deleteAll(stubFlags);
   }
 
   @Test
   public void testCreateCommentFlag() throws Exception {
+    when(mockHibernateTemplate.execute(any())).thenReturn(createStubComment());
+
+    mockCommentCrudService.createCommentFlag(CommentIdentifier.create("0"), stubFlagInputView);
+
+    verify(mockHibernateTemplate).save(any(Flag.class));
   }
 
   @Test
   public void testReadAllCommentFlags() throws Exception {
+    when(mockHibernateTemplate.execute(any())).thenAnswer(new Returns(stubFlags));
+
+    mockCommentCrudService.readAllCommentFlags();
   }
 
   @Test
   public void testReadCommentFlag() throws Exception {
+    when(mockHibernateTemplate.execute(any())).thenReturn(createStubFlag());
+    when(mockRuntimeConfiguration.getCompetingInterestPolicyStart()).thenReturn(LocalDate.now());
+
+    mockCommentCrudService.readCommentFlag(0L);
   }
 
   @Test
   public void testReadCommentFlagsOn() throws Exception {
+    when(mockHibernateTemplate.execute(any())).thenReturn(createStubComment()).thenAnswer(new Returns(stubFlags));
+    when(mockRuntimeConfiguration.getCompetingInterestPolicyStart()).thenReturn(LocalDate.now());
+
+    mockCommentCrudService.readCommentFlagsOn(CommentIdentifier.create("0"));
   }
 
   @Test
   public void testReadCommentFlagsForJournal() throws Exception {
+    when(mockJournalCrudService.readJournal("test")).thenReturn(new Journal("test"));
+    when(mockHibernateTemplate.execute(any())).thenAnswer(new Returns(stubFlags));
+    when(mockRuntimeConfiguration.getCompetingInterestPolicyStart()).thenReturn(LocalDate.now());
+
+    mockCommentCrudService.readCommentFlagsForJournal("test");
   }
 
   @Test
   public void testDeleteCommentFlag() throws Exception {
+    when(mockHibernateTemplate.execute(any())).thenReturn(createStubFlag());
+
+    mockCommentCrudService.deleteCommentFlag(0L);
+
+    verify(mockHibernateTemplate).delete(any(Flag.class));
   }
 
   @Test
   public void testServeFlaggedComments() throws Exception {
+    when(mockHibernateTemplate.execute(any())).thenReturn(stubComments);
+    when(mockRuntimeConfiguration.getCompetingInterestPolicyStart()).thenReturn(LocalDate.now());
+
+    mockCommentCrudService.serveFlaggedComments();
   }
 
   @Test
   public void testGetCommentCount() throws Exception {
+    when(mockHibernateTemplate.execute(any())).thenReturn(new CommentCountView(1, 1, 0));
+    mockCommentCrudService.getCommentCount(createStubArticle());
   }
 
   @Test
   public void testGetCommentsCreatedOn() throws Exception {
+    when(mockHibernateTemplate.execute(any())).thenReturn(ImmutableList.of());
+    mockCommentCrudService.getCommentsCreatedOn(LocalDate.now());
   }
 
   @Test
   public void testReadRecentComments() throws Exception {
+    when(mockHibernateTemplate.execute(any())).thenReturn(ImmutableList.of());
+    mockCommentCrudService.getCommentsCreatedOn(LocalDate.now());
   }
 
 }
