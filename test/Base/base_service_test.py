@@ -118,7 +118,7 @@ class BaseServiceTest(unittest.TestCase):
           return root + '/' + file
 
   @staticmethod
-  def _run_tests_randomly():
+  def run_tests_randomly():
     unittest.TestLoader.sortTestMethodsUsing = lambda _, x, y: random.choice([-1, 1])
     if is_running_under_teamcity():
       runner = TeamcityTestRunner()

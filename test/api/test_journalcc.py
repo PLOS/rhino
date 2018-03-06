@@ -25,7 +25,7 @@ __author__ = 'jgray@plos.org'
 '''
 Test cases for Rhino Journal Crud Controller requests.
 '''
-from ..api.RequestObject.journalcc_json import JournalCCJson
+from ..api.RequestObject.journalcc import JournalCCJson
 
 
 class GetJournals(JournalCCJson):
@@ -38,4 +38,4 @@ class GetJournals(JournalCCJson):
     self.verify_journals()
 
 if __name__ == '__main__':
-    JournalCCJson._run_tests_randomly()
+    JournalCCJson.run_tests_randomly()

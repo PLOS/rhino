@@ -36,6 +36,7 @@ HEADER = '-H'
 EXPECTED_KEYS = [u'PLoSMedicine', u'PLoSONE', u'PLoSGenetics', u'PLoSCompBiol', u'PLoSCollections', u'PLoSDefault',
                  u'ApertaRxiv', u'PLoSNTD', u'PLoSBiology', u'PLoSClinicalTrials', u'PLoSPathogens']
 
+
 class JournalCCJson(BaseServiceTest):
 
   def get_journals(self):
