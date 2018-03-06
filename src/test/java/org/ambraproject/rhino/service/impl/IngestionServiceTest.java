@@ -22,28 +22,9 @@
 
 package org.ambraproject.rhino.service.impl;
 
-import static com.google.common.truth.Truth.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockingDetails;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.testng.Assert.fail;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
-import javax.xml.parsers.ParserConfigurationException;
-
+import com.google.common.collect.ImmutableList;
+import com.google.common.io.ByteSource;
+import com.google.common.io.Resources;
 import org.ambraproject.rhino.AbstractRhinoTest;
 import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
@@ -76,9 +57,26 @@ import org.testng.annotations.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.io.ByteSource;
-import com.google.common.io.Resources;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockingDetails;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.testng.Assert.fail;
 
 @ContextConfiguration(classes = IngestionServiceTest.class)
 @Configuration
