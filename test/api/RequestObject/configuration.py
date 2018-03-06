@@ -44,7 +44,7 @@ class Configuration(BaseServiceTest):
         if self.already_done > 0:
             return
 
-    def get_type(self, type_: str):
+    def get_type(self, type_):
         """
         Calls configuration-read-controller API with type parameter
         :param type_: string. Valid values are 'build', 'run' or 'repo'
