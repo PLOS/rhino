@@ -22,13 +22,11 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Joiner;
-import com.google.common.base.Strings;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.io.ByteSource;
 import org.ambraproject.rhino.content.xml.ArticleXml;
-import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
@@ -133,15 +131,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     ArticleFileIdentifier manuscriptId = ArticleFileIdentifier.create(articleItemId, "manuscript");
     RepoObjectMetadata objectMetadata = assetCrudService.getArticleItemFile(manuscriptId);
     return objectMetadata;
-  }
-
-  static RestClientException complainAboutXml(XmlContentException e) {
-    String msg = "Error in submitted XML";
-    String nestedMsg = e.getMessage();
-    if (!Strings.isNullOrEmpty(nestedMsg)) {
-      msg = msg + " -- " + nestedMsg;
-    }
-    return new RestClientException(msg, HttpStatus.BAD_REQUEST, e);
   }
 
   @Override

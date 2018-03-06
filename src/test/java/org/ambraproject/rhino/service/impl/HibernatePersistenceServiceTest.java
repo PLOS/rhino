@@ -58,8 +58,6 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
 
   private static final String ARTICLE_DOI_URI = "info:doi/10.1111/dupp.0000001";
 
-  private static final String DESTINATION_BUCKET = "water_bucket";
-
   private static final String EISSN = "EISSN-0001";
 
   private static final String META_JOURNAL_NAME = "Meta journal name";
