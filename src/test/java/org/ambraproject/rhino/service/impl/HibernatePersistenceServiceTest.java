@@ -3,6 +3,7 @@ package org.ambraproject.rhino.service.impl;
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth8.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
@@ -32,6 +33,8 @@ import org.ambraproject.rhino.service.ContentRepoPersistenceService;
 import org.ambraproject.rhino.service.HibernatePersistenceService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.util.Archive;
+import org.hibernate.Query;
+import org.mockito.invocation.InvocationOnMock;
 import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.model.input.RepoObjectInput;
 import org.plos.crepo.service.ContentRepoService;
@@ -102,6 +105,7 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
    */
   @BeforeMethod(alwaysRun = true)
   public void init() {
+    LOG.info("init() *** BEGIN ***");
     articleDoi = Doi.create(ARTICLE_DOI_URI);
 
     final LocalDate publishedOn = LocalDate.now();
@@ -190,6 +194,17 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
     return hibernatePersistenceService;
   }
 
+  @Override
+  protected Query createQuery(InvocationOnMock invocation) {
+    final String sql = invocation.getArgument(0);
+    final Query mockQuery = mock(Query.class);
+    if (sql.contains("SELECT MAX(ingestionNumber)")) {
+      LOG.info("createQuery() * {} -> {}", invocation.getMethod().getName(), sql);
+      when(mockQuery.uniqueResult()).thenReturn(NEXT_INGESTION_NUMBER);
+    }
+    return mockQuery;
+  }
+
   /**
    * Test successful persisting of article to data source.
    */
@@ -213,9 +228,10 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
   @Test
   @DirtiesContext
   public void testPersistExistingArticleShouldSucceed() {
+    LOG.info("testPersistExistingArticleShouldSucceed() *");
     final HibernateTemplate mockHibernateTemplate =
         applicationContext.getBean(HibernateTemplate.class);
-    when(mockHibernateTemplate.execute(any())).thenReturn(expectedArticle);
+    doReturn(expectedArticle).when(mockHibernateTemplate).execute(any());
 
     final HibernatePersistenceService mockPersistenceService =
         applicationContext.getBean(HibernatePersistenceService.class);
@@ -234,7 +250,7 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
   public void testPersistIngestionShouldSucceed() {
     final HibernateTemplate mockHibernateTemplate =
         applicationContext.getBean(HibernateTemplate.class);
-    when(mockHibernateTemplate.execute(any())).thenReturn(NEXT_INGESTION_NUMBER);
+    // doReturn(NEXT_INGESTION_NUMBER).when(mockHibernateTemplate).execute(any());
 
     final ConfigurationReadService mockConfigurationReadService =
         applicationContext.getBean(ConfigurationReadService.class);
@@ -249,7 +265,7 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
 
     final ArticleIngestion expectedIngestion = new ArticleIngestion();
     expectedIngestion.setArticle(expectedArticle);
-    expectedIngestion.setIngestionNumber(NEXT_INGESTION_NUMBER);
+    expectedIngestion.setIngestionNumber(NEXT_INGESTION_NUMBER + 1);
 
     final ArticleIngestion actualIngestion =
         mockPersistenceService.persistIngestion(expectedArticle, expectedIngestPackage);
@@ -269,7 +285,7 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
   public void testPersistIngestionUsingJournalEissnShouldSucceed() {
     final HibernateTemplate mockHibernateTemplate =
         applicationContext.getBean(HibernateTemplate.class);
-    when(mockHibernateTemplate.execute(any())).thenReturn(NEXT_INGESTION_NUMBER);
+    doReturn(NEXT_INGESTION_NUMBER).when(mockHibernateTemplate).execute(any());
 
     final ImmutableMap<String, Object> repoConfig =
         ImmutableMap.of("corpus", ImmutableMap.of("secondaryBuckets", ImmutableSet.of()));

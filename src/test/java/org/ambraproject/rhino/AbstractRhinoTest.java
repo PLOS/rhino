@@ -1,11 +1,15 @@
 package org.ambraproject.rhino;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.withSettings;
 
 import java.io.InputStream;
+import java.lang.reflect.Method;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.ambraproject.rhino.config.RuntimeConfiguration;
@@ -14,18 +18,30 @@ import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.HibernatePersistenceService;
 import org.ambraproject.rhino.util.Java8TimeGsonAdapters;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
+import org.hibernate.FlushMode;
+import org.hibernate.Query;
+import org.hibernate.SessionFactory;
+import org.hibernate.classic.Session;
+import org.hibernate.dialect.MySQL5Dialect;
+import org.hibernate.dialect.function.SQLFunctionRegistry;
+import org.hibernate.engine.SessionFactoryImplementor;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.model.input.RepoObjectInput;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.plos.crepo.service.ContentRepoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.context.annotation.Bean;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.BeforeMethod;
 import org.yaml.snakeyaml.Yaml;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -40,10 +56,52 @@ public abstract class AbstractRhinoTest extends AbstractTestNGSpringContextTests
 
   public static final String TEST_RHINO_YAML = "rhino-test.yaml";
 
+  protected String currentTestMethod;
+
+  @BeforeMethod(alwaysRun = true)
+  @Override
+  protected void springTestContextBeforeTestMethod(Method testMethod) throws Exception {
+    currentTestMethod = testMethod.getName();
+    LOG.info("springTestContextBeforeTestMethod() * {}", currentTestMethod);
+    super.springTestContextBeforeTestMethod(testMethod);
+  }
+
+  /** Returns a query. */
+  protected Query createQuery(InvocationOnMock invocation) {
+    final Query mockQuery = mock(Query.class);
+    return mockQuery;
+  }
+
   @Bean
+  public SessionFactory sessionFactory() {
+    LOG.info("hibernateSessionFactory() *");
+    final SessionFactory hibernateSessionFactory = mock(
+        SessionFactory.class, withSettings().extraInterfaces(SessionFactoryImplementor.class));
+
+    final Session mockSession = mock(Session.class);
+    when(mockSession.getFlushMode()).thenReturn(FlushMode.AUTO);
+    when(mockSession.createQuery(anyString())).thenAnswer(new Answer<Query>() {
+
+      @Override
+      public Query answer(InvocationOnMock invocation) throws Throwable {
+        return createQuery(invocation);
+      }
+
+    });
+
+    when(hibernateSessionFactory.openSession()).thenReturn(mockSession);
+
+    final SessionFactoryImplementor factoryImplementor =
+        (SessionFactoryImplementor) hibernateSessionFactory;
+    when(factoryImplementor.getSqlFunctionRegistry())
+        .thenReturn(new SQLFunctionRegistry(new MySQL5Dialect(), ImmutableMap.of()));
+    return hibernateSessionFactory;
+  }
+
+  @Bean(autowire = Autowire.BY_TYPE)
   public HibernateTemplate hibernateTemplate() {
-    LOG.debug("hibernateTemplate() *");
-    final HibernateTemplate hibernateTemplate = mock(HibernateTemplate.class);
+    LOG.info("hibernateTemplate() *");
+    final HibernateTemplate hibernateTemplate = spy(new HibernateTemplate());
     return hibernateTemplate;
   }
 
@@ -54,7 +112,7 @@ public abstract class AbstractRhinoTest extends AbstractTestNGSpringContextTests
     return configurationReadService;
   }
 
-  @Bean
+  @Bean(autowire = Autowire.BY_TYPE)
   public HibernatePersistenceService hibernatePersistenceService() {
     LOG.debug("hibernatePersistenceService() *");
     final HibernatePersistenceService hibernatePersistenceService =
@@ -95,6 +153,31 @@ public abstract class AbstractRhinoTest extends AbstractTestNGSpringContextTests
   public Yaml yaml() {
     final Yaml mockYaml = spy(new Yaml());
     return mockYaml;
+  }
+
+  /**
+   * Method to mock a {@link org.hibernate.SessionFactory Hibernate Session Factor}.
+   *
+   * @param query The {@link org.hibernate.Query Query} to associate with
+   *              {@link org.hibernate.classic.Session#createQuery(String) createQuery()}
+   *
+   * @return The {@link org.hibernate.SessionFactory Hibernate Session Factor}
+   */
+  public SessionFactory buildMockHibernateSessionFactory(Optional<Query> query) {
+    final SessionFactory sessionFactory = applicationContext.getBean(SessionFactory.class);
+
+    final Session mockSession = mock(Session.class);
+    when(mockSession.getFlushMode()).thenReturn(FlushMode.AUTO);
+
+    if (query.isPresent()) {
+      when(mockSession.createQuery(anyString())).thenReturn(query.get());
+    } else {
+      when(mockSession.createQuery(anyString())).thenReturn(mock(Query.class));
+    }
+
+    when(sessionFactory.openSession()).thenReturn(mockSession);
+
+    return sessionFactory;
   }
 
   /**
