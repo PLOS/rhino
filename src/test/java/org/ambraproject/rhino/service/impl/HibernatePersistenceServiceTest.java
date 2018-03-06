@@ -118,7 +118,7 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
     expectedArticle = new Article();
     expectedArticle.setDoi(articleDoi.getName());
 
-    mockArchive = IngestionServiceTest.createStubArchive(new byte[] {},
+    mockArchive = IngestionServiceTest.createStubArchive(new byte[] {} /* manifestXml */,
         IngestionServiceTest.ARTICLE_INGEST_ENTRIES);
 
     mockArticleXml = mock(ArticleXml.class);
@@ -223,7 +223,6 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
   public void testPersistExistingArticleShouldSucceed() {
     LOG.info("testPersistExistingArticleShouldSucceed() *");
     final HibernateTemplate mockHibernateTemplate = buildMockHibernateTemplate();
-        // applicationContext.getBean(HibernateTemplate.class);
     doReturn(expectedArticle).when(mockHibernateTemplate).execute(any());
 
     final HibernatePersistenceService mockPersistenceService =
@@ -245,7 +244,6 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
     when(mockQuery.uniqueResult()).thenReturn(INGESTION_NUMBER);
 
     final HibernateTemplate mockHibernateTemplate = buildMockHibernateTemplate(mockQuery);
-    // doReturn(NEXT_INGESTION_NUMBER).when(mockHibernateTemplate).execute(any());
 
     final ConfigurationReadService mockConfigurationReadService =
         applicationContext.getBean(ConfigurationReadService.class);
