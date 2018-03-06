@@ -1,23 +1,23 @@
 package org.ambraproject.rhino;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.withSettings;
-
-import java.io.InputStream;
-import java.util.UUID;
-
+import com.google.common.base.Joiner;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableMap;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.config.YamlConfiguration;
 import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleIngestion;
+import org.ambraproject.rhino.model.ArticleRevision;
+import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.HibernatePersistenceService;
+import org.ambraproject.rhino.service.JournalCrudService;
+import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.util.Java8TimeGsonAdapters;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
@@ -42,11 +42,15 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.yaml.snakeyaml.Yaml;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableMap;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import java.io.InputStream;
+import java.util.UUID;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.withSettings;
 
 /**
  * Abstract base class for Rhino unit tests.
@@ -207,6 +211,20 @@ public abstract class AbstractRhinoTest extends AbstractTestNGSpringContextTests
     return mockTaxonomyService;
   }
 
+  @Bean
+  public ArticleCrudService articleCrudService() {
+    ArticleCrudService mockArticleCrudService = mock(ArticleCrudServiceImpl.class);
+    LOG.debug("articleCrudService() * --> {}", mockArticleCrudService);
+    return mockArticleCrudService;
+  }
+
+  @Bean
+  public JournalCrudService journalCrudService() {
+    JournalCrudService mockJournalCrudService = mock(JournalCrudService.class);
+    LOG.debug("journalCrudService() * --> {}", mockJournalCrudService);
+    return mockJournalCrudService;
+  }
+
   /**
    * Method to mock a
    * {@link org.springframework.orm.hibernate3.HibernateTemplate HibernateTemplate},
@@ -345,10 +363,23 @@ public abstract class AbstractRhinoTest extends AbstractTestNGSpringContextTests
   /**
    * @return a stub Article object
    */
-  public Article createStubArticle() {
+  protected Article createStubArticle() {
     final Article article = new Article();
     article.setArticleId(0L);
     article.setDoi("10.1371/journal.pbio.2001414");
     return article;
+  }
+
+  /**
+   * @return a stub ArticleRevision object
+   */
+  protected ArticleRevision createStubArticleRevision() {
+    Article stubArticle = createStubArticle();
+    ArticleRevision articleRevision = new ArticleRevision();
+    ArticleIngestion articleIngestion = new ArticleIngestion();
+    articleIngestion.setArticle(stubArticle);
+    articleIngestion.setIngestionNumber(1);
+    articleRevision.setIngestion(articleIngestion);
+    return articleRevision;
   }
 }

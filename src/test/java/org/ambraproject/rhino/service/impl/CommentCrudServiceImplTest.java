@@ -85,24 +85,10 @@ public class CommentCrudServiceImplTest extends AbstractRhinoTest {
   }
 
   @Bean
-  public ArticleCrudService articleCrudService() {
-    mockArticleCrudService = mock(ArticleCrudServiceImpl.class);
-    LOG.debug("articleCrudService() * --> {}", mockArticleCrudService);
-    return mockArticleCrudService;
-  }
-
-  @Bean
   public CommentNodeView.Factory commentNodeViewFactory() {
     mockCommentNodeViewFactory = mock(CommentNodeView.Factory.class);
     LOG.debug("commentNodeView.Factory() * --> {}", mockCommentNodeViewFactory);
     return mockCommentNodeViewFactory;
-  }
-
-  @Bean
-  public JournalCrudService journalCrudService() {
-    mockJournalCrudService = mock(JournalCrudService.class);
-    LOG.debug("journalCrudService() * --> {}", mockJournalCrudService);
-    return mockJournalCrudService;
   }
 
   private Comment createStubComment() {

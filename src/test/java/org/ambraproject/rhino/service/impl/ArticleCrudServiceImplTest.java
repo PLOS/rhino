@@ -84,16 +84,6 @@ public class ArticleCrudServiceImplTest extends AbstractRhinoTest {
     return mockArticleCrudService;
   }
 
-  private ArticleRevision createStubArticleRevision() {
-    stubArticle = createStubArticle();
-    ArticleRevision articleRevision = new ArticleRevision();
-    ArticleIngestion articleIngestion = new ArticleIngestion();
-    articleIngestion.setArticle(stubArticle);
-    articleIngestion.setIngestionNumber(1);
-    articleRevision.setIngestion(articleIngestion);
-    return articleRevision;
-  }
-
   private Collection<ArticleRevision> createStubArticleRevisions() {
     final ArticleRevision dummyRevision = createStubArticleRevision();
     Collection<ArticleRevision> dummyRevisions = ImmutableList.of(dummyRevision);
