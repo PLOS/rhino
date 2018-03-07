@@ -12,17 +12,10 @@ import java.util.UUID;
 
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.config.YamlConfiguration;
-import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
-import org.ambraproject.rhino.content.xml.XpathReader;
-import org.ambraproject.rhino.model.Article;
-import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.HibernatePersistenceService;
-import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.util.Java8TimeGsonAdapters;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
-import org.ambraproject.rhino.view.article.ArticleIngestionView;
-import org.ambraproject.rhino.view.article.ItemSetView;
 import org.hibernate.FlushMode;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
@@ -30,6 +23,7 @@ import org.hibernate.classic.Session;
 import org.hibernate.dialect.MySQL5Dialect;
 import org.hibernate.dialect.function.SQLFunctionRegistry;
 import org.hibernate.engine.SessionFactoryImplementor;
+import org.mockito.stubbing.Answer;
 import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.model.input.RepoObjectInput;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
@@ -164,49 +158,6 @@ public abstract class AbstractRhinoTest extends AbstractTestNGSpringContextTests
     return mockYaml;
   }
 
-  @Bean
-  public AssetCrudService assetCrudService() {
-    AssetCrudService mockAssetCrudService = mock(AssetCrudService.class);
-    LOG.debug("assetCrudService() * --> {}", mockAssetCrudService);
-    return mockAssetCrudService;
-  }
-
-  @Bean
-  public XpathReader xpathReader() {
-    XpathReader mockXpathReader = mock(XpathReader.class);
-    LOG.debug("xpathReader() * --> {}", mockXpathReader);
-    return mockXpathReader;
-  }
-
-  @Bean
-  public ArticleIngestionView.Factory articleIngestionViewFactory() {
-    ArticleIngestionView.Factory mockArticleIngestionViewFactory = mock(ArticleIngestionView.Factory.class);
-    LOG.debug("articleIngestionView.Factory() * --> {}", mockArticleIngestionViewFactory);
-    return mockArticleIngestionViewFactory;
-  }
-
-  @Bean
-  public ItemSetView.Factory itemSetViewFactory() {
-    ItemSetView.Factory mockItemSetViewFactory = mock(ItemSetView.Factory.class);
-    LOG.debug("itemSetViewFactory() * --> {}", mockItemSetViewFactory);
-    return mockItemSetViewFactory;
-  }
-
-  @Bean
-  public CustomMetadataExtractor.Factory customMetadataExtractorFactory() {
-    CustomMetadataExtractor.Factory mockMetadataExtractorFactory =
-        spy(CustomMetadataExtractor.Factory.class);
-    LOG.debug("customMetadataExtractorFactory() * {}", mockMetadataExtractorFactory);
-    return mockMetadataExtractorFactory;
-  }
-
-  @Bean
-  public TaxonomyService taxonomyService() {
-    TaxonomyService mockTaxonomyService = mock(TaxonomyService.class);
-    LOG.debug("taxonomyService() * --> {}", mockTaxonomyService);
-    return mockTaxonomyService;
-  }
-
   /**
    * Method to mock a
    * {@link org.springframework.orm.hibernate3.HibernateTemplate HibernateTemplate},
@@ -236,6 +187,32 @@ public abstract class AbstractRhinoTest extends AbstractTestNGSpringContextTests
       final Session mockSession = mock(Session.class);
       when(mockSession.getFlushMode()).thenReturn(FlushMode.AUTO);
       when(mockSession.createQuery(anyString())).thenReturn(query);
+
+      when(sessionFactory.openSession()).thenReturn(mockSession);
+    }
+
+    final HibernateTemplate hibernateTemplate =
+        applicationContext.getBean(HibernateTemplate.class);
+    return hibernateTemplate;
+  }
+
+  /**
+   * Method to mock a
+   * {@link org.springframework.orm.hibernate3.HibernateTemplate HibernateTemplate}.
+   *
+   * @param answer The {@link org.hibernate.Query Query} to associate with
+   *              {@link org.hibernate.classic.Session#createQuery(String) createQuery()}
+   *
+   * @return The {@link org.springframework.orm.hibernate3.HibernateTemplate HibernateTemplate}
+   */
+  public HibernateTemplate buildMockHibernateTemplate(Answer<Query> answer) {
+    Preconditions.checkNotNull(answer, "answer reference cannot be null");
+
+    final SessionFactory sessionFactory = applicationContext.getBean(SessionFactory.class);
+    if (spyOnHibernateTemplate) {
+      final Session mockSession = mock(Session.class);
+      when(mockSession.getFlushMode()).thenReturn(FlushMode.AUTO);
+      when(mockSession.createQuery(anyString())).then(answer);
 
       when(sessionFactory.openSession()).thenReturn(mockSession);
     }
@@ -340,15 +317,5 @@ public abstract class AbstractRhinoTest extends AbstractTestNGSpringContextTests
         .thenReturn(mockRepoMetadata);
 
     return mockContentRepoService;
-  }
-
-  /**
-   * @return a stub Article object
-   */
-  public Article createStubArticle() {
-    final Article article = new Article();
-    article.setArticleId(0L);
-    article.setDoi("10.1371/journal.pbio.2001414");
-    return article;
   }
 }
