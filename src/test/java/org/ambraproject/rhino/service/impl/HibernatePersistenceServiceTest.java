@@ -158,7 +158,7 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
 
     expectedArticleMetadata = ArticleMetadata.builder().setTitle("Meta title")
         .setArticleType("MetaArticleType")
-        .setEissn(EISSN)
+        .seteIssn(EISSN)
         .setJournalName(META_JOURNAL_NAME)
         .setPublicationDate(publishedOn).build();
 

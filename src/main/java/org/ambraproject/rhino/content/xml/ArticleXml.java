@@ -178,7 +178,7 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
       if (Strings.isNullOrEmpty(eissn)) {
         eissn = readString("/article/front/journal-meta/issn");
       }
-      article.setEissn(eissn);
+      article.seteIssn(eissn);
     }
     article.setJournalName(readString("/article/front/journal-meta/journal-title-group/journal-title"));
     article.setDescription(getXmlFromNode(findAbstractNode()));
