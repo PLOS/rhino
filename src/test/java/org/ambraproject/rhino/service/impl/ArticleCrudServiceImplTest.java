@@ -1,7 +1,6 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.collect.ImmutableList;
-import org.ambraproject.rhino.AbstractRhinoTest;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleItemIdentifier;
@@ -60,7 +59,7 @@ import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = ArticleCrudServiceImplTest.class)
 @Configuration
-public class ArticleCrudServiceImplTest extends AbstractRhinoTest {
+public class ArticleCrudServiceImplTest extends AbstractStubbingArticleTest {
 
   private ArticleCrudService mockArticleCrudService;
 
