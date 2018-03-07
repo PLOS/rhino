@@ -1,7 +1,6 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.collect.ImmutableList;
-import org.ambraproject.rhino.AbstractRhinoTest;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.model.Journal;
@@ -29,7 +28,7 @@ import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = SyndicationCrudServiceImplTest.class)
 @Configuration
-public class SyndicationCrudServiceImplTest extends AbstractRhinoTest {
+public class SyndicationCrudServiceImplTest extends AbstractStubbingArticleTest {
 
   private SyndicationCrudService mockSyndicationCrudService;
 

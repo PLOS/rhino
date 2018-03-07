@@ -2,7 +2,6 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
-import org.ambraproject.rhino.AbstractRhinoTest;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.CommentIdentifier;
@@ -39,7 +38,7 @@ import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = CommentCrudServiceImplTest.class)
 @Configuration
-public class CommentCrudServiceImplTest extends AbstractRhinoTest {
+public class CommentCrudServiceImplTest extends AbstractStubbingArticleTest {
 
   private CommentCrudService mockCommentCrudService;
 
