@@ -417,6 +417,7 @@
       <artifactId>swagger-springmvc</artifactId>
       <version>0.8.8</version>
     </dependency>
+
     <dependency>
     	<groupId>com.google.auto.value</groupId>
     	<artifactId>auto-value</artifactId>
