@@ -35,7 +35,7 @@ public abstract class ArticleMetadata {
   @Nullable public abstract String getDoi();
 
   @Nullable public abstract String getTitle();
-  @Nullable public abstract String getEissn();
+  @Nullable public abstract String geteIssn();
   @Nullable public abstract String getJournalName();
   @Nullable public abstract String getDescription();
   @Nullable public abstract String getAbstractText();
@@ -71,7 +71,7 @@ public abstract class ArticleMetadata {
 
     public abstract Builder setDoi(String doi);
     public abstract Builder setTitle(String title);
-    public abstract Builder setEissn(String eIssn);
+    public abstract Builder seteIssn(String eIssn);
     public abstract Builder setJournalName(String journalName);
     public abstract Builder setDescription(String description);
     public abstract Builder setAbstractText(String abstractText);
