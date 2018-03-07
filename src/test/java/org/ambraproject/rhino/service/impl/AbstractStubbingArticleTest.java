@@ -91,9 +91,22 @@ public abstract class AbstractStubbingArticleTest extends AbstractRhinoTest {
    * @return a stub Article object
    */
   public static final Article createStubArticle() {
+    final Article article = createStubArticle(ARTICLE_ID, ARTICLE_DOI);
+    return article;
+  }
+
+  /**
+   * Creates an {@link org.ambraproject.rhino.model.Article Article}.
+   *
+   * @param article_id The article ID
+   * @param doi The article DOI
+   *
+   * @return A stub Article object
+   */
+  public static final Article createStubArticle(long article_id, String doi) {
     final Article article = new Article();
-    article.setArticleId(ARTICLE_ID);
-    article.setDoi(ARTICLE_DOI);
+    article.setArticleId(article_id);
+    article.setDoi(doi);
     return article;
   }
 

@@ -3,11 +3,14 @@ package org.ambraproject.rhino.service.impl;
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
@@ -138,7 +141,7 @@ public class ArticleRevisionWriteServiceTest extends AbstractStubbingArticleTest
     final ArticleRevision actualRevision = mockArticleRevisionWriteService.createRevision(
         expectedIngestionIdentifier);
 
-    assertThat(actualRevision).isNotNull();
+    assertThat(actualRevision).isEqualTo(refreshedArticleRevision);
 
     verify(mockArticleCrudService).refreshArticleRelationships(refreshedArticleRevision);
     verify(mockHibernateTemplate, times(3)).execute(any());
@@ -180,7 +183,6 @@ public class ArticleRevisionWriteServiceTest extends AbstractStubbingArticleTest
           }
     });
 
-
     final ArticleCrudService mockArticleCrudService =
         applicationContext.getBean(ArticleCrudService.class);
     doNothing().when(mockArticleCrudService).refreshArticleRelationships(expectedArticleRevision);
@@ -191,13 +193,124 @@ public class ArticleRevisionWriteServiceTest extends AbstractStubbingArticleTest
     final ArticleRevision actualRevision = mockArticleRevisionWriteService.writeRevision(
         expectedRevisionIdentifier, expectedIngestionIdentifier);
 
-    assertThat(actualRevision).isNotNull();
+    assertThat(actualRevision).isEqualTo(expectedArticleRevision);
 
     verify(mockArticleCrudService).refreshArticleRelationships(expectedArticleRevision);
     verify(mockHibernateTemplate, times(4)).execute(any());
+    verify(mockHibernateTemplate).saveOrUpdate(expectedArticleRevision);
+
+    // setParameter("doi", ...) in ArticleCrudServiceImpl.getIngestion().
+    // setParameter("doi", ...) in ArticleCrudServiceImpl.getRevision().
     verify(mockQuery, times(2)).setParameter("doi", expectedDoi.getName());
+
+    // setParameter("ingestionNumber", ...) in ArticleCrudServiceImpl.getIngestion().
     verify(mockQuery).setParameter(
         "ingestionNumber", expectedIngestionIdentifier.getIngestionNumber());
+
+    // setParameter("revisionNumber", ...) in ArticleCrudServiceImpl.getRevision().
     verify(mockQuery).setParameter("revisionNumber", expectedRevisionIdentifier.getRevision());
+  }
+
+  /**
+   * Test successful update of an article revision, where article doesn't have a
+   * previous version.
+   */
+  @Test
+  @DirtiesContext
+  public void testWriteRevisionWithouPriorShouldSucceed() {
+    final HibernateTemplate mockHibernateTemplate = buildMockHibernateTemplate();
+
+    final Optional<ArticleRevision> latestRevision = Optional.empty();
+
+    final ArticleRevision newRevision = new ArticleRevision();
+    newRevision.setRevisionNumber(expectedRevisionIdentifier.getRevision());
+    newRevision.setIngestion(expectedArticleIngestion);
+
+    final ArticleCrudService mockArticleCrudService =
+        applicationContext.getBean(ArticleCrudService.class);
+    doReturn(expectedArticleIngestion).when(mockArticleCrudService)
+        .readIngestion(expectedIngestionIdentifier);
+    doReturn(expectedArticleRevision).when(mockArticleCrudService)
+        .readRevision(expectedRevisionIdentifier);
+    doReturn(latestRevision).when(mockArticleCrudService).getLatestRevision(expectedArticle);
+    doNothing().when(mockArticleCrudService).refreshArticleRelationships(newRevision);
+
+    final ArticleRevisionWriteService mockArticleRevisionWriteService =
+        applicationContext.getBean(ArticleRevisionWriteService.class);
+
+    final ArticleRevision actualRevision = mockArticleRevisionWriteService.writeRevision(
+        expectedRevisionIdentifier, expectedIngestionIdentifier);
+
+    assertThat(actualRevision).isEqualTo(newRevision);
+
+    verify(mockHibernateTemplate).saveOrUpdate(newRevision);
+    verify(mockArticleCrudService).refreshArticleRelationships(newRevision);
+  }
+
+  /**
+   * Test successful deletion of the latest article revision.
+   */
+  @Test
+  @DirtiesContext
+  public void testDeleteLatestRevisionShouldSucceed() {
+    final HibernateTemplate mockHibernateTemplate =
+        buildMockHibernateTemplate(new Answer<Query>() {
+          @Override
+          public Query answer(InvocationOnMock invocation) throws Throwable {
+            // final Query mockQuery = mock(Query.class);
+            final String sql = invocation.getArgument(0);
+
+            // Return appropriate data based on SQL.
+            LOG.info("sql: {}", sql);
+            if (sql.contains("SELECT MAX(rev.revisionNumber)")) {
+              when(mockQuery.uniqueResult()).thenReturn(REVISION_NUMBER);
+            } else if (sql.contains("FROM ArticleIngestion")) {
+              when(mockQuery.uniqueResult()).thenReturn(expectedArticleIngestion);
+            } else if (sql.contains("FROM ArticleRevision")) {
+              when(mockQuery.uniqueResult()).thenReturn(expectedArticleRevision);
+            }
+            return mockQuery;
+          }
+    });
+
+    final ArticleCrudService mockArticleCrudService =
+        applicationContext.getBean(ArticleCrudService.class);
+    doNothing().when(mockArticleCrudService).refreshArticleRelationships(expectedArticleRevision);
+
+    final ArticleRevisionWriteService mockArticleRevisionWriteService =
+        applicationContext.getBean(ArticleRevisionWriteService.class);
+
+    mockArticleRevisionWriteService.deleteRevision(expectedRevisionIdentifier);
+
+    verify(mockArticleCrudService).refreshArticleRelationships(expectedArticleRevision);
+    verify(mockHibernateTemplate).delete(expectedArticleRevision);
+    verify(mockHibernateTemplate, times(5)).execute(any());
+    verify(mockQuery, times(5)).uniqueResult();
+  }
+
+  /**
+   * Test successful deletion of a revision, for an article with multiple revisions.
+   */
+  @Test
+  @DirtiesContext
+  public void testDeleteNonLatestRevisionShouldSucceed() {
+    final HibernateTemplate mockHibernateTemplate = buildMockHibernateTemplate();
+
+    final Optional<ArticleRevision> latestRevision = Optional.of(createStubArticleRevision(
+        1001L /* revisionId */, 5 /* revisionNumber */));
+
+    final ArticleCrudService mockArticleCrudService =
+        applicationContext.getBean(ArticleCrudService.class);
+    doReturn(expectedArticleRevision).when(mockArticleCrudService)
+        .readRevision(expectedRevisionIdentifier);
+    doReturn(latestRevision).when(mockArticleCrudService).getLatestRevision(expectedArticle);
+
+    final ArticleRevisionWriteService mockArticleRevisionWriteService =
+        applicationContext.getBean(ArticleRevisionWriteService.class);
+
+    mockArticleRevisionWriteService.deleteRevision(expectedRevisionIdentifier);
+
+    verify(mockArticleCrudService, times(0)).refreshArticleRelationships(any());
+    verify(mockHibernateTemplate).delete(expectedArticleRevision);
   }
 }
