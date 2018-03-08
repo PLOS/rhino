@@ -38,10 +38,6 @@ import org.testng.annotations.Test;
 @Configuration
 public class ArticleRevisionWriteServiceTest extends AbstractStubbingArticleTest {
 
-  private static final long REVISION_ID = 0;
-
-  private static final int REVISION_NUMBER = 2;
-
   private Query mockQuery;
 
   private Doi expectedDoi;

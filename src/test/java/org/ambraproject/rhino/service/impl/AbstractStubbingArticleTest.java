@@ -34,6 +34,10 @@ public abstract class AbstractStubbingArticleTest extends AbstractRhinoTest {
   
   protected static final Integer INGESTION_NUMBER = new Integer(5);
 
+  protected static final long REVISION_ID = 1;
+
+  protected static final int REVISION_NUMBER = 2;
+
   /** Returns a stubbed article Doi. */
   public static final Doi createStubArticleDoi() {
     final Doi articleDoi = Doi.create(ARTICLE_DOI_URI);
@@ -48,6 +52,7 @@ public abstract class AbstractStubbingArticleTest extends AbstractRhinoTest {
     return ingestionIdentifier;
   }
 
+  /** Returns a stubbed article revision identifier. */
   public static final ArticleRevisionIdentifier createStubArticleRevisionIdentifier(
       Doi articleDoi, int revision) {
     final ArticleRevisionIdentifier revisionIdentifier =

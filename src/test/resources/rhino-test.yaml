@@ -11,3 +11,4 @@ contentRepo:
 manuscriptCustomMeta:
   revisionDate:     "Publication Update"
   publicationStage: "PLOS Publication Stage"
+queue:
