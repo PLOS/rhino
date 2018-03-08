@@ -56,7 +56,10 @@ public class ConfigurationReadServiceTest extends BaseRhinoTest {
 
   @Test
   public void testReadBuildProperties() throws IOException {
-    assertNotNull(configurationReadService.readBuildConfig());
+    final ServiceResponse<Properties> buildProperties = configurationReadService.readBuildConfig();
+    assertNotNull(buildProperties);
+    final ResponseEntity<?> responseEntity = buildProperties.asJsonResponse(new Gson());
+    assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
   }
 
   @Test
@@ -85,8 +88,12 @@ public class ConfigurationReadServiceTest extends BaseRhinoTest {
   @Test
   public void testReadRunInfo() throws IOException {
     final ServiceResponse<Map<String, String>> runConfig = configurationReadService.readRunInfo();
-    assertNotNull(runConfig);
-    final ResponseEntity<?> responseEntity = runConfig.asJsonResponse(new Gson());
+    assertResponseEntity(runConfig);
+  }
+
+  private void assertResponseEntity(ServiceResponse<Map<String, String>> config) throws IOException {
+    assertNotNull(config);
+    final ResponseEntity<?> responseEntity = config.asJsonResponse(new Gson());
     assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
   }
 
