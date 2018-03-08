@@ -1,17 +1,5 @@
 package org.ambraproject.rhino.service.impl;
 
-import static com.google.common.truth.Truth.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.Optional;
-
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
@@ -21,7 +9,6 @@ import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleRevisionWriteService;
 import org.hibernate.Query;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +17,18 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.util.Optional;
+
+import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Unit tests for {@link ArticleRevisionWriteServiceImpl}.
@@ -80,12 +79,12 @@ public class ArticleRevisionWriteServiceTest extends AbstractStubbingArticleTest
     mockArticleCrudService = applicationContext.getBean(ArticleCrudService.class);
 
     expectedDoi = createStubArticleDoi();
-  
+
     expectedArticle = createStubArticle();
-    
+
     expectedIngestionIdentifier = createStubArticleIngestionIdentifier(expectedDoi,
         INGESTION_NUMBER);
-    
+
     expectedArticleIngestion = createStubArticleIngestion(expectedArticle, INGESTION_NUMBER);
 
     expectedArticleRevision = createStubArticleRevision(REVISION_ID, REVISION_NUMBER);
@@ -111,24 +110,20 @@ public class ArticleRevisionWriteServiceTest extends AbstractStubbingArticleTest
    * Returns a mock query used to mock a HibernateTemplate.
    */
   private Answer<Query> createQueryAnswer() {
-    final Answer<Query> answer = new Answer<Query>() {
-      @Override
-      public Query answer(InvocationOnMock invocation) throws Throwable {
-        final String sql = invocation.getArgument(0);
+    return invocation -> {
+      final String sql = invocation.getArgument(0);
 
-        // Return appropriate data based on SQL.
-        LOG.info("sql: {}", sql);
-        if (sql.contains("SELECT MAX(rev.revisionNumber)")) {
-          when(mockQuery.uniqueResult()).thenReturn(REVISION_NUMBER);
-        } else if (sql.contains("FROM ArticleIngestion")) {
-          when(mockQuery.uniqueResult()).thenReturn(expectedArticleIngestion);
-        } else if (sql.contains("FROM ArticleRevision")) {
-          when(mockQuery.uniqueResult()).thenReturn(expectedArticleRevision);
-        }
-        return mockQuery;
+      // Return appropriate data based on SQL.
+      LOG.info("sql: {}", sql);
+      if (sql.contains("SELECT MAX(rev.revisionNumber)")) {
+        when(mockQuery.uniqueResult()).thenReturn(REVISION_NUMBER);
+      } else if (sql.contains("FROM ArticleIngestion")) {
+        when(mockQuery.uniqueResult()).thenReturn(expectedArticleIngestion);
+      } else if (sql.contains("FROM ArticleRevision")) {
+        when(mockQuery.uniqueResult()).thenReturn(expectedArticleRevision);
       }
+      return mockQuery;
     };
-    return answer;
   }
 
   /**
