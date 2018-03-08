@@ -10,7 +10,7 @@ rm test/Base/*.pyc
 rm test/api/*.pyc
 rm test/api/RequestObject/*.pyc
 
-pyenv activate raro3
+pyenv activate raro2
 pyenv version
 
 python -m test.api.test_articlecc
