@@ -40,6 +40,10 @@ public class ArticleRevisionWriteServiceTest extends AbstractStubbingArticleTest
 
   private Query mockQuery;
 
+  private ArticleRevisionWriteService mockArticleRevisionWriteService;
+
+  private ArticleCrudService mockArticleCrudService;
+
   private Doi expectedDoi;
 
   private Article expectedArticle;
@@ -66,6 +70,11 @@ public class ArticleRevisionWriteServiceTest extends AbstractStubbingArticleTest
   public void init() {
     mockQuery = mock(Query.class);
 
+    mockArticleRevisionWriteService =
+        applicationContext.getBean(ArticleRevisionWriteService.class);
+
+    mockArticleCrudService = applicationContext.getBean(ArticleCrudService.class);
+
     expectedDoi = createStubArticleDoi();
   
     expectedArticle = createStubArticle();
@@ -89,8 +98,33 @@ public class ArticleRevisionWriteServiceTest extends AbstractStubbingArticleTest
 
   @Bean
   public ArticleRevisionWriteService articleRevisionWriteService() {
-    final ArticleRevisionWriteService articleRevisionWriteService = spy(new ArticleRevisionWriteServiceImpl());
+    final ArticleRevisionWriteService articleRevisionWriteService =
+        spy(new ArticleRevisionWriteServiceImpl());
     return articleRevisionWriteService;
+  }
+
+  /**
+   * Returns a mock query used to mock a HibernateTemplate.
+   */
+  private Answer<Query> createQueryAnswer() {
+    final Answer<Query> answer = new Answer<Query>() {
+      @Override
+      public Query answer(InvocationOnMock invocation) throws Throwable {
+        final String sql = invocation.getArgument(0);
+
+        // Return appropriate data based on SQL.
+        LOG.info("sql: {}", sql);
+        if (sql.contains("SELECT MAX(rev.revisionNumber)")) {
+          when(mockQuery.uniqueResult()).thenReturn(REVISION_NUMBER);
+        } else if (sql.contains("FROM ArticleIngestion")) {
+          when(mockQuery.uniqueResult()).thenReturn(expectedArticleIngestion);
+        } else if (sql.contains("FROM ArticleRevision")) {
+          when(mockQuery.uniqueResult()).thenReturn(expectedArticleRevision);
+        }
+        return mockQuery;
+      }
+    };
+    return answer;
   }
 
   /**
@@ -99,28 +133,8 @@ public class ArticleRevisionWriteServiceTest extends AbstractStubbingArticleTest
   @Test
   @DirtiesContext
   public void testCreateRevisionShouldSucceed() {
-    final HibernateTemplate mockHibernateTemplate =
-        buildMockHibernateTemplate(new Answer<Query>() {
-          @Override
-          public Query answer(InvocationOnMock invocation) throws Throwable {
-            // final Query mockQuery = mock(Query.class);
-            final String sql = invocation.getArgument(0);
-
-            // Return appropriate data based on SQL.
-            LOG.info("sql: {}", sql);
-            if (sql.contains("SELECT MAX(rev.revisionNumber)")) {
-              when(mockQuery.uniqueResult()).thenReturn(REVISION_NUMBER);
-            } else if (sql.contains("FROM ArticleIngestion")) {
-              when(mockQuery.uniqueResult()).thenReturn(expectedArticleIngestion);
-            } else if (sql.contains("FROM ArticleRevision")) {
-              when(mockQuery.uniqueResult()).thenReturn(expectedArticleRevision);
-            }
-            return mockQuery;
-          }
-    });
-
-    final ArticleCrudService mockArticleCrudService =
-        applicationContext.getBean(ArticleCrudService.class);
+    final Answer<Query> answer = createQueryAnswer();
+    final HibernateTemplate mockHibernateTemplate = buildMockHibernateTemplate(answer);
 
     // Create a new ArticleRevision, as ArticleRevisionWriteServiceImpl.createRevision()
     // will create a new instance prior to calling
@@ -130,9 +144,6 @@ public class ArticleRevisionWriteServiceTest extends AbstractStubbingArticleTest
     refreshedArticleRevision.setRevisionNumber(REVISION_NUMBER + 1);
 
     doNothing().when(mockArticleCrudService).refreshArticleRelationships(refreshedArticleRevision);
-
-    final ArticleRevisionWriteService mockArticleRevisionWriteService =
-        applicationContext.getBean(ArticleRevisionWriteService.class);
 
     final ArticleRevision actualRevision = mockArticleRevisionWriteService.createRevision(
         expectedIngestionIdentifier);
@@ -159,32 +170,10 @@ public class ArticleRevisionWriteServiceTest extends AbstractStubbingArticleTest
   @Test
   @DirtiesContext
   public void testWriteRevisionShouldSucceed() {
-    final HibernateTemplate mockHibernateTemplate =
-        buildMockHibernateTemplate(new Answer<Query>() {
-          @Override
-          public Query answer(InvocationOnMock invocation) throws Throwable {
-            // final Query mockQuery = mock(Query.class);
-            final String sql = invocation.getArgument(0);
+    final Answer<Query> answer = createQueryAnswer();
+    final HibernateTemplate mockHibernateTemplate = buildMockHibernateTemplate(answer);
 
-            // Return appropriate data based on SQL.
-            LOG.info("sql: {}", sql);
-            if (sql.contains("SELECT MAX(rev.revisionNumber)")) {
-              when(mockQuery.uniqueResult()).thenReturn(REVISION_NUMBER);
-            } else if (sql.contains("FROM ArticleIngestion")) {
-              when(mockQuery.uniqueResult()).thenReturn(expectedArticleIngestion);
-            } else if (sql.contains("FROM ArticleRevision")) {
-              when(mockQuery.uniqueResult()).thenReturn(expectedArticleRevision);
-            }
-            return mockQuery;
-          }
-    });
-
-    final ArticleCrudService mockArticleCrudService =
-        applicationContext.getBean(ArticleCrudService.class);
     doNothing().when(mockArticleCrudService).refreshArticleRelationships(expectedArticleRevision);
-
-    final ArticleRevisionWriteService mockArticleRevisionWriteService =
-        applicationContext.getBean(ArticleRevisionWriteService.class);
 
     final ArticleRevision actualRevision = mockArticleRevisionWriteService.writeRevision(
         expectedRevisionIdentifier, expectedIngestionIdentifier);
@@ -222,17 +211,12 @@ public class ArticleRevisionWriteServiceTest extends AbstractStubbingArticleTest
     newRevision.setRevisionNumber(expectedRevisionIdentifier.getRevision());
     newRevision.setIngestion(expectedArticleIngestion);
 
-    final ArticleCrudService mockArticleCrudService =
-        applicationContext.getBean(ArticleCrudService.class);
     doReturn(expectedArticleIngestion).when(mockArticleCrudService)
         .readIngestion(expectedIngestionIdentifier);
     doReturn(expectedArticleRevision).when(mockArticleCrudService)
         .readRevision(expectedRevisionIdentifier);
     doReturn(latestRevision).when(mockArticleCrudService).getLatestRevision(expectedArticle);
     doNothing().when(mockArticleCrudService).refreshArticleRelationships(newRevision);
-
-    final ArticleRevisionWriteService mockArticleRevisionWriteService =
-        applicationContext.getBean(ArticleRevisionWriteService.class);
 
     final ArticleRevision actualRevision = mockArticleRevisionWriteService.writeRevision(
         expectedRevisionIdentifier, expectedIngestionIdentifier);
@@ -249,32 +233,10 @@ public class ArticleRevisionWriteServiceTest extends AbstractStubbingArticleTest
   @Test
   @DirtiesContext
   public void testDeleteLatestRevisionShouldSucceed() {
-    final HibernateTemplate mockHibernateTemplate =
-        buildMockHibernateTemplate(new Answer<Query>() {
-          @Override
-          public Query answer(InvocationOnMock invocation) throws Throwable {
-            // final Query mockQuery = mock(Query.class);
-            final String sql = invocation.getArgument(0);
+    final Answer<Query> answer = createQueryAnswer();
+    final HibernateTemplate mockHibernateTemplate = buildMockHibernateTemplate(answer);
 
-            // Return appropriate data based on SQL.
-            LOG.info("sql: {}", sql);
-            if (sql.contains("SELECT MAX(rev.revisionNumber)")) {
-              when(mockQuery.uniqueResult()).thenReturn(REVISION_NUMBER);
-            } else if (sql.contains("FROM ArticleIngestion")) {
-              when(mockQuery.uniqueResult()).thenReturn(expectedArticleIngestion);
-            } else if (sql.contains("FROM ArticleRevision")) {
-              when(mockQuery.uniqueResult()).thenReturn(expectedArticleRevision);
-            }
-            return mockQuery;
-          }
-    });
-
-    final ArticleCrudService mockArticleCrudService =
-        applicationContext.getBean(ArticleCrudService.class);
     doNothing().when(mockArticleCrudService).refreshArticleRelationships(expectedArticleRevision);
-
-    final ArticleRevisionWriteService mockArticleRevisionWriteService =
-        applicationContext.getBean(ArticleRevisionWriteService.class);
 
     mockArticleRevisionWriteService.deleteRevision(expectedRevisionIdentifier);
 
@@ -295,14 +257,9 @@ public class ArticleRevisionWriteServiceTest extends AbstractStubbingArticleTest
     final Optional<ArticleRevision> latestRevision = Optional.of(createStubArticleRevision(
         1001L /* revisionId */, 5 /* revisionNumber */));
 
-    final ArticleCrudService mockArticleCrudService =
-        applicationContext.getBean(ArticleCrudService.class);
     doReturn(expectedArticleRevision).when(mockArticleCrudService)
         .readRevision(expectedRevisionIdentifier);
     doReturn(latestRevision).when(mockArticleCrudService).getLatestRevision(expectedArticle);
-
-    final ArticleRevisionWriteService mockArticleRevisionWriteService =
-        applicationContext.getBean(ArticleRevisionWriteService.class);
 
     mockArticleRevisionWriteService.deleteRevision(expectedRevisionIdentifier);
 

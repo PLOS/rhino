@@ -59,7 +59,7 @@ public class SolrIndexServiceTest extends AbstractStubbingArticleTest {
   }
 
   @Bean
-  protected ArticleCrudService articleCrudService() {
+  public ArticleCrudService articleCrudService() {
     final ArticleCrudService articleCrudService = spy(ArticleCrudServiceImpl.class);
     return articleCrudService;
   }
