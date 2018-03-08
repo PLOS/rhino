@@ -44,6 +44,8 @@ public class SyndicationCrudServiceImplTest extends AbstractStubbingArticleTest 
 
   private List<Syndication> stubSyndications = ImmutableList.of(createStubSyndication());
 
+  private final ArticleRevisionIdentifier stubRevisionId = ArticleRevisionIdentifier.create("0", 1);
+
   @Bean
   public SyndicationCrudService syndicationCrudService() {
     mockSyndicationCrudService = spy(SyndicationCrudServiceImpl.class);
@@ -74,39 +76,35 @@ public class SyndicationCrudServiceImplTest extends AbstractStubbingArticleTest 
 
   @Test
   public void testGetSyndication() throws Exception {
-    final ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create("0", 1);
-    when(mockArticleCrudService.readRevision(revisionId)).thenReturn(createStubArticleRevision());
+    when(mockArticleCrudService.readRevision(stubRevisionId)).thenReturn(createStubArticleRevision());
     when(mockHibernateTemplate.execute(any())).thenReturn(createStubSyndication());
 
-    mockSyndicationCrudService.getSyndication(revisionId, "test");
+    mockSyndicationCrudService.getSyndication(stubRevisionId, "test");
   }
 
   @Test
   public void testGetSyndications() throws Exception {
-    final ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create("0", 1);
-    when(mockArticleCrudService.readRevision(revisionId)).thenReturn(createStubArticleRevision());
+    when(mockArticleCrudService.readRevision(stubRevisionId)).thenReturn(createStubArticleRevision());
     when(mockHibernateTemplate.execute(any())).thenAnswer(new Returns(stubSyndications));
 
-    mockSyndicationCrudService.getSyndications(revisionId);
+    mockSyndicationCrudService.getSyndications(stubRevisionId);
   }
 
   @Test
   public void testUpdateSyndication() throws Exception {
-    final ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create("0", 1);
-    when(mockArticleCrudService.readRevision(revisionId)).thenReturn(createStubArticleRevision());
+    when(mockArticleCrudService.readRevision(stubRevisionId)).thenReturn(createStubArticleRevision());
     when(mockHibernateTemplate.execute(any())).thenReturn(createStubSyndication());
 
-    mockSyndicationCrudService.updateSyndication(revisionId, "test", "test", "test");
+    mockSyndicationCrudService.updateSyndication(stubRevisionId, "test", "test", "test");
 
     verify(mockHibernateTemplate).update(any(Syndication.class));
   }
 
   @Test
   public void testCreateSyndication() throws Exception {
-    final ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create("0", 1);
-    when(mockArticleCrudService.readRevision(revisionId)).thenReturn(createStubArticleRevision());
+    when(mockArticleCrudService.readRevision(stubRevisionId)).thenReturn(createStubArticleRevision());
 
-    mockSyndicationCrudService.createSyndication(revisionId, "test");
+    mockSyndicationCrudService.createSyndication(stubRevisionId, "test");
 
     verify(mockHibernateTemplate).save(any(Syndication.class));
   }
@@ -123,11 +121,10 @@ public class SyndicationCrudServiceImplTest extends AbstractStubbingArticleTest 
   @Test
   @DirtiesContext
   public void testSyndicateExistingSyndication() throws Exception {
-    final ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create("0", 1);
-    when(mockArticleCrudService.readRevision(revisionId)).thenReturn(createStubArticleRevision());
+    when(mockArticleCrudService.readRevision(stubRevisionId)).thenReturn(createStubArticleRevision());
     when(mockHibernateTemplate.execute(any())).thenReturn(createStubSyndication());
 
-    mockSyndicationCrudService.syndicate(revisionId, "test");
+    mockSyndicationCrudService.syndicate(stubRevisionId, "test");
 
     verify(mockHibernateTemplate).update(any(Syndication.class));
     verify(mockMessageSender).sendBody(any(String.class), any(String.class));
@@ -136,11 +133,10 @@ public class SyndicationCrudServiceImplTest extends AbstractStubbingArticleTest 
   @Test
   @DirtiesContext
   public void testSyndicateNoSyndication() throws Exception {
-    final ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create("0", 1);
-    when(mockArticleCrudService.readRevision(revisionId)).thenReturn(createStubArticleRevision());
+    when(mockArticleCrudService.readRevision(stubRevisionId)).thenReturn(createStubArticleRevision());
     when(mockHibernateTemplate.execute(any())).thenReturn(null);
 
-    mockSyndicationCrudService.syndicate(revisionId, "test");
+    mockSyndicationCrudService.syndicate(stubRevisionId, "test");
 
     verify(mockHibernateTemplate).save(any(Syndication.class));
     verify(mockMessageSender).sendBody(any(String.class), any(String.class));
