@@ -15,6 +15,7 @@ import org.mockito.stubbing.Answer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -25,7 +26,6 @@ import java.util.Date;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -122,21 +122,24 @@ public class VolumeCrudServiceImplTest extends AbstractStubbingArticleTest {
   }
 
   @Test
+  @DirtiesContext
   public void testReadVolume() throws Exception {
 
     mockVolumeCrudService.readVolume(VolumeIdentifier.create("test"));
 
-    verify(mockHibernateTemplate, times(5)).execute(any());
+    verify(mockHibernateTemplate).execute(any());
   }
 
   @Test
+  @DirtiesContext
   public void testReadVolumeByIssue() throws Exception {
     mockVolumeCrudService.readVolumeByIssue(new Issue("test"));
 
-    verify(mockHibernateTemplate, times(6)).execute(any());
+    verify(mockHibernateTemplate).execute(any());
   }
 
   @Test
+  @DirtiesContext
   public void testCreate() throws Exception {
     when(mockJournalCrudService.readJournal("test")).thenReturn(stubJournal);
 
@@ -153,6 +156,7 @@ public class VolumeCrudServiceImplTest extends AbstractStubbingArticleTest {
   }
 
   @Test
+  @DirtiesContext
   public void testUpdate() throws Exception {
     mockVolumeCrudService.update(VolumeIdentifier.create("test"), stubVolumeInputView);
 
@@ -160,15 +164,17 @@ public class VolumeCrudServiceImplTest extends AbstractStubbingArticleTest {
   }
 
   @Test
+  @DirtiesContext
   public void testServeVolume() throws Exception {
     when(mockJournalCrudService.readJournalByVolume(any())).thenReturn(stubJournal);
 
     mockVolumeCrudService.serveVolume(VolumeIdentifier.create("test"));
 
-    verify(mockHibernateTemplate, times(7)).execute(any());
+    verify(mockHibernateTemplate).execute(any());
   }
 
   @Test
+  @DirtiesContext
   public void testDelete() throws Exception {
     mockVolumeCrudService.delete(VolumeIdentifier.create("test"));
 
@@ -176,10 +182,11 @@ public class VolumeCrudServiceImplTest extends AbstractStubbingArticleTest {
   }
 
   @Test
+  @DirtiesContext
   public void testGetJournalOf() throws Exception {
     mockVolumeCrudService.getJournalOf(stubVolume);
 
-    verify(mockHibernateTemplate, times(4)).execute(any());
+    verify(mockHibernateTemplate).execute(any());
   }
 
 }
