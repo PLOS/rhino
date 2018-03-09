@@ -165,7 +165,7 @@ public class VolumeCrudServiceImplTest extends AbstractStubbingArticleTest {
 
     mockVolumeCrudService.serveVolume(VolumeIdentifier.create("test"));
 
-    verify(mockHibernateTemplate).execute(any());
+    verify(mockHibernateTemplate, times(7)).execute(any());
   }
 
   @Test
@@ -179,7 +179,7 @@ public class VolumeCrudServiceImplTest extends AbstractStubbingArticleTest {
   public void testGetJournalOf() throws Exception {
     mockVolumeCrudService.getJournalOf(stubVolume);
 
-    verify(mockHibernateTemplate).execute(any());
+    verify(mockHibernateTemplate, times(4)).execute(any());
   }
 
 }
