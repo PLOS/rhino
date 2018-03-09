@@ -36,6 +36,10 @@ public abstract class AbstractStubbingArticleTest extends AbstractRhinoTest {
 
   protected static final Integer INGESTION_NUMBER = new Integer(5);
 
+  protected static final long REVISION_ID = 1;
+
+  protected static final int REVISION_NUMBER = 2;
+
   /**
    * Returns a stubbed article Doi.
    */
@@ -54,6 +58,7 @@ public abstract class AbstractStubbingArticleTest extends AbstractRhinoTest {
     return ingestionIdentifier;
   }
 
+  /** Returns a stubbed article revision identifier. */
   public static final ArticleRevisionIdentifier createStubArticleRevisionIdentifier(
       Doi articleDoi, int revision) {
     final ArticleRevisionIdentifier revisionIdentifier =
@@ -76,8 +81,8 @@ public abstract class AbstractStubbingArticleTest extends AbstractRhinoTest {
    * Returns a stubbed article ingestion.
    */
   public static final ArticleIngestion createStubArticleIngestion(Article article,
-                                                                  int ingestionNumber, String title, LocalDate publication, String articleType, Journal journal,
-                                                                  LocalDate revisionDate, String publicationStage) {
+      int ingestionNumber, String title, LocalDate publication, String articleType, Journal journal,
+      LocalDate revisionDate, String publicationStage) {
     final ArticleIngestion ingestion = createStubArticleIngestion(article, ingestionNumber);
     ingestion.setTitle(title);
     ingestion.setPublicationDate(java.sql.Date.valueOf(publication));

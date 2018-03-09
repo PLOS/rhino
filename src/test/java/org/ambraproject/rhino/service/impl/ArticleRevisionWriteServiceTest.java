@@ -37,10 +37,6 @@ import static org.mockito.Mockito.when;
 @Configuration
 public class ArticleRevisionWriteServiceTest extends AbstractStubbingArticleTest {
 
-  private static final long REVISION_ID = 0;
-
-  private static final int REVISION_NUMBER = 2;
-
   private Query mockQuery;
 
   private ArticleRevisionWriteService mockArticleRevisionWriteService;
