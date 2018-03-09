@@ -26,8 +26,8 @@ __author__ = 'fcabrales@plos.org'
 This test case validates Rhino's article crud controller.
 """
 
-from .RequestObject.articlecc_json import ArticlesJSON
-from .RequestObject.memory_zip_json import MemoryZipJSON
+from .RequestObject.articlecc import ArticlesJSON
+from .RequestObject.memory_zip import MemoryZipJSON
 from test.api import resources
 
 
@@ -64,4 +64,4 @@ class ArticlesTest(ArticlesJSON, MemoryZipJSON):
 
 
 if __name__ == '__main__':
-  ArticlesJSON._run_tests_randomly()
+  ArticlesJSON.run_tests_randomly()

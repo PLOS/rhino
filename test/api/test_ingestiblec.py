@@ -20,98 +20,44 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
-__author__ = 'jkrzemien@plos.org; gfilomeno@plos.org'
+__author__ = 'fcabrales@plos.org'
 
 
 """
-This test case validates Rhino's convenience zipUpload Tests for ZIP ingestion.
+This test case validates Rhino's article repack service.
 """
 
-from .RequestObject.zip_ingestion_json import ZIPIngestionJson
-from .RequestObject.memory_zip_json import MemoryZipJSON
+from .RequestObject.articlecc import ArticlesJSON
+from .RequestObject.ingestiblec import IngestibleJSON
+from .RequestObject.memory_zip import MemoryZipJSON
 from test.api import resources
 
-class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
+class ZipIngestibleTest(IngestibleJSON, MemoryZipJSON, ArticlesJSON):
 
   def setUp(self):
-    self.already_done = 0
-
-  def tearDown(self):
-    """
-    Purge all objects and collections created in the test case
-    """
-    if self.already_done > 0: return
-
-  def test_zip_ingestion_related_article(self):
-    """
-    POST zips: Forced ingestion of ZIP archive
-    """
-    print('\nTesting POST zips for related article/\n')
-    # Invoke ZIP API
-    zip_file = self.create_ingestible(resources.RA_DOI, 'RelatedArticle/')
-    self.post_ingestible_zip(zip_file, resources.RELATED_ARTICLE_BUCKET_NAME)
-    # Validate HTTP code in the response is 201 (CREATED)
-    self.verify_http_code_is(resources.CREATED)
-    # Validate response with database tables
-    self.verify_zip_ingestion(resources.NOT_SCAPE_RELATED_ARTICLE_DOI)
-    self.delete_test_article(resources.RELATED_ARTICLE_DOI, resources.NOT_SCAPE_RELATED_ARTICLE_DOI,
-                             resources.RELATED_ARTICLE_BUCKET_NAME)
-
-  def test_zip_ingestion_related_article_no_bucket(self):
-    """
-    POST zips: Forced ingestion of ZIP archive
-    """
-    print('\nTesting POST zips for related article no bucket/\n')
+    print('\nTesting POST zips/\n')
     # Invoke ZIP API
     zip_file = self.create_ingestible(resources.RA_DOI, 'RelatedArticle/')
     self.post_ingestible_zip(zip_file)
     # Validate HTTP code in the response is 201 (CREATED)
     self.verify_http_code_is(resources.CREATED)
-    # Validate response with database tables
-    self.verify_zip_ingestion(resources.NOT_SCAPE_RELATED_ARTICLE_DOI)
+
+  def tearDown(self):
+    """
+    Purge all objects and collections created in the test case
+    """
+    #self.delete_test_article()
+
+  def test_ingestible(self):
+    """
+    GET ingestibles
+    """
+    print('\nTesting GET ingestibles/\n')
+    # Invoke ingestibles API
+    self.get_ingestible(resources.RELATED_ARTICLE_DOI)
+    self.verify_http_code_is(resources.OK)
     self.delete_test_article(resources.RELATED_ARTICLE_DOI, resources.NOT_SCAPE_RELATED_ARTICLE_DOI,
                              resources.RELATED_ARTICLE_BUCKET_NAME)
-
-  def test_zip_ingestion_preprint_article(self):
-    """
-    POST zips: Forced ingestion of ZIP archive
-    """
-    print('\nTesting POST zips for preprint article/\n')
-    # Invoke ZIP API
-    zip_file = self.create_ingestible(resources.PP_DOI, 'PrePrint/')
-    self.post_ingestible_zip(zip_file, resources.PREPRINT_ARTICLE_BUCKET_NAME)
-    # Validate HTTP code in the response is 201 (CREATED)
-    self.verify_http_code_is(resources.CREATED)
-    # Validate response with database tables
-    self.verify_zip_ingestion(resources.NOT_SCAPE_PREPRINT_ARTICLE_DOI)
-    self.delete_test_article(resources.PREPRINT_ARTICLE_DOI, resources.NOT_SCAPE_PREPRINT_ARTICLE_DOI,
-                             resources.PREPRINT_ARTICLE_BUCKET_NAME)
-
-  def test_zip_ingestion_without_file(self):
-    """
-    POST zips: Try to ingest of ZIP archive without file name
-    """
-    print('\nTesting POST zips/ without parameters\n')
-    # Ingest a ZIP file
-    try:
-      self.already_done = 1
-      self.post_ingestible_zip(None)
-    except:
-      pass
-
-  def verify_zip_ingestion(self, not_scaped_article_doi):
-    """
-    Verifies article, journal and figure inforamtion from ambra db
-    :param not_scapted_article_doi: String. Such as '10.1371/journal.pone.0155391'
-    :return: none
-    """
-    # All below verifications will be fix with https://developer.plos.org/jira/browse/DPRO-3259
-    # Validate response with Article table
-    self.verify_article(not_scaped_article_doi)
-    # Validate response with Journal table
-    self.verify_journals(not_scaped_article_doi)
-    # Validate article figures
-    self.verify_article_figures(not_scaped_article_doi)
 
   def delete_test_article(self, article_doi, not_scaped_article_doi, bucket_name):
     """
@@ -172,4 +118,4 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
           self.verify_http_code_is(resources.OK)
 
 if __name__ == '__main__':
-  ZIPIngestionJson._run_tests_randomly()
+  IngestibleJSON.run_tests_randomly()

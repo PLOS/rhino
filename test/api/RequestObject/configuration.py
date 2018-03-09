@@ -1,6 +1,7 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
-# Copyright (c) 2017 Public Library of Science
+# Copyright (c) 2018 Public Library of Science
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -20,22 +21,37 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
+"""
+Base class for Configuration crud controller
+"""
+
 __author__ = 'jgray@plos.org'
 
-'''
-Test cases for Rhino Journal Crud Controller requests.
-'''
-from ..api.RequestObject.journalcc_json import JournalCCJson
+from ...Base.base_service_test import BaseServiceTest
+from ..resources import API_BASE_URL, OK, BAD_REQUEST
+
+CONFIGURATION_API = API_BASE_URL + '/config'
 
 
-class GetJournals(JournalCCJson):
+class Configuration(BaseServiceTest):
+    def setUp(self):
+        self.already_done = 0
 
-  def test_journals(self):
-    """
-    Get Journalss API call
-    """
-    self.get_journals()
-    self.verify_journals()
+    def tearDown(self):
+        """
+        Purge all objects and collections created in the test case
+        """
+        if self.already_done > 0:
+            return
 
-if __name__ == '__main__':
-    JournalCCJson._run_tests_randomly()
+    def get_type(self, type_):
+        """
+        Calls configuration-read-controller API with type parameter
+        :param type_: string. Valid values are 'build', 'run' or 'repo'
+        """
+        self.doGet(CONFIGURATION_API, params='type={0}'.format(type_))
+        if type_ in ('build', 'run', 'repo'):
+            self.verify_http_code_is(OK)
+            self.parse_response_as_json()
+        else:
+            self.verify_http_code_is(BAD_REQUEST)
