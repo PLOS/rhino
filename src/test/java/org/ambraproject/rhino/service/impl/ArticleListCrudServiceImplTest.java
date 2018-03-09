@@ -44,8 +44,6 @@ public class ArticleListCrudServiceImplTest extends AbstractStubbingArticleTest 
 
   private ArticleListCrudService mockArticleListCrudService;
 
-  private ArticleCrudService mockArticleCrudService;
-
   private HibernateTemplate mockHibernateTemplate;
 
   @BeforeMethod
@@ -59,13 +57,6 @@ public class ArticleListCrudServiceImplTest extends AbstractStubbingArticleTest 
     mockArticleListCrudService = spy(ArticleListCrudServiceImpl.class);
     LOG.debug("articleListCrudService() * --> {}", mockArticleListCrudService);
     return mockArticleListCrudService;
-  }
-
-  @Bean
-  public ArticleCrudService articleCrudService() {
-    mockArticleCrudService = spy(ArticleCrudServiceImpl.class);
-    LOG.debug("articleCrudService() * --> {}", mockArticleCrudService);
-    return mockArticleCrudService;
   }
 
   @Bean
@@ -276,27 +267,8 @@ public class ArticleListCrudServiceImplTest extends AbstractStubbingArticleTest 
     assertThat(newArticleListView.getIdentity()).isEqualTo(identity);
     assertThat(newArticleListView.getArticleList()).isEqualTo(articleList);
 
-//    // commented out code is needed to test without modifying ServiceResponse.java
-//    // and also needs SampleSerializer and localGson later.
-//    ResponseEntity<?> entity = response.asJsonResponse(localGson());
-//    String body = new String((byte[]) entity.getBody(), Charset.forName("UTF8"));
-//    logger.debug(body);
   }
 
-//  public static class SampleSerializer implements JsonSerializer<ArticleRevisionView.Factory>
-//  {
-//    public JsonElement serialize(ArticleRevisionView.Factory src, Type typeOfSrc, JsonSerializationContext context)
-//    {
-//      return null;
-//    }
-//  }
-//
-//  private Gson localGson() {
-//    final GsonBuilder builder = JsonAdapterUtil.makeGsonBuilder().setPrettyPrinting();
-//    Java8TimeGsonAdapters.register(builder);
-//    builder.registerTypeAdapter(ArticleRevisionView.Factory.class, new SampleSerializer());
-//    return builder.create();
-//  }
 
   @Test
   public void testReadAll_SucceedForEmpty() {
