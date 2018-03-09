@@ -26,11 +26,11 @@ Class for creating an ingestible zip in memory.
 
 __author__ = 'rskonnord'
 
-
 import sys
 
 from test.Base.base_service_test import BaseServiceTest
 from test.Base.MemoryZip import MemoryZipFile, MemoryZipData, build_zip_file_in_memory
+
 
 class MemoryZipJSON(BaseServiceTest):
 

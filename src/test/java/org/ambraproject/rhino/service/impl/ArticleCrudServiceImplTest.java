@@ -65,7 +65,7 @@ public class ArticleCrudServiceImplTest extends AbstractStubbingArticleTest {
 
   private HibernateTemplate mockHibernateTemplate;
 
-  private Article stubArticle = null;
+  private Article stubArticle = createStubArticle();
 
   private final ArticleIdentifier stubArticleId = ArticleIdentifier.create(Doi.create("0"));
 
@@ -81,16 +81,6 @@ public class ArticleCrudServiceImplTest extends AbstractStubbingArticleTest {
     mockArticleCrudService = spy(ArticleCrudServiceImpl.class);
     LOG.debug("articleCrudService() * --> {}", mockArticleCrudService);
     return mockArticleCrudService;
-  }
-
-  private ArticleRevision createStubArticleRevision() {
-    stubArticle = createStubArticle();
-    ArticleRevision articleRevision = new ArticleRevision();
-    ArticleIngestion articleIngestion = new ArticleIngestion();
-    articleIngestion.setArticle(stubArticle);
-    articleIngestion.setIngestionNumber(1);
-    articleRevision.setIngestion(articleIngestion);
-    return articleRevision;
   }
 
   private Collection<ArticleRevision> createStubArticleRevisions() {

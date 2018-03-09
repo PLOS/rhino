@@ -1,15 +1,10 @@
 package org.ambraproject.rhino;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.withSettings;
-
-import java.io.InputStream;
-import java.util.UUID;
-
+import com.google.common.base.Joiner;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableMap;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.config.YamlConfiguration;
 import org.ambraproject.rhino.service.ConfigurationReadService;
@@ -36,11 +31,15 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.yaml.snakeyaml.Yaml;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableMap;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import java.io.InputStream;
+import java.util.UUID;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.withSettings;
 
 /**
  * Abstract base class for Rhino unit tests.
@@ -217,9 +216,7 @@ public abstract class AbstractRhinoTest extends AbstractTestNGSpringContextTests
       when(sessionFactory.openSession()).thenReturn(mockSession);
     }
 
-    final HibernateTemplate hibernateTemplate =
-        applicationContext.getBean(HibernateTemplate.class);
-    return hibernateTemplate;
+    return applicationContext.getBean(HibernateTemplate.class);
   }
 
   /**
