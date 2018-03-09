@@ -135,4 +135,12 @@ public class ServiceResponse<T> {
     return response.build();
   }
 
+  /**
+   * Get the body in its original type. This is useful in testing.
+   * @return Body object.
+   */
+  public T getBody() {
+    return body;
+  }
+
 }

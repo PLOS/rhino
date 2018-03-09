@@ -409,7 +409,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public Optional<ResolvedDoiView> getItemOverview(Doi doi) {
-    return hibernateTemplate.execute(session -> {
+    return (Optional<ResolvedDoiView>) hibernateTemplate.execute(session -> {
       Query ingestionQuery = session.createQuery("FROM ArticleItem WHERE doi = :doi");
       ingestionQuery.setParameter("doi", doi.getName());
       List<ArticleItem> items = ingestionQuery.list();
