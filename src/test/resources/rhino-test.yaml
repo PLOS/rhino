@@ -12,3 +12,6 @@ manuscriptCustomMeta:
   revisionDate:     "Publication Update"
   publicationStage: "PLOS Publication Stage"
 queue:
+  solrUpdate:       activemq:plos.solr.article.index?transacted=false
+  liteSolrUpdate:   activemq:plos.solr.article.lite-index?transacted=false
+  solrDelete:       activemq:plos.solr.article.delete?transacted=false
