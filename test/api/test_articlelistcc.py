@@ -24,15 +24,11 @@ __author__ = 'fcabrales'
 This test cases validates JSON article list crud controller.
 '''
 
-from test.api.RequestObject.articlelistcc_json import ArticlesListJSON
+from test.api.RequestObject.articlelistcc import ArticlesListJSON
+from .resources import OK, BAD_REQUEST, NOT_FOUND, CREATED
 import time
 from termcolor import cprint
 
-HTTP_NOT_FOUND = 404
-HTTP_ERROR = 400
-
-HTTP_CREATED = 201
-HTTP_OK = 200
 
 class ArticlesListAdditions(ArticlesListJSON):
 
@@ -47,7 +43,7 @@ class ArticlesListAdditions(ArticlesListJSON):
     self.test_cleanup()
     cprint('Adding article list', 'green', attrs=['bold'])
 
-    self.add_article_list(HTTP_CREATED)
+    self.add_article_list(CREATED)
     time.sleep(10)
     self.test_cleanup()
 
@@ -55,9 +51,9 @@ class ArticlesListAdditions(ArticlesListJSON):
     self.test_cleanup()
     cprint('Adding two identical article lists', 'green', attrs=['bold'])
 
-    self.add_article_list(HTTP_CREATED)
+    self.add_article_list(CREATED)
     time.sleep(10)
-    self.add_article_list(HTTP_ERROR)
+    self.add_article_list(BAD_REQUEST)
     time.sleep(5)
     self.test_cleanup()
 
@@ -65,14 +61,14 @@ class ArticlesListAdditions(ArticlesListJSON):
     self.test_cleanup()
     cprint('Patching article list', 'green', attrs=['bold'])
 
-    self.add_article_list(HTTP_CREATED)
+    self.add_article_list(CREATED)
     time.sleep(10)
-    self.patch_article_list(HTTP_OK, "rhino-cell-collection")
-    self.patch_article_list(HTTP_NOT_FOUND, "wombat-cell-collection")
-    self.patch_article_list(HTTP_NOT_FOUND, "rhino-cell-collection", True)  # use bogus data
+    self.patch_article_list(OK, "rhino-cell-collection")
+    self.patch_article_list(NOT_FOUND, "wombat-cell-collection")
+    self.patch_article_list(NOT_FOUND, "rhino-cell-collection", True)  # use bogus data
     time.sleep(5)
     self.test_cleanup()
 
 
 if __name__ == '__main__':
-  ArticlesListJSON._run_tests_randomly()
+  ArticlesListJSON.run_tests_randomly()

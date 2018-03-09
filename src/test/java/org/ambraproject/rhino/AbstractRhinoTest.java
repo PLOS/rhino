@@ -216,9 +216,7 @@ public abstract class AbstractRhinoTest extends AbstractTestNGSpringContextTests
       when(sessionFactory.openSession()).thenReturn(mockSession);
     }
 
-    final HibernateTemplate hibernateTemplate =
-        applicationContext.getBean(HibernateTemplate.class);
-    return hibernateTemplate;
+    return applicationContext.getBean(HibernateTemplate.class);
   }
 
   /**
