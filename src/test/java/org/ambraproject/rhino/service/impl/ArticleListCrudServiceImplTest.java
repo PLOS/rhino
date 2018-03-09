@@ -316,8 +316,8 @@ public class ArticleListCrudServiceImplTest extends AbstractStubbingArticleTest 
     ArticleList articleList1 = articleListView1.getArticleList();
 
     ArticleListIdentity identity2 = createStubArticleListIdentity("invalid-type", ARTICLE_LIST_ID_JOURNAL, ARTICLE_LIST_ID_KEY);
-    ArticleListView articleListView2 = createStubArticleList("article list 2", null, null);
-    ArticleList articleList2 = articleListView1.getArticleList();
+    ArticleListView articleListView2 = createStubArticleList("article list 2", identity2, null);
+    ArticleList articleList2 = articleListView2.getArticleList();
 
     List<Object[]> list = new ArrayList<Object[]>();
     list.add(new Object[] {ARTICLE_LIST_ID_JOURNAL, articleList1});
@@ -368,7 +368,7 @@ public class ArticleListCrudServiceImplTest extends AbstractStubbingArticleTest 
 
     ArticleListIdentity identity2 = createStubArticleListIdentity("second-type", ARTICLE_LIST_ID_JOURNAL, ARTICLE_LIST_ID_KEY);
     ArticleListView articleListView2 = createStubArticleList("article list 2", identity2, articleA);
-    ArticleList articleList2 = articleListView1.getArticleList();
+    ArticleList articleList2 = articleListView2.getArticleList();
 
     ArticleListIdentity identity3 = createStubArticleListIdentity("third-type", ARTICLE_LIST_ID_JOURNAL, ARTICLE_LIST_ID_KEY);
     ArticleListView articleListView3 = createStubArticleList("article list 3", identity3, articleB);
@@ -380,6 +380,8 @@ public class ArticleListCrudServiceImplTest extends AbstractStubbingArticleTest 
 
     ArticleIdentifier articleIdA = ArticleIdentifier.create(articleA.getDoi());
 
+    when(mockHibernateTemplate.execute(any())).thenReturn(list1);
+
     ServiceResponse<Collection<ArticleListView>> response = mockArticleListCrudService.readContainingLists(articleIdA);
     Collection<ArticleListView> listA = response.getBody();
     assertThat(listA.size()).isEqualTo(list1.size());
@@ -390,6 +392,8 @@ public class ArticleListCrudServiceImplTest extends AbstractStubbingArticleTest 
     list2.add(new Object[]{ ARTICLE_LIST_ID_JOURNAL, articleList3});
 
     ArticleIdentifier articleIdB = ArticleIdentifier.create(articleB.getDoi());
+
+    when(mockHibernateTemplate.execute(any())).thenReturn(list2);
 
     response = mockArticleListCrudService.readContainingLists(articleIdB);
     Collection<ArticleListView> listB = response.getBody();
