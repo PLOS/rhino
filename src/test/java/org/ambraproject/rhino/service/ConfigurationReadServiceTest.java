@@ -22,8 +22,12 @@
 
 package org.ambraproject.rhino.service;
 
+import com.google.gson.Gson;
 import org.ambraproject.rhino.BaseRhinoTest;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -32,6 +36,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
 
@@ -50,7 +55,15 @@ public class ConfigurationReadServiceTest extends BaseRhinoTest {
   }
 
   @Test
-  public void testReadRepoConfig() throws IOException {
+  public void testReadBuildProperties() throws IOException {
+    final ServiceResponse<Properties> buildProperties = configurationReadService.readBuildConfig();
+    assertNotNull(buildProperties);
+    final ResponseEntity<?> responseEntity = buildProperties.asJsonResponse(new Gson());
+    assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+  }
+
+  @Test
+  public void testGetRepoConfig() throws IOException {
     Map<String, Object> repoConfigMap = configurationReadService.getRepoConfig();
     Map<String, Object> editorialConfigMap = (Map<String, Object>) repoConfigMap.get("editorial");
 
@@ -62,6 +75,26 @@ public class ConfigurationReadServiceTest extends BaseRhinoTest {
     Map<String, Object> corpusConfigMap = (Map<String, Object>) repoConfigMap.get("corpus");
     final Set<String> secondaryBuckets = (Set<String>) corpusConfigMap.get("secondaryBuckets");
     assertEquals(secondaryBuckets.iterator().next(), "secondary_bucket");
+  }
+
+  @Test
+  public void testReadRepoConfig() throws IOException {
+    final ServiceResponse<Map<String, Object>> repoConfig = configurationReadService.readRepoConfig();
+    assertNotNull(repoConfig);
+    final ResponseEntity<?> responseEntity = repoConfig.asJsonResponse(new Gson());
+    assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+  }
+
+  @Test
+  public void testReadRunInfo() throws IOException {
+    final ServiceResponse<Map<String, String>> runConfig = configurationReadService.readRunInfo();
+    assertResponseEntity(runConfig);
+  }
+
+  private void assertResponseEntity(ServiceResponse<Map<String, String>> config) throws IOException {
+    assertNotNull(config);
+    final ResponseEntity<?> responseEntity = config.asJsonResponse(new Gson());
+    assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
   }
 
 }
