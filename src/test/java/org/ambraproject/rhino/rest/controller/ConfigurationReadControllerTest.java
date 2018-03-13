@@ -45,12 +45,12 @@ public class ConfigurationReadControllerTest extends AbstractRhinoTest {
   }
 
   /**
-   * Test successful request to read API Configurations.
+   * Test failed request to read API Configurations.
    *
    * @throws Exception if API request fails 
    */
   @Test
-  public void testReadUserApiConfigShouldSucceed() throws Exception {
+  public void testReadUserApiConfigShouldFail() throws Exception {
     mockModelViewController.perform(get("/config/userApi/")).andExpect(status().isNotFound());
     mockModelViewController.perform(get("/config/userApi")).andExpect(status().isNotFound());
 
