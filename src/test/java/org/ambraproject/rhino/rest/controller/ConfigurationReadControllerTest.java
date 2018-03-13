@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.rest;
+package org.ambraproject.rhino.rest.controller;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
