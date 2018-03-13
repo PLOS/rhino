@@ -76,9 +76,4 @@ public class ConfigurationReadController extends RestController {
     return response.asJsonResponse(entityGson);
   }
 
-  @RequestMapping(value = CONFIG_ROOT + "/userApi", method = RequestMethod.GET)
-  public ResponseEntity<?> readUserApiConfig() throws IOException {
-    return ServiceResponse.serveView(runtimeConfiguration.getNedConfiguration()).asJsonResponse(entityGson);
-  }
-
 }
