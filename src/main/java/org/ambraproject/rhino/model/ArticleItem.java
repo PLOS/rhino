@@ -65,7 +65,7 @@ public class ArticleItem implements Timestamped {
   private String itemType;
 
   @Cascade(CascadeType.SAVE_UPDATE)
-  @OneToMany(targetEntity = ArticleFile.class, mappedBy = "item", fetch = FetchType.EAGER)
+  @OneToMany(targetEntity = ArticleFile.class, mappedBy = "item")
   private Collection<ArticleFile> files;
 
   @Generated(value = GenerationTime.INSERT)
