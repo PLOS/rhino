@@ -27,7 +27,7 @@
   <artifactId>rhino</artifactId>
   <name>rhino</name>
   <packaging>war</packaging>
-  <version>2.4.4</version>
+  <version>2.4.5</version>
   <description>Service-oriented back end for Ambra.</description>
 
   <licenses>
@@ -530,6 +530,12 @@
           </systemProperties>
         </configuration>
         <dependencies>
+          <!-- https://mvnrepository.com/artifact/org.apache.tomcat.maven/tomcat6-maven-plugin -->
+          <dependency>
+              <groupId>org.apache.tomcat.maven</groupId>
+              <artifactId>tomcat6-maven-plugin</artifactId>
+              <version>2.1</version>
+          </dependency>
           <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>juli</artifactId>
