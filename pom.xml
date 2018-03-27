@@ -530,12 +530,6 @@
           </systemProperties>
         </configuration>
         <dependencies>
-          <!-- https://mvnrepository.com/artifact/org.apache.tomcat.maven/tomcat6-maven-plugin -->
-          <dependency>
-              <groupId>org.apache.tomcat.maven</groupId>
-              <artifactId>tomcat6-maven-plugin</artifactId>
-              <version>2.1</version>
-          </dependency>
           <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>juli</artifactId>
