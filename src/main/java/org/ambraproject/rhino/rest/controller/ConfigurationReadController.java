@@ -51,12 +51,12 @@ public class ConfigurationReadController extends RestController {
   /**
    * Retrieves configuration metadata according to the given type parameters.
    * @param configType String indicating the type of config values to be returned (should be one of {@link
- *                   ConfigurationReadService.CONFIG_TYPES})
+   *                   ConfigurationReadService.CONFIG_TYPES})
    **/
-
   @Transactional(readOnly = true)
   @RequestMapping(value = CONFIG_ROOT, method = RequestMethod.GET)
-  public ResponseEntity<?> readConfig(@RequestParam(value = CONFIG_TYPE_PARAM, required = true) String configType)
+  public ResponseEntity<?> readConfig(
+      @RequestParam(value = CONFIG_TYPE_PARAM, required = true) String configType)
       throws IOException {
     ServiceResponse<?> response;
     switch (configType) {
@@ -76,9 +76,18 @@ public class ConfigurationReadController extends RestController {
     return response.asJsonResponse(entityGson);
   }
 
-  @RequestMapping(value = CONFIG_ROOT + "/userApi", method = RequestMethod.GET)
+  /**
+   * This method exposes the NED login credentials, which is a high security risk.
+   *
+   * @return The NED user/password
+   *
+   * @throws IOException if errors on creating the JSON object
+   *
+   * @deprecated Should not be used, as this is a high security risk
+   */
   public ResponseEntity<?> readUserApiConfig() throws IOException {
-    return ServiceResponse.serveView(runtimeConfiguration.getNedConfiguration()).asJsonResponse(entityGson);
+    // TODO: Remove `readUserApiConfig` method.
+    return ServiceResponse.serveView(runtimeConfiguration.getNedConfiguration())
+        .asJsonResponse(entityGson);
   }
-
 }
