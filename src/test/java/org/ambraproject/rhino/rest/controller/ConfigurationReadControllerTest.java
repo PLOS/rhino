@@ -8,13 +8,14 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.testng.Assert.fail;
 
 import java.net.URI;
-import java.util.Map;
 import java.util.Properties;
 
 import org.ambraproject.rhino.AbstractRhinoTest;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
 import org.ambraproject.rhino.util.GitInfo;
@@ -33,16 +34,19 @@ import org.springframework.web.context.WebApplicationContext;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @ContextConfiguration(
     classes = {ConfigurationReadController.class, ConfigurationReadControllerTest.class})
-@Configuration
 @WebAppConfiguration
+@Configuration
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class ConfigurationReadControllerTest extends AbstractRhinoTest {
+
+  private static final JsonParser jsonParser = new JsonParser();
 
   @Autowired
   private WebApplicationContext context;
@@ -108,16 +112,55 @@ public class ConfigurationReadControllerTest extends AbstractRhinoTest {
    */
   @Test
   public void testReadRepoConfigShouldSucceed() throws Exception {
-    final ImmutableMap<String, Map<String, Object>> repoConfig = ImmutableMap.of(
-        "editorial", ImmutableMap.of("bucket", "plive"),
-        "corpus", ImmutableMap.of("secondaryBuckets", ImmutableList.of()));
-    doReturn(repoConfig).when(mockConfigurationReadService).getRepoConfig();
-
     final MvcResult result = mockModelViewController.perform(get(new URI("/config?type=repo")))
         .andExpect(status().isOk()).andReturn();
     final MockHttpServletResponse response = result.getResponse();
-    final String expectedConfig = entityGson.toJson(repoConfig);
-    assertThat(response.getContentAsString()).isEqualTo(expectedConfig);
+    final JsonObject data = jsonParser.parse(response.getContentAsString()).getAsJsonObject();
+
+    final JsonObject editorial = data.getAsJsonObject("editorial");
+    assertThat(editorial).isNotNull();
+    assertThat(editorial.getAsJsonPrimitive("address").getAsString())
+        .isEqualTo("http://path/to/content/repo");
+    assertThat(editorial.getAsJsonPrimitive("bucket").getAsString()).isEqualTo("bucket_name");
+
+    final JsonObject corpus = data.getAsJsonObject("corpus");
+    assertThat(corpus).isNotNull();
+    assertThat(corpus.getAsJsonPrimitive("address").getAsString())
+        .isEqualTo("http://path/to/content/repo");
+
+    final JsonArray actualSecondaryBuckets = corpus.getAsJsonArray("secondaryBuckets");
+    assertThat(actualSecondaryBuckets).hasSize(1);
+    assertThat(actualSecondaryBuckets.getAsString()).isEqualTo("secondary_bucket");
+  }
+
+  /**
+   * Test request for <b>run</b> info should succeed.
+   *
+   * @throws Exception if API request fails
+   */
+  @Test
+  public void testReadRunInfoShouldSucceed() throws Exception {
+    final MvcResult result = mockModelViewController.perform(get(new URI("/config?type=run")))
+        .andExpect(status().isOk()).andReturn();
+    final MockHttpServletResponse response = result.getResponse();
+    final JsonObject data = jsonParser.parse(response.getContentAsString()).getAsJsonObject();
+    assertThat(data.has("host")).isTrue();
+    assertThat(data.has("started")).isTrue();
+  }
+
+  /**
+   * Test request for invalid configuration <b>type</b> should fail.
+   *
+   * @throws Exception if API request fails
+   */
+  @Test
+  public void testInvalidConfigTypeShouldFail() throws Exception {
+    try {
+      mockModelViewController.perform(get(new URI("/config?type=unknown")));
+      fail("Expecting exception, but nothing was thrown.");
+    } catch (Throwable exception) {
+      assertThat(exception.getCause()).isInstanceOf(RestClientException.class);
+    }
   }
 
   /**
