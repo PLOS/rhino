@@ -11,7 +11,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.testng.Assert.fail;
 
 import java.net.URI;
-import java.util.Properties;
 
 import org.ambraproject.rhino.AbstractRhinoTest;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
@@ -34,7 +33,6 @@ import org.springframework.web.context.WebApplicationContext;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -55,9 +53,7 @@ public class ConfigurationReadControllerTest extends AbstractRhinoTest {
 
   private RuntimeConfiguration mockRuntimeConfiguration;
 
-  private ConfigurationReadService mockConfigurationReadService;
-
-  private Gson entityGson;
+  private GitInfo mockGitInfo;
 
   @Bean
   protected GitInfo gitInfo() {
@@ -78,9 +74,8 @@ public class ConfigurationReadControllerTest extends AbstractRhinoTest {
    */
   @BeforeMethod(alwaysRun = true)
   public void init() {
-    entityGson = applicationContext.getBean(Gson.class);
+    mockGitInfo = applicationContext.getBean(GitInfo.class);
     mockRuntimeConfiguration = applicationContext.getBean(RuntimeConfiguration.class);
-    mockConfigurationReadService = applicationContext.getBean(ConfigurationReadService.class);
     mockModelViewController = MockMvcBuilders.webAppContextSetup(context).build();
   }
 
@@ -91,18 +86,21 @@ public class ConfigurationReadControllerTest extends AbstractRhinoTest {
    */
   @Test
   public void testReadBuildConfigShouldSucceed() throws Exception {
-    final Properties buildProperties = new Properties();
-    buildProperties.setProperty("version", "0.0.0");
-    buildProperties.setProperty("buildUser", "teamcity");
-    buildProperties.setProperty("buildDate", "YYYMMDD");
-    buildProperties.setProperty("gitCommitIdAbbrev", "commit_id");
-    doReturn(buildProperties).when(mockConfigurationReadService).getBuildProperties();
+    final String expectedGitCommId = "0000_commit_id";
+    doReturn(expectedGitCommId).when(mockGitInfo).getCommitIdAbbrev();
 
     final MvcResult result = mockModelViewController.perform(get(new URI("/config?type=build")))
         .andExpect(status().isOk()).andReturn();
+
     final MockHttpServletResponse response = result.getResponse();
-    final String expectedProperties = entityGson.toJson(buildProperties);
-    assertThat(response.getContentAsString()).isEqualTo(expectedProperties);
+    final JsonObject config = jsonParser.parse(response.getContentAsString()).getAsJsonObject();
+    assertThat(config.getAsJsonPrimitive("gitCommitIdAbbrev").getAsString())
+        .isEqualTo(expectedGitCommId);
+    assertThat(config.has("version")).isTrue();
+    assertThat(config.has("buildUser")).isTrue();
+    assertThat(config.has("buildDate")).isTrue();
+
+    verify(mockGitInfo).getCommitIdAbbrev();
   }
 
   /**
