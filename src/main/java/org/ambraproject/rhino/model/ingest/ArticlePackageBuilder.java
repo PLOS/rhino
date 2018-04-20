@@ -79,7 +79,7 @@ public class ArticlePackageBuilder {
     List<ArticleFileInput> ancillaryFiles = manifest.getAncillaryFiles().stream()
         .map(this::buildObjectForAncillary).collect(Collectors.toList());
 
-    return new ArticlePackage(new ArticleItemInput(articleIdentity, articleObjects,
+    return new ArticlePackage(ArticleItemInput.create(articleIdentity, articleObjects,
         AssetType.ARTICLE.getIdentifier()), assetItems, ancillaryFiles, manifest,
         destinationBucketName);
   }
@@ -153,7 +153,7 @@ public class ArticlePackageBuilder {
         ArticleFileInput fileInput = buildObjectForAsset(asset, representation);
         assetObjects.put(fileType.getIdentifier(), fileInput);
       }
-      items.add(new ArticleItemInput(Doi.create(asset.getUri()), assetObjects.build(), assetType.getIdentifier()));
+      items.add(ArticleItemInput.create(Doi.create(asset.getUri()), assetObjects.build(), assetType.getIdentifier()));
     }
     return items;
   }

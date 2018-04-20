@@ -100,7 +100,7 @@ public class ContentRepoPersistenceServiceTest extends AbstractRhinoTest {
     final ImmutableSet<String> expectedFileNames = ImmutableSet.of("file1", "file2", "file3",
         "file4");
 
-    final ArticleItemInput expectedItemInput = new ArticleItemInput(
+    final ArticleItemInput expectedItemInput = ArticleItemInput.create(
         expectedDoi, expectedFileInputs, ITEM_INPUT_TYPE);
 
     final ContentRepoService mockContentRepoService =
@@ -191,7 +191,7 @@ public class ContentRepoPersistenceServiceTest extends AbstractRhinoTest {
   @Test
   @DirtiesContext
   public void testEmptyArticleItemFilesShouldSucceed() {
-    final ArticleItemInput expectedItemInput = new ArticleItemInput(
+    final ArticleItemInput expectedItemInput = ArticleItemInput.create(
         expectedDoi, ImmutableMap.of(), ITEM_INPUT_TYPE);
 
     final ContentRepoService mockContentRepoService =
