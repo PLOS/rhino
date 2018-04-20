@@ -174,7 +174,7 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
     String fullName = NAME_JOINER.join(fullNameParts);
     givenName = Strings.nullToEmpty(givenName);
     suffix = Strings.nullToEmpty(suffix);
-    return new NlmPerson(fullName, givenName, surname, suffix);
+    return NlmPerson.create(fullName, givenName, surname, suffix);
   }
 
   /**
