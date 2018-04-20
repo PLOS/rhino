@@ -60,7 +60,7 @@ public class AssetXml extends AbstractArticleXml<AssetMetadata> {
     Node captionNode = readNode("child::caption");
     String description = Strings.nullToEmpty(getXmlFromNode(captionNode));
 
-    return new AssetMetadata(doi, title, description);
+    return AssetMetadata.create(doi, title, description);
   }
 
 }

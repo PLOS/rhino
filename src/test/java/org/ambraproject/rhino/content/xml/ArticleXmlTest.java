@@ -46,7 +46,7 @@ public class ArticleXmlTest {
       new Object[] {asset("", "description"), new AssetMetadata[] {asset("", "")}});
 
   private static AssetMetadata asset(String title, String description) {
-    return new AssetMetadata("testAssetDoi", title, description);
+    return AssetMetadata.create("testAssetDoi", title, description);
   }
 
   @DataProvider
