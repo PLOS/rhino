@@ -22,32 +22,17 @@
 
 package org.ambraproject.rhino.model.ingest;
 
+import com.google.auto.value.AutoValue;
 import org.ambraproject.rhino.model.article.ArticleCustomMetadata;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 
-import java.util.Objects;
-
-public class IngestPackage {
-  private final ArticlePackage articlePackage;
-  private final ArticleMetadata articleMetadata;
-  private final ArticleCustomMetadata articleCustomMetadata;
-
-  public IngestPackage(ArticlePackage articlePackage, ArticleMetadata articleMetadata,
-                       ArticleCustomMetadata customMetadata) {
-    this.articlePackage = Objects.requireNonNull(articlePackage);
-    this.articleMetadata = Objects.requireNonNull(articleMetadata);
-    this.articleCustomMetadata = Objects.requireNonNull(customMetadata);
+@AutoValue
+public abstract class IngestPackage {
+  public static IngestPackage create(ArticlePackage articlePackage, ArticleMetadata articleMetadata, ArticleCustomMetadata customMetadata) {
+    return new AutoValue_IngestPackage(articlePackage, articleMetadata, customMetadata);
   }
 
-  public ArticlePackage getArticlePackage() {
-    return articlePackage;
-  }
-
-  public ArticleMetadata getArticleMetadata() {
-    return articleMetadata;
-  }
-
-  public ArticleCustomMetadata getArticleCustomMetadata() {
-    return articleCustomMetadata;
-  }
+  public abstract ArticlePackage getArticlePackage();
+  public abstract ArticleMetadata getArticleMetadata();
+  public abstract ArticleCustomMetadata getArticleCustomMetadata();
 }

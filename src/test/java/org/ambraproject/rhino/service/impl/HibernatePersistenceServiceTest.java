@@ -166,7 +166,7 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
         .setRevisionDate(publishedOn).build();
 
     expectedIngestPackage =
-        new IngestPackage(expectedArticlePackage, expectedArticleMetadata, expectedCustomMetadata);
+        IngestPackage.create(expectedArticlePackage, expectedArticleMetadata, expectedCustomMetadata);
 
     final Journal journal = new Journal();
     journal.setJournalKey(META_JOURNAL_NAME);

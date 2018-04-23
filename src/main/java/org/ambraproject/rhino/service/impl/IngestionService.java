@@ -92,7 +92,7 @@ public class IngestionService extends AmbraService {
     articlePackage.validateAssetCompleteness(parsedArticle.findAllAssetNodes().getDois());
 
     ArticleMetadata articleMetadata = parsedArticle.build();
-    return new IngestPackage(articlePackage, articleMetadata, customMetadata);
+    return IngestPackage.create(articlePackage, articleMetadata, customMetadata);
   }
 
   /**
