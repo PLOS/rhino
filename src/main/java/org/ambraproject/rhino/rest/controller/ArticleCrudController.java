@@ -48,6 +48,7 @@ import org.ambraproject.rhino.view.article.ArticleRevisionView;
 import org.ambraproject.rhino.view.article.RelationshipSetView;
 import org.ambraproject.rhino.view.article.SyndicationInputView;
 import org.ambraproject.rhino.view.article.SyndicationView;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +70,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -84,7 +84,6 @@ import java.util.stream.Collectors;
 public class ArticleCrudController extends RestController {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudController.class);
-
 
   @Autowired
   private ArticleCrudService articleCrudService;
@@ -107,17 +106,15 @@ public class ArticleCrudController extends RestController {
 
   @Transactional(readOnly = true)
   @RequestMapping(value = "/articles", method = RequestMethod.GET)
-  public void listDois(HttpServletRequest request, HttpServletResponse response)
-      throws IOException {
-    // TODO: Reimplement?
-    throw new RestClientException("GET /articles not currently supported", HttpStatus.METHOD_NOT_ALLOWED);
-  }
-
-  /*
-   * Null-safe utility method for Arrays.asList. Put somewhere for reuse?
-   */
-  private static <E> List<E> asList(E[] array) {
-    return (array == null) ? null : Arrays.asList(array);
+  public ResponseEntity<?> listDois(
+      @RequestParam(value="pageNumber", defaultValue="1") int pageNumber,
+      @RequestParam(value="pageSize", defaultValue="10") int pageSize,
+      @RequestParam(value="orderBy", defaultValue="oldest") String orderBy) throws IOException {
+    final ArticleCrudService.SortOrder sortOrder = ArticleCrudService.SortOrder.valueOf(
+        StringUtils.upperCase(orderBy));
+    final Collection<String> articleDois = articleCrudService.getArticleDois(
+        pageNumber, pageSize, sortOrder);
+    return ServiceResponse.serveView(articleDois).asJsonResponse(entityGson);
   }
 
   /**

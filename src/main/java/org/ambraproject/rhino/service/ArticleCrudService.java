@@ -54,6 +54,11 @@ import java.util.Optional;
 
 public interface ArticleCrudService {
 
+  /** Sort ordering types. */
+  public enum SortOrder {
+    OLDEST, NEWEST
+  }
+
   /**
    * Populates article category information by making a call to the taxonomy server.
    *
@@ -209,4 +214,17 @@ public interface ArticleCrudService {
    */
   public abstract void updatePreprintDoi(ArticleIngestionIdentifier articleId, String preprintOfDoi) throws IOException;
 
+  /**
+   * Get the article DOIs.
+   *
+   * Method will return a <b>paginated</b> list of the DOIs.
+   *
+   * @param pageNumber The page number to retrieve
+   * @param pageSize The number of results to retrieve
+   * @param sortOrder The order by method (i.e. order by oldest or newest)
+   *
+   * @return The list for DOIs
+   */
+  public abstract Collection<String> getArticleDois(
+      int pageNumber, int pageSize, SortOrder sortOrder);
 }
