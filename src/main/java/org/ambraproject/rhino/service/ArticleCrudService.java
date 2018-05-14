@@ -48,6 +48,7 @@ import org.w3c.dom.Document;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -227,4 +228,21 @@ public interface ArticleCrudService {
    */
   public abstract Collection<String> getArticleDois(
       int pageNumber, int pageSize, SortOrder sortOrder);
+
+  /**
+   * Get the article DOIs, for a given <b>date range</b>.
+   *
+   * Method will return a <b>paginated</b> list of the DOIs.
+   *
+   * @param pageNumber The page number to retrieve
+   * @param pageSize The number of results to retrieve
+   * @param sortOrder The order by method (i.e. order by oldest or newest)
+   * @param fromDate The starting date range
+   * @param toDate The ending date range
+   *
+   * @return The list for DOIs
+   */
+  public abstract Collection<String> getArticleDoisForDateRange(
+      int pageNumber, int pageSize, SortOrder sortOrder, Optional<LocalDateTime> fromDate,
+      Optional<LocalDateTime> toDate);
 }

@@ -67,6 +67,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,6 +79,7 @@ import javax.xml.xpath.XPathException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -618,9 +620,20 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public Collection<String> getArticleDois(int pageNumber, int pageSize, SortOrder sortOrder) {
+    final Collection<String> articleDois = getArticleDoisForDateRange(
+        pageNumber, pageSize, sortOrder, Optional.empty() /* fromDate */,
+        Optional.empty() /* toDate */);
+    return articleDois;
+  }
+
+  @Override
+  public Collection<String> getArticleDoisForDateRange(
+      int pageNumber, int pageSize, SortOrder sortOrder, Optional<LocalDateTime> fromDate,
+      Optional<LocalDateTime> toDate) {
     final long totalArticles = hibernateTemplate.execute(session -> {
       final Query query = session.createQuery("select count(*) from Article");
-      return (Long) query.uniqueResult();
+      final Long count = (Long) query.uniqueResult();
+      return count;
     });
 
     if (totalArticles > 0L) {
@@ -628,15 +641,31 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       final int maxResults = min(pageSize, MAX_PAGE_SIZE);
       final int firstResult = (pageNumber - 1) * maxResults;
 
-      LOG.info("pageNumber: {}, pageSize: {}", pageNumber, pageSize);
-      LOG.info("firstResult: {}, maxResults: {}", firstResult, maxResults);
-      LOG.info("sortOrder: {}", sortOrder);
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("pageNumber: {}, pageSize: {}", pageNumber, pageSize);
+        LOG.debug("firstResult: {}, maxResults: {}", firstResult, maxResults);
+        LOG.debug("sortOrder: {}", sortOrder);
+      }
 
       if (firstResult < totalArticles) {
         final DetachedCriteria criteria = DetachedCriteria.forClass(Article.class);
         final ProjectionList projections = Projections.projectionList();
         projections.add(Projections.property("doi" /* propertyName */));
         criteria.setProjection(projections);
+
+        // Set restrictions for filtering on date range, if any.
+        if (fromDate.isPresent() && toDate.isPresent()) {
+          criteria.add(Restrictions.ge(
+              "created" /* propertyName */, java.sql.Timestamp.valueOf(fromDate.get())));
+          criteria.add(Restrictions.le(
+              "created" /* propertyName */, java.sql.Timestamp.valueOf(toDate.get())));
+        } else if (fromDate.isPresent()) {
+          criteria.add(Restrictions.ge(
+              "created" /* propertyName */, java.sql.Timestamp.valueOf(fromDate.get())));
+        } else if (toDate.isPresent()) {
+          criteria.add(Restrictions.le(
+              "created" /* propertyName */, java.sql.Timestamp.valueOf(toDate.get())));
+        }
 
         if (sortOrder == SortOrder.OLDEST) {
           criteria.addOrder(Order.asc("created" /* propertyName */));

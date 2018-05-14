@@ -14,10 +14,12 @@ import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.service.ArticleCrudService;
+import org.ambraproject.rhino.service.ArticleCrudService.SortOrder;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.view.ResolvedDoiView;
 import org.ambraproject.rhino.view.article.ArticleOverview;
+import org.hibernate.criterion.DetachedCriteria;
 import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.plos.crepo.service.ContentRepoService;
@@ -25,8 +27,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
@@ -44,6 +48,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -52,6 +57,7 @@ import java.util.Optional;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
@@ -59,6 +65,7 @@ import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = ArticleCrudServiceImplTest.class)
 @Configuration
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class ArticleCrudServiceImplTest extends AbstractStubbingArticleTest {
 
   private ArticleCrudService mockArticleCrudService;
@@ -69,11 +76,10 @@ public class ArticleCrudServiceImplTest extends AbstractStubbingArticleTest {
 
   private final ArticleIdentifier stubArticleId = ArticleIdentifier.create(Doi.create("0"));
 
-  @BeforeMethod
+  @BeforeMethod(alwaysRun = true)
   public void initMocks() throws IllegalAccessException, NoSuchFieldException {
     mockArticleCrudService = applicationContext.getBean(ArticleCrudService.class);
     mockHibernateTemplate = applicationContext.getBean(HibernateTemplate.class);
-    // MockitoAnnotations.initMocks(this);
   }
 
   @Bean
@@ -348,4 +354,71 @@ public class ArticleCrudServiceImplTest extends AbstractStubbingArticleTest {
     verify(mockHibernateTemplate).save(stubIngestion);
   }
 
+  @Test
+  @SuppressWarnings({"rawtypes", "unchecked"})
+  /**
+   * Test getting list of article DOIs.
+   */
+  public void testGetListOfArticleDOIsShouldSucceed() {
+    final long articlesCount = 20;
+    final List expectedDois = ImmutableList.of(
+        "10.1371/journal.ppat.1006521",
+        "10.1371/journal.pone.0180908",
+        "10.1371/journal.pgen.1006865",
+        "10.1371/journal.pone.0189616",
+        "10.1371/journal.pone.0187101");
+
+    when(mockHibernateTemplate.execute(any())).thenReturn(articlesCount);
+    when(mockHibernateTemplate.findByCriteria(
+        any(DetachedCriteria.class), anyInt(), anyInt())).thenReturn(expectedDois);
+
+    Collection<String> actualDois = mockArticleCrudService.getArticleDois(
+        1 /* pageNumber */, 5 /* pageSize */, SortOrder.NEWEST);
+    assertThat(actualDois).isEqualTo(expectedDois);
+
+    verify(mockHibernateTemplate).execute(any());
+    verify(mockHibernateTemplate).findByCriteria(any(DetachedCriteria.class), anyInt(), anyInt());
+
+    // Test when "pageNumber" results in an query offset greater than the number of records. 
+    actualDois = mockArticleCrudService.getArticleDois(
+        5 /* pageNumber */, 5 /* pageSize */, SortOrder.NEWEST);
+    assertThat(actualDois).isEmpty();
+  }
+
+  @DataProvider
+  protected Object [][] dateRanges() {
+    return new Object[][] {
+        {LocalDateTime.now(), LocalDateTime.now()},
+        {LocalDateTime.now(), null},
+        {null, LocalDateTime.now()}
+    };
+  }
+
+  @Test(dataProvider = "dateRanges")
+  @SuppressWarnings({"rawtypes", "unchecked"})
+  /**
+   * Test getting list of article DOIs with a specified date range.
+   */
+  public void testGetListOfArticleDOIsWithDateRangeShouldSucceed(
+      LocalDateTime starting, LocalDateTime ending) {
+    final long articlesCount = 20;
+    final Optional<LocalDateTime> fromDate = Optional.ofNullable(starting);
+    final Optional<LocalDateTime> toDate = Optional.ofNullable(ending);
+    final List expectedDois = ImmutableList.of(
+        "10.1371/journal.ppat.1006521",
+        "10.1371/journal.pone.0180908",
+        "10.1371/journal.pgen.1006865",
+        "10.1371/journal.pone.0189616",
+        "10.1371/journal.pone.0187101");
+
+    when(mockHibernateTemplate.execute(any())).thenReturn(articlesCount);
+    when(mockHibernateTemplate.findByCriteria(
+        any(DetachedCriteria.class), anyInt(), anyInt())).thenReturn(expectedDois);
+
+    final Collection<String> actualDois = mockArticleCrudService.getArticleDoisForDateRange(
+        0, 5, SortOrder.OLDEST, fromDate, toDate);
+    assertThat(actualDois).isEqualTo(expectedDois);
+    verify(mockHibernateTemplate).execute(any());
+    verify(mockHibernateTemplate).findByCriteria(any(DetachedCriteria.class), anyInt(), anyInt());
+  }
 }

@@ -70,6 +70,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -104,16 +106,89 @@ public class ArticleCrudController extends RestController {
   @Autowired
   private RelationshipSetView.Factory relationshipSetViewFactory;
 
+  /**
+   * Calculate the date range using the specified rule. For example:
+   *
+   * <ul>
+   * <li>sinceRule=2y  - 2 years</li>
+   * <li>sinceRule=5m  - 5 months</li>
+   * <li>sinceRule=10d - 10 days</li>
+   * <li>sinceRule=5h  - 5 hours</li>
+   * <li>sinceRule=33  - 33 minutes</li>
+   * </ul>
+   *
+   * The method will result in a {@link java.util.Map Map} containing the following keys:
+   *
+   * <ul>
+   * <li><b>fromDate</b> - the starting date
+   * <li><b>toDate</b> - the ending date, which will be the current system date (i.e. now())
+   * </ul>
+   *
+   * @param sinceRule The rule to calculate the date range
+   *
+   * @return A {@link java.util.Map Map}
+   */
+  public static final Map<String, LocalDateTime> calculateDateRange(String sinceRule) {
+    if (StringUtils.isBlank(sinceRule)) {
+      return ImmutableMap.of();
+    }
+
+    final String timeDesignation = StringUtils.right(sinceRule, 1);
+    long timeDelta = 0;
+    try {
+      // Assume last character is NOT a letter (i.e. all characters are digits).
+      timeDelta = Long.parseLong(sinceRule);
+    } catch (NumberFormatException exception) {
+      // If an exception, then last character MUST have been a letter,
+      // so we now exclude the last character and re-try conversion.
+      try {
+        timeDelta = Long.parseLong(sinceRule.substring(0, sinceRule.length() - 1));
+      } catch (NumberFormatException error) {
+        log.warn("Failed to convert {} to a timeDelta/timeDesignation!", sinceRule);
+        timeDelta = 0;
+      }
+    }
+
+    if (timeDelta < 1) {
+      return ImmutableMap.of();
+    }
+
+    final LocalDateTime toDate = LocalDateTime.now();
+    final LocalDateTime fromDate;
+    if (timeDesignation.equalsIgnoreCase("y")) {
+      fromDate = toDate.minusYears(timeDelta);
+    } else if (timeDesignation.equalsIgnoreCase("m")) {
+      fromDate = toDate.minusMonths(timeDelta);
+    } else if (timeDesignation.equalsIgnoreCase("d")) {
+      fromDate = toDate.minusDays(timeDelta);
+    } else if (timeDesignation.equalsIgnoreCase("h")) {
+      fromDate = toDate.minus(timeDelta, ChronoUnit.HOURS);
+    } else {
+      fromDate = toDate.minus(timeDelta, ChronoUnit.MINUTES);
+    }
+
+    final ImmutableMap<String, LocalDateTime> dateRange = ImmutableMap.of(
+        "fromDate", fromDate, "toDate", toDate);
+    return dateRange;
+  }
+
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/articles", method = RequestMethod.GET)
+  @RequestMapping(value = "/articles/page/{pageNumber}", method = RequestMethod.GET)
   public ResponseEntity<?> listDois(
-      @RequestParam(value="pageNumber", defaultValue="1") int pageNumber,
-      @RequestParam(value="pageSize", defaultValue="10") int pageSize,
-      @RequestParam(value="orderBy", defaultValue="oldest") String orderBy) throws IOException {
+      @PathVariable(value="pageNumber") int pageNumber,
+      @RequestParam(value="pageSize", required=false, defaultValue="100") int pageSize,
+      @RequestParam(value="orderBy", required=false, defaultValue="newest") String orderBy,
+      @RequestParam(value="since", required=false, defaultValue="") String sinceRule)
+          throws IOException {
     final ArticleCrudService.SortOrder sortOrder = ArticleCrudService.SortOrder.valueOf(
-        StringUtils.upperCase(orderBy));
-    final Collection<String> articleDois = articleCrudService.getArticleDois(
-        pageNumber, pageSize, sortOrder);
+        StringUtils.upperCase(StringUtils.defaultString(orderBy, "NEWEST")));
+
+    final Map<String, LocalDateTime>dateRange = calculateDateRange(sinceRule);
+    final Optional<LocalDateTime> fromDate = Optional.ofNullable(dateRange.getOrDefault(
+        "fromDate", null));
+    final Optional<LocalDateTime> toDate = Optional.ofNullable(dateRange.getOrDefault("tot", null));
+    final Collection<String> articleDois = articleCrudService.getArticleDoisForDateRange(
+        pageNumber, pageSize, sortOrder, fromDate, toDate);
     return ServiceResponse.serveView(articleDois).asJsonResponse(entityGson);
   }
 
