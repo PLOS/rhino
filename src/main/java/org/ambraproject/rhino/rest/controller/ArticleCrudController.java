@@ -87,6 +87,10 @@ public class ArticleCrudController extends RestController {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudController.class);
 
+  private static final String FROM_DATE = "fromDate";
+
+  private static final String TO_DATE = "toDate";
+
   @Autowired
   private ArticleCrudService articleCrudService;
   @Autowired
@@ -168,7 +172,7 @@ public class ArticleCrudController extends RestController {
     }
 
     final ImmutableMap<String, LocalDateTime> dateRange = ImmutableMap.of(
-        "fromDate", fromDate, "toDate", toDate);
+        FROM_DATE, fromDate, TO_DATE, toDate);
     return dateRange;
   }
 
@@ -181,12 +185,13 @@ public class ArticleCrudController extends RestController {
       @RequestParam(value="since", required=false, defaultValue="") String sinceRule)
           throws IOException {
     final ArticleCrudService.SortOrder sortOrder = ArticleCrudService.SortOrder.valueOf(
-        StringUtils.upperCase(StringUtils.defaultString(orderBy, "NEWEST")));
+        StringUtils.upperCase(StringUtils.defaultString(orderBy, "newest")));
 
     final Map<String, LocalDateTime>dateRange = calculateDateRange(sinceRule);
     final Optional<LocalDateTime> fromDate = Optional.ofNullable(dateRange.getOrDefault(
-        "fromDate", null));
-    final Optional<LocalDateTime> toDate = Optional.ofNullable(dateRange.getOrDefault("tot", null));
+        FROM_DATE, null));
+    final Optional<LocalDateTime> toDate = Optional.ofNullable(dateRange.getOrDefault(
+        TO_DATE, null));
     final Collection<String> articleDois = articleCrudService.getArticleDoisForDateRange(
         pageNumber, pageSize, sortOrder, fromDate, toDate);
     return ServiceResponse.serveView(articleDois).asJsonResponse(entityGson);
