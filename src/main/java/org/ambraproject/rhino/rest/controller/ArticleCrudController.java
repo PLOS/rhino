@@ -185,7 +185,7 @@ public class ArticleCrudController extends RestController {
       @RequestParam(value="since", required=false, defaultValue="") String sinceRule)
           throws IOException {
     final ArticleCrudService.SortOrder sortOrder = ArticleCrudService.SortOrder.valueOf(
-        StringUtils.upperCase(StringUtils.defaultString(orderBy, "newest")));
+        StringUtils.upperCase(StringUtils.defaultString(orderBy, "newest" /* defaultStr */)));
 
     final Map<String, LocalDateTime>dateRange = calculateDateRange(sinceRule);
     final Optional<LocalDateTime> fromDate = Optional.ofNullable(dateRange.getOrDefault(

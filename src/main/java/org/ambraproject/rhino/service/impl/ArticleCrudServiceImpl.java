@@ -654,15 +654,11 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         criteria.setProjection(projections);
 
         // Set restrictions for filtering on date range, if any.
-        if (fromDate.isPresent() && toDate.isPresent()) {
+        if (fromDate.isPresent()) {
           criteria.add(Restrictions.ge(
               "created" /* propertyName */, java.sql.Timestamp.valueOf(fromDate.get())));
-          criteria.add(Restrictions.le(
-              "created" /* propertyName */, java.sql.Timestamp.valueOf(toDate.get())));
-        } else if (fromDate.isPresent()) {
-          criteria.add(Restrictions.ge(
-              "created" /* propertyName */, java.sql.Timestamp.valueOf(fromDate.get())));
-        } else if (toDate.isPresent()) {
+        }
+        if (toDate.isPresent()) {
           criteria.add(Restrictions.le(
               "created" /* propertyName */, java.sql.Timestamp.valueOf(toDate.get())));
         }
