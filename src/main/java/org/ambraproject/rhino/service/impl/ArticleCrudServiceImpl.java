@@ -21,8 +21,12 @@
  */
 package org.ambraproject.rhino.service.impl;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 import com.google.common.base.Joiner;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.io.ByteSource;
@@ -59,6 +63,11 @@ import org.ambraproject.rhino.view.article.author.ArticleAllAuthorsView;
 import org.ambraproject.rhino.view.article.author.AuthorView;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.hibernate.Query;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,6 +79,7 @@ import javax.xml.xpath.XPathException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -87,9 +97,11 @@ import java.util.stream.Collectors;
 @SuppressWarnings("JpaQlInspection")
 public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudService {
 
-  private static final Logger log = LoggerFactory.getLogger(ArticleCrudServiceImpl.class);
+  private static final Logger LOG = LoggerFactory.getLogger(ArticleCrudServiceImpl.class);
 
   private static final Joiner SPACE_JOINER = Joiner.on(' ');
+
+  public static final int MAX_PAGE_SIZE = 1000;
 
   @Autowired
   AssetCrudService assetCrudService;
@@ -145,6 +157,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return CacheableResponse.serveEntity(ingestion, itemSetViewFactory::getView);
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public ArticleOverview buildOverview(Article article) {
     return hibernateTemplate.execute(session -> {
@@ -163,6 +176,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     });
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public ServiceResponse<ArticleOverview> serveOverview(ArticleIdentifier id) {
     ArticleOverview view = hibernateTemplate.execute(session -> {
@@ -184,6 +198,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public ServiceResponse<List<ArticleRevisionView>> serveRevisions(ArticleIdentifier id) {
     Article article = readArticle(id);
+    @SuppressWarnings("unchecked")
     List<ArticleRevision> revisions = (List<ArticleRevision>) hibernateTemplate.find(
         "FROM ArticleRevision WHERE ingestion.article = ? ORDER BY revisionNumber", article);
     List<ArticleRevisionView> views = Lists.transform(revisions, ArticleRevisionView::getView);
@@ -280,6 +295,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
 
+  @SuppressWarnings("unchecked")
   @Override
   public List<ArticleRelationship> getRelationshipsFrom(ArticleIdentifier sourceId) {
     return (List<ArticleRelationship>) hibernateTemplate.execute(session -> {
@@ -292,6 +308,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     });
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public List<ArticleRelationship> getRelationshipsTo(ArticleIdentifier targetId) {
     return (List<ArticleRelationship>) hibernateTemplate.execute(session -> {
@@ -347,6 +364,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public Archive repack(ArticleIngestionIdentifier ingestionId) {
     ArticleIngestion ingestion = readIngestion(ingestionId);
+    @SuppressWarnings("unchecked")
     List<ArticleFile> files = hibernateTemplate.execute(session -> {
       Query query = session.createQuery("FROM ArticleFile WHERE ingestion = :ingestion");
       query.setParameter("ingestion", ingestion);
@@ -385,6 +403,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     });
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public Collection<ArticleItem> getAllArticleItems(Doi doi) {
     return hibernateTemplate.execute(session -> {
@@ -398,6 +417,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return item.getDoi().equals(item.getIngestion().getArticle().getDoi());
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public Collection<ArticleItem> getAllArticleItems(ArticleIngestion ingestion) {
     return hibernateTemplate.execute(session -> {
@@ -407,6 +427,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     });
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public Optional<ResolvedDoiView> getItemOverview(Doi doi) {
     return (Optional<ResolvedDoiView>) hibernateTemplate.execute(session -> {
@@ -521,6 +542,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return getArticlesPublishedOn(fromDate, toDate, null);
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public Collection<ArticleRevision> getArticlesPublishedOn(LocalDate fromDate, LocalDate toDate, String bucketName) {
     return hibernateTemplate.execute(session -> {
@@ -557,6 +579,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return getArticlesRevisedOn(fromDate, toDate, null);
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public Collection<ArticleRevision> getArticlesRevisedOn(LocalDate fromDate, LocalDate toDate, String bucketName) {
     return hibernateTemplate.execute(session -> {
@@ -593,5 +616,65 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     final ArticleIngestion articleIngestion = readIngestion(articleId);
     articleIngestion.setPreprintDoi(preprintOfDoi);
     hibernateTemplate.save(articleIngestion);
+  }
+
+  @Override
+  public Collection<String> getArticleDois(int pageNumber, int pageSize, SortOrder sortOrder) {
+    final Collection<String> articleDois = getArticleDoisForDateRange(
+        pageNumber, pageSize, sortOrder, Optional.empty() /* fromDate */,
+        Optional.empty() /* toDate */);
+    return articleDois;
+  }
+
+  @Override
+  public Collection<String> getArticleDoisForDateRange(
+      int pageNumber, int pageSize, SortOrder sortOrder, Optional<LocalDateTime> fromDate,
+      Optional<LocalDateTime> toDate) {
+    final long totalArticles = hibernateTemplate.execute(session -> {
+      final Query query = session.createQuery("select count(*) from Article");
+      final Long count = (Long) query.uniqueResult();
+      return count;
+    });
+
+    if (totalArticles > 0L) {
+      pageNumber = max(pageNumber, 1);
+      final int maxResults = min(pageSize, MAX_PAGE_SIZE);
+      final int firstResult = (pageNumber - 1) * maxResults;
+
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("pageNumber: {}, pageSize: {}", pageNumber, pageSize);
+        LOG.debug("firstResult: {}, maxResults: {}", firstResult, maxResults);
+        LOG.debug("sortOrder: {}", sortOrder);
+      }
+
+      if (firstResult < totalArticles) {
+        final DetachedCriteria criteria = DetachedCriteria.forClass(Article.class);
+        final ProjectionList projections = Projections.projectionList();
+        projections.add(Projections.property("doi" /* propertyName */));
+        criteria.setProjection(projections);
+
+        // Set restrictions for filtering on date range, if any.
+        if (fromDate.isPresent()) {
+          criteria.add(Restrictions.ge(
+              "created" /* propertyName */, java.sql.Timestamp.valueOf(fromDate.get())));
+        }
+        if (toDate.isPresent()) {
+          criteria.add(Restrictions.le(
+              "created" /* propertyName */, java.sql.Timestamp.valueOf(toDate.get())));
+        }
+
+        if (sortOrder == SortOrder.OLDEST) {
+          criteria.addOrder(Order.asc("created" /* propertyName */));
+        } else {
+          criteria.addOrder(Order.desc("created" /* propertyName */));
+        }
+
+        @SuppressWarnings("unchecked")
+        final List<String> articleDois = (List<String>) hibernateTemplate.findByCriteria(
+            criteria, firstResult, maxResults);
+        return articleDois;
+      }
+    }
+    return ImmutableList.of();
   }
 }
