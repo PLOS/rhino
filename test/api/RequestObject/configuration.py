@@ -25,10 +25,10 @@
 Base class for Configuration crud controller
 """
 
-__author__ = 'jgray@plos.org'
-
 from ...Base.base_service_test import BaseServiceTest
 from ..resources import API_BASE_URL, OK, BAD_REQUEST
+
+__author__ = 'jgray@plos.org'
 
 CONFIGURATION_API = API_BASE_URL + '/config'
 
@@ -49,9 +49,9 @@ class Configuration(BaseServiceTest):
         Calls configuration-read-controller API with type parameter
         :param type_: string. Valid values are 'build', 'run' or 'repo'
         """
-        self.doGet(CONFIGURATION_API, params='type={0}'.format(type_))
+        response = self.doGet(CONFIGURATION_API, params='type={0}'.format(type_))
         if type_ in ('build', 'run', 'repo'):
-            self.verify_http_code_is(OK)
-            self.parse_response_as_json()
+            self.verify_http_code_is(response, OK)
+            self.parse_response_as_json(response)
         else:
-            self.verify_http_code_is(BAD_REQUEST)
+            self.verify_http_code_is(response, BAD_REQUEST)

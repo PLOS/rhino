@@ -1,4 +1,5 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 # Copyright (c) 2017 Public Library of Science
 #
@@ -20,22 +21,25 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
-__author__ = 'jgray@plos.org'
 
-'''
+"""
 Test cases for Rhino Journal Crud Controller requests.
-'''
+"""
+
 from ..api.RequestObject.journalcc import JournalCCJson
+
+__author__ = 'jgray@plos.org'
 
 
 class GetJournals(JournalCCJson):
 
-  def test_journals(self):
-    """
-    Get Journalss API call
-    """
-    self.get_journals()
-    self.verify_journals()
+    def test_journals(self):
+        """
+        Get Journals API call
+        """
+        self.get_journals()
+        self.verify_journals()
+
 
 if __name__ == '__main__':
     JournalCCJson.run_tests_randomly()

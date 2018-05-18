@@ -32,3 +32,8 @@ test-output/
 
 # Backup files #
 *.versionsBackup
+
+.DS_Store
+**/.DS_Store
+.pytest_cache/
+**/.pytest_cache/

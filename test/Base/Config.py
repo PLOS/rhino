@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 # Copyright (c) 2017 Public Library of Science
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
@@ -18,8 +21,6 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
-#/usr/bin/env python2
-
 import os
 from os import getenv
 from selenium.webdriver import DesiredCapabilities
@@ -35,6 +36,7 @@ mysql_user = getenv('WEBDRIVER_MYSQL_USER', '')
 mysql_password = getenv('WEBDRIVER_MYSQL_PASSWORD', '')
 crepo_host = getenv('WEBDRIVER_CREPO_HOST', 'contentrepo-301.soma.plos.org')
 crepo_port = getenv('WEBDRIVER_CREPO_PORT', '8002')
+db_connection_timeout = getenv('WEBDRIVER_MYSQL_TIMEOUT', '60')
 
 PRINT_DEBUG = False
 TIMEOUT = 60         # API call timeout, in seconds
@@ -81,7 +83,7 @@ dbconfig = {'user': mysql_user,
             'host': mysql_host,
             'port': 3306,
             'database': 'ambra',
-            'connection_timeout': 10,
+            'connection_timeout': int(db_connection_timeout),
             }
 
 repo_config = {'transport': 'http',
@@ -116,12 +118,12 @@ ANDROID = {'browserName': 'Browser',
 IOS = {'browserName': 'Safari',
        'platformName': 'iOS',
        'platformVersion': '7.1',
-       'deviceName': 'iPhone Simulator'
+       'deviceName': 'iPhone Simulator',
        }
 
 # List of Appium (stand-alone mode) enabled browsers
 appium_enabled_browsers = [ANDROID,
-                           IOS
+                           IOS,
                            ]
 
 
@@ -141,7 +143,8 @@ Running through Grid **takes precedence** among all other configurations.
 Ex: If you have both `USE_APPIUM_SERVER` **AND** `USE_SELENIUM_GRID` options set to **True**,
 then tests will be run against the **Grid**.
 
-You can *still* include IOS and ANDROID capabilities as *enabled browsers* in the Grid and will be run against Appium.
+You can *still* include IOS and ANDROID capabilities as *enabled browsers* in the Grid and will be
+ run against Appium.
 
 """
 
@@ -160,7 +163,7 @@ grid_enabled_browsers = [DesiredCapabilities.FIREFOX,
                          DesiredCapabilities.CHROME,
                          DesiredCapabilities.SAFARI,
                          IOS,
-                         ANDROID
+                         ANDROID,
                          ]
 
 

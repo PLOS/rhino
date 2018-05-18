@@ -1,4 +1,5 @@
-#!/usr/bin/python2
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
 
 # Copyright (c) 2017 Public Library of Science
 #
@@ -76,7 +77,7 @@ class MemoryZipFile(MemoryZipEntry):
         :param None
         :return: Return file read handler
         """
-        with open(self._filename) as f:
+        with open(self._filename, mode='rb') as f:
             return f.read()
 
 def build_zip_file_in_memory(entries):

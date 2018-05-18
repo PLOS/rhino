@@ -1,4 +1,5 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python2#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 # Copyright (c) 2017 Public Library of Science
 #
@@ -20,9 +21,10 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
-__author__ = 'jkrzemien@plos.org'
 
 from selenium.common.exceptions import StaleElementReferenceException
+
+__author__ = 'jkrzemien@plos.org'
 
 
 # === Element To Be Clickable expectation definition ===

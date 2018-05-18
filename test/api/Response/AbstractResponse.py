@@ -1,4 +1,5 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 # Copyright (c) 2017 Public Library of Science
 #
@@ -42,35 +43,34 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 """
 
-__author__ = 'jgray@plos.org'
-
 from abc import ABCMeta, abstractmethod
+
+__author__ = 'jgray@plos.org'
 
 
 class AbstractResponse(object):
+    __metaclass__ = ABCMeta
 
-  __metaclass__ = ABCMeta
+    @abstractmethod
+    def get_journals(self):
+        pass
 
-  @abstractmethod
-  def get_journals(self):
-    pass
+    @abstractmethod
+    def get_journalKey(self):
+        pass
 
-  @abstractmethod
-  def get_journalKey(self):
-    pass
+    @abstractmethod
+    def get_journaleIssn(self):
+        pass
 
-  @abstractmethod
-  def get_journaleIssn(self):
-    pass
+    @abstractmethod
+    def get_journalTitle(self):
+        pass
 
-  @abstractmethod
-  def get_journalTitle(self):
-    pass
+    @abstractmethod
+    def get_article_doi(self):
+        pass
 
-  @abstractmethod
-  def get_article_doi(self):
-    pass
-
-  @abstractmethod
-  def get_article_revision_number(self):
-    pass
+    @abstractmethod
+    def get_article_revision_number(self):
+        pass

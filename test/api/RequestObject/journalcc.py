@@ -1,4 +1,5 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 # Copyright (c) 2017 Public Library of Science
 #
@@ -23,40 +24,56 @@
 """
 Base class for Rhino Journal JSON related services
 """
-
-__author__ = 'jgray@plos.org'
+import logging
 
 from ...Base.base_service_test import BaseServiceTest
 from ...Base.Config import API_BASE_URL
 from ...Base.api import needs
 
+__author__ = 'jgray@plos.org'
+
 JOURNALS_API = API_BASE_URL + '/journals'
 DEFAULT_HEADERS = {'Accept': 'application/json'}
 HEADER = '-H'
-EXPECTED_KEYS = [u'PLoSMedicine', u'PLoSONE', u'PLoSGenetics', u'PLoSCompBiol', u'PLoSCollections', u'PLoSDefault',
-                 u'ApertaRxiv', u'PLoSNTD', u'PLoSBiology', u'PLoSClinicalTrials', u'PLoSPathogens']
+EXPECTED_KEYS = \
+    [
+        'PLoSMedicine',
+        'PLoSONE',
+        'PLoSGenetics',
+        'PLoSCompBiol',
+        'PLoSCollections',
+        'PLoSDefault',
+        'ApertaRxiv',
+        'PLoSNTD',
+        'PLoSBiology',
+        'PLoSClinicalTrials',
+        'PLoSPathogens',
+    ]
 
 
 class JournalCCJson(BaseServiceTest):
 
-  def get_journals(self):
-    """
-    Calls Rhino API to get journal list
-    :param
-    :return:JSON response
-    """
-    header = {'header': HEADER}
-    self.doGet('%s' % JOURNALS_API, header, DEFAULT_HEADERS)
-    self.parse_response_as_json()
+    def get_journals(self):
+        """
+        Calls Rhino API to get journal list
+        :param
+        :return:JSON response
+        """
+        header = {'header': HEADER}
+        response = self.doGet('%s' % JOURNALS_API, header, DEFAULT_HEADERS)
+        self.parse_response_as_json(response)
+        return response
 
-  @needs('parsed', 'parse_response_as_json()')
-  def verify_journals(self):
-    """
-    Verifies a valid response
-    :param
-    :return: Journal List + OK
-    """
-    print ('Validating journals...'),
-    actual_keys = self.parsed.get_journalKey()
-    assert actual_keys == EXPECTED_KEYS, 'Journals keys did not match: Actual Keys %s != Expected Keys %s' % (actual_keys, EXPECTED_KEYS)
-    print ('OK')
+    @needs('parsed', 'parse_response_as_json()')
+    def verify_journals(self):
+        """
+        Verifies a valid response
+        :param
+        :return: Journal List + OK
+        """
+        logging.info('Validating journals...'),
+        actual_keys = self.parsed.get_journalKey()
+        assert actual_keys == EXPECTED_KEYS, \
+            'Journals keys did not match: Actual Keys {0!r} != Expected Keys {1!r}' \
+            .format(actual_keys, EXPECTED_KEYS)
+        logging.info('OK')

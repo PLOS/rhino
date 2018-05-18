@@ -1,4 +1,5 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
+
 
 # Copyright (c) 2017 Public Library of Science
 #
@@ -56,8 +57,9 @@ class ArticlesJSON(ZIPIngestionJson):
     :param revision
     :param ingestion
     """
-    self.doPost('%s?revision=%s&ingestion=%s' % (ARTICLE_REVISION_API,REVISION, INGESTION_NUMBER))
-    self.verify_http_code_is(expected_response_code)
+    response = self.doPost('%s?revision=%s&ingestion=%s' % (ARTICLE_REVISION_API,REVISION,
+                                                    INGESTION_NUMBER))
+    self.verify_http_code_is(response, expected_response_code)
 
 
   """
@@ -77,8 +79,8 @@ class ArticlesJSON(ZIPIngestionJson):
     GET /articles/{article_doi}/revisions
     :param article_doi example:10.1371%2B%2Bjournal.pone.0155391
     """
-    self.doGet(ARTICLE_REVISION_API, None, headers=DEFAULT_HEADERS)
-    self.parse_response_as_json()
+    response = self.doGet(ARTICLE_REVISION_API, None, headers=DEFAULT_HEADERS)
+    self.parse_response_as_json(response)
 
   @needs('parsed', 'parse_response_as_json()')
   def verify_article_revision_db_expected(self, expected_results, attribute):

@@ -1,4 +1,5 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 # Copyright (c) 2017 Public Library of Science
 #
@@ -26,55 +27,54 @@ Python's JSONPath can be installed via the following command:
   sudo pip install --allow-external jsonpath --allow-unverified jsonpath jsonpath
 """
 
-__author__ = 'jgray@plos.org'
-
 import json
-
 from jsonpath import jsonpath
+import logging
 
-from test.api.Response.AbstractResponse import AbstractResponse
+from ...api.Response.AbstractResponse import AbstractResponse
+
+__author__ = 'jgray@plos.org'
 
 
 class JSONResponse(AbstractResponse):
+    _json = None
 
-  _json = None
+    def __init__(self, response):
+        try:
+            self._json = json.loads(response)
+        except Exception as e:
+            logging.error('Error while trying to parse response as JSON!')
+            logging.error('Actual response was: {0!r}'.format(response))
+            raise e
 
-  def __init__(self, response):
-    try:
-      self._json = json.loads(response)
-    except Exception as e:
-      print('Error while trying to parse response as JSON!')
-      print('Actual response was: "%s"' % response)
-      raise e
+    def get_json(self, printvalue=True):
+        if printvalue:
+            logging.info(self._json)
+        return self._json
 
-  def get_json(self, printvalue=True):
-    if printvalue:
-      print(self._json)
-    return self._json
+    def jpath(self, path):
+        return jsonpath(self._json, path)
 
-  def jpath(self, path):
-    return jsonpath(self._json, path)
+    def get_journals(self):
+        return self.jpath('$[]')
 
-  def get_journals(self):
-    return self.jpath('$[]')
+    def get_journalKey(self):
+        return self.jpath('$..journalKey')
 
-  def get_journalKey(self):
-    return self.jpath('$..journalKey')
+    def get_journaleIssn(self):
+        return self.jpath('$..eIssn')
 
-  def get_journaleIssn(self):
-    return self.jpath('$..eIssn')
+    def get_journalTitle(self):
+        return self.jpath('$..title')
 
-  def get_journalTitle(self):
-    return self.jpath('$..title')
+    def get_attribute(self, name):
+        return self._json.get(name, None)
 
-  def get_attribute(self, name):
-      return self._json.get(name, None)
+    def get_list(self):
+        return self.jpath('$[*]')
 
-  def get_list(self):
-    return self.jpath('$[*]')
+    def get_article_doi(self):
+        return self.jpath('$..doi')
 
-  def get_article_doi(self):
-    return self.jpath('$..doi')
-
-  def get_article_revision_number(self):
-    return self.jpath('$..revisionNumber')
+    def get_article_revision_number(self):
+        return self.jpath('$..revisionNumber')
