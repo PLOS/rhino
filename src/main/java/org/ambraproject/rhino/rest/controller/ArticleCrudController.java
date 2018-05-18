@@ -48,6 +48,7 @@ import org.ambraproject.rhino.view.article.ArticleRevisionView;
 import org.ambraproject.rhino.view.article.RelationshipSetView;
 import org.ambraproject.rhino.view.article.SyndicationInputView;
 import org.ambraproject.rhino.view.article.SyndicationView;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +70,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Arrays;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -85,6 +87,9 @@ public class ArticleCrudController extends RestController {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudController.class);
 
+  private static final String FROM_DATE = "fromDate";
+
+  private static final String TO_DATE = "toDate";
 
   @Autowired
   private ArticleCrudService articleCrudService;
@@ -105,19 +110,91 @@ public class ArticleCrudController extends RestController {
   @Autowired
   private RelationshipSetView.Factory relationshipSetViewFactory;
 
-  @Transactional(readOnly = true)
-  @RequestMapping(value = "/articles", method = RequestMethod.GET)
-  public void listDois(HttpServletRequest request, HttpServletResponse response)
-      throws IOException {
-    // TODO: Reimplement?
-    throw new RestClientException("GET /articles not currently supported", HttpStatus.METHOD_NOT_ALLOWED);
+  /**
+   * Calculate the date range using the specified rule. For example:
+   *
+   * <ul>
+   * <li>sinceRule=2y  - 2 years</li>
+   * <li>sinceRule=5m  - 5 months</li>
+   * <li>sinceRule=10d - 10 days</li>
+   * <li>sinceRule=5h  - 5 hours</li>
+   * <li>sinceRule=33  - 33 minutes</li>
+   * </ul>
+   *
+   * The method will result in a {@link java.util.Map Map} containing the following keys:
+   *
+   * <ul>
+   * <li><b>fromDate</b> - the starting date
+   * <li><b>toDate</b> - the ending date, which will be the current system date (i.e. now())
+   * </ul>
+   *
+   * @param sinceRule The rule to calculate the date range
+   *
+   * @return A {@link java.util.Map Map}
+   */
+  public static final Map<String, LocalDateTime> calculateDateRange(String sinceRule) {
+    if (StringUtils.isBlank(sinceRule)) {
+      return ImmutableMap.of();
+    }
+
+    final String timeDesignation = StringUtils.right(sinceRule, 1);
+    long timeDelta = 0;
+    try {
+      // Assume last character is NOT a letter (i.e. all characters are digits).
+      timeDelta = Long.parseLong(sinceRule);
+    } catch (NumberFormatException exception) {
+      // If an exception, then last character MUST have been a letter,
+      // so we now exclude the last character and re-try conversion.
+      try {
+        timeDelta = Long.parseLong(sinceRule.substring(0, sinceRule.length() - 1));
+      } catch (NumberFormatException error) {
+        log.warn("Failed to convert {} to a timeDelta/timeDesignation!", sinceRule);
+        timeDelta = 0;
+      }
+    }
+
+    if (timeDelta < 1) {
+      return ImmutableMap.of();
+    }
+
+    final LocalDateTime toDate = LocalDateTime.now();
+    final LocalDateTime fromDate;
+    if (timeDesignation.equalsIgnoreCase("y")) {
+      fromDate = toDate.minusYears(timeDelta);
+    } else if (timeDesignation.equalsIgnoreCase("m")) {
+      fromDate = toDate.minusMonths(timeDelta);
+    } else if (timeDesignation.equalsIgnoreCase("d")) {
+      fromDate = toDate.minusDays(timeDelta);
+    } else if (timeDesignation.equalsIgnoreCase("h")) {
+      fromDate = toDate.minus(timeDelta, ChronoUnit.HOURS);
+    } else {
+      fromDate = toDate.minus(timeDelta, ChronoUnit.MINUTES);
+    }
+
+    final ImmutableMap<String, LocalDateTime> dateRange = ImmutableMap.of(
+        FROM_DATE, fromDate, TO_DATE, toDate);
+    return dateRange;
   }
 
-  /*
-   * Null-safe utility method for Arrays.asList. Put somewhere for reuse?
-   */
-  private static <E> List<E> asList(E[] array) {
-    return (array == null) ? null : Arrays.asList(array);
+  @Transactional(readOnly = true)
+  @RequestMapping(value = "/articles/page/{pageNumber}", method = RequestMethod.GET)
+  public ResponseEntity<?> listDois(
+      @PathVariable(value="pageNumber") int pageNumber,
+      @RequestParam(value="pageSize", required=false, defaultValue="100") int pageSize,
+      @RequestParam(value="orderBy", required=false, defaultValue="newest") String orderBy,
+      @RequestParam(value="since", required=false, defaultValue="") String sinceRule)
+          throws IOException {
+    final ArticleCrudService.SortOrder sortOrder = ArticleCrudService.SortOrder.valueOf(
+        StringUtils.upperCase(StringUtils.defaultString(orderBy, "newest" /* defaultStr */)));
+
+    final Map<String, LocalDateTime>dateRange = calculateDateRange(sinceRule);
+    final Optional<LocalDateTime> fromDate = Optional.ofNullable(dateRange.getOrDefault(
+        FROM_DATE, null));
+    final Optional<LocalDateTime> toDate = Optional.ofNullable(dateRange.getOrDefault(
+        TO_DATE, null));
+    final Collection<String> articleDois = articleCrudService.getArticleDoisForDateRange(
+        pageNumber, pageSize, sortOrder, fromDate, toDate);
+    return ServiceResponse.serveView(articleDois).asJsonResponse(entityGson);
   }
 
   /**
