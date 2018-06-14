@@ -57,8 +57,9 @@ class ZIPIngestionJson(Ingestion):
         :param article_doi
         :return: response
         """
-        response = self.doGet('{0}/{1}/{2}'.format(ARTICLE_API, article_doi, 'ingestions/1'), None,
-                              headers=DEFAULT_HEADERS)
+        response = self.doGet(
+                '{0}/{1}/ingestions/{2}'.format(ARTICLE_API, article_doi, self.ingestion_number),
+                None, headers=DEFAULT_HEADERS)
         self.parse_response_as_json(response)
         return response
 

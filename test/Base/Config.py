@@ -36,7 +36,7 @@ mysql_user = getenv('WEBDRIVER_MYSQL_USER', '')
 mysql_password = getenv('WEBDRIVER_MYSQL_PASSWORD', '')
 crepo_host = getenv('WEBDRIVER_CREPO_HOST', 'contentrepo-301.soma.plos.org')
 crepo_port = getenv('WEBDRIVER_CREPO_PORT', '8002')
-db_connection_timeout = getenv('WEBDRIVER_MYSQL_TIMEOUT', '60')
+db_connection_timeout = getenv('WEBDRIVER_MYSQL_TIMEOUT', '10')
 
 PRINT_DEBUG = False
 TIMEOUT = 60         # API call timeout, in seconds

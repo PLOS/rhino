@@ -41,6 +41,6 @@ class IngestibleJSON(BaseServiceTest):
         GET /articles/{article_doi}/ingestions/{ingestion_number}/ingestible
         :param article_doi
         """
-        response = self.doGet('{0}/{1}/{2}'.format(ARTICLE_API, article_doi,
-                                        'ingestions/1/ingestible'), None, headers=DEFAULT_HEADERS)
+        response = self.doGet('{0}/{1}/ingestions/{2!s}/ingestible'.format(ARTICLE_API, article_doi,
+                                         self.ingestion_number), None, headers=DEFAULT_HEADERS)
         return response

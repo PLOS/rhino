@@ -145,9 +145,9 @@ class Ingestion(BaseServiceTest):
         """
         current_articles_id = MySQL().query('SELECT articleId FROM article WHERE doi = %s',
                                             [not_scape_doi])
-        return current_articles_id[0][0]
+        return 0 if not current_articles_id else current_articles_id[0][0]
 
-    def delete_article_sql_doi(self, not_scape_doi):
+    def delete_article_sql_doi(self, not_scape_doi, ingestion_number=1):
         """
         Executes SQL statement which deletes article from ambra db
         :param not_scapted_doi: String. Such as '10.1371/journal.pone.0155391'
@@ -157,13 +157,56 @@ class Ingestion(BaseServiceTest):
         logging.info('Call sql stored procedure: CALL migrate_article_rollback({0}, '
                      'connection_timeout: {1})'
                      .format(current_articles_id, dbconfig['connection_timeout']))
-        try:
-            MySQL().modify('CALL migrate_article_rollback(%s)', [current_articles_id])
-        except IOError as err:
-            logging.error('Call sql stored procedure: CALL migrate_article_rollback({0}, '
-                          'connection_timeout: {1})'
-                          .format(current_articles_id, dbconfig['connection_timeout']))
+        if ingestion_number == 1:
+            try:
+                MySQL().modify('CALL migrate_article_rollback(%s)', [current_articles_id])
+            except:
+                logging.error('Call sql stored procedure: CALL migrate_article_rollback({0}, '
+                              'connection_timeout: {1})'
+                              .format(current_articles_id, dbconfig['connection_timeout']))
+        else:
+            ingestion_id = self.get_article_sql_ingestion_id(current_articles_id, ingestion_number)
+            self.delete_article_files(ingestion_id)
+            self.update_constraint(ingestion_id)
+            self.delete_article_items(ingestion_id)
+            self.delete_ingestion(ingestion_id)
+        return self
 
+    def clean_article_sql_doi(self, not_scape_doi):
+        """
+        Executes SQL statement which deletes article from ambra db
+        :param not_scapted_doi: String. Such as '10.1371/journal.pone.0155391'
+        :return: none
+        """
+        current_article_id = self.get_article_id_sql_doi(not_scape_doi)
+        if not current_article_id:
+            return self
+
+        ingestion_id_list = self.get_article_sql_ingestions(current_article_id)
+        if ingestion_id_list:
+            logging.info('Found previous article ingestion(s). Cleaning... ')
+            if len(ingestion_id_list) == 1:
+                try:
+                    MySQL().modify('CALL migrate_article_rollback(%s)', [current_article_id])
+                except:
+                    logging.error('Call sql stored procedure: CALL migrate_article_rollback({0}, '
+                                  'connection_timeout: {1})'
+                                  .format(current_article_id, dbconfig['connection_timeout']))
+            else:
+                self.delete_article_comment_flag(current_article_id)
+                self.delete_article_comments(current_article_id)
+                self.delete_article_relationship(current_article_id)
+                self.delete_article_category(current_article_id)
+                self.delete_article_from_list_join(current_article_id)
+                self.delete_article_from_list(current_article_id)
+
+                for ingestion_id in ingestion_id_list:
+                    self.delete_article_files(ingestion_id)
+                    self.update_constraint(ingestion_id)
+                    self.delete_article_items(ingestion_id)
+                    self.delete_syndications(ingestion_id)
+                    self.delete_article_revision(ingestion_id)
+                    self.delete_ingestion(ingestion_id)
         return self
 
     def get_article_sql_archiveName(self, article_id):
@@ -183,7 +226,10 @@ class Ingestion(BaseServiceTest):
         :return: String article_type
         """
         article_type = MySQL().query(
-                'SELECT articleType FROM articleIngestion WHERE articleId = %s', [article_id])
+                'SELECT articleType '
+                'FROM articleIngestion '
+                'WHERE articleId = %s and ingestionNumber = %s', [article_id,
+                                                                  self.ingestion_number])
         return article_type[0]
 
     def get_article_sql_pubdate(self, article_id):
@@ -193,8 +239,37 @@ class Ingestion(BaseServiceTest):
         :return: String article_publication_date
         """
         article_publication_date = MySQL().query(
-                'SELECT publicationDate FROM articleIngestion WHERE articleId = %s', [article_id])
+                'SELECT publicationDate '
+                'FROM articleIngestion '
+                'WHERE articleId = %s and ingestionNumber = %s', [article_id,
+                                                                  self.ingestion_number])
         return article_publication_date[0]
+
+    def get_article_sql_ingestion_id(self, article_id, ingestion_number):
+        """
+        Executes SQL statement against ambra articleIngestion table to get article ingestion id
+        for specific ingestion number
+        :param article_id: String. Such as '55391'
+        :param ingestion number
+        :return: String ingestion id
+        """
+        ingestion_id = MySQL().query(
+                'SELECT ingestionId FROM articleIngestion WHERE articleId = %s and '
+                'ingestionNumber = %s', [article_id, ingestion_number])
+        return ingestion_id[0][0]
+
+    def get_article_sql_ingestions(self, article_id):
+        """
+        Executes SQL statement against ambra articleIngestion table to get all article ingestion
+        id's
+        :param article_id: String. Such as '55391'
+        :return: String ingestion id
+        """
+        ingestion_id = MySQL().query(
+                'SELECT ingestionId FROM articleIngestion WHERE articleId = {0!r}'
+                .format(article_id))
+        ingestion_id_list = [i[0] for i in ingestion_id]
+        return ingestion_id_list
 
     def get_journals_sql_archiveName(self, article_id):
         """
@@ -217,14 +292,139 @@ class Ingestion(BaseServiceTest):
         :param article_id: String. Such as '55391'
         :return: List tuples assets
         """
-        ingestion_id = MySQL().query(
-                'SELECT ingestionId FROM articleIngestion WHERE articleId = %s', [article_id])
+        ingestion_id = self.get_article_sql_ingestion_id(article_id, self.ingestion_number)
         assets = MySQL().query('SELECT doi FROM articleItem '
                                'WHERE ingestionId = %s and articleItemType = "figure"'
-                               'ORDER BY doi', [ingestion_id[0][0]])
+                               'ORDER BY doi', [ingestion_id,])
         return assets
 
     def get_article_status(self, status):
         return {
             1: resources.INGESTED
         }[status]
+
+    def delete_article_files(self, ingestion_id):
+        """
+        Runs a delete sql statements to remove any created files from articleFile
+        :param ingestion_id: ingestion_id.
+        """
+        MySQL().modify(
+                "DELETE "
+                "FROM articleFile "
+                "WHERE ingestionId = {0!r}".format(ingestion_id))
+
+    def delete_article_items(self, ingestion_id):
+        """
+        Runs a delete sql statements to remove any created items from articleItem
+        :param ingestion_id: ingestion_id.
+        """
+        MySQL().modify(
+                "DELETE "
+                "FROM articleItem "
+                "WHERE ingestionId = {0!r}".format(ingestion_id))
+
+    def update_constraint(self, ingestion_id):
+        """
+
+        :param ingestion_id:
+        :return:
+        """
+        MySQL().modify(
+                "UPDATE articleIngestion "
+                "SET strikingImageItemId = NULL "
+                "WHERE ingestionId = {0!r}".format(ingestion_id))
+
+    def delete_syndications(self, ingestion_id):
+        """
+        Runs a delete sql statements to remove any syndication
+        :param ingestion_id: ingestion_id.
+        """
+        MySQL().modify(
+                "DELETE "
+                "FROM syndication "
+                "WHERE revisionId IN "
+                "(SELECT revisionId FROM articleRevision WHERE ingestionId = {0!r})"
+                .format(ingestion_id))
+
+    def delete_article_revision(self, ingestion_id):
+        """
+        Runs a delete sql statements to remove any article revision
+        :param ingestion_id: ingestion_id.
+        """
+        MySQL().modify(
+                "DELETE "
+                "FROM articleRevision "
+                "WHERE ingestionId = {0!r}".format(ingestion_id))
+
+    def delete_ingestion(self, ingestion_id):
+        """
+        Runs a delete sql statements to remove any created ingestion from articleIngestion
+        :param ingestion_id: ingestion_id.
+        """
+        MySQL().modify(
+                "DELETE "
+                "FROM articleIngestion "
+                "WHERE ingestionId = {0!r}".format(ingestion_id))
+
+    def delete_article_comment_flag(self, article_id):
+        """
+        Runs a delete sql statements to remove any article comment flags
+        :param article_id: String. Such as '55391'
+        """
+        MySQL().modify(
+                "DELETE "
+                "FROM commentFlag "
+                "WHERE commentId in "
+                "(SELECT commentId FROM comment "
+                "WHERE articleId = {0!r})".format(article_id))
+
+    def delete_article_comments(self, article_id):
+        """
+        Runs a delete sql statements to remove any article comments
+        :param article_id: String. Such as '55391'
+        """
+        MySQL().modify(
+                "DELETE "
+                "FROM comment "
+                "WHERE articleId = {0!r}".format(article_id))
+
+    def delete_article_relationship(self, article_id):
+        """
+        Runs a delete sql statements to remove any article relationship
+        :param article_id: String. Such as '55391'
+        """
+        MySQL().modify(
+                "DELETE "
+                "FROM articleRelationship "
+                "WHERE sourceArticleId = {0!r} OR targetArticleId = {0!r}"
+                .format(article_id))
+
+    def delete_article_category(self, article_id):
+        """
+        Runs a delete sql statements to remove any article categories
+        :param article_id: String. Such as '55391'
+        """
+        MySQL().modify(
+                "DELETE "
+                "FROM articleCategoryAssignment "
+                "WHERE articleId = {0!r}".format(article_id))
+
+    def delete_article_from_list(self, article_id):
+        """
+        Runs a delete sql statements to remove the article from article list
+        :param article_id: String. Such as '55391'
+        """
+        MySQL().modify(
+                "DELETE "
+                "FROM issueArticleList "
+                "WHERE articleId = {0!r}".format(article_id))
+
+    def delete_article_from_list_join(self, article_id):
+        """
+        Runs a delete sql statements to remove article from articleListJoinTable
+        :param article_id: String. Such as '55391'
+        """
+        MySQL().modify(
+                "DELETE "
+                "FROM articleListJoinTable "
+                "WHERE articleId = {0!r}".format(article_id))

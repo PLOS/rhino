@@ -30,6 +30,9 @@ import logging
 from ..api import resources
 from .RequestObject.zip_ingestion import ZIPIngestionJson
 from .RequestObject.memory_zip import MemoryZipJSON
+from ..api.resources import RA_DOI, CREATED, RELATED_ARTICLE_DOI, NOT_SCAPE_RELATED_ARTICLE_DOI, \
+    RELATED_ARTICLE_BUCKET_NAME, OK, NOT_FOUND, NOT_SCAPE_PREPRINT_ARTICLE_DOI, PP_DOI, \
+    PREPRINT_ARTICLE_BUCKET_NAME, PREPRINT_ARTICLE_DOI
 
 __author__ = 'jkrzemien@plos.org; gfilomeno@plos.org'
 
@@ -51,32 +54,38 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
         POST zips: Forced ingestion of ZIP archive
         """
         logging.info('\nTesting POST zips for related article/\n')
+        # if article exists, clean all previous ingestions 
+        self.clean_article_sql_doi(NOT_SCAPE_RELATED_ARTICLE_DOI)
         # Invoke ZIP API
-        zip_file = self.create_ingestible(resources.RA_DOI, 'RelatedArticle/')
-        response = self.post_ingestible_zip(zip_file, resources.RELATED_ARTICLE_BUCKET_NAME)
+        zip_file = self.create_ingestible(RA_DOI, 'RelatedArticle/')
+        response = self.post_ingestible_zip(zip_file, RELATED_ARTICLE_BUCKET_NAME)
+        self.ingestion_number = self.parsed.get_attribute("ingestionNumber")
         # Validate HTTP code in the response is 201 (CREATED)
-        self.verify_http_code_is(response, resources.CREATED)
+        self.verify_http_code_is(response, CREATED)
         # Validate response with database tables
-        self.verify_zip_ingestion(resources.NOT_SCAPE_RELATED_ARTICLE_DOI)
-        self.delete_test_article(resources.RELATED_ARTICLE_DOI,
-                                 resources.NOT_SCAPE_RELATED_ARTICLE_DOI,
-                                 resources.RELATED_ARTICLE_BUCKET_NAME)
+        self.verify_zip_ingestion(NOT_SCAPE_RELATED_ARTICLE_DOI)
+        self.delete_test_article(RELATED_ARTICLE_DOI,
+                                 NOT_SCAPE_RELATED_ARTICLE_DOI,
+                                 RELATED_ARTICLE_BUCKET_NAME)
 
-    def test_zip_ingestion_related_article_no_bucket(self):
+    def rest_zip_ingestion_related_article_no_bucket(self):
         """
         POST zips: Forced ingestion of ZIP archive
         """
         logging.info('\nTesting POST zips for related article no bucket/\n')
+        # if article exists, clean all previous ingestions
+        self.clean_article_sql_doi(NOT_SCAPE_RELATED_ARTICLE_DOI)
         # Invoke ZIP API
-        zip_file = self.create_ingestible(resources.RA_DOI, 'RelatedArticle/')
+        zip_file = self.create_ingestible(RA_DOI, 'RelatedArticle/')
         response = self.post_ingestible_zip(zip_file)
+        self.ingestion_number = self.parsed.get_attribute("ingestionNumber")
         # Validate HTTP code in the response is 201 (CREATED)
-        self.verify_http_code_is(response, resources.CREATED)
+        self.verify_http_code_is(response, CREATED)
         # Validate response with database tables
-        self.verify_zip_ingestion(resources.NOT_SCAPE_RELATED_ARTICLE_DOI)
-        self.delete_test_article(resources.RELATED_ARTICLE_DOI,
-                                 resources.NOT_SCAPE_RELATED_ARTICLE_DOI,
-                                 resources.RELATED_ARTICLE_BUCKET_NAME)
+        self.verify_zip_ingestion(NOT_SCAPE_RELATED_ARTICLE_DOI)
+        self.delete_test_article(RELATED_ARTICLE_DOI,
+                                 NOT_SCAPE_RELATED_ARTICLE_DOI,
+                                 RELATED_ARTICLE_BUCKET_NAME)
 
     def test_zip_ingestion_preprint_article(self):
         """
@@ -84,15 +93,16 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
         """
         logging.info('\nTesting POST zips for preprint article/\n')
         # Invoke ZIP API
-        zip_file = self.create_ingestible(resources.PP_DOI, 'PrePrint/')
-        response = self.post_ingestible_zip(zip_file, resources.PREPRINT_ARTICLE_BUCKET_NAME)
+        zip_file = self.create_ingestible(PP_DOI, 'PrePrint/')
+        response = self.post_ingestible_zip(zip_file, PREPRINT_ARTICLE_BUCKET_NAME)
+        self.ingestion_number = self.parsed.get_attribute("ingestionNumber")
         # Validate HTTP code in the response is 201 (CREATED)
-        self.verify_http_code_is(response, resources.CREATED)
+        self.verify_http_code_is(response, CREATED)
         # Validate response with database tables
-        self.verify_zip_ingestion(resources.NOT_SCAPE_PREPRINT_ARTICLE_DOI)
-        self.delete_test_article(resources.PREPRINT_ARTICLE_DOI,
-                                 resources.NOT_SCAPE_PREPRINT_ARTICLE_DOI,
-                                 resources.PREPRINT_ARTICLE_BUCKET_NAME)
+        self.verify_zip_ingestion(NOT_SCAPE_PREPRINT_ARTICLE_DOI)
+        self.delete_test_article(PREPRINT_ARTICLE_DOI,
+                                 NOT_SCAPE_PREPRINT_ARTICLE_DOI,
+                                 PREPRINT_ARTICLE_BUCKET_NAME)
 
     def test_zip_ingestion_without_file(self):
         """
@@ -131,12 +141,12 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
         """
         try:
             response = self.get_article(article_doi)
-            status_code = response.status_code #self.get_http_response().status_code
-            if status_code == resources.OK:
-                self.delete_article_sql_doi(not_scaped_article_doi)
+            status_code = response.status_code
+            if status_code == OK:
+                self.delete_article_sql_doi(not_scaped_article_doi, self.ingestion_number)
                 # Delete article
                 response = self.delete_article(article_doi)
-                self.verify_http_code_is(response, resources.NOT_FOUND)
+                self.verify_http_code_is(response, NOT_FOUND)
                 # Delete CRepo collections
                 self.delete_test_collections(article_doi, bucket_name)
                 # Delete CRepo objects
@@ -159,7 +169,7 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
             for coll in collections:
                 response = self.delete_collection(bucketName=bucket_name, key=coll['key'],
                                        version=coll['versionNumber'])
-                self.verify_http_code_is(response, resources.OK)
+                self.verify_http_code_is(response, OK)
 
     def delete_test_objects(self, article_doi, bucket_name):
         """
@@ -170,7 +180,7 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
         :return: None
         """
         response = self.get_crepo_objets(bucketName=bucket_name)
-        self.verify_http_code_is(response, resources.OK)
+        self.verify_http_code_is(response, OK)
         objects = self.parsed.get_list()
         if objects:
             test_objects = [item for item in objects if article_doi in item['key']]
@@ -178,7 +188,7 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
                 for object in test_objects:
                     response = self.delete_object(bucketName=bucket_name, key=object['key'],
                                        version=object['versionNumber'], purge=True)
-                    self.verify_http_code_is(response, resources.OK)
+                    self.verify_http_code_is(response, OK)
 
 
 if __name__ == '__main__':

@@ -41,9 +41,12 @@ class ZipIngestibleTest(IngestibleJSON, MemoryZipJSON, ArticlesJSON):
 
     def setUp(self):
         logging.info('\nTesting POST zips/\n')
+        # if article exists, clean all previous ingestions
+        self.clean_article_sql_doi(NOT_SCAPE_RELATED_ARTICLE_DOI)
         # Invoke ZIP API
         zip_file = self.create_ingestible(RA_DOI, 'RelatedArticle/')
         response = self.post_ingestible_zip(zip_file)
+        self.ingestion_number = self.parsed.get_attribute("ingestionNumber")
         # Validate HTTP code in the response is 201 (CREATED)
         self.verify_http_code_is(response, CREATED)
 
@@ -59,25 +62,28 @@ class ZipIngestibleTest(IngestibleJSON, MemoryZipJSON, ArticlesJSON):
         """
         logging.info('\nTesting GET ingestibles/\n')
         # Invoke ingestibles API
+        # response_ingestion_number = self.parsed.get_attribute("ingestionNumber")
         response = self.get_ingestible(RELATED_ARTICLE_DOI)
         self.verify_http_code_is(response, OK)
         self.delete_test_article(RELATED_ARTICLE_DOI, NOT_SCAPE_RELATED_ARTICLE_DOI,
-                                 RELATED_ARTICLE_BUCKET_NAME)
+                                 RELATED_ARTICLE_BUCKET_NAME, self.ingestion_number)
 
-    def delete_test_article(self, article_doi, not_scaped_article_doi, bucket_name):
+    def delete_test_article(self, article_doi, not_scaped_article_doi, bucket_name,
+                            ingestion_number=1):
         """
         Gets article information for rhino then proceeds to delete article records from ambra db
         and content repo database
         :param article_doi: String. Such as '10.1371++journal.pone.0170224'
         :param not_scaped_article_doi: String. Such as '10.1371/journal.pone.0155391'
         :param bucket_name: String. Such as 'preprint'
+        :param ingestion_number: String, such as '2'
         :return: None
         """
         try:
             response = self.get_article(article_doi)
             status_code = response.status_code  # self.get_http_response().status_code
             if status_code == OK:
-                self.delete_article_sql_doi(not_scaped_article_doi)
+                self.delete_article_sql_doi(not_scaped_article_doi, ingestion_number)
                 # Delete article
                 response = self.delete_article(article_doi)
                 self.verify_http_code_is(response, NOT_FOUND)
