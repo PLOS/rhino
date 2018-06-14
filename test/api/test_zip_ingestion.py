@@ -68,7 +68,7 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
                                  NOT_SCAPE_RELATED_ARTICLE_DOI,
                                  RELATED_ARTICLE_BUCKET_NAME)
 
-    def rest_zip_ingestion_related_article_no_bucket(self):
+    def test_zip_ingestion_related_article_no_bucket(self):
         """
         POST zips: Forced ingestion of ZIP archive
         """
