@@ -1,4 +1,5 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 # Copyright (c) 2017 Public Library of Science
 #
@@ -20,19 +21,20 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
-__author__ = 'jkrzemien@plos.org'
 
-'''
+"""
 This class loads up an XML file in order to be used later on for validations against
 Tests's responses.
-'''
+"""
 
-from TIFValidator import TIFValidator
+from .TIFValidator import TIFValidator
+
+__author__ = 'jkrzemien@plos.org'
 
 
 class PNGValidator(TIFValidator):
 
-  def __init__(self, name, data, xml):
-    super(PNGValidator, self).__init__(name, data, xml)
-    self.MIME = 'image/png'
-    self.EXT = 'PNG'
+    def __init__(self, name, data, xml):
+        super(PNGValidator, self).__init__(name, data, xml)
+        self.MIME = 'image/png'
+        self.EXT = 'PNG'

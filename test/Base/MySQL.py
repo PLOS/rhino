@@ -1,4 +1,5 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 # Copyright (c) 2017 Public Library of Science
 #
@@ -30,38 +31,38 @@ Python's MySQL connector can be installed via the following command:
 
 """
 
-__author__ = 'jgray@plos.org'
-
-from mysql.connector.pooling import MySQLConnectionPool
 from contextlib import closing
+from mysql.connector.pooling import MySQLConnectionPool
 
-from test.Base.Config import dbconfig
+from .Config import dbconfig
+
+__author__ = 'jgray@plos.org'
 
 
 class MySQL(object):
 
-  def __init__(self):
-    self._cnxpool = MySQLConnectionPool(pool_name="mysqlPool", pool_size=3, **dbconfig)
+    def __init__(self):
+        self._cnxpool = MySQLConnectionPool(pool_name="mysqlPool", pool_size=3, **dbconfig)
 
-  def _getConnection(self):
-    return self._cnxpool.get_connection()
+    def _get_connection(self):
+        return self._cnxpool.get_connection()
 
-  def query(self, query, queryArgsTuple=None):
-    cnx = self._getConnection()
+    def query(self, query, query_args_tuple=None):
+        cnx = self._get_connection()
 
-    with closing(cnx.cursor()) as cursor:
-      cursor.execute(query, queryArgsTuple)
-      results = cursor.fetchall()
+        with closing(cnx.cursor()) as cursor:
+            cursor.execute(query, query_args_tuple)
+            results = cursor.fetchall()
 
-    cnx.close()
+        cnx.close()
 
-    return results
+        return results
 
-  def modify(self, query, queryArgsTuple=None):
-    cnx = self._getConnection()
+    def modify(self, query, query_args_tuple=None):
+        cnx = self._get_connection()
 
-    with closing(cnx.cursor()) as cursor:
-      cursor.execute(query, queryArgsTuple)
-      cnx.commit()
+        with closing(cnx.cursor()) as cursor:
+            cursor.execute(query, query_args_tuple)
+            cnx.commit()
 
-    cnx.close()
+        cnx.close()

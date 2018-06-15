@@ -1,4 +1,5 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 # Copyright (c) 2017 Public Library of Science
 #
@@ -20,166 +21,182 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
-__author__ = 'jkrzemien@plos.org'
+
+import logging
 
 from selenium.webdriver.support.events import AbstractEventListener
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, WebDriverException
 from datetime import datetime
 from time import time
 from inspect import getfile
 from os.path import abspath, dirname
 
+from .CustomException import ElementDoesNotExistAssertionError, ErrorAlertThrownException
+
+__author__ = 'jkrzemien@plos.org'
+
 LOG_HEADER = '\t[WebDriver %s] '
 
+
 class WebDriverListener(AbstractEventListener):
-  """
-  WebDriver's listener for printing out information to STDOUT whenever the driver is about to/done
-  processing an event.
-
-  These events are triggered from the EventFiringWebDriver instance before and after each
-  available action on the driver's intance.
-  """
-
-  # Just a mapping between HTML tag names and their 'human readable' form, for the logger
-  _pretty_names = {
-    'a': 'link',
-    'img': 'image',
-    'button': 'button',
-    'input': 'text box',
-    'textarea': 'text area',
-    'submit': 'button',
-    'cancel': 'button',
-    'select': 'drop down box',
-    'option': 'drop down option',
-    'radio': 'radio button',
-    'li': 'list item'
-  }
-
-  # Constructor. Initializes parent class (`AbstractEventListener`)
-  def __init__(self):
-    super(WebDriverListener, self).__init__()
-    self._driver = None
-
-  def after_click(self, element, driver):
-    self._log('Click on "%s" %s successful' % self.lastElement)
-
-  def after_find(self, by, value, driver):
-    self._log('Element "%s" identified successfully' % value)
-
-  def before_click(self, element, driver):
-    friendly_name = self._friendly_tag_name(element)
-    self.lastElement = (self._tidyText(element.text), friendly_name)
-    self._log('Clicking on "%s" %s...' % self.lastElement)
-
-  def before_find(self, by, value, driver):
-    if self._driver is None:
-      self._driver = driver
-    message = 'Identifing element using "%s" as locator (%s strategy)...' % (value, str(by))
-    self._log(message)
-
-  def before_navigate_back(self, driver):
-    self._log('Navigating back to previous page...')
-
-  def before_navigate_to(self, url, driver):
-    if self._driver is None:
-      self._driver = driver
-    print '=' * 80
-    self._log('Navigating to %s...' % url)
-
-  def on_exception(self, exception, driver):
-    if type(exception) is NoSuchElementException:
-      self._log('The locator provided did not match any element in the page. %s' % exception.msg)
-    driver.save_screenshot(self._generate_png_filename(exception))
-
-  def _generate_png_filename(self, exception):
     """
-    Helper *internal* method to generate a filaname for the captured screenshots
+    WebDriver's listener for printing out information to STDOUT whenever the driver is about to/done
+    processing an event.
+
+    These events are triggered from the EventFiringWebDriver instance before and after each
+    available action on the driver's intance.
     """
-    ts = time()
-    timestamp = datetime.fromtimestamp(ts).strftime('%Y%m%d-%H%M%S')
-    path = dirname(abspath(getfile(WebDriverListener)))
-    return '%s/../Output/%s-%s.png' % (path, exception.__class__.__name__, timestamp)
 
-  def _friendly_tag_name(self, element):
-    """
-    Helper *internal* method to "translate" some keywords to human readable ones before printing out messages
-    """
-    try:
-      name = WebDriverListener._pretty_names[element.tag_name]
-    except KeyError:
-      try:
-        name = WebDriverListener._pretty_names[element.get_attribute("type")]
-      except KeyError:
-        name = ""
-    return name
+    # Just a mapping between HTML tag names and their 'human readable' form, for the logger
+    _pretty_names = {
+        'a': 'link',
+        'img': 'image',
+        'button': 'button',
+        'input': 'text box',
+        'textarea': 'text area',
+        'submit': 'button',
+        'cancel': 'button',
+        'select': 'drop down box',
+        'option': 'drop down option',
+        'radio': 'radio button',
+        'li': 'list item'
+    }
 
-  def _log(self, msg):
-    """
-    Helper *internal* method to print out messages from this listener
-    """
-    d = dict(self._driver.capabilities)
-    print ''
-    print LOG_HEADER % d['browserName'],
-    print msg
+    # Constructor. Initializes parent class (`AbstractEventListener`)
+    def __init__(self):
+        super(WebDriverListener, self).__init__()
+        self._driver = None
 
-  def _tidyText(self, text):
-    """
-    Helper *internal* method to remove some annoying characters before printing out messages
-    """
-    if (text is not None):
-      text = text.strip()
-      text = text.replace('\t', ' ')
-      text = text.replace('\n', ' ')
-      text = text.replace('\v', ' ')
-      while text.count('  ') > 0:
-        text = text.replace('  ', ' ')
-      return text
-    return ''
+    def after_click(self, element, driver):
+        self._log('Click on "{0}" {0} successful'.format(self.lastElement))
 
-  # Not implemented
-  def after_change_value_of(self, element, driver):
-    pass
+    def after_find(self, by, value, driver):
+        self._log('Element "{0}" identified successfully'.format(value))
 
-  # Not implemented
-  def after_close(self, driver):
-    pass
+    def before_click(self, element, driver):
+        friendly_name = self._friendly_tag_name(element)
+        self.lastElement = (self._tidy_text(element.text), friendly_name)
+        self._log('Clicking on "{0}" {0}...'.format(self.lastElement))
 
-  # Not implemented
-  def after_execute_script(self, script, driver):
-    pass
+    def before_find(self, by, value, driver):
+        if self._driver is None:
+            self._driver = driver
+        message = 'Identifying element using "{0}" as locator ' \
+                  '({1} strategy)...'.format(value, str(by))
+        self._log(message)
 
-  # Not implemented
-  def after_navigate_back(self, driver):
-    pass
+    def before_navigate_back(self, driver):
+        self._log('Navigating back to previous page...')
 
-  # Not implemented
-  def after_navigate_forward(self, driver):
-    pass
+    def before_navigate_to(self, url, driver):
+        if self._driver is None:
+            self._driver = driver
+        logging.info('=' * 80)
+        self._log('Navigating to {0!r}...'.format(url))
 
-  # Not implemented
-  def after_navigate_to(self, url, driver):
-    pass
+    def on_exception(self, exception, driver):
+        if type(exception) in [NoSuchElementException,
+                               ElementDoesNotExistAssertionError,
+                               WebDriverException,
+                               ErrorAlertThrownException,
+                               ]:
+            self._log('The locator provided did not match any element in the page. '
+                      '{0}'.format(exception.msg))
+            driver.save_screenshot(self._generate_png_filename(exception))
 
-  # Not implemented
-  def after_quit(self, driver):
-    pass
+    @staticmethod
+    def _generate_png_filename(exception):
+        """
+        Helper *internal* method to generate a filaname for the captured screenshots
+        """
+        ts = time()
+        timestamp = datetime.fromtimestamp(ts).strftime('%Y%m%d-%H%M%S')
+        path = dirname(abspath(getfile(WebDriverListener)))
+        return '%s/../Output/%s-%s.png' % (path, exception.__class__.__name__, timestamp)
 
-  # Not implemented
-  def before_change_value_of(self, element, driver):
-    pass
+    @staticmethod
+    def _friendly_tag_name(element):
+        """
+        Helper *internal* method to "translate" some keywords to human readable ones before
+        printing out messages
+        """
+        try:
+            name = WebDriverListener._pretty_names[element.tag_name]
+        except KeyError:
+            try:
+                name = WebDriverListener._pretty_names[element.get_attribute("type")]
+            except KeyError:
+                name = ""
+        return name
 
-  # Not implemented
-  def before_close(self, driver):
-    pass
+    def _log(self, msg):
+        """
+        Helper *internal* method to print out messages from this listener
+        """
+        d = dict(self._driver.capabilities)
+        logging.info('')
+        logging.info(LOG_HEADER % d['browserName'])
+        logging.info(msg)
 
-  # Not implemented
-  def before_execute_script(self, script, driver):
-    pass
+    @staticmethod
+    def _tidy_text(text):
+        """
+        Helper *internal* method to remove some annoying characters before printing out messages
+        """
+        if text:
+            text = text.strip()
+            text = text.replace('\t', ' ')
+            text = text.replace('\n', ' ')
+            text = text.replace('\v', ' ')
+            while text.count('  ') > 0:
+                text = text.replace('  ', ' ')
+            return text
+        return ''
 
-  # Not implemented
-  def before_navigate_forward(self, driver):
-    pass
+    # Not implemented
+    def after_change_value_of(self, element, driver):
+        pass
 
-  # Not implemented
-  def before_quit(self, driver):
-    pass
+    # Not implemented
+    def after_close(self, driver):
+        pass
+
+    # Not implemented
+    def after_execute_script(self, script, driver):
+        pass
+
+    # Not implemented
+    def after_navigate_back(self, driver):
+        pass
+
+    # Not implemented
+    def after_navigate_forward(self, driver):
+        pass
+
+    # Not implemented
+    def after_navigate_to(self, url, driver):
+        pass
+
+    # Not implemented
+    def after_quit(self, driver):
+        pass
+
+    # Not implemented
+    def before_change_value_of(self, element, driver):
+        pass
+
+    # Not implemented
+    def before_close(self, driver):
+        pass
+
+    # Not implemented
+    def before_execute_script(self, script, driver):
+        pass
+
+    # Not implemented
+    def before_navigate_forward(self, driver):
+        pass
+
+    # Not implemented
+    def before_quit(self, driver):
+        pass

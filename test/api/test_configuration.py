@@ -21,8 +21,6 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
-__author__ = 'jgray@plos.org'
-
 """
 This test cases validates JSON configuration crud controller.
 """
@@ -30,7 +28,9 @@ This test cases validates JSON configuration crud controller.
 import logging
 
 from ..Base.base_service_test import BaseServiceTest
-from test.api.RequestObject.configuration import Configuration
+from ..api.RequestObject.configuration import Configuration
+
+__author__ = 'jgray@plos.org'
 
 
 class ConfigurationTest(Configuration):

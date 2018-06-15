@@ -1,4 +1,5 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 # Copyright (c) 2017 Public Library of Science
 #
@@ -31,12 +32,15 @@ __author__ = 'fcabrales@plos.org'
 from ...Base.base_service_test import BaseServiceTest
 from ..resources import ARTICLE_API, DEFAULT_HEADERS
 
+
 class IngestibleJSON(BaseServiceTest):
 
-  def get_ingestible(self, article_doi=None):
-    """
-    Calls ingestible API to get a repack article
-    GET /articles/{article_doi}/ingestions/{ingestion_number}/ingestible
-    :param article_doi
-    """
-    self.doGet('{0}/{1}/{2}'.format(ARTICLE_API, article_doi, 'ingestions/1/ingestible'), None, headers=DEFAULT_HEADERS)
+    def get_ingestible(self, article_doi=None):
+        """
+        Calls ingestible API to get a repack article
+        GET /articles/{article_doi}/ingestions/{ingestion_number}/ingestible
+        :param article_doi
+        """
+        response = self.doGet('{0}/{1}/ingestions/{2!s}/ingestible'.format(ARTICLE_API, article_doi,
+                                         self.ingestion_number), None, headers=DEFAULT_HEADERS)
+        return response

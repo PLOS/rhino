@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # Copyright (c) 2017 Public Library of Science
@@ -28,12 +28,13 @@ Class for accessing XML data, returning a dom representation
 
 __author__ = 'jgray@plos.org'
 
-import Config
-import urllib
+import logging
+from .Config import repo_config
+import urllib.request
 import xml.etree.ElementTree as ET
 
-xmlurl = str(Config.repo_config['transport']) + '://' + str(Config.repo_config['host']) + ':' + \
-    str(Config.repo_config['port']) + str(Config.repo_config['path']) + '/objects/'
+xmlurl = str(repo_config['transport']) + '://' + str(repo_config['host']) + ':' + \
+    str(repo_config['port']) + str(repo_config['path']) + '/objects/'
 
 
 class ParseXML(object):
@@ -55,7 +56,7 @@ class ParseXML(object):
           fullname = collab.text
         authors.append(fullname)
     except Exception as e:
-      print(e)
+      logging.error(e)
     return authors
 
 
@@ -77,7 +78,7 @@ class ParseXML(object):
             fullname = contrib.find('./collab')
           corresp_auth.append(fullname)
     except Exception as e:
-      print(e)
+      logging.error(e)
     return corresp_auth
 
   def get_cocontributing_auths(self, bucket, article):
@@ -97,7 +98,7 @@ class ParseXML(object):
             fullname = contrib.find('./collab')
           cocontrib_auth.append(fullname)
     except Exception as e:
-      print(e)
+      logging.error(e)
     return cocontrib_auth
 
   def get_customfootnote_auths(self, bucket, article):
@@ -123,10 +124,11 @@ class ParseXML(object):
                 fullname = contrib.find('./collab')
               customfootnote_auth.append(fullname)
     except Exception as e:
-      print(e)
+      logging.error(e)
     return customfootnote_auth
 
-  def get_article_sections(self, bucket, article):
+  @staticmethod
+  def get_article_sections( bucket, article):
     article_sections = []
     patient_summary = False
     try:
@@ -149,10 +151,10 @@ class ParseXML(object):
 
       for section in root.findall(".//body/sec"):
         title = section.find("./title")
-        if unicode(title.text) == "None":
+        if str(title.text) == "None":
           continue
         else:
-          article_sections.append(unicode(title.text))
+          article_sections.append(str(title.text))
 
       if root.findall(".//back/ack"):
         article_sections.append('Acknowledgments')
@@ -168,5 +170,5 @@ class ParseXML(object):
         article_sections.append('Patient Summary')
 
     except Exception as e:
-      print(e)
+      logging.error(e)
     return(article_sections)
