@@ -203,6 +203,8 @@ public class ArticlePackageBuilder {
         return AssetType.GRAPHIC;
       case "supplementary-material":
         return AssetType.SUPPLEMENTARY_MATERIAL;
+      case "response":
+        return AssetType.REVIEW_LETTER;
       default:
         throw new RestClientException("XML node name could not be matched to asset type: " + nodeName, HttpStatus.BAD_REQUEST);
     }

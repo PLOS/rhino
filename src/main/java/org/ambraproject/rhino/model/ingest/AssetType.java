@@ -78,6 +78,15 @@ public enum AssetType {
     }
   },
 
+  REVIEW_LETTER {
+    private final ImmutableSet<FileType> TYPES = Sets.immutableEnumSet(FileType.LETTER);
+
+    @Override
+    protected ImmutableSet<FileType> getSupportedFileTypes() {
+      return TYPES;
+    }
+  },
+
   SUPPLEMENTARY_MATERIAL {
     private final ImmutableSet<FileType> TYPES = Sets.immutableEnumSet(FileType.SUPPLEMENTARY);
 

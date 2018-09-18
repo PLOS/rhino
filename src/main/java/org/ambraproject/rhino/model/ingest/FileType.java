@@ -48,6 +48,9 @@ public enum FileType {
   // Display formats at different sizes for figures and tables
   SMALL, MEDIUM, INLINE, LARGE,
 
+  // TPR Letter Type
+  LETTER,
+
   // A supplementary information file, which should always be the only file with its DOI
   SUPPLEMENTARY;
 

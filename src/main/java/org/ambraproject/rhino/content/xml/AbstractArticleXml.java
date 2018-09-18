@@ -70,10 +70,11 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
   protected static final String TABLE_WRAP = "table-wrap";
   protected static final String ALTERNATIVES = "alternatives";
   protected static final String DISP_FORMULA = "disp-formula";
+  protected static final String DECISION_LETTER = "response";
 
   // The node-names for nodes that can be an asset on their own
   protected static final ImmutableSet<String> ASSET_NODE_NAMES = ImmutableSet.of(
-      "supplementary-material", "inline-formula", DISP_FORMULA, GRAPHIC);
+      "supplementary-material", "inline-formula", DISP_FORMULA, GRAPHIC,DECISION_LETTER);
 
   // The node-names for nodes that can be an asset if they have a descendant <graphic> node
   protected static final ImmutableSet<String> GRAPHIC_NODE_PARENTS = ImmutableSet.of(TABLE_WRAP, "fig",
@@ -92,6 +93,8 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
         //disp-formula may be a graphic node parent, or an asset node name
         doi = readHrefAttribute(assetNode);
       }
+    } else if (DECISION_LETTER.equalsIgnoreCase(nodeName)) {
+      doi = readString("front-stub/article-id[@pub-id-type=\"doi\"]", assetNode);
     } else if (ASSET_NODE_NAMES.contains(nodeName)) {
       doi = readHrefAttribute(assetNode);
     } else {
