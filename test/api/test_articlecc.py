@@ -66,6 +66,13 @@ class ArticlesTest(ArticlesJSON, MemoryZipJSON):
         self.add_article_revision(resources.CREATED)
         self.verify_article_revision()
 
+    def test_add_article_syndication(self):
+        """
+        POST revision: Adding article syndication to article
+        """
+        logging.info('\nTesting POST article syndication/\n')
+        # Invoke article API
+        self.add_article_syndication(resources.CREATED, syndication_target= 'crossref')
 
 if __name__ == '__main__':
     ArticlesJSON.run_tests_randomly()

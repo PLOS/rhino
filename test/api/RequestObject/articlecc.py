@@ -32,10 +32,11 @@ from ..resources import *
 
 from test.Base.api import needs
 from test.Base.MySQL import MySQL
-from ..resources import NOT_SCAPE_RELATED_ARTICLE_DOI
+from ..resources import NOT_SCAPE_RELATED_ARTICLE_DOI, CONTENT_HEADERS
 
 ARTICLE_API = API_BASE_URL + '/articles/'
 ARTICLE_REVISION_API = ARTICLE_API + RELATED_ARTICLE_DOI + '/revisions'
+HEADER = '-H'
 
 
 class ArticlesJSON(ZIPIngestionJson):
@@ -59,6 +60,21 @@ class ArticlesJSON(ZIPIngestionJson):
     """
     response = self.doPost('%s?revision=%s&ingestion=%s' % (ARTICLE_REVISION_API,REVISION,
                                                     INGESTION_NUMBER))
+    self.verify_http_code_is(response, expected_response_code)
+
+  def add_article_syndication(self, expected_response_code, syndication_target):
+    """
+    Calls article API to syndicate revision of an article
+    POST /articles/{doi}/revisions/1/syndications?syndicate
+    :param doi
+    :param revision
+    :param ingestion
+    :param syndication target
+    """
+    da_data = json.dumps({
+      "targetQueue": "activemq:plos." + syndication_target
+    })
+    response = self.doPostData('%s/%s/syndications?syndicate' % (ARTICLE_REVISION_API,REVISION, da_data, CONTENT_HEADERS))
     self.verify_http_code_is(response, expected_response_code)
 
 

@@ -33,6 +33,7 @@ from test.Base.Config import repo_config
 
 # Default headers
 DEFAULT_HEADERS = {'Accept': 'application/json'}
+CONTENT_HEADERS = {'content-type': 'application/json'}
 
 # Get BUCKET_NAME
 RELATED_ARTICLE_BUCKET_NAME = 'mogilefs-prod-repo'
