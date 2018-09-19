@@ -27,6 +27,8 @@ Base class for Article crud controller JSON related services
 
 __author__ = 'fcabrales@plos.org'
 
+import json
+
 from .zip_ingestion import ZIPIngestionJson
 from ..resources import *
 
