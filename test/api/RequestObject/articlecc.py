@@ -63,19 +63,19 @@ class ArticlesJSON(ZIPIngestionJson):
     self.verify_http_code_is(response, expected_response_code)
 
   def add_article_syndication(self, expected_response_code, syndication_target):
-    """
-    Calls article API to syndicate revision of an article
-    POST /articles/{doi}/revisions/1/syndications?syndicate
-    :param doi
-    :param revision
-    :param ingestion
-    :param syndication target
-    """
-    da_data = json.dumps({
-      "targetQueue": "activemq:plos." + syndication_target
-    })
-    response = self.doPostData('%s/%s/syndications?syndicate' % (ARTICLE_REVISION_API,REVISION, da_data, CONTENT_HEADERS))
-    self.verify_http_code_is(response, expected_response_code)
+      """
+      Calls article API to syndicate revision of an article
+      POST /articles/{doi}/revisions/1/syndications?syndicate
+      :param doi
+      :param revision
+      :param ingestion
+      :param syndication target
+      """
+      da_data = json.dumps({
+        "targetQueue": "activemq:plos." + syndication_target
+      })
+      response = self.doPostData('%s/%s/syndications?syndicate' % (ARTICLE_REVISION_API,REVISION, da_data, CONTENT_HEADERS))
+      self.verify_http_code_is(response, expected_response_code)
 
 
   """
