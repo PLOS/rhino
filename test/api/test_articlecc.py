@@ -74,7 +74,13 @@ class ArticlesTest(ArticlesJSON, MemoryZipJSON):
         self.add_article_revision(resources.CREATED)
         self.verify_article_revision()
 
-    @data((CROSSFER), (JISC), (PMC), (PUBMED), (FIGSHARE))
+    @data(
+        (CROSSFER),
+        (JISC),
+        (PMC),
+        (PUBMED),
+        (FIGSHARE),
+    )
     @unpack
     def test_add_article_syndication_crossref(self, syndication_target):
         """
