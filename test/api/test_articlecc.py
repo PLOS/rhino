@@ -27,15 +27,23 @@ This test case validates Rhino's article crud controller.
 """
 
 import logging
+from ddt import ddt, data, unpack
 
 from .RequestObject.articlecc import ArticlesJSON
 from .RequestObject.memory_zip import MemoryZipJSON
 from ..api import resources
 
+CROSSFER = 'crossref'
+JISC = 'jisc'
+PMC = 'pmc'
+PUBMED = 'pubmed'
+FIGSHARE = 'figshare'
+
 __author__ = 'fcabrales@plos.org'
 
-
+@ddt
 class ArticlesTest(ArticlesJSON, MemoryZipJSON):
+
     def setUp(self):
         logging.info('\nTesting POST zips/\n')
         # Invoke ZIP API to generate in memory ingestible zip
@@ -66,13 +74,15 @@ class ArticlesTest(ArticlesJSON, MemoryZipJSON):
         self.add_article_revision(resources.CREATED)
         self.verify_article_revision()
 
-    def test_add_article_syndication(self):
+    @data(CROSSFER, JISC, PMC, PUBMED, FIGSHARE)
+    @unpack
+    def test_add_article_syndication_crossref(self, syndication_target):
         """
         POST revision: Adding article syndication to article
         """
         logging.info('\nTesting POST article syndication/\n')
-        # Invoke article API
-        self.add_article_syndication(resources.CREATED, syndication_target= 'crossref')
+        # Invoke article syndication API call
+        self.add_article_syndication(resources.CREATED, syndication_target)
 
 if __name__ == '__main__':
     ArticlesJSON.run_tests_randomly()
