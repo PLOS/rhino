@@ -55,10 +55,17 @@ public class AssetXml extends AbstractArticleXml<AssetMetadata> {
   @Override
   public AssetMetadata build() throws XmlContentException {
     String doi = assetId.getName();
+    String title = "";
+    String description = "";
 
-    String title = Strings.nullToEmpty(readString("child::label"));
-    Node captionNode = readNode("child::caption");
-    String description = Strings.nullToEmpty(getXmlFromNode(captionNode));
+    if (xml.getLocalName().equalsIgnoreCase(DECISION_LETTER)) {
+      title = Strings.nullToEmpty(readString("front-stub/title-group/article-title"));
+      description = Strings.nullToEmpty(readString("@response-type"));
+    } else {
+      title = Strings.nullToEmpty(readString("child::label"));
+      Node captionNode = readNode("child::caption");
+      description = Strings.nullToEmpty(getXmlFromNode(captionNode));
+    }
 
     return new AssetMetadata(doi, title, description);
   }
