@@ -81,7 +81,7 @@ class ArticlesTest(ArticlesJSON, MemoryZipJSON):
         PUBMED,
         FIGSHARE,
     )
-    def test_add_article_syndication_crossref(self, syndication_target):
+    def test_add_article_syndication(self, syndication_target):
         """
         POST revision: Adding article syndication to article
         """
