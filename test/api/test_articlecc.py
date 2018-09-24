@@ -95,7 +95,7 @@ class ArticlesTest(ArticlesJSON, MemoryZipJSON):
         """
         logging.info('\nTesting POST article solr index/\n')
         # Invoke article API to add solr index
-        self.add_article_solr_index(resources.CREATED)
+        self.add_article_solr_index(resources.OK)
         self.verify_article_revision()
 
 if __name__ == '__main__':
