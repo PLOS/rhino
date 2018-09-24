@@ -89,5 +89,14 @@ class ArticlesTest(ArticlesJSON, MemoryZipJSON):
         # Invoke article syndication API call
         self.add_article_syndication(resources.CREATED, syndication_target)
 
+    def test_add_article_solr_index(self):
+        """
+        POST revision: Adding article solr index to article
+        """
+        logging.info('\nTesting POST article solr index/\n')
+        # Invoke article API to add solr index
+        self.add_article_solr_index(resources.CREATED)
+        self.verify_article_revision()
+
 if __name__ == '__main__':
     ArticlesJSON.run_tests_randomly()

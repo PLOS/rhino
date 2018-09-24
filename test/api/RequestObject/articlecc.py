@@ -37,7 +37,9 @@ from test.Base.MySQL import MySQL
 from ..resources import NOT_SCAPE_RELATED_ARTICLE_DOI, CONTENT_HEADERS
 
 ARTICLE_API = API_BASE_URL + '/articles/'
+ARTICLE_RELATED_ARTICLE_API = ARTICLE_API + RELATED_ARTICLE_DOI
 ARTICLE_REVISION_API = ARTICLE_API + RELATED_ARTICLE_DOI + '/revisions'
+
 HEADER = '-H'
 
 
@@ -62,6 +64,15 @@ class ArticlesJSON(ZIPIngestionJson):
     """
     response = self.doPost('%s?revision=%s&ingestion=%s' % (ARTICLE_REVISION_API,REVISION,
                                                     INGESTION_NUMBER))
+    self.verify_http_code_is(response, expected_response_code)
+
+  def add_article_solr_index(self, expected_response_code):
+    """
+    Calls article API to write revision for an article
+    POST /articles/{doi}?solrIndex
+    :param doi
+    """
+    response = self.doPost('%s?solrIndex' % (ARTICLE_RELATED_ARTICLE_API))
     self.verify_http_code_is(response, expected_response_code)
 
   def add_article_syndication(self, expected_response_code, syndication_target):
