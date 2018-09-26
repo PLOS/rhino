@@ -513,8 +513,8 @@
 
       <plugin>
         <groupId>org.apache.tomcat.maven</groupId>
-        <artifactId>tomcat6-maven-plugin</artifactId>
-        <version>2.1</version>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>2.2</version>
         <configuration>
           <path>/</path>
           <contextFile>${rhino.configDir}/context.xml</contextFile>
