@@ -36,7 +36,7 @@
 
     <!-- JMX Support for the Tomcat server.-->
     <Listener className="org.apache.catalina.mbeans.JmxRemoteLifecycleListener"
-              rmiRegistryPortPlatform="21212" rmiServerPortPlatform="21213"
+              rmiRegistryPortPlatform="0" rmiServerPortPlatform="0"
               useLocalPorts="true" />
 
     <!-- Global JNDI resources
