@@ -64,6 +64,7 @@
     <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
     <build.timestamp>${maven.build.timestamp}</build.timestamp>
     <build.counter>0</build.counter>
+    <maven.tomcat.port>8082</maven.tomcat.port>
   </properties>
 
   <repositories>
