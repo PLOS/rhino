@@ -648,6 +648,15 @@
                   </mapper>
                 </data>
 
+                <data>
+                  <src>${project.basedir}/root-index.html</src>
+                  <type>file</type>
+                  <dst>/opt/plos/rhino/webapps/ROOT/index.html</dst>
+                  <mapper>
+                    <type>perm</type>
+                    <filemode>755</filemode>
+                  </mapper>
+                </data>
               </dataSet>
             </configuration>
           </execution>
