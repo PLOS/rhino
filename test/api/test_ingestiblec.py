@@ -40,7 +40,7 @@ __author__ = 'fcabrales@plos.org'
 
 class TestZipIngestible(IngestibleJSON, MemoryZipJSON, ArticlesJSON):
 
-    @pytest.fixture(scope="module", name='setup')
+    @pytest.fixture(scope="function", name='setup')
     def set_up(self, request):
         logging.info('\nTesting POST zips/\n')
         # if article exists, clean all previous ingestions
@@ -57,10 +57,8 @@ class TestZipIngestible(IngestibleJSON, MemoryZipJSON, ArticlesJSON):
             Purge all records from the db for test article
             """
             try:
-                # self.delete_test_article(RELATED_ARTICLE_DOI, NOT_SCAPE_RELATED_ARTICLE_DOI,
-                #                          RELATED_ARTICLE_BUCKET_NAME, self.ingestion_number)
                 self.delete_test_article(RELATED_ARTICLE_DOI, NOT_SCAPE_RELATED_ARTICLE_DOI,
-                                         RELATED_ARTICLE_BUCKET_NAME, int('1'))
+                                         RELATED_ARTICLE_BUCKET_NAME, self.ingestion_number)
             except:
                 pass
 
