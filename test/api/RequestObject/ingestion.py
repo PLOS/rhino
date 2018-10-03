@@ -134,8 +134,8 @@ class Ingestion(BaseServiceTest):
                 attribute, actual_results, expected_results))
 
     def verify_array(self, actual_array, expected_array):
-        self.assertIsNotNone(actual_array)
-        self.assertIsNotNone(expected_array)
+        assert actual_array is not None
+        assert expected_array is not None
 
     def get_article_id_sql_doi(self, not_scape_doi):
         """

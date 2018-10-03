@@ -26,6 +26,7 @@ This test cases validates JSON configuration crud controller.
 """
 
 import logging
+import pytest
 
 from ..Base.base_service_test import BaseServiceTest
 from ..api.RequestObject.configuration import Configuration
@@ -33,7 +34,7 @@ from ..api.RequestObject.configuration import Configuration
 __author__ = 'jgray@plos.org'
 
 
-class ConfigurationTest(Configuration):
+class TestConfiguration(Configuration):
 
     def test_smoke_configuration(self):
         logging.info('Configuration test smoke')
@@ -45,6 +46,3 @@ class ConfigurationTest(Configuration):
         logging.info('Configuration test core')
         self.get_type(type_='bogus')
 
-
-if __name__ == '__main__':
-    BaseServiceTest.run_tests_randomly()

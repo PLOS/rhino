@@ -27,11 +27,12 @@ This test case validates Rhino's article crud controller.
 """
 
 import logging
-from ddt import ddt, data, unpack
+import pytest
 
 from .RequestObject.articlecc import ArticlesJSON
 from .RequestObject.memory_zip import MemoryZipJSON
 from ..api import resources
+import time
 
 CROSSFER = 'crossref'
 JISC = 'jisc'
@@ -41,10 +42,14 @@ FIGSHARE = 'figshare'
 
 __author__ = 'fcabrales@plos.org'
 
-@ddt
-class ArticlesTest(ArticlesJSON, MemoryZipJSON):
 
-    def setUp(self):
+class TestArticles(ArticlesJSON, MemoryZipJSON):
+
+    @pytest.fixture(scope="module", name='setup')
+    def set_up(self, request):
+        """
+        Ingest test article and verifies http response
+        """
         logging.info('\nTesting POST zips/\n')
         # Invoke ZIP API to generate in memory ingestible zip
         zip_file = self.create_ingestible(resources.RA_DOI, 'RelatedArticle/')
@@ -52,19 +57,22 @@ class ArticlesTest(ArticlesJSON, MemoryZipJSON):
         # Validate HTTP code in the response is 201 (CREATED)
         self.verify_http_code_is(response, resources.CREATED)
 
-    def tearDown(self):
-        """
-        Purge all records from the db for test article
-        """
-        try:
-            response = self.get_article(resources.RELATED_ARTICLE_DOI)
-            if response.raise_for_status() is None:
-                self.delete_article_sql_doi(resources.NOT_SCAPE_RELATED_ARTICLE_DOI)
-            else:
-                logging.info(self.parsed.get_attribute('message'))
-        except:
-            pass
+        def tear_down():
+            """
+            Purge all records from the db for test article
+            """
+            try:
+                self.article = self.get_article(resources.RELATED_ARTICLE_DOI)
+                if self.article.raise_for_status() is None:
+                    self.delete_article_sql_doi(resources.NOT_SCAPE_RELATED_ARTICLE_DOI)
+                else:
+                    logging.info(self.parsed.get_attribute('message'))
+            except:
+                pass
 
+        request.addfinalizer(tear_down)
+
+    @pytest.mark.usefixtures("setup")
     def test_add_article_revision(self):
         """
         POST revision: Adding article revision to article
@@ -74,29 +82,36 @@ class ArticlesTest(ArticlesJSON, MemoryZipJSON):
         self.add_article_revision(resources.CREATED)
         self.verify_article_revision()
 
-    @data(
+    @pytest.mark.parametrize("syndication_target", [
         CROSSFER,
         JISC,
         PMC,
         PUBMED,
         FIGSHARE,
-    )
+    ])
+    @pytest.mark.usefixtures("setup")
     def test_add_article_syndication(self, syndication_target):
         """
         POST revision: Adding article syndication to article
         """
         logging.info('\nTesting POST article syndication/\n')
         # Invoke article syndication API call
+        self.add_article_revision(resources.CREATED)
         self.add_article_syndication(resources.CREATED, syndication_target)
+        """
+        Need to add sleep since we need to wait queue to process request
+        before purging article from rhino
+        """
+        time.sleep(5)
+        self.verify_article_revision()
 
+    @pytest.mark.usefixtures("setup")
     def test_add_article_solr_index(self):
         """
         POST revision: Adding article solr index to article
         """
         logging.info('\nTesting POST article solr index/\n')
         # Invoke article API to add solr index
+        self.add_article_revision(resources.CREATED)
         self.add_article_solr_index(resources.OK)
-        self.verify_article_revision()
 
-if __name__ == '__main__':
-    ArticlesJSON.run_tests_randomly()

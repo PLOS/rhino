@@ -25,23 +25,23 @@
 Module to store various Decorators that will come in handy while service testing
 """
 
-from functools import wraps
-from unittest import TestCase
 from datetime import datetime
+from functools import wraps
 import logging
+import pytest
 import time
 
 __author__ = 'jkrzemien@plos.org'
 
 
 class needs(object):
+
     """
     Decorator to guarantee a given attribute is **present** in an instance.
     If the attribute is not present, test fails with a message containing instructions of which
     method was not called from test to create the required attribute.
     If the attribute is present this decorator does nothing.
     """
-
     def __init__(self, attribute, needs_method):
         self.attributeNeeded = attribute
         self.methodToInvoke = needs_method
@@ -50,7 +50,7 @@ class needs(object):
         @wraps(method)
         def wrapper(value, *args, **kw):
             if not hasattr(value, self.attributeNeeded):
-                TestCase.fail(value, 'You MUST invoke {0} first, BEFORE performing any '
+                pytest.fail('You MUST invoke {0} first, BEFORE performing any '
                                      'validations!'.format(self.methodToInvoke))
             else:
                 return method(value, *args, **kw)
@@ -65,7 +65,6 @@ def timeit(method):
     (module-level methods or class methods) by just adding the
     @timeit decorator in in front of the method call.
     """
-
     @wraps(method)
     def wrapper(value, *args, **kw):
         setattr(value, 'testStartTime', datetime.now())

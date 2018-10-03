@@ -44,7 +44,6 @@ class ZIPIngestionJson(Ingestion):
         """
         da_data = {'bucket': bucket_name}
         response = self.doPost(ZIP_INGESTION_API, {'archive': archive}, da_data)
-
         self.parse_response_as_json(response)
 
         return response
@@ -58,7 +57,7 @@ class ZIPIngestionJson(Ingestion):
         :return: response
         """
         response = self.doGet(
-                '{0}/{1}/ingestions/{2}'.format(ARTICLE_API, article_doi, self.ingestion_number),
+                '{0}/{1}/ingestions/{2}'.format(ARTICLE_API, article_doi, '1'),
                 None, headers=DEFAULT_HEADERS)
         self.parse_response_as_json(response)
         return response

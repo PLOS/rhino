@@ -26,6 +26,7 @@
 This test case validates Rhino's convenience zipUpload Tests for ZIP ingestion.
 """
 import logging
+import pytest
 
 from ..api import resources
 from .RequestObject.zip_ingestion import ZIPIngestionJson
@@ -37,24 +38,31 @@ from ..api.resources import RA_DOI, CREATED, RELATED_ARTICLE_DOI, NOT_SCAPE_RELA
 __author__ = 'jkrzemien@plos.org; gfilomeno@plos.org'
 
 
-class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
+class TestZipIngestion(ZIPIngestionJson, MemoryZipJSON):
 
-    def setUp(self):
+    @pytest.fixture(scope="module", name='setup')
+    def set_up(self, request):
         self.already_done = 0
 
-    def tearDown(self):
-        """
-        Purge all objects and collections created in the test case
-        """
-        if self.already_done > 0:
-            return
+        def tear_down():
+            """
+            Purge all objects and collections created in the test case
+            """
+            try:
+                if self.already_done > 0:
+                    return
+            except:
+                pass
 
+        request.addfinalizer(tear_down)
+
+    @pytest.mark.usefixtures("setup")
     def test_zip_ingestion_related_article(self):
         """
         POST zips: Forced ingestion of ZIP archive
         """
         logging.info('\nTesting POST zips for related article/\n')
-        # if article exists, clean all previous ingestions 
+        # if article exists, clean all previous ingestions
         self.clean_article_sql_doi(NOT_SCAPE_RELATED_ARTICLE_DOI)
         # Invoke ZIP API
         zip_file = self.create_ingestible(RA_DOI, 'RelatedArticle/')
@@ -68,6 +76,7 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
                                  NOT_SCAPE_RELATED_ARTICLE_DOI,
                                  RELATED_ARTICLE_BUCKET_NAME)
 
+    @pytest.mark.usefixtures("setup")
     def test_zip_ingestion_related_article_no_bucket(self):
         """
         POST zips: Forced ingestion of ZIP archive
@@ -87,6 +96,7 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
                                  NOT_SCAPE_RELATED_ARTICLE_DOI,
                                  RELATED_ARTICLE_BUCKET_NAME)
 
+    @pytest.mark.usefixtures("setup")
     def test_zip_ingestion_preprint_article(self):
         """
         POST zips: Forced ingestion of ZIP archive
@@ -104,6 +114,7 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
                                  NOT_SCAPE_PREPRINT_ARTICLE_DOI,
                                  PREPRINT_ARTICLE_BUCKET_NAME)
 
+    @pytest.mark.usefixtures("setup")
     def test_zip_ingestion_without_file(self):
         """
         POST zips: Try to ingest of ZIP archive without file name
@@ -190,6 +201,3 @@ class ZipIngestionTest(ZIPIngestionJson, MemoryZipJSON):
                                        version=object['versionNumber'], purge=True)
                     self.verify_http_code_is(response, OK)
 
-
-if __name__ == '__main__':
-    ZIPIngestionJson.run_tests_randomly()
