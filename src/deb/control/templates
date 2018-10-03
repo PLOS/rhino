@@ -35,5 +35,5 @@ Description: The HTTP port you would like Rhino to be accessible from
 
 Template: [[artifactId]]/control_port
 Type: string
-Default: 8005
+Default: 8007
 Description: The TCP port to use for Tomcat shutdown control port
