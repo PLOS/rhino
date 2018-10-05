@@ -27,6 +27,7 @@ This test cases validates JSON article list crud controller.
 """
 
 import logging
+import pytest
 import time
 from termcolor import cprint
 
@@ -36,7 +37,7 @@ from .resources import OK, BAD_REQUEST, NOT_FOUND, CREATED
 __author__ = 'fcabrales'
 
 
-class ArticlesListAdditions(ArticlesListJSON):
+class TestArticlesListAdditions(ArticlesListJSON):
 
     def test_cleanup(self):
         """
@@ -74,7 +75,3 @@ class ArticlesListAdditions(ArticlesListJSON):
         self.patch_article_list(NOT_FOUND, "rhino-cell-collection", True)  # use bogus data
         time.sleep(5)
         self.test_cleanup()
-
-
-if __name__ == '__main__':
-    ArticlesListJSON.run_tests_randomly()

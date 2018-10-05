@@ -44,7 +44,6 @@ class ZIPIngestionJson(Ingestion):
         """
         da_data = {'bucket': bucket_name}
         response = self.doPost(ZIP_INGESTION_API, {'archive': archive}, da_data)
-
         self.parse_response_as_json(response)
 
         return response

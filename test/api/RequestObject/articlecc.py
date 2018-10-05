@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+# -*- coding: utf-8 -*-
 
 # Copyright (c) 2017 Public Library of Science
 #
@@ -25,7 +25,6 @@
 Base class for Article crud controller JSON related services
 """
 
-__author__ = 'fcabrales@plos.org'
 
 import json
 
@@ -42,10 +41,9 @@ ARTICLE_REVISION_API = ARTICLE_API + RELATED_ARTICLE_DOI + '/revisions'
 
 HEADER = '-H'
 
+__author__ = 'fcabrales@plos.org'
 
 class ArticlesJSON(ZIPIngestionJson):
-
-  @needs('parsed', 'parse_response_as_json()')
   def verify_article_revision(self):
     """
     Validate setting article revision using articleRevision table

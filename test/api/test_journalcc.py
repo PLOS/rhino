@@ -25,13 +25,14 @@
 """
 Test cases for Rhino Journal Crud Controller requests.
 """
+import pytest
 
 from ..api.RequestObject.journalcc import JournalCCJson
 
 __author__ = 'jgray@plos.org'
 
 
-class GetJournals(JournalCCJson):
+class TestGetJournals(JournalCCJson):
 
     def test_journals(self):
         """
@@ -40,6 +41,3 @@ class GetJournals(JournalCCJson):
         self.get_journals()
         self.verify_journals()
 
-
-if __name__ == '__main__':
-    JournalCCJson.run_tests_randomly()

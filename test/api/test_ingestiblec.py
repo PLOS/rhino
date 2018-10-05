@@ -27,6 +27,7 @@ This test case validates Rhino's article repack service.
 """
 
 import logging
+import pytest
 
 from .RequestObject.articlecc import ArticlesJSON
 from .RequestObject.ingestiblec import IngestibleJSON
@@ -37,9 +38,10 @@ from ..api.resources import RA_DOI, CREATED, RELATED_ARTICLE_DOI, NOT_SCAPE_RELA
 __author__ = 'fcabrales@plos.org'
 
 
-class ZipIngestibleTest(IngestibleJSON, MemoryZipJSON, ArticlesJSON):
+class TestZipIngestible(IngestibleJSON, MemoryZipJSON, ArticlesJSON):
 
-    def setUp(self):
+    @pytest.fixture(scope="function", name='setup')
+    def set_up(self, request):
         logging.info('\nTesting POST zips/\n')
         # if article exists, clean all previous ingestions
         self.clean_article_sql_doi(NOT_SCAPE_RELATED_ARTICLE_DOI)
@@ -50,12 +52,19 @@ class ZipIngestibleTest(IngestibleJSON, MemoryZipJSON, ArticlesJSON):
         # Validate HTTP code in the response is 201 (CREATED)
         self.verify_http_code_is(response, CREATED)
 
-    def tearDown(self):
-        """
-        Purge all objects and collections created in the test case
-        """
-        # self.delete_test_article()
+        def tear_down():
+            """
+            Purge all records from the db for test article
+            """
+            try:
+                self.delete_test_article(RELATED_ARTICLE_DOI, NOT_SCAPE_RELATED_ARTICLE_DOI,
+                                         RELATED_ARTICLE_BUCKET_NAME, self.ingestion_number)
+            except:
+                pass
 
+        request.addfinalizer(tear_down)
+
+    @pytest.mark.usefixtures("setup")
     def test_ingestible(self):
         """
         GET ingestibles
@@ -65,8 +74,6 @@ class ZipIngestibleTest(IngestibleJSON, MemoryZipJSON, ArticlesJSON):
         # response_ingestion_number = self.parsed.get_attribute("ingestionNumber")
         response = self.get_ingestible(RELATED_ARTICLE_DOI)
         self.verify_http_code_is(response, OK)
-        self.delete_test_article(RELATED_ARTICLE_DOI, NOT_SCAPE_RELATED_ARTICLE_DOI,
-                                 RELATED_ARTICLE_BUCKET_NAME, self.ingestion_number)
 
     def delete_test_article(self, article_doi, not_scaped_article_doi, bucket_name,
                             ingestion_number=1):
@@ -130,7 +137,3 @@ class ZipIngestibleTest(IngestibleJSON, MemoryZipJSON, ArticlesJSON):
                     response = self.delete_object(bucketName=bucket_name, key=object['key'],
                                                   version=object['versionNumber'], purge=True)
                     self.verify_http_code_is(response, OK)
-
-
-if __name__ == '__main__':
-    IngestibleJSON.run_tests_randomly()

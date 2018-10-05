@@ -29,22 +29,19 @@ from inspect import getfile
 import logging
 from os import walk
 from os.path import dirname, abspath
-import random
 from requests import get, post, patch, put, delete
-
-import unittest
-
-from teamcity import is_running_under_teamcity
-from teamcity.unittestpy import TeamcityTestRunner
+import requests.auth
 
 from test.api.Response.JSONResponse import JSONResponse
+
 from .api import timeit
+
 from .Config import TIMEOUT, PRINT_DEBUG
 
 __author__ = 'jgray@plos.org'
 
 
-class BaseServiceTest(unittest.TestCase):
+class BaseServiceTest:
     response = None
 
     # Autowired by @timeit decorator
@@ -119,23 +116,16 @@ class BaseServiceTest(unittest.TestCase):
     def parse_response_as_json(self, response):
         self.parsed = JSONResponse(response.text)
 
+    @classmethod
     def verify_http_code_is(self, response, http_code):
         logging.info('Validating HTTP Response code to be {0}...'.format(http_code))
         assert response.status_code == http_code
         logging.info('OK')
 
+    @staticmethod
     def find_file(self, filename):
         path = dirname(abspath(getfile(BaseServiceTest))) + '/../../'
         for root, dirs, files in walk(path):
             for file in files:
                 if file == filename:
                     return root + '/' + file
-
-    @staticmethod
-    def run_tests_randomly():
-        unittest.TestLoader.sortTestMethodsUsing = lambda _, x, y: random.choice([-1, 1])
-        if is_running_under_teamcity():
-            runner = TeamcityTestRunner()
-        else:
-            runner = unittest.TextTestRunner()
-        unittest.main(testRunner=runner)
