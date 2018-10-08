@@ -184,10 +184,6 @@ public interface ArticleCrudService {
 
   public abstract Document getManuscriptXml(ArticleIngestion articleIngestion);
 
-  public abstract Document getManuscriptXml(RepoObjectMetadata objectMetadata);
-
-  public abstract RepoObjectMetadata getManuscriptMetadata(ArticleIngestion ingestion);
-
   /**
    * Get all the article revisions published within a given date range
    */

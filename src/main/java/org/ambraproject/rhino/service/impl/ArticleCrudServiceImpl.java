@@ -126,8 +126,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return getManuscriptXml(getManuscriptMetadata(ingestion));
   }
 
-  @Override
-  public Document getManuscriptXml(RepoObjectMetadata objectMetadata) {
+  private Document getManuscriptXml(RepoObjectMetadata objectMetadata) {
     try (InputStream manuscriptInputStream = contentRepoService.getRepoObject(objectMetadata.getVersion())) {
       return parseXml(manuscriptInputStream);
     } catch (IOException e) {
@@ -135,8 +134,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
   }
 
-  @Override
-  public RepoObjectMetadata getManuscriptMetadata(ArticleIngestion ingestion) {
+  private RepoObjectMetadata getManuscriptMetadata(ArticleIngestion ingestion) {
     Doi articleDoi = Doi.create(ingestion.getArticle().getDoi());
     ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(articleDoi, ingestion.getIngestionNumber());
     ArticleItemIdentifier articleItemId = ingestionId.getItemFor();
