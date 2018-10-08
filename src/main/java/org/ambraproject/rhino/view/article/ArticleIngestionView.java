@@ -65,8 +65,7 @@ public class ArticleIngestionView implements JsonOutputView {
     public ArticleIngestionView getView(ArticleIngestion ingestion) {
       JournalOutputView journal = JournalOutputView.getView(ingestion.getJournal());
 
-      RepoObjectMetadata objectMetadata = articleCrudService.getManuscriptMetadata(ingestion);
-      Document document = articleCrudService.getManuscriptXml(objectMetadata);
+      Document document = articleCrudService.getManuscriptXml(ingestion);
       ArticleMetadata metadata;
       ArticleCustomMetadata customMetadata;
       try {
@@ -76,8 +75,7 @@ public class ArticleIngestionView implements JsonOutputView {
         throw new RuntimeException(e);
       }
 
-      String bucketName = objectMetadata.getVersion().getId().getBucketName();
-      return new ArticleIngestionView(ingestion, metadata, customMetadata, journal, bucketName);
+      return new ArticleIngestionView(ingestion, metadata, customMetadata, journal);
     }
 
   }
@@ -86,21 +84,19 @@ public class ArticleIngestionView implements JsonOutputView {
   private final ArticleMetadata metadata;
   private final ArticleCustomMetadata customMetadata;
   private final JournalOutputView journal;
-  private final String bucketName;
 
   private ArticleIngestionView(ArticleIngestion ingestion,
                                ArticleMetadata metadata,
                                ArticleCustomMetadata customMetadata,
-                               JournalOutputView journal,
-                               String bucketName) {
+                               JournalOutputView journal) {
     Preconditions.checkArgument(ingestion.getArticle().getDoi().equals(metadata.getDoi()));
     this.ingestion = ingestion;
     this.metadata = metadata;
 
     this.customMetadata = Objects.requireNonNull(customMetadata);
     this.journal = Objects.requireNonNull(journal);
-    this.bucketName = bucketName;
   }
+
 
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
@@ -108,7 +104,6 @@ public class ArticleIngestionView implements JsonOutputView {
     serialized.addProperty("doi", ingestion.getArticle().getDoi());
     serialized.addProperty("ingestionNumber", ingestion.getIngestionNumber());
     serialized.add("journal", context.serialize(journal));
-    serialized.addProperty("bucketName", bucketName);
 
     if (!Strings.isNullOrEmpty(ingestion.getPreprintDoi())) {
       serialized.addProperty("preprintDoi", ingestion.getPreprintDoi());
