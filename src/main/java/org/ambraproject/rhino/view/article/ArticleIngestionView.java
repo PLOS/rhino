@@ -39,7 +39,6 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
-import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.Document;
 

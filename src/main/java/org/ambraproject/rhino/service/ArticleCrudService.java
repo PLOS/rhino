@@ -44,7 +44,6 @@ import org.ambraproject.rhino.view.article.ArticleRevisionView;
 import org.ambraproject.rhino.view.article.CategoryAssignmentView;
 import org.ambraproject.rhino.view.article.ItemSetView;
 import org.ambraproject.rhino.view.article.author.ArticleAllAuthorsView;
-import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
