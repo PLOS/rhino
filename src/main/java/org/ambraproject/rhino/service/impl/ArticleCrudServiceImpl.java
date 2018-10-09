@@ -68,6 +68,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.plos.crepo.service.ContentRepoService;
 import org.slf4j.Logger;
@@ -359,13 +360,15 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       query.setParameter("ingestion", ingestion);
       return (List<ArticleFile>) query.list();
     });
+    
 
     Map<String, ByteSource> archiveMap = files.stream().collect(Collectors.toMap(
         ArticleFile::getIngestedFileName,
         (ArticleFile file) -> new ByteSource() {
           @Override
           public InputStream openStream() throws IOException {
-            return contentRepoService.getRepoObject(file.getCrepoVersion());
+            RepoVersion repoVersion = RepoVersion.create(file.getBucketName(), file.getCrepoKey(), file.getCrepoUuid());
+            return contentRepoService.getRepoObject(repoVersion);
           }
         }));
 

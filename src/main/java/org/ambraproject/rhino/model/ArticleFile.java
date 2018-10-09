@@ -24,7 +24,6 @@ package org.ambraproject.rhino.model;
 
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
-import org.plos.crepo.model.identity.RepoVersion;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -162,16 +161,6 @@ public class ArticleFile implements Timestamped {
   public Date getLastModified() {
     return getCreated();
   }
-
-
-  private transient RepoVersion crepoVersion;
-
-  @Transient
-  public RepoVersion getCrepoVersion() {
-    return (crepoVersion != null) ? crepoVersion :
-        (crepoVersion = RepoVersion.create(bucketName, crepoKey, crepoUuid));
-  }
-
 
   @Override
   public boolean equals(Object o) {

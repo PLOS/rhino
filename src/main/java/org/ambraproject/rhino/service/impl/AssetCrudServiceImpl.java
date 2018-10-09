@@ -29,6 +29,7 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.plos.crepo.exceptions.NotFoundException;
+import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,8 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     ArticleFile articleFile = work.getFile(fileType)
         .orElseThrow(() -> new RestClientException("Unrecognized type: " + fileType, HttpStatus.NOT_FOUND));
     try {
-      return contentRepoService.getRepoObjectMetadata(articleFile.getCrepoVersion());
+      RepoVersion repoVersion = RepoVersion.create(articleFile.getBucketName(), articleFile.getCrepoKey(), articleFile.getCrepoUuid());
+      return contentRepoService.getRepoObjectMetadata(repoVersion);
     } catch (NotFoundException e) {
       throw new RestClientException("Object not found: " + fileId + ". File info: " + articleFile,
           HttpStatus.NOT_FOUND);
