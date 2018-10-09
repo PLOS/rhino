@@ -22,6 +22,8 @@
 
 package org.ambraproject.rhino.service;
 
+import java.io.InputStream;
+
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 
@@ -29,4 +31,5 @@ public interface AssetCrudService {
 
   public abstract RepoObjectMetadata getArticleItemFile(ArticleFileIdentifier fileId);
 
+  public abstract InputStream getRepoObjectInputStream(RepoObjectMetadata metadata);
 }

@@ -39,7 +39,6 @@ import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
-import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -53,9 +52,6 @@ public class AssetFileCrudController extends RestController {
 
   @Autowired
   private AssetCrudService assetCrudService;
-  @Autowired
-  private ContentRepoService contentRepoService;
-
 
   private void serve(HttpServletRequest request, HttpServletResponse response, RepoObjectMetadata objMeta)
       throws IOException {
@@ -75,7 +71,7 @@ public class AssetFileCrudController extends RestController {
       return;
     }
 
-    try (InputStream fileStream = contentRepoService.getRepoObject(objMeta.getVersion());
+    try (InputStream fileStream = assetCrudService.getRepoObjectInputStream(objMeta);
          OutputStream responseStream = response.getOutputStream()) {
       ByteStreams.copy(fileStream, responseStream);
     }

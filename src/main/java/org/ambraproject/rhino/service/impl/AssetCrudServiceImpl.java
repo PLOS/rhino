@@ -22,6 +22,8 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import java.io.InputStream;
+
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.model.ArticleFile;
 import org.ambraproject.rhino.model.ArticleItem;
@@ -58,4 +60,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     }
   }
 
+  public InputStream getRepoObjectInputStream(RepoObjectMetadata metadata) {
+    return contentRepoService.getRepoObject(metadata.getVersion());
+  }
 }
