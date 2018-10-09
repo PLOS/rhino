@@ -28,7 +28,6 @@ import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -45,9 +44,6 @@ public abstract class AmbraService {
 
   @Autowired
   protected HibernateTemplate hibernateTemplate;
-
-  @Autowired
-  protected ContentRepoService contentRepoService;
 
   @Autowired
   protected Gson entityGson;

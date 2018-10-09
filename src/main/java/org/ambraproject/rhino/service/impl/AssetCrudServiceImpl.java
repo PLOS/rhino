@@ -30,6 +30,7 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.plos.crepo.exceptions.NotFoundException;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
+import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
@@ -37,6 +38,9 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
 
   @Autowired
   private ArticleCrudService articleCrudService;
+
+  @Autowired
+  private ContentRepoService contentRepoService;
 
   @Override
   public RepoObjectMetadata getArticleItemFile(ArticleFileIdentifier fileId) {

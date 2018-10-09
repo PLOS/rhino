@@ -69,6 +69,7 @@ import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
+import org.plos.crepo.service.ContentRepoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,6 +114,9 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private ArticleIngestionView.Factory articleIngestionViewFactory;
   @Autowired
   private ItemSetView.Factory itemSetViewFactory;
+
+  @Autowired
+  protected ContentRepoService contentRepoService;
 
   @Override
   public void populateCategories(ArticleIdentifier articleId) throws IOException {
