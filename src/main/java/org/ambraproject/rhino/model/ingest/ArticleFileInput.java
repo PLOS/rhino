@@ -25,6 +25,8 @@ package org.ambraproject.rhino.model.ingest;
 import org.plos.crepo.model.input.RepoObjectInput;
 import com.google.auto.value.AutoValue;
 import java.util.Objects;
+import org.ambraproject.rhino.content.xml.ManifestXml;
+import org.ambraproject.rhino.util.Archive;
 
 @AutoValue
 abstract public class ArticleFileInput {
@@ -32,13 +34,23 @@ abstract public class ArticleFileInput {
     return new AutoValue_ArticleFileInput.Builder();
   }
 
-  abstract public String getFilename();
-  abstract public RepoObjectInput getObject();
+  abstract public Archive getArchive();
+  abstract public String getContentType();
+  abstract public String getDestinationBucketName();
+  abstract public String getDownloadName();
+  abstract public ManifestXml.ManifestFile getManifestFile();
+
+  public String getFilename() {
+    return this.getManifestFile().getEntry();
+  }
 
   @AutoValue.Builder
   abstract public static class Builder {
-    abstract public Builder setFilename(String value);
-    abstract public Builder setObject(RepoObjectInput value);
     abstract public ArticleFileInput build();
+    abstract public Builder setArchive(Archive value);
+    abstract public Builder setContentType(String value);
+    abstract public Builder setDestinationBucketName(String value);
+    abstract public Builder setDownloadName(String value);
+    abstract public Builder setManifestFile(ManifestXml.ManifestFile value);
   }
 }

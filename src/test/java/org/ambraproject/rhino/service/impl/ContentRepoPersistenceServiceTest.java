@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 import org.ambraproject.rhino.AbstractRhinoTest;
+import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleFile;
@@ -21,6 +22,7 @@ import org.ambraproject.rhino.model.ingest.ArticleFileInput;
 import org.ambraproject.rhino.model.ingest.ArticleItemInput;
 import org.ambraproject.rhino.model.ingest.ArticlePackage;
 import org.ambraproject.rhino.service.ContentRepoPersistenceService;
+import org.ambraproject.rhino.util.Archive;
 import org.plos.crepo.model.input.RepoObjectInput;
 import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.service.ContentRepoService;
@@ -84,6 +86,19 @@ public class ContentRepoPersistenceServiceTest extends AbstractRhinoTest {
     return contentRepoPersistenceService;
   }
 
+  private ArticleFileInput makeArticleFileInput(String name) {
+    ManifestXml.ManifestFile manifest = mock(ManifestXml.ManifestFile.class);
+    when(manifest.getEntry()).thenReturn(name);
+    when(manifest.getCrepoKey()).thenReturn(UUID.randomUUID().toString());
+    return ArticleFileInput.builder()
+      .setArchive(mock(Archive.class))
+      .setDestinationBucketName("my-bucket")
+      .setManifestFile(manifest)
+      .setContentType("application/octet-stream")
+      .setDownloadName(name)
+      .build();
+  }
+
   /**
    * Test successful creation of an item in content repo.
    */
@@ -91,10 +106,10 @@ public class ContentRepoPersistenceServiceTest extends AbstractRhinoTest {
   @DirtiesContext
   public void testCreateArticleItemShouldSucceed() {
     final ImmutableMap<String, ArticleFileInput> expectedFileInputs = ImmutableMap.of(
-        "type1", ArticleFileInput.builder().setFilename("file1").setObject(mock(RepoObjectInput.class)).build(),
-        "type2", ArticleFileInput.builder().setFilename("file2").setObject(mock(RepoObjectInput.class)).build(),
-        "type3", ArticleFileInput.builder().setFilename("file3").setObject(mock(RepoObjectInput.class)).build(),
-        "type4", ArticleFileInput.builder().setFilename("file4").setObject(mock(RepoObjectInput.class)).build());
+        "type1", makeArticleFileInput("file1"),
+        "type2", makeArticleFileInput("file2"),
+        "type3", makeArticleFileInput("file3"),
+        "type4", makeArticleFileInput("file4"));
     final int expectedFileCount = expectedFileInputs.size();
     final ImmutableSet<String> expectedFileTypes = expectedFileInputs.keySet();
     final ImmutableSet<String> expectedFileNames = ImmutableSet.of("file1", "file2", "file3",
@@ -146,12 +161,12 @@ public class ContentRepoPersistenceServiceTest extends AbstractRhinoTest {
   public void testPersistAncillaryFilesShouldSucceed() {
     final String destinationBucket = "ancillary";
     final ImmutableList<ArticleFileInput> expectedAncillaryFiles = ImmutableList.of(
-        ArticleFileInput.builder().setFilename("ancillary1").setObject(mock(RepoObjectInput.class)).build(),
-        ArticleFileInput.builder().setFilename("ancillary2").setObject(mock(RepoObjectInput.class)).build(),
-        ArticleFileInput.builder().setFilename("ancillary3").setObject(mock(RepoObjectInput.class)).build(),
-        ArticleFileInput.builder().setFilename("ancillary4").setObject(mock(RepoObjectInput.class)).build(),
-        ArticleFileInput.builder().setFilename("ancillary5").setObject(mock(RepoObjectInput.class)).build(),
-        ArticleFileInput.builder().setFilename("ancillary6").setObject(mock(RepoObjectInput.class)).build());
+        makeArticleFileInput("ancillary1"),
+        makeArticleFileInput("ancillary2"),
+        makeArticleFileInput("ancillary3"),
+        makeArticleFileInput("ancillary4"),
+        makeArticleFileInput("ancillary5"),
+        makeArticleFileInput("ancillary6"));
     final int expectedFileCount = expectedAncillaryFiles.size();
     final ImmutableSet<String> expectedFileNames = ImmutableSet.of("ancillary1", "ancillary2",
         "ancillary3", "ancillary4", "ancillary5", "ancillary6");

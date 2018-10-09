@@ -31,7 +31,6 @@ import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.ContentTypeInference;
-import org.plos.crepo.model.input.RepoObjectInput;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Node;
 
@@ -100,14 +99,14 @@ public class ArticlePackageBuilder {
   }
 
   private ArticleFileInput buildObject(ManifestXml.ManifestFile manifestFile, String downloadName, String contentType) {
-    String filename = manifestFile.getEntry();
-    archive.checkEntryName(filename);
-    RepoObjectInput repoObjectInput = RepoObjectInput.builder(destinationBucketName, manifestFile.getCrepoKey())
-        .setContentAccessor(() -> archive.openFile(filename))
-        .setContentType(contentType)
-        .setDownloadName(downloadName)
-        .build();
-    return ArticleFileInput.builder().setFilename(filename).setObject(repoObjectInput).build();
+    archive.checkEntryName(manifestFile.getEntry());
+    return ArticleFileInput.builder()
+      .setArchive(archive)
+      .setDestinationBucketName(destinationBucketName)
+      .setManifestFile(manifestFile)
+      .setContentType(contentType)
+      .setDownloadName(downloadName)
+      .build();
   }
 
   private static String generateDownloadName(String doi, String filename) {

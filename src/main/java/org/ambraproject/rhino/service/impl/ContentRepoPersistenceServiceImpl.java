@@ -31,6 +31,7 @@ import org.ambraproject.rhino.model.ingest.ArticlePackage;
 import org.ambraproject.rhino.service.ContentRepoPersistenceService;
 import org.plos.crepo.model.identity.RepoId;
 import org.plos.crepo.model.identity.RepoVersion;
+import org.plos.crepo.model.input.RepoObjectInput;
 import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -43,6 +44,14 @@ public class ContentRepoPersistenceServiceImpl implements ContentRepoPersistence
   @Autowired
   private ContentRepoService contentRepoService;
 
+  private RepoObjectInput makeRepoObjectInput(ArticleFileInput fileInput) {
+    return RepoObjectInput.builder(fileInput.getDestinationBucketName(), fileInput.getManifestFile().getCrepoKey())
+        .setContentAccessor(() -> fileInput.getArchive().openFile(fileInput.getFilename()))
+        .setContentType(fileInput.getContentType())
+        .setDownloadName(fileInput.getDownloadName())
+        .build();
+  }
+
   @Override
   public ArticleItem createItem(ArticleItemInput itemInput, ArticleIngestion ingestion) {
     ArticleItem item = new ArticleItem();
@@ -53,8 +62,7 @@ public class ContentRepoPersistenceServiceImpl implements ContentRepoPersistence
     Collection<ArticleFile> files = new ArrayList<>(itemInput.getFiles().entrySet().size());
     for (Map.Entry<String, ArticleFileInput> entry : itemInput.getFiles().entrySet()) {
       ArticleFileInput fileInput = entry.getValue();
-      RepoVersion repoVersion = contentRepoService.autoCreateRepoObject(fileInput.getObject())
-          .getVersion();
+      RepoVersion repoVersion = contentRepoService.autoCreateRepoObject(makeRepoObjectInput(fileInput)).getVersion();
 
       ArticleFile file = new ArticleFile();
       file.setIngestion(ingestion);
@@ -82,8 +90,7 @@ public class ContentRepoPersistenceServiceImpl implements ContentRepoPersistence
                                                        ArticleIngestion ingestion) {
     Collection<ArticleFile> files = new ArrayList<>();
     for (ArticleFileInput ancillaryFile : articlePackage.getAncillaryFiles()) {
-      RepoVersion repoVersion = contentRepoService.autoCreateRepoObject(ancillaryFile.getObject())
-          .getVersion();
+      RepoVersion repoVersion = contentRepoService.autoCreateRepoObject(makeRepoObjectInput(ancillaryFile)).getVersion();
 
       ArticleFile file = new ArticleFile();
       file.setIngestion(ingestion);
