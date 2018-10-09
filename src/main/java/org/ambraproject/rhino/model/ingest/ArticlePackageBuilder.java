@@ -101,8 +101,9 @@ public class ArticlePackageBuilder {
 
   private ArticleFileInput buildObject(ManifestXml.ManifestFile manifestFile, String downloadName, String contentType) {
     String filename = manifestFile.getEntry();
+    archive.checkEntryName(filename);
     RepoObjectInput repoObjectInput = RepoObjectInput.builder(destinationBucketName, manifestFile.getCrepoKey())
-        .setContentAccessor(archive.getContentAccessorFor(filename))
+        .setContentAccessor(() -> archive.openFile(filename))
         .setContentType(contentType)
         .setDownloadName(downloadName)
         .build();

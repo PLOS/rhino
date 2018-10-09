@@ -27,7 +27,6 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.io.ByteSource;
 import com.google.common.io.ByteStreams;
-import org.plos.crepo.model.input.RepoObjectInput;
 
 import java.io.ByteArrayInputStream;
 import java.io.Closeable;
@@ -104,11 +103,15 @@ public abstract class Archive implements Closeable {
 
   protected abstract InputStream openFileFrom(Object fileObj);
 
-  public final RepoObjectInput.ContentAccessor getContentAccessorFor(final String entryName) {
+  /**
+   * Throw an exception if the entryName is not valid.
+   *
+   * @param entryName entry (file) name to check
+   */
+  public void checkEntryName(final String entryName) {
     if (!files.containsKey(Preconditions.checkNotNull(entryName))) {
       throw new IllegalArgumentException("Archive does not contain an entry named: " + entryName);
     }
-    return () -> openFile(entryName);
   }
 
   /**
