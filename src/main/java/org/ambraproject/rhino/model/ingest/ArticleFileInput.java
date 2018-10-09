@@ -23,25 +23,22 @@
 package org.ambraproject.rhino.model.ingest;
 
 import org.plos.crepo.model.input.RepoObjectInput;
-
+import com.google.auto.value.AutoValue;
 import java.util.Objects;
 
-public class ArticleFileInput {
-
-  private final String filename;
-  private final RepoObjectInput object;
-
-  public ArticleFileInput(String filename, RepoObjectInput object) {
-    this.filename = Objects.requireNonNull(filename);
-    this.object = Objects.requireNonNull(object);
+@AutoValue
+abstract public class ArticleFileInput {
+  public static Builder builder() {
+    return new AutoValue_ArticleFileInput.Builder();
   }
 
-  public String getFilename() {
-    return filename;
-  }
+  abstract public String getFilename();
+  abstract public RepoObjectInput getObject();
 
-  public RepoObjectInput getObject() {
-    return object;
+  @AutoValue.Builder
+  abstract public static class Builder {
+    abstract public Builder setFilename(String value);
+    abstract public Builder setObject(RepoObjectInput value);
+    abstract public ArticleFileInput build();
   }
-
 }

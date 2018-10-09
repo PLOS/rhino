@@ -91,10 +91,10 @@ public class ContentRepoPersistenceServiceTest extends AbstractRhinoTest {
   @DirtiesContext
   public void testCreateArticleItemShouldSucceed() {
     final ImmutableMap<String, ArticleFileInput> expectedFileInputs = ImmutableMap.of(
-        "type1", new ArticleFileInput("file1" /* filename */, mock(RepoObjectInput.class)),
-        "type2", new ArticleFileInput("file2" /* filename */, mock(RepoObjectInput.class)),
-        "type3", new ArticleFileInput("file3" /* filename */, mock(RepoObjectInput.class)),
-        "type4", new ArticleFileInput("file4" /* filename */, mock(RepoObjectInput.class)));
+        "type1", ArticleFileInput.builder().setFilename("file1").setObject(mock(RepoObjectInput.class)).build(),
+        "type2", ArticleFileInput.builder().setFilename("file2").setObject(mock(RepoObjectInput.class)).build(),
+        "type3", ArticleFileInput.builder().setFilename("file3").setObject(mock(RepoObjectInput.class)).build(),
+        "type4", ArticleFileInput.builder().setFilename("file4").setObject(mock(RepoObjectInput.class)).build());
     final int expectedFileCount = expectedFileInputs.size();
     final ImmutableSet<String> expectedFileTypes = expectedFileInputs.keySet();
     final ImmutableSet<String> expectedFileNames = ImmutableSet.of("file1", "file2", "file3",
@@ -146,12 +146,12 @@ public class ContentRepoPersistenceServiceTest extends AbstractRhinoTest {
   public void testPersistAncillaryFilesShouldSucceed() {
     final String destinationBucket = "ancillary";
     final ImmutableList<ArticleFileInput> expectedAncillaryFiles = ImmutableList.of(
-        new ArticleFileInput("ancillary1" /* filename */, mock(RepoObjectInput.class)),
-        new ArticleFileInput("ancillary2" /* filename */, mock(RepoObjectInput.class)),
-        new ArticleFileInput("ancillary3" /* filename */, mock(RepoObjectInput.class)),
-        new ArticleFileInput("ancillary4" /* filename */, mock(RepoObjectInput.class)),
-        new ArticleFileInput("ancillary5" /* filename */, mock(RepoObjectInput.class)),
-        new ArticleFileInput("ancillary6" /* filename */, mock(RepoObjectInput.class)));
+        ArticleFileInput.builder().setFilename("ancillary1").setObject(mock(RepoObjectInput.class)).build(),
+        ArticleFileInput.builder().setFilename("ancillary2").setObject(mock(RepoObjectInput.class)).build(),
+        ArticleFileInput.builder().setFilename("ancillary3").setObject(mock(RepoObjectInput.class)).build(),
+        ArticleFileInput.builder().setFilename("ancillary4").setObject(mock(RepoObjectInput.class)).build(),
+        ArticleFileInput.builder().setFilename("ancillary5").setObject(mock(RepoObjectInput.class)).build(),
+        ArticleFileInput.builder().setFilename("ancillary6").setObject(mock(RepoObjectInput.class)).build());
     final int expectedFileCount = expectedAncillaryFiles.size();
     final ImmutableSet<String> expectedFileNames = ImmutableSet.of("ancillary1", "ancillary2",
         "ancillary3", "ancillary4", "ancillary5", "ancillary6");

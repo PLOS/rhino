@@ -106,7 +106,7 @@ public class ArticlePackageBuilder {
         .setContentType(contentType)
         .setDownloadName(downloadName)
         .build();
-    return new ArticleFileInput(filename, repoObjectInput);
+    return ArticleFileInput.builder().setFilename(filename).setObject(repoObjectInput).build();
   }
 
   private static String generateDownloadName(String doi, String filename) {
