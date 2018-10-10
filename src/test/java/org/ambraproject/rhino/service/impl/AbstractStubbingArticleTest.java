@@ -11,7 +11,6 @@ import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.view.article.ArticleIngestionView;
@@ -146,13 +145,6 @@ public abstract class AbstractStubbingArticleTest extends AbstractRhinoTest {
    */
   public AbstractStubbingArticleTest(boolean spyOnHibernateTemplate) {
     super(spyOnHibernateTemplate);
-  }
-
-  @Bean
-  public AssetCrudService assetCrudService() {
-    AssetCrudService mockAssetCrudService = mock(AssetCrudService.class);
-    LOG.debug("assetCrudService() * --> {}", mockAssetCrudService);
-    return mockAssetCrudService;
   }
 
   @Bean

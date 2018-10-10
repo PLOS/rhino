@@ -45,7 +45,6 @@ import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService.SortOrder;
-import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.view.ResolvedDoiView;
 import org.ambraproject.rhino.view.article.ArticleOverview;
@@ -64,12 +63,44 @@ import org.springframework.test.context.ContextConfiguration;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.mock;
+
 @ContextConfiguration(classes = ArticleCrudServiceImplTest.class)
 @Configuration
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class ArticleCrudServiceImplTest extends AbstractStubbingArticleTest {
 
-  private ArticleCrudService mockArticleCrudService;
+  private ArticleCrudServiceImpl mockArticleCrudService;
+  private ContentRepoService mockContentRepoService;
 
   private HibernateTemplate mockHibernateTemplate;
 
@@ -79,17 +110,25 @@ public class ArticleCrudServiceImplTest extends AbstractStubbingArticleTest {
 
   @Before
   public void initMocks() throws IllegalAccessException, NoSuchFieldException {
-    mockArticleCrudService = applicationContext.getBean(ArticleCrudService.class);
+    mockArticleCrudService = (ArticleCrudServiceImpl) applicationContext.getBean(ArticleCrudService.class);
     reset(mockArticleCrudService);
     mockHibernateTemplate = applicationContext.getBean(HibernateTemplate.class);
     reset(mockHibernateTemplate);
+    mockContentRepoService = applicationContext.getBean(ContentRepoService.class);
   }
 
   @Bean
-  public ArticleCrudService articleCrudService() {
+  public ArticleCrudServiceImpl articleCrudService() {
     mockArticleCrudService = spy(ArticleCrudServiceImpl.class);
     LOG.debug("articleCrudService() * --> {}", mockArticleCrudService);
     return mockArticleCrudService;
+  }
+
+  @Bean
+  public ContentRepoService contentRepoService() {
+    mockContentRepoService = mock(ContentRepoService.class);
+    LOG.debug("contentRepoService() * --> {}", mockContentRepoService);
+    return mockContentRepoService;
   }
 
   private Collection<ArticleRevision> createStubArticleRevisions() {
@@ -141,15 +180,34 @@ public class ArticleCrudServiceImplTest extends AbstractStubbingArticleTest {
   @Test
   public void testGetManuscriptXml() throws Exception {
     setCommonManuscriptMocks();
+    ArticleIngestion articleIngestion = mock(ArticleIngestion.class);
+    Article mockArticle = mock(Article.class);
+    ArticleItem mockItem = mock(ArticleItem.class);
+    ArticleFile mockArticleFile = mock(ArticleFile.class);
+    RepoObjectMetadata mockMetadata = mock(RepoObjectMetadata.class);
+    when(articleIngestion.getArticle()).thenReturn(mockArticle);
+    when(articleIngestion.getIngestionNumber()).thenReturn(0);
+    when(mockArticle.getDoi()).thenReturn("10.1371/journal.pcrypt.0");
+    when(mockHibernateTemplate.execute(any())).thenReturn(mockItem);
+    when(mockItem.getFile("manuscript")).thenReturn(Optional.of(mockArticleFile));
+    when(mockArticleFile.getBucketName()).thenReturn("my-bucket");
+    when(mockArticleFile.getCrepoKey()).thenReturn("key");
+    when(mockArticleFile.getCrepoUuid()).thenReturn(UUID.randomUUID().toString());
+    when(mockContentRepoService.getRepoObjectMetadata(any(RepoVersion.class))).thenReturn(mockMetadata);
 
-    ArticleIngestion articleIngestion = new ArticleIngestion();
-    articleIngestion.setArticle(createStubArticle());
-    mockArticleCrudService.getManuscriptXml(articleIngestion);
+    RepoVersion mockRepoVersion = mock(RepoVersion.class);
+    when(mockMetadata.getVersion()).thenReturn(mockRepoVersion);
+    mockArticleCrudService.getManuscriptXml(articleIngestion); 
+  }
+
+  @Test
+  public void testGetManuscriptMetadata() throws TransformerException {
+    setCommonManuscriptMocks();
+    ArticleIngestion articleIngestion = setManuscriptMetadataMocks();
+    mockArticleCrudService.getManuscriptMetadata(articleIngestion);
   }
 
   private void setCommonManuscriptMocks() throws TransformerException {
-    final AssetCrudService mockAssetCrudService = applicationContext.getBean(AssetCrudService.class);
-    final ContentRepoService mockContentRepoService = applicationContext.getBean(ContentRepoService.class);
 
     final HashMap<String, Object> repoObjectMap = new HashMap<>();
     repoObjectMap.put("key", "0");
@@ -157,10 +215,26 @@ public class ArticleCrudServiceImplTest extends AbstractStubbingArticleTest {
     final RepoObjectMetadata repoObjectMetadata
         = new RepoObjectMetadata("bucket", repoObjectMap);
 
-    when(mockAssetCrudService.getArticleItemFile(any())).thenReturn(repoObjectMetadata);
-
     when(mockContentRepoService.getRepoObject(any(RepoVersion.class)))
         .thenReturn(createStubInputStream());
+  }
+
+  private ArticleIngestion setManuscriptMetadataMocks() throws TransformerException {
+    ArticleIngestion articleIngestion = mock(ArticleIngestion.class);
+    Article mockArticle = mock(Article.class);
+    ArticleItem mockItem = mock(ArticleItem.class);
+    ArticleFile mockArticleFile = mock(ArticleFile.class);
+    RepoObjectMetadata mockMetadata = mock(RepoObjectMetadata.class);
+    when(articleIngestion.getArticle()).thenReturn(mockArticle);
+    when(articleIngestion.getIngestionNumber()).thenReturn(0);
+    when(mockArticle.getDoi()).thenReturn("10.1371/journal.pcrypt.0");
+    when(mockHibernateTemplate.execute(any())).thenReturn(mockItem);
+    when(mockItem.getFile("manuscript")).thenReturn(Optional.of(mockArticleFile));
+    when(mockArticleFile.getBucketName()).thenReturn("my-bucket");
+    when(mockArticleFile.getCrepoKey()).thenReturn("key");
+    when(mockArticleFile.getCrepoUuid()).thenReturn(UUID.randomUUID().toString());
+    when(mockContentRepoService.getRepoObjectMetadata(any(RepoVersion.class))).thenReturn(mockMetadata);
+    return articleIngestion;
   }
 
   @Test
@@ -175,8 +249,26 @@ public class ArticleCrudServiceImplTest extends AbstractStubbingArticleTest {
 
   @Test
   public void testGetRawCategoriesAndText() throws Exception {
-    setCommonArticleMocks();
+    ArticleIngestion articleIngestion = mock(ArticleIngestion.class);
+    Article mockArticle = mock(Article.class);
+    ArticleItem mockItem = mock(ArticleItem.class);
+    ArticleFile mockArticleFile = mock(ArticleFile.class);
+    RepoObjectMetadata mockMetadata = mock(RepoObjectMetadata.class);
+    when(articleIngestion.getArticle()).thenReturn(mockArticle);
+    when(articleIngestion.getIngestionNumber()).thenReturn(0);
+    when(mockArticle.getDoi()).thenReturn("10.1371/journal.pcrypt.0");
+    when(mockHibernateTemplate.execute(any())).thenReturn(mockItem);
+    when(mockItem.getFile("manuscript")).thenReturn(Optional.of(mockArticleFile));
+    when(mockArticleFile.getBucketName()).thenReturn("my-bucket");
+    when(mockArticleFile.getCrepoKey()).thenReturn("key");
+    when(mockArticleFile.getCrepoUuid()).thenReturn(UUID.randomUUID().toString());
+    when(mockContentRepoService.getRepoObjectMetadata(any(RepoVersion.class))).thenReturn(mockMetadata);
+    ArticleRevision articleRevision = createStubArticleRevision();
+    when(mockHibernateTemplate.execute(any())).thenReturn(stubArticle).thenReturn(1)
+      .thenReturn(articleRevision).thenReturn(mockItem);
     setCommonManuscriptMocks();
+    RepoVersion mockRepoVersion = mock(RepoVersion.class);
+    when(mockMetadata.getVersion()).thenReturn(mockRepoVersion);
 
     final ArrayList<String> categoryList = new ArrayList<>();
     categoryList.add("test/test");
@@ -214,10 +306,28 @@ public class ArticleCrudServiceImplTest extends AbstractStubbingArticleTest {
   @Test
   public void testRefreshArticleRelationships() throws Exception {
     setCommonManuscriptMocks();
-
+    ArticleIngestion articleIngestion = mock(ArticleIngestion.class);
+    Article mockArticle = mock(Article.class);
+    ArticleItem mockItem = mock(ArticleItem.class);
+    ArticleFile mockArticleFile = mock(ArticleFile.class);
+    RepoObjectMetadata mockMetadata = mock(RepoObjectMetadata.class);
     final ArticleRelationship dummyRelationship = new ArticleRelationship();
     final List<ArticleRelationship> dummyRelationships = ImmutableList.of(dummyRelationship);
-    when(mockHibernateTemplate.execute(any())).thenReturn(dummyRelationships);
+
+    when(articleIngestion.getArticle()).thenReturn(mockArticle);
+    when(articleIngestion.getIngestionNumber()).thenReturn(0);
+    when(mockArticle.getDoi()).thenReturn("10.1371/journal.pcrypt.0");
+    when(mockHibernateTemplate.execute(any()))
+      .thenReturn(mockItem)
+      .thenReturn(dummyRelationships);
+    when(mockItem.getFile("manuscript")).thenReturn(Optional.of(mockArticleFile));
+    when(mockArticleFile.getBucketName()).thenReturn("my-bucket");
+    when(mockArticleFile.getCrepoKey()).thenReturn("key");
+    when(mockArticleFile.getCrepoUuid()).thenReturn(UUID.randomUUID().toString());
+    when(mockContentRepoService.getRepoObjectMetadata(any(RepoVersion.class))).thenReturn(mockMetadata);
+
+    RepoVersion mockRepoVersion = mock(RepoVersion.class);
+    when(mockMetadata.getVersion()).thenReturn(mockRepoVersion);
 
     mockArticleCrudService.refreshArticleRelationships(createStubArticleRevision());
 

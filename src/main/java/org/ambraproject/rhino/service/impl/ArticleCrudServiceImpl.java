@@ -24,6 +24,7 @@ package org.ambraproject.rhino.service.impl;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
@@ -50,7 +51,6 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.response.CacheableResponse;
 import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.view.ResolvedDoiView;
@@ -68,6 +68,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.plos.crepo.exceptions.NotFoundException;
 import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.plos.crepo.service.ContentRepoService;
@@ -106,8 +107,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public static final int MAX_PAGE_SIZE = 1000;
 
   @Autowired
-  AssetCrudService assetCrudService;
-  @Autowired
   private XpathReader xpathReader;
   @Autowired
   private TaxonomyService taxonomyService;
@@ -132,19 +131,21 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   private Document getManuscriptXml(RepoObjectMetadata objectMetadata) {
-    try (InputStream manuscriptInputStream = contentRepoService.getRepoObject(objectMetadata.getVersion())) {
+    RepoVersion repoVersion = objectMetadata.getVersion();
+    try (InputStream manuscriptInputStream = contentRepoService.getRepoObject(repoVersion)) {
       return parseXml(manuscriptInputStream);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
   }
 
-  private RepoObjectMetadata getManuscriptMetadata(ArticleIngestion ingestion) {
+  @VisibleForTesting
+  public RepoObjectMetadata getManuscriptMetadata(ArticleIngestion ingestion) {
     Doi articleDoi = Doi.create(ingestion.getArticle().getDoi());
     ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(articleDoi, ingestion.getIngestionNumber());
     ArticleItemIdentifier articleItemId = ingestionId.getItemFor();
     ArticleFileIdentifier manuscriptId = ArticleFileIdentifier.create(articleItemId, "manuscript");
-    RepoObjectMetadata objectMetadata = assetCrudService.getArticleItemFile(manuscriptId);
+    RepoObjectMetadata objectMetadata = getArticleItemFile(manuscriptId);
     return objectMetadata;
   }
 
@@ -669,5 +670,27 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       }
     }
     return ImmutableList.of();
+  }
+
+  @Override
+  public RepoObjectMetadata getArticleItemFile(ArticleFileIdentifier fileId) {
+    ArticleItemIdentifier id = fileId.getItemIdentifier();
+    ArticleItem work = getArticleItem(id);
+    String fileType = fileId.getFileType();
+    ArticleFile articleFile = work.getFile(fileType)
+        .orElseThrow(() -> new RestClientException("Unrecognized type: " + fileType, HttpStatus.NOT_FOUND));
+    try {
+      RepoVersion repoVersion = RepoVersion.create(articleFile.getBucketName(), articleFile.getCrepoKey(), articleFile.getCrepoUuid());
+      // throw new RuntimeException(contentRepoService.getRepoObjectMetadata(repoVersion).toString());
+      return contentRepoService.getRepoObjectMetadata(repoVersion);
+    } catch (NotFoundException e) {
+      throw new RestClientException("Object not found: " + fileId + ". File info: " + articleFile,
+          HttpStatus.NOT_FOUND);
+    }
+  }
+
+  @Override
+  public InputStream getRepoObjectInputStream(RepoObjectMetadata metadata) {
+    return contentRepoService.getRepoObject(metadata.getVersion());
   }
 }

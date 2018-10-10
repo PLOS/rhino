@@ -22,6 +22,7 @@
 
 package org.ambraproject.rhino.service;
 
+import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleItemIdentifier;
@@ -44,9 +45,11 @@ import org.ambraproject.rhino.view.article.ArticleRevisionView;
 import org.ambraproject.rhino.view.article.CategoryAssignmentView;
 import org.ambraproject.rhino.view.article.ItemSetView;
 import org.ambraproject.rhino.view.article.author.ArticleAllAuthorsView;
+import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -249,4 +252,8 @@ public interface ArticleCrudService {
    * @param RelatedArticleLink Data parsed from XML
    */
   public abstract ArticleRelationship fromRelatedArticleLink(Article article, RelatedArticleLink ral);
+
+  public abstract RepoObjectMetadata getArticleItemFile(ArticleFileIdentifier fileId);
+
+  public abstract InputStream getRepoObjectInputStream(RepoObjectMetadata metadata);
 }

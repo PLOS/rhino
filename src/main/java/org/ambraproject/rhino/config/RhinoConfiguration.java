@@ -45,7 +45,6 @@ import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.ArticleRevisionWriteService;
-import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.ContentRepoPersistenceService;
@@ -56,7 +55,6 @@ import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleListCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleRevisionWriteServiceImpl;
-import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.CommentCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
 import org.ambraproject.rhino.service.impl.ContentRepoPersistenceServiceImpl;
@@ -215,11 +213,6 @@ public class RhinoConfiguration {
   @Bean
   public ArticleCrudService articleCrudService() {
     return new ArticleCrudServiceImpl();
-  }
-
-  @Bean
-  public AssetCrudService assetCrudService() {
-    return new AssetCrudServiceImpl();
   }
 
   @Bean

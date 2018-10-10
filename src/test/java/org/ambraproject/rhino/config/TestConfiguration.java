@@ -30,9 +30,7 @@ import javax.sql.DataSource;
 import com.google.common.io.Closeables;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;
-import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.CommentCrudServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.DummyTaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
@@ -106,11 +104,6 @@ public class TestConfiguration {
   @Bean
   public TaxonomyClassificationService taxonomyClassificationService() {
     return new DummyTaxonomyClassificationService();
-  }
-
-  @Bean
-  public AssetCrudService assetService() {
-    return new AssetCrudServiceImpl();
   }
 
   @Bean

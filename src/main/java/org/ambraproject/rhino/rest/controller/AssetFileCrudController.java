@@ -37,7 +37,7 @@ import com.wordnik.swagger.annotations.ApiImplicitParam;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.service.AssetCrudService;
+import org.ambraproject.rhino.service.ArticleCrudService;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,9 +49,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class AssetFileCrudController extends RestController {
-
   @Autowired
-  private AssetCrudService assetCrudService;
+  private ArticleCrudService articleCrudService;
 
   private void serve(HttpServletRequest request, HttpServletResponse response, RepoObjectMetadata objMeta)
       throws IOException {
@@ -71,7 +70,7 @@ public class AssetFileCrudController extends RestController {
       return;
     }
 
-    try (InputStream fileStream = assetCrudService.getRepoObjectInputStream(objMeta);
+    try (InputStream fileStream = articleCrudService.getRepoObjectInputStream(objMeta);
          OutputStream responseStream = response.getOutputStream()) {
       ByteStreams.copy(fileStream, responseStream);
     }
@@ -106,7 +105,7 @@ public class AssetFileCrudController extends RestController {
     ArticleFileIdentifier fileId = ArticleFileIdentifier.create(DoiEscaping.unescape(itemDoi), ingestionNumber, fileType);
     // TODO: Validate that articleDoi belongs to item's parent
 
-    RepoObjectMetadata objectMetadata = assetCrudService.getArticleItemFile(fileId);
+    RepoObjectMetadata objectMetadata = articleCrudService.getArticleItemFile(fileId);
     serve(request, response, objectMetadata);
   }
 
