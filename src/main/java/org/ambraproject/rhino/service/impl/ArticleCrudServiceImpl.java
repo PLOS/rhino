@@ -42,6 +42,7 @@ import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleCategoryAssignment;
 import org.ambraproject.rhino.model.ArticleFile;
+import org.ambraproject.rhino.model.ArticleFileStorage;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRelationship;
@@ -69,6 +70,7 @@ import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.NotFoundException;
+import org.plos.crepo.model.identity.RepoId;
 import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.plos.crepo.service.ContentRepoService;
@@ -145,7 +147,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(articleDoi, ingestion.getIngestionNumber());
     ArticleItemIdentifier articleItemId = ingestionId.getItemFor();
     ArticleFileIdentifier manuscriptId = ArticleFileIdentifier.create(articleItemId, "manuscript");
-    RepoObjectMetadata objectMetadata = getArticleItemFile(manuscriptId);
+    RepoObjectMetadata objectMetadata = getArticleItemFileInternal(manuscriptId);
     return objectMetadata;
   }
 
@@ -672,8 +674,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return ImmutableList.of();
   }
 
-  @Override
-  public RepoObjectMetadata getArticleItemFile(ArticleFileIdentifier fileId) {
+  private RepoObjectMetadata getArticleItemFileInternal(ArticleFileIdentifier fileId) {
     ArticleItemIdentifier id = fileId.getItemIdentifier();
     ArticleItem work = getArticleItem(id);
     String fileType = fileId.getFileType();
@@ -690,7 +691,22 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public InputStream getRepoObjectInputStream(RepoObjectMetadata metadata) {
-    return contentRepoService.getRepoObject(metadata.getVersion());
+  public ArticleFileStorage getArticleItemFile(ArticleFileIdentifier fileId) {
+    RepoObjectMetadata metadata = getArticleItemFileInternal(fileId);
+    RepoVersion version = metadata.getVersion();
+    RepoId id = version.getId();
+    return ArticleFileStorage.builder()
+      .setBucketName(id.getBucketName())
+      .setContentType(metadata.getContentType())
+      .setCrepoKey(id.getKey())
+      .setDownloadName(metadata.getDownloadName())
+      .setSize(metadata.getSize())
+      .setTimestamp(metadata.getTimestamp())
+      .setUuid(version.getUuid().toString())
+      .build();
+  }
+
+  public InputStream getRepoObjectInputStream(ArticleFileStorage metadata) {
+    return contentRepoService.getRepoObject(RepoVersion.create(metadata.getBucketName(), metadata.getCrepoKey(), metadata.getUuid()));
   }
 }

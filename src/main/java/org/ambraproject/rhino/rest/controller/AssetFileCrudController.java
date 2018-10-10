@@ -35,10 +35,10 @@ import com.google.common.net.HttpHeaders;
 import com.wordnik.swagger.annotations.ApiImplicitParam;
 
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
+import org.ambraproject.rhino.model.ArticleFileStorage;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -52,7 +52,7 @@ public class AssetFileCrudController extends RestController {
   @Autowired
   private ArticleCrudService articleCrudService;
 
-  private void serve(HttpServletRequest request, HttpServletResponse response, RepoObjectMetadata objMeta)
+  private void serve(HttpServletRequest request, HttpServletResponse response, ArticleFileStorage objMeta)
       throws IOException {
     objMeta.getContentType().ifPresent((String contentType) -> {
       response.setHeader(HttpHeaders.CONTENT_TYPE, contentType);
@@ -105,7 +105,7 @@ public class AssetFileCrudController extends RestController {
     ArticleFileIdentifier fileId = ArticleFileIdentifier.create(DoiEscaping.unescape(itemDoi), ingestionNumber, fileType);
     // TODO: Validate that articleDoi belongs to item's parent
 
-    RepoObjectMetadata objectMetadata = articleCrudService.getArticleItemFile(fileId);
+    ArticleFileStorage objectMetadata = articleCrudService.getArticleItemFile(fileId);
     serve(request, response, objectMetadata);
   }
 

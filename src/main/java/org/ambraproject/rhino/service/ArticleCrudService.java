@@ -29,6 +29,7 @@ import org.ambraproject.rhino.identity.ArticleItemIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleFileStorage;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRelationship;
@@ -45,7 +46,6 @@ import org.ambraproject.rhino.view.article.ArticleRevisionView;
 import org.ambraproject.rhino.view.article.CategoryAssignmentView;
 import org.ambraproject.rhino.view.article.ItemSetView;
 import org.ambraproject.rhino.view.article.author.ArticleAllAuthorsView;
-import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
@@ -253,7 +253,7 @@ public interface ArticleCrudService {
    */
   public abstract ArticleRelationship fromRelatedArticleLink(Article article, RelatedArticleLink ral);
 
-  public abstract RepoObjectMetadata getArticleItemFile(ArticleFileIdentifier fileId);
+  public abstract ArticleFileStorage getArticleItemFile(ArticleFileIdentifier fileId);
 
-  public abstract InputStream getRepoObjectInputStream(RepoObjectMetadata metadata);
+  public abstract InputStream getRepoObjectInputStream(ArticleFileStorage metadata);
 }
