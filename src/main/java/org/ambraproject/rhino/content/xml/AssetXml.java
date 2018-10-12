@@ -60,7 +60,7 @@ public class AssetXml extends AbstractArticleXml<AssetMetadata> {
 
     if (xml.getLocalName().equalsIgnoreCase(DECISION_LETTER)) {
       title = Strings.nullToEmpty(readString("front-stub/title-group/article-title"));
-      description = Strings.nullToEmpty(readString("@response-type"));
+      description = Strings.nullToEmpty(readString("@article-type"));
     } else {
       title = Strings.nullToEmpty(readString("child::label"));
       Node captionNode = readNode("child::caption");

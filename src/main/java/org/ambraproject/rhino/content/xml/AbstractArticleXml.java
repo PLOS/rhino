@@ -70,7 +70,7 @@ public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
   protected static final String TABLE_WRAP = "table-wrap";
   protected static final String ALTERNATIVES = "alternatives";
   protected static final String DISP_FORMULA = "disp-formula";
-  protected static final String DECISION_LETTER = "response";
+  protected static final String DECISION_LETTER = "sub-article";
 
   // The node-names for nodes that can be an asset on their own
   protected static final ImmutableSet<String> ASSET_NODE_NAMES = ImmutableSet.of(
