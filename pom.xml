@@ -227,6 +227,12 @@
       <groupId>org.plos</groupId>
       <artifactId>content-repo-library</artifactId>
       <version>1.6.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.httpcomponents</groupId>
+          <artifactId>httpclient</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <!-- ========================= End Ambra inclusions ========================= -->
