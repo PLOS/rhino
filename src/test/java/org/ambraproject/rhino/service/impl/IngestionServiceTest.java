@@ -346,7 +346,6 @@ public class IngestionServiceTest extends AbstractRhinoTest {
     final byte[] manifestData = FileUtils.readFileToByteArray(manifestFile);
     final Archive testArchive = createStubArchive(manifestData, ARTICLE_INGEST_ENTRIES);
 
-    final Optional<String> bucketName = Optional.empty();
     final String manuscriptEntry = "dupp.0000001.xml";
     final URL manuscriptResource =
         Resources.getResource(IngestionServiceTest.class, manuscriptEntry);
@@ -371,7 +370,7 @@ public class IngestionServiceTest extends AbstractRhinoTest {
         applicationContext.getBean(IngestionService.class);
     doReturn(manuscript).when(mockIngestionService).getDocument(testArchive, manuscriptEntry);
 
-    final ArticleIngestion actualIngestion = mockIngestionService.ingest(testArchive, bucketName);
+    final ArticleIngestion actualIngestion = mockIngestionService.ingest(testArchive);
 
     assertThat(actualIngestion).isNotNull();
     assertThat(actualIngestion).isEqualTo(expectedIngestion);
@@ -399,90 +398,5 @@ public class IngestionServiceTest extends AbstractRhinoTest {
 
     verify(mockPersistenceService).persistArticle(expectedArticleDoi);
     verify(mockPersistenceService).persistIngestion(any(Article.class), any(IngestPackage.class));
-  }
-
-  /**
-   * Test successful article ingestion into a bucket.
-   * 
-   * @throws IOException if archive file cannot be processed
-   * @throws SAXException if any XML parsing errors
-   * @throws ParserConfigurationException if a DocumentBuilder cannot be created
-   */
-  @Test
-  @DirtiesContext
-  public void testIngestIntoBucketShouldSucceed()
-      throws IOException, ParserConfigurationException, SAXException {
-    final URL xmlDataResource = Resources.getResource(IngestionServiceTest.class, MANIFEST_XML);
-    final File manifestFile = FileUtils.toFile(xmlDataResource);
-    final byte[] manifestData = FileUtils.readFileToByteArray(manifestFile);
-    final Archive testArchive = createStubArchive(manifestData, ARTICLE_INGEST_ENTRIES);
-
-    final Optional<String> bucketName = Optional.of("corpus");
-    final RuntimeConfiguration.MultiBucketContentRepoEndpoint mockRepoEndpoint =
-        new RhinoTestHelper.TestMultiBucketContentRepoEndpoint(bucketName.get());
-
-    final RuntimeConfiguration mockRuntimeConfiguration =
-        applicationContext.getBean(RuntimeConfiguration.class);
-    doReturn(mockRepoEndpoint).when(mockRuntimeConfiguration).getCorpusStorage();
-
-    final String manuscriptEntry = "dupp.0000001.xml";
-    final URL manuscriptResource =
-        Resources.getResource(IngestionServiceTest.class, manuscriptEntry);
-    final Document manuscript = RhinoTestHelper.loadXMLFromString(manuscriptResource);
-
-    final IngestionService mockIngestionService =
-        applicationContext.getBean(IngestionService.class);
-
-    doReturn(manuscript).when(mockIngestionService).getDocument(testArchive, manuscriptEntry);
-
-    final ArticleIngestion expectedIngestion = new ArticleIngestion();
-
-    doReturn(expectedIngestion).when(mockIngestionService)
-        .processIngestPackage(any(IngestPackage.class));
-
-    mockIngestionService.ingest(testArchive, bucketName); // Ingest the archive to the bucket.
-
-    verify(mockIngestionService).processIngestPackage(any(IngestPackage.class));
-  }
-
-  /**
-   * Test exception handling for article ingestion into an unknown bucket.
-   * 
-   * @throws IOException if archive file cannot be processed
-   * @throws SAXException if any XML parsing errors
-   * @throws ParserConfigurationException if a DocumentBuilder cannot be created
-   */
-  @Test
-  @DirtiesContext
-  public void testIngestIntoUnknownBucketShouldFail()
-      throws IOException, ParserConfigurationException, SAXException {
-    final URL xmlDataResource = Resources.getResource(IngestionServiceTest.class, MANIFEST_XML);
-    final File manifestFile = FileUtils.toFile(xmlDataResource);
-    final byte[] manifestData = FileUtils.readFileToByteArray(manifestFile);
-    final Archive testArchive = createStubArchive(manifestData, ARTICLE_INGEST_ENTRIES);
-
-    final Optional<String> bucketName = Optional.of("unknown");
-    final String manuscriptEntry = "dupp.0000001.xml";
-    final URL manuscriptResource =
-        Resources.getResource(IngestionServiceTest.class, manuscriptEntry);
-    final Document manuscript = RhinoTestHelper.loadXMLFromString(manuscriptResource);
-
-    final IngestionService mockIngestionService =
-        applicationContext.getBean(IngestionService.class);
-
-    doReturn(manuscript).when(mockIngestionService).getDocument(testArchive, manuscriptEntry);
-
-    try {
-      mockIngestionService.ingest(testArchive, bucketName);
-      fail("Expecting exception, but nothing was thrown.");
-    } catch (Exception exception) {
-      assertThat(exception).isInstanceOf(RestClientException.class);
-      final String message =
-          NO_SPACE_JOINER.join("Invalid bucket name: ", bucketName.get(), ". Allowed values are: ",
-              "[bucket_name, secondary_bucket]. ", "(Allowed values are specified by rhino.yaml.)");
-      assertThat(exception).hasMessageThat().isEqualTo(message);
-    }
-
-    verify(mockIngestionService, times(0)).processIngestPackage(any(IngestPackage.class));
   }
 }

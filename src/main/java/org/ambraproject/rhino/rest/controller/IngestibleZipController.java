@@ -59,15 +59,14 @@ public class IngestibleZipController extends RestController {
    */
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/articles", method = RequestMethod.POST)
-  public ResponseEntity<?> zipUpload(@RequestParam(value = "archive", required = true) MultipartFile requestFile,
-                                     @RequestParam(value = "bucket", required = false) String bucket)
+  public ResponseEntity<?> zipUpload(@RequestParam(value = "archive", required = true) MultipartFile requestFile)
       throws IOException {
 
     String ingestedFileName = requestFile.getOriginalFilename();
     ArticleIngestion ingestion;
     try (InputStream requestInputStream = requestFile.getInputStream();
          Archive archive = Archive.readZipFile(ingestedFileName, requestInputStream)) {
-      ingestion = ingestionService.ingest(archive, Optional.ofNullable(bucket));
+      ingestion = ingestionService.ingest(archive);
     } catch (ManifestXml.ManifestDataException e) {
       throw new RestClientException("Invalid manifest: " + e.getMessage(), HttpStatus.BAD_REQUEST, e);
     }
