@@ -38,8 +38,6 @@ import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyServiceImpl;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
-import org.plos.crepo.service.ContentRepoService;
-import org.plos.crepo.service.InMemoryContentRepoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -94,11 +92,6 @@ public class TestConfiguration {
     HibernateTransactionManager manager = new HibernateTransactionManager();
     manager.setSessionFactory(sessionFactory);
     return manager;
-  }
-
-  @Bean
-  public ContentRepoService contentRepoService() {
-    return new InMemoryContentRepoService("testBucket");
   }
 
   @Bean
