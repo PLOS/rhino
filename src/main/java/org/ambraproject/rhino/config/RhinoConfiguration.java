@@ -34,6 +34,8 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
@@ -273,6 +275,13 @@ public class RhinoConfiguration {
   @Bean
   public HibernatePersistenceService hibernatePersistenceService() {
     return new HibernatePersistenceServiceImpl();
+  }
+
+  @Bean
+  public AmazonS3 amazonS3(RuntimeConfiguration runtimeConfiguration) {
+    return AmazonS3ClientBuilder.standard()
+      .withRegion("us-west-1")
+      .build();
   }
 
   @Bean
