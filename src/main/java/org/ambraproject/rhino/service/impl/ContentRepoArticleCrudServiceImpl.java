@@ -100,9 +100,9 @@ import java.util.stream.Collectors;
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
  */
 @SuppressWarnings("JpaQlInspection")
-public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudService {
+public class ContentRepoArticleCrudServiceImpl extends AmbraService implements ArticleCrudService {
 
-  private static final Logger LOG = LoggerFactory.getLogger(ArticleCrudServiceImpl.class);
+  private static final Logger LOG = LoggerFactory.getLogger(ContentRepoArticleCrudServiceImpl.class);
 
   private static final Joiner SPACE_JOINER = Joiner.on(' ');
 
@@ -431,7 +431,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       List<ArticleItem> items = ingestionQuery.list();
       if (items.isEmpty()) return Optional.empty();
 
-      ResolvedDoiView.DoiWorkType type = items.stream().allMatch(ArticleCrudServiceImpl::isMainArticleItem)
+      ResolvedDoiView.DoiWorkType type = items.stream().allMatch(ContentRepoArticleCrudServiceImpl::isMainArticleItem)
           ? ResolvedDoiView.DoiWorkType.ARTICLE : ResolvedDoiView.DoiWorkType.ASSET;
       ArticleIdentifier articleId = Iterables.getOnlyElement(items.stream()
           .map(item -> ArticleIdentifier.create(item.getIngestion().getArticle().getDoi()))
@@ -625,7 +625,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         } else {
           criteria.addOrder(Order.desc("created" /* propertyName */));
         }
-        criteria.addOrder(Order.asc("articleId"));
 
         @SuppressWarnings("unchecked")
         final List<String> articleDois = (List<String>) hibernateTemplate.findByCriteria(

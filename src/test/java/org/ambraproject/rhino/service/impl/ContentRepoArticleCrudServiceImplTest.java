@@ -94,12 +94,12 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.mock;
 
-@ContextConfiguration(classes = ArticleCrudServiceImplTest.class)
+@ContextConfiguration(classes = ContentRepoArticleCrudServiceImplTest.class)
 @Configuration
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
-public class ArticleCrudServiceImplTest extends AbstractStubbingArticleTest {
+public class ContentRepoArticleCrudServiceImplTest extends AbstractStubbingArticleTest {
 
-  private ArticleCrudServiceImpl mockArticleCrudService;
+  private ContentRepoArticleCrudServiceImpl mockArticleCrudService;
   private ContentRepoService mockContentRepoService;
 
   private HibernateTemplate mockHibernateTemplate;
@@ -110,7 +110,7 @@ public class ArticleCrudServiceImplTest extends AbstractStubbingArticleTest {
 
   @Before
   public void initMocks() throws IllegalAccessException, NoSuchFieldException {
-    mockArticleCrudService = (ArticleCrudServiceImpl) applicationContext.getBean(ArticleCrudService.class);
+    mockArticleCrudService = (ContentRepoArticleCrudServiceImpl) applicationContext.getBean(ArticleCrudService.class);
     reset(mockArticleCrudService);
     mockHibernateTemplate = applicationContext.getBean(HibernateTemplate.class);
     reset(mockHibernateTemplate);
@@ -118,8 +118,8 @@ public class ArticleCrudServiceImplTest extends AbstractStubbingArticleTest {
   }
 
   @Bean
-  public ArticleCrudServiceImpl articleCrudService() {
-    mockArticleCrudService = spy(ArticleCrudServiceImpl.class);
+  public ContentRepoArticleCrudServiceImpl articleCrudService() {
+    mockArticleCrudService = spy(ContentRepoArticleCrudServiceImpl.class);
     LOG.debug("articleCrudService() * --> {}", mockArticleCrudService);
     return mockArticleCrudService;
   }

@@ -186,7 +186,7 @@ public abstract class AbstractStubbingArticleTest extends AbstractRhinoTest {
 
   @Bean
   public ArticleCrudService articleCrudService() {
-    ArticleCrudService mockArticleCrudService = mock(ArticleCrudServiceImpl.class);
+    ArticleCrudService mockArticleCrudService = mock(ContentRepoArticleCrudServiceImpl.class);
     LOG.debug("articleCrudService() * --> {}", mockArticleCrudService);
     return mockArticleCrudService;
   }

@@ -91,7 +91,7 @@ public class ArticleRevisionWriteServiceTest extends AbstractStubbingArticleTest
 
   @Bean
   public ArticleCrudService articleCrudService() {
-    final ArticleCrudService articleCrudService = spy(ArticleCrudServiceImpl.class);
+    final ArticleCrudService articleCrudService = spy(ContentRepoArticleCrudServiceImpl.class);
     return articleCrudService;
   }
 
@@ -148,13 +148,13 @@ public class ArticleRevisionWriteServiceTest extends AbstractStubbingArticleTest
     verify(mockArticleCrudService).refreshArticleRelationships(refreshedArticleRevision);
     verify(mockHibernateTemplate, times(3)).execute(any());
 
-    // setParameter("doi", ...) in ArticleCrudServiceImpl.getLatestRevision().
+    // setParameter("doi", ...) in ContentRepoArticleCrudServiceImpl.getLatestRevision().
     verify(mockQuery).setParameter("doi", expectedArticle.getDoi());
 
-    // setParameter("doi", ...) in ArticleCrudServiceImpl.getIngestion().
+    // setParameter("doi", ...) in ContentRepoArticleCrudServiceImpl.getIngestion().
     verify(mockQuery).setParameter("doi", expectedDoi.getName());
 
-    // setParameter("ingestionNumber", ...) in ArticleCrudServiceImpl.getIngestion().
+    // setParameter("ingestionNumber", ...) in ContentRepoArticleCrudServiceImpl.getIngestion().
     verify(mockQuery).setParameter(
         "ingestionNumber", expectedIngestionIdentifier.getIngestionNumber());
   }
@@ -179,15 +179,15 @@ public class ArticleRevisionWriteServiceTest extends AbstractStubbingArticleTest
     verify(mockHibernateTemplate, times(4)).execute(any());
     verify(mockHibernateTemplate).saveOrUpdate(expectedArticleRevision);
 
-    // setParameter("doi", ...) in ArticleCrudServiceImpl.getIngestion().
-    // setParameter("doi", ...) in ArticleCrudServiceImpl.getRevision().
+    // setParameter("doi", ...) in ContentRepoArticleCrudServiceImpl.getIngestion().
+    // setParameter("doi", ...) in ContentRepoArticleCrudServiceImpl.getRevision().
     verify(mockQuery, times(2)).setParameter("doi", expectedDoi.getName());
 
-    // setParameter("ingestionNumber", ...) in ArticleCrudServiceImpl.getIngestion().
+    // setParameter("ingestionNumber", ...) in ContentRepoArticleCrudServiceImpl.getIngestion().
     verify(mockQuery).setParameter(
         "ingestionNumber", expectedIngestionIdentifier.getIngestionNumber());
 
-    // setParameter("revisionNumber", ...) in ArticleCrudServiceImpl.getRevision().
+    // setParameter("revisionNumber", ...) in ContentRepoArticleCrudServiceImpl.getRevision().
     verify(mockQuery).setParameter("revisionNumber", expectedRevisionIdentifier.getRevision());
   }
 
