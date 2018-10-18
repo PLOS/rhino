@@ -156,12 +156,9 @@ public class HibernatePersistenceServiceImpl implements HibernatePersistenceServ
   private Journal fetchJournal(IngestPackage ingestPackage) {
     final ArticleMetadata articleMetadata = ingestPackage.getArticleMetadata();
     final String eissn = articleMetadata.geteIssn();
-    final String bucketName = ingestPackage.getArticlePackage().getBucketName();
 
     Optional<Journal> journal;
-    if (isSecondaryBucket(bucketName)) {
-      journal = getJournalFromName(articleMetadata.getJournalName());
-    } else if (eissn != null) {
+    if (eissn != null) {
       journal = getJournalFromEissn(eissn);
     } else {
       throw new RestClientException("eIssn not set for article: " + articleMetadata.getDoi(),
@@ -178,22 +175,5 @@ public class HibernatePersistenceServiceImpl implements HibernatePersistenceServ
       throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
     }
     return journal;
-  }
-
-  private Optional<Journal> getJournalFromName(String journalName) {
-    Optional<Journal> journal;
-    journal = journalCrudService.getJournal(journalName);
-    if (!journal.isPresent()) {
-      String msg = "Journal key from XML was not matched to a journal: " + journalName;
-      throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
-    }
-    return journal;
-  }
-
-  private boolean isSecondaryBucket(String bucketName) {
-    Map<String, Object> repoConfigMap = configurationReadService.getRepoConfig();
-    Map<String, Object> corpusConfigMap = (Map<String, Object>) repoConfigMap.get("corpus");
-    final Set<String> secondaryBuckets = (Set<String>) corpusConfigMap.get("secondaryBuckets");
-    return secondaryBuckets.contains(bucketName);
   }
 }

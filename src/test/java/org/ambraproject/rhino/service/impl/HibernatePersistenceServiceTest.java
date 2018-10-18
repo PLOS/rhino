@@ -64,9 +64,6 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
 
   private static final Integer INGESTION_NUMBER = new Integer(5);
 
-  private static final ImmutableMap<String, Object> REPO_CONFIG = ImmutableMap
-      .of("corpus", ImmutableMap.of("secondaryBuckets", ImmutableSet.of(DESTINATION_BUCKET)));
-
   private Doi articleDoi;
 
   private Article expectedArticle;
@@ -153,8 +150,7 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
     when(mockManifest.getAncillaryFiles()).thenReturn(ImmutableList.of(mockAncillaryFile));
 
     expectedArticlePackage =
-        new ArticlePackageBuilder(DESTINATION_BUCKET, mockArchive, mockArticleXml, mockManifest)
-            .build();
+        new ArticlePackageBuilder(mockArchive, mockArticleXml, mockManifest).build();
 
     expectedArticleMetadata = ArticleMetadata.builder().setTitle("Meta title")
         .setArticleType("MetaArticleType")
@@ -245,11 +241,10 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
 
     final ConfigurationReadService mockConfigurationReadService =
         applicationContext.getBean(ConfigurationReadService.class);
-    when(mockConfigurationReadService.getRepoConfig()).thenReturn(REPO_CONFIG);
 
     final JournalCrudService mockJournalCrudService =
         applicationContext.getBean(JournalCrudService.class);
-    when(mockJournalCrudService.getJournal(META_JOURNAL_NAME)).thenReturn(expectedJournal);
+    when(mockJournalCrudService.getJournalByEissn(EISSN)).thenReturn(expectedJournal);
 
     final HibernatePersistenceService mockPersistenceService =
         applicationContext.getBean(HibernatePersistenceService.class);
@@ -262,9 +257,7 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
         mockPersistenceService.persistIngestion(expectedArticle, expectedIngestPackage);
 
     assertThat(actualIngestion).isEqualTo(expectedIngestion);
-    verify(mockConfigurationReadService).getRepoConfig();
-    verify(mockJournalCrudService, times(0)).getJournalByEissn(EISSN);
-    verify(mockJournalCrudService).getJournal(META_JOURNAL_NAME);
+    verify(mockJournalCrudService, times(1)).getJournalByEissn(EISSN);
     verify(mockHibernateTemplate).save(expectedIngestion);
   }
 
@@ -277,12 +270,8 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
     final HibernateTemplate mockHibernateTemplate = buildMockHibernateTemplate();
     doReturn(INGESTION_NUMBER).when(mockHibernateTemplate).execute(any());
 
-    final ImmutableMap<String, Object> repoConfig =
-        ImmutableMap.of("corpus", ImmutableMap.of("secondaryBuckets", ImmutableSet.of()));
-
     final ConfigurationReadService mockConfigurationReadService =
         applicationContext.getBean(ConfigurationReadService.class);
-    when(mockConfigurationReadService.getRepoConfig()).thenReturn(repoConfig);
 
     final JournalCrudService mockJournalCrudService =
         applicationContext.getBean(JournalCrudService.class);
@@ -299,9 +288,7 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
         mockPersistenceService.persistIngestion(expectedArticle, expectedIngestPackage);
 
     assertThat(actualIngestion).isEqualTo(expectedIngestion);
-    verify(mockConfigurationReadService).getRepoConfig();
     verify(mockJournalCrudService).getJournalByEissn(EISSN);
-    verify(mockJournalCrudService, times(0)).getJournal(META_JOURNAL_NAME);
     verify(mockHibernateTemplate).save(expectedIngestion);
   }
 

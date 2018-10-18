@@ -22,6 +22,7 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.model.ArticleFile;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
@@ -44,8 +45,23 @@ public class ContentRepoPersistenceServiceImpl implements ContentRepoPersistence
   @Autowired
   private ContentRepoService contentRepoService;
 
+  @Autowired
+  private RuntimeConfiguration runtimeConfiguration;
+
+  private String bucketName() {
+    RuntimeConfiguration.MultiBucketContentRepoEndpoint corpusStorage = runtimeConfiguration.getCorpusStorage();
+    return corpusStorage.getDefaultBucket();
+  }
+
   private RepoObjectInput makeRepoObjectInput(ArticleFileInput fileInput) {
-    return RepoObjectInput.builder(fileInput.getDestinationBucketName(), fileInput.getManifestFile().getCrepoKey())
+  /**
+   * Validate the bucket name against the set of allowed buckets and supply the default if needed.
+   *
+   * @return the specified bucket name, or the default if the client did not specify a bucket name
+   * @throws RestClientException if the clietn specified a disallowed (or nonexistent) bucket name
+   */
+
+    return RepoObjectInput.builder(bucketName(), fileInput.getManifestFile().getCrepoKey())
         .setContentAccessor(() -> fileInput.getArchive().openFile(fileInput.getFilename()))
         .setContentType(fileInput.getContentType())
         .setDownloadName(fileInput.getDownloadName())

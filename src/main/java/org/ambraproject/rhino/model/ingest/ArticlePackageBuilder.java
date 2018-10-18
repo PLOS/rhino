@@ -44,8 +44,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class ArticlePackageBuilder {
-
-  private final String destinationBucketName;
   private final Archive archive;
   private final ArticleXml article;
   private final ManifestXml manifest;
@@ -54,9 +52,8 @@ public class ArticlePackageBuilder {
   private final Optional<ManifestXml.Representation> printableRepr;
   private final Doi articleIdentity;
 
-  public ArticlePackageBuilder(String destinationBucketName, Archive archive,
+  public ArticlePackageBuilder(Archive archive,
                                ArticleXml article, ManifestXml manifest) {
-    this.destinationBucketName = Objects.requireNonNull(destinationBucketName);
     this.archive = Objects.requireNonNull(archive);
     this.article = Objects.requireNonNull(article);
     this.manifest = Objects.requireNonNull(manifest);
@@ -79,8 +76,7 @@ public class ArticlePackageBuilder {
         .map(this::buildObjectForAncillary).collect(Collectors.toList());
 
     return new ArticlePackage(new ArticleItemInput(articleIdentity, articleObjects,
-        AssetType.ARTICLE.getIdentifier()), assetItems, ancillaryFiles, manifest,
-        destinationBucketName);
+                                                   AssetType.ARTICLE.getIdentifier()), assetItems, ancillaryFiles, manifest);
   }
 
   private ArticleFileInput buildObjectForAsset(ManifestXml.Asset asset, ManifestXml.Representation representation) {
@@ -102,7 +98,6 @@ public class ArticlePackageBuilder {
     archive.checkEntryName(manifestFile.getEntry());
     return ArticleFileInput.builder()
       .setArchive(archive)
-      .setDestinationBucketName(destinationBucketName)
       .setManifestFile(manifestFile)
       .setContentType(contentType)
       .setDownloadName(downloadName)

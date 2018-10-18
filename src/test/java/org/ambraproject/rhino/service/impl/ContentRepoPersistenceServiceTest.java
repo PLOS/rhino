@@ -92,7 +92,6 @@ public class ContentRepoPersistenceServiceTest extends AbstractRhinoTest {
     when(manifest.getCrepoKey()).thenReturn(UUID.randomUUID().toString());
     return ArticleFileInput.builder()
       .setArchive(mock(Archive.class))
-      .setDestinationBucketName("my-bucket")
       .setManifestFile(manifest)
       .setContentType("application/octet-stream")
       .setDownloadName(name)

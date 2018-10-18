@@ -36,7 +36,6 @@ abstract public class ArticleFileInput {
 
   abstract public Archive getArchive();
   abstract public String getContentType();
-  abstract public String getDestinationBucketName();
   abstract public String getDownloadName();
   abstract public ManifestXml.ManifestFile getManifestFile();
 
@@ -49,7 +48,6 @@ abstract public class ArticleFileInput {
     abstract public ArticleFileInput build();
     abstract public Builder setArchive(Archive value);
     abstract public Builder setContentType(String value);
-    abstract public Builder setDestinationBucketName(String value);
     abstract public Builder setDownloadName(String value);
     abstract public Builder setManifestFile(ManifestXml.ManifestFile value);
   }
