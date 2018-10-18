@@ -74,14 +74,6 @@ public interface RuntimeConfiguration {
    */
   MultiBucketContentRepoEndpoint getCorpusStorage();
 
-  /**
-   * Return the content repository bucket from which the system should pick up editorial (non-article) content. Returns
-   * {@code null} if no editorial bucket is configured.
-   *
-   * @return the homepage bucket name
-   */
-  ContentRepoEndpoint getEditorialStorage();
-
   interface HttpConnectionPoolConfiguration {
     /**
      * @see org.apache.http.pool.ConnPoolControl

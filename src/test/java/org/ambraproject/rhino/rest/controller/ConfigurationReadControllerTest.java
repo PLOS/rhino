@@ -115,12 +115,6 @@ public class ConfigurationReadControllerTest extends AbstractRhinoTest {
     final MockHttpServletResponse response = result.getResponse();
     final JsonObject data = jsonParser.parse(response.getContentAsString()).getAsJsonObject();
 
-    final JsonObject editorial = data.getAsJsonObject("editorial");
-    assertThat(editorial).isNotNull();
-    assertThat(editorial.getAsJsonPrimitive("address").getAsString())
-        .isEqualTo("http://path/to/content/repo");
-    assertThat(editorial.getAsJsonPrimitive("bucket").getAsString()).isEqualTo("bucket_name");
-
     final JsonObject corpus = data.getAsJsonObject("corpus");
     assertThat(corpus).isNotNull();
     assertThat(corpus.getAsJsonPrimitive("address").getAsString())

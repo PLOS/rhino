@@ -65,13 +65,6 @@ public class ConfigurationReadServiceTest extends BaseRhinoTest {
   @Test
   public void testGetRepoConfig() throws IOException {
     Map<String, Object> repoConfigMap = configurationReadService.getRepoConfig();
-    Map<String, Object> editorialConfigMap = (Map<String, Object>) repoConfigMap.get("editorial");
-
-    String repoAddress = editorialConfigMap.get("address").toString();
-    assertEquals("Invalid/missing content repo URL", "http://path/to/content/repo", repoAddress);
-    String repoBucket = editorialConfigMap.get("bucket").toString();
-    assertEquals("Invalid/missing content repo bucket name", "bucket_name", repoBucket);
-
     Map<String, Object> corpusConfigMap = (Map<String, Object>) repoConfigMap.get("corpus");
     final Set<String> secondaryBuckets = (Set<String>) corpusConfigMap.get("secondaryBuckets");
     assertEquals(secondaryBuckets.iterator().next(), "secondary_bucket");

@@ -75,7 +75,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
   }
 
   /**
-   * For corpus storage, unlike for editorial storage, enforce non-null values and set up collection of all buckets.
+   * For corpus storage enforce non-null values and set up collection of all buckets.
    */
   private static MultiBucketContentRepoEndpoint parseCorpusStorage(MultibucketContentRepoEndpointInput corpus) {
     URI address = corpus.address;
@@ -131,26 +131,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
       return null;
     }
   };
-  private transient ContentRepoEndpoint editorialStorageView;
-
-  @Override
-  public ContentRepoEndpoint getEditorialStorage() {
-    return (editorialStorageView != null) ? editorialStorageView
-        : (input.contentRepo == null) ? NULL_CONTENT_REPO_ENDPOINT
-        : (input.contentRepo.editorial == null) ? NULL_CONTENT_REPO_ENDPOINT
-        : (editorialStorageView = new ContentRepoEndpoint() {
-      @Override
-      public URI getAddress() {
-        return input.contentRepo.editorial.address;
-      }
-
-      @Override
-      public String getDefaultBucket() {
-        return input.contentRepo.editorial.bucket;
-      }
-    });
-  }
-
 
   private final HttpConnectionPoolConfiguration httpConnectionPoolConfiguration = new HttpConnectionPoolConfiguration() {
     @Override
@@ -365,16 +345,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
   }
 
   public static class ContentRepoInput {
-    private ContentRepoEndpointInput editorial; // upstairs
     private MultibucketContentRepoEndpointInput corpus;  // downstairs
-
-    /**
-     * @deprecated For reflective access by SnakeYAML only
-     */
-    @Deprecated
-    public void setEditorial(ContentRepoEndpointInput editorial) {
-      this.editorial = editorial;
-    }
 
     /**
      * @deprecated For reflective access by SnakeYAML only
