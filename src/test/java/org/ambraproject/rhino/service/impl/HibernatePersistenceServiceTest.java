@@ -29,7 +29,7 @@ import org.ambraproject.rhino.model.ingest.ArticlePackage;
 import org.ambraproject.rhino.model.ingest.ArticlePackageBuilder;
 import org.ambraproject.rhino.model.ingest.IngestPackage;
 import org.ambraproject.rhino.service.ConfigurationReadService;
-import org.ambraproject.rhino.service.ContentRepoPersistenceService;
+import org.ambraproject.rhino.service.ContentPersistenceService;
 import org.ambraproject.rhino.service.HibernatePersistenceService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.util.Archive;
@@ -178,9 +178,9 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
   }
 
   @Bean
-  public ContentRepoPersistenceService contentRepoPersistenceService() {
+  public ContentPersistenceService contentRepoPersistenceService() {
     LOG.debug("contentRepoPersistenceService() *");
-    final ContentRepoPersistenceService contentRepoPersistenceService =
+    final ContentPersistenceService contentRepoPersistenceService =
         spy(ContentRepoPersistenceServiceImpl.class);
     return contentRepoPersistenceService;
   }
@@ -303,8 +303,8 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
     final ContentRepoService mockContentRepoService =
         buildMockContentRepoService(DESTINATION_BUCKET);
 
-    final ContentRepoPersistenceService mockContentRepoPersistenceService =
-        applicationContext.getBean(ContentRepoPersistenceService.class);
+    final ContentPersistenceService mockContentRepoPersistenceService =
+        applicationContext.getBean(ContentPersistenceService.class);
 
     final HibernatePersistenceService mockPersistenceService =
         applicationContext.getBean(HibernatePersistenceService.class);

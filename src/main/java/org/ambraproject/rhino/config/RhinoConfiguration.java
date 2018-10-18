@@ -47,7 +47,7 @@ import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.ArticleRevisionWriteService;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.ConfigurationReadService;
-import org.ambraproject.rhino.service.ContentRepoPersistenceService;
+import org.ambraproject.rhino.service.ContentPersistenceService;
 import org.ambraproject.rhino.service.HibernatePersistenceService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
@@ -266,7 +266,7 @@ public class RhinoConfiguration {
   }
 
   @Bean
-  public ContentRepoPersistenceService contentRepoPersistenceService() {
+  public ContentPersistenceService contentRepoPersistenceService() {
     return new ContentRepoPersistenceServiceImpl();
   }
 

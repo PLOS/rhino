@@ -21,7 +21,7 @@ import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ingest.ArticleFileInput;
 import org.ambraproject.rhino.model.ingest.ArticleItemInput;
 import org.ambraproject.rhino.model.ingest.ArticlePackage;
-import org.ambraproject.rhino.service.ContentRepoPersistenceService;
+import org.ambraproject.rhino.service.ContentPersistenceService;
 import org.ambraproject.rhino.util.Archive;
 import org.plos.crepo.model.input.RepoObjectInput;
 import org.plos.crepo.model.identity.RepoVersion;
@@ -79,9 +79,9 @@ public class ContentRepoPersistenceServiceTest extends AbstractRhinoTest {
   }
 
   @Bean
-  public ContentRepoPersistenceService contentRepoPersistenceService() {
+  public ContentPersistenceService contentRepoPersistenceService() {
     LOG.debug("contentRepoPersistenceService() *");
-    final ContentRepoPersistenceService contentRepoPersistenceService =
+    final ContentPersistenceService contentRepoPersistenceService =
         spy(ContentRepoPersistenceServiceImpl.class);
     return contentRepoPersistenceService;
   }
@@ -120,8 +120,8 @@ public class ContentRepoPersistenceServiceTest extends AbstractRhinoTest {
     final ContentRepoService mockContentRepoService =
         buildMockContentRepoService(DESTINATION_BUCKET, REPO_KEY, repoUUID, FILE_SIZE);
 
-    final ContentRepoPersistenceService mockContentRepoPersistenceService =
-        applicationContext.getBean(ContentRepoPersistenceService.class);
+    final ContentPersistenceService mockContentRepoPersistenceService =
+        applicationContext.getBean(ContentPersistenceService.class);
 
     final ArticleItem actualArticleItem =
         mockContentRepoPersistenceService.createItem(expectedItemInput, expectedIngestion);
@@ -176,8 +176,8 @@ public class ContentRepoPersistenceServiceTest extends AbstractRhinoTest {
     final ContentRepoService mockContentRepoService =
         buildMockContentRepoService(destinationBucket, REPO_KEY, repoUUID, FILE_SIZE);
 
-    final ContentRepoPersistenceService mockContentRepoPersistenceService =
-        applicationContext.getBean(ContentRepoPersistenceService.class);
+    final ContentPersistenceService mockContentRepoPersistenceService =
+        applicationContext.getBean(ContentPersistenceService.class);
 
     final Collection<ArticleFile> actualFiles =
         mockContentRepoPersistenceService.persistAncillaryFiles(mockArticlePackage,
@@ -211,8 +211,8 @@ public class ContentRepoPersistenceServiceTest extends AbstractRhinoTest {
     final ContentRepoService mockContentRepoService =
         buildMockContentRepoService(DESTINATION_BUCKET);
 
-    final ContentRepoPersistenceService mockContentRepoPersistenceService =
-        applicationContext.getBean(ContentRepoPersistenceService.class);
+    final ContentPersistenceService mockContentRepoPersistenceService =
+        applicationContext.getBean(ContentPersistenceService.class);
 
     final ArticleItem actualArticleItem =
         mockContentRepoPersistenceService.createItem(expectedItemInput, expectedIngestion);
@@ -239,8 +239,8 @@ public class ContentRepoPersistenceServiceTest extends AbstractRhinoTest {
     final ContentRepoService mockContentRepoService =
         buildMockContentRepoService(DESTINATION_BUCKET);
 
-    final ContentRepoPersistenceService mockContentRepoPersistenceService =
-        applicationContext.getBean(ContentRepoPersistenceService.class);
+    final ContentPersistenceService mockContentRepoPersistenceService =
+        applicationContext.getBean(ContentPersistenceService.class);
 
     final Collection<ArticleFile> actualFiles =
         mockContentRepoPersistenceService.persistAncillaryFiles(mockArticlePackage,

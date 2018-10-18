@@ -36,7 +36,7 @@ import org.ambraproject.rhino.model.ingest.ArticlePackage;
 import org.ambraproject.rhino.model.ingest.IngestPackage;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ConfigurationReadService;
-import org.ambraproject.rhino.service.ContentRepoPersistenceService;
+import org.ambraproject.rhino.service.ContentPersistenceService;
 import org.ambraproject.rhino.service.HibernatePersistenceService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.hibernate.Query;
@@ -58,7 +58,7 @@ public class HibernatePersistenceServiceImpl implements HibernatePersistenceServ
   @Autowired
   private JournalCrudService journalCrudService;
   @Autowired
-  private ContentRepoPersistenceService contentRepoPersistenceService;
+  private ContentPersistenceService contentRepoPersistenceService;
   @Autowired
   private ConfigurationReadService configurationReadService;
 

@@ -29,7 +29,7 @@ import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ingest.ArticleFileInput;
 import org.ambraproject.rhino.model.ingest.ArticleItemInput;
 import org.ambraproject.rhino.model.ingest.ArticlePackage;
-import org.ambraproject.rhino.service.ContentRepoPersistenceService;
+import org.ambraproject.rhino.service.ContentPersistenceService;
 import org.plos.crepo.model.identity.RepoId;
 import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.model.input.RepoObjectInput;
@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
-public class ContentRepoPersistenceServiceImpl implements ContentRepoPersistenceService {
+public class ContentRepoPersistenceServiceImpl implements ContentPersistenceService {
 
   @Autowired
   private ContentRepoService contentRepoService;
