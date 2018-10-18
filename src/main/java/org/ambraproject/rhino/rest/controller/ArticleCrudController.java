@@ -479,9 +479,9 @@ public class ArticleCrudController extends RestController {
   public ResponseEntity<?> getDoisPublishedOn(@ApiParam(value = "Date Format: yyyy-MM-dd")
                                               @RequestParam(value = "fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fromDate,
                                               @ApiParam(value = "Date Format: yyyy-MM-dd")
-                                              @RequestParam(value = "toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate,
-                                              @RequestParam(value = "bucketName", required = false) String bucketName) throws IOException {
-    List<ArticleRevisionView> views = articleCrudService.getArticlesPublishedOn(fromDate, toDate, bucketName)
+                                              @RequestParam(value = "toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate)
+    throws IOException {
+    List<ArticleRevisionView> views = articleCrudService.getArticlesPublishedOn(fromDate, toDate)
         .stream().map(ArticleRevisionView::getView)
         .collect(Collectors.toList());
     return ServiceResponse.serveView(views).asJsonResponse(entityGson);
@@ -494,9 +494,9 @@ public class ArticleCrudController extends RestController {
   public ResponseEntity<?> getDoisRevisedOn(@ApiParam(value = "Date Format: yyyy-MM-dd")
                                             @RequestParam(value = "fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fromDate,
                                             @ApiParam(value = "Date Format: yyyy-MM-dd")
-                                            @RequestParam(value = "toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate,
-                                            @RequestParam(value = "bucketName", required = false) String bucketName) throws IOException {
-    List<ArticleRevisionView> views = articleCrudService.getArticlesRevisedOn(fromDate, toDate, bucketName)
+                                            @RequestParam(value = "toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate toDate) 
+    throws IOException {
+    List<ArticleRevisionView> views = articleCrudService.getArticlesRevisedOn(fromDate, toDate)
         .stream().map(ArticleRevisionView::getView)
         .collect(Collectors.toList());
     return ServiceResponse.serveView(views).asJsonResponse(entityGson);

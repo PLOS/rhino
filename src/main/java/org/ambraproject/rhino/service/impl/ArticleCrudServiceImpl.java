@@ -532,76 +532,38 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         new RestClientException("Article not found: " + articleIdentifier, HttpStatus.NOT_FOUND));
   }
 
-  @Override
-  public Collection<ArticleRevision> getArticlesPublishedOn(LocalDate fromDate, LocalDate toDate) {
-    return getArticlesPublishedOn(fromDate, toDate, null);
-  }
-
   @SuppressWarnings("unchecked")
   @Override
-  public Collection<ArticleRevision> getArticlesPublishedOn(LocalDate fromDate, LocalDate toDate, String bucketName) {
+  public Collection<ArticleRevision> getArticlesPublishedOn(LocalDate fromDate, LocalDate toDate) {
     return hibernateTemplate.execute(session -> {
       final String queryString;
-      if (bucketName == null) {
-        queryString = SPACE_JOINER.join("SELECT DISTINCT ar",
+      queryString = SPACE_JOINER.join("SELECT DISTINCT ar",
             "FROM ArticleRevision ar",
             "INNER JOIN ar.ingestion ai",
             "INNER JOIN  ar.ingestion.article at",
             "WHERE ai.publicationDate >= :fromDate AND ai.publicationDate <= :toDate",
             "AND ar.revisionId IS NOT NULL");
-      } else {
-        queryString = SPACE_JOINER.join("SELECT DISTINCT ar",
-            "FROM ArticleRevision ar, ArticleFile file",
-            "INNER JOIN ar.ingestion ai",
-            "INNER JOIN ar.ingestion.article at",
-            "WHERE ai.publicationDate >= :fromDate AND ai.publicationDate <= :toDate",
-            "AND ar.revisionId IS NOT NULL",
-            "AND file.ingestion = ai",
-            "AND file.bucketName = :bucketName");
-      }
       Query query = session.createQuery(queryString);
       query.setParameter("fromDate", java.sql.Date.valueOf(fromDate));
       query.setParameter("toDate", java.sql.Date.valueOf(toDate));
-      if (bucketName != null) {
-        query.setParameter("bucketName", bucketName);
-      }
       return (Collection<ArticleRevision>) query.list();
     });
   }
 
-  @Override
-  public Collection<ArticleRevision> getArticlesRevisedOn(LocalDate fromDate, LocalDate toDate) {
-    return getArticlesRevisedOn(fromDate, toDate, null);
-  }
-
   @SuppressWarnings("unchecked")
   @Override
-  public Collection<ArticleRevision> getArticlesRevisedOn(LocalDate fromDate, LocalDate toDate, String bucketName) {
+  public Collection<ArticleRevision> getArticlesRevisedOn(LocalDate fromDate, LocalDate toDate) {
     return hibernateTemplate.execute(session -> {
       final String queryString;
-      if (bucketName == null) {
-        queryString = SPACE_JOINER.join("SELECT DISTINCT ar",
+      queryString = SPACE_JOINER.join("SELECT DISTINCT ar",
             "FROM ArticleRevision ar",
             "INNER JOIN ar.ingestion ai",
             "INNER JOIN  ar.ingestion.article at",
             "WHERE ai.revisionDate >= :fromDate AND ai.revisionDate <= :toDate",
             "AND ar.revisionId IS NOT NULL");
-      } else {
-        queryString = SPACE_JOINER.join("SELECT DISTINCT ar",
-            "FROM ArticleRevision ar, ArticleFile file",
-            "INNER JOIN ar.ingestion ai",
-            "INNER JOIN ar.ingestion.article at",
-            "WHERE ai.revisionDate >= :fromDate AND ai.revisionDate <= :toDate",
-            "AND ar.revisionId IS NOT NULL",
-            "AND file.ingestion = ai",
-            "AND file.bucketName = :bucketName");
-      }
       Query query = session.createQuery(queryString);
       query.setParameter("fromDate", java.sql.Date.valueOf(fromDate));
       query.setParameter("toDate", java.sql.Date.valueOf(toDate));
-      if (bucketName != null) {
-        query.setParameter("bucketName", bucketName);
-      }
       return (Collection<ArticleRevision>) query.list();
     });
   }
