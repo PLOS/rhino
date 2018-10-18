@@ -53,16 +53,7 @@ public interface RuntimeConfiguration {
     /**
      * @return the name of the bucket on that server to use when none is specified
      */
-    String getDefaultBucket();
-  }
-
-  interface MultiBucketContentRepoEndpoint extends ContentRepoEndpoint {
-    /**
-     * @return the names of all buckets that may be specified to use
-     */
-    ImmutableSet<String> getAllBuckets();
-
-    ImmutableSet<String> getSecondaryBuckets();
+    String getBucket();
   }
 
   /**
@@ -72,7 +63,7 @@ public interface RuntimeConfiguration {
    *
    * @return the corpus bucket name
    */
-  MultiBucketContentRepoEndpoint getCorpusStorage();
+  ContentRepoEndpoint getCorpusStorage();
 
   interface HttpConnectionPoolConfiguration {
     /**

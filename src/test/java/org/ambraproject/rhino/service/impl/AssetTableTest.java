@@ -105,7 +105,7 @@ public class AssetTableTest {
 //  }
 //
 //  private static final byte[] DUMMY_CONTENT = new byte[]{0};
-//  private final InMemoryContentRepoService inMemoryContentRepoService = new InMemoryContentRepoService("defaultBucket");
+//  private final InMemoryContentRepoService inMemoryContentRepoService = new InMemoryContentRepoService("bucket");
 //
 //  private ImmutableBiMap<String, RepoVersion> createDummyRepoObjects(AssetTable<String> assetTable) {
 //    ImmutableBiMap.Builder<String, RepoVersion> dummyRepoVersions = ImmutableBiMap.builder();

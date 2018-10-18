@@ -66,8 +66,8 @@ public class ConfigurationReadServiceTest extends BaseRhinoTest {
   public void testGetRepoConfig() throws IOException {
     Map<String, Object> repoConfigMap = configurationReadService.getRepoConfig();
     Map<String, Object> corpusConfigMap = (Map<String, Object>) repoConfigMap.get("corpus");
-    final Set<String> secondaryBuckets = (Set<String>) corpusConfigMap.get("secondaryBuckets");
-    assertEquals(secondaryBuckets.iterator().next(), "secondary_bucket");
+    final String bucket = (String) corpusConfigMap.get("bucket");
+    assertEquals(bucket, "bucket_name");
   }
 
   @Test

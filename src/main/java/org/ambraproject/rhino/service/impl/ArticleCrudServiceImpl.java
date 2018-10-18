@@ -537,7 +537,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public Collection<ArticleRevision> getArticlesPublishedOn(LocalDate fromDate, LocalDate toDate) {
     return hibernateTemplate.execute(session -> {
       final String queryString;
-      queryString = SPACE_JOINER.join("SELECT DISTINCT ar",
+        queryString = SPACE_JOINER.join("SELECT DISTINCT ar",
             "FROM ArticleRevision ar",
             "INNER JOIN ar.ingestion ai",
             "INNER JOIN  ar.ingestion.article at",

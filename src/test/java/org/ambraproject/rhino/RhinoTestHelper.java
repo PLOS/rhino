@@ -169,55 +169,23 @@ public final class RhinoTestHelper {
   }
 
   /**
-   * Class to implement a {@link RuntimeConfiguration.MultiBucketContentRepoEndpoint
-   * MultiBucketContentRepoEndpoint}, which can be used for unit tests.
+   * Class to implement a {@link RuntimeConfiguration.ContentRepoEndpoint
+   * ContentRepoEndpoint}, which can be used for unit tests.
    */
-  public static class TestMultiBucketContentRepoEndpoint
-      implements RuntimeConfiguration.MultiBucketContentRepoEndpoint {
-
-    private final ImmutableSet<String> allBuckets;
-
-    private final ImmutableSet<String> secondaryBuckets;
-
-    private Optional<String> defaultBucket = Optional.empty();
+  public static class TestContentRepoEndpoint
+      implements RuntimeConfiguration.ContentRepoEndpoint {
+    private String bucket;
 
     private Optional<URI> address = Optional.empty();
 
     /**
-     * Creates an instance of <code>TestMultiBucketContentRepoEndpoint</code>.
+     * Creates an instance of <code>TestContentRepoEndpoint</code>.
      *
-     * @param buckets The list of <b>all</b> the buckets
-     */
-    public TestMultiBucketContentRepoEndpoint(String... buckets) {
-      this(ImmutableSet.copyOf(buckets), Collections.emptySet() /* secondaryBuckets */);
-    }
-
-    /**
-     * Creates an instance of <code>TestMultiBucketContentRepoEndpoint</code>.
-     *
-     * @param buckets The list of <b>all</b> the buckets
-     * @param secondaryBuckets The list of secondary buckets
-     */
-    public TestMultiBucketContentRepoEndpoint(Set<String> buckets, Set<String> secondaryBuckets) {
-      this(buckets, secondaryBuckets, null /* defaultBucket */, null /* address */);
-    }
-
-    /**
-     * Creates an instance of <code>TestMultiBucketContentRepoEndpoint</code>.
-     *
-     * @param buckets The list of <b>all</b> the buckets
-     * @param secondaryBuckets The list of secondary buckets
-     * @param defaultBucket The default bucket
+     * @param bucket The default bucket
      * @param address The URI address
      */
-    public TestMultiBucketContentRepoEndpoint(Set<String> buckets, Set<String> secondaryBuckets,
-        String defaultBucket, URI address) {
-      Preconditions.checkNotNull(buckets, "'buckets' must be specified.");
-      Preconditions.checkNotNull(secondaryBuckets, "'secondaryBuckets' must be specified.");
-
-      this.allBuckets = ImmutableSet.copyOf(buckets);
-      this.secondaryBuckets = ImmutableSet.copyOf(secondaryBuckets);
-      this.defaultBucket = Optional.ofNullable(defaultBucket);
+    public TestContentRepoEndpoint(String bucket, URI address) {
+      this.bucket = bucket;
       this.address = Optional.ofNullable(address);
     }
 
@@ -229,20 +197,8 @@ public final class RhinoTestHelper {
 
     /** Returns the default bucket. */
     @Override
-    public String getDefaultBucket() {
-      return defaultBucket.orElse("");
-    }
-
-    /** Returns the set of buckets. */
-    @Override
-    public ImmutableSet<String> getAllBuckets() {
-      return allBuckets;
-    }
-
-    /** Returns the set of secondary buckets. */
-    @Override
-    public ImmutableSet<String> getSecondaryBuckets() {
-      return secondaryBuckets;
+    public String getBucket() {
+      return bucket;
     }
   }
 

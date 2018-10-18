@@ -63,10 +63,10 @@ public class YamlConfiguration implements RuntimeConfiguration {
   }
 
 
-  private transient MultiBucketContentRepoEndpoint corpusStorageView;
+  private transient ContentRepoEndpoint corpusStorageView;
 
   @Override
-  public MultiBucketContentRepoEndpoint getCorpusStorage() {
+  public ContentRepoEndpoint getCorpusStorage() {
     if (corpusStorageView != null) return corpusStorageView;
     if (input.contentRepo == null || input.contentRepo.corpus == null) {
       throw new RuntimeException("contentRepo.corpus must be configured");
@@ -77,44 +77,26 @@ public class YamlConfiguration implements RuntimeConfiguration {
   /**
    * For corpus storage enforce non-null values and set up collection of all buckets.
    */
-  private static MultiBucketContentRepoEndpoint parseCorpusStorage(MultibucketContentRepoEndpointInput corpus) {
+  private static ContentRepoEndpoint parseCorpusStorage(ContentRepoEndpointInput corpus) {
     URI address = corpus.address;
     if (address == null) {
       throw new RuntimeException("contentRepo.corpus.address must be configured");
     }
 
-    String defaultBucket = corpus.bucket;
-    if (defaultBucket == null) {
+    String bucket = corpus.bucket;
+    if (bucket == null) {
       throw new RuntimeException("contentRepo.corpus.bucket must be configured");
     }
 
-    ImmutableSet<String> allBuckets = ImmutableSet.<String>builder()
-        .add(defaultBucket)
-        .addAll(MoreObjects.firstNonNull(corpus.secondaryBuckets, ImmutableSet.of()))
-        .build();
-
-    ImmutableSet<String> secondaryBuckets =
-        ImmutableSet.copyOf(MoreObjects.firstNonNull(corpus.secondaryBuckets, ImmutableSet.of()));
-
-    return new MultiBucketContentRepoEndpoint() {
+    return new ContentRepoEndpoint() {
       @Override
       public URI getAddress() {
         return address;
       }
 
       @Override
-      public String getDefaultBucket() {
-        return defaultBucket;
-      }
-
-      @Override
-      public ImmutableSet<String> getAllBuckets() {
-        return allBuckets;
-      }
-
-      @Override
-      public ImmutableSet<String> getSecondaryBuckets() {
-        return secondaryBuckets;
+      public String getBucket() {
+        return bucket;
       }
     };
   }
@@ -127,7 +109,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
     }
 
     @Override
-    public String getDefaultBucket() {
+    public String getBucket() {
       return null;
     }
   };
@@ -345,13 +327,13 @@ public class YamlConfiguration implements RuntimeConfiguration {
   }
 
   public static class ContentRepoInput {
-    private MultibucketContentRepoEndpointInput corpus;  // downstairs
+    private ContentRepoEndpointInput corpus;  // downstairs
 
     /**
      * @deprecated For reflective access by SnakeYAML only
      */
     @Deprecated
-    public void setCorpus(MultibucketContentRepoEndpointInput corpus) {
+    public void setCorpus(ContentRepoEndpointInput corpus) {
       this.corpus = corpus;
     }
   }
@@ -374,18 +356,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setBucket(String bucket) {
       this.bucket = bucket;
-    }
-  }
-
-  public static class MultibucketContentRepoEndpointInput extends ContentRepoEndpointInput {
-    private List<String> secondaryBuckets;
-
-    /**
-     * @deprecated For reflective access by SnakeYAML only
-     */
-    @Deprecated
-    public void setSecondaryBuckets(List<String> secondaryBuckets) {
-      this.secondaryBuckets = secondaryBuckets;
     }
   }
 
