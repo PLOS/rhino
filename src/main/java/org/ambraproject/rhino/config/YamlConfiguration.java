@@ -79,9 +79,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
    */
   private static ContentRepoEndpoint parseCorpusStorage(ContentRepoEndpointInput corpus) {
     URI address = corpus.address;
-    if (address == null) {
-      throw new RuntimeException("contentRepo.corpus.address must be configured");
-    }
 
     String bucket = corpus.bucket;
     if (bucket == null) {

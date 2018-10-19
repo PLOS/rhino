@@ -36,7 +36,6 @@ import javax.sql.DataSource;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -64,6 +63,8 @@ import org.ambraproject.rhino.service.impl.HibernatePersistenceServiceImpl;
 import org.ambraproject.rhino.service.impl.IngestionService;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.JournalCrudServiceImpl;
+import org.ambraproject.rhino.service.impl.S3ArticleCrudServiceImpl;
+import org.ambraproject.rhino.service.impl.S3PersistenceServiceImpl;
 import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
@@ -98,6 +99,18 @@ import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.yaml.snakeyaml.Yaml;
+
+import javax.sql.DataSource;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.lang.reflect.Type;
+import java.net.URI;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Properties;
 
 /**
  * Bean configuration for the application.
@@ -206,15 +219,26 @@ public class RhinoConfiguration {
   public ContentRepoService contentRepoService(RuntimeConfiguration runtimeConfiguration,
                                                final CloseableHttpClient httpClient) {
     RuntimeConfiguration.ContentRepoEndpoint corpus = runtimeConfiguration.getCorpusStorage();
-    final String repoServer = Preconditions.checkNotNull(corpus.getAddress().toString());
-    Objects.requireNonNull(httpClient);
-
-    return new ContentRepoServiceImpl(repoServer, HttpClientFunction.from(httpClient));
+    URI address = corpus.getAddress();
+    if (address == null) {
+      /* Use S3 */
+      return null;
+    } else {
+      Objects.requireNonNull(httpClient);
+      return new ContentRepoServiceImpl(address.toString(), HttpClientFunction.from(httpClient));
+    }
   }
 
   @Bean
-  public ArticleCrudService articleCrudService() {
-    return new ContentRepoArticleCrudServiceImpl();
+  public ArticleCrudService articleCrudService(RuntimeConfiguration runtimeConfiguration) {
+    RuntimeConfiguration.ContentRepoEndpoint corpus = runtimeConfiguration.getCorpusStorage();
+    URI address = corpus.getAddress();
+    if (address == null) {
+      /* Use S3 */
+      return new S3ArticleCrudServiceImpl();
+    } else {
+      return new ContentRepoArticleCrudServiceImpl();
+    }
   }
 
   @Bean
@@ -268,8 +292,15 @@ public class RhinoConfiguration {
   }
 
   @Bean
-  public ContentPersistenceService contentRepoPersistenceService() {
-    return new ContentRepoPersistenceServiceImpl();
+  public ContentPersistenceService contentRepoPersistenceService(RuntimeConfiguration runtimeConfiguration) {
+    RuntimeConfiguration.ContentRepoEndpoint corpus = runtimeConfiguration.getCorpusStorage();
+    URI address = corpus.getAddress();
+    if (address == null) {
+      /* Use S3 */
+      return new S3PersistenceServiceImpl();
+    } else {
+      return new ContentRepoPersistenceServiceImpl();
+    }
   }
 
   @Bean

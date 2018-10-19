@@ -30,6 +30,7 @@ import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.S3Object;
 
+import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.model.ArticleFile;
 import org.ambraproject.rhino.model.ArticleFileStorage;
@@ -38,8 +39,6 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class S3ArticleCrudServiceImpl extends AbstractArticleCrudServiceImpl implements ArticleCrudService {
-  private String bucketName = "MY_BUCKET";
-
   @Autowired
   protected AmazonS3 amazonS3;
 
@@ -48,14 +47,14 @@ public class S3ArticleCrudServiceImpl extends AbstractArticleCrudServiceImpl imp
     return String.format("%s/v%d/%s",
                          ingestion.getArticle().getDoi(),
                          ingestion.getIngestionNumber(),
-                         file.getCrepoKey());
+                         file.getIngestedFileName());
   }
 
   @Override
   public ArticleFileStorage getArticleItemFile(ArticleFileIdentifier fileId) {
     ArticleFile articleFile = getArticleFile(fileId);
     String key = getS3Key(articleFile);
-    GetObjectRequest request = new GetObjectRequest(bucketName, key);
+    GetObjectRequest request = new GetObjectRequest(bucketName(), key);
     S3Object object = amazonS3.getObject(request);
     ObjectMetadata metadata = object.getObjectMetadata();
 
@@ -70,13 +69,13 @@ public class S3ArticleCrudServiceImpl extends AbstractArticleCrudServiceImpl imp
   @Override
   public InputStream getRepoObjectInputStream(ArticleFileStorage metadata) {
     String key = metadata.getS3Key().get();
-    GetObjectRequest request = new GetObjectRequest(bucketName, key);
+    GetObjectRequest request = new GetObjectRequest(bucketName(), key);
     return amazonS3.getObject(request).getObjectContent();
   }
 
   public InputStream getRepoObjectInputStream(ArticleFile metadata) {
     String key = getS3Key(metadata);
-    GetObjectRequest request = new GetObjectRequest(bucketName, key);
+    GetObjectRequest request = new GetObjectRequest(bucketName(), key);
     return amazonS3.getObject(request).getObjectContent();
   }
 }

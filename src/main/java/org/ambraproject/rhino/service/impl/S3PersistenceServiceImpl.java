@@ -22,6 +22,7 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.model.ArticleFile;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
@@ -43,21 +44,23 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
 
 public class S3PersistenceServiceImpl implements ContentPersistenceService {
-  private String bucketName = "MY_BUCKET";
-
   @Autowired
   private AmazonS3 amazonS3;
 
-  // public S3PersistenceServiceImpl(String bucketName) {
-  //   this.bucketName = bucketName;
-  // }
+  @Autowired
+  private RuntimeConfiguration runtimeConfiguration;
+
+  private String bucketName() {
+    RuntimeConfiguration.ContentRepoEndpoint corpusStorage = runtimeConfiguration.getCorpusStorage();
+    return corpusStorage.getBucket();
+  }
   
   private PutObjectResult uploadFile(ArticleFileInput fileInput, String key) {
     ObjectMetadata metadata = new ObjectMetadata();
     metadata.setContentType(fileInput.getContentType());
     metadata.setContentDisposition(String.format("attachment; filename=%s", fileInput.getDownloadName()));
     InputStream input = fileInput.getArchive().openFile(fileInput.getFilename());
-    PutObjectRequest request = new PutObjectRequest(bucketName, key, input, metadata);
+    PutObjectRequest request = new PutObjectRequest(bucketName(), key, input, metadata);
     return amazonS3.putObject(request);
   }
 
@@ -65,7 +68,7 @@ public class S3PersistenceServiceImpl implements ContentPersistenceService {
     return String.format("%s/v%d/%s",
                          ingestion.getArticle().getDoi(),
                          ingestion.getIngestionNumber(),
-                         fileInput.getManifestFile().getCrepoKey());
+                         fileInput.getFilename());
   }
 
   @Override
