@@ -199,13 +199,6 @@ public class ContentRepoArticleCrudServiceImplTest extends AbstractStubbingArtic
     mockArticleCrudService.getManuscriptXml(articleIngestion); 
   }
 
-  @Test
-  public void testGetManuscriptMetadata() throws TransformerException {
-    setCommonManuscriptMocks();
-    ArticleIngestion articleIngestion = setManuscriptMetadataMocks();
-    mockArticleCrudService.getManuscriptMetadata(articleIngestion);
-  }
-
   private void setCommonManuscriptMocks() throws TransformerException {
 
     final HashMap<String, Object> repoObjectMap = new HashMap<>();

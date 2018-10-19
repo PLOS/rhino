@@ -55,58 +55,24 @@ public class ContentRepoArticleCrudServiceImpl extends AbstractArticleCrudServic
   protected ContentRepoService contentRepoService;
 
   @Override
-  public Document getManuscriptXml(ArticleIngestion ingestion) {
-    return getManuscriptXml(getManuscriptMetadata(ingestion));
-  }
-
-  private Document getManuscriptXml(RepoObjectMetadata objectMetadata) {
-    RepoVersion repoVersion = objectMetadata.getVersion();
-    try (InputStream manuscriptInputStream = contentRepoService.getRepoObject(repoVersion)) {
-      return parseXml(manuscriptInputStream);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  @VisibleForTesting
-  public RepoObjectMetadata getManuscriptMetadata(ArticleIngestion ingestion) {
-    Doi articleDoi = Doi.create(ingestion.getArticle().getDoi());
-    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(articleDoi, ingestion.getIngestionNumber());
-    ArticleItemIdentifier articleItemId = ingestionId.getItemFor();
-    ArticleFileIdentifier manuscriptId = ArticleFileIdentifier.create(articleItemId, "manuscript");
-    RepoObjectMetadata objectMetadata = getArticleItemFileInternal(manuscriptId);
-    return objectMetadata;
-  }
-
-  private RepoObjectMetadata getArticleItemFileInternal(ArticleFileIdentifier fileId) {
-    ArticleItemIdentifier id = fileId.getItemIdentifier();
-    ArticleItem work = getArticleItem(id);
-    String fileType = fileId.getFileType();
-    ArticleFile articleFile = work.getFile(fileType)
-        .orElseThrow(() -> new RestClientException("Unrecognized type: " + fileType, HttpStatus.NOT_FOUND));
+  public ArticleFileStorage getArticleItemFile(ArticleFileIdentifier fileId) {
+    ArticleFile articleFile = getArticleFile(fileId);
     try {
-      RepoVersion repoVersion = RepoVersion.create(bucketName(), articleFile.getCrepoKey(), articleFile.getCrepoUuid());
-      // throw new RuntimeException(contentRepoService.getRepoObjectMetadata(repoVersion).toString());
-      return contentRepoService.getRepoObjectMetadata(repoVersion);
+      RepoObjectMetadata metadata = contentRepoService.getRepoObjectMetadata(RepoVersion.create(bucketName(), articleFile.getCrepoKey(), articleFile.getCrepoUuid()));
+      RepoVersion version = metadata.getVersion();
+      RepoId id = version.getId();
+      return ArticleFileStorage.builder()
+        .setContentType(metadata.getContentType())
+        .setCrepoKey(id.getKey())
+        .setDownloadName(metadata.getDownloadName())
+        .setSize(metadata.getSize())
+        .setTimestamp(metadata.getTimestamp())
+        .setUuid(version.getUuid().toString())
+        .build();
     } catch (NotFoundException e) {
       throw new RestClientException("Object not found: " + fileId + ". File info: " + articleFile,
           HttpStatus.NOT_FOUND);
     }
-  }
-
-  @Override
-  public ArticleFileStorage getArticleItemFile(ArticleFileIdentifier fileId) {
-    RepoObjectMetadata metadata = getArticleItemFileInternal(fileId);
-    RepoVersion version = metadata.getVersion();
-    RepoId id = version.getId();
-    return ArticleFileStorage.builder()
-      .setContentType(metadata.getContentType())
-      .setCrepoKey(id.getKey())
-      .setDownloadName(metadata.getDownloadName())
-      .setSize(metadata.getSize())
-      .setTimestamp(metadata.getTimestamp())
-      .setUuid(version.getUuid().toString())
-      .build();
   }
 
   @Override

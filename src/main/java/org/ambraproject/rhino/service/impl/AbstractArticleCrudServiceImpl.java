@@ -33,6 +33,7 @@ import com.google.common.io.ByteSource;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.XpathReader;
+import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleItemIdentifier;
@@ -605,5 +606,28 @@ public abstract class AbstractArticleCrudServiceImpl extends AmbraService implem
       }
     }
     return ImmutableList.of();
+  }
+
+  @Override
+  public Document getManuscriptXml(ArticleIngestion ingestion) {
+    Doi articleDoi = Doi.create(ingestion.getArticle().getDoi());
+    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(articleDoi, ingestion.getIngestionNumber());
+    ArticleItemIdentifier articleItemId = ingestionId.getItemFor();
+    ArticleFileIdentifier manuscriptId = ArticleFileIdentifier.create(articleItemId, "manuscript");
+    ArticleFile articleFile = getArticleFile(manuscriptId);
+    try (InputStream manuscriptInputStream = getRepoObjectInputStream(articleFile)) {
+      return parseXml(manuscriptInputStream);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public ArticleFile getArticleFile(ArticleFileIdentifier fileId) {
+    ArticleItemIdentifier id = fileId.getItemIdentifier();
+    ArticleItem work = getArticleItem(id);
+    String fileType = fileId.getFileType();
+    ArticleFile articleFile = work.getFile(fileType)
+      .orElseThrow(() -> new RestClientException("Unrecognized type: " + fileType, HttpStatus.NOT_FOUND));
+    return articleFile;
   }
 }
