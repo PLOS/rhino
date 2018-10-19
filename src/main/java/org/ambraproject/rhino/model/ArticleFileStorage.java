@@ -33,7 +33,6 @@ abstract public class ArticleFileStorage {
     return new AutoValue_ArticleFileStorage.Builder();
   }
 
-  abstract public String getBucketName();
   abstract public Optional<String> getContentType();
   abstract public String getCrepoKey();
   abstract public Optional<String> getDownloadName();
@@ -44,7 +43,6 @@ abstract public class ArticleFileStorage {
   @AutoValue.Builder
   abstract public static class Builder {
     abstract public ArticleFileStorage build();
-    abstract public Builder setBucketName(String value);
     abstract public Builder setContentType(Optional<String> value);
     abstract public Builder setCrepoKey(String value);
     abstract public Builder setDownloadName(Optional<String> value);

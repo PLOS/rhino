@@ -190,7 +190,6 @@ public class ContentRepoArticleCrudServiceImplTest extends AbstractStubbingArtic
     when(mockArticle.getDoi()).thenReturn("10.1371/journal.pcrypt.0");
     when(mockHibernateTemplate.execute(any())).thenReturn(mockItem);
     when(mockItem.getFile("manuscript")).thenReturn(Optional.of(mockArticleFile));
-    when(mockArticleFile.getBucketName()).thenReturn("my-bucket");
     when(mockArticleFile.getCrepoKey()).thenReturn("key");
     when(mockArticleFile.getCrepoUuid()).thenReturn(UUID.randomUUID().toString());
     when(mockContentRepoService.getRepoObjectMetadata(any(RepoVersion.class))).thenReturn(mockMetadata);
@@ -212,9 +211,6 @@ public class ContentRepoArticleCrudServiceImplTest extends AbstractStubbingArtic
     final HashMap<String, Object> repoObjectMap = new HashMap<>();
     repoObjectMap.put("key", "0");
     repoObjectMap.put("uuid", "50a25f86-bcf2-4577-a3a1-e4f673615de8");
-    final RepoObjectMetadata repoObjectMetadata
-        = new RepoObjectMetadata("bucket", repoObjectMap);
-
     when(mockContentRepoService.getRepoObject(any(RepoVersion.class)))
         .thenReturn(createStubInputStream());
   }
@@ -230,7 +226,6 @@ public class ContentRepoArticleCrudServiceImplTest extends AbstractStubbingArtic
     when(mockArticle.getDoi()).thenReturn("10.1371/journal.pcrypt.0");
     when(mockHibernateTemplate.execute(any())).thenReturn(mockItem);
     when(mockItem.getFile("manuscript")).thenReturn(Optional.of(mockArticleFile));
-    when(mockArticleFile.getBucketName()).thenReturn("my-bucket");
     when(mockArticleFile.getCrepoKey()).thenReturn("key");
     when(mockArticleFile.getCrepoUuid()).thenReturn(UUID.randomUUID().toString());
     when(mockContentRepoService.getRepoObjectMetadata(any(RepoVersion.class))).thenReturn(mockMetadata);
@@ -259,7 +254,6 @@ public class ContentRepoArticleCrudServiceImplTest extends AbstractStubbingArtic
     when(mockArticle.getDoi()).thenReturn("10.1371/journal.pcrypt.0");
     when(mockHibernateTemplate.execute(any())).thenReturn(mockItem);
     when(mockItem.getFile("manuscript")).thenReturn(Optional.of(mockArticleFile));
-    when(mockArticleFile.getBucketName()).thenReturn("my-bucket");
     when(mockArticleFile.getCrepoKey()).thenReturn("key");
     when(mockArticleFile.getCrepoUuid()).thenReturn(UUID.randomUUID().toString());
     when(mockContentRepoService.getRepoObjectMetadata(any(RepoVersion.class))).thenReturn(mockMetadata);
@@ -321,7 +315,6 @@ public class ContentRepoArticleCrudServiceImplTest extends AbstractStubbingArtic
       .thenReturn(mockItem)
       .thenReturn(dummyRelationships);
     when(mockItem.getFile("manuscript")).thenReturn(Optional.of(mockArticleFile));
-    when(mockArticleFile.getBucketName()).thenReturn("my-bucket");
     when(mockArticleFile.getCrepoKey()).thenReturn("key");
     when(mockArticleFile.getCrepoUuid()).thenReturn(UUID.randomUUID().toString());
     when(mockContentRepoService.getRepoObjectMetadata(any(RepoVersion.class))).thenReturn(mockMetadata);
@@ -344,7 +337,6 @@ public class ContentRepoArticleCrudServiceImplTest extends AbstractStubbingArtic
 
     final ArticleFile dummyFile = new ArticleFile();
     dummyFile.setCrepoKey("test");
-    dummyFile.setBucketName("bucket");
     dummyFile.setCrepoUuid("50a25f86-bcf2-4577-a3a1-e4f673615de8");
     dummyFile.setIngestedFileName("test");
     List<ArticleFile> dummyFiles = ImmutableList.of(dummyFile);

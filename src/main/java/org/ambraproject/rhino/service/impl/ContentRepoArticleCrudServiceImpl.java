@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.io.ByteSource;
 
+import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleItemIdentifier;
@@ -60,6 +61,14 @@ import org.w3c.dom.Document;
 public class ContentRepoArticleCrudServiceImpl extends AbstractArticleCrudServiceImpl implements ArticleCrudService {
   @Autowired
   protected ContentRepoService contentRepoService;
+
+  @Autowired
+  private RuntimeConfiguration runtimeConfiguration;
+
+  private String bucketName() {
+    RuntimeConfiguration.ContentRepoEndpoint corpusStorage = runtimeConfiguration.getCorpusStorage();
+    return corpusStorage.getBucket();
+  }
 
   @Override
   public Document getManuscriptXml(ArticleIngestion ingestion) {
@@ -101,7 +110,7 @@ public class ContentRepoArticleCrudServiceImpl extends AbstractArticleCrudServic
         (ArticleFile file) -> new ByteSource() {
           @Override
           public InputStream openStream() throws IOException {
-            RepoVersion repoVersion = RepoVersion.create(file.getBucketName(), file.getCrepoKey(), file.getCrepoUuid());
+            RepoVersion repoVersion = RepoVersion.create(bucketName(), file.getCrepoKey(), file.getCrepoUuid());
             return contentRepoService.getRepoObject(repoVersion);
           }
         }));
@@ -123,7 +132,7 @@ public class ContentRepoArticleCrudServiceImpl extends AbstractArticleCrudServic
     ArticleFile articleFile = work.getFile(fileType)
         .orElseThrow(() -> new RestClientException("Unrecognized type: " + fileType, HttpStatus.NOT_FOUND));
     try {
-      RepoVersion repoVersion = RepoVersion.create(articleFile.getBucketName(), articleFile.getCrepoKey(), articleFile.getCrepoUuid());
+      RepoVersion repoVersion = RepoVersion.create(bucketName(), articleFile.getCrepoKey(), articleFile.getCrepoUuid());
       // throw new RuntimeException(contentRepoService.getRepoObjectMetadata(repoVersion).toString());
       return contentRepoService.getRepoObjectMetadata(repoVersion);
     } catch (NotFoundException e) {
@@ -138,7 +147,6 @@ public class ContentRepoArticleCrudServiceImpl extends AbstractArticleCrudServic
     RepoVersion version = metadata.getVersion();
     RepoId id = version.getId();
     return ArticleFileStorage.builder()
-      .setBucketName(id.getBucketName())
       .setContentType(metadata.getContentType())
       .setCrepoKey(id.getKey())
       .setDownloadName(metadata.getDownloadName())
@@ -150,6 +158,6 @@ public class ContentRepoArticleCrudServiceImpl extends AbstractArticleCrudServic
 
   @Override
   public InputStream getRepoObjectInputStream(ArticleFileStorage metadata) {
-    return contentRepoService.getRepoObject(RepoVersion.create(metadata.getBucketName(), metadata.getCrepoKey(), metadata.getUuid()));
+    return contentRepoService.getRepoObject(RepoVersion.create(bucketName(), metadata.getCrepoKey(), metadata.getUuid()));
   }
 }

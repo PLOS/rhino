@@ -83,7 +83,6 @@ public class S3PersistenceServiceImpl implements ContentPersistenceService {
       file.setItem(item);
       file.setFileType(entry.getKey());
 
-      file.setBucketName(bucketName);
       file.setCrepoKey(key);
       file.setCrepoUuid(UUID.randomUUID().toString()); // TODO: Drop this column
       file.setFileSize(result.getMetadata().getContentLength());
@@ -104,7 +103,6 @@ public class S3PersistenceServiceImpl implements ContentPersistenceService {
       ArticleFile file = new ArticleFile();
       file.setIngestion(ingestion);
 
-      file.setBucketName(bucketName);
       file.setCrepoKey(key);
       file.setCrepoUuid(UUID.randomUUID().toString()); // TODO: Drop this column
       file.setFileSize(result.getMetadata().getContentLength());

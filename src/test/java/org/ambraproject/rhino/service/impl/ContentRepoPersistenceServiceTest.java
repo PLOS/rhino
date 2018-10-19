@@ -136,7 +136,6 @@ public class ContentRepoPersistenceServiceTest extends AbstractRhinoTest {
     assertThat(actualFiles).hasSize(expectedFileCount);
 
     actualFiles.forEach(articleFile -> {
-      assertThat(articleFile.getBucketName()).isEqualTo(DESTINATION_BUCKET);
       assertThat(articleFile.getIngestion()).isEqualTo(expectedIngestion);
       assertThat(articleFile.getItem()).isEqualTo(actualArticleItem);
       assertThat(articleFile.getCrepoKey()).isEqualTo(REPO_KEY);
@@ -185,7 +184,6 @@ public class ContentRepoPersistenceServiceTest extends AbstractRhinoTest {
 
     assertThat(actualFiles).hasSize(expectedFileCount);
     actualFiles.forEach(articleFile -> {
-      assertThat(articleFile.getBucketName()).isEqualTo(destinationBucket);
       assertThat(articleFile.getIngestion()).isEqualTo(expectedIngestion);
       assertThat(articleFile.getCrepoKey()).isEqualTo(REPO_KEY);
       assertThat(articleFile.getCrepoUuid()).isEqualTo(repoUUID);

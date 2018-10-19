@@ -57,9 +57,6 @@ public class ArticleFile implements Timestamped {
   private String fileType;
 
   @Column
-  private String bucketName;
-
-  @Column
   private String crepoKey;
 
   @Column
@@ -106,14 +103,6 @@ public class ArticleFile implements Timestamped {
 
   public void setFileType(String fileType) {
     this.fileType = fileType;
-  }
-
-  public String getBucketName() {
-    return bucketName;
-  }
-
-  public void setBucketName(String bucketName) {
-    this.bucketName = bucketName;
   }
 
   public String getCrepoKey() {
@@ -185,7 +174,6 @@ public class ArticleFile implements Timestamped {
   @Override
   public String toString() {
     return "ArticleFile{" +
-        "bucketName='" + bucketName + '\'' +
         ", crepoKey='" + crepoKey + '\'' +
         ", crepoUuid='" + crepoUuid + '\'' +
         '}';
