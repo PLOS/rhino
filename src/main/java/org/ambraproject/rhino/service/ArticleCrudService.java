@@ -29,6 +29,7 @@ import org.ambraproject.rhino.identity.ArticleItemIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleFile;
 import org.ambraproject.rhino.model.ArticleFileStorage;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
@@ -246,4 +247,6 @@ public interface ArticleCrudService {
   public abstract ArticleFileStorage getArticleItemFile(ArticleFileIdentifier fileId);
 
   public abstract InputStream getRepoObjectInputStream(ArticleFileStorage metadata);
+
+  public abstract InputStream getRepoObjectInputStream(ArticleFile metadata);
 }

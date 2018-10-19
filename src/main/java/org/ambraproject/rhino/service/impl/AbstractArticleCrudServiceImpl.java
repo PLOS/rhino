@@ -29,6 +29,8 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.common.io.ByteSource;
+import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
@@ -38,6 +40,7 @@ import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleCategoryAssignment;
+import org.ambraproject.rhino.model.ArticleFile;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRelationship;
@@ -48,6 +51,7 @@ import org.ambraproject.rhino.rest.response.CacheableResponse;
 import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
+import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.view.ResolvedDoiView;
 import org.ambraproject.rhino.view.article.ArticleIngestionView;
 import org.ambraproject.rhino.view.article.ArticleOverview;
@@ -63,6 +67,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.plos.crepo.model.identity.RepoVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,14 +76,18 @@ import org.w3c.dom.Document;
 
 import javax.xml.xpath.XPathException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -101,6 +110,43 @@ public abstract class AbstractArticleCrudServiceImpl extends AmbraService implem
   private ArticleIngestionView.Factory articleIngestionViewFactory;
   @Autowired
   private ItemSetView.Factory itemSetViewFactory;
+
+  @Autowired
+  private RuntimeConfiguration runtimeConfiguration;
+
+  String bucketName() {
+    RuntimeConfiguration.ContentRepoEndpoint corpusStorage = runtimeConfiguration.getCorpusStorage();
+    return corpusStorage.getBucket();
+  }
+
+  @Override
+  public Archive repack(ArticleIngestionIdentifier ingestionId) {
+    ArticleIngestion ingestion = readIngestion(ingestionId);
+    @SuppressWarnings("unchecked")
+    List<ArticleFile> files = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM ArticleFile WHERE ingestion = :ingestion");
+      query.setParameter("ingestion", ingestion);
+      return (List<ArticleFile>) query.list();
+    });
+
+    Map<String, ByteSource> archiveMap = files.stream().collect(Collectors.toMap(
+        ArticleFile::getIngestedFileName,
+        (ArticleFile file) -> new ByteSource() {
+          @Override
+          public InputStream openStream() throws IOException {
+            return getRepoObjectInputStream(file);
+          }
+        }));
+
+    return Archive.pack(extractFilenameStub(ingestionId.getDoiName()) + ".zip", archiveMap);
+  }
+
+  private static final Pattern FILENAME_STUB_PATTERN = Pattern.compile("(?:[^/]*/)*?([^/]*)/?");
+
+  private static String extractFilenameStub(String name) {
+    Matcher m = FILENAME_STUB_PATTERN.matcher(name);
+    return m.matches() ? m.group(1) : name;
+  }
 
   @Override
   public void populateCategories(ArticleIdentifier articleId) throws IOException {

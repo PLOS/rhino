@@ -23,14 +23,8 @@ package org.ambraproject.rhino.service.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.io.ByteSource;
 
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
@@ -43,8 +37,6 @@ import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.util.Archive;
-import org.hibernate.Query;
 import org.plos.crepo.exceptions.NotFoundException;
 import org.plos.crepo.model.identity.RepoId;
 import org.plos.crepo.model.identity.RepoVersion;
@@ -61,14 +53,6 @@ import org.w3c.dom.Document;
 public class ContentRepoArticleCrudServiceImpl extends AbstractArticleCrudServiceImpl implements ArticleCrudService {
   @Autowired
   protected ContentRepoService contentRepoService;
-
-  @Autowired
-  private RuntimeConfiguration runtimeConfiguration;
-
-  private String bucketName() {
-    RuntimeConfiguration.ContentRepoEndpoint corpusStorage = runtimeConfiguration.getCorpusStorage();
-    return corpusStorage.getBucket();
-  }
 
   @Override
   public Document getManuscriptXml(ArticleIngestion ingestion) {
@@ -92,37 +76,6 @@ public class ContentRepoArticleCrudServiceImpl extends AbstractArticleCrudServic
     ArticleFileIdentifier manuscriptId = ArticleFileIdentifier.create(articleItemId, "manuscript");
     RepoObjectMetadata objectMetadata = getArticleItemFileInternal(manuscriptId);
     return objectMetadata;
-  }
-
-  @Override
-  public Archive repack(ArticleIngestionIdentifier ingestionId) {
-    ArticleIngestion ingestion = readIngestion(ingestionId);
-    @SuppressWarnings("unchecked")
-    List<ArticleFile> files = hibernateTemplate.execute(session -> {
-      Query query = session.createQuery("FROM ArticleFile WHERE ingestion = :ingestion");
-      query.setParameter("ingestion", ingestion);
-      return (List<ArticleFile>) query.list();
-    });
-    
-
-    Map<String, ByteSource> archiveMap = files.stream().collect(Collectors.toMap(
-        ArticleFile::getIngestedFileName,
-        (ArticleFile file) -> new ByteSource() {
-          @Override
-          public InputStream openStream() throws IOException {
-            RepoVersion repoVersion = RepoVersion.create(bucketName(), file.getCrepoKey(), file.getCrepoUuid());
-            return contentRepoService.getRepoObject(repoVersion);
-          }
-        }));
-
-    return Archive.pack(extractFilenameStub(ingestionId.getDoiName()) + ".zip", archiveMap);
-  }
-
-  private static final Pattern FILENAME_STUB_PATTERN = Pattern.compile("(?:[^/]*/)*?([^/]*)/?");
-
-  private static String extractFilenameStub(String name) {
-    Matcher m = FILENAME_STUB_PATTERN.matcher(name);
-    return m.matches() ? m.group(1) : name;
   }
 
   private RepoObjectMetadata getArticleItemFileInternal(ArticleFileIdentifier fileId) {
@@ -159,5 +112,10 @@ public class ContentRepoArticleCrudServiceImpl extends AbstractArticleCrudServic
   @Override
   public InputStream getRepoObjectInputStream(ArticleFileStorage metadata) {
     return contentRepoService.getRepoObject(RepoVersion.create(bucketName(), metadata.getCrepoKey(), metadata.getUuid()));
+  }
+
+  @Override
+  public InputStream getRepoObjectInputStream(ArticleFile metadata) {
+    return contentRepoService.getRepoObject(RepoVersion.create(bucketName(), metadata.getCrepoKey(), metadata.getCrepoUuid()));
   }
 }
