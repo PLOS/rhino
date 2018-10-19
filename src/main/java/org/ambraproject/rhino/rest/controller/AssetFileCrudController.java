@@ -77,21 +77,6 @@ public class AssetFileCrudController extends RestController {
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/articles/{articleDoi}/ingestions/{number}/items/{itemDoi}/files/{filetype}", method = RequestMethod.GET)
-  public void readMetadata(HttpServletRequest request, HttpServletResponse response,
-                           @PathVariable("articleDoi") String articleDoi,
-                           @PathVariable("number") int ingestionNumber,
-                           @PathVariable("itemDoi") String itemDoi,
-                           @PathVariable("filetype") String fileType)
-      throws IOException {
-    ArticleFileIdentifier fileId = ArticleFileIdentifier.create(DoiEscaping.unescape(itemDoi), ingestionNumber, fileType);
-    // TODO: Validate that articleDoi belongs to item's parent
-
-    // TODO: Add support for serving metadata about individual files?
-    throw new RestClientException("File metadata not supported (URL reserved)", HttpStatus.NOT_FOUND);
-  }
-
-  @Transactional(readOnly = true)
   @RequestMapping(value = "/articles/{articleDoi}/ingestions/{number}/items/{itemDoi}/files/{filetype}",
       params = "download", method = RequestMethod.GET)
   @ApiImplicitParam(name = "download", value = "download flag (any value)", required = true,
