@@ -31,10 +31,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import java.sql.Date;
+import java.util.Collection;
 
 @Entity
 @Table(name = "articleIngestion")
@@ -83,6 +85,12 @@ public class ArticleIngestion implements Timestamped {
   @Column
   private String preprintDoi;
 
+  @OneToMany(targetEntity = ArticleFile.class, mappedBy = "ingestion")
+  private Collection<ArticleFile> files;
+
+  @OneToMany(targetEntity = ArticleItem.class, mappedBy = "ingestion")
+  private Collection<ArticleItem> items;
+
   public long getVersionId() {
     return ingestionId;
   }
@@ -107,6 +115,14 @@ public class ArticleIngestion implements Timestamped {
     this.ingestionNumber = ingestionNumber;
   }
 
+  public Collection<ArticleItem> getItems() {
+    return items;
+  };
+
+  public Collection<ArticleFile> getFiles() {
+    return files;
+  };
+  
   public Journal getJournal() {
     return journal;
   }

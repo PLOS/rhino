@@ -45,8 +45,7 @@ public class ItemSetView {
     private HibernateTemplate hibernateTemplate;
 
     public ItemSetView getView(ArticleIngestion ingestion) {
-      Collection<ArticleFile> files = (List<ArticleFile>) hibernateTemplate.find("SELECT file FROM ArticleFile file LEFT JOIN FETCH file.item WHERE file.ingestion = ?", ingestion);
-      return new ItemSetView(ingestion, files);
+      return new ItemSetView(ingestion, ingestion.getFiles());
     }
   }
 
