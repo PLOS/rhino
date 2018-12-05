@@ -67,6 +67,8 @@ case "$1" in
 
 	process_env_template $HOME/bin/setenv.template.sh $HOME/bin/setenv.sh
 
+	invoke-rc.d [[artifactId]] restart
+
   ;;
 
   abort-upgrade|abort-remove|abort-deconfigure)
@@ -78,5 +80,3 @@ case "$1" in
   ;;
 
 esac
-
-service [[artifactId]] stop || true
