@@ -1,0 +1,57 @@
+contentRepo:
+  editorial:
+    # Editorial content written by Lemur.
+    address: ${REPO_LOCATION}
+    bucket:  ${EDITORIAL_BUCKET}
+  corpus:
+    # Main corpus of articles.
+    address: ${REPO_LOCATION}
+    bucket:  ${CORPUS_BUCKET}
+
+httpConnectionPool:
+  maxTotal:           100
+  defaultMaxPerRoute: 100
+# HTTP connection management from Rhino (as a client) to other services
+# (including content repo and taxonomy server).
+
+taxonomy:
+  server:    null
+  thesaurus: null
+  # categoryBlacklist:
+  #   - "/Earth sciences/Geography/Locations/"
+# Configuration related to the taxonomic classification of articles.
+#
+# "server" and "thesaurus" specify the remote taxonomy server that will
+# classify articles as they are ingested. If both are null, Rhino will skip the
+# service call; it will still ingest articles, but will not write any
+# categories for them at ingestion time.
+#
+# Any term that starts with a string in "categoryBlacklist" will be suppressed
+# from all articles if the taxonomy service returns it. The "Locations" term is
+# suppressed as a workaround for a problem where articles that mention
+# geographic locations are over-aggressively categorized under "Earth
+# sciences". See <https://developer.plos.org/jira/browse/AMEC-100>
+
+userApi:
+  server:                ${USER_API_SERVER}
+  authorizationAppName:  ${USER_API_USER}
+  authorizationPassword: ${USER_API_AUTH}
+# Configuration for the API for user data (Named Entity Database, NED).
+
+queue:
+  brokerUrl:        ${QUEUE_LOCATION}
+  # ActiveMQ address.
+
+  solrUpdate:       activemq:plos.solr.article.index?transacted=false
+  solrDelete:       activemq:plos.solr.article.delete?transacted=false
+  # Queue destination keys.
+
+  syndicationRange: 30
+  # Number of days in the past to syndicate.
+
+# manuscriptCustomMeta:
+#   revisionDate:     "Publication Update"
+#   publicationStage: "PLOS Publication Stage"
+# # Values to look for in manuscripts as "<custom-meta><meta-name>...</meta-name
+# # ></custom-meta>" XML elements, where programmatically signficant data will be
+# # found.

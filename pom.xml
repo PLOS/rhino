@@ -669,7 +669,27 @@
           </execution>
         </executions>
       </plugin>
-
+      <plugin>
+        <groupId>com.spotify</groupId>
+        <artifactId>dockerfile-maven-plugin</artifactId>
+        <version>1.4.9</version>
+        <executions>
+          <execution>
+            <id>default</id>
+            <goals>
+              <goal>build</goal>
+              <!-- <goal>push</goal> -->
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <repository>plos/rhino</repository>
+          <!-- <tag>${project.version}</tag> -->
+          <buildArgs>
+            <WAR_FILE>${project.build.finalName}.war</WAR_FILE>
+          </buildArgs>
+        </configuration>
+      </plugin>
       <plugin>
         <artifactId>apt-repo</artifactId>
         <groupId>org.m1theo</groupId>

@@ -1,0 +1,46 @@
+version: '3'
+services:
+  rhino:
+    image: plos/rhino:latest
+    ports:
+      - "8006:8080"
+    environment:
+      - REPO_LOCATION=http://contentrepo:8080/v1/
+      - EDITORIAL_BUCKET=editorial
+      - CORPUS_BUCKET=corpus
+      - USER_API_SERVER=http://ned/
+      - USER_API_USER=user
+      - USER_API_AUTH=password
+      - QUEUE_LOCATION=queue
+      - RHINO_DB_USER=rhino
+      - RHINO_DB_HOST=db-rhino
+      - RHINO_DB_PASSWORD=password
+      - RHINO_DB_NAME=rhino
+    links:
+      - db-rhino
+      - contentrepo
+  db-rhino:
+    image: mysql:5
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "true"
+      MYSQL_DATABASE: rhino
+      MYSQL_USER: rhino
+      MYSQL_PASSWORD: password
+  contentrepo:
+    image: plos/contentrepo:latest
+    ports:
+      - "8002:8080"
+    environment:
+      - CONTENTREPO_DB_PASSWORD=password
+      - CONTENTREPO_DB_HOST=db-contentrepo
+    links:
+      - db-contentrepo
+  db-contentrepo:
+    image: mysql:5
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "true"
+      MYSQL_DATABASE: PLOS_REPO
+      MYSQL_USER: plosrepo
+      MYSQL_PASSWORD: password
+    # https://github.com/docker-library/mysql/issues/149
+    command: mysqld --sql_mode=""
