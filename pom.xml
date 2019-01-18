@@ -64,7 +64,6 @@
     <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
     <build.timestamp>${maven.build.timestamp}</build.timestamp>
     <build.counter>0</build.counter>
-    <maven.tomcat.port>8082</maven.tomcat.port>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
@@ -432,8 +431,15 @@
       <artifactId>flyway-core</artifactId>
       <version>5.1.4</version>
     </dependency>
-  </dependencies>
 
+    <!-- For cargo (see below) -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.12</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
 
   <build>
     <finalName>rhino</finalName>
@@ -446,6 +452,58 @@
     </resources>
 
     <plugins>
+      <plugin>
+        <groupId>org.codehaus.cargo</groupId>
+        <artifactId>cargo-maven2-plugin</artifactId>
+        <version>1.7.1</version>
+        <configuration>
+          <type>standalone</type>
+          <container>
+            <containerId>tomcat8x</containerId>
+            <zipUrlInstaller>
+              <url>http://repo1.maven.org/maven2/org/apache/tomcat/tomcat/8.5.37/tomcat-8.5.37.zip</url>
+            </zipUrlInstaller>
+            <systemProperties>
+              <java.util.logging.manager>org.apache.juli.ClassLoaderLogManager</java.util.logging.manager>
+              <log4j.configuration>file://${rhino.configDir}/log4j.xml</log4j.configuration>
+              <org.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH>true</org.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH>
+              <java.net.preferIPv4Stack>true</java.net.preferIPv4Stack>
+              <ambra.platform.appContext/>
+              <!-- Needed to pass on system properties to child process -->
+              <rhino.configDir>${rhino.configDir}</rhino.configDir>
+            </systemProperties>
+            <dependencies>
+              <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <classpath>extra</classpath>
+              </dependency>
+            </dependencies>
+          </container>
+          <configuration>
+            <properties>
+              <cargo.servlet.port>8082</cargo.servlet.port>
+            </properties>
+            <files>
+              <file>
+                <file>${rhino.configDir}/context.xml</file>
+                <todir>conf</todir>
+              </file>
+            </files>
+          </configuration>
+          <deployables>
+            <deployable>
+              <groupId>org.ambraproject</groupId>
+              <artifactId>rhino</artifactId>
+              <type>war</type>
+              <properties>
+                <context>/v2</context>
+              </properties>
+            </deployable>
+          </deployables>
+        </configuration>
+      </plugin>
+
       <!--warpath plugin allows us to use warpath dependencies to get transitive dependencies from the war-->
       <plugin>
         <groupId>org.appfuse</groupId>
@@ -517,43 +575,6 @@
         <configuration>
           <mainClass>org.test.int1.Main</mainClass>
         </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.tomcat.maven</groupId>
-        <artifactId>tomcat7-maven-plugin</artifactId>
-        <version>2.2</version>
-        <configuration>
-          <path>/</path>
-          <contextFile>${rhino.configDir}/context.xml</contextFile>
-          <additionalConfigFilesDir>${rhino.configDir}/</additionalConfigFilesDir>
-          <systemProperties>
-            <java.util.logging.manager>org.apache.juli.ClassLoaderLogManager</java.util.logging.manager>
-            <log4j.configuration>file://${rhino.configDir}/log4j.xml</log4j.configuration>
-            <org.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH>true
-            </org.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH>
-            <java.net.preferIPv4Stack>true</java.net.preferIPv4Stack>
-            <ambra.platform.appContext/>
-            <struts.devMode>true</struts.devMode>
-          </systemProperties>
-        </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>juli</artifactId>
-            <version>6.0.29</version>
-          </dependency>
-          <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-jdbc</artifactId>
-            <version>7.0.21</version>
-          </dependency>
-          <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.12</version>
-          </dependency>
-        </dependencies>
       </plugin>
 
       <plugin>
@@ -637,7 +658,7 @@
                 </data>
 
                 <data>
-                  <src>${project.basedir}/src/deb/tomcat7</src>
+                  <src>${project.basedir}/src/deb/tomcat8</src>
                   <type>directory</type>
                   <mapper>
                     <type>perm</type>
