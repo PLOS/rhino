@@ -496,6 +496,7 @@
               <groupId>org.ambraproject</groupId>
               <artifactId>rhino</artifactId>
               <type>war</type>
+              <location>${project.build.directory}/${project.build.finalName}</location>
               <properties>
                 <context>/v2</context>
               </properties>
