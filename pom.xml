@@ -698,7 +698,7 @@
         <version>0.3.0</version>
         <executions>
           <execution>
-            <phase>package</phase>
+            <phase>install</phase>
             <goals>
               <goal>apt-repo</goal>
             </goals>
