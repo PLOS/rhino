@@ -27,7 +27,6 @@ import com.google.common.collect.ImmutableListMultimap;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhombat.HttpDateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +37,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.apache.http.client.utils.DateUtils;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -48,10 +48,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.StringWriter;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
-import java.util.TimeZone;
 
 /**
  * Controller that sends HTTP responses to RESTful requests.
@@ -235,10 +233,7 @@ public abstract class RestController {
    * @param lastModified date to set the header to
    */
   protected void setLastModifiedHeader(HttpServletResponse response, Date lastModified) {
-    Calendar calendar = Calendar.getInstance();
-    calendar.setTimeZone(TimeZone.getTimeZone("GMT"));
-    calendar.setTime(lastModified);
-    response.addHeader("Last-Modified", HttpDateUtil.format(calendar));
+    response.addHeader("Last-Modified", DateUtils.formatDate(lastModified));
   }
 
   /**
@@ -255,11 +250,8 @@ public abstract class RestController {
     if (Strings.isNullOrEmpty(ifModifiedSince)) {
       return true;
     } else {
-      Calendar headerCal = HttpDateUtil.parse(ifModifiedSince);
-      Calendar lastModifiedCal = Calendar.getInstance();
-      lastModifiedCal.setTimeZone(TimeZone.getTimeZone("GMT"));
-      lastModifiedCal.setTime(lastModified);
-      return lastModifiedCal.after(headerCal);
+      Date ifModifiedSinceDate = DateUtils.parseDate(ifModifiedSince);
+      return lastModified.after(ifModifiedSinceDate);
     }
   }
 }
