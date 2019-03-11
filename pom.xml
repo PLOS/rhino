@@ -674,16 +674,6 @@
                 </data>
 
                 <data>
-                  <src>${project.basedir}/src/deb/rhino.sysv</src>
-                  <type>file</type>
-                  <dst>/etc/init.d/rhino</dst>
-                  <mapper>
-                    <type>perm</type>
-                    <filemode>755</filemode>
-                  </mapper>
-                </data>
-
-                <data>
                   <src>${project.basedir}/root-index.html</src>
                   <type>file</type>
                   <dst>/opt/plos/rhino/webapps/ROOT/index.html</dst>
