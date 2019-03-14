@@ -56,7 +56,7 @@
     <rhombat.version>1.0.2</rhombat.version>
     <hibernate-version>3.6.3.Final</hibernate-version>
     <conf-helper.version>2.2.1</conf-helper.version>
-    <camel.version>2.10.4</camel.version>
+    <camel.version>2.13.4</camel.version>
     <activemq.version>5.2.0</activemq.version>
     <ehcache.version>2.7.0</ehcache.version>
     <testng.version>6.9.10</testng.version>
