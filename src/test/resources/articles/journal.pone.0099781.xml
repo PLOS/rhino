@@ -840,4 +840,45 @@
 <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kim</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Fung</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Parikh</surname><given-names>SG</given-names></name>, <name name-style="western"><surname>Valore</surname><given-names>EV</given-names></name>, <name name-style="western"><surname>Gabayan</surname><given-names>V</given-names></name>, <etal>et al</etal>. (<year>2014</year>) <article-title>A mouse model of anemia of inflammation: complex pathogenesis with partial dependence on hepcidin</article-title>. <source>Blood</source> <volume>123(8)</volume>: <fpage>1129</fpage>–<lpage>36</lpage>.</mixed-citation>
 </ref>
 </ref-list></back>
+    <sub-article article-type="aggregated-review-documents" id="pone.0099781.r001" specific-use="decision-letter">
+        <front-stub>
+            <article-id pub-id-type="doi">10.1371/journal.pone.0099781.r002</article-id>
+            <title-group>
+                <article-title>Decision Letter 0</article-title>
+            </title-group>
+            <contrib-group>
+                <contrib contrib-type="author">
+                    <name>
+                        <surname>Tough</surname>
+                        <given-names>Guy</given-names>
+                    </name>
+                    <role>Academic Editor</role>
+                </contrib>
+            </contrib-group>
+            <permissions>
+                <copyright-year>2018</copyright-year>
+                <copyright-holder>Guy Tough</copyright-holder>
+                <license xlink:href="http://creativecommons.org/licenses/by/4.0/">
+                    <license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+                </license>
+            </permissions>
+            <related-object document-id="10.1371/journal.pone.0099781" document-id-type="doi" document-type="article" id="rel-obj001" link-type="peer-reviewed-article"/>
+            <custom-meta-group>
+                <custom-meta>
+                    <meta-name>Submission Version</meta-name>
+                    <meta-value>0</meta-value>
+                </custom-meta>
+            </custom-meta-group>
+        </front-stub>
+        <body>
+            <p><named-content content-type="letter-date">12 Sep 2018</named-content></p>
+            <p>PONE-D-18-18642</p><p>Dosimetric and radiobiological comparison in different dose calculation grid sizes between Acuros XB and anisotropic analytical algorithm for prostate VMAT</p><p>PLOS ONE</p><p>Dear Prof. Chung,</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <ext-link ext-link-type="uri" xlink:href="https://pone.editorialmanager.com/" xlink:type="simple">dolor sit amet</ext-link> dolore magna 'minim veniam' Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p><p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur:</p>
+            <list list-type="bullet">
+                <list-item><p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></list-item>
+                <list-item><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p></list-item>
+                <list-item><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></list-item>
+            </list>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </body>
+    </sub-article>
 </article>
