@@ -17,8 +17,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.context.ContextConfiguration;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,9 +29,10 @@ import java.util.Set;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
-import static org.testng.Assert.fail;
+import static org.junit.Assert.fail;
 
 
 @ContextConfiguration(classes = ArticleListCrudServiceImplTest.class)
@@ -46,10 +47,12 @@ public class ArticleListCrudServiceImplTest extends AbstractStubbingArticleTest 
 
   private HibernateTemplate mockHibernateTemplate;
 
-  @BeforeMethod
+  @Before
   public void initMocks() throws IllegalAccessException, NoSuchFieldException {
     mockArticleListCrudService = applicationContext.getBean(ArticleListCrudService.class);
+    reset(mockArticleListCrudService);
     mockHibernateTemplate = applicationContext.getBean(HibernateTemplate.class);
+    reset(mockHibernateTemplate);
   }
 
   @Bean

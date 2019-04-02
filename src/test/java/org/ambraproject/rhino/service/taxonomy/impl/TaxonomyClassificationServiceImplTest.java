@@ -21,13 +21,13 @@
  */
 package org.ambraproject.rhino.service.taxonomy.impl;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -37,9 +37,13 @@ import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyRemoteServiceInvalidBehaviorException;
 import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.testng.Assert;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.junit.Assert;
+import com.tngtech.java.junit.dataprovider.DataProvider;
+import com.tngtech.java.junit.dataprovider.DataProviderRunner;
+import com.tngtech.java.junit.dataprovider.UseDataProvider;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.w3c.dom.Document;
 
 import com.google.common.collect.ImmutableList;
@@ -47,6 +51,7 @@ import com.google.common.collect.ImmutableList;
 /**
  * @author Alex Kudlick Date: 7/3/12
  */
+@RunWith(DataProviderRunner.class)
 public class TaxonomyClassificationServiceImplTest {
   @Autowired
   protected TaxonomyClassificationService taxonomyClassificationService;
@@ -170,7 +175,7 @@ public class TaxonomyClassificationServiceImplTest {
             , 67));
   }
 
-  @Test(expectedExceptions = TaxonomyRemoteServiceInvalidBehaviorException.class)
+  @Test(expected = TaxonomyRemoteServiceInvalidBehaviorException.class)
   public void testInvalidVectorElement() throws Exception {
     // This appears to be a bug in the AI server--it sometimes does not return an
     // absolute path to a top-level category.  In these cases, the returned value
@@ -181,8 +186,8 @@ public class TaxonomyClassificationServiceImplTest {
 
 
   @DataProvider
-  public Iterator<Object[]> getDistinctLeafNodesTestCases() {
-    final ImmutableList<Object[]> cases = ImmutableList.of(
+  public static Object[][] getDistinctLeafNodesTestCases() {
+    return new Object[][]{
         new Object[] {0, ImmutableList.of(), ImmutableList.of()},
 
         new Object[] {1, ImmutableList.of(), ImmutableList.of()},
@@ -245,11 +250,11 @@ public class TaxonomyClassificationServiceImplTest {
                 new WeightedTerm("/c/y", 4),
                 new WeightedTerm("/d/y", 3),
                 new WeightedTerm("/f/x", 1))
-        });
-    return cases.iterator();
+        }};
   }
 
-  @Test(dataProvider = "getDistinctLeafNodesTestCases")
+  @Test
+  @UseDataProvider("getDistinctLeafNodesTestCases")
   public void testGetDistinctLeafNodes(int leafCount, List<WeightedTerm> input, List<WeightedTerm> expected) {
     List<WeightedTerm> actual = TaxonomyClassificationServiceImpl.getDistinctLeafNodes(leafCount, input);
     Assert.assertEquals(actual, expected);

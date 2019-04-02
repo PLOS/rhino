@@ -26,8 +26,8 @@ import com.google.common.collect.ImmutableList;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Comment;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.sql.Date;
 import java.time.Instant;
@@ -36,7 +36,7 @@ import java.time.ZoneId;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertNotNull;
+import static org.junit.Assert.assertNotNull;
 
 
 public class CommentOutputViewTest {
@@ -45,7 +45,7 @@ public class CommentOutputViewTest {
 
   private CommentOutputView.Factory factory;
 
-  @BeforeMethod
+  @Before
   public void init() {
 
     when(runtimeConfiguration.getCompetingInterestPolicyStart())

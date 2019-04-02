@@ -51,9 +51,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.junit.Before;
+
+import org.junit.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -76,7 +76,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.testng.Assert.fail;
+import static org.junit.Assert.fail;
 
 @ContextConfiguration(classes = IngestionServiceTest.class)
 @Configuration
@@ -95,7 +95,7 @@ public class IngestionServiceTest extends AbstractRhinoTest {
 
   private IngestionService ingestionService;
 
-  @BeforeMethod(alwaysRun = true)
+  @Before
   public void init() {
     ingestionService = new IngestionService();
   }
@@ -146,15 +146,7 @@ public class IngestionServiceTest extends AbstractRhinoTest {
     return articleItem;
   }
 
-  @DataProvider
-  private Object[][] getPackageEntryNames() {
-    final Object[][] cases = new Object[][] {
-        {getBaseEntryNames()}
-    };
-    return cases;
-  }
-
-  private Collection<String> getBaseEntryNames() {
+  private static Collection<String> getBaseEntryNames() {
     Collection<String> entryNames = new ArrayList<>(8);
     entryNames.add(MANIFEST_XML);
     entryNames.add("pone.0000001.xml");
@@ -167,16 +159,17 @@ public class IngestionServiceTest extends AbstractRhinoTest {
     return entryNames;
   }
 
-  @Test(dataProvider = "getPackageEntryNames", expectedExceptions = RestClientException.class,
-      expectedExceptionsMessageRegExp = ".*Invalid XML: Premature end of file.")
-  public void testGetManifestXml(Collection<String> entryNames) throws Exception {
-    Archive invalidTestArchive = createStubArchive(new byte[] {}, entryNames);
+  @Test(expected = RestClientException.class)
+      // expectedMessageRegExp = ".*Invalid XML: Premature end of file.")
+  public void testGetManifestXml() throws Exception {
+    Archive invalidTestArchive = createStubArchive(new byte[] {}, getBaseEntryNames());
     ingestionService.getManifestXml(invalidTestArchive);
   }
 
-  @Test(dataProvider = "getPackageEntryNames", expectedExceptions = RestClientException.class,
-      expectedExceptionsMessageRegExp = "Archive has no manifest file")
-  public void testGetManifestXml_missingManifest(Collection<String> entryNames) throws Exception {
+  @Test(expected = RestClientException.class)
+      // expectedMessageRegExp = "Archive has no manifest file")
+  public void testGetManifestXml_missingManifest() throws Exception {
+    Collection<String> entryNames = getBaseEntryNames();
     entryNames.remove(MANIFEST_XML);
     Archive invalidTestArchive = createStubArchive(null, entryNames);
     ingestionService.getManifestXml(invalidTestArchive);
@@ -187,7 +180,7 @@ public class IngestionServiceTest extends AbstractRhinoTest {
     ingestionService.validateManuscript(Doi.create("test"), "test");
   }
 
-  @Test(expectedExceptions = RestClientException.class)
+  @Test(expected = RestClientException.class)
   public void testValidateManuscript_invalid() {
     ingestionService.validateManuscript(Doi.create("test"), "test2");
   }
@@ -198,7 +191,7 @@ public class IngestionServiceTest extends AbstractRhinoTest {
         ImmutableList.of(createStubArticleItem()));
   }
 
-  @Test(expectedExceptions = RestClientException.class)
+  @Test(expected = RestClientException.class)
   public void testValidateAssetUniqueness_invalid() {
     ingestionService.validateAssetUniqueness(Doi.create("test2"),
         ImmutableList.of(createStubArticleItem()));
@@ -211,8 +204,9 @@ public class IngestionServiceTest extends AbstractRhinoTest {
    *
    * @throws IOException if manifest file cannot be processed
    */
-  @Test(dataProvider = "getPackageEntryNames")
-  public void testGetManifestXmlShouldSucceed(Collection<String> entryNames) throws IOException {
+  @Test
+  public void testGetManifestXmlShouldSucceed() throws IOException {
+    Collection<String> entryNames = getBaseEntryNames();
     final URL xmlDataResource = Resources.getResource(IngestionServiceTest.class, MANIFEST_XML);
     final File manifestFile = FileUtils.toFile(xmlDataResource);
     final byte[] manifestData = FileUtils.readFileToByteArray(manifestFile);
@@ -285,8 +279,9 @@ public class IngestionServiceTest extends AbstractRhinoTest {
    *
    * @throws IOException if manifest file cannot be processed
    */
-  @Test(dataProvider = "getPackageEntryNames")
-  public void testEmptyManifestXmlShouldFail(Collection<String> entryNames) throws IOException {
+  @Test
+  public void testEmptyManifestXmlShouldFail() throws IOException {
+    Collection<String> entryNames = getBaseEntryNames();
     final URL xmlDataResource =
         Resources.getResource(IngestionServiceTest.class, "empty_manifest.xml");
     final File manifestFile = FileUtils.toFile(xmlDataResource);
@@ -313,9 +308,10 @@ public class IngestionServiceTest extends AbstractRhinoTest {
    *
    * @throws IOException if manifest file cannot be processed
    */
-  @Test(dataProvider = "getPackageEntryNames")
-  public void testDuplicateUriManifestXmlShouldFail(Collection<String> entryNames)
+  @Test
+  public void testDuplicateUriManifestXmlShouldFail()
       throws IOException {
+    Collection<String> entryNames = getBaseEntryNames();
     final URL xmlDataResource =
         Resources.getResource(IngestionServiceTest.class, "duplicate_assets_manifest.xml");
     final File manifestFile = FileUtils.toFile(xmlDataResource);

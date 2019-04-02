@@ -36,9 +36,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.junit.Before;
+import com.tngtech.java.junit.dataprovider.DataProvider;
+import com.tngtech.java.junit.dataprovider.DataProviderRunner;
+import com.tngtech.java.junit.dataprovider.UseDataProvider;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -87,8 +91,8 @@ public class SolrIndexServiceTest extends AbstractStubbingArticleTest {
   /**
    * Prepare test fixtures.
    */
-  @BeforeMethod(alwaysRun = true)
-  protected void init() {
+  @Before
+  public void init() {
     mockContentRepoService = buildMockContentRepoService(DESTINATION_BUCKET);
     mockRepoMetadata = mock(RepoObjectMetadata.class);
     mockArticleCrudService = applicationContext.getBean(ArticleCrudService.class);
@@ -147,20 +151,6 @@ public class SolrIndexServiceTest extends AbstractStubbingArticleTest {
   }
 
   /**
-   * Returns the data to test Solr indexing.
-   */
-  @DataProvider
-  private Object[][] solrIndexData() {
-    final Object[][] data = new Object[][] {
-        {"activemq:plos.solr.article.index?transacted=false" /* destinationQueue */,
-          false /* isLiteIndex */},
-        {"activemq:plos.solr.article.lite-index?transacted=false" /* destinationQueue */,
-         true /* isLiteIndex */}
-    };
-    return data;
-  }
-
-  /**
    * Test successful Solr index.
    *
    * @param destinationQueue The queue name used to send the indexing job
@@ -170,10 +160,12 @@ public class SolrIndexServiceTest extends AbstractStubbingArticleTest {
    * @throws IOException  if failed to open file
    * @throws ParserConfigurationException if failed to parse XML
    */
-  @Test(dataProvider = "solrIndexData")
+  @Test
   @DirtiesContext
-  public void testUpdateSolrIndexShouldSucceed(String destinationQueue, boolean isLiteIndex)
+  public void testUpdateSolrIndexShouldSucceed() 
       throws ParserConfigurationException, IOException, SAXException {
+    String destinationQueue = "activemq:plos.solr.article.index?transacted=false";
+
     final ArticleIngestionIdentifier expectedIngestionId = ArticleIngestionIdentifier.create(
         expectedDoi, expectedIngestion.getIngestionNumber());
 
@@ -200,7 +192,7 @@ public class SolrIndexServiceTest extends AbstractStubbingArticleTest {
 
     doNothing().when(mockMessageSender).sendBody(destinationQueue, manuscript);
 
-    mockSolrIndexService.updateSolrIndex(expectedArticleIdentifier, isLiteIndex);
+    mockSolrIndexService.updateSolrIndex(expectedArticleIdentifier, false);
 
     verify(mockMessageSender).sendBody(destinationQueue, manuscript);
   }

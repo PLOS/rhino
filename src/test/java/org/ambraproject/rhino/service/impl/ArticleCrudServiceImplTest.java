@@ -29,9 +29,13 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ContextConfiguration;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.junit.Before;
+import com.tngtech.java.junit.dataprovider.DataProvider;
+import com.tngtech.java.junit.dataprovider.DataProviderRunner;
+import com.tngtech.java.junit.dataprovider.UseDataProvider;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
@@ -59,6 +63,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -76,10 +81,12 @@ public class ArticleCrudServiceImplTest extends AbstractStubbingArticleTest {
 
   private final ArticleIdentifier stubArticleId = ArticleIdentifier.create(Doi.create("0"));
 
-  @BeforeMethod(alwaysRun = true)
+  @Before
   public void initMocks() throws IllegalAccessException, NoSuchFieldException {
     mockArticleCrudService = applicationContext.getBean(ArticleCrudService.class);
+    reset(mockArticleCrudService);
     mockHibernateTemplate = applicationContext.getBean(HibernateTemplate.class);
+    reset(mockHibernateTemplate);
   }
 
   @Bean
@@ -385,25 +392,15 @@ public class ArticleCrudServiceImplTest extends AbstractStubbingArticleTest {
     assertThat(actualDois).isEmpty();
   }
 
-  @DataProvider
-  protected Object [][] dateRanges() {
-    return new Object[][] {
-        {LocalDateTime.now(), LocalDateTime.now()},
-        {LocalDateTime.now(), null},
-        {null, LocalDateTime.now()}
-    };
-  }
-
-  @Test(dataProvider = "dateRanges")
+  @Test
   @SuppressWarnings({"rawtypes", "unchecked"})
   /**
    * Test getting list of article DOIs with a specified date range.
    */
-  public void testGetListOfArticleDOIsWithDateRangeShouldSucceed(
-      LocalDateTime starting, LocalDateTime ending) {
+  public void testGetListOfArticleDOIsWithDateRangeShouldSucceed() {
     final long articlesCount = 20;
-    final Optional<LocalDateTime> fromDate = Optional.ofNullable(starting);
-    final Optional<LocalDateTime> toDate = Optional.ofNullable(ending);
+    final Optional<LocalDateTime> fromDate = Optional.ofNullable(LocalDateTime.now());
+    final Optional<LocalDateTime> toDate = Optional.ofNullable(LocalDateTime.now());
     final List expectedDois = ImmutableList.of(
         "10.1371/journal.ppat.1006521",
         "10.1371/journal.pone.0180908",
