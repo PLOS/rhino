@@ -50,7 +50,6 @@
     <buildDate>${maven.build.timestamp}</buildDate>
     <java-version>1.8</java-version>
     <org.springframework-version>4.1.6.RELEASE</org.springframework-version>
-    <org.aspectj-version>1.6.9</org.aspectj-version>
     <org.slf4j-version>1.6.1</org.slf4j-version>
     <ambra.version>2.10.21</ambra.version>
     <rhombat.version>1.0.2</rhombat.version>
@@ -293,13 +292,6 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
       <version>${org.springframework-version}</version>
-    </dependency>
-
-    <!-- AspectJ -->
-    <dependency>
-      <groupId>org.aspectj</groupId>
-      <artifactId>aspectjrt</artifactId>
-      <version>${org.aspectj-version}</version>
     </dependency>
 
     <!-- Logging -->
