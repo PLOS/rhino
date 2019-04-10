@@ -58,8 +58,9 @@ public class AuthorsXmlExtractorTest extends BaseRhinoTest {
 
   @Test
   public void testGetAuthors() throws Exception {
-    /** TODO Change to use Data provider when we upgrade spring and we
-     * no longer need the @RunWith annotation */
+    /** TODO We cannout combine the Spring and the Dataprovider
+     * `RunWith` annotations. We can change to the way we parameterize
+     * tests when we upgrade spring and/or junit. */
     for (Object[] o : getAuthorTestData()) {
       String filename = (String) o[0];
       AuthorView[] expected = (AuthorView[]) o[1];
