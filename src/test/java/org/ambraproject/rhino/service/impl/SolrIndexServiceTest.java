@@ -15,6 +15,9 @@ import java.util.UUID;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.io.Resources;
+
 import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
@@ -30,24 +33,16 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.MessageSender;
 import org.ambraproject.rhino.service.SolrIndexService;
+import org.junit.Before;
+import org.junit.Test;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.plos.crepo.service.ContentRepoService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.junit.Before;
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.io.Resources;
 
 /**
  * Unit tests for {@link SolrIndexServiceImpl}.
@@ -160,12 +155,10 @@ public class SolrIndexServiceTest extends AbstractStubbingArticleTest {
    * @throws IOException  if failed to open file
    * @throws ParserConfigurationException if failed to parse XML
    */
-  @Test
-  @DirtiesContext
-  public void testUpdateSolrIndexShouldSucceed() 
+  private void testUpdateSolrIndexShouldSucceed(String destinationQueue, boolean isLiteIndex)
       throws ParserConfigurationException, IOException, SAXException {
-    String destinationQueue = "activemq:plos.solr.article.index?transacted=false";
-
+    /** TODO Parameterize this properly */
+    
     final ArticleIngestionIdentifier expectedIngestionId = ArticleIngestionIdentifier.create(
         expectedDoi, expectedIngestion.getIngestionNumber());
 
@@ -192,9 +185,22 @@ public class SolrIndexServiceTest extends AbstractStubbingArticleTest {
 
     doNothing().when(mockMessageSender).sendBody(destinationQueue, manuscript);
 
-    mockSolrIndexService.updateSolrIndex(expectedArticleIdentifier, false);
+    mockSolrIndexService.updateSolrIndex(expectedArticleIdentifier, isLiteIndex);
 
     verify(mockMessageSender).sendBody(destinationQueue, manuscript);
+  }
+
+  /** TODO Parameterize these properly when we upgrade junit and/or spring*/
+  @Test
+  @DirtiesContext
+  public void testUpdateSolrIndexShouldSucceed1() throws ParserConfigurationException, IOException, SAXException {
+    testUpdateSolrIndexShouldSucceed("activemq:plos.solr.article.index?transacted=false", false);
+  }
+  
+  @Test
+  @DirtiesContext
+  public void testUpdateSolrIndexShouldSucceed2() throws ParserConfigurationException, IOException, SAXException {
+    testUpdateSolrIndexShouldSucceed("activemq:plos.solr.article.lite-index?transacted=false", true);
   }
 
   /**
