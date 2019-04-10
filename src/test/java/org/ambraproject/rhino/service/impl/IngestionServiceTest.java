@@ -160,14 +160,12 @@ public class IngestionServiceTest extends AbstractRhinoTest {
   }
 
   @Test(expected = RestClientException.class)
-      // expectedMessageRegExp = ".*Invalid XML: Premature end of file.")
   public void testGetManifestXml() throws Exception {
     Archive invalidTestArchive = createStubArchive(new byte[] {}, getBaseEntryNames());
     ingestionService.getManifestXml(invalidTestArchive);
   }
 
   @Test(expected = RestClientException.class)
-      // expectedMessageRegExp = "Archive has no manifest file")
   public void testGetManifestXml_missingManifest() throws Exception {
     Collection<String> entryNames = getBaseEntryNames();
     entryNames.remove(MANIFEST_XML);
