@@ -58,7 +58,6 @@
     <conf-helper.version>2.2.1</conf-helper.version>
     <camel.version>2.13.4</camel.version>
     <activemq.version>5.2.0</activemq.version>
-    <ehcache.version>2.7.0</ehcache.version>
     <google.truth.version>0.39</google.truth.version>
     <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
     <build.timestamp>${maven.build.timestamp}</build.timestamp>
@@ -411,12 +410,6 @@
       <groupId>org.apache.activemq</groupId>
       <artifactId>activemq-camel</artifactId>
       <version>${activemq.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>net.sf.ehcache</groupId>
-      <artifactId>ehcache</artifactId>
-      <version>${ehcache.version}</version>
     </dependency>
 
     <dependency>
