@@ -28,8 +28,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -63,7 +63,7 @@ public class ContentRepoPersistenceServiceTest extends AbstractRhinoTest {
   /**
    * Initialize test data fixtures.
    */
-  @BeforeMethod(alwaysRun = true)
+  @Before
   public void init() {
     repoUUID = UUID.randomUUID().toString();
     expectedDoi = Doi.create(ARTICLE_DOI_URI);

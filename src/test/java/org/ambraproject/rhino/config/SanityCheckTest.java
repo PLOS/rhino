@@ -24,13 +24,13 @@ package org.ambraproject.rhino.config;
 
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.testng.annotations.Test;
+import org.junit.Test;
 
-import static org.testng.Assert.assertNotNull;
+import static org.junit.Assert.assertNotNull;
 
 
 /**
- * Meta-test to check whether the Spring/TestNG testing harness is configured correctly.
+ * Meta-test to check whether the Spring/JUnit4 testing harness is configured correctly.
  */
 public class SanityCheckTest extends BaseRhinoTest {
 

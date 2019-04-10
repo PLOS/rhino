@@ -21,8 +21,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.context.ContextConfiguration;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -32,6 +32,7 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -64,11 +65,12 @@ public class CommentCrudServiceImplTest extends AbstractStubbingArticleTest {
 
   private final String FLAG_CREATION_JSON = "{\"creatorUserId\": 10365, \"body\": \"oops\", \"reasonCode\": \"spam\"}";
 
-  @BeforeMethod
+  @Before
   public void initMocks() throws IllegalAccessException, NoSuchFieldException {
     mockCommentCrudService = applicationContext.getBean(CommentCrudService.class);
     mockArticleCrudService = applicationContext.getBean(ArticleCrudService.class);
     mockHibernateTemplate = applicationContext.getBean(HibernateTemplate.class);
+    reset(mockHibernateTemplate);
     mockRuntimeConfiguration = applicationContext.getBean(RuntimeConfiguration.class);
     mockJournalCrudService = applicationContext.getBean(JournalCrudService.class);
     Gson mockEntityGson = applicationContext.getBean(Gson.class);

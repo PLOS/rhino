@@ -23,13 +23,19 @@
 package org.ambraproject.rhino.rest;
 
 import org.ambraproject.rhino.identity.Doi;
-import org.testng.Assert;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.tngtech.java.junit.dataprovider.DataProvider;
+import com.tngtech.java.junit.dataprovider.DataProviderRunner;
+import com.tngtech.java.junit.dataprovider.UseDataProvider;
+
+@RunWith(DataProviderRunner.class)
 public class DoiEscapingTest {
 
   // Unoptimized reference implementation. Should always return the same value as DoiEscaping.resolve
@@ -42,7 +48,7 @@ public class DoiEscapingTest {
   private static final String NON_ESCAPABLE = "\t\n\u000b\f\r !\"#$%&'()*,-.0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 
   @DataProvider
-  public Iterator<Object[]> doiEscapingCases() {
+  public static Object[][] doiEscapingCases() {
     String[][] withoutUriPrefix = {
         {"", ""},
         {NON_ESCAPABLE, NON_ESCAPABLE},
@@ -66,10 +72,11 @@ public class DoiEscapingTest {
     return Stream.concat(
         Stream.of(withoutUriPrefix).map(array -> new Object[]{array[0], array[1], false}),
         Stream.of(withUriPrefix).map(array -> new Object[]{array[0], array[1], true})
-    ).iterator();
+    ).toArray(Object[][]::new);
   }
 
-  @Test(dataProvider = "doiEscapingCases")
+  @Test
+  @UseDataProvider("doiEscapingCases")
   public void testDoiUnescaping(String expectedUnescape, String escapedDoi, boolean hasUriPrefix) {
     Doi actualUnescape = DoiEscaping.unescape(escapedDoi);
     Assert.assertEquals(actualUnescape, easyResolve(escapedDoi));
@@ -83,15 +90,16 @@ public class DoiEscapingTest {
 
 
   @DataProvider
-  public Iterator<Object[]> invalidEscapedDois() {
+  public static Object[][] invalidEscapedDois() {
     String[] invalidEscapedDois = new String[]{
         "/", "+", "+++", "+a", "+/", "+++a", "a+a",
         "10.1371/journal.pone.0000000", "10.1371+journal.pone.0000000", "10.1371++journal.pone.0000000+"
     };
-    return Stream.of(invalidEscapedDois).map(s -> new Object[]{s}).iterator();
+    return Stream.of(invalidEscapedDois).map(s -> new Object[]{s}).toArray(Object[][]::new);
   }
 
-  @Test(dataProvider = "invalidEscapedDois", expectedExceptions = {DoiEscaping.EscapedDoiException.class})
+  @Test(expected = DoiEscaping.EscapedDoiException.class)
+  @UseDataProvider("invalidEscapedDois")
   public void testInvalidEscapedDoi(String escaped) {
     DoiEscaping.unescape(escaped);
   }

@@ -22,39 +22,44 @@
 
 package org.ambraproject.rhino.content.xml;
 
-import static org.testng.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
-import org.ambraproject.rhino.model.article.AssetMetadata;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
-
 import com.google.common.collect.ImmutableList;
+import com.tngtech.java.junit.dataprovider.DataProvider;
+import com.tngtech.java.junit.dataprovider.DataProviderRunner;
+import com.tngtech.java.junit.dataprovider.UseDataProvider;
 
+import org.ambraproject.rhino.model.article.AssetMetadata;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+@RunWith(DataProviderRunner.class)
 public class ArticleXmlTest {
 
-  private static final ImmutableList<Object[]> ASSET_NODE_CASES = ImmutableList.of(
+  private static final Object[][] ASSET_NODE_CASES = new Object[][]{
       new Object[] {asset("title", "description"), new AssetMetadata[] {asset("", "")}},
       new Object[] {asset("title", "description"), new AssetMetadata[] {asset("title", "")}},
       new Object[] {asset("title", "description"), new AssetMetadata[] {asset("", "description")}},
       new Object[] {asset("title", "description"),
           new AssetMetadata[] {asset("title", ""), asset("", "description")}},
       new Object[] {asset("title", ""), new AssetMetadata[] {asset("", "")}},
-      new Object[] {asset("", "description"), new AssetMetadata[] {asset("", "")}});
+      new Object[] {asset("", "description"), new AssetMetadata[] {asset("", "")}}};
 
   private static AssetMetadata asset(String title, String description) {
     return new AssetMetadata("testAssetDoi", title, description);
   }
 
   @DataProvider
-  public Iterator<Object[]> assetNodeCases() {
-    return ASSET_NODE_CASES.iterator();
+  public static Object[][] assetNodeCases() {
+    return ASSET_NODE_CASES;
   }
 
-  @Test(dataProvider = "assetNodeCases")
+  @Test
+  @UseDataProvider("assetNodeCases")
   public void testDisambiguateAssetNodes(AssetMetadata goodNode, AssetMetadata[] badNodes) {
     ImmutableList<AssetMetadata> cases = ImmutableList.<AssetMetadata>builder().add(goodNode).add(badNodes).build();
     assertEquals(ArticleXml.disambiguateAssetNodes(cases), goodNode);
@@ -62,7 +67,7 @@ public class ArticleXmlTest {
   }
 
   @DataProvider
-  public Iterator<Object[]> ambiguousAssetNodeCases() {
+  public static Object[][] ambiguousAssetNodeCases() {
     AssetMetadata[][] cases = {
         {asset("title", ""), asset("", "description")},
         {asset("title1", "description1"), asset("title2", "description2")},
@@ -81,10 +86,12 @@ public class ArticleXmlTest {
           return Stream.of(nodeList, nodeList.reverse());
         })
         .<Object[]>map((Collection<AssetMetadata> nodeList) -> new Object[]{nodeList})
-        .iterator();
+      .toArray(Object[][]::new);
+
   }
 
-  @Test(dataProvider = "ambiguousAssetNodeCases", expectedExceptions = {XmlContentException.class})
+  @Test(expected = XmlContentException.class)
+  @UseDataProvider("ambiguousAssetNodeCases")
   public void testAmbiguousAssetNodes(Collection<AssetMetadata> nodes) {
     ArticleXml.disambiguateAssetNodes(nodes);
   }

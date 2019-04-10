@@ -23,19 +23,18 @@
 package org.ambraproject.rhino;
 
 import com.google.gson.Gson;
-import org.ambraproject.rhino.config.TestConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
+import org.ambraproject.rhino.config.TestConfiguration;
+import org.junit.Before;
 
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = TestConfiguration.class)
 
 // TODO: try to get the tests to work transactionally--I was having much pain with this.
-public abstract class BaseRhinoTest extends /* AbstractTransactionalTestNGSpringContextTests */ AbstractTestNGSpringContextTests {
+public abstract class BaseRhinoTest extends /* AbstractTransactionalJUnit4SpringContextTests */ AbstractJUnit4SpringContextTests {
 
   @Autowired
   protected HibernateTemplate hibernateTemplate;
@@ -49,14 +48,9 @@ public abstract class BaseRhinoTest extends /* AbstractTransactionalTestNGSpring
    * Really, the entire persistent environment should be reset on every test. Deleting values that we expected to be
    * created by type is a kludge.
    */
-  @BeforeMethod
+  @Before
   public void deleteEntities() {
     RhinoTestHelper.deleteEntities(hibernateTemplate);
-  }
-
-  @DataProvider
-  public Object[][] sampleArticles() {
-    return RhinoTestHelper.sampleArticles();
   }
 
   /**

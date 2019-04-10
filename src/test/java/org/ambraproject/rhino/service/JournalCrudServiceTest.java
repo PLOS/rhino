@@ -25,12 +25,13 @@ package org.ambraproject.rhino.service;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.model.Journal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.testng.annotations.Test;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Collection;
 
-import static org.testng.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test for {@link JournalCrudServiceImpl}
@@ -46,7 +47,8 @@ public class JournalCrudServiceTest extends BaseRhinoTest {
   @Autowired
   private JournalCrudService journalCrudService;
 
-  @Test(enabled = false)
+  @Test
+  @Ignore
   public void testListJournals() throws IOException {
     Collection<Journal> journals = journalCrudService.getAllJournals();
     assertTrue(journals.size() > 0);

@@ -40,8 +40,8 @@ import org.plos.crepo.model.input.RepoObjectInput;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.service.InMemoryContentRepoService;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import com.tngtech.java.junit.dataprovider.DataProvider;
+import org.junit.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -54,13 +54,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class AssetTableTest {
 
   @DataProvider
-  public Object[][] ingestibles() {
+  public static Object[][] ingestibles() {
     File[] ingestibles = new File("src/test/resources/articles/").listFiles((dir, name) -> name.endsWith(".zip"));
     return Lists.transform(Arrays.asList(ingestibles), file -> {
       try {
@@ -83,7 +83,8 @@ public class AssetTableTest {
     }
   }
 
-//  @Test(dataProvider = "ingestibles", enabled = false)
+//  @Test(dataProvider = "ingestibles")
+//  @Ignore
 //  public void test(ManifestXml manifest, ArticleXml article) throws IOException {
 //    AssetTable<String> assetTable = AssetTable.buildFromIngestible(article.findAllAssetNodes(), manifest);
 //    assertFalse(assetTable.getAssets().isEmpty());

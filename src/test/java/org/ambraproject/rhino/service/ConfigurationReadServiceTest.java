@@ -28,16 +28,16 @@ import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.testng.annotations.Test;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 
 public class ConfigurationReadServiceTest extends BaseRhinoTest {
@@ -48,10 +48,10 @@ public class ConfigurationReadServiceTest extends BaseRhinoTest {
   public void testGetBuildProperties() throws IOException {
     Properties actualProperties = configurationReadService.getBuildProperties();
 
-    assertTrue(actualProperties.containsKey("version"), "Did not contain version");
-    assertTrue(actualProperties.containsKey("buildDate"), "Did not contain buildDate");
-    assertTrue(actualProperties.containsKey("buildUser"), "Did not contain buildUser");
-    assertTrue(actualProperties.containsKey("gitCommitIdAbbrev"), "Did not contain gitCommitIdAbbrev");
+    assertTrue("Did not contain version", actualProperties.containsKey("version"));
+    assertTrue("Did not contain buildDate", actualProperties.containsKey("buildDate"));
+    assertTrue("Did not contain buildUser", actualProperties.containsKey("buildUser"));
+    assertTrue("Did not contain gitCommitIdAbbrev", actualProperties.containsKey("gitCommitIdAbbrev"));
   }
 
   @Test
@@ -68,9 +68,9 @@ public class ConfigurationReadServiceTest extends BaseRhinoTest {
     Map<String, Object> editorialConfigMap = (Map<String, Object>) repoConfigMap.get("editorial");
 
     String repoAddress = editorialConfigMap.get("address").toString();
-    assertEquals(repoAddress, "http://path/to/content/repo", "Invalid/missing content repo URL");
+    assertEquals("Invalid/missing content repo URL", "http://path/to/content/repo", repoAddress);
     String repoBucket = editorialConfigMap.get("bucket").toString();
-    assertEquals(repoBucket, "bucket_name", "Invalid/missing content repo bucket name");
+    assertEquals("Invalid/missing content repo bucket name", "bucket_name", repoBucket);
 
     Map<String, Object> corpusConfigMap = (Map<String, Object>) repoConfigMap.get("corpus");
     final Set<String> secondaryBuckets = (Set<String>) corpusConfigMap.get("secondaryBuckets");

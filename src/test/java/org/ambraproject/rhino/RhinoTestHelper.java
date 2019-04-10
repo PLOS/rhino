@@ -52,7 +52,6 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import com.beust.jcommander.internal.Nullable;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -213,7 +212,7 @@ public final class RhinoTestHelper {
      * @param address The URI address
      */
     public TestMultiBucketContentRepoEndpoint(Set<String> buckets, Set<String> secondaryBuckets,
-        @Nullable String defaultBucket, @Nullable URI address) {
+        String defaultBucket, URI address) {
       Preconditions.checkNotNull(buckets, "'buckets' must be specified.");
       Preconditions.checkNotNull(secondaryBuckets, "'secondaryBuckets' must be specified.");
 

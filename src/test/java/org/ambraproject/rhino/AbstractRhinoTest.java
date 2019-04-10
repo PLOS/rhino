@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.context.annotation.Bean;
 import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;
@@ -44,7 +44,7 @@ import static org.mockito.Mockito.withSettings;
 /**
  * Abstract base class for Rhino unit tests.
  */
-public abstract class AbstractRhinoTest extends AbstractTestNGSpringContextTests {
+public abstract class AbstractRhinoTest extends AbstractJUnit4SpringContextTests {
 
   protected static final Logger LOG = LoggerFactory.getLogger(AbstractRhinoTest.class);
 
