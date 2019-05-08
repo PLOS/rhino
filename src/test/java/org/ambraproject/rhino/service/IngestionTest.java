@@ -45,11 +45,12 @@ import org.ambraproject.rhino.util.StringReplacer;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.junit.Ignore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
-import org.testng.annotations.DataProvider;
+import com.tngtech.java.junit.dataprovider.DataProvider;
 
 import javax.annotation.Nullable;
 import java.io.File;
@@ -63,7 +64,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.testng.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Special test suite for testing ingestion features, using the legacy Admin app as a reference implementation.
@@ -80,6 +81,7 @@ import static org.testng.Assert.assertEquals;
  * <p/>
  * Better, less hackish tests are desirable in the unit test classes that explicitly test particular services.
  */
+@Ignore
 public class IngestionTest extends BaseRhinoTest {
   private static final Logger log = LoggerFactory.getLogger(IngestionTest.class);
 
@@ -145,7 +147,7 @@ public class IngestionTest extends BaseRhinoTest {
    * @param testDataPath    the path to the directory containing both above kinds of file
    * @return a list containing arrays ready to pass as @Test parameters
    */
-  private List<Object[]> provideIngestionCases(String assertionSuffix, String testInputSuffix, File testDataPath) {
+  private static List<Object[]> provideIngestionCases(String assertionSuffix, String testInputSuffix, File testDataPath) {
     File[] assertionFiles = testDataPath.listFiles(forSuffix(assertionSuffix));
     Arrays.sort(assertionFiles);
     List<Object[]> cases = Lists.newLinkedList(); // LinkedList for mid-iteration removal -- see generatedIngestionData
@@ -167,7 +169,7 @@ public class IngestionTest extends BaseRhinoTest {
   }
 
   @DataProvider
-  public Object[][] generatedIngestionData() {
+  public static Object[][] generatedIngestionData() {
     List<Object[]> cases = provideIngestionCases(JSON_SUFFIX, XML_SUFFIX, DATA_PATH);
 
     for (Iterator<Object[]> iterator = cases.iterator(); iterator.hasNext(); ) {
@@ -188,7 +190,7 @@ public class IngestionTest extends BaseRhinoTest {
   }
 
   @DataProvider
-  public Object[][] generatedZipIngestionData() {
+  public static Object[][] generatedZipIngestionData() {
     return provideIngestionCases(JSON_SUFFIX, ZIP_SUFFIX, ZIP_DATA_PATH).toArray(new Object[0][]);
   }
 
@@ -209,7 +211,8 @@ public class IngestionTest extends BaseRhinoTest {
     }
   }
 
-//  @Test(dataProvider = "generatedIngestionData", enabled = false)
+//  @Test(dataProvider = "generatedIngestionData")
+//  @Ignore
 //  public void testIngestion(File jsonFile, File xmlFile) throws Exception {
 //    final Article expected = RhinoTestHelper.readReferenceCase(jsonFile);
 //    createTestJournal(expected.geteIssn());
@@ -250,7 +253,8 @@ public class IngestionTest extends BaseRhinoTest {
 //    assertFalse(StringUtils.isBlank(response.readJson(entityGson)));
 //  }
 
-//  @Test(dataProvider = "generatedZipIngestionData", enabled = false)
+//  @Test(dataProvider = "generatedZipIngestionData")
+//  @Ignore
 //  public void testZipIngestion(File jsonFile, File zipFile) throws Exception {
 //    final Article expected = RhinoTestHelper.readReferenceCase(jsonFile);
 //    createTestJournal(expected.geteIssn());
@@ -278,7 +282,8 @@ public class IngestionTest extends BaseRhinoTest {
 //    assertEquals(failures.size(), 0, "Mismatched Article fields for " + expected.getDoi());
 //  }
 
-//  @Test(enabled = false)
+//  @Test
+//  @Ignore
 //  public void testReingestion() throws Exception {
 //    createTestJournal("1932-6203");
 //    long start = System.currentTimeMillis();

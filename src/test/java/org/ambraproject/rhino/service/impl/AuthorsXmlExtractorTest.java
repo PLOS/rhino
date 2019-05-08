@@ -28,9 +28,9 @@ import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.view.article.author.AuthorView;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+
 import org.w3c.dom.Document;
 
 import java.io.BufferedInputStream;
@@ -41,10 +41,9 @@ import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 
-import static org.testng.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 public class AuthorsXmlExtractorTest extends BaseRhinoTest {
-
   @Autowired
   private XpathReader xpathReader;
 
@@ -57,14 +56,20 @@ public class AuthorsXmlExtractorTest extends BaseRhinoTest {
     }
   }
 
-  @Test(dataProvider = "authorTestData")
-  public void testGetAuthors(String filename, AuthorView[] expected) throws Exception {
-    Document doc = parseTestFile(filename);
-    List<AuthorView> actual = AuthorsXmlExtractor.getAuthors(doc, xpathReader);
-    assertEquals(actual, Arrays.asList(expected));
+  @Test
+  public void testGetAuthors() throws Exception {
+    /** TODO We cannout combine the Spring and the Dataprovider
+     * `RunWith` annotations. We can change to the way we parameterize
+     * tests when we upgrade spring and/or junit. */
+    for (Object[] o : getAuthorTestData()) {
+      String filename = (String) o[0];
+      AuthorView[] expected = (AuthorView[]) o[1];
+      Document doc = parseTestFile(filename);
+      List<AuthorView> actual = AuthorsXmlExtractor.getAuthors(doc, xpathReader);
+      assertEquals(actual, Arrays.asList(expected));
+    }
   }
 
-  @DataProvider(name = "authorTestData")
   public static Object[][] getAuthorTestData() {
     return new Object[][]{
         {"pone.0005723.xml", new AuthorView[]{

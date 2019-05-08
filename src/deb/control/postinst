@@ -53,8 +53,6 @@ case "$1" in
   $GET/rhino_db_user && export RHINO_DB_USER=$RET
   $GET/rhino_db_password && export RHINO_DB_PASSWORD=$RET
   $GET/rhino_port && export RHINO_PORT=$RET
-  $GET/tomcat_admin_user && export TOMCAT_ADMIN_USER=$RET
-  $GET/tomcat_admin_password && export TOMCAT_ADMIN_PASSWORD=$RET
 
 ########### END app-specific code ###########
 
@@ -62,11 +60,9 @@ case "$1" in
 
 	process_env_template $HOME/conf/server.template.xml $HOME/conf/server.xml
 
-  process_env_template $HOME/conf/tomcat-users.template.xml $HOME/conf/tomcat-users.xml
-
 	process_env_template $HOME/bin/setenv.template.sh $HOME/bin/setenv.sh
 
-	invoke-rc.d [[artifactId]] restart
+        deb-systemd-invoke restart [[artifactId]]
 
   ;;
 

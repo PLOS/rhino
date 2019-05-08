@@ -32,11 +32,12 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
-import org.testng.annotations.Test;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import java.util.List;
 
-import static org.testng.Assert.assertFalse;
+import static org.junit.Assert.assertFalse;
 
 public class VolumeCrudServiceTest extends BaseRhinoTest {
 
@@ -62,7 +63,8 @@ public class VolumeCrudServiceTest extends BaseRhinoTest {
         ));
   }
 
-  @Test(enabled = false)
+  @Test
+  @Ignore
   public void testCreate() {
     Doi volumeId = Doi.create("10.1371/volume.pmed.v05");
     String displayName = "volumeDisplay";

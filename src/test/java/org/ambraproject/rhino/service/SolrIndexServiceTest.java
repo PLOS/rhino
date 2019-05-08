@@ -35,15 +35,16 @@ import org.custommonkey.xmlunit.XMLUnit;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Tests for {@link SolrIndexServiceImpl}
@@ -60,7 +61,7 @@ public class SolrIndexServiceTest extends BaseRhinoTest {
     assertNotNull(solrIndexService);
   }
 
-  @BeforeMethod
+  @Before
   public void addJournal() {
     final ImmutableSet<String> testCaseEissns = ImmutableSet.of("1932-6203");
 
@@ -75,7 +76,8 @@ public class SolrIndexServiceTest extends BaseRhinoTest {
     }
   }
 
-  @Test(enabled = false)
+  @Test
+  @Ignore
   public void testPublication() throws Exception {
     Archive archive = Archive.readZipFileIntoMemory(new File(TEST_DATA_DIR + "pone.0056489.zip"));
 //    Article article = articleCrudService.writeArchive(archive,

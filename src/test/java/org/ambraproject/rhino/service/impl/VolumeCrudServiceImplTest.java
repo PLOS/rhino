@@ -17,14 +17,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -110,13 +111,14 @@ public class VolumeCrudServiceImplTest extends AbstractStubbingArticleTest {
     super(true);
   }
 
-  @BeforeMethod
+  @Before
   public void initMocks() throws IllegalAccessException, NoSuchFieldException {
     mockVolumeCrudService = applicationContext.getBean(VolumeCrudService.class);
     mockJournalCrudService = applicationContext.getBean(JournalCrudService.class);
     mockVolumeOutputViewFactory = applicationContext.getBean(VolumeOutputView.Factory.class);
     mockQuery = mock(Query.class);
     mockHibernateTemplate = buildMockHibernateTemplate(createQueryAnswer());
+    reset(mockHibernateTemplate);
     Gson mockEntityGson = applicationContext.getBean(Gson.class);
     stubVolumeInputView = mockEntityGson.fromJson(VOLUME_CREATION_JSON, VolumeInputView.class);
   }
@@ -150,7 +152,7 @@ public class VolumeCrudServiceImplTest extends AbstractStubbingArticleTest {
     verify(mockHibernateTemplate).save(any(Journal.class));
   }
 
-  @Test(expectedExceptions = RestClientException.class)
+  @Test(expected = RestClientException.class)
   public void testCreate_volumeExists() throws Exception {
     mockVolumeCrudService.create("test", stubVolumeInputView);
   }

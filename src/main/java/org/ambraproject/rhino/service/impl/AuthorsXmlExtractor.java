@@ -122,7 +122,7 @@ public final class AuthorsXmlExtractor {
     List<AuthorView> list = new ArrayList<>();
 
     //Get all the authors
-    NodeList authorList = xpath.selectNodes(doc, "//contrib-group/contrib[@contrib-type='author']");
+    NodeList authorList = xpath.selectNodes(doc, "/article/front/article-meta/contrib-group/contrib[@contrib-type='author']");
 
     for (int i = 0; i < authorList.getLength(); i++) {
       Node authorNode = authorList.item(i);

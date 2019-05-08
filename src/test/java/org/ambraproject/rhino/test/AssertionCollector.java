@@ -31,14 +31,12 @@ import com.google.common.collect.Lists;
 import javax.annotation.Nullable;
 import java.util.Collection;
 
-import static org.testng.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * An object that does multiple "soft" assertions for equality. That is, it does all the assertions and then reports
  * which ones failed, rather than halting on the first failed assertion.
  * <p/>
- * It would be nice to use TestNG features for this, but quick research indicates that it would require custom code
- * anyway.
  */
 public class AssertionCollector {
 
@@ -110,7 +108,7 @@ public class AssertionCollector {
     }
     Failure failure = new Failure(objectName, fieldName, actual, expected);
     if (failFast) {
-      assertEquals(actual, expected, failure.toString());
+      assertEquals(failure.toString(), expected, actual);
     } else {
       failures.add(failure);
     }

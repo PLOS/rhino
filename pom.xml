@@ -27,7 +27,7 @@
   <artifactId>rhino</artifactId>
   <name>rhino</name>
   <packaging>war</packaging>
-  <version>2.5.1</version>
+  <version>2.5.2</version>
   <description>Service-oriented back end for Ambra.</description>
 
   <licenses>
@@ -50,16 +50,13 @@
     <buildDate>${maven.build.timestamp}</buildDate>
     <java-version>1.8</java-version>
     <org.springframework-version>4.1.6.RELEASE</org.springframework-version>
-    <org.aspectj-version>1.6.9</org.aspectj-version>
     <org.slf4j-version>1.6.1</org.slf4j-version>
     <ambra.version>2.10.21</ambra.version>
     <rhombat.version>1.0.2</rhombat.version>
     <hibernate-version>3.6.3.Final</hibernate-version>
     <conf-helper.version>2.2.1</conf-helper.version>
-    <camel.version>2.10.4</camel.version>
+    <camel.version>2.13.4</camel.version>
     <activemq.version>5.2.0</activemq.version>
-    <ehcache.version>2.7.0</ehcache.version>
-    <testng.version>6.9.10</testng.version>
     <google.truth.version>0.39</google.truth.version>
     <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
     <build.timestamp>${maven.build.timestamp}</build.timestamp>
@@ -194,10 +191,16 @@
 
     <!-- Test -->
     <dependency>
-      <groupId>org.testng</groupId>
-      <artifactId>testng</artifactId>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
       <scope>test</scope>
-      <version>${testng.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.tngtech.java</groupId>
+      <artifactId>junit-dataprovider</artifactId>
+      <version>1.10.0</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
@@ -209,17 +212,27 @@
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
       <version>2.3.0</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.google.truth</groupId>
       <artifactId>truth</artifactId>
       <version>${google.truth.version}</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.google.truth.extensions</groupId>
       <artifactId>truth-java8-extension</artifactId>
       <version>${google.truth.version}</version>
+      <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>xmlunit</groupId>
+      <artifactId>xmlunit</artifactId>
+      <version>1.3</version>
+      <scope>test</scope>
+    </dependency>
+
     <!-- ========================= Begin Ambra inclusions ========================= -->
 
     <dependency>
@@ -278,13 +291,6 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
       <version>${org.springframework-version}</version>
-    </dependency>
-
-    <!-- AspectJ -->
-    <dependency>
-      <groupId>org.aspectj</groupId>
-      <artifactId>aspectjrt</artifactId>
-      <version>${org.aspectj-version}</version>
     </dependency>
 
     <!-- Logging -->
@@ -396,27 +402,6 @@
       <groupId>org.apache.activemq</groupId>
       <artifactId>activemq-camel</artifactId>
       <version>${activemq.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>net.sf.ehcache</groupId>
-      <artifactId>ehcache</artifactId>
-      <version>${ehcache.version}</version>
-    </dependency>
-
-    <!-- Test -->
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.7</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>xmlunit</groupId>
-      <artifactId>xmlunit</artifactId>
-      <version>1.3</version>
-      <scope>test</scope>
     </dependency>
 
     <dependency>
@@ -670,16 +655,6 @@
                   <mapper>
                     <type>perm</type>
                     <prefix>/opt/plos/rhino</prefix>
-                  </mapper>
-                </data>
-
-                <data>
-                  <src>${project.basedir}/src/deb/rhino.sysv</src>
-                  <type>file</type>
-                  <dst>/etc/init.d/rhino</dst>
-                  <mapper>
-                    <type>perm</type>
-                    <filemode>755</filemode>
                   </mapper>
                 </data>
 

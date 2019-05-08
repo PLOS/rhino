@@ -22,51 +22,60 @@
 
 package org.ambraproject.rhino.identity;
 
-import org.testng.Assert;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
-
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.Iterator;
-import java.util.stream.Stream;
+import java.util.List;
 
+import com.google.common.collect.ImmutableList;
+import com.tngtech.java.junit.dataprovider.DataProvider;
+import com.tngtech.java.junit.dataprovider.DataProviderRunner;
+import com.tngtech.java.junit.dataprovider.UseDataProvider;
+
+import org.apache.commons.lang3.tuple.Pair;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+@RunWith(DataProviderRunner.class)
 public class DoiTest {
 
-  private static class StylePair {
-    private final Doi.UriStyle from;
-    private final Doi.UriStyle to;
-
-    private StylePair(Doi.UriStyle from, Doi.UriStyle to) {
-      this.from = from;
-      this.to = to;
+  /**
+   * Return the cartesian product of URI styles as a set of pairs.
+   */
+  private static List<Pair<Doi.UriStyle, Doi.UriStyle>> getStyleMatrix() {
+    List<Pair<Doi.UriStyle, Doi.UriStyle>> retval = new ArrayList<>();
+    for (Doi.UriStyle from: EnumSet.allOf(Doi.UriStyle.class)) {
+      for (Doi.UriStyle to: EnumSet.allOf(Doi.UriStyle.class)) {
+        retval.add(Pair.of(from, to));
+      }
     }
-  }
-
-  private static Stream<StylePair> getStyleMatrix() {
-    return EnumSet.allOf(Doi.UriStyle.class).stream().flatMap(from ->
-        EnumSet.allOf(Doi.UriStyle.class).stream().map(to -> new StylePair(from, to)));
+    return retval;
   }
 
   @Test
   public void checkForPrefixCollisions() {
     getStyleMatrix().forEach(stylePair -> {
-      if (stylePair.from != stylePair.to) {
-        Assert.assertFalse(stylePair.from.getPrefix().startsWith(stylePair.to.getPrefix()));
+        if (stylePair.getKey() != stylePair.getValue()) {
+          Assert.assertFalse(stylePair.getKey().getPrefix().startsWith(stylePair.getValue().getPrefix()));
       }
     });
   }
 
   @DataProvider
-  public Iterator<Object[]> doiCases() {
-    String[] doiNames = new String[]{"10.1371/foo"};
-    return Stream.of(doiNames)
-        .flatMap(doiName -> getStyleMatrix()
-            .map(stylePair -> new Object[]{doiName, stylePair.from, stylePair.to}))
-        .iterator();
+  public static List<List<Object>> doiCases() {
+    List<List<Object>> retval = new ArrayList<>();
+    
+    for(String doi: ImmutableList.of("10.1371/foo")) {
+      for (Pair<Doi.UriStyle, Doi.UriStyle> entry: getStyleMatrix()) {
+        retval.add(ImmutableList.of(doi, entry.getKey(), entry.getValue()));
+      }
+    }
+    return retval;
   }
 
-  @Test(dataProvider = "doiCases")
+  @Test
+  @UseDataProvider("doiCases")
   public void testDoi(String doiName, Doi.UriStyle from, Doi.UriStyle to) {
     Doi fromRawName = Doi.create(doiName);
     URI asUri = fromRawName.asUri(from);
@@ -87,5 +96,4 @@ public class DoiTest {
     Assert.assertTrue(lowercase.equals(uppercase));
     Assert.assertTrue(lowercase.hashCode() == uppercase.hashCode());
   }
-
 }

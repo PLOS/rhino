@@ -23,9 +23,9 @@
 package org.ambraproject.rhino.model.article;
 
 import com.google.gson.Gson;
-import org.testng.annotations.Test;
+import org.junit.Test;
 
-import static org.testng.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 public class ArticleMetadataTest {
 
