@@ -668,6 +668,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         } else {
           criteria.addOrder(Order.desc("created" /* propertyName */));
         }
+        criteria.addOrder(Order.asc("articleId"));
 
         @SuppressWarnings("unchecked")
         final List<String> articleDois = (List<String>) hibernateTemplate.findByCriteria(
