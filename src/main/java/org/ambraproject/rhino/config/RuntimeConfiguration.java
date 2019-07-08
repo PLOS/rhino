@@ -42,9 +42,9 @@ public interface RuntimeConfiguration {
   boolean prettyPrintJson();
 
   /**
-   * Identifies a content repo bucket on a particular server.
+   * Identifies a persistence endpoint.
    */
-  interface ContentRepoEndpoint {
+  interface PersistenceEndpoint {
     /**
      * @return the URI of the server
      */
@@ -63,7 +63,7 @@ public interface RuntimeConfiguration {
    *
    * @return the corpus bucket name
    */
-  ContentRepoEndpoint getCorpusStorage();
+  PersistenceEndpoint getPersistenceEndpoint();
 
   interface HttpConnectionPoolConfiguration {
     /**

@@ -169,22 +169,22 @@ public final class RhinoTestHelper {
   }
 
   /**
-   * Class to implement a {@link RuntimeConfiguration.ContentRepoEndpoint
-   * ContentRepoEndpoint}, which can be used for unit tests.
+   * Class to implement a {@link RuntimeConfiguration.PersistenceEndpoint
+   * PersistenceEndpoint}, which can be used for unit tests.
    */
-  public static class TestContentRepoEndpoint
-      implements RuntimeConfiguration.ContentRepoEndpoint {
+  public static class TestPersistenceEndpoint
+      implements RuntimeConfiguration.PersistenceEndpoint {
     private String bucket;
 
     private Optional<URI> address = Optional.empty();
 
     /**
-     * Creates an instance of <code>TestContentRepoEndpoint</code>.
+     * Creates an instance of <code>TestPersistenceEndpoint</code>.
      *
      * @param bucket The default bucket
      * @param address The URI address
      */
-    public TestContentRepoEndpoint(String bucket, URI address) {
+    public TestPersistenceEndpoint(String bucket, URI address) {
       this.bucket = bucket;
       this.address = Optional.ofNullable(address);
     }

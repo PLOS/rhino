@@ -51,8 +51,8 @@ public class S3PersistenceServiceImpl implements ContentPersistenceService {
   private RuntimeConfiguration runtimeConfiguration;
 
   private String bucketName() {
-    RuntimeConfiguration.ContentRepoEndpoint corpusStorage = runtimeConfiguration.getCorpusStorage();
-    return corpusStorage.getBucket();
+    RuntimeConfiguration.PersistenceEndpoint persistenceEndpoint = runtimeConfiguration.getPersistenceEndpoint();
+    return persistenceEndpoint.getBucket();
   }
   
   private PutObjectResult uploadFile(ArticleFileInput fileInput, String key) {

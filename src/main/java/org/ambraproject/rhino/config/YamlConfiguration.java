@@ -63,21 +63,21 @@ public class YamlConfiguration implements RuntimeConfiguration {
   }
 
 
-  private transient ContentRepoEndpoint corpusStorageView;
+  private transient PersistenceEndpoint persistenceEndpointView;
 
   @Override
-  public ContentRepoEndpoint getCorpusStorage() {
-    if (corpusStorageView != null) return corpusStorageView;
+  public PersistenceEndpoint getPersistenceEndpoint() {
+    if (persistenceEndpointView != null) return persistenceEndpointView;
     if (input.contentRepo == null || input.contentRepo.corpus == null) {
       throw new RuntimeException("contentRepo.corpus must be configured");
     }
-    return corpusStorageView = parseCorpusStorage(input.contentRepo.corpus);
+    return persistenceEndpointView = parseCorpusStorage(input.contentRepo.corpus);
   }
 
   /**
    * For corpus storage enforce non-null values and set up collection of all buckets.
    */
-  private static ContentRepoEndpoint parseCorpusStorage(ContentRepoEndpointInput corpus) {
+  private static PersistenceEndpoint parseCorpusStorage(PersistenceEndpointInput corpus) {
     URI address = corpus.address;
 
     String bucket = corpus.bucket;
@@ -85,7 +85,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
       throw new RuntimeException("contentRepo.corpus.bucket must be configured");
     }
 
-    return new ContentRepoEndpoint() {
+    return new PersistenceEndpoint() {
       @Override
       public URI getAddress() {
         return address;
@@ -99,7 +99,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
   }
 
 
-  private static final ContentRepoEndpoint NULL_CONTENT_REPO_ENDPOINT = new ContentRepoEndpoint() {
+  private static final PersistenceEndpoint NULL_CONTENT_REPO_ENDPOINT = new PersistenceEndpoint() {
     @Override
     public URI getAddress() {
       return null;
@@ -324,18 +324,18 @@ public class YamlConfiguration implements RuntimeConfiguration {
   }
 
   public static class ContentRepoInput {
-    private ContentRepoEndpointInput corpus;  // downstairs
+    private PersistenceEndpointInput corpus;  // downstairs
 
     /**
      * @deprecated For reflective access by SnakeYAML only
      */
     @Deprecated
-    public void setCorpus(ContentRepoEndpointInput corpus) {
+    public void setCorpus(PersistenceEndpointInput corpus) {
       this.corpus = corpus;
     }
   }
 
-  public static class ContentRepoEndpointInput {
+  public static class PersistenceEndpointInput {
     protected URI address;
     protected String bucket;
 

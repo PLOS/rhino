@@ -81,10 +81,10 @@ public class S3PersistenceServiceTest extends AbstractJUnit4SpringContextTests {
 
     @Bean
     public RuntimeConfiguration runtimeConfiguration() throws Exception {
-      RuntimeConfiguration.ContentRepoEndpoint corpusStorage = mock(RuntimeConfiguration.ContentRepoEndpoint.class);
+      RuntimeConfiguration.PersistenceEndpoint persistenceEndpoint = mock(RuntimeConfiguration.PersistenceEndpoint.class);
       RuntimeConfiguration rc = mock(RuntimeConfiguration.class);
-      when(corpusStorage.getBucket()).thenReturn("my-bucket");
-      when(rc.getCorpusStorage()).thenReturn(corpusStorage);
+      when(persistenceEndpoint.getBucket()).thenReturn("my-bucket");
+      when(rc.getPersistenceEndpoint()).thenReturn(persistenceEndpoint);
       return rc;
     }
   }

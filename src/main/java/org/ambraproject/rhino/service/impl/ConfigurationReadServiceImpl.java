@@ -64,7 +64,7 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
     return ServiceResponse.serveView(getBuildProperties());
   }
 
-  private static Map<String, Object> showEndpointAsMap(RuntimeConfiguration.ContentRepoEndpoint endpoint) {
+  private static Map<String, Object> showEndpointAsMap(RuntimeConfiguration.PersistenceEndpoint endpoint) {
     if (endpoint == null) return null;
     Map<String, Object> map = new LinkedHashMap<>(4);
     map.put("address", endpoint.getAddress());
@@ -80,7 +80,7 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
   @Override
   public Map<String, Object> getRepoConfig() {
     Map<String, Object> cfgMap = new LinkedHashMap<>(4);
-    cfgMap.put("corpus", showEndpointAsMap(runtimeConfiguration.getCorpusStorage()));
+    cfgMap.put("corpus", showEndpointAsMap(runtimeConfiguration.getPersistenceEndpoint()));
     return cfgMap;
   }
 

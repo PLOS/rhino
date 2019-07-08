@@ -116,8 +116,8 @@ public abstract class AbstractArticleCrudServiceImpl extends AmbraService implem
   private RuntimeConfiguration runtimeConfiguration;
 
   String bucketName() {
-    RuntimeConfiguration.ContentRepoEndpoint corpusStorage = runtimeConfiguration.getCorpusStorage();
-    return corpusStorage.getBucket();
+    RuntimeConfiguration.PersistenceEndpoint persistenceEndpoint = runtimeConfiguration.getPersistenceEndpoint();
+    return persistenceEndpoint.getBucket();
   }
 
   @Override

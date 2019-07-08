@@ -49,8 +49,8 @@ public class ContentRepoPersistenceServiceImpl implements ContentPersistenceServ
   private RuntimeConfiguration runtimeConfiguration;
 
   private String bucketName() {
-    RuntimeConfiguration.ContentRepoEndpoint corpusStorage = runtimeConfiguration.getCorpusStorage();
-    return corpusStorage.getBucket();
+    RuntimeConfiguration.PersistenceEndpoint persistenceEndpoint = runtimeConfiguration.getPersistenceEndpoint();
+    return persistenceEndpoint.getBucket();
   }
 
   private RepoObjectInput makeRepoObjectInput(ArticleFileInput fileInput) {

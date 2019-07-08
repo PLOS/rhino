@@ -218,7 +218,7 @@ public class RhinoConfiguration {
   @Bean
   public ContentRepoService contentRepoService(RuntimeConfiguration runtimeConfiguration,
                                                final CloseableHttpClient httpClient) {
-    RuntimeConfiguration.ContentRepoEndpoint corpus = runtimeConfiguration.getCorpusStorage();
+    RuntimeConfiguration.PersistenceEndpoint corpus = runtimeConfiguration.getPersistenceEndpoint();
     URI address = corpus.getAddress();
     if (address == null) {
       /* Use S3 */
@@ -231,7 +231,7 @@ public class RhinoConfiguration {
 
   @Bean
   public ArticleCrudService articleCrudService(RuntimeConfiguration runtimeConfiguration) {
-    RuntimeConfiguration.ContentRepoEndpoint corpus = runtimeConfiguration.getCorpusStorage();
+    RuntimeConfiguration.PersistenceEndpoint corpus = runtimeConfiguration.getPersistenceEndpoint();
     URI address = corpus.getAddress();
     if (address == null) {
       /* Use S3 */
@@ -293,7 +293,7 @@ public class RhinoConfiguration {
 
   @Bean
   public ContentPersistenceService contentRepoPersistenceService(RuntimeConfiguration runtimeConfiguration) {
-    RuntimeConfiguration.ContentRepoEndpoint corpus = runtimeConfiguration.getCorpusStorage();
+    RuntimeConfiguration.PersistenceEndpoint corpus = runtimeConfiguration.getPersistenceEndpoint();
     URI address = corpus.getAddress();
     if (address == null) {
       /* Use S3 */
