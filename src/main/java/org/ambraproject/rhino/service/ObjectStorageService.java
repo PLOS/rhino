@@ -30,7 +30,7 @@ import org.ambraproject.rhino.model.ingest.ArticlePackage;
 
 import java.util.Collection;
 
-public interface ContentPersistenceService {
+public interface ObjectStorageService {
 
   public ArticleItem createItem(ArticleItemInput itemInput, ArticleIngestion ingestion);
 

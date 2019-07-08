@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Public Library of Science
+ * Copyright (c) 2018 Public Library of Science
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -29,21 +29,23 @@ import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ingest.ArticleFileInput;
 import org.ambraproject.rhino.model.ingest.ArticleItemInput;
 import org.ambraproject.rhino.model.ingest.ArticlePackage;
-import org.ambraproject.rhino.service.ContentPersistenceService;
-import org.plos.crepo.model.identity.RepoId;
-import org.plos.crepo.model.identity.RepoVersion;
-import org.plos.crepo.model.input.RepoObjectInput;
-import org.plos.crepo.service.ContentRepoService;
+import org.ambraproject.rhino.service.ObjectStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
+import java.util.UUID;
 
-public class ContentRepoPersistenceServiceImpl implements ContentPersistenceService {
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectResult;
 
+public class S3ObjectStorageServiceImpl implements ObjectStorageService {
   @Autowired
-  private ContentRepoService contentRepoService;
+  private AmazonS3 amazonS3;
 
   @Autowired
   private RuntimeConfiguration runtimeConfiguration;
@@ -52,13 +54,21 @@ public class ContentRepoPersistenceServiceImpl implements ContentPersistenceServ
     RuntimeConfiguration.PersistenceEndpoint persistenceEndpoint = runtimeConfiguration.getPersistenceEndpoint();
     return persistenceEndpoint.getBucket();
   }
+  
+  private PutObjectResult uploadFile(ArticleFileInput fileInput, String key) {
+    ObjectMetadata metadata = new ObjectMetadata();
+    metadata.setContentType(fileInput.getContentType());
+    metadata.setContentDisposition(String.format("attachment; filename=%s", fileInput.getDownloadName()));
+    InputStream input = fileInput.getArchive().openFile(fileInput.getFilename());
+    PutObjectRequest request = new PutObjectRequest(bucketName(), key, input, metadata);
+    return amazonS3.putObject(request);
+  }
 
-  private RepoObjectInput makeRepoObjectInput(ArticleFileInput fileInput) {
-    return RepoObjectInput.builder(bucketName(), fileInput.getManifestFile().getCrepoKey())
-        .setContentAccessor(() -> fileInput.getArchive().openFile(fileInput.getFilename()))
-        .setContentType(fileInput.getContentType())
-        .setDownloadName(fileInput.getDownloadName())
-        .build();
+  public static String getS3Key(ArticleIngestion ingestion, ArticleFileInput fileInput) {
+    return String.format("%s/v%d/%s",
+                         ingestion.getArticle().getDoi(),
+                         ingestion.getIngestionNumber(),
+                         fileInput.getFilename());
   }
 
   @Override
@@ -67,48 +77,39 @@ public class ContentRepoPersistenceServiceImpl implements ContentPersistenceServ
     item.setIngestion(ingestion);
     item.setDoi(itemInput.getDoi().getName());
     item.setItemType(itemInput.getType());
-
-    Collection<ArticleFile> files = new ArrayList<>(itemInput.getFiles().entrySet().size());
+    Collection<ArticleFile> files = new ArrayList<>();
     for (Map.Entry<String, ArticleFileInput> entry : itemInput.getFiles().entrySet()) {
-      ArticleFileInput fileInput = entry.getValue();
-      RepoVersion repoVersion = contentRepoService.autoCreateRepoObject(makeRepoObjectInput(fileInput)).getVersion();
-
+      String key = getS3Key(ingestion, entry.getValue());
+      PutObjectResult result = uploadFile(entry.getValue(), key);
       ArticleFile file = new ArticleFile();
       file.setIngestion(ingestion);
       file.setItem(item);
       file.setFileType(entry.getKey());
 
-      RepoId repoId = repoVersion.getId();
-      file.setCrepoKey(repoId.getKey());
-      file.setCrepoUuid(repoVersion.getUuid().toString());
-
-      file.setFileSize(contentRepoService.getRepoObjectMetadata(repoVersion).getSize());
-      file.setIngestedFileName(fileInput.getFilename());
-
+      file.setCrepoKey(key);
+      file.setCrepoUuid(UUID.randomUUID().toString()); // TODO: Drop this column
+      file.setFileSize(result.getMetadata().getContentLength());
+      file.setIngestedFileName(entry.getValue().getFilename());
       files.add(file);
     }
     item.setFiles(files);
-
     return item;
   }
 
-  // TODO: 12/9/16 merge some of the shared logic between these two methods
   @Override
   public Collection<ArticleFile> persistAncillaryFiles(ArticlePackage articlePackage,
                                                        ArticleIngestion ingestion) {
     Collection<ArticleFile> files = new ArrayList<>();
     for (ArticleFileInput ancillaryFile : articlePackage.getAncillaryFiles()) {
-      RepoVersion repoVersion = contentRepoService.autoCreateRepoObject(makeRepoObjectInput(ancillaryFile)).getVersion();
-
+      String key = getS3Key(ingestion, ancillaryFile);
+      PutObjectResult result = uploadFile(ancillaryFile, key);
       ArticleFile file = new ArticleFile();
       file.setIngestion(ingestion);
-      file.setFileSize(contentRepoService.getRepoObjectMetadata(repoVersion).getSize());
+
+      file.setCrepoKey(key);
+      file.setCrepoUuid(UUID.randomUUID().toString()); // TODO: Drop this column
+      file.setFileSize(result.getMetadata().getContentLength());
       file.setIngestedFileName(ancillaryFile.getFilename());
-
-      RepoId repoId = repoVersion.getId();
-      file.setCrepoKey(repoId.getKey());
-      file.setCrepoUuid(repoVersion.getUuid().toString());
-
       files.add(file);
     }
     return files;

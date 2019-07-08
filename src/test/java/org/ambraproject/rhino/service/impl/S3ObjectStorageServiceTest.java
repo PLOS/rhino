@@ -50,7 +50,7 @@ import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ingest.ArticleFileInput;
 import org.ambraproject.rhino.model.ingest.ArticleItemInput;
 import org.ambraproject.rhino.model.ingest.ArticlePackage;
-import org.ambraproject.rhino.service.ContentPersistenceService;
+import org.ambraproject.rhino.service.ObjectStorageService;
 import org.ambraproject.rhino.util.Archive;
 import org.junit.Before;
 import org.junit.Test;
@@ -62,10 +62,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 /**
- * Unit tests for {@link S3PersistenceServiceImpl}.
+ * Unit tests for {@link S3ObjectStorageServiceImplpl}.
  */
 @ContextConfiguration
-public class S3PersistenceServiceTest extends AbstractJUnit4SpringContextTests {
+public class S3ObjectStorageServiceTest extends AbstractJUnit4SpringContextTests {
 
   @Configuration
   static class ContextConfiguration {
@@ -75,8 +75,8 @@ public class S3PersistenceServiceTest extends AbstractJUnit4SpringContextTests {
     }
 
     @Bean
-    public ContentPersistenceService contentPersistenceService() {
-      return new S3PersistenceServiceImpl();
+    public ObjectStorageService objectStorageService() {
+      return new S3ObjectStorageServiceImpl();
     }
 
     @Bean
@@ -105,7 +105,7 @@ public class S3PersistenceServiceTest extends AbstractJUnit4SpringContextTests {
   @Autowired
   private AmazonS3 amazonS3;
   @Autowired
-  private ContentPersistenceService contentPersistenceService;
+  private ObjectStorageService objectStorageService;
 
   /**
    * Initialize test data fixtures.
@@ -150,7 +150,7 @@ public class S3PersistenceServiceTest extends AbstractJUnit4SpringContextTests {
 
     final ArticleItemInput expectedItemInput = new ArticleItemInput(expectedDoi, expectedFileInputs, ITEM_INPUT_TYPE);
 
-    final ArticleItem actualArticleItem = contentPersistenceService.createItem(expectedItemInput, expectedIngestion);
+    final ArticleItem actualArticleItem = objectStorageService.createItem(expectedItemInput, expectedIngestion);
 
     assertThat(actualArticleItem).isNotNull();
     assertThat(actualArticleItem.getIngestion()).isEqualTo(expectedIngestion);
@@ -189,7 +189,7 @@ public class S3PersistenceServiceTest extends AbstractJUnit4SpringContextTests {
     final ArticlePackage mockArticlePackage = mock(ArticlePackage.class);
     when(mockArticlePackage.getAncillaryFiles()).thenReturn(expectedAncillaryFiles);
 
-    final Collection<ArticleFile> actualFiles = contentPersistenceService.persistAncillaryFiles(mockArticlePackage,
+    final Collection<ArticleFile> actualFiles = objectStorageService.persistAncillaryFiles(mockArticlePackage,
         expectedIngestion);
 
     assertThat(actualFiles).hasSize(expectedFileCount);
@@ -212,7 +212,7 @@ public class S3PersistenceServiceTest extends AbstractJUnit4SpringContextTests {
   public void testEmptyArticleItemFilesShouldSucceed() {
     final ArticleItemInput expectedItemInput = new ArticleItemInput(expectedDoi, ImmutableMap.of(), ITEM_INPUT_TYPE);
 
-    final ArticleItem actualArticleItem = contentPersistenceService.createItem(expectedItemInput, expectedIngestion);
+    final ArticleItem actualArticleItem = objectStorageService.createItem(expectedItemInput, expectedIngestion);
 
     assertThat(actualArticleItem).isNotNull();
     assertThat(actualArticleItem.getIngestion()).isEqualTo(expectedIngestion);
@@ -229,7 +229,7 @@ public class S3PersistenceServiceTest extends AbstractJUnit4SpringContextTests {
     final ArticlePackage mockArticlePackage = mock(ArticlePackage.class);
     when(mockArticlePackage.getAncillaryFiles()).thenReturn(ImmutableList.of());
 
-    final Collection<ArticleFile> actualFiles = contentPersistenceService.persistAncillaryFiles(mockArticlePackage,
+    final Collection<ArticleFile> actualFiles = objectStorageService.persistAncillaryFiles(mockArticlePackage,
         expectedIngestion);
     assertThat(actualFiles).isNotNull();
     assertThat(actualFiles).isEmpty();

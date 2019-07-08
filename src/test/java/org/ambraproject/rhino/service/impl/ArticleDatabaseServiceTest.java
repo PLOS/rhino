@@ -29,7 +29,7 @@ import org.ambraproject.rhino.model.ingest.ArticlePackage;
 import org.ambraproject.rhino.model.ingest.ArticlePackageBuilder;
 import org.ambraproject.rhino.model.ingest.IngestPackage;
 import org.ambraproject.rhino.service.ConfigurationReadService;
-import org.ambraproject.rhino.service.ContentPersistenceService;
+import org.ambraproject.rhino.service.ObjectStorageService;
 import org.ambraproject.rhino.service.ArticleDatabaseService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.util.Archive;
@@ -178,11 +178,11 @@ public class ArticleDatabaseServiceTest extends AbstractRhinoTest {
   }
 
   @Bean
-  public ContentPersistenceService contentRepoPersistenceService() {
-    LOG.debug("contentRepoPersistenceService() *");
-    final ContentPersistenceService contentRepoPersistenceService =
-        spy(ContentRepoPersistenceServiceImpl.class);
-    return contentRepoPersistenceService;
+  public ObjectStorageService objectStorageService() {
+    LOG.debug("objectStorageService() *");
+    final ObjectStorageService objectStorageService =
+        spy(ContentRepoObjectStorageServiceImpl.class);
+    return objectStorageService;
   }
 
   @Bean
@@ -303,8 +303,8 @@ public class ArticleDatabaseServiceTest extends AbstractRhinoTest {
     final ContentRepoService mockContentRepoService =
         buildMockContentRepoService(DESTINATION_BUCKET);
 
-    final ContentPersistenceService mockContentRepoPersistenceService =
-        applicationContext.getBean(ContentPersistenceService.class);
+    final ObjectStorageService mockObjectStorageService =
+        applicationContext.getBean(ObjectStorageService.class);
 
     final ArticleDatabaseService mockArticleDatabaseService =
         applicationContext.getBean(ArticleDatabaseService.class);
@@ -325,7 +325,7 @@ public class ArticleDatabaseServiceTest extends AbstractRhinoTest {
 
     final ImmutableList<ArticleItemInput> assets = expectedArticlePackage.getAllItems();
     assets.forEach(itemInput -> {
-      verify(mockContentRepoPersistenceService).createItem(itemInput, expectedIngestion);
+      verify(mockObjectStorageService).createItem(itemInput, expectedIngestion);
     });
 
     final ArticleItem expectedArticleItem = new ArticleItem();

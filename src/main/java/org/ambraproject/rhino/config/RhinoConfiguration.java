@@ -48,7 +48,7 @@ import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.ArticleRevisionWriteService;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.ConfigurationReadService;
-import org.ambraproject.rhino.service.ContentPersistenceService;
+import org.ambraproject.rhino.service.ObjectStorageService;
 import org.ambraproject.rhino.service.ArticleDatabaseService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
@@ -58,13 +58,13 @@ import org.ambraproject.rhino.service.impl.ArticleListCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleRevisionWriteServiceImpl;
 import org.ambraproject.rhino.service.impl.CommentCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
-import org.ambraproject.rhino.service.impl.ContentRepoPersistenceServiceImpl;
+import org.ambraproject.rhino.service.impl.ContentRepoObjectStorageServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleDatabaseServiceImpl;
 import org.ambraproject.rhino.service.impl.IngestionService;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.JournalCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.S3ArticleCrudServiceImpl;
-import org.ambraproject.rhino.service.impl.S3PersistenceServiceImpl;
+import org.ambraproject.rhino.service.impl.S3ObjectStorageServiceImpl;
 import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
@@ -292,14 +292,14 @@ public class RhinoConfiguration {
   }
 
   @Bean
-  public ContentPersistenceService contentRepoPersistenceService(RuntimeConfiguration runtimeConfiguration) {
+  public ObjectStorageService objectStorageService(RuntimeConfiguration runtimeConfiguration) {
     RuntimeConfiguration.PersistenceEndpoint corpus = runtimeConfiguration.getPersistenceEndpoint();
     URI address = corpus.getAddress();
     if (address == null) {
       /* Use S3 */
-      return new S3PersistenceServiceImpl();
+      return new S3ObjectStorageServiceImpl();
     } else {
-      return new ContentRepoPersistenceServiceImpl();
+      return new ContentRepoObjectStorageServiceImpl();
     }
   }
 
