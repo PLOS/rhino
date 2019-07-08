@@ -43,7 +43,7 @@ import org.ambraproject.rhino.model.ingest.AssetType;
 import org.ambraproject.rhino.model.ingest.IngestPackage;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.HibernatePersistenceService;
+import org.ambraproject.rhino.service.ArticleDatabaseService;
 import org.ambraproject.rhino.util.Archive;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -360,10 +360,10 @@ public class IngestionServiceTest extends AbstractRhinoTest {
 
     final Doi expectedArticleDoi = Doi.create(INGESTED_DOI_URI);
 
-    final HibernatePersistenceService mockPersistenceService =
-        applicationContext.getBean(HibernatePersistenceService.class);
-    when(mockPersistenceService.persistArticle(expectedArticleDoi)).thenReturn(expectedArticle);
-    when(mockPersistenceService.persistIngestion(any(Article.class), any(IngestPackage.class)))
+    final ArticleDatabaseService mockArticleDatabaseService =
+        applicationContext.getBean(ArticleDatabaseService.class);
+    when(mockArticleDatabaseService.persistArticle(expectedArticleDoi)).thenReturn(expectedArticle);
+    when(mockArticleDatabaseService.persistIngestion(any(Article.class), any(IngestPackage.class)))
         .thenReturn(expectedIngestion);
 
     final IngestionService mockIngestionService =
@@ -396,7 +396,7 @@ public class IngestionServiceTest extends AbstractRhinoTest {
       verify(mockArticleCrudService).getAllArticleItems(assetDoi);
     });
 
-    verify(mockPersistenceService).persistArticle(expectedArticleDoi);
-    verify(mockPersistenceService).persistIngestion(any(Article.class), any(IngestPackage.class));
+    verify(mockArticleDatabaseService).persistArticle(expectedArticleDoi);
+    verify(mockArticleDatabaseService).persistIngestion(any(Article.class), any(IngestPackage.class));
   }
 }

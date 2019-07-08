@@ -33,7 +33,7 @@ import org.ambraproject.rhino.model.ingest.IngestPackage;
 import java.util.List;
 import java.util.Optional;
 
-public interface HibernatePersistenceService {
+public interface ArticleDatabaseService {
 
   /**
    * Get the article object for a DOI if it exists, and save it if it doesn't.

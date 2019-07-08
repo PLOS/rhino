@@ -46,7 +46,7 @@ import org.ambraproject.rhino.model.ingest.ArticlePackageBuilder;
 import org.ambraproject.rhino.model.ingest.IngestPackage;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.HibernatePersistenceService;
+import org.ambraproject.rhino.service.ArticleDatabaseService;
 import org.ambraproject.rhino.util.Archive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,7 +62,7 @@ public class IngestionService extends AmbraService {
   @Autowired
   private CustomMetadataExtractor.Factory customMetadataExtractorFactory;
   @Autowired
-  private HibernatePersistenceService hibernatePersistenceService;
+  private ArticleDatabaseService articleDatabaseService;
   @Autowired
   private ArticleCrudService articleCrudService;
 
@@ -168,10 +168,10 @@ public class IngestionService extends AmbraService {
 
   private ArticleIngestion persistArticle(IngestPackage ingestPackage, Doi doi,
                                           ArticlePackage articlePackage) {
-    Article article = hibernatePersistenceService.persistArticle(doi);
-    ArticleIngestion ingestion = hibernatePersistenceService.persistIngestion(article, ingestPackage);
+    Article article = articleDatabaseService.persistArticle(doi);
+    ArticleIngestion ingestion = articleDatabaseService.persistIngestion(article, ingestPackage);
 
-    hibernatePersistenceService.persistAssets(articlePackage, ingestion);
+    articleDatabaseService.persistAssets(articlePackage, ingestion);
 
     hibernateTemplate.flush();
     hibernateTemplate.refresh(ingestion); // Pick up auto-persisted timestamp

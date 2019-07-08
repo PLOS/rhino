@@ -30,7 +30,7 @@ import org.ambraproject.rhino.model.ingest.ArticlePackageBuilder;
 import org.ambraproject.rhino.model.ingest.IngestPackage;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.ContentPersistenceService;
-import org.ambraproject.rhino.service.HibernatePersistenceService;
+import org.ambraproject.rhino.service.ArticleDatabaseService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.util.Archive;
 import org.hibernate.Query;
@@ -50,11 +50,11 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 
 /**
- * Unit tests for {@link HibernatePersistenceServiceImpl}.
+ * Unit tests for {@link ArticleDatabaseServiceImpl}.
  */
-@ContextConfiguration(classes = HibernatePersistenceServiceTest.class)
+@ContextConfiguration(classes = ArticleDatabaseServiceTest.class)
 @Configuration
-public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
+public class ArticleDatabaseServiceTest extends AbstractRhinoTest {
 
   private static final String ARTICLE_DOI_URI = "info:doi/10.1111/dupp.0000001";
 
@@ -95,9 +95,9 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
   private Optional<Journal> expectedJournal;
 
   /**
-   * Creates an instance of <code>HibernatePersistenceServiceTest</code>.
+   * Creates an instance of <code>ArticleDatabaseServiceTest</code>.
    */
-  public HibernatePersistenceServiceTest() {
+  public ArticleDatabaseServiceTest() {
     super(true /* spyOnHibernateTemplate */);
   }
 
@@ -186,11 +186,11 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
   }
 
   @Bean
-  public HibernatePersistenceService hibernatePersistenceService() {
-    final HibernatePersistenceService hibernatePersistenceService =
-        spy(HibernatePersistenceServiceImpl.class);
-    LOG.info("hibernatePersistenceService() ** " + hibernatePersistenceService);
-    return hibernatePersistenceService;
+  public ArticleDatabaseService articleDatabaseService() {
+    final ArticleDatabaseService articleDatabaseService =
+        spy(ArticleDatabaseServiceImpl.class);
+    LOG.info("ArticleDatabaseService() ** " + articleDatabaseService);
+    return articleDatabaseService;
   }
 
   /**
@@ -201,9 +201,9 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
   public void testPersistArticleShouldSucceed() {
     final HibernateTemplate mockHibernateTemplate = buildMockHibernateTemplate();
 
-    final HibernatePersistenceService mockPersistenceService =
-        applicationContext.getBean(HibernatePersistenceService.class);
-    final Article actualArticle = mockPersistenceService.persistArticle(articleDoi);
+    final ArticleDatabaseService mockArticleDatabaseService =
+        applicationContext.getBean(ArticleDatabaseService.class);
+    final Article actualArticle = mockArticleDatabaseService.persistArticle(articleDoi);
 
     verify(mockHibernateTemplate).save(expectedArticle);
     assertThat(actualArticle).isEqualTo(expectedArticle);
@@ -219,9 +219,9 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
     final HibernateTemplate mockHibernateTemplate = buildMockHibernateTemplate();
     doReturn(expectedArticle).when(mockHibernateTemplate).execute(any());
 
-    final HibernatePersistenceService mockPersistenceService =
-        applicationContext.getBean(HibernatePersistenceService.class);
-    final Article actualArticle = mockPersistenceService.persistArticle(articleDoi);
+    final ArticleDatabaseService mockArticleDatabaseService =
+        applicationContext.getBean(ArticleDatabaseService.class);
+    final Article actualArticle = mockArticleDatabaseService.persistArticle(articleDoi);
 
     verify(mockHibernateTemplate).execute(any());
     verify(mockHibernateTemplate, times(0)).save(expectedArticle);
@@ -246,15 +246,15 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
         applicationContext.getBean(JournalCrudService.class);
     when(mockJournalCrudService.getJournalByEissn(EISSN)).thenReturn(expectedJournal);
 
-    final HibernatePersistenceService mockPersistenceService =
-        applicationContext.getBean(HibernatePersistenceService.class);
+    final ArticleDatabaseService mockArticleDatabaseService =
+        applicationContext.getBean(ArticleDatabaseService.class);
 
     final ArticleIngestion expectedIngestion = new ArticleIngestion();
     expectedIngestion.setArticle(expectedArticle);
     expectedIngestion.setIngestionNumber(INGESTION_NUMBER + 1);
 
     final ArticleIngestion actualIngestion =
-        mockPersistenceService.persistIngestion(expectedArticle, expectedIngestPackage);
+        mockArticleDatabaseService.persistIngestion(expectedArticle, expectedIngestPackage);
 
     assertThat(actualIngestion).isEqualTo(expectedIngestion);
     verify(mockJournalCrudService, times(1)).getJournalByEissn(EISSN);
@@ -277,15 +277,15 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
         applicationContext.getBean(JournalCrudService.class);
     when(mockJournalCrudService.getJournalByEissn(EISSN)).thenReturn(expectedJournal);
 
-    final HibernatePersistenceService mockPersistenceService =
-        applicationContext.getBean(HibernatePersistenceService.class);
+    final ArticleDatabaseService mockArticleDatabaseService =
+        applicationContext.getBean(ArticleDatabaseService.class);
 
     final ArticleIngestion expectedIngestion = new ArticleIngestion();
     expectedIngestion.setArticle(expectedArticle);
     expectedIngestion.setIngestionNumber(INGESTION_NUMBER);
 
     final ArticleIngestion actualIngestion =
-        mockPersistenceService.persistIngestion(expectedArticle, expectedIngestPackage);
+        mockArticleDatabaseService.persistIngestion(expectedArticle, expectedIngestPackage);
 
     assertThat(actualIngestion).isEqualTo(expectedIngestion);
     verify(mockJournalCrudService).getJournalByEissn(EISSN);
@@ -306,8 +306,8 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
     final ContentPersistenceService mockContentRepoPersistenceService =
         applicationContext.getBean(ContentPersistenceService.class);
 
-    final HibernatePersistenceService mockPersistenceService =
-        applicationContext.getBean(HibernatePersistenceService.class);
+    final ArticleDatabaseService mockArticleDatabaseService =
+        applicationContext.getBean(ArticleDatabaseService.class);
 
     final ArticleIngestion expectedIngestion = new ArticleIngestion();
     expectedIngestion.setArticle(expectedArticle);
@@ -321,7 +321,7 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
         .setRevisionDate(java.sql.Date.valueOf(expectedCustomMetadata.getRevisionDate()));
     expectedIngestion.setPublicationStage(expectedCustomMetadata.getPublicationStage());
 
-    mockPersistenceService.persistAssets(expectedArticlePackage, expectedIngestion);
+    mockArticleDatabaseService.persistAssets(expectedArticlePackage, expectedIngestion);
 
     final ImmutableList<ArticleItemInput> assets = expectedArticlePackage.getAllItems();
     assets.forEach(itemInput -> {
@@ -349,8 +349,8 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
     final ManifestXml mockManifest = mock(ManifestXml.class);
     when(mockManifest.getAssets()).thenReturn(ImmutableList.of(mockManifestAsset));
 
-    final HibernatePersistenceService mockPersistenceService =
-        applicationContext.getBean(HibernatePersistenceService.class);
+    final ArticleDatabaseService mockArticleDatabaseService =
+        applicationContext.getBean(ArticleDatabaseService.class);
 
     final ArticleIngestion expectedIngestion = new ArticleIngestion();
     expectedIngestion.setArticle(expectedArticle);
@@ -363,7 +363,7 @@ public class HibernatePersistenceServiceTest extends AbstractRhinoTest {
     final ImmutableList<ArticleItem> articleItems = ImmutableList.of(expectedArticleItem);
 
     final Optional<ArticleItem> actualStrikingImage =
-        mockPersistenceService.persistStrikingImage(expectedIngestion, articleItems, mockManifest);
+        mockArticleDatabaseService.persistStrikingImage(expectedIngestion, articleItems, mockManifest);
 
     assertThat(actualStrikingImage).isPresent();
     assertThat(actualStrikingImage.get()).isEqualTo(expectedArticleItem);

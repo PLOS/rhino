@@ -8,7 +8,7 @@ import com.google.gson.GsonBuilder;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.config.YamlConfiguration;
 import org.ambraproject.rhino.service.ConfigurationReadService;
-import org.ambraproject.rhino.service.HibernatePersistenceService;
+import org.ambraproject.rhino.service.ArticleDatabaseService;
 import org.ambraproject.rhino.util.Java8TimeGsonAdapters;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.hibernate.FlushMode;
@@ -61,13 +61,13 @@ public abstract class AbstractRhinoTest extends AbstractJUnit4SpringContextTests
   private boolean spyOnHibernateTemplate;
 
   /**
-   * Creates an instance of <code>HibernatePersistenceServiceTest</code>.
+   * Creates an instance of <code>ArticleDatabaseServiceTest</code>.
    */
   protected AbstractRhinoTest() {
   }
 
   /**
-   * Creates an instance of <code>HibernatePersistenceServiceTest</code>.
+   * Creates an instance of <code>ArticleDatabaseServiceTest</code>.
    *
    * @param spyOnHibernateTemplate Flag to determine if spying on <code>HibernateTemplate</code>
    */
@@ -115,11 +115,11 @@ public abstract class AbstractRhinoTest extends AbstractJUnit4SpringContextTests
   }
 
   @Bean(autowire = Autowire.BY_TYPE)
-  public HibernatePersistenceService hibernatePersistenceService() {
-    LOG.debug("hibernatePersistenceService() *");
-    final HibernatePersistenceService hibernatePersistenceService =
-        mock(HibernatePersistenceService.class);
-    return hibernatePersistenceService;
+  public ArticleDatabaseService articleDatabaseService() {
+    LOG.debug("articleDatabaseService() *");
+    final ArticleDatabaseService articleDatabaseService =
+        mock(ArticleDatabaseService.class);
+    return articleDatabaseService;
   }
 
   @Bean

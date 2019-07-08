@@ -37,7 +37,7 @@ import org.ambraproject.rhino.model.ingest.IngestPackage;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.ContentPersistenceService;
-import org.ambraproject.rhino.service.HibernatePersistenceService;
+import org.ambraproject.rhino.service.ArticleDatabaseService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +51,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class HibernatePersistenceServiceImpl implements HibernatePersistenceService {
+public class ArticleDatabaseServiceImpl implements ArticleDatabaseService {
 
   @Autowired
   private HibernateTemplate hibernateTemplate;

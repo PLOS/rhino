@@ -49,7 +49,7 @@ import org.ambraproject.rhino.service.ArticleRevisionWriteService;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.ContentPersistenceService;
-import org.ambraproject.rhino.service.HibernatePersistenceService;
+import org.ambraproject.rhino.service.ArticleDatabaseService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
@@ -59,7 +59,7 @@ import org.ambraproject.rhino.service.impl.ArticleRevisionWriteServiceImpl;
 import org.ambraproject.rhino.service.impl.CommentCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
 import org.ambraproject.rhino.service.impl.ContentRepoPersistenceServiceImpl;
-import org.ambraproject.rhino.service.impl.HibernatePersistenceServiceImpl;
+import org.ambraproject.rhino.service.impl.ArticleDatabaseServiceImpl;
 import org.ambraproject.rhino.service.impl.IngestionService;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.JournalCrudServiceImpl;
@@ -304,8 +304,8 @@ public class RhinoConfiguration {
   }
 
   @Bean
-  public HibernatePersistenceService hibernatePersistenceService() {
-    return new HibernatePersistenceServiceImpl();
+  public ArticleDatabaseService articleDatabaseService() {
+    return new ArticleDatabaseServiceImpl();
   }
 
   @Bean
