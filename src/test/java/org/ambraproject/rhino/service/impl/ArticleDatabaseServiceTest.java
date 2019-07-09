@@ -325,7 +325,7 @@ public class ArticleDatabaseServiceTest extends AbstractRhinoTest {
 
     final ImmutableList<ArticleItemInput> assets = expectedArticlePackage.getAllItems();
     assets.forEach(itemInput -> {
-      verify(mockObjectStorageService).createItem(itemInput, expectedIngestion);
+      verify(mockObjectStorageService).storeItem(itemInput, expectedIngestion);
     });
 
     final ArticleItem expectedArticleItem = new ArticleItem();

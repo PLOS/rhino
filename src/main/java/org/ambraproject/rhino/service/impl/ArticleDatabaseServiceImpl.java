@@ -115,13 +115,13 @@ public class ArticleDatabaseServiceImpl implements ArticleDatabaseService {
   @Override
   public void persistAssets(ArticlePackage articlePackage, ArticleIngestion ingestion) {
     List<ArticleItem> items = articlePackage.getAllItems().stream()
-        .map((ArticleItemInput item) -> objectStorageService.createItem(item, ingestion))
+        .map((ArticleItemInput item) -> objectStorageService.storeItem(item, ingestion))
         .collect(Collectors.toList());
     for (ArticleItem item : items) {
       hibernateTemplate.save(item);
     }
 
-    Collection<ArticleFile> files = objectStorageService.persistAncillaryFiles(articlePackage,
+    Collection<ArticleFile> files = objectStorageService.storeAncillaryFiles(articlePackage,
         ingestion);
     for (ArticleFile file : files) {
       hibernateTemplate.save(file);

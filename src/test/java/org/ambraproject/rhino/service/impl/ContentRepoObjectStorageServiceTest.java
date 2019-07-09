@@ -124,7 +124,7 @@ public class ContentRepoObjectStorageServiceTest extends AbstractRhinoTest {
         applicationContext.getBean(ObjectStorageService.class);
 
     final ArticleItem actualArticleItem =
-        mockObjectStorageService.createItem(expectedItemInput, expectedIngestion);
+        mockObjectStorageService.storeItem(expectedItemInput, expectedIngestion);
 
     assertThat(actualArticleItem).isNotNull();
     assertThat(actualArticleItem.getIngestion()).isEqualTo(expectedIngestion);
@@ -179,7 +179,7 @@ public class ContentRepoObjectStorageServiceTest extends AbstractRhinoTest {
         applicationContext.getBean(ObjectStorageService.class);
 
     final Collection<ArticleFile> actualFiles =
-        objectStorageService.persistAncillaryFiles(mockArticlePackage,
+        objectStorageService.storeAncillaryFiles(mockArticlePackage,
             expectedIngestion);
 
     assertThat(actualFiles).hasSize(expectedFileCount);
@@ -213,7 +213,7 @@ public class ContentRepoObjectStorageServiceTest extends AbstractRhinoTest {
         applicationContext.getBean(ObjectStorageService.class);
 
     final ArticleItem actualArticleItem =
-        objectStorageService.createItem(expectedItemInput, expectedIngestion);
+        objectStorageService.storeItem(expectedItemInput, expectedIngestion);
     
     assertThat(actualArticleItem).isNotNull();
     assertThat(actualArticleItem.getIngestion()).isEqualTo(expectedIngestion);
@@ -241,7 +241,7 @@ public class ContentRepoObjectStorageServiceTest extends AbstractRhinoTest {
         applicationContext.getBean(ObjectStorageService.class);
 
     final Collection<ArticleFile> actualFiles =
-        objectStorageService.persistAncillaryFiles(mockArticlePackage,
+        objectStorageService.storeAncillaryFiles(mockArticlePackage,
             expectedIngestion);
     assertThat(actualFiles).isNotNull();
     assertThat(actualFiles).isEmpty();

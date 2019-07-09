@@ -62,7 +62,7 @@ public class ContentRepoObjectStorageServiceImpl implements ObjectStorageService
   }
 
   @Override
-  public ArticleItem createItem(ArticleItemInput itemInput, ArticleIngestion ingestion) {
+  public ArticleItem storeItem(ArticleItemInput itemInput, ArticleIngestion ingestion) {
     ArticleItem item = new ArticleItem();
     item.setIngestion(ingestion);
     item.setDoi(itemInput.getDoi().getName());
@@ -94,7 +94,7 @@ public class ContentRepoObjectStorageServiceImpl implements ObjectStorageService
 
   // TODO: 12/9/16 merge some of the shared logic between these two methods
   @Override
-  public Collection<ArticleFile> persistAncillaryFiles(ArticlePackage articlePackage,
+  public Collection<ArticleFile> storeAncillaryFiles(ArticlePackage articlePackage,
                                                        ArticleIngestion ingestion) {
     Collection<ArticleFile> files = new ArrayList<>();
     for (ArticleFileInput ancillaryFile : articlePackage.getAncillaryFiles()) {

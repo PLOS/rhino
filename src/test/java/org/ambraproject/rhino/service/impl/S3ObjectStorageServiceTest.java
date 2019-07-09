@@ -150,7 +150,7 @@ public class S3ObjectStorageServiceTest extends AbstractJUnit4SpringContextTests
 
     final ArticleItemInput expectedItemInput = new ArticleItemInput(expectedDoi, expectedFileInputs, ITEM_INPUT_TYPE);
 
-    final ArticleItem actualArticleItem = objectStorageService.createItem(expectedItemInput, expectedIngestion);
+    final ArticleItem actualArticleItem = objectStorageService.storeItem(expectedItemInput, expectedIngestion);
 
     assertThat(actualArticleItem).isNotNull();
     assertThat(actualArticleItem.getIngestion()).isEqualTo(expectedIngestion);
@@ -189,7 +189,7 @@ public class S3ObjectStorageServiceTest extends AbstractJUnit4SpringContextTests
     final ArticlePackage mockArticlePackage = mock(ArticlePackage.class);
     when(mockArticlePackage.getAncillaryFiles()).thenReturn(expectedAncillaryFiles);
 
-    final Collection<ArticleFile> actualFiles = objectStorageService.persistAncillaryFiles(mockArticlePackage,
+    final Collection<ArticleFile> actualFiles = objectStorageService.storeAncillaryFiles(mockArticlePackage,
         expectedIngestion);
 
     assertThat(actualFiles).hasSize(expectedFileCount);
@@ -212,7 +212,7 @@ public class S3ObjectStorageServiceTest extends AbstractJUnit4SpringContextTests
   public void testEmptyArticleItemFilesShouldSucceed() {
     final ArticleItemInput expectedItemInput = new ArticleItemInput(expectedDoi, ImmutableMap.of(), ITEM_INPUT_TYPE);
 
-    final ArticleItem actualArticleItem = objectStorageService.createItem(expectedItemInput, expectedIngestion);
+    final ArticleItem actualArticleItem = objectStorageService.storeItem(expectedItemInput, expectedIngestion);
 
     assertThat(actualArticleItem).isNotNull();
     assertThat(actualArticleItem.getIngestion()).isEqualTo(expectedIngestion);
@@ -229,7 +229,7 @@ public class S3ObjectStorageServiceTest extends AbstractJUnit4SpringContextTests
     final ArticlePackage mockArticlePackage = mock(ArticlePackage.class);
     when(mockArticlePackage.getAncillaryFiles()).thenReturn(ImmutableList.of());
 
-    final Collection<ArticleFile> actualFiles = objectStorageService.persistAncillaryFiles(mockArticlePackage,
+    final Collection<ArticleFile> actualFiles = objectStorageService.storeAncillaryFiles(mockArticlePackage,
         expectedIngestion);
     assertThat(actualFiles).isNotNull();
     assertThat(actualFiles).isEmpty();

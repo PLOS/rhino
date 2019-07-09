@@ -72,7 +72,7 @@ public class S3ObjectStorageServiceImpl implements ObjectStorageService {
   }
 
   @Override
-  public ArticleItem createItem(ArticleItemInput itemInput, ArticleIngestion ingestion) {
+  public ArticleItem storeItem(ArticleItemInput itemInput, ArticleIngestion ingestion) {
     ArticleItem item = new ArticleItem();
     item.setIngestion(ingestion);
     item.setDoi(itemInput.getDoi().getName());
@@ -97,7 +97,7 @@ public class S3ObjectStorageServiceImpl implements ObjectStorageService {
   }
 
   @Override
-  public Collection<ArticleFile> persistAncillaryFiles(ArticlePackage articlePackage,
+  public Collection<ArticleFile> storeAncillaryFiles(ArticlePackage articlePackage,
                                                        ArticleIngestion ingestion) {
     Collection<ArticleFile> files = new ArrayList<>();
     for (ArticleFileInput ancillaryFile : articlePackage.getAncillaryFiles()) {

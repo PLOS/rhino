@@ -32,8 +32,8 @@ import java.util.Collection;
 
 public interface ObjectStorageService {
 
-  public ArticleItem createItem(ArticleItemInput itemInput, ArticleIngestion ingestion);
+  public ArticleItem storeItem(ArticleItemInput itemInput, ArticleIngestion ingestion);
 
-  public Collection<ArticleFile> persistAncillaryFiles(ArticlePackage articlePackage,
+  public Collection<ArticleFile> storeAncillaryFiles(ArticlePackage articlePackage,
                                                        ArticleIngestion ingestion);
 }
