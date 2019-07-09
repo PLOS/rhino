@@ -81,10 +81,8 @@ public class S3ObjectStorageServiceTest extends AbstractJUnit4SpringContextTests
 
     @Bean
     public RuntimeConfiguration runtimeConfiguration() throws Exception {
-      RuntimeConfiguration.PersistenceEndpoint persistenceEndpoint = mock(RuntimeConfiguration.PersistenceEndpoint.class);
       RuntimeConfiguration rc = mock(RuntimeConfiguration.class);
-      when(persistenceEndpoint.getBucket()).thenReturn("my-bucket");
-      when(rc.getPersistenceEndpoint()).thenReturn(persistenceEndpoint);
+      when(rc.getS3Bucket()).thenReturn("my-bucket");
       return rc;
     }
   }
@@ -131,13 +129,12 @@ public class S3ObjectStorageServiceTest extends AbstractJUnit4SpringContextTests
   private ArticleFileInput makeArticleFileInput(String name) {
     ManifestXml.ManifestFile manifest = mock(ManifestXml.ManifestFile.class);
     when(manifest.getEntry()).thenReturn(name);
-    when(manifest.getCrepoKey()).thenReturn(name);
     return ArticleFileInput.builder().setArchive(mock(Archive.class)).setManifestFile(manifest)
         .setContentType("application/octet-stream").setDownloadName(name).build();
   }
 
   /**
-   * Test successful creation of an item in content repo.
+   * Test successful creation of an item in object storage.
    */
   @Test
   public void testCreateArticleItemShouldSucceed() {
@@ -164,8 +161,6 @@ public class S3ObjectStorageServiceTest extends AbstractJUnit4SpringContextTests
     actualFiles.forEach(articleFile -> {
       assertThat(articleFile.getIngestion()).isEqualTo(expectedIngestion);
       assertThat(articleFile.getItem()).isEqualTo(actualArticleItem);
-      assertThat(articleFile.getCrepoKey())
-          .isEqualTo(String.format("%s/v%d/%s", ARTICLE_DOI, NEXT_INGESTION_NUMBER, articleFile.getIngestedFileName()));
       assertThat(articleFile.getFileType()).isIn(expectedFileTypes);
       assertThat(articleFile.getIngestedFileName()).isIn(expectedFileNames);
     });
@@ -174,7 +169,7 @@ public class S3ObjectStorageServiceTest extends AbstractJUnit4SpringContextTests
   }
 
   /**
-   * Test successful adding of ancillary files in content repo.
+   * Test successful adding of ancillary files in object storage.
    */
   @Test
   @DirtiesContext
@@ -195,8 +190,6 @@ public class S3ObjectStorageServiceTest extends AbstractJUnit4SpringContextTests
     assertThat(actualFiles).hasSize(expectedFileCount);
     actualFiles.forEach(articleFile -> {
       assertThat(articleFile.getIngestion()).isEqualTo(expectedIngestion);
-      assertThat(articleFile.getCrepoKey())
-          .isEqualTo(String.format("%s/v%d/%s", ARTICLE_DOI, NEXT_INGESTION_NUMBER, articleFile.getIngestedFileName()));
       assertThat(articleFile.getFileSize()).isEqualTo(FILE_SIZE);
       assertThat(articleFile.getIngestedFileName()).isIn(expectedFileNames);
     });

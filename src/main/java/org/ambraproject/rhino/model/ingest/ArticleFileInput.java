@@ -22,9 +22,7 @@
 
 package org.ambraproject.rhino.model.ingest;
 
-import org.plos.crepo.model.input.RepoObjectInput;
 import com.google.auto.value.AutoValue;
-import java.util.Objects;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.util.Archive;
 

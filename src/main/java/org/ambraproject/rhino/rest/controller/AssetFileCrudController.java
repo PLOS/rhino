@@ -70,7 +70,7 @@ public class AssetFileCrudController extends RestController {
       return;
     }
 
-    try (InputStream fileStream = articleCrudService.getRepoObjectInputStream(objMeta);
+    try (InputStream fileStream = articleCrudService.getInputStream(objMeta);
          OutputStream responseStream = response.getOutputStream()) {
       ByteStreams.copy(fileStream, responseStream);
     }

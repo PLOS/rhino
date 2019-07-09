@@ -42,6 +42,13 @@ public class S3ArticleCrudServiceImpl extends AbstractArticleCrudServiceImpl imp
   @Autowired
   protected AmazonS3 amazonS3;
 
+  @Autowired
+  private RuntimeConfiguration runtimeConfiguration;
+
+  String bucketName() {
+    return runtimeConfiguration.getS3Bucket();
+  }
+  
   public static String getS3Key(ArticleFile file) {
     ArticleIngestion ingestion = file.getIngestion();
     return String.format("%s/v%d/%s",
@@ -60,20 +67,19 @@ public class S3ArticleCrudServiceImpl extends AbstractArticleCrudServiceImpl imp
 
     return ArticleFileStorage.builder()
       .setContentType(Optional.ofNullable(metadata.getContentType()))
-      .setCrepoKey(key)
       .setSize(metadata.getContentLength())
       .setTimestamp(new Timestamp(metadata.getLastModified().getTime()))
       .build();
   }
 
   @Override
-  public InputStream getRepoObjectInputStream(ArticleFileStorage metadata) {
+  public InputStream getInputStream(ArticleFileStorage metadata) {
     String key = metadata.getS3Key().get();
     GetObjectRequest request = new GetObjectRequest(bucketName(), key);
     return amazonS3.getObject(request).getObjectContent();
   }
 
-  public InputStream getRepoObjectInputStream(ArticleFile metadata) {
+  public InputStream getInputStream(ArticleFile metadata) {
     String key = getS3Key(metadata);
     GetObjectRequest request = new GetObjectRequest(bucketName(), key);
     return amazonS3.getObject(request).getObjectContent();

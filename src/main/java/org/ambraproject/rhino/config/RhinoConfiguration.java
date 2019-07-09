@@ -53,12 +53,10 @@ import org.ambraproject.rhino.service.ArticleDatabaseService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
-import org.ambraproject.rhino.service.impl.ContentRepoArticleCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleListCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleRevisionWriteServiceImpl;
 import org.ambraproject.rhino.service.impl.CommentCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
-import org.ambraproject.rhino.service.impl.ContentRepoObjectStorageServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleDatabaseServiceImpl;
 import org.ambraproject.rhino.service.impl.IngestionService;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
@@ -86,9 +84,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.hibernate.SessionFactory;
-import org.plos.crepo.config.HttpClientFunction;
-import org.plos.crepo.service.ContentRepoService;
-import org.plos.crepo.service.ContentRepoServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -192,16 +187,6 @@ public class RhinoConfiguration {
     return builder.create();
   }
 
-  /**
-   * Gson instance for serializing and deserializing {@code userMetadata} fields for the CRepo. Unlike {@link
-   * #entityGson}, it requires no adapters (at this time) and should never pretty-print (because we always want to print
-   * compact JSON for efficient storage).
-   */
-  @Bean
-  public Gson crepoGson() {
-    return new Gson();
-  }
-
   @Bean
   public CloseableHttpClient httpClient(RuntimeConfiguration runtimeConfiguration) {
     PoolingHttpClientConnectionManager manager = new PoolingHttpClientConnectionManager();
@@ -216,29 +201,8 @@ public class RhinoConfiguration {
   }
 
   @Bean
-  public ContentRepoService contentRepoService(RuntimeConfiguration runtimeConfiguration,
-                                               final CloseableHttpClient httpClient) {
-    RuntimeConfiguration.PersistenceEndpoint corpus = runtimeConfiguration.getPersistenceEndpoint();
-    URI address = corpus.getAddress();
-    if (address == null) {
-      /* Use S3 */
-      return null;
-    } else {
-      Objects.requireNonNull(httpClient);
-      return new ContentRepoServiceImpl(address.toString(), HttpClientFunction.from(httpClient));
-    }
-  }
-
-  @Bean
   public ArticleCrudService articleCrudService(RuntimeConfiguration runtimeConfiguration) {
-    RuntimeConfiguration.PersistenceEndpoint corpus = runtimeConfiguration.getPersistenceEndpoint();
-    URI address = corpus.getAddress();
-    if (address == null) {
-      /* Use S3 */
-      return new S3ArticleCrudServiceImpl();
-    } else {
-      return new ContentRepoArticleCrudServiceImpl();
-    }
+    return new S3ArticleCrudServiceImpl();
   }
 
   @Bean
@@ -293,14 +257,7 @@ public class RhinoConfiguration {
 
   @Bean
   public ObjectStorageService objectStorageService(RuntimeConfiguration runtimeConfiguration) {
-    RuntimeConfiguration.PersistenceEndpoint corpus = runtimeConfiguration.getPersistenceEndpoint();
-    URI address = corpus.getAddress();
-    if (address == null) {
-      /* Use S3 */
-      return new S3ObjectStorageServiceImpl();
-    } else {
-      return new ContentRepoObjectStorageServiceImpl();
-    }
+    return new S3ObjectStorageServiceImpl();
   }
 
   @Bean

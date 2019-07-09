@@ -64,26 +64,6 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
     return ServiceResponse.serveView(getBuildProperties());
   }
 
-  private static Map<String, Object> showEndpointAsMap(RuntimeConfiguration.PersistenceEndpoint endpoint) {
-    if (endpoint == null) return null;
-    Map<String, Object> map = new LinkedHashMap<>(4);
-    map.put("address", endpoint.getAddress());
-    map.put("bucket", endpoint.getBucket());
-    return map;
-  }
-
-  @Override
-  public ServiceResponse<Map<String, Object>> readRepoConfig() throws IOException {
-    return ServiceResponse.serveView(getRepoConfig());
-  }
-
-  @Override
-  public Map<String, Object> getRepoConfig() {
-    Map<String, Object> cfgMap = new LinkedHashMap<>(4);
-    cfgMap.put("corpus", showEndpointAsMap(runtimeConfiguration.getPersistenceEndpoint()));
-    return cfgMap;
-  }
-
   @Override
   public ServiceResponse<Map<String, String>> readRunInfo() {
     Map<String, String> cfgMap = ImmutableMap.of("host", hostname, "started", startTime.toString());

@@ -168,40 +168,6 @@ public final class RhinoTestHelper {
     }
   }
 
-  /**
-   * Class to implement a {@link RuntimeConfiguration.PersistenceEndpoint
-   * PersistenceEndpoint}, which can be used for unit tests.
-   */
-  public static class TestPersistenceEndpoint
-      implements RuntimeConfiguration.PersistenceEndpoint {
-    private String bucket;
-
-    private Optional<URI> address = Optional.empty();
-
-    /**
-     * Creates an instance of <code>TestPersistenceEndpoint</code>.
-     *
-     * @param bucket The default bucket
-     * @param address The URI address
-     */
-    public TestPersistenceEndpoint(String bucket, URI address) {
-      this.bucket = bucket;
-      this.address = Optional.ofNullable(address);
-    }
-
-    /** Returns the URI. */
-    @Override
-    public URI getAddress() {
-      return address.orElse(null);
-    }
-
-    /** Returns the default bucket. */
-    @Override
-    public String getBucket() {
-      return bucket;
-    }
-  }
-
   public static final ImmutableList<String> SAMPLE_ARTICLES = ImmutableList.of("pone.0038869"
       // More can be filled in here
       );

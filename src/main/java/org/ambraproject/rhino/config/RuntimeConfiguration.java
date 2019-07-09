@@ -42,28 +42,9 @@ public interface RuntimeConfiguration {
   boolean prettyPrintJson();
 
   /**
-   * Identifies a persistence endpoint.
+   * @return the name of the bucket to use.
    */
-  interface PersistenceEndpoint {
-    /**
-     * @return the URI of the server
-     */
-    URI getAddress();
-
-    /**
-     * @return the name of the bucket on that server to use when none is specified
-     */
-    String getBucket();
-  }
-
-  /**
-   * Return the content repository bucket for the corpus of articles. The application will write to this bucket when
-   * ingesting articles and read from it when serving article assets. Returns {@code null} if no corpus bucket is
-   * configured.
-   *
-   * @return the corpus bucket name
-   */
-  PersistenceEndpoint getPersistenceEndpoint();
+  public String getS3Bucket();
 
   interface HttpConnectionPoolConfiguration {
     /**

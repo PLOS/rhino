@@ -51,8 +51,7 @@ public class S3ObjectStorageServiceImpl implements ObjectStorageService {
   private RuntimeConfiguration runtimeConfiguration;
 
   private String bucketName() {
-    RuntimeConfiguration.PersistenceEndpoint persistenceEndpoint = runtimeConfiguration.getPersistenceEndpoint();
-    return persistenceEndpoint.getBucket();
+    return runtimeConfiguration.getS3Bucket();
   }
   
   private PutObjectResult uploadFile(ArticleFileInput fileInput, String key) {
@@ -86,8 +85,6 @@ public class S3ObjectStorageServiceImpl implements ObjectStorageService {
       file.setItem(item);
       file.setFileType(entry.getKey());
 
-      file.setCrepoKey(key);
-      file.setCrepoUuid(UUID.randomUUID().toString()); // TODO: Drop this column
       file.setFileSize(result.getMetadata().getContentLength());
       file.setIngestedFileName(entry.getValue().getFilename());
       files.add(file);
@@ -106,8 +103,6 @@ public class S3ObjectStorageServiceImpl implements ObjectStorageService {
       ArticleFile file = new ArticleFile();
       file.setIngestion(ingestion);
 
-      file.setCrepoKey(key);
-      file.setCrepoUuid(UUID.randomUUID().toString()); // TODO: Drop this column
       file.setFileSize(result.getMetadata().getContentLength());
       file.setIngestedFileName(ancillaryFile.getFilename());
       files.add(file);

@@ -57,12 +57,6 @@ public class ArticleFile implements Timestamped {
   private String fileType;
 
   @Column
-  private String crepoKey;
-
-  @Column
-  private String crepoUuid;
-
-  @Column
   private long fileSize;
 
   @Column
@@ -105,22 +99,6 @@ public class ArticleFile implements Timestamped {
     this.fileType = fileType;
   }
 
-  public String getCrepoKey() {
-    return crepoKey;
-  }
-
-  public void setCrepoKey(String crepoKey) {
-    this.crepoKey = crepoKey;
-  }
-
-  public String getCrepoUuid() {
-    return crepoUuid;
-  }
-
-  public void setCrepoUuid(String crepoUuid) {
-    this.crepoUuid = crepoUuid;
-  }
-
   public long getFileSize() {
     return fileSize;
   }
@@ -159,23 +137,20 @@ public class ArticleFile implements Timestamped {
     ArticleFile that = (ArticleFile) o;
 
     if (ingestion != null ? !ingestion.equals(that.ingestion) : that.ingestion != null) return false;
-    if (crepoKey != null ? !crepoKey.equals(that.crepoKey) : that.crepoKey != null) return false;
-    return crepoUuid != null ? crepoUuid.equals(that.crepoUuid) : that.crepoUuid == null;
+    return ingestedFileName != null ? ingestedFileName.equals(that.ingestedFileName) : that.ingestedFileName == null;
   }
 
   @Override
   public int hashCode() {
     int result = ingestion != null ? ingestion.hashCode() : 0;
-    result = 31 * result + (crepoKey != null ? crepoKey.hashCode() : 0);
-    result = 31 * result + (crepoUuid != null ? crepoUuid.hashCode() : 0);
+    result = 31 * result + (ingestedFileName != null ? ingestedFileName.hashCode() : 0);
     return result;
   }
 
   @Override
   public String toString() {
     return "ArticleFile{" +
-        ", crepoKey='" + crepoKey + '\'' +
-        ", crepoUuid='" + crepoUuid + '\'' +
+        ", ingestedFileName='" + ingestedFileName + '\'' +
         '}';
   }
 }

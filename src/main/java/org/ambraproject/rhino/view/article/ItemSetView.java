@@ -117,13 +117,9 @@ public class ItemSetView {
 
   private static class FileView {
 
-    private final String crepoKey;
-    private final String crepoUuid;
     private final long size;
 
     private FileView(ArticleFile file) {
-      this.crepoKey = Objects.requireNonNull(file.getCrepoKey());
-      this.crepoUuid = Objects.requireNonNull(file.getCrepoUuid());
       this.size = file.getFileSize();
       // Do not expose file.ingestedFileName
     }

@@ -246,7 +246,7 @@ public interface ArticleCrudService {
 
   public abstract ArticleFileStorage getArticleItemFile(ArticleFileIdentifier fileId);
 
-  public abstract InputStream getRepoObjectInputStream(ArticleFileStorage metadata);
+  public abstract InputStream  getInputStream(ArticleFileStorage metadata);
 
-  public abstract InputStream getRepoObjectInputStream(ArticleFile metadata);
+  public abstract InputStream  getInputStream(ArticleFile metadata);
 }

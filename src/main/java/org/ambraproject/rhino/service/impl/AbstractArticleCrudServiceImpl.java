@@ -68,7 +68,6 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.plos.crepo.model.identity.RepoVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,8 +115,7 @@ public abstract class AbstractArticleCrudServiceImpl extends AmbraService implem
   private RuntimeConfiguration runtimeConfiguration;
 
   String bucketName() {
-    RuntimeConfiguration.PersistenceEndpoint persistenceEndpoint = runtimeConfiguration.getPersistenceEndpoint();
-    return persistenceEndpoint.getBucket();
+    return runtimeConfiguration.getS3Bucket();
   }
 
   @Override
@@ -135,7 +133,7 @@ public abstract class AbstractArticleCrudServiceImpl extends AmbraService implem
         (ArticleFile file) -> new ByteSource() {
           @Override
           public InputStream openStream() throws IOException {
-            return getRepoObjectInputStream(file);
+            return getInputStream(file);
           }
         }));
 
@@ -615,7 +613,7 @@ public abstract class AbstractArticleCrudServiceImpl extends AmbraService implem
     ArticleItemIdentifier articleItemId = ingestionId.getItemFor();
     ArticleFileIdentifier manuscriptId = ArticleFileIdentifier.create(articleItemId, "manuscript");
     ArticleFile articleFile = getArticleFile(manuscriptId);
-    try (InputStream manuscriptInputStream = getRepoObjectInputStream(articleFile)) {
+    try (InputStream manuscriptInputStream = getInputStream(articleFile)) {
       return parseXml(manuscriptInputStream);
     } catch (IOException e) {
       throw new RuntimeException(e);

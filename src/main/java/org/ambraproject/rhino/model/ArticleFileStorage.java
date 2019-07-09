@@ -34,7 +34,6 @@ abstract public class ArticleFileStorage {
   }
 
   abstract public Optional<String> getContentType();
-  abstract public String getCrepoKey();
   abstract public Optional<String> getDownloadName();
   abstract public Optional<String> getS3Key();
   abstract public Long getSize();
@@ -45,7 +44,6 @@ abstract public class ArticleFileStorage {
   abstract public static class Builder {
     abstract public ArticleFileStorage build();
     abstract public Builder setContentType(Optional<String> value);
-    abstract public Builder setCrepoKey(String value);
     abstract public Builder setDownloadName(Optional<String> value);
     abstract public Builder setS3Key(String value);
     abstract public Builder setSize(Long value);

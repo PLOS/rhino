@@ -62,56 +62,12 @@ public class YamlConfiguration implements RuntimeConfiguration {
     return input.prettyPrintJson;
   }
 
-
-  private transient PersistenceEndpoint persistenceEndpointView;
-
   @Override
-  public PersistenceEndpoint getPersistenceEndpoint() {
-    if (persistenceEndpointView != null) return persistenceEndpointView;
-    if (input.contentRepo == null || input.contentRepo.corpus == null) {
-      throw new RuntimeException("contentRepo.corpus must be configured");
-    }
-    return persistenceEndpointView = parseCorpusStorage(input.contentRepo.corpus);
+  public String getS3Bucket() {
+    return input.s3Bucket;
   }
 
-  /**
-   * For corpus storage enforce non-null values and set up collection of all buckets.
-   */
-  private static PersistenceEndpoint parseCorpusStorage(PersistenceEndpointInput corpus) {
-    URI address = corpus.address;
-
-    String bucket = corpus.bucket;
-    if (bucket == null) {
-      throw new RuntimeException("contentRepo.corpus.bucket must be configured");
-    }
-
-    return new PersistenceEndpoint() {
-      @Override
-      public URI getAddress() {
-        return address;
-      }
-
-      @Override
-      public String getBucket() {
-        return bucket;
-      }
-    };
-  }
-
-
-  private static final PersistenceEndpoint NULL_CONTENT_REPO_ENDPOINT = new PersistenceEndpoint() {
-    @Override
-    public URI getAddress() {
-      return null;
-    }
-
-    @Override
-    public String getBucket() {
-      return null;
-    }
-  };
-
-  private final HttpConnectionPoolConfiguration httpConnectionPoolConfiguration = new HttpConnectionPoolConfiguration() {
+  private final HttpConnectionPoolConfiguration httpConnectionPoolConfiguration=new HttpConnectionPoolConfiguration(){
     @Override
     public Integer getMaxTotal() {
       return (input.httpConnectionPool == null) ? null : input.httpConnectionPool.maxTotal;
@@ -241,7 +197,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
   public static class Input {
 
     private boolean prettyPrintJson = true; // the default value should be true
-    private ContentRepoInput contentRepo;
+    private String s3Bucket;
     private HttpConnectionPoolConfigurationInput httpConnectionPool;
     private TaxonomyConfigurationInput taxonomy;
     private UserApiConfigurationInput userApi;
@@ -258,12 +214,13 @@ public class YamlConfiguration implements RuntimeConfiguration {
       this.prettyPrintJson = prettyPrintJson;
     }
 
+
     /**
      * @deprecated For reflective access by SnakeYAML only
      */
     @Deprecated
-    public void setContentRepo(ContentRepoInput contentRepo) {
-      this.contentRepo = contentRepo;
+    public void setS3Bucket(String s3Bucket) {
+      this.s3Bucket = s3Bucket;
     }
 
     /**
@@ -320,39 +277,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setEnableDevFeatures(List<String> enableDevFeatures) {
       this.enableDevFeatures = enableDevFeatures;
-    }
-  }
-
-  public static class ContentRepoInput {
-    private PersistenceEndpointInput corpus;  // downstairs
-
-    /**
-     * @deprecated For reflective access by SnakeYAML only
-     */
-    @Deprecated
-    public void setCorpus(PersistenceEndpointInput corpus) {
-      this.corpus = corpus;
-    }
-  }
-
-  public static class PersistenceEndpointInput {
-    protected URI address;
-    protected String bucket;
-
-    /**
-     * @deprecated For reflective access by SnakeYAML only
-     */
-    @Deprecated
-    public void setAddress(URI address) {
-      this.address = address;
-    }
-
-    /**
-     * @deprecated For reflective access by SnakeYAML only
-     */
-    @Deprecated
-    public void setBucket(String bucket) {
-      this.bucket = bucket;
     }
   }
 

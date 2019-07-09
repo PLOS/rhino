@@ -1,8 +1,5 @@
 prettyPrintJson: true
-contentRepo:
-  corpus:
-    address: http://path/to/content/repo
-    bucket:  bucket_name
+s3Bucket: my-bucket
 manuscriptCustomMeta:
   revisionDate:     "Publication Update"
   publicationStage: "PLOS Publication Stage"

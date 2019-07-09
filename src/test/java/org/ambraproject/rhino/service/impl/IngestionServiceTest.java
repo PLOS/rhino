@@ -221,7 +221,6 @@ public class IngestionServiceTest extends AbstractRhinoTest {
     assertThat(printablePresentation.getType()).isEqualTo("printable");
     final ManifestFile presentationManifest = printablePresentation.getFile();
     assertThat(presentationManifest.getEntry()).isEqualTo("dupp.0000001.pdf");
-    assertThat(presentationManifest.getCrepoKey()).isEqualTo("10.1111/dupp.0000001.pdf");
 
     final ImmutableList<Asset> assets = actualManifest.getAssets();
     assertThat(assets).hasSize(8);
@@ -259,10 +258,8 @@ public class IngestionServiceTest extends AbstractRhinoTest {
       final String entry = ancillary.getEntry();
       assertThat(expectedEntries).contains(entry);
       if (entry.equals(MANIFEST_XML)) {
-        assertThat(ancillary.getCrepoKey()).isEqualTo("10.1111/dupp.0000001.manifest.xml");
         assertThat(ancillary.getMimetype()).isEqualTo("application/xml");
       } else if (entry.equals(MANIFEST_DTD)) {
-        assertThat(ancillary.getCrepoKey()).isEqualTo("10.1111/dupp.0000001.manifest.dtd");
         assertThat(ancillary.getMimetype()).isEqualTo("application/xml-dtd");
       } else {
         assert false : String.format("Unexpected test case for entry: '%s'", entry);
