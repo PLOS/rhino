@@ -22,10 +22,18 @@
 
 package org.ambraproject.rhino.rest.controller;
 
-import com.google.common.base.Joiner;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.sql.Timestamp;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.google.common.io.ByteStreams;
 import com.google.common.net.HttpHeaders;
 import com.wordnik.swagger.annotations.ApiImplicitParam;
+
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -40,16 +48,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.sql.Timestamp;
-import java.util.Enumeration;
-import java.util.List;
-
 @Controller
 public class AssetFileCrudController extends RestController {
 
@@ -58,11 +56,6 @@ public class AssetFileCrudController extends RestController {
   @Autowired
   private ContentRepoService contentRepoService;
 
-
-  private static final Joiner REPROXY_URL_JOINER = Joiner.on(' ');
-  private static final int REPROXY_CACHE_FOR_VALUE = 6 * 60 * 60; // TODO: Make configurable
-  private static final String REPROXY_CACHE_FOR_HEADER =
-      REPROXY_CACHE_FOR_VALUE + "; Last-Modified Content-Type Content-Disposition";
 
   private void serve(HttpServletRequest request, HttpServletResponse response, RepoObjectMetadata objMeta)
       throws IOException {
@@ -82,32 +75,10 @@ public class AssetFileCrudController extends RestController {
       return;
     }
 
-    List<URL> reproxyUrls = objMeta.getReproxyUrls();
-    if (clientSupportsReproxy(request) && reproxyUrls != null && !reproxyUrls.isEmpty()) {
-      String reproxyUrlHeader = REPROXY_URL_JOINER.join(reproxyUrls);
-
-      response.setStatus(HttpStatus.OK.value());
-      response.setHeader("X-Reproxy-URL", reproxyUrlHeader);
-      response.setHeader("X-Reproxy-Cache-For", REPROXY_CACHE_FOR_HEADER);
-    } else {
-      try (InputStream fileStream = contentRepoService.getRepoObject(objMeta.getVersion());
-           OutputStream responseStream = response.getOutputStream()) {
-        ByteStreams.copy(fileStream, responseStream);
-      }
+    try (InputStream fileStream = contentRepoService.getRepoObject(objMeta.getVersion());
+         OutputStream responseStream = response.getOutputStream()) {
+      ByteStreams.copy(fileStream, responseStream);
     }
-  }
-
-  private boolean clientSupportsReproxy(HttpServletRequest request) {
-    Enumeration headers = request.getHeaders("X-Proxy-Capabilities");
-    if (headers == null) {
-      return false;
-    }
-    while (headers.hasMoreElements()) {
-      if ("reproxy-file".equals(headers.nextElement())) {
-        return true;
-      }
-    }
-    return false;
   }
 
   @Transactional(readOnly = true)
