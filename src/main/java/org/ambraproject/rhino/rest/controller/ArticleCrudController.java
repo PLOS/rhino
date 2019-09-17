@@ -33,7 +33,6 @@ import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.Category;
-import org.ambraproject.rhino.model.Syndication;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.response.ServiceResponse;
@@ -41,13 +40,9 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.ArticleRevisionWriteService;
 import org.ambraproject.rhino.service.CommentCrudService;
-import org.ambraproject.rhino.service.SolrIndexService;
-import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.view.article.ArticleRevisionView;
 import org.ambraproject.rhino.view.article.RelationshipSetView;
-import org.ambraproject.rhino.view.article.SyndicationInputView;
-import org.ambraproject.rhino.view.article.SyndicationView;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,15 +91,11 @@ public class ArticleCrudController extends RestController {
   @Autowired
   private ArticleRevisionWriteService articleRevisionWriteService;
   @Autowired
-  private SolrIndexService solrIndexService;
-  @Autowired
   private CommentCrudService commentCrudService;
   @Autowired
   private AssetFileCrudController assetFileCrudController;
   @Autowired
   private ArticleListCrudService articleListCrudService;
-  @Autowired
-  private SyndicationCrudService syndicationCrudService;
   @Autowired
   private TaxonomyService taxonomyService;
   @Autowired
@@ -475,87 +466,6 @@ public class ArticleCrudController extends RestController {
     ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
     return articleListCrudService.readContainingLists(id).asJsonResponse(entityGson);
   }
-
-  @RequestMapping(value = "/articles/{doi:.+}", params = {"solrIndex"}, method = RequestMethod.POST)
-  public ResponseEntity<?> updateSolrIndex(@PathVariable("doi") String doi,
-                                           @ApiParam(value = "Enter 'lite' to perform a lite index. Any other value will perform a standard, full index")
-                                           @RequestParam(value = "solrIndex", defaultValue = "standard") String solrIndexMode) {
-    ArticleIdentifier identifier = ArticleIdentifier.create(DoiEscaping.unescape(doi));
-    solrIndexService.updateSolrIndex(identifier, solrIndexMode.equals("lite"));
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
-
-  @RequestMapping(value = "/articles/{doi:.+}", params = {"solrIndex"}, method = RequestMethod.DELETE)
-  @ApiImplicitParam(name = "solrIndex", value = "solrIndex flag (any value)", required = true,
-      defaultValue = "solrIndex", paramType = "query", dataType = "string")
-  public ResponseEntity<?> removeSolrIndex(@PathVariable("doi") String doi) {
-    ArticleIdentifier identifier = ArticleIdentifier.create(DoiEscaping.unescape(doi));
-    solrIndexService.removeSolrIndex(identifier);
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
-
-  @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications", method = RequestMethod.GET)
-  public ResponseEntity<?> readSyndications(@PathVariable("doi") String doi,
-                                            @PathVariable("number") int revisionNumber)
-      throws IOException {
-    ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
-    List<Syndication> syndications = syndicationCrudService.getSyndications(revisionId);
-    // TODO: If revision does not exist, need to respond with 404 instead of empty list?
-    List<SyndicationView> views = syndications.stream().map(SyndicationView::new).collect(Collectors.toList());
-    return ServiceResponse.serveView(views).asJsonResponse(entityGson);
-  }
-
-  @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications", method = RequestMethod.POST)
-  @ApiImplicitParam(name = "body", paramType = "body", dataType = "SyndicationInputView",
-      value = "example: {\"targetQueue\": \"activemq:plos.pmc\"}")
-  public ResponseEntity<?> createSyndication(HttpServletRequest request,
-                                             @PathVariable("doi") String doi,
-                                             @PathVariable("number") int revisionNumber)
-      throws IOException {
-    ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
-    SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
-
-    Syndication syndication = syndicationCrudService.createSyndication(revisionId, input.getTargetQueue());
-    return ServiceResponse.reportCreated(new SyndicationView(syndication)).asJsonResponse(entityGson);
-  }
-
-  @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications",
-      // Fold into PATCH operation so we can get rid of "?syndicate"?
-      method = RequestMethod.POST, params = "syndicate")
-  @ApiOperation(value = "syndicate", notes = "Send a syndication message to the queue for processing. " +
-      "Will create and add a syndication to the database if none exist for current article and target.")
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "syndicate", value = "syndicate flag (any value)", required = true,
-          defaultValue = "syndicate", paramType = "query", dataType = "string"),
-      @ApiImplicitParam(name = "body", paramType = "body", dataType = "SyndicationInputView",
-          value = "example: {\"targetQueue\": \"activemq:plos.pmc\"}")
-  })
-  public ResponseEntity<?> syndicate(HttpServletRequest request,
-                                     @PathVariable("doi") String doi,
-                                     @PathVariable("number") int revisionNumber)
-      throws IOException {
-    ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
-    SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
-
-    Syndication created = syndicationCrudService.syndicate(revisionId, input.getTargetQueue());
-    return ServiceResponse.reportCreated(new SyndicationView(created)).asJsonResponse(entityGson);
-  }
-
-  @RequestMapping(value = "/articles/{doi}/revisions/{number}/syndications", method = RequestMethod.PATCH)
-  @ApiImplicitParam(name = "body", paramType = "body", dataType = "SyndicationInputView",
-      value = "example: {\"targetQueue\": \"activemq:plos.pmc\", \"status\": \"FAILURE\", \"errorMessage\": \"failed\"}")
-  public ResponseEntity<?> patchSyndication(HttpServletRequest request,
-                                            @PathVariable("doi") String doi,
-                                            @PathVariable("number") int revisionNumber)
-      throws IOException {
-    ArticleRevisionIdentifier revisionId = ArticleRevisionIdentifier.create(DoiEscaping.unescape(doi), revisionNumber);
-    SyndicationInputView input = readJsonFromRequest(request, SyndicationInputView.class);
-
-    Syndication patched = syndicationCrudService.updateSyndication(revisionId,
-        input.getTargetQueue(), input.getStatus(), input.getErrorMessage());
-    return ServiceResponse.serveView(new SyndicationView(patched)).asJsonResponse(entityGson);
-  }
-
 
   /**
    * The following two methods {@link #getDoisPublishedOn} and {@link #getDoisRevisedOn} provide two utility endpoints
