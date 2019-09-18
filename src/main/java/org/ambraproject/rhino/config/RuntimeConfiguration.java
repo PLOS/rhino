@@ -125,20 +125,6 @@ public interface RuntimeConfiguration {
    */
   LocalDate getCompetingInterestPolicyStart();
 
-  interface QueueConfiguration {
-    String getBrokerUrl();
-
-    String getSolrUpdate();
-
-    String getLiteSolrUpdate();
-
-    String getSolrDelete();
-
-    int getSyndicationRange();
-  }
-
-  QueueConfiguration getQueueConfiguration();
-
   interface KafkaConfiguration {
     Set<String> getServers();
   }

@@ -33,16 +33,12 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.ArticleRevisionWriteService;
 import org.ambraproject.rhino.service.AssetCrudService;
-import org.ambraproject.rhino.service.CamelSender;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.ContentRepoPersistenceService;
 import org.ambraproject.rhino.service.HibernatePersistenceService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
-import org.ambraproject.rhino.service.MessageSender;
-import org.ambraproject.rhino.service.SolrIndexService;
-import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleListCrudServiceImpl;
@@ -55,8 +51,6 @@ import org.ambraproject.rhino.service.impl.HibernatePersistenceServiceImpl;
 import org.ambraproject.rhino.service.impl.IngestionService;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.JournalCrudServiceImpl;
-import org.ambraproject.rhino.service.impl.SolrIndexServiceImpl;
-import org.ambraproject.rhino.service.impl.SyndicationCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
@@ -74,7 +68,6 @@ import org.ambraproject.rhino.view.comment.CommentNodeView;
 import org.ambraproject.rhino.view.journal.ArticleListView;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.ambraproject.rhino.view.journal.VolumeOutputView;
-import org.apache.activemq.spring.ActiveMQConnectionFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
@@ -218,14 +211,6 @@ public class RhinoConfiguration {
   }
 
   @Bean
-  public ActiveMQConnectionFactory jmsConnectionFactory(RuntimeConfiguration runtimeConfiguration) {
-    ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory();
-    factory.setBrokerURL(runtimeConfiguration.getQueueConfiguration().getBrokerUrl());
-    return factory;
-  }
-
-
-  @Bean
   public ArticleCrudService articleCrudService() {
     return new ArticleCrudServiceImpl();
   }
@@ -243,11 +228,6 @@ public class RhinoConfiguration {
   @Bean
   public IssueCrudService issueCrudService() {
     return new IssueCrudServiceImpl();
-  }
-
-  @Bean
-  public SolrIndexService solrIndexService() {
-    return new SolrIndexServiceImpl();
   }
 
   @Bean
@@ -281,11 +261,6 @@ public class RhinoConfiguration {
   }
 
   @Bean
-  public SyndicationCrudService syndicationService() {
-    return new SyndicationCrudServiceImpl();
-  }
-
-  @Bean
   public IngestionService ingestionService() {
     return new IngestionService();
   }
@@ -303,11 +278,6 @@ public class RhinoConfiguration {
   @Bean
   public HibernatePersistenceService hibernatePersistenceService() {
     return new HibernatePersistenceServiceImpl();
-  }
-
-  @Bean
-  public MessageSender messageSender() {
-    return new CamelSender();
   }
 
   @Bean

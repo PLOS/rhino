@@ -43,17 +43,6 @@ public abstract class BaseRhinoTest extends /* AbstractTransactionalJUnit4Spring
   protected Gson entityGson;
 
   /**
-   * Clear out old persistent values.
-   * <p/>
-   * Really, the entire persistent environment should be reset on every test. Deleting values that we expected to be
-   * created by type is a kludge.
-   */
-  @Before
-  public void deleteEntities() {
-    RhinoTestHelper.deleteEntities(hibernateTemplate);
-  }
-
-  /**
    * Adds journal entities for the test article set.
    */
   protected void addExpectedJournals() {

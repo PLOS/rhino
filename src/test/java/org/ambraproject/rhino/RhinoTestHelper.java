@@ -43,7 +43,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Journal;
-import org.ambraproject.rhino.model.Syndication;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.hibernate.criterion.DetachedCriteria;
@@ -262,16 +261,6 @@ public final class RhinoTestHelper {
 
   public static final String prefixed(String doi) {
     return "10.1371/journal." + doi;
-  }
-
-  public static void deleteEntities(HibernateTemplate hibernateTemplate) {
-    Collection<Class<?>> typesToDelete =
-        ImmutableList.<Class<?>>of(Article.class, Syndication.class);
-    for (Class<?> typeToDelete : typesToDelete) {
-      List<?> allObjects =
-          hibernateTemplate.findByCriteria(DetachedCriteria.forClass(typeToDelete));
-      hibernateTemplate.deleteAll(allObjects);
-    }
   }
 
   private static File getXmlPath(String doiStub) {
