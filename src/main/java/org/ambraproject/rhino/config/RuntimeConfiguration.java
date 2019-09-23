@@ -125,13 +125,6 @@ public interface RuntimeConfiguration {
    */
   LocalDate getCompetingInterestPolicyStart();
 
-  interface KafkaConfiguration {
-    Set<String> getServers();
-  }
-
-  KafkaConfiguration getKafkaConfiguration();
-
-
   /**
    * Article attributes that may be parsed from {@code &lt;custom-meta&rt;} elements, whose {@code &lt;meta-name&rt;}
    * values are provided as configuration.
