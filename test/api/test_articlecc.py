@@ -27,18 +27,12 @@ This test case validates Rhino's article crud controller.
 """
 
 import logging
+
 import pytest
 
 from .RequestObject.articlecc import ArticlesJSON
 from .RequestObject.memory_zip import MemoryZipJSON
 from ..api import resources
-import time
-
-CROSSFER = 'crossref'
-JISC = 'jisc'
-PMC = 'pmc'
-PUBMED = 'pubmed'
-FIGSHARE = 'figshare'
 
 __author__ = 'fcabrales@plos.org'
 
@@ -81,37 +75,3 @@ class TestArticles(ArticlesJSON, MemoryZipJSON):
         # Invoke article API
         self.add_article_revision(resources.CREATED)
         self.verify_article_revision()
-
-    @pytest.mark.parametrize("syndication_target", [
-        CROSSFER,
-        JISC,
-        PMC,
-        PUBMED,
-        FIGSHARE,
-    ])
-    @pytest.mark.usefixtures("setup")
-    def test_add_article_syndication(self, syndication_target):
-        """
-        POST revision: Adding article syndication to article
-        """
-        logging.info('\nTesting POST article syndication/\n')
-        # Invoke article syndication API call
-        self.add_article_revision(resources.CREATED)
-        self.add_article_syndication(resources.CREATED, syndication_target)
-        """
-        Need to add sleep since we need to wait queue to process request
-        before purging article from rhino
-        """
-        time.sleep(5)
-        self.verify_article_revision()
-
-    @pytest.mark.usefixtures("setup")
-    def test_add_article_solr_index(self):
-        """
-        POST revision: Adding article solr index to article
-        """
-        logging.info('\nTesting POST article solr index/\n')
-        # Invoke article API to add solr index
-        self.add_article_revision(resources.CREATED)
-        self.add_article_solr_index(resources.OK)
-

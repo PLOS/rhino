@@ -25,15 +25,11 @@
 Base class for Article crud controller JSON related services
 """
 
-
-import json
-
+from test.Base.MySQL import MySQL
+from test.Base.api import needs
 from .zip_ingestion import ZIPIngestionJson
 from ..resources import *
-
-from test.Base.api import needs
-from test.Base.MySQL import MySQL
-from ..resources import NOT_SCAPE_RELATED_ARTICLE_DOI, CONTENT_HEADERS
+from ..resources import NOT_SCAPE_RELATED_ARTICLE_DOI
 
 ARTICLE_API = API_BASE_URL + '/articles/'
 ARTICLE_RELATED_ARTICLE_API = ARTICLE_API + RELATED_ARTICLE_DOI
@@ -43,74 +39,49 @@ HEADER = '-H'
 
 __author__ = 'fcabrales@plos.org'
 
+
 class ArticlesJSON(ZIPIngestionJson):
-  def verify_article_revision(self):
-    """
-    Validate setting article revision using articleRevision table
-    """
-    db_article_revision = self.get_article_sql_revision(NOT_SCAPE_RELATED_ARTICLE_DOI)
-    self.get_article_revisions()
-    self.verify_article_revision_db_expected(db_article_revision[0], 'revisionNumber')
+    def verify_article_revision(self):
+        """
+        Validate setting article revision using articleRevision table
+        """
+        db_article_revision = self.get_article_sql_revision(NOT_SCAPE_RELATED_ARTICLE_DOI)
+        self.get_article_revisions()
+        self.verify_article_revision_db_expected(db_article_revision[0], 'revisionNumber')
 
-  def add_article_revision(self, expected_response_code):
+    def add_article_revision(self, expected_response_code):
+        """
+        Calls article API to write revision for an article
+        POST /articles/{doi}/revisions
+        :param expected_response_code
+        """
+        response = self.doPost('%s?revision=%s&ingestion=%s' % (ARTICLE_REVISION_API, REVISION,
+                                                                INGESTION_NUMBER))
+        self.verify_http_code_is(response, expected_response_code)
+
     """
-    Calls article API to write revision for an article
-    POST /articles/{doi}/revisions
-    :param doi
-    :param revision
-    :param ingestion
+    Below SQL statements will query ambra articleRevision table for revision number by articleDoi
     """
-    response = self.doPost('%s?revision=%s&ingestion=%s' % (ARTICLE_REVISION_API,REVISION,
-                                                    INGESTION_NUMBER))
-    self.verify_http_code_is(response, expected_response_code)
 
-  def add_article_solr_index(self, expected_response_code):
-    """
-    Calls article API to write revision for an article
-    POST /articles/{doi}?solrIndex
-    :param doi
-    """
-    response = self.doPost('%s?solrIndex' % (ARTICLE_RELATED_ARTICLE_API))
-    self.verify_http_code_is(response, expected_response_code)
+    def get_article_sql_revision(self, article_doi):
+        article_revision = MySQL().query(
+            'SELECT ar.revisionNumber FROM articleRevision as ar JOIN articleIngestion ai ON '
+            'ar.ingestionId = ai.ingestionId JOIN article a ON ai.articleId = a.articleId '
+            'where a.doi = %s', [article_doi])
+        return article_revision[0]
 
-  def add_article_syndication(self, expected_response_code, syndication_target):
-      """
-      Calls article API to syndicate revision of an article
-      POST /articles/{doi}/revisions/1/syndications?syndicate
-      :param doi
-      :param revision
-      :param ingestion
-      :param syndication target
-      """
-      da_data = json.dumps({
-        "targetQueue": "activemq:plos." + syndication_target
-      })
-      response = self.doPostData('%s/%s/syndications?syndicate' % (ARTICLE_REVISION_API,REVISION), da_data, CONTENT_HEADERS)
-      self.verify_http_code_is(response, expected_response_code)
+    # Article API
+    def get_article_revisions(self):
+        """
+        Calls article API to get an article revisions
+        GET /articles/{article_doi}/revisions
+        """
+        response = self.doGet(ARTICLE_REVISION_API, None, headers=DEFAULT_HEADERS)
+        self.parse_response_as_json(response)
 
-
-  """
-  Below SQL statements will query ambra articleRevision table for revision number by articleDoi
-  """
-  def get_article_sql_revision (self,article_doi):
-    article_revision = MySQL().query('SELECT ar.revisionNumber FROM articleRevision as ar JOIN articleIngestion ai ON '
-                                     'ar.ingestionId = ai.ingestionId JOIN article a ON ai.articleId = a.articleId '
-                                     'where a.doi = %s', [article_doi])
-    return article_revision[0]
-
-
-  #Article API
-  def get_article_revisions(self):
-    """
-    Calls article API to get an article revisions
-    GET /articles/{article_doi}/revisions
-    :param article_doi example:10.1371%2B%2Bjournal.pone.0155391
-    """
-    response = self.doGet(ARTICLE_REVISION_API, None, headers=DEFAULT_HEADERS)
-    self.parse_response_as_json(response)
-
-  @needs('parsed', 'parse_response_as_json()')
-  def verify_article_revision_db_expected(self, expected_results, attribute):
-    actual_results = self.parsed.get_article_revision_number()
-    assert actual_results[0] == expected_results, \
-      ('%s is not correct! actual: %s expected: %s' % (attribute, actual_results[0], expected_results))
+    @needs('parsed', 'parse_response_as_json()')
+    def verify_article_revision_db_expected(self, expected_results, attribute):
+        actual_results = self.parsed.get_article_revision_number()
+        assert actual_results[0] == expected_results, \
+            ('%s is not correct! actual: %s expected: %s' % (
+            attribute, actual_results[0], expected_results))
