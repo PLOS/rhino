@@ -66,7 +66,6 @@
 
   <beans:bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate">
     <beans:property name="dataSource" ref="hibernateDataSource" />
-    <beans:property name="baselineOnMigrate" value="true"/>
   </beans:bean>
 
   <!-- Serve static content-->
