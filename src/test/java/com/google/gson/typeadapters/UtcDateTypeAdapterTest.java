@@ -1,3 +1,7 @@
+/* PLEASE READ */
+/* This is not packaged for maven so we include it here. */
+/* Upstream: https://github.com/google/gson/blob/master/extras/src/test/java/com/google/gson/typeadapters/UtcDateTypeAdapterTest.java */
+
 /*
  * Copyright (C) 2011 Google Inc.
  *

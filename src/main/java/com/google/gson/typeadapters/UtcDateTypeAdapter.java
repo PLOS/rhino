@@ -1,3 +1,8 @@
+/* PLEASE READ */
+/* This is not packaged for maven so we include it here. */
+/* https://github.com/google/gson/blob/master/extras/src/main/java/com/google/gson/typeadapters/UtcDateTypeAdapter.java */
+
+/* 
 /*
  * Copyright (C) 2011 Google Inc.
  *
@@ -14,8 +19,6 @@
  * limitations under the License.
  */
 
-/* This is not packaged for maven so we just include it here. */
-/* https://github.com/google/gson/blob/master/extras/src/main/java/com/google/gson/typeadapters/UtcDateTypeAdapter.java */
 
 package com.google.gson.typeadapters;
 
