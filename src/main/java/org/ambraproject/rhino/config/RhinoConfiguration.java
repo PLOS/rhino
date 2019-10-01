@@ -127,6 +127,14 @@ public class RhinoConfiguration {
 
     bean.setPackagesToScan("org.ambraproject.rhino.model");
 
+    try {
+      log.info("initializing Kafka");
+      bean.setEntityInterceptor(new HibernateLoggingInterceptor(runtimeConfiguration, entityGson));
+    } catch (RuntimeException e) {
+      log.error("Error initializing HibernateLoggingInterceptor:", e);
+    }
+
+
     return bean;
   }
 
