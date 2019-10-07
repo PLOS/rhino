@@ -26,19 +26,12 @@ import com.google.common.io.Closeables;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;
-import org.ambraproject.rhino.service.DummyMessageSender;
-import org.ambraproject.rhino.service.MessageSender;
-import org.ambraproject.rhino.service.SolrIndexService;
-import org.ambraproject.rhino.service.SyndicationCrudService;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.CommentCrudServiceImpl;
-import org.ambraproject.rhino.service.impl.SolrIndexServiceImpl;
-import org.ambraproject.rhino.service.impl.SyndicationCrudServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.DummyTaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyServiceImpl;
-import org.apache.activemq.spring.ActiveMQConnectionFactory;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.plos.crepo.service.ContentRepoService;
@@ -110,12 +103,6 @@ public class TestConfiguration {
   }
 
   @Bean
-  public ActiveMQConnectionFactory jmsConnectionFactory(RuntimeConfiguration runtimeConfiguration) {
-    return new ActiveMQConnectionFactory();
-  }
-
-
-  @Bean
   public TaxonomyClassificationService taxonomyClassificationService() {
     return new DummyTaxonomyClassificationService();
   }
@@ -123,21 +110,6 @@ public class TestConfiguration {
   @Bean
   public AssetCrudService assetService() {
     return new AssetCrudServiceImpl();
-  }
-
-  @Bean
-  public MessageSender messageSender() {
-    return new DummyMessageSender();
-  }
-
-  @Bean
-  public SyndicationCrudService syndicationService() throws Exception {
-    return new SyndicationCrudServiceImpl();
-  }
-
-  @Bean
-  public SolrIndexService solrIndexService() {
-    return new SolrIndexServiceImpl();
   }
 
   @Bean

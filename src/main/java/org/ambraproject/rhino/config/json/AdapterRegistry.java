@@ -65,7 +65,6 @@ public class AdapterRegistry {
       .add(org.ambraproject.rhino.view.article.ArticleIngestionView.class)
       .add(org.ambraproject.rhino.view.article.ArticleRevisionView.class)
       .add(org.ambraproject.rhino.view.article.CategoryAssignmentView.class)
-      .add(org.ambraproject.rhino.view.article.SyndicationView.class)
 
       .add(org.ambraproject.rhino.view.comment.CommentFlagOutputView.class)
       .add(org.ambraproject.rhino.view.comment.CommentNodeView.class)

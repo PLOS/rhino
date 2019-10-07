@@ -23,7 +23,6 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.collect.ImmutableList;
-import edu.emory.mathcs.backport.java.util.Arrays;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.view.article.author.AuthorView;
@@ -38,6 +37,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 

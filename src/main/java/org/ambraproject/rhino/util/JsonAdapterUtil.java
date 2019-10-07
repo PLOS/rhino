@@ -22,18 +22,16 @@
 
 package org.ambraproject.rhino.util;
 
+import java.util.Date;
+import java.util.Map;
+
 import com.google.common.base.Preconditions;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.ambraproject.rhombat.gson.Iso8601CalendarAdapter;
-import org.ambraproject.rhombat.gson.Iso8601DateAdapter;
-import org.hibernate.proxy.HibernateProxy;
+import com.google.gson.typeadapters.UtcDateTypeAdapter;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Map;
+import org.hibernate.proxy.HibernateProxy;
 
 public final class JsonAdapterUtil {
   private JsonAdapterUtil() {
@@ -65,12 +63,7 @@ public final class JsonAdapterUtil {
    */
   public static GsonBuilder makeGsonBuilder() {
     GsonBuilder builder = new GsonBuilder();
-
-    builder.registerTypeAdapter(Date.class, new Iso8601DateAdapter());
-    Iso8601CalendarAdapter calendarAdapter = new Iso8601CalendarAdapter();
-    builder.registerTypeAdapter(Calendar.class, calendarAdapter);
-    builder.registerTypeAdapter(GregorianCalendar.class, calendarAdapter);
-
+    builder.registerTypeAdapter(Date.class, new UtcDateTypeAdapter());
     return builder;
   }
 

@@ -245,42 +245,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
    */
   private static final LocalDate DEFAULT_COMPETING_INTEREST_POLICY_START = LocalDate.of(2009, Month.MARCH, 20);
 
-
-  private transient QueueConfiguration queueConfiguration;
-
-  @Override
-  public QueueConfiguration getQueueConfiguration() {
-    return (queueConfiguration != null) ? queueConfiguration : (queueConfiguration = new QueueConfiguration() {
-      private static final String DEFAULT_BROKER_URL = "tcp://localhost:61616";
-      private static final int DEFAULT_SYNDICATION_RANGE = 30;
-
-      @Override
-      public String getBrokerUrl() {
-        return input.queue != null && input.queue.brokerUrl != null ? input.queue.brokerUrl : DEFAULT_BROKER_URL;
-      }
-
-      @Override
-      public String getSolrUpdate() {
-        return input.queue != null ? input.queue.solrUpdate : null;
-      }
-
-      @Override
-      public String getLiteSolrUpdate() {
-        return input.queue != null ? input.queue.liteSolrUpdate : null;
-      }
-
-      @Override
-      public String getSolrDelete() {
-        return input.queue != null ? input.queue.solrDelete : null;
-      }
-
-      @Override
-      public int getSyndicationRange() {
-        return input.queue != null && input.queue.syndicationRange != null ? input.queue.syndicationRange : DEFAULT_SYNDICATION_RANGE;
-      }
-    });
-  }
-
   private transient KafkaConfiguration kafkaConfiguration;
 
   @Override
@@ -323,7 +287,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
     private TaxonomyConfigurationInput taxonomy;
     private UserApiConfigurationInput userApi;
     private String competingInterestPolicyStart;
-    private QueueConfigurationInput queue;
     private KafkaConfigurationInput kafka;
     private ManuscriptCustomMetaInput manuscriptCustomMeta;
     private List<String> enableDevFeatures;
@@ -374,14 +337,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setCompetingInterestPolicyStart(String competingInterestPolicyStart) {
       this.competingInterestPolicyStart = competingInterestPolicyStart;
-    }
-
-    /**
-     * @deprecated For reflective access by SnakeYAML only
-     */
-    @Deprecated
-    public void setQueue(QueueConfigurationInput queue) {
-      this.queue = queue;
     }
 
     /**
@@ -517,39 +472,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setAuthorizationPassword(String authorizationPassword) {
       this.authorizationPassword = authorizationPassword;
-    }
-  }
-
-  public static class QueueConfigurationInput {
-    private String brokerUrl;
-    private String solrUpdate;
-    private String liteSolrUpdate;
-    private String solrDelete;
-    private Integer syndicationRange;
-
-    @Deprecated
-    public void setBrokerUrl(String brokerUrl) {
-      this.brokerUrl = brokerUrl;
-    }
-
-    @Deprecated
-    public void setSolrUpdate(String solrUpdate) {
-      this.solrUpdate = solrUpdate;
-    }
-
-    @Deprecated
-    public void setLiteSolrUpdate(String liteSolrUpdate) {
-      this.liteSolrUpdate = liteSolrUpdate;
-    }
-
-    @Deprecated
-    public void setSolrDelete(String solrDelete) {
-      this.solrDelete = solrDelete;
-    }
-
-    @Deprecated
-    public void setSyndicationRange(Integer syndicationRange) {
-      this.syndicationRange = syndicationRange;
     }
   }
 

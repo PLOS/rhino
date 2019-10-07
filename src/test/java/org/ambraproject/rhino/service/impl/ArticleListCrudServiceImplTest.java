@@ -1,7 +1,6 @@
 package org.ambraproject.rhino.service.impl;
 
 
-import edu.emory.mathcs.backport.java.util.Collections;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleListIdentity;
 import org.ambraproject.rhino.model.Article;
@@ -22,6 +21,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -100,7 +100,7 @@ public class ArticleListCrudServiceImplTest extends AbstractStubbingArticleTest 
 
     when(mockHibernateTemplate.execute(any())).thenReturn(0L);
     when(mockHibernateTemplate.findByCriteria(any())).thenReturn(
-        Collections.singletonList(new Journal(identity.getJournalKey())));
+        (List) Collections.singletonList(new Journal(identity.getJournalKey())));
 
     if (article != null) {
       articleIds.add(ArticleIdentifier.create(article.getDoi()));
@@ -128,7 +128,7 @@ public class ArticleListCrudServiceImplTest extends AbstractStubbingArticleTest 
 
     when(mockHibernateTemplate.execute(any())).thenReturn(0L);
     when(mockHibernateTemplate.findByCriteria(any())).thenReturn(
-        Collections.singletonList(new Journal(identity.getJournalKey())));
+        (List) Collections.singletonList(new Journal(identity.getJournalKey())));
 
     ArticleListView articleListView = mockArticleListCrudService.create(identity, displayName, articleIds);
     assertThat(articleListView.getIdentity()).isEqualTo(identity);
