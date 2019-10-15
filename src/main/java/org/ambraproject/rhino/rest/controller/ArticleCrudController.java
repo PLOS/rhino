@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Public Library of Science
+ * Copyright (c) 2017-2019 Public Library of Science
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -22,11 +22,24 @@
 
 package org.ambraproject.rhino.rest.controller;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.google.common.collect.ImmutableMap;
 import com.wordnik.swagger.annotations.ApiImplicitParam;
-import com.wordnik.swagger.annotations.ApiImplicitParams;
-import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
+
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
@@ -42,7 +55,7 @@ import org.ambraproject.rhino.service.ArticleRevisionWriteService;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.view.article.ArticleRevisionView;
-import org.ambraproject.rhino.view.article.RelationshipSetView;
+import org.ambraproject.rhino.view.article.RelationshipViewFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,19 +73,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -99,7 +99,7 @@ public class ArticleCrudController extends RestController {
   @Autowired
   private TaxonomyService taxonomyService;
   @Autowired
-  private RelationshipSetView.Factory relationshipSetViewFactory;
+  private RelationshipViewFactory relationshipViewFactory;
 
   /**
    * Calculate the date range using the specified rule. For example:
@@ -327,7 +327,7 @@ public class ArticleCrudController extends RestController {
                                              @PathVariable("doi") String doi)
       throws IOException {
     ArticleIdentifier id = ArticleIdentifier.create(DoiEscaping.unescape(doi));
-    return ServiceResponse.serveView(relationshipSetViewFactory.getSetView(id)).asJsonResponse(entityGson);
+    return ServiceResponse.serveView(relationshipViewFactory.getRelationshipViews(id)).asJsonResponse(entityGson);
   }
 
   /**
