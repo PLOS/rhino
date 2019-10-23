@@ -27,45 +27,45 @@ This test cases validates JSON article list crud controller.
 """
 
 import logging
-import pytest
 import time
-from termcolor import cprint
 
-from ..api.RequestObject.articlelistcc import ArticlesListJSON
+import pytest
+
 from .resources import OK, BAD_REQUEST, NOT_FOUND, CREATED
+from ..api.RequestObject.articlelistcc import ArticlesListJSON
 
 __author__ = 'fcabrales'
 
 
 class TestArticlesListAdditions(ArticlesListJSON):
 
-    def test_cleanup(self):
-        """
-        Cleanup any created list with name starting with "rhino-cell-collection"
-        """
+    def lists_cleanup(self):
+        """ Cleanup any created list with name starting with 'rhino-cell-collection' """
         self.delete_lists_articlelistjointable('rhino-cell-collection')
         self.delete_lists_articlelist('rhino-cell-collection')
 
-    def test_articles_list_addition(self):
-        self.test_cleanup()
+    @pytest.fixture(scope="function", name='cleanup')
+    def set_up(self, request):
+        self.lists_cleanup()
+
+        def tear_down():
+            time.sleep(10)
+            self.lists_cleanup()
+
+        request.addfinalizer(tear_down)
+
+    def test_articles_list_addition(self, cleanup):
         logging.info('Adding article list', 'green', attrs=['bold'])
-
         self.add_article_list(CREATED)
-        time.sleep(10)
-        self.test_cleanup()
 
-    def test_articles_list_addition_twice(self):
-        self.test_cleanup()
+    def test_articles_list_addition_twice(self, cleanup):
         logging.info('Adding two identical article lists', 'green', attrs=['bold'])
 
         self.add_article_list(CREATED)
         time.sleep(10)
         self.add_article_list(BAD_REQUEST)
-        time.sleep(5)
-        self.test_cleanup()
 
-    def test_article_list_patch(self):
-        self.test_cleanup()
+    def test_articles_list_patch(self, cleanup):
         logging.info('Patching article list', 'green', attrs=['bold'])
 
         self.add_article_list(CREATED)
@@ -73,5 +73,3 @@ class TestArticlesListAdditions(ArticlesListJSON):
         self.patch_article_list(OK, "rhino-cell-collection")
         self.patch_article_list(NOT_FOUND, "wombat-cell-collection")
         self.patch_article_list(NOT_FOUND, "rhino-cell-collection", True)  # use bogus data
-        time.sleep(5)
-        self.test_cleanup()
