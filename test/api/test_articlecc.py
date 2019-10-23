@@ -29,6 +29,7 @@ This test case validates Rhino's article crud controller.
 import logging
 
 import pytest
+from requests.exceptions import HTTPError
 
 from .RequestObject.articlecc import ArticlesJSON
 from .RequestObject.memory_zip import MemoryZipJSON
@@ -45,9 +46,12 @@ class TestArticles(ArticlesJSON, MemoryZipJSON):
         Ingest test article and verifies http response
         """
         logging.info('\nTesting POST zips/\n')
+        # if article exists, clean all previous ingestions
+        self.clean_article_sql_doi(resources.NOT_SCAPE_RELATED_ARTICLE_DOI)
         # Invoke ZIP API to generate in memory ingestible zip
         zip_file = self.create_ingestible(resources.RA_DOI, 'RelatedArticle/')
         response = self.post_ingestible_zip(zip_file, resources.RELATED_ARTICLE_BUCKET_NAME)
+        self.ingestion_number = self.parsed.get_attribute("ingestionNumber")
         # Validate HTTP code in the response is 201 (CREATED)
         self.verify_http_code_is(response, resources.CREATED)
 
@@ -56,13 +60,15 @@ class TestArticles(ArticlesJSON, MemoryZipJSON):
             Purge all records from the db for test article
             """
             try:
-                self.article = self.get_article(resources.RELATED_ARTICLE_DOI)
-                if self.article.raise_for_status() is None:
-                    self.delete_article_sql_doi(resources.NOT_SCAPE_RELATED_ARTICLE_DOI)
-                else:
-                    logging.info(self.parsed.get_attribute('message'))
-            except:
-                pass
+                response_article = self.get_article(resources.RELATED_ARTICLE_DOI)
+                response_article.raise_for_status()
+            except HTTPError as http_err:
+                logging.warning('HTTP error occurred: {}'.format(http_err))
+            except Exception as err:
+                logging.warning('Error occurred: {}'.format(err))
+            # If the response was successful, no Exception will be raised
+            else:
+                self.delete_article_sql_doi(resources.NOT_SCAPE_RELATED_ARTICLE_DOI)
 
         request.addfinalizer(tear_down)
 

@@ -31,7 +31,6 @@ from ...Base.Config import dbconfig
 
 __author__ = 'jkrzemien@plos.org; gfilomeno@plos.org; fcabrales@plos.org'
 
-import sys
 from test.Base.base_service_test import BaseServiceTest
 from test.Base.api import needs
 from test.Base.MySQL import MySQL
@@ -51,7 +50,7 @@ class Ingestion(BaseServiceTest):
         # # Verify uploaded DOI against the one stored in DB
         self.verify_ingestion_text_expected_only(not_scaped_article_doi, 'doi')
         # Verify article title stored in DB
-        article_title = self.get_article_sql_archiveName(article_id)
+        article_title = self.get_article_sql_archive_name(article_id)
         self.verify_ingestion_text_expected_only(article_title[0], 'title')
         # Verify article type stored in DB
         article_type = self.get_article_sql_type(article_id)
@@ -71,7 +70,7 @@ class Ingestion(BaseServiceTest):
         article_id = self.get_article_id_sql_doi(not_scaped_article_doi)
         logging.info('Verify Journals')
         article_id = self.get_article_id_sql_doi(not_scaped_article_doi)
-        journals = self.get_journals_sql_archiveName(article_id)
+        journals = self.get_journals_sql_archive_name(article_id)
         journals_json = self.parsed.get_attribute('journal')
         self.verify_array(journals, journals_json)
         for journal in journals:
@@ -109,15 +108,10 @@ class Ingestion(BaseServiceTest):
     @needs('parsed', 'parse_response_as_json()')
     def verify_ingestion_text_expected_only(self, expected, attribute):
         actual = self.parsed.get_attribute(attribute)
-        if isinstance(actual, str) and sys.version_info[0] >= 3:
+        if isinstance(actual, str):
             actual = bytes(actual, 'utf-8')
-        elif sys.version_info[0] == 2 and isinstance(actual, unicode):
-            actual = bytearray(actual, 'utf-8')
-        if isinstance(expected, str) and sys.version_info[0] >= 3:
-            # if sys.version_info[0]>=3:
+        if isinstance(expected, str):
             expected = bytes(expected, 'utf-8')
-        elif sys.version_info[0] == 2 and isinstance(expected, unicode):
-            expected = bytearray(expected, 'utf-8')
         assert actual == expected, ('%s is not correct! actual: %s expected: %s' % (
             attribute, actual, expected))
 
@@ -137,79 +131,66 @@ class Ingestion(BaseServiceTest):
         assert actual_array is not None
         assert expected_array is not None
 
-    def get_article_id_sql_doi(self, not_scape_doi):
+    def get_article_id_sql_doi(self, not_escaped_doi):
         """
         Executes SQL statement against ambra article table to get article id
-        :param not_scapted_doi: String. Such as '10.1371/journal.pone.0155391'
+        :param not_escaped_doi: String. Such as '10.1371/journal.pone.0155391'
         :return: Int Article id
         """
         current_articles_id = MySQL().query('SELECT articleId FROM article WHERE doi = %s',
-                                            [not_scape_doi])
+                                            [not_escaped_doi])
         return 0 if not current_articles_id else current_articles_id[0][0]
 
-    def delete_article_sql_doi(self, not_scape_doi, ingestion_number=1):
+    def delete_article_sql_doi(self, not_escaped_doi, ingestion_number=1):
         """
         Executes SQL statement which deletes article from ambra db
-        :param not_scapted_doi: String. Such as '10.1371/journal.pone.0155391'
+        :param not_escaped_doi: String. Such as '10.1371/journal.pone.0155391'
+        :param ingestion_number
         :return: none
         """
-        current_articles_id = self.get_article_id_sql_doi(not_scape_doi)
+        current_articles_id = self.get_article_id_sql_doi(not_escaped_doi)
         logging.info('Call sql stored procedure: CALL migrate_article_rollback({0}, '
                      'connection_timeout: {1})'
                      .format(current_articles_id, dbconfig['connection_timeout']))
-        if ingestion_number == 1:
-            try:
-                MySQL().modify('CALL migrate_article_rollback(%s)', [current_articles_id])
-            except:
-                logging.error('Call sql stored procedure: CALL migrate_article_rollback({0}, '
-                              'connection_timeout: {1})'
-                              .format(current_articles_id, dbconfig['connection_timeout']))
-        else:
-            ingestion_id = self.get_article_sql_ingestion_id(current_articles_id, ingestion_number)
-            self.delete_article_files(ingestion_id)
-            self.update_constraint(ingestion_id)
-            self.delete_article_items(ingestion_id)
-            self.delete_ingestion(ingestion_id)
+
+        ingestion_id = self.get_article_sql_ingestion_id(current_articles_id, ingestion_number)
+        self.delete_article_files(ingestion_id)
+        self.update_constraint(ingestion_id)
+        self.delete_article_items(ingestion_id)
+        self.delete_article_revision(ingestion_id)
+        self.delete_ingestion(ingestion_id)
+
         return self
 
-    def clean_article_sql_doi(self, not_scape_doi):
+    def clean_article_sql_doi(self, not_escaped_doi):
         """
         Executes SQL statement which deletes article from ambra db
-        :param not_scapted_doi: String. Such as '10.1371/journal.pone.0155391'
+        :param not_escaped_doi: String. Such as '10.1371/journal.pone.0155391'
         :return: none
         """
-        current_article_id = self.get_article_id_sql_doi(not_scape_doi)
+        current_article_id = self.get_article_id_sql_doi(not_escaped_doi)
         if not current_article_id:
             return self
 
         ingestion_id_list = self.get_article_sql_ingestions(current_article_id)
         if ingestion_id_list:
             logging.info('Found previous article ingestion(s). Cleaning... ')
-            if len(ingestion_id_list) == 1:
-                try:
-                    MySQL().modify('CALL migrate_article_rollback(%s)', [current_article_id])
-                except:
-                    logging.error('Call sql stored procedure: CALL migrate_article_rollback({0}, '
-                                  'connection_timeout: {1})'
-                                  .format(current_article_id, dbconfig['connection_timeout']))
-            else:
-                self.delete_article_comment_flag(current_article_id)
-                self.delete_article_comments(current_article_id)
-                self.delete_article_relationship(current_article_id)
-                self.delete_article_category(current_article_id)
-                self.delete_article_from_list_join(current_article_id)
-                self.delete_article_from_list(current_article_id)
+            self.delete_article_comment_flag(current_article_id)
+            self.delete_article_comments(current_article_id)
+            self.delete_article_relationship(current_article_id)
+            self.delete_article_category(current_article_id)
+            self.delete_article_from_list_join(current_article_id)
+            self.delete_article_from_list(current_article_id)
 
-                for ingestion_id in ingestion_id_list:
-                    self.delete_article_files(ingestion_id)
-                    self.update_constraint(ingestion_id)
-                    self.delete_article_items(ingestion_id)
-                    self.delete_syndications(ingestion_id)
-                    self.delete_article_revision(ingestion_id)
-                    self.delete_ingestion(ingestion_id)
+            for ingestion_id in ingestion_id_list:
+                self.delete_article_files(ingestion_id)
+                self.update_constraint(ingestion_id)
+                self.delete_article_items(ingestion_id)
+                self.delete_article_revision(ingestion_id)
+                self.delete_ingestion(ingestion_id)
         return self
 
-    def get_article_sql_archiveName(self, article_id):
+    def get_article_sql_archive_name(self, article_id):
         """
         Executes SQL statement against ambra articleIngestion table to get article title
         :param article_id: String. Such as '55391'
@@ -250,7 +231,7 @@ class Ingestion(BaseServiceTest):
         Executes SQL statement against ambra articleIngestion table to get article ingestion id
         for specific ingestion number
         :param article_id: String. Such as '55391'
-        :param ingestion number
+        :param ingestion_number
         :return: String ingestion id
         """
         ingestion_id = MySQL().query(
@@ -271,7 +252,7 @@ class Ingestion(BaseServiceTest):
         ingestion_id_list = [i[0] for i in ingestion_id]
         return ingestion_id_list
 
-    def get_journals_sql_archiveName(self, article_id):
+    def get_journals_sql_archive_name(self, article_id):
         """
         Executes SQL statement joins ambra journal and articleIngestion table to get journalKey,
         eIssn and title
@@ -295,13 +276,13 @@ class Ingestion(BaseServiceTest):
         ingestion_id = self.get_article_sql_ingestion_id(article_id, self.ingestion_number)
         assets = MySQL().query('SELECT doi FROM articleItem '
                                'WHERE ingestionId = %s and articleItemType = "figure"'
-                               'ORDER BY doi', [ingestion_id,])
+                               'ORDER BY doi', [ingestion_id, ])
         return assets
 
     def get_article_status(self, status):
         return {
             1: resources.INGESTED
-        }[status]
+            }[status]
 
     def delete_article_files(self, ingestion_id):
         """
@@ -333,18 +314,6 @@ class Ingestion(BaseServiceTest):
                 "UPDATE articleIngestion "
                 "SET strikingImageItemId = NULL "
                 "WHERE ingestionId = {0!r}".format(ingestion_id))
-
-    def delete_syndications(self, ingestion_id):
-        """
-        Runs a delete sql statements to remove any syndication
-        :param ingestion_id: ingestion_id.
-        """
-        MySQL().modify(
-                "DELETE "
-                "FROM syndication "
-                "WHERE revisionId IN "
-                "(SELECT revisionId FROM articleRevision WHERE ingestionId = {0!r})"
-                .format(ingestion_id))
 
     def delete_article_revision(self, ingestion_id):
         """
