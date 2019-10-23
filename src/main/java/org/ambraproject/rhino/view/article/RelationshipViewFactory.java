@@ -79,7 +79,8 @@ public class RelationshipViewFactory {
   }
 
   public RelationshipView invert(ArticleRelationship relation) {
-    return of(relation.getTargetArticle(), invertedTypes.get(relation.getType()));
+    String invertedRelation = invertedTypes.getOrDefault(relation.getType(), relation.getType() +"-inverted");
+    return of(relation.getTargetArticle(), invertedRelation);
   }
 
   public List<RelationshipView> getRelationshipViews(ArticleIdentifier articleId) {
