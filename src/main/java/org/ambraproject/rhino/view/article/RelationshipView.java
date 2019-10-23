@@ -36,7 +36,7 @@ public abstract class RelationshipView {
   @Nullable public abstract LocalDate getPublicationDate();
   @Nullable public abstract Integer getRevisionNumber();
   @Nullable public abstract String getTitle();
-  @Nullable public abstract String getType();
+  public abstract String getType();
   public abstract JournalOutputView getJournal();
 
   @AutoValue.Builder
