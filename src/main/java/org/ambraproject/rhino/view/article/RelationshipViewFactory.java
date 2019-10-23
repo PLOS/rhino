@@ -58,6 +58,20 @@ public class RelationshipViewFactory {
     .put("update-forward", "updated-article")
     .build();
 
+  /* 
+   * Our corpus contains some dirty data: make it canonical.
+   */
+  private static String getCanonicalType(String type) {
+    if (type.equals("corrrection-forward")) {
+      /* lol, it's too much trouble to repub this */
+      return "correction-forward";
+    } else if (type.equals("article-commentary")) {
+      return "commentary-article";
+    } else {
+      return type;
+    }
+  }
+
   private RelationshipView of(Article article, String type) {
     Optional<ArticleRevision> revision = articleCrudService.getLatestRevision(article);
     Optional<ArticleIngestion> ingestion = revision.map(ArticleRevision::getIngestion);
@@ -70,7 +84,7 @@ public class RelationshipViewFactory {
       .setRevisionNumber(revisionNumber)
       .setPublicationDate(publicationDate)
       .setJournal(journal)
-      .setType(type)
+      .setType(getCanonicalType(type))
       .build();
   }
 

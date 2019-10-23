@@ -138,4 +138,11 @@ public class RelationshipViewFactoryTest extends AbstractJUnit4SpringContextTest
     RelationshipView view = relationshipViewFactory.invert(rel);
     assertEquals("new-type-inverted", view.getType());
   }
+
+  @Test
+  public void testCanonicalizeType() {
+    when(rel.getType()).thenReturn("corrrection-forward"); // arrrrrrrrr
+    RelationshipView view = relationshipViewFactory.of(rel);
+    assertEquals("correction-forward", view.getType());
+  }
 }
