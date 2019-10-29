@@ -27,13 +27,16 @@ This test case validates Rhino's article repack service.
 """
 
 import logging
+
 import pytest
 
 from .RequestObject.articlecc import ArticlesJSON
 from .RequestObject.ingestiblec import IngestibleJSON
 from .RequestObject.memory_zip import MemoryZipJSON
-from ..api.resources import RA_DOI, CREATED, RELATED_ARTICLE_DOI, NOT_SCAPE_RELATED_ARTICLE_DOI, \
+from ..api.resources import (
+    RA_DOI, CREATED, RELATED_ARTICLE_DOI, NOT_SCAPE_RELATED_ARTICLE_DOI,
     RELATED_ARTICLE_BUCKET_NAME, OK, NOT_FOUND
+    )
 
 __author__ = 'fcabrales@plos.org'
 
