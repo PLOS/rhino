@@ -47,7 +47,7 @@ public abstract class RelationshipView {
     public abstract Builder setType(String type);
     public abstract Builder setJournal(JournalOutputView journal);
     public abstract Builder setRevisionNumber(Integer revisionNumber);
-    public abstract Builder setPublicationDate(LocalDate title);
+    public abstract Builder setPublicationDate(LocalDate date);
   }
 
   public static Builder builder() {
