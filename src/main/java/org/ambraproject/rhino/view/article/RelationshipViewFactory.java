@@ -89,17 +89,17 @@ public class RelationshipViewFactory {
   }
 
   public RelationshipView of(ArticleRelationship relation) {
-    return of(relation.getSourceArticle(), relation.getType());
+    return of(relation.getTargetArticle(), relation.getType());
   }
 
   public RelationshipView invert(ArticleRelationship relation) {
     String invertedRelation = invertedTypes.getOrDefault(relation.getType(), relation.getType() +"-inverted");
-    return of(relation.getTargetArticle(), invertedRelation);
+    return of(relation.getSourceArticle(), invertedRelation);
   }
 
   public List<RelationshipView> getRelationshipViews(ArticleIdentifier articleId) {
-    Stream<RelationshipView> from = articleCrudService.getRelationshipsTo(articleId).stream().map(this::of);
-    Stream<RelationshipView> to = articleCrudService.getRelationshipsFrom(articleId).stream().map(this::invert);
+    Stream<RelationshipView> from = articleCrudService.getRelationshipsFrom(articleId).stream().map(this::of);
+    Stream<RelationshipView> to = articleCrudService.getRelationshipsTo(articleId).stream().map(this::invert);
     return Stream.concat(from, to).distinct().collect(Collectors.toList());
   }
 }

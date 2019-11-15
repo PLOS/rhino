@@ -118,7 +118,7 @@ public class RelationshipViewFactoryTest extends AbstractJUnit4SpringContextTest
     when(articleCrudService.getRelationshipsTo(any(ArticleIdentifier.class))).thenReturn(ImmutableList.of());
     List<RelationshipView> views = relationshipViewFactory.getRelationshipViews(ArticleIdentifier.create("10.9999/journal.xxx.1"));
     assertEquals(1, views.size());
-    assertEquals("correction-forward", views.get(0).getType());
+    assertEquals("corrected-article", views.get(0).getType());
     assertEquals("Target", views.get(0).getTitle());
   }
 
@@ -128,7 +128,7 @@ public class RelationshipViewFactoryTest extends AbstractJUnit4SpringContextTest
     when(articleCrudService.getRelationshipsTo(any(ArticleIdentifier.class))).thenReturn(ImmutableList.of(rel));
     List<RelationshipView> views = relationshipViewFactory.getRelationshipViews(ArticleIdentifier.create("10.9999/journal.xxx.1"));
     assertEquals(1, views.size());
-    assertEquals("corrected-article", views.get(0).getType());
+    assertEquals("correction-forward", views.get(0).getType());
     assertEquals("Source", views.get(0).getTitle());
   }
 
