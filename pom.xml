@@ -437,6 +437,8 @@
           <configuration>
             <properties>
               <cargo.servlet.port>8082</cargo.servlet.port>
+              <cargo.tomcat.ajp.port>0</cargo.tomcat.ajp.port>
+              <cargo.rmi.port>0</cargo.rmi.port>
             </properties>
             <files>
               <file>

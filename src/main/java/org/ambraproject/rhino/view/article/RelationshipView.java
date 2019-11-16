@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Public Library of Science
+ * Copyright (c) 2017-2019 Public Library of Science
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -20,41 +20,37 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package org.ambraproject.rhino.view.journal;
+package org.ambraproject.rhino.view.article;
 
-import java.util.Objects;
+import java.time.LocalDate;
+
+import javax.annotation.Nullable;
 
 import com.google.auto.value.AutoValue;
 
-import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.view.journal.JournalOutputView;
 
-/**
- * A view of a {@link Journal} object.
- */
 @AutoValue
-public abstract class JournalOutputView {
-  public abstract String getJournalKey();
-  public abstract String getTitle();
-  public abstract String geteIssn();
+public abstract class RelationshipView {
+  public abstract String getDoi();
+  @Nullable public abstract LocalDate getPublicationDate();
+  @Nullable public abstract Integer getRevisionNumber();
+  @Nullable public abstract String getTitle();
+  public abstract String getType();
+  public abstract JournalOutputView getJournal();
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract JournalOutputView build();
+    public abstract RelationshipView build();
+    public abstract Builder setDoi(String doi);
     public abstract Builder setTitle(String title);
-    public abstract Builder setJournalKey(String title);
-    public abstract Builder seteIssn(String title);
+    public abstract Builder setType(String type);
+    public abstract Builder setJournal(JournalOutputView journal);
+    public abstract Builder setRevisionNumber(Integer revisionNumber);
+    public abstract Builder setPublicationDate(LocalDate date);
   }
 
   public static Builder builder() {
-    return new AutoValue_JournalOutputView.Builder();
-  }
-
-  public static JournalOutputView getView(Journal journal) {
-    Objects.requireNonNull(journal);
-    return JournalOutputView.builder()
-      .setTitle(journal.getTitle())
-      .setJournalKey(journal.getJournalKey())
-      .seteIssn(journal.geteIssn())
-      .build();
+    return new AutoValue_RelationshipView.Builder();
   }
 }

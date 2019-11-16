@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Public Library of Science
+ * Copyright (c) 2017-2019 Public Library of Science
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -22,10 +22,23 @@
 
 package org.ambraproject.rhino.config;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.lang.reflect.Type;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import org.ambraproject.rhino.config.json.AdapterRegistry;
 import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
 import org.ambraproject.rhino.content.xml.XpathReader;
@@ -63,7 +76,7 @@ import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.article.ArticleIngestionView;
 import org.ambraproject.rhino.view.article.ArticleRevisionView;
 import org.ambraproject.rhino.view.article.ItemSetView;
-import org.ambraproject.rhino.view.article.RelationshipSetView;
+import org.ambraproject.rhino.view.article.RelationshipViewFactory;
 import org.ambraproject.rhino.view.comment.CommentNodeView;
 import org.ambraproject.rhino.view.journal.ArticleListView;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
@@ -85,17 +98,6 @@ import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.yaml.snakeyaml.Yaml;
-
-import javax.sql.DataSource;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.lang.reflect.Type;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
 
 /**
  * Bean configuration for the application.
@@ -291,8 +293,8 @@ public class RhinoConfiguration {
   }
 
   @Bean
-  public RelationshipSetView.Factory relationshipSetViewFactory() {
-    return new RelationshipSetView.Factory();
+  public RelationshipViewFactory relationshipViewFactory() {
+    return new RelationshipViewFactory();
   }
 
   @Bean

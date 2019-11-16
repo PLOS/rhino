@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Public Library of Science
+ * Copyright (c) 2017-2019 Public Library of Science
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -72,7 +72,6 @@ public class AdapterRegistry {
 
       .add(org.ambraproject.rhino.view.journal.ArticleListView.class)
       .add(org.ambraproject.rhino.view.journal.IssueOutputView.class)
-      .add(org.ambraproject.rhino.view.journal.JournalOutputView.class)
       .add(org.ambraproject.rhino.view.journal.VolumeOutputView.class)
 
       .add(org.ambraproject.rhino.view.user.UserIdView.class)
