@@ -285,8 +285,11 @@ public class ArticleCrudServiceImplTest extends AbstractStubbingArticleTest {
   @Test
   public void testGetItemOverview() throws Exception {
     final Doi dummyDoi = Doi.create("0");
+    Journal journal = new Journal("PLOSZERO");
+    journal.setTitle("PLOS Zero");
+    journal.seteIssn("0000-0000");
     ResolvedDoiView dummyView = ResolvedDoiView
-        .create(dummyDoi, ResolvedDoiView.DoiWorkType.ISSUE, new Journal());
+      .create(dummyDoi, ResolvedDoiView.DoiWorkType.ISSUE, journal);
     when(mockHibernateTemplate.execute(any())).thenReturn(Optional.of(dummyView));
 
     final Optional<ResolvedDoiView> itemOverview = mockArticleCrudService.getItemOverview(dummyDoi);

@@ -326,30 +326,15 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     ArticleXml sourceArticleXml = new ArticleXml(getManuscriptXml(sourceArticleRev.getIngestion()));
     Article sourceArticle = sourceArticleRev.getIngestion().getArticle();
 
-    List<RelatedArticleLink> xmlRelationships = sourceArticleXml.parseRelatedArticles();
-    List<ArticleRelationship> dbRelationships = getRelationshipsFrom(ArticleIdentifier.create(sourceArticle.getDoi()));
-    dbRelationships.forEach(ar -> hibernateTemplate.delete(ar));
-    xmlRelationships.forEach(ar -> {
-      getArticle(ar.getArticleId()).ifPresent((Article relatedArticle) -> {
-        // if related article exists, persist ArticleRelationship object
-        // otherwise, likely a reference to an article external to our system and so the relationship is not persisted
-        hibernateTemplate.save(fromRelatedArticleLink(sourceArticle, ar));
+    /* Drop old relationships */
+    getRelationshipsFrom(ArticleIdentifier.create(sourceArticle.getDoi()))
+      .forEach(hibernateTemplate::delete);
 
-        // refresh related article relationships pointing back to the source article
-        getLatestRevision(relatedArticle).ifPresent((ArticleRevision relatedArticleRev) -> {
-          ArticleXml relatedArticleXml = new ArticleXml(getManuscriptXml(relatedArticleRev.getIngestion()));
-          Set<ArticleRelationship> inboundDbRelationships =
-              getRelationshipsTo(ArticleIdentifier.create(sourceArticle.getDoi())).stream()
-                  .filter(dbAr -> dbAr.getSourceArticle().equals(relatedArticle))
-                  .collect(Collectors.toSet());
-          relatedArticleXml.parseRelatedArticles().stream()
-              .filter(ral -> ral.getArticleId().getDoiName().equals(sourceArticle.getDoi()))
-              .map(ral -> fromRelatedArticleLink(relatedArticle, ral))
-              .filter(relatedAr -> !inboundDbRelationships.contains(relatedAr))
-              .forEach(relatedAr -> hibernateTemplate.save(relatedAr));
-        });
-      });
-    });
+    for (RelatedArticleLink ar: sourceArticleXml.parseRelatedArticles()) {
+      if (getArticle(ar.getArticleId()).isPresent()) {
+        hibernateTemplate.save(fromRelatedArticleLink(sourceArticle, ar));
+      }
+    }
   }
 
   private ArticleRelationship fromRelatedArticleLink(Article article, RelatedArticleLink ral) {
