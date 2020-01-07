@@ -337,12 +337,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
   }
 
-  private ArticleRelationship fromRelatedArticleLink(Article article, RelatedArticleLink ral) {
+  @Override
+  public ArticleRelationship fromRelatedArticleLink(Article article, RelatedArticleLink ral) {
     ArticleRelationship ar = new ArticleRelationship();
     ar.setSourceArticle(Objects.requireNonNull(article));
     Article targetArticle = getArticle(ral.getArticleId()).orElse(null);
     ar.setTargetArticle(Objects.requireNonNull(targetArticle));
     ar.setType(Objects.requireNonNull(ral.getType()));
+    ar.setSpecificUse(ral.getSpecificUse());
     return ar;
   }
 

@@ -32,6 +32,7 @@ import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.model.ArticleRevision;
+import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.response.CacheableResponse;
 import org.ambraproject.rhino.rest.response.ServiceResponse;
@@ -245,4 +246,12 @@ public interface ArticleCrudService {
   public abstract Collection<String> getArticleDoisForDateRange(
       int pageNumber, int pageSize, SortOrder sortOrder, Optional<LocalDateTime> fromDate,
       Optional<LocalDateTime> toDate);
+
+  /**
+   * Build an ArticleRelationship.
+   *
+   * @param Article source article
+   * @param RelatedArticleLink Data parsed from XML
+   */
+  public abstract ArticleRelationship fromRelatedArticleLink(Article article, RelatedArticleLink ral);
 }

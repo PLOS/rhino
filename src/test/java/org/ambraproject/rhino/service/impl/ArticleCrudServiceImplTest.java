@@ -1,5 +1,34 @@
 package org.ambraproject.rhino.service.impl;
 
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import com.google.common.collect.ImmutableList;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
@@ -13,6 +42,7 @@ import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.ArticleRelationship;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.Journal;
+import org.ambraproject.rhino.model.article.RelatedArticleLink;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService.SortOrder;
 import org.ambraproject.rhino.service.AssetCrudService;
@@ -20,6 +50,8 @@ import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.view.ResolvedDoiView;
 import org.ambraproject.rhino.view.article.ArticleOverview;
 import org.hibernate.criterion.DetachedCriteria;
+import org.junit.Before;
+import org.junit.Test;
 import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.plos.crepo.service.ContentRepoService;
@@ -29,44 +61,8 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ContextConfiguration;
-import org.junit.Before;
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.StringReader;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
-
-import static com.google.common.truth.Truth.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = ArticleCrudServiceImplTest.class)
 @Configuration
@@ -420,5 +416,21 @@ public class ArticleCrudServiceImplTest extends AbstractStubbingArticleTest {
     assertThat(actualDois).isEqualTo(expectedDois);
     verify(mockHibernateTemplate).execute(any());
     verify(mockHibernateTemplate).findByCriteria(any(DetachedCriteria.class), anyInt(), anyInt());
+  }
+
+  @Test
+  public void fromRelatedArticleLinkTest() {
+    Article sourceArticle = mock(Article.class);
+    Article targetArticle = mock(Article.class);
+    when(mockHibernateTemplate.execute(any())).thenReturn(targetArticle);
+    ArticleIdentifier id = ArticleIdentifier.create("10.9999/foo");
+    when(mockArticleCrudService.getArticle(id)).thenReturn(Optional.of(targetArticle));
+    RelatedArticleLink ral =
+      RelatedArticleLink.builder().setType("foo").setSpecificUse("bar").setArticleId(id).build();
+    ArticleRelationship ar = mockArticleCrudService.fromRelatedArticleLink(sourceArticle, ral);
+    assertEquals("foo", ar.getType());
+    assertEquals("bar", ar.getSpecificUse());
+    assertEquals(sourceArticle, ar.getSourceArticle());
+    assertEquals(targetArticle, ar.getTargetArticle());
   }
 }

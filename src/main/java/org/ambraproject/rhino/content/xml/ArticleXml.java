@@ -336,9 +336,13 @@ public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
     List<RelatedArticleLink> relatedArticles = Lists.newArrayListWithCapacity(relatedArticleNodes.size());
     for (Node relatedArticleNode : relatedArticleNodes) {
       String type = readString("attribute::related-article-type", relatedArticleNode);
+      String specificUse = readString("attribute::specific-use", relatedArticleNode);
       String doi = readHrefAttribute(relatedArticleNode);
       if (doi != null) {
-        RelatedArticleLink relatedArticle = new RelatedArticleLink(type, ArticleIdentifier.create(doi));
+        RelatedArticleLink relatedArticle = RelatedArticleLink.builder()
+          .setType(type)
+          .setSpecificUse(specificUse)
+          .setArticleId(ArticleIdentifier.create(doi)).build();
         relatedArticles.add(relatedArticle);
       } else {
         throw new XmlContentException("Related article has no doi. node "

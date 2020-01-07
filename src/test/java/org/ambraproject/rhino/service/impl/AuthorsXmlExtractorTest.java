@@ -22,6 +22,11 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import static org.ambraproject.rhino.BaseRhinoTest.parseTestFile;
+import static org.junit.Assert.assertEquals;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 import com.google.common.collect.ImmutableList;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.content.xml.XpathReader;
@@ -29,32 +34,11 @@ import org.ambraproject.rhino.view.article.author.AuthorView;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.w3c.dom.Document;
-
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
 
 public class AuthorsXmlExtractorTest extends BaseRhinoTest {
   @Autowired
   private XpathReader xpathReader;
-
-  private static final File DATA_PATH = new File("src/test/resources/articles/");
-
-  private static Document parseTestFile(String filename) throws IOException {
-    File testFile = new File(DATA_PATH, filename);
-    try (InputStream testData = new BufferedInputStream(new FileInputStream(testFile))) {
-      return AmbraService.parseXml(testData);
-    }
-  }
 
   @Test
   public void testGetAuthors() throws Exception {

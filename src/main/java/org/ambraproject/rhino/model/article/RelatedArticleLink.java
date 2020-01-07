@@ -22,45 +22,26 @@
 
 package org.ambraproject.rhino.model.article;
 
+import javax.annotation.Nullable;
+import com.google.auto.value.AutoValue;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
-import org.ambraproject.rhino.identity.Doi;
 
-import java.util.Objects;
+@AutoValue
+public abstract class RelatedArticleLink {
 
-public class RelatedArticleLink {
+  public abstract String getType();
+  @Nullable public abstract String getSpecificUse();
+  public abstract ArticleIdentifier getArticleId();
 
-  private final String type;
-  private final ArticleIdentifier articleId;
-
-  public RelatedArticleLink(String type, ArticleIdentifier articleId) {
-    this.type = Objects.requireNonNull(type);
-    this.articleId = Objects.requireNonNull(articleId);
+  @AutoValue.Builder
+  public abstract static class Builder {
+    public abstract RelatedArticleLink build();
+    public abstract Builder setType(String type);
+    public abstract Builder setSpecificUse(String specificUse);
+    public abstract Builder setArticleId(ArticleIdentifier articleId);
   }
-
-  public String getType() {
-    return type;
-  }
-
-  public ArticleIdentifier getArticleId() {
-    return articleId;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    RelatedArticleLink that = (RelatedArticleLink) o;
-
-    if (!type.equals(that.type)) return false;
-    return articleId.equals(that.articleId);
-
-  }
-
-  @Override
-  public int hashCode() {
-    int result = type.hashCode();
-    result = 31 * result + articleId.hashCode();
-    return result;
+  
+  public static Builder builder() {
+    return new AutoValue_RelatedArticleLink.Builder();
   }
 }
