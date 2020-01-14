@@ -36,6 +36,7 @@ public abstract class RelationshipView {
   @Nullable public abstract LocalDate getPublicationDate();
   @Nullable public abstract Integer getRevisionNumber();
   @Nullable public abstract String getTitle();
+  @Nullable public abstract String getSpecificUse();
   public abstract String getType();
   public abstract JournalOutputView getJournal();
 
@@ -48,6 +49,7 @@ public abstract class RelationshipView {
     public abstract Builder setJournal(JournalOutputView journal);
     public abstract Builder setRevisionNumber(Integer revisionNumber);
     public abstract Builder setPublicationDate(LocalDate date);
+    public abstract Builder setSpecificUse(String specificUse);
   }
 
   public static Builder builder() {

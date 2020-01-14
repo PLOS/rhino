@@ -23,22 +23,28 @@
 package org.ambraproject.rhino.content.xml;
 
 import static org.junit.Assert.assertEquals;
-
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.stream.Stream;
 
 import com.google.common.collect.ImmutableList;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
-
+import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.model.article.AssetMetadata;
+import org.ambraproject.rhino.model.article.RelatedArticleLink;
+import org.ambraproject.rhino.service.impl.AmbraService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.w3c.dom.Document;
 
 @RunWith(DataProviderRunner.class)
-public class ArticleXmlTest {
+public class ArticleXmlTest extends BaseRhinoTest {
 
   private static final Object[][] ASSET_NODE_CASES = new Object[][]{
       new Object[] {asset("title", "description"), new AssetMetadata[] {asset("", "")}},
@@ -96,4 +102,12 @@ public class ArticleXmlTest {
     ArticleXml.disambiguateAssetNodes(nodes);
   }
 
+  @Test
+  public void testParseRelatedArticles() throws IOException {
+    ArticleXml xml = new ArticleXml(parseTestFile("pcbi.0020083.xml"));
+    List<RelatedArticleLink> related = xml.parseRelatedArticles();
+    assertEquals(1, related.size());
+    assertEquals("companion", related.get(0).getType());
+    assertEquals("friend", related.get(0).getSpecificUse());
+  }
 }

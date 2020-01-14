@@ -60,6 +60,9 @@ public class ArticleRelationship implements Timestamped {
   @Column
   private String type;
 
+  @Column
+  private String specificUse;
+
   @Generated(value = GenerationTime.INSERT)
   @Temporal(javax.persistence.TemporalType.TIMESTAMP)
   @Column(name = "created", insertable = false, updatable = false, columnDefinition = "timestamp default current_timestamp")
@@ -92,6 +95,13 @@ public class ArticleRelationship implements Timestamped {
 
   public void setType(String type) {
     this.type = type;
+  }
+
+  public String getSpecificUse() {
+    return specificUse;
+  }
+  public void setSpecificUse(String specificUse) {
+    this.specificUse = specificUse;
   }
 
   public Date getCreated() {

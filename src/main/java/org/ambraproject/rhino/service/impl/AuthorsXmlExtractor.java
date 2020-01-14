@@ -174,7 +174,7 @@ public final class AuthorsXmlExtractor {
                     footnotes.add(value);
 
                     list.set(list.size() - 1,
-                        AuthorView.builder(av)
+                             av.toBuilder()
                             .setCustomFootnotes(footnotes)
                             .build());
                   }
