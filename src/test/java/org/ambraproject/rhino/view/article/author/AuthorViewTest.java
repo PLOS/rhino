@@ -40,6 +40,7 @@ public class AuthorViewTest {
     assertEquals("Jane Doe", av.getFullName());
     av = AuthorView.builder().setGivenNames("Jane").build();
     assertEquals("Jane", av.getFullName());
+    av = AuthorView.builder().setSurnames("Doe").build();
   }
 }
   

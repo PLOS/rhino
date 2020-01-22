@@ -36,7 +36,7 @@ import com.google.common.collect.ImmutableList;
  */
 @AutoValue
 public abstract class AuthorView {
-  public abstract String getGivenNames();
+  @Nullable public abstract String getGivenNames();
   @Nullable public abstract String getSurnames();
   @Nullable public abstract String getSuffix();
   @Nullable public abstract String getOnBehalfOf();
