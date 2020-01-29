@@ -22,13 +22,20 @@
 
 package org.ambraproject.rhino;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.BufferedInputStream;
+import java.io.InputStream;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import org.w3c.dom.Document;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.ambraproject.rhino.config.TestConfiguration;
+import org.ambraproject.rhino.service.impl.AmbraService;
 import org.junit.Before;
 
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = TestConfiguration.class)
@@ -47,5 +54,14 @@ public abstract class BaseRhinoTest extends /* AbstractTransactionalJUnit4Spring
    */
   protected void addExpectedJournals() {
     RhinoTestHelper.addExpectedJournals(hibernateTemplate);
+  }
+
+  private static final File DATA_PATH = new File("src/test/resources/articles/");
+
+  public static Document parseTestFile(String filename) throws IOException {
+    File testFile = new File(DATA_PATH, filename);
+    try (InputStream testData = new BufferedInputStream(new FileInputStream(testFile))) {
+      return AmbraService.parseXml(testData);
+    }
   }
 }

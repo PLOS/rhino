@@ -27,7 +27,7 @@
   <artifactId>rhino</artifactId>
   <name>rhino</name>
   <packaging>war</packaging>
-  <version>2.5.6</version>
+  <version>2.5.7</version>
   <description>Service-oriented back end for Ambra.</description>
 
   <licenses>
@@ -83,21 +83,6 @@
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
-    </repository>
-    <repository>
-      <id>central</id>
-      <name>Maven Repository Switchboard</name>
-      <layout>default</layout>
-      <url>http://repo1.maven.org/maven2</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>JBoss</id>
-      <name>JBoss Repsitory</name>
-      <layout>default</layout>
-      <url>http://repository.jboss.org/maven2</url>
     </repository>
   </repositories>
 
@@ -653,6 +638,16 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.7.5</version>
+        <configuration>
+          <excludes>
+            <exclude>**/AutoValue_*.class</exclude>
+          </excludes>
+        </configuration>
       </plugin>
     </plugins>
   </build>

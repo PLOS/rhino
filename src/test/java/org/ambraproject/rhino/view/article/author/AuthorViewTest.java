@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Public Library of Science
+ * Copyright (c) 2019 Public Library of Science
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -20,28 +20,27 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package org.ambraproject.rhino.model.article;
+package org.ambraproject.rhino.view.article.author;
 
-import javax.annotation.Nullable;
-import com.google.auto.value.AutoValue;
-import org.ambraproject.rhino.identity.ArticleIdentifier;
+import static org.junit.Assert.assertEquals;
+import java.util.Map;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.junit.Test;
 
-@AutoValue
-public abstract class RelatedArticleLink {
-
-  public abstract String getType();
-  @Nullable public abstract String getSpecificUse();
-  public abstract ArticleIdentifier getArticleId();
-
-  @AutoValue.Builder
-  public abstract static class Builder {
-    public abstract RelatedArticleLink build();
-    public abstract Builder setType(String type);
-    public abstract Builder setSpecificUse(String specificUse);
-    public abstract Builder setArticleId(ArticleIdentifier articleId);
-  }
-  
-  public static Builder builder() {
-    return new AutoValue_RelatedArticleLink.Builder();
+public class AuthorViewTest {
+  @Test
+  public void testGetFullName () {
+    Gson gson = new GsonBuilder().create();
+    AuthorView av = AuthorView.builder().setGivenNames("Jane").setSurnames("Doe").setSuffix("Jr").build();
+    assertEquals("Jane Doe Jr", av.getFullName());
+    Map<String, Object> json = gson.<Map<String, Object>>fromJson(gson.toJson(av), Map.class);
+    assertEquals("Jane Doe Jr", (String) json.get("fullName"));
+    av = AuthorView.builder().setGivenNames("Jane").setSurnames("Doe").build();
+    assertEquals("Jane Doe", av.getFullName());
+    av = AuthorView.builder().setGivenNames("Jane").build();
+    assertEquals("Jane", av.getFullName());
+    av = AuthorView.builder().setSurnames("Doe").build();
   }
 }
+  

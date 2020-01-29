@@ -72,7 +72,7 @@ public class RelationshipViewFactory {
     }
   }
 
-  private RelationshipView of(Article article, String type) {
+  private RelationshipView of(Article article, String type, String specificUse) {
     Optional<ArticleRevision> revision = articleCrudService.getLatestRevision(article);
     Optional<ArticleIngestion> ingestion = revision.map(ArticleRevision::getIngestion);
     String title = ingestion.map(ArticleIngestion::getTitle).orElse(null);
@@ -85,16 +85,17 @@ public class RelationshipViewFactory {
       .setPublicationDate(publicationDate)
       .setJournal(journal)
       .setType(getCanonicalType(type))
+      .setSpecificUse(specificUse)
       .build();
   }
 
   public RelationshipView of(ArticleRelationship relation) {
-    return of(relation.getTargetArticle(), relation.getType());
+    return of(relation.getTargetArticle(), relation.getType(), relation.getSpecificUse());
   }
 
   public RelationshipView invert(ArticleRelationship relation) {
     String invertedRelation = invertedTypes.getOrDefault(relation.getType(), relation.getType() +"-inverted");
-    return of(relation.getSourceArticle(), invertedRelation);
+    return of(relation.getSourceArticle(), invertedRelation, relation.getSpecificUse());
   }
 
   public List<RelationshipView> getRelationshipViews(ArticleIdentifier articleId) {

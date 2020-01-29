@@ -64,7 +64,7 @@ public abstract class AmbraService {
    * @throws IOException         if the stream cannot be read
    * @throws RestClientException if the stream does not contain valid XML
    */
-  protected static Document parseXml(InputStream stream) throws IOException, RestClientException {
+  public static Document parseXml(InputStream stream) throws IOException, RestClientException {
     Preconditions.checkNotNull(stream);
     try {
       // Get a new DocumentBuilder every time because because it isn't thread-safe
