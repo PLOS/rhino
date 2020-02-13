@@ -418,6 +418,9 @@
                 <classpath>extra</classpath>
               </dependency>
             </dependencies>
+            <systemProperties>
+              <org.apache.tomcat.util.digester.PROPERTY_SOURCE>org.apache.tomcat.util.digester.Digester$EnvironmentPropertySource</org.apache.tomcat.util.digester.PROPERTY_SOURCE>
+            </systemProperties>
           </container>
           <configuration>
             <properties>
@@ -425,12 +428,6 @@
               <cargo.tomcat.ajp.port>0</cargo.tomcat.ajp.port>
               <cargo.rmi.port>0</cargo.rmi.port>
             </properties>
-            <files>
-              <file>
-                <file>${rhino.configDir}/context.xml</file>
-                <todir>conf</todir>
-              </file>
-            </files>
           </configuration>
           <deployables>
             <deployable>
