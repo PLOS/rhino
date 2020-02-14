@@ -242,11 +242,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
     }
   }
 
-  @Override
-  public ImmutableSet<String> getEnabledDevFeatures() {
-    return ImmutableSet.copyOf(MoreObjects.firstNonNull(input.enableDevFeatures, ImmutableSet.of()));
-  }
-
   public static class Input {
 
     private boolean prettyPrintJson = true; // the default value should be true
@@ -255,7 +250,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
     private UserApiConfigurationInput userApi;
     private KafkaConfigurationInput kafka;
     private ManuscriptCustomMetaInput manuscriptCustomMeta;
-    private List<String> enableDevFeatures;
 
     /**
      * @deprecated For reflective access by SnakeYAML only
@@ -303,14 +297,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setManuscriptCustomMeta(ManuscriptCustomMetaInput manuscriptCustomMeta) {
       this.manuscriptCustomMeta = manuscriptCustomMeta;
-    }
-
-    /**
-     * @deprecated For access by reflective deserializer only
-     */
-    @Deprecated
-    public void setEnableDevFeatures(List<String> enableDevFeatures) {
-      this.enableDevFeatures = enableDevFeatures;
     }
   }
 

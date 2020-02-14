@@ -139,10 +139,4 @@ public interface RuntimeConfiguration {
    * @return the &lt;meta-name&rt; value to find in a manuscript
    */
   String getManuscriptCustomMetaName(ManuscriptCustomMetaAttribute attribute);
-
-  /**
-   * @return the set of enabled dev features, configured in rhino.yaml.
-   */
-  ImmutableSet<String> getEnabledDevFeatures();
-
 }
