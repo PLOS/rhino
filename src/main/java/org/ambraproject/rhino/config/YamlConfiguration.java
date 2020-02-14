@@ -227,21 +227,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
       }
     });
   }
-
-  @Override
-  public String getManuscriptCustomMetaName(ManuscriptCustomMetaAttribute attribute) {
-    Objects.requireNonNull(attribute);
-    if (input.manuscriptCustomMeta == null) return null;
-    switch (attribute) {
-      case REVISION_DATE:
-        return input.manuscriptCustomMeta.revisionDate;
-      case PUBLICATION_STAGE:
-        return input.manuscriptCustomMeta.publicationStage;
-      default:
-        throw new AssertionError();
-    }
-  }
-
+ 
   public static class Input {
 
     private boolean prettyPrintJson = true; // the default value should be true
@@ -249,7 +235,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
     private TaxonomyConfigurationInput taxonomy;
     private UserApiConfigurationInput userApi;
     private KafkaConfigurationInput kafka;
-    private ManuscriptCustomMetaInput manuscriptCustomMeta;
 
     /**
      * @deprecated For reflective access by SnakeYAML only
@@ -289,14 +274,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setKafka(KafkaConfigurationInput kafka) {
       this.kafka = kafka;
-    }
-
-    /**
-     * @deprecated For reflective access by SnakeYAML only
-     */
-    @Deprecated
-    public void setManuscriptCustomMeta(ManuscriptCustomMetaInput manuscriptCustomMeta) {
-      this.manuscriptCustomMeta = manuscriptCustomMeta;
     }
   }
 
@@ -404,20 +381,4 @@ public class YamlConfiguration implements RuntimeConfiguration {
       this.servers = servers;
     }
   }
-
-  public static class ManuscriptCustomMetaInput {
-    private String revisionDate;
-    private String publicationStage;
-
-    @Deprecated
-    public void setRevisionDate(String revisionDate) {
-      this.revisionDate = revisionDate;
-    }
-
-    @Deprecated
-    public void setPublicationStage(String publicationStage) {
-      this.publicationStage = publicationStage;
-    }
-  }
-
 }

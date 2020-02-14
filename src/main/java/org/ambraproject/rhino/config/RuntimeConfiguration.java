@@ -107,36 +107,4 @@ public interface RuntimeConfiguration {
   }
 
   KafkaConfiguration getKafkaConfiguration();
-
-
-  /**
-   * Article attributes that may be parsed from {@code &lt;custom-meta&rt;} elements, whose {@code &lt;meta-name&rt;}
-   * values are provided as configuration.
-   */
-  static enum ManuscriptCustomMetaAttribute {
-    REVISION_DATE("revisionDate"),
-    PUBLICATION_STAGE("publicationStage");
-
-    private final String configKey;
-
-    private ManuscriptCustomMetaAttribute(String configKey) {
-      this.configKey = configKey;
-    }
-
-    /**
-     * @return the configuration key used to match the attribute to its {@code &lt;meta-name&rt;} value
-     */
-    public String getConfigKey() {
-      return configKey;
-    }
-  }
-
-  /**
-   * Get the {@code &lt;meta-name&rt;} value that will be matched to a {@code &lt;meta-value&rt;} element to populate
-   * article metadata.
-   *
-   * @param attribute an attribute in article metadata
-   * @return the &lt;meta-name&rt; value to find in a manuscript
-   */
-  String getManuscriptCustomMetaName(ManuscriptCustomMetaAttribute attribute);
 }

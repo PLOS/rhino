@@ -22,22 +22,21 @@
 
 package org.ambraproject.rhino.content.xml;
 
-import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableListMultimap;
-import com.google.common.collect.ListMultimap;
-import org.ambraproject.rhino.config.RuntimeConfiguration;
-import org.ambraproject.rhino.config.RuntimeConfiguration.ManuscriptCustomMetaAttribute;
-import org.ambraproject.rhino.model.article.ArticleCustomMetadata;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.w3c.dom.Node;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableListMultimap;
+import com.google.common.collect.ListMultimap;
+import org.ambraproject.rhino.config.RuntimeConfiguration;
+import org.ambraproject.rhino.model.article.ArticleCustomMetadata;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.w3c.dom.Node;
 
 /**
  * Parses {@code &lt;custom-meta&gt;} elements from a manuscript, looking for {@code &lt;meta-name&gt;} values that are
@@ -66,10 +65,10 @@ public class CustomMetadataExtractor extends AbstractArticleXml<ArticleCustomMet
   public ArticleCustomMetadata build() throws XmlContentException {
     ListMultimap<String, String> customMeta = parseCustomMeta();
     ArticleCustomMetadata.Builder builder = ArticleCustomMetadata.builder();
-    getSingleValue(customMeta, ManuscriptCustomMetaAttribute.REVISION_DATE)
-        .ifPresent(revisionDate -> builder.setRevisionDate(parseRevisionDate(revisionDate)));
-    getSingleValue(customMeta, ManuscriptCustomMetaAttribute.PUBLICATION_STAGE)
-        .ifPresent(builder::setPublicationStage);
+    getSingleValue(customMeta, "Publication Update")
+      .map(this::parseRevisionDate)
+      .ifPresent(builder::setRevisionDate);
+    getSingleValue(customMeta, "PLOS Publication Stage").ifPresent(builder::setPublicationStage);
     return builder.build();
   }
 
@@ -102,12 +101,8 @@ public class CustomMetadataExtractor extends AbstractArticleXml<ArticleCustomMet
    * @param attribute  the type of value to retrieve, if a meta-name is configured for it
    * @return the value if the type is configured and it is present
    */
-  private Optional<String> getSingleValue(ListMultimap<String, String> customMeta, ManuscriptCustomMetaAttribute attribute) {
-    String metaName = runtimeConfiguration.getManuscriptCustomMetaName(attribute);
-    if (metaName == null) {
-      log.warn("No meta-name is configured for {}. Value cannot be parsed from manuscript or persisted on new ingestions.", attribute.getConfigKey());
-      return Optional.empty();
-    }
+  private Optional<String> getSingleValue(ListMultimap<String, String> customMeta, String metaName) {
+    Preconditions.checkNotNull(metaName);
 
     List<String> values = customMeta.get(metaName);
     if (values.isEmpty()) {
@@ -126,8 +121,7 @@ public class CustomMetadataExtractor extends AbstractArticleXml<ArticleCustomMet
     try {
       parsedDate = LocalDate.parse(revisionDate);
     } catch (DateTimeParseException e) {
-      String message = String.format("'%s' custom-meta value must be an ISO-8601 date",
-          runtimeConfiguration.getManuscriptCustomMetaName(ManuscriptCustomMetaAttribute.REVISION_DATE));
+      String message = String.format("'%s' custom-meta value must be an ISO-8601 date");
       throw new XmlContentException(message, e);
     }
     return parsedDate;
