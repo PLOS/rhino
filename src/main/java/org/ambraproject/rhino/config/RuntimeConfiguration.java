@@ -102,15 +102,6 @@ public interface RuntimeConfiguration {
 
   UserApiConfiguration getNedConfiguration();
 
-  /**
-   * Return the date, for comments persisted on this system, at which commenters were first prompted for competing
-   * interests. Comments from before this date will necessarily lack competing interest statements, but the system
-   * should not indicate that the commenters affirmatively declared that they had no competing interests.
-   *
-   * @return the date at which commenters were first prompted for competing interests
-   */
-  LocalDate getCompetingInterestPolicyStart();
-
   interface KafkaConfiguration {
     Set<String> getServers();
   }

@@ -213,19 +213,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
         : (userApiConfigurationObject = new UserApiConfigurationObject(input));
   }
 
-  @Override
-  public LocalDate getCompetingInterestPolicyStart() {
-    return (input.competingInterestPolicyStart == null) ? DEFAULT_COMPETING_INTEREST_POLICY_START
-        : LocalDate.parse(input.competingInterestPolicyStart);
-  }
-
-  /**
-   * The date at which the relevant software upgrade was deployed on PLOS's Ambra system, which was the only extant
-   * Ambra system at the time. Because no other systems will have older comments, it should never be necessary to
-   * override this default except in test environments.
-   */
-  private static final LocalDate DEFAULT_COMPETING_INTEREST_POLICY_START = LocalDate.of(2009, Month.MARCH, 20);
-
   private transient KafkaConfiguration kafkaConfiguration;
 
   @Override
@@ -266,7 +253,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
     private ContentRepoInput contentRepo;
     private TaxonomyConfigurationInput taxonomy;
     private UserApiConfigurationInput userApi;
-    private String competingInterestPolicyStart;
     private KafkaConfigurationInput kafka;
     private ManuscriptCustomMetaInput manuscriptCustomMeta;
     private List<String> enableDevFeatures;
@@ -301,14 +287,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setUserApi(UserApiConfigurationInput userApi) {
       this.userApi = userApi;
-    }
-
-    /**
-     * @deprecated For reflective access by SnakeYAML only
-     */
-    @Deprecated
-    public void setCompetingInterestPolicyStart(String competingInterestPolicyStart) {
-      this.competingInterestPolicyStart = competingInterestPolicyStart;
     }
 
     /**

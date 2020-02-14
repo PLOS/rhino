@@ -48,11 +48,8 @@ public class CommentOutputViewTest {
   @Before
   public void init() {
 
-    when(runtimeConfiguration.getCompetingInterestPolicyStart())
-        .thenReturn(LocalDate.now(ZoneId.systemDefault()));
-
     Comment comment = createStubComment();
-    factory = new CommentOutputView.Factory(new CompetingInterestPolicy(runtimeConfiguration),
+    factory = new CommentOutputView.Factory(new CompetingInterestPolicy(),
         ImmutableList.of(comment), comment.getArticle());
 
   }

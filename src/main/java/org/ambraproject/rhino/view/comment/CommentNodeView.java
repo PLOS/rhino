@@ -60,7 +60,7 @@ public class CommentNodeView implements JsonOutputView {
     private final CompetingInterestPolicy competingInterestPolicy;
 
     public Factory(RuntimeConfiguration runtimeConfiguration) {
-      this.competingInterestPolicy = new CompetingInterestPolicy(runtimeConfiguration);
+      this.competingInterestPolicy = new CompetingInterestPolicy();
     }
 
     public CommentNodeView create(Comment comment, String articleDoi) {
