@@ -82,20 +82,6 @@ public interface RuntimeConfiguration {
    */
   ContentRepoEndpoint getEditorialStorage();
 
-  interface HttpConnectionPoolConfiguration {
-    /**
-     * @see org.apache.http.pool.ConnPoolControl
-     */
-    Integer getMaxTotal();
-
-    /**
-     * @see org.apache.http.pool.ConnPoolControl
-     */
-    Integer getDefaultMaxPerRoute();
-  }
-
-  HttpConnectionPoolConfiguration getHttpConnectionPoolConfiguration();
-
   interface TaxonomyConfiguration {
     URL getServer();
 

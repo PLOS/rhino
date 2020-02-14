@@ -151,25 +151,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
     });
   }
 
-
-  private final HttpConnectionPoolConfiguration httpConnectionPoolConfiguration = new HttpConnectionPoolConfiguration() {
-    @Override
-    public Integer getMaxTotal() {
-      return (input.httpConnectionPool == null) ? null : input.httpConnectionPool.maxTotal;
-    }
-
-    @Override
-    public Integer getDefaultMaxPerRoute() {
-      return (input.httpConnectionPool == null) ? null : input.httpConnectionPool.defaultMaxPerRoute;
-    }
-  };
-
-  @Override
-  public HttpConnectionPoolConfiguration getHttpConnectionPoolConfiguration() {
-    return httpConnectionPoolConfiguration;
-  }
-
-
   private final TaxonomyConfiguration taxonomyConfiguration = new TaxonomyConfiguration() {
     private ImmutableSet<String> categoryBlacklist;
 
@@ -283,7 +264,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
 
     private boolean prettyPrintJson = true; // the default value should be true
     private ContentRepoInput contentRepo;
-    private HttpConnectionPoolConfigurationInput httpConnectionPool;
     private TaxonomyConfigurationInput taxonomy;
     private UserApiConfigurationInput userApi;
     private String competingInterestPolicyStart;
@@ -305,14 +285,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setContentRepo(ContentRepoInput contentRepo) {
       this.contentRepo = contentRepo;
-    }
-
-    /**
-     * @deprecated For reflective access by SnakeYAML only
-     */
-    @Deprecated
-    public void setHttpConnectionPool(HttpConnectionPoolConfigurationInput httpConnectionPool) {
-      this.httpConnectionPool = httpConnectionPool;
     }
 
     /**
@@ -415,21 +387,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setSecondaryBuckets(List<String> secondaryBuckets) {
       this.secondaryBuckets = secondaryBuckets;
-    }
-  }
-
-  public static class HttpConnectionPoolConfigurationInput {
-    private Integer maxTotal;
-    private Integer defaultMaxPerRoute;
-
-    @Deprecated
-    public void setMaxTotal(Integer maxTotal) {
-      this.maxTotal = maxTotal;
-    }
-
-    @Deprecated
-    public void setDefaultMaxPerRoute(Integer defaultMaxPerRoute) {
-      this.defaultMaxPerRoute = defaultMaxPerRoute;
     }
   }
 

@@ -190,15 +190,12 @@ public class RhinoConfiguration {
   }
 
   @Bean
-  public CloseableHttpClient httpClient(RuntimeConfiguration runtimeConfiguration) {
+  public CloseableHttpClient httpClient() {
     PoolingHttpClientConnectionManager manager = new PoolingHttpClientConnectionManager();
 
-    Integer maxTotal = runtimeConfiguration.getHttpConnectionPoolConfiguration().getMaxTotal();
-    manager.setMaxTotal(maxTotal == null ? 400 : maxTotal);
-
-    Integer defaultMaxPerRoute = runtimeConfiguration.getHttpConnectionPoolConfiguration().getDefaultMaxPerRoute();
-    manager.setDefaultMaxPerRoute(defaultMaxPerRoute == null ? 20 : defaultMaxPerRoute);
-
+    manager.setMaxTotal(400);
+    manager.setDefaultMaxPerRoute(20);
+        
     return HttpClientBuilder.create().setConnectionManager(manager).build();
   }
 
