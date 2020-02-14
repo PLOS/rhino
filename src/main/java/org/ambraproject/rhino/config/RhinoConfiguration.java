@@ -179,16 +179,6 @@ public class RhinoConfiguration {
     return builder.create();
   }
 
-  /**
-   * Gson instance for serializing and deserializing {@code userMetadata} fields for the CRepo. Unlike {@link
-   * #entityGson}, it requires no adapters (at this time) and should never pretty-print (because we always want to print
-   * compact JSON for efficient storage).
-   */
-  @Bean
-  public Gson crepoGson() {
-    return new Gson();
-  }
-
   @Bean
   public CloseableHttpClient httpClient() {
     PoolingHttpClientConnectionManager manager = new PoolingHttpClientConnectionManager();
