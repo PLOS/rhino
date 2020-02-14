@@ -72,9 +72,6 @@ public class ConfigurationReadServiceTest extends BaseRhinoTest {
     String repoBucket = editorialConfigMap.get("bucket").toString();
     assertEquals("Invalid/missing content repo bucket name", "bucket_name", repoBucket);
 
-    Map<String, Object> corpusConfigMap = (Map<String, Object>) repoConfigMap.get("corpus");
-    final Set<String> secondaryBuckets = (Set<String>) corpusConfigMap.get("secondaryBuckets");
-    assertEquals(secondaryBuckets.iterator().next(), "secondary_bucket");
   }
 
   @Test

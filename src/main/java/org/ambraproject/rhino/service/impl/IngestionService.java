@@ -101,21 +101,21 @@ public class IngestionService extends AmbraService {
    * @param bucketName the bucket name specified as the destination for this ingestion, or empty if the client did not
    *                   specify a bucket name
    * @return the specified bucket name, or the default if the client did not specify a bucket name
-   * @throws RestClientException if the clietn specified a disallowed (or nonexistent) bucket name
+   * @throws RestClientException if the client specified a disallowed (or nonexistent) bucket name
    */
   private String resolveBucketName(Optional<String> bucketName) {
-    RuntimeConfiguration.MultiBucketContentRepoEndpoint corpusStorage = runtimeConfiguration.getCorpusStorage();
+    RuntimeConfiguration.ContentRepoEndpoint corpusStorage = runtimeConfiguration.getCorpusStorage();
     if (!bucketName.isPresent()) {
-      return corpusStorage.getDefaultBucket();
+      return corpusStorage.getBucketName();
     }
 
     String configuredName = bucketName.get();
-    Set<String> allowedBuckets = corpusStorage.getAllBuckets();
-    if (!allowedBuckets.contains(configuredName)) {
-      String message = String.format("" +
-              "Invalid bucket name: %s. Allowed values are: %s. " +
-              "(Allowed values are specified by rhino.yaml.)",
-          configuredName, allowedBuckets);
+    String defaultBucket = corpusStorage.getBucketName();
+    if (!defaultBucket.equals(configuredName)) {
+      String message = String
+          .format("Invalid bucket name: %s. Allowed values is: %s. " +
+                  "(Allowed values are specified by rhino.yaml.)",
+                  configuredName, defaultBucket);
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
     return configuredName;

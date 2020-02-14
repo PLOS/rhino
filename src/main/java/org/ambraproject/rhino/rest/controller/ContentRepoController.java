@@ -54,7 +54,7 @@ public class ContentRepoController extends RestController {
     String bucketName;
     if (editorialBucket == null
         || (address = editorialBucket.getAddress()) == null
-        || (bucketName = editorialBucket.getDefaultBucket()) == null) {
+        || (bucketName = editorialBucket.getBucketName()) == null) {
       throw new RuntimeException("contentRepo.editorial is not configured");
     }
     if ("file".equals(address.getScheme())) {

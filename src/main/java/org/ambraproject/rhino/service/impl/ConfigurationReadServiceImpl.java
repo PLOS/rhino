@@ -68,10 +68,7 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
     if (endpoint == null) return null;
     Map<String, Object> map = new LinkedHashMap<>(4);
     map.put("address", endpoint.getAddress());
-    map.put("bucket", endpoint.getDefaultBucket());
-    if (endpoint instanceof RuntimeConfiguration.MultiBucketContentRepoEndpoint) {
-      map.put("secondaryBuckets", ((RuntimeConfiguration.MultiBucketContentRepoEndpoint) endpoint).getSecondaryBuckets());
-    }
+    map.put("bucket", endpoint.getBucketName());
     return map;
   }
 

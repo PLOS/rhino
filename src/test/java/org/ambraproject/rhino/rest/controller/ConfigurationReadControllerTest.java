@@ -125,10 +125,6 @@ public class ConfigurationReadControllerTest extends AbstractRhinoTest {
     assertThat(corpus).isNotNull();
     assertThat(corpus.getAsJsonPrimitive("address").getAsString())
         .isEqualTo("http://path/to/content/repo");
-
-    final JsonArray actualSecondaryBuckets = corpus.getAsJsonArray("secondaryBuckets");
-    assertThat(actualSecondaryBuckets).hasSize(1);
-    assertThat(actualSecondaryBuckets.getAsString()).isEqualTo("secondary_bucket");
   }
 
   /**

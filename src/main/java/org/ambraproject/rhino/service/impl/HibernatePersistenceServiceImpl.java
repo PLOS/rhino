@@ -159,9 +159,7 @@ public class HibernatePersistenceServiceImpl implements HibernatePersistenceServ
     final String bucketName = ingestPackage.getArticlePackage().getBucketName();
 
     Optional<Journal> journal;
-    if (isSecondaryBucket(bucketName)) {
-      journal = getJournalFromName(articleMetadata.getJournalName());
-    } else if (eissn != null) {
+    if (eissn != null) {
       journal = getJournalFromEissn(eissn);
     } else {
       throw new RestClientException("eIssn not set for article: " + articleMetadata.getDoi(),
@@ -188,12 +186,5 @@ public class HibernatePersistenceServiceImpl implements HibernatePersistenceServ
       throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
     }
     return journal;
-  }
-
-  private boolean isSecondaryBucket(String bucketName) {
-    Map<String, Object> repoConfigMap = configurationReadService.getRepoConfig();
-    Map<String, Object> corpusConfigMap = (Map<String, Object>) repoConfigMap.get("corpus");
-    final Set<String> secondaryBuckets = (Set<String>) corpusConfigMap.get("secondaryBuckets");
-    return secondaryBuckets.contains(bucketName);
   }
 }

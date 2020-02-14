@@ -418,8 +418,8 @@ public class IngestionServiceTest extends AbstractRhinoTest {
     final Archive testArchive = createStubArchive(manifestData, ARTICLE_INGEST_ENTRIES);
 
     final Optional<String> bucketName = Optional.of("corpus");
-    final RuntimeConfiguration.MultiBucketContentRepoEndpoint mockRepoEndpoint =
-        new RhinoTestHelper.TestMultiBucketContentRepoEndpoint(bucketName.get());
+    final RuntimeConfiguration.ContentRepoEndpoint mockRepoEndpoint =
+        new RhinoTestHelper.TestContentRepoEndpoint(bucketName.get());
 
     final RuntimeConfiguration mockRuntimeConfiguration =
         applicationContext.getBean(RuntimeConfiguration.class);
@@ -478,8 +478,8 @@ public class IngestionServiceTest extends AbstractRhinoTest {
     } catch (Exception exception) {
       assertThat(exception).isInstanceOf(RestClientException.class);
       final String message =
-          NO_SPACE_JOINER.join("Invalid bucket name: ", bucketName.get(), ". Allowed values are: ",
-              "[bucket_name, secondary_bucket]. ", "(Allowed values are specified by rhino.yaml.)");
+          NO_SPACE_JOINER.join("Invalid bucket name: ", bucketName.get(), ". Allowed values is: ",
+              "bucket_name. ", "(Allowed values are specified by rhino.yaml.)");
       assertThat(exception).hasMessageThat().isEqualTo(message);
     }
 
