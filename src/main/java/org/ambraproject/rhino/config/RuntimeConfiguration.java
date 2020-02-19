@@ -22,12 +22,8 @@
 
 package org.ambraproject.rhino.config;
 
-import com.google.common.collect.ImmutableSet;
-
 import java.net.URI;
 import java.net.URL;
-import java.time.LocalDate;
-import java.util.Set;
 
 /**
  * Interface that represents configurable values that are only known at server startup time.
@@ -77,8 +73,6 @@ public interface RuntimeConfiguration {
     URL getServer();
 
     String getThesaurus();
-
-    Set<String> getCategoryBlacklist();
   }
 
   TaxonomyConfiguration getTaxonomyConfiguration();

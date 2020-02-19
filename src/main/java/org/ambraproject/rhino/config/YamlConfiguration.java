@@ -129,8 +129,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
   }
 
   private final TaxonomyConfiguration taxonomyConfiguration = new TaxonomyConfiguration() {
-    private ImmutableSet<String> categoryBlacklist;
-
     @Override
     public URL getServer() {
       return (input.taxonomy == null) ? null : input.taxonomy.server;
@@ -139,13 +137,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Override
     public String getThesaurus() {
       return (input.taxonomy == null) ? null : input.taxonomy.thesaurus;
-    }
-
-    @Override
-    public Set<String> getCategoryBlacklist() {
-      if (categoryBlacklist != null) return categoryBlacklist;
-      if (input.taxonomy.categoryBlacklist == null) return categoryBlacklist = ImmutableSet.of();
-      return categoryBlacklist = ImmutableSet.copyOf(input.taxonomy.categoryBlacklist);
     }
   };
 
@@ -275,7 +266,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
   public static class TaxonomyConfigurationInput {
     private URL server;
     private String thesaurus;
-    private List<String> categoryBlacklist;
 
     @Deprecated
     public void setServer(URL server) {
@@ -285,11 +275,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setThesaurus(String thesaurus) {
       this.thesaurus = thesaurus;
-    }
-
-    @Deprecated
-    public void setCategoryBlacklist(List<String> categoryBlacklist) {
-      this.categoryBlacklist = categoryBlacklist;
     }
   }
 

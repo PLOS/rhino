@@ -122,12 +122,13 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   @Autowired
   protected HibernateTemplate hibernateTemplate;
 
+  private static final String[] CATEGORY_BLACKLIST =
+      new String[] {"/Earth sciences/Geography/Locations/"};
   /**
    * @inheritDoc
    */
   @Override
   public List<WeightedTerm> classifyArticle(Article article, Document articleXml)  {
-    RuntimeConfiguration.TaxonomyConfiguration configuration = getTaxonomyConfiguration();
 
     List<String> rawTerms = getRawTerms(articleXml, article, false /*isTextRequired*/);
     List<WeightedTerm> results = new ArrayList<>(rawTerms.size());
@@ -137,7 +138,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
       String term = entry.getPath();
       if (term != null) {
         boolean isBlacklisted = false;
-        for (String blacklistedCategory : configuration.getCategoryBlacklist()) {
+        for (String blacklistedCategory : CATEGORY_BLACKLIST) {
           if (term.startsWith(blacklistedCategory)) {
             isBlacklisted = true;
             break;
