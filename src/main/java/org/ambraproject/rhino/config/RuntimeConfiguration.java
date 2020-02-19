@@ -93,9 +93,4 @@ public interface RuntimeConfiguration {
 
   UserApiConfiguration getNedConfiguration();
 
-  interface KafkaConfiguration {
-    Set<String> getServers();
-  }
-
-  KafkaConfiguration getKafkaConfiguration();
 }

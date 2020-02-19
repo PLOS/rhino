@@ -190,28 +190,12 @@ public class YamlConfiguration implements RuntimeConfiguration {
         : (userApiConfigurationObject = new UserApiConfigurationObject(input));
   }
 
-  private transient KafkaConfiguration kafkaConfiguration;
-
-  @Override
-  public KafkaConfiguration getKafkaConfiguration() {
-    return (kafkaConfiguration != null) ? kafkaConfiguration : (kafkaConfiguration = new KafkaConfiguration() {
-      public final ImmutableSet<String> DEFAULT_SERVER = ImmutableSet.of("localhost:9092");
-
-      @Override
-      public Set<String> getServers() {
-        return input.kafka != null && input.kafka.servers != null
-            ? ImmutableSet.copyOf(input.kafka.servers) : DEFAULT_SERVER;
-      }
-    });
-  }
- 
   public static class Input {
 
     private boolean prettyPrintJson = true; // the default value should be true
     private ContentRepoInput contentRepo;
     private TaxonomyConfigurationInput taxonomy;
     private UserApiConfigurationInput userApi;
-    private KafkaConfigurationInput kafka;
 
     /**
      * @deprecated For reflective access by SnakeYAML only
@@ -243,14 +227,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setUserApi(UserApiConfigurationInput userApi) {
       this.userApi = userApi;
-    }
-
-    /**
-     * @deprecated For reflective access by SnakeYAML only
-     */
-    @Deprecated
-    public void setKafka(KafkaConfigurationInput kafka) {
-      this.kafka = kafka;
     }
   }
 
@@ -335,15 +311,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setAuthorizationPassword(String authorizationPassword) {
       this.authorizationPassword = authorizationPassword;
-    }
-  }
-
-  public static class KafkaConfigurationInput {
-    private List<String> servers;
-
-    @Deprecated
-    public void setServers(List<String> servers) {
-      this.servers = servers;
     }
   }
 }
