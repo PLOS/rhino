@@ -23,13 +23,27 @@ package org.ambraproject.rhino.service.impl;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-
+import java.io.IOException;
+import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import javax.xml.xpath.XPathException;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.io.ByteSource;
+import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
@@ -75,22 +89,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
 
-import javax.xml.xpath.XPathException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
  */
@@ -113,7 +111,9 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private ArticleIngestionView.Factory articleIngestionViewFactory;
   @Autowired
   private ItemSetView.Factory itemSetViewFactory;
-
+  @Autowired
+  private RuntimeConfiguration runtimeConfiguration;
+  
   @Override
   public void populateCategories(ArticleIdentifier articleId) throws IOException {
     Article article = readArticle(articleId);
@@ -358,12 +358,13 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       return (List<ArticleFile>) query.list();
     });
 
+    String bucketName = runtimeConfiguration.getCorpusStorage().getBucketName();
     Map<String, ByteSource> archiveMap = files.stream().collect(Collectors.toMap(
         ArticleFile::getIngestedFileName,
         (ArticleFile file) -> new ByteSource() {
           @Override
           public InputStream openStream() throws IOException {
-            return contentRepoService.getRepoObject(file.getCrepoVersion());
+            return contentRepoService.getRepoObject(file.getCrepoVersion(bucketName));
           }
         }));
 
@@ -526,74 +527,33 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public Collection<ArticleRevision> getArticlesPublishedOn(LocalDate fromDate, LocalDate toDate) {
-    return getArticlesPublishedOn(fromDate, toDate, null);
-  }
-
-  @SuppressWarnings("unchecked")
-  @Override
-  public Collection<ArticleRevision> getArticlesPublishedOn(LocalDate fromDate, LocalDate toDate, String bucketName) {
     return hibernateTemplate.execute(session -> {
-      final String queryString;
-      if (bucketName == null) {
-        queryString = SPACE_JOINER.join("SELECT DISTINCT ar",
-            "FROM ArticleRevision ar",
-            "INNER JOIN ar.ingestion ai",
-            "INNER JOIN  ar.ingestion.article at",
-            "WHERE ai.publicationDate >= :fromDate AND ai.publicationDate <= :toDate",
-            "AND ar.revisionId IS NOT NULL");
-      } else {
-        queryString = SPACE_JOINER.join("SELECT DISTINCT ar",
-            "FROM ArticleRevision ar, ArticleFile file",
-            "INNER JOIN ar.ingestion ai",
-            "INNER JOIN ar.ingestion.article at",
-            "WHERE ai.publicationDate >= :fromDate AND ai.publicationDate <= :toDate",
-            "AND ar.revisionId IS NOT NULL",
-            "AND file.ingestion = ai",
-            "AND file.bucketName = :bucketName");
-      }
+      final String queryString = SPACE_JOINER
+        .join(
+              "SELECT DISTINCT ar",
+              "FROM ArticleRevision ar",
+              "INNER JOIN ar.ingestion ai", "INNER JOIN  ar.ingestion.article at",
+              "WHERE ai.publicationDate >= :fromDate AND ai.publicationDate <= :toDate",
+              "AND ar.revisionId IS NOT NULL");
       Query query = session.createQuery(queryString);
       query.setParameter("fromDate", java.sql.Date.valueOf(fromDate));
       query.setParameter("toDate", java.sql.Date.valueOf(toDate));
-      if (bucketName != null) {
-        query.setParameter("bucketName", bucketName);
-      }
       return (Collection<ArticleRevision>) query.list();
     });
   }
 
   @Override
   public Collection<ArticleRevision> getArticlesRevisedOn(LocalDate fromDate, LocalDate toDate) {
-    return getArticlesRevisedOn(fromDate, toDate, null);
-  }
-
-  @SuppressWarnings("unchecked")
-  @Override
-  public Collection<ArticleRevision> getArticlesRevisedOn(LocalDate fromDate, LocalDate toDate, String bucketName) {
     return hibernateTemplate.execute(session -> {
-      final String queryString;
-      if (bucketName == null) {
-        queryString = SPACE_JOINER.join("SELECT DISTINCT ar",
-            "FROM ArticleRevision ar",
-            "INNER JOIN ar.ingestion ai",
-            "INNER JOIN  ar.ingestion.article at",
-            "WHERE ai.revisionDate >= :fromDate AND ai.revisionDate <= :toDate",
-            "AND ar.revisionId IS NOT NULL");
-      } else {
-        queryString = SPACE_JOINER.join("SELECT DISTINCT ar",
-            "FROM ArticleRevision ar, ArticleFile file",
-            "INNER JOIN ar.ingestion ai",
-            "INNER JOIN ar.ingestion.article at",
-            "WHERE ai.revisionDate >= :fromDate AND ai.revisionDate <= :toDate",
-            "AND ar.revisionId IS NOT NULL",
-            "AND file.ingestion = ai",
-            "AND file.bucketName = :bucketName");
-      }
+      final String queryString = SPACE_JOINER
+        .join("SELECT DISTINCT ar",
+              "FROM ArticleRevision ar",
+              "INNER JOIN ar.ingestion ai", "INNER JOIN  ar.ingestion.article at",
+              "WHERE ai.revisionDate >= :fromDate AND ai.revisionDate <= :toDate",
+              "AND ar.revisionId IS NOT NULL");
       Query query = session.createQuery(queryString);
       query.setParameter("fromDate", java.sql.Date.valueOf(fromDate));
       query.setParameter("toDate", java.sql.Date.valueOf(toDate));
-      if (bucketName != null) {
-        query.setParameter("bucketName", bucketName);
-      }
       return (Collection<ArticleRevision>) query.list();
     });
   }

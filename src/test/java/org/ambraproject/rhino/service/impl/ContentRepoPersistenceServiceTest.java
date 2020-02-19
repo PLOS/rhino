@@ -122,7 +122,6 @@ public class ContentRepoPersistenceServiceTest extends AbstractRhinoTest {
     assertThat(actualFiles).hasSize(expectedFileCount);
 
     actualFiles.forEach(articleFile -> {
-      assertThat(articleFile.getBucketName()).isEqualTo(DESTINATION_BUCKET);
       assertThat(articleFile.getIngestion()).isEqualTo(expectedIngestion);
       assertThat(articleFile.getItem()).isEqualTo(actualArticleItem);
       assertThat(articleFile.getCrepoKey()).isEqualTo(REPO_KEY);
@@ -144,7 +143,6 @@ public class ContentRepoPersistenceServiceTest extends AbstractRhinoTest {
   @Test
   @DirtiesContext
   public void testPersistAncillaryFilesShouldSucceed() {
-    final String destinationBucket = "ancillary";
     final ImmutableList<ArticleFileInput> expectedAncillaryFiles = ImmutableList.of(
         new ArticleFileInput("ancillary1" /* filename */, mock(RepoObjectInput.class)),
         new ArticleFileInput("ancillary2" /* filename */, mock(RepoObjectInput.class)),
@@ -160,7 +158,7 @@ public class ContentRepoPersistenceServiceTest extends AbstractRhinoTest {
     when(mockArticlePackage.getAncillaryFiles()).thenReturn(expectedAncillaryFiles);
 
     final ContentRepoService mockContentRepoService =
-        buildMockContentRepoService(destinationBucket, REPO_KEY, repoUUID, FILE_SIZE);
+        buildMockContentRepoService("corpus", REPO_KEY, repoUUID, FILE_SIZE);
 
     final ContentRepoPersistenceService mockContentRepoPersistenceService =
         applicationContext.getBean(ContentRepoPersistenceService.class);
@@ -171,7 +169,6 @@ public class ContentRepoPersistenceServiceTest extends AbstractRhinoTest {
 
     assertThat(actualFiles).hasSize(expectedFileCount);
     actualFiles.forEach(articleFile -> {
-      assertThat(articleFile.getBucketName()).isEqualTo(destinationBucket);
       assertThat(articleFile.getIngestion()).isEqualTo(expectedIngestion);
       assertThat(articleFile.getCrepoKey()).isEqualTo(REPO_KEY);
       assertThat(articleFile.getCrepoUuid()).isEqualTo(repoUUID);

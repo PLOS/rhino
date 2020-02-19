@@ -234,7 +234,6 @@ public class ArticleCrudServiceImplTest extends AbstractStubbingArticleTest {
 
     final ArticleFile dummyFile = new ArticleFile();
     dummyFile.setCrepoKey("test");
-    dummyFile.setBucketName("bucket");
     dummyFile.setCrepoUuid("50a25f86-bcf2-4577-a3a1-e4f673615de8");
     dummyFile.setIngestedFileName("test");
     List<ArticleFile> dummyFiles = ImmutableList.of(dummyFile);

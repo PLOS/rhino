@@ -29,17 +29,17 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.regex.Pattern;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+import com.google.gson.Gson;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Journal;
@@ -50,12 +50,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
-
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Lists;
-import com.google.gson.Gson;
 
 /**
  * Miscellaneous fields and methods used in Rhino tests.
@@ -175,7 +169,7 @@ public final class RhinoTestHelper {
   public static class TestContentRepoEndpoint
       implements RuntimeConfiguration.ContentRepoEndpoint {
 
-    private Optional<String> defaultBucket = Optional.empty();
+    private Optional<String> bucketName = Optional.empty();
 
     private Optional<URI> address = Optional.empty();
 
@@ -184,19 +178,19 @@ public final class RhinoTestHelper {
      *
      * @param bucket The bucket
      */
-    public TestContentRepoEndpoint(String defaultBucket) {
-      this(defaultBucket, null /* address */);
+    public TestContentRepoEndpoint(String bucketName) {
+      this(bucketName, null /* address */);
     }
 
     /**
      * Creates an instance of <code>TestContentRepoEndpoint</code>.
      *
-     * @param defaultBucket The default bucket
+     * @param bucketName The bucket
      * @param address The URI address
      */
-    public TestContentRepoEndpoint(String defaultBucket, URI address) {
-      Preconditions.checkNotNull(defaultBucket, "'bucket' must be specified.");
-      this.defaultBucket = Optional.ofNullable(defaultBucket);
+    public TestContentRepoEndpoint(String bucketName, URI address) {
+      Preconditions.checkNotNull(bucketName, "'bucket' must be specified.");
+      this.bucketName = Optional.ofNullable(bucketName);
       this.address = Optional.ofNullable(address);
     }
 
@@ -206,10 +200,10 @@ public final class RhinoTestHelper {
       return address.orElse(null);
     }
 
-    /** Returns the default bucket. */
+    /** Returns the bucket. */
     @Override
     public String getBucketName() {
-      return defaultBucket.orElse("");
+      return bucketName.orElse("");
     }
   }
 

@@ -194,19 +194,9 @@ public interface ArticleCrudService {
   public abstract Collection<ArticleRevision> getArticlesPublishedOn(LocalDate fromDate, LocalDate toDate);
 
   /**
-   * Get all the article revisions published in the given bucket within a given date range
-   */
-  public abstract Collection<ArticleRevision> getArticlesPublishedOn(LocalDate fromDate, LocalDate toDate, String bucketName);
-
-  /**
    * Get all the article revisions revised within a given date range
    */
   public abstract Collection<ArticleRevision> getArticlesRevisedOn(LocalDate fromDate, LocalDate toDate);
-
-  /**
-   * Get all the article revisions revised in the given bucket within a given date range
-   */
-  public abstract Collection<ArticleRevision> getArticlesRevisedOn(LocalDate fromDate, LocalDate toDate, String bucketName);
 
   /**
    * Sets the "preprintDoi" field on the article ingestion.

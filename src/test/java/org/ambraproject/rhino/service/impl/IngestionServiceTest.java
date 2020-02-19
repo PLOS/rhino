@@ -22,6 +22,24 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockingDetails;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import javax.xml.parsers.ParserConfigurationException;
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.ByteSource;
 import com.google.common.io.Resources;
@@ -47,36 +65,14 @@ import org.ambraproject.rhino.service.HibernatePersistenceService;
 import org.ambraproject.rhino.util.Archive;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.junit.Before;
-
-import org.junit.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
-
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
-import static com.google.common.truth.Truth.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockingDetails;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.junit.Assert.fail;
 
 @ContextConfiguration(classes = IngestionServiceTest.class)
 @Configuration
@@ -346,7 +342,6 @@ public class IngestionServiceTest extends AbstractRhinoTest {
     final byte[] manifestData = FileUtils.readFileToByteArray(manifestFile);
     final Archive testArchive = createStubArchive(manifestData, ARTICLE_INGEST_ENTRIES);
 
-    final Optional<String> bucketName = Optional.empty();
     final String manuscriptEntry = "dupp.0000001.xml";
     final URL manuscriptResource =
         Resources.getResource(IngestionServiceTest.class, manuscriptEntry);
@@ -371,7 +366,7 @@ public class IngestionServiceTest extends AbstractRhinoTest {
         applicationContext.getBean(IngestionService.class);
     doReturn(manuscript).when(mockIngestionService).getDocument(testArchive, manuscriptEntry);
 
-    final ArticleIngestion actualIngestion = mockIngestionService.ingest(testArchive, bucketName);
+    final ArticleIngestion actualIngestion = mockIngestionService.ingest(testArchive);
 
     assertThat(actualIngestion).isNotNull();
     assertThat(actualIngestion).isEqualTo(expectedIngestion);
@@ -417,9 +412,8 @@ public class IngestionServiceTest extends AbstractRhinoTest {
     final byte[] manifestData = FileUtils.readFileToByteArray(manifestFile);
     final Archive testArchive = createStubArchive(manifestData, ARTICLE_INGEST_ENTRIES);
 
-    final Optional<String> bucketName = Optional.of("corpus");
     final RuntimeConfiguration.ContentRepoEndpoint mockRepoEndpoint =
-        new RhinoTestHelper.TestContentRepoEndpoint(bucketName.get());
+        new RhinoTestHelper.TestContentRepoEndpoint("corpus");
 
     final RuntimeConfiguration mockRuntimeConfiguration =
         applicationContext.getBean(RuntimeConfiguration.class);
@@ -440,49 +434,8 @@ public class IngestionServiceTest extends AbstractRhinoTest {
     doReturn(expectedIngestion).when(mockIngestionService)
         .processIngestPackage(any(IngestPackage.class));
 
-    mockIngestionService.ingest(testArchive, bucketName); // Ingest the archive to the bucket.
+    mockIngestionService.ingest(testArchive); // Ingest the archive to the bucket.
 
     verify(mockIngestionService).processIngestPackage(any(IngestPackage.class));
-  }
-
-  /**
-   * Test exception handling for article ingestion into an unknown bucket.
-   * 
-   * @throws IOException if archive file cannot be processed
-   * @throws SAXException if any XML parsing errors
-   * @throws ParserConfigurationException if a DocumentBuilder cannot be created
-   */
-  @Test
-  @DirtiesContext
-  public void testIngestIntoUnknownBucketShouldFail()
-      throws IOException, ParserConfigurationException, SAXException {
-    final URL xmlDataResource = Resources.getResource(IngestionServiceTest.class, MANIFEST_XML);
-    final File manifestFile = FileUtils.toFile(xmlDataResource);
-    final byte[] manifestData = FileUtils.readFileToByteArray(manifestFile);
-    final Archive testArchive = createStubArchive(manifestData, ARTICLE_INGEST_ENTRIES);
-
-    final Optional<String> bucketName = Optional.of("unknown");
-    final String manuscriptEntry = "dupp.0000001.xml";
-    final URL manuscriptResource =
-        Resources.getResource(IngestionServiceTest.class, manuscriptEntry);
-    final Document manuscript = RhinoTestHelper.loadXMLFromString(manuscriptResource);
-
-    final IngestionService mockIngestionService =
-        applicationContext.getBean(IngestionService.class);
-
-    doReturn(manuscript).when(mockIngestionService).getDocument(testArchive, manuscriptEntry);
-
-    try {
-      mockIngestionService.ingest(testArchive, bucketName);
-      fail("Expecting exception, but nothing was thrown.");
-    } catch (Exception exception) {
-      assertThat(exception).isInstanceOf(RestClientException.class);
-      final String message =
-          NO_SPACE_JOINER.join("Invalid bucket name: ", bucketName.get(), ". Allowed values is: ",
-              "bucket_name. ", "(Allowed values are specified by rhino.yaml.)");
-      assertThat(exception).hasMessageThat().isEqualTo(message);
-    }
-
-    verify(mockIngestionService, times(0)).processIngestPackage(any(IngestPackage.class));
   }
 }

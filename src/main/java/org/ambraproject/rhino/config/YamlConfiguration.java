@@ -22,16 +22,11 @@
 
 package org.ambraproject.rhino.config;
 
-import com.google.common.base.MoreObjects;
-import com.google.common.collect.ImmutableSet;
-
 import java.net.URI;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
+import com.google.common.collect.ImmutableSet;
 
 /**
  * Configuration for the server.
@@ -83,8 +78,8 @@ public class YamlConfiguration implements RuntimeConfiguration {
       throw new RuntimeException("contentRepo.corpus.address must be configured");
     }
 
-    String defaultBucket = corpus.bucket;
-    if (defaultBucket == null) {
+    String bucketName = corpus.bucket;
+    if (bucketName == null) {
       throw new RuntimeException("contentRepo.corpus.bucket must be configured");
     }
 
@@ -96,7 +91,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
 
       @Override
       public String getBucketName() {
-        return defaultBucket;
+        return bucketName;
       }
     };
   }

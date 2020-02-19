@@ -22,6 +22,7 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
 import org.ambraproject.rhino.model.ArticleFile;
 import org.ambraproject.rhino.model.ArticleItem;
@@ -38,6 +39,9 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   @Autowired
   private ArticleCrudService articleCrudService;
 
+  @Autowired
+  private RuntimeConfiguration runtimeConfiguration;
+
   @Override
   public RepoObjectMetadata getArticleItemFile(ArticleFileIdentifier fileId) {
     ArticleItem work = articleCrudService.getArticleItem(fileId.getItemIdentifier());
@@ -45,7 +49,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     ArticleFile articleFile = work.getFile(fileType)
         .orElseThrow(() -> new RestClientException("Unrecognized type: " + fileType, HttpStatus.NOT_FOUND));
     try {
-      return contentRepoService.getRepoObjectMetadata(articleFile.getCrepoVersion());
+      return contentRepoService.getRepoObjectMetadata(articleFile.getCrepoVersion(runtimeConfiguration.getCorpusStorage().getBucketName()));
     } catch (NotFoundException e) {
       throw new RestClientException("Object not found: " + fileId + ". File info: " + articleFile,
           HttpStatus.NOT_FOUND);

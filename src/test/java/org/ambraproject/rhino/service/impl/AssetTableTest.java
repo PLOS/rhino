@@ -22,40 +22,19 @@
 
 package org.ambraproject.rhino.service.impl;
 
-import com.google.common.base.Charsets;
-import com.google.common.collect.BiMap;
-import com.google.common.collect.ImmutableBiMap;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Ordering;
-import com.google.common.hash.Hashing;
-import com.google.gson.Gson;
-import org.ambraproject.rhino.content.xml.ArticleXml;
-import org.ambraproject.rhino.content.xml.ManifestXml;
-import org.ambraproject.rhino.util.Archive;
-import org.plos.crepo.model.input.RepoCollectionInput;
-import org.plos.crepo.model.metadata.RepoCollectionList;
-import org.plos.crepo.model.input.RepoObjectInput;
-import org.plos.crepo.model.metadata.RepoObjectMetadata;
-import org.plos.crepo.model.identity.RepoVersion;
-import org.plos.crepo.service.InMemoryContentRepoService;
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import org.junit.Test;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
-
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import com.google.common.base.Charsets;
+import com.google.common.collect.Lists;
+import com.google.common.hash.Hashing;
+import com.tngtech.java.junit.dataprovider.DataProvider;
+import org.ambraproject.rhino.content.xml.ArticleXml;
+import org.ambraproject.rhino.content.xml.ManifestXml;
+import org.ambraproject.rhino.util.Archive;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 public class AssetTableTest {
 
@@ -105,7 +84,7 @@ public class AssetTableTest {
 //  }
 //
 //  private static final byte[] DUMMY_CONTENT = new byte[]{0};
-//  private final InMemoryContentRepoService inMemoryContentRepoService = new InMemoryContentRepoService("defaultBucket");
+//  private final InMemoryContentRepoService inMemoryContentRepoService = new InMemoryContentRepoService("bucketName");
 //
 //  private ImmutableBiMap<String, RepoVersion> createDummyRepoObjects(AssetTable<String> assetTable) {
 //    ImmutableBiMap.Builder<String, RepoVersion> dummyRepoVersions = ImmutableBiMap.builder();

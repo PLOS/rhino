@@ -156,7 +156,6 @@ public class HibernatePersistenceServiceImpl implements HibernatePersistenceServ
   private Journal fetchJournal(IngestPackage ingestPackage) {
     final ArticleMetadata articleMetadata = ingestPackage.getArticleMetadata();
     final String eissn = articleMetadata.geteIssn();
-    final String bucketName = ingestPackage.getArticlePackage().getBucketName();
 
     Optional<Journal> journal;
     if (eissn != null) {

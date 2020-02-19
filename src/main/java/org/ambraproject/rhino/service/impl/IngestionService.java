@@ -26,9 +26,8 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
-import java.util.Optional;
-import java.util.Set;
-
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.ImmutableSet;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
@@ -52,9 +51,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.ImmutableSet;
-
 public class IngestionService extends AmbraService {
 
   public static final String MANIFEST_XML = "manifest.xml";
@@ -65,14 +61,16 @@ public class IngestionService extends AmbraService {
   private HibernatePersistenceService hibernatePersistenceService;
   @Autowired
   private ArticleCrudService articleCrudService;
+  @Autowired
+  private RuntimeConfiguration runtimeConfiguration;
 
-  public ArticleIngestion ingest(Archive archive, Optional<String> bucketName)
+  public ArticleIngestion ingest(Archive archive)
       throws IOException, XmlContentException {
-    IngestPackage ingestPackage = createIngestPackage(archive, bucketName);
+    IngestPackage ingestPackage = createIngestPackage(archive);
     return processIngestPackage(ingestPackage);
   }
 
-  private IngestPackage createIngestPackage(Archive archive, Optional<String> bucketName)
+  private IngestPackage createIngestPackage(Archive archive)
       throws IOException {
     ManifestXml manifestXml = getManifestXml(archive);
 
@@ -86,39 +84,14 @@ public class IngestionService extends AmbraService {
     ArticleXml parsedArticle = new ArticleXml(document);
     ArticleCustomMetadata customMetadata = customMetadataExtractorFactory.parse(document).build();
 
-    ArticlePackage articlePackage = new ArticlePackageBuilder(resolveBucketName(bucketName),
-        archive, parsedArticle, manifestXml).build();
+    RuntimeConfiguration.ContentRepoEndpoint corpusStorage = runtimeConfiguration.getCorpusStorage();
+    ArticlePackage articlePackage = new ArticlePackageBuilder(corpusStorage.getBucketName(),
+                                                              archive, parsedArticle, manifestXml).build();
 
     articlePackage.validateAssetCompleteness(parsedArticle.findAllAssetNodes().getDois());
 
     ArticleMetadata articleMetadata = parsedArticle.build();
     return new IngestPackage(articlePackage, articleMetadata, customMetadata);
-  }
-
-  /**
-   * Validate the bucket name against the set of allowed buckets and supply the default if needed.
-   *
-   * @param bucketName the bucket name specified as the destination for this ingestion, or empty if the client did not
-   *                   specify a bucket name
-   * @return the specified bucket name, or the default if the client did not specify a bucket name
-   * @throws RestClientException if the client specified a disallowed (or nonexistent) bucket name
-   */
-  private String resolveBucketName(Optional<String> bucketName) {
-    RuntimeConfiguration.ContentRepoEndpoint corpusStorage = runtimeConfiguration.getCorpusStorage();
-    if (!bucketName.isPresent()) {
-      return corpusStorage.getBucketName();
-    }
-
-    String configuredName = bucketName.get();
-    String defaultBucket = corpusStorage.getBucketName();
-    if (!defaultBucket.equals(configuredName)) {
-      String message = String
-          .format("Invalid bucket name: %s. Allowed values is: %s. " +
-                  "(Allowed values are specified by rhino.yaml.)",
-                  configuredName, defaultBucket);
-      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
-    }
-    return configuredName;
   }
 
   @VisibleForTesting
