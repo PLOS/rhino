@@ -23,10 +23,6 @@
 package org.ambraproject.rhino.config;
 
 import java.net.URI;
-import java.net.URL;
-import java.util.List;
-import java.util.Set;
-import com.google.common.collect.ImmutableSet;
 
 /**
  * Configuration for the server.
@@ -130,7 +126,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
 
   private final TaxonomyConfiguration taxonomyConfiguration = new TaxonomyConfiguration() {
     @Override
-    public URL getServer() {
+    public URI getServer() {
       return (input.taxonomy == null) ? null : input.taxonomy.server;
     }
 
@@ -145,48 +141,11 @@ public class YamlConfiguration implements RuntimeConfiguration {
     return taxonomyConfiguration;
   }
 
-  private static class UserApiConfigurationObject implements UserApiConfiguration {
-    // Must have real instance variables so that ConfigurationReadController.readNedConfig can serialize it
-    private final URL server;
-    private final String authorizationAppName;
-    private final String authorizationPassword;
-
-    private UserApiConfigurationObject(Input input) {
-      server = (input.userApi == null) ? null : input.userApi.server;
-      authorizationAppName = (input.userApi == null) ? null : input.userApi.authorizationAppName;
-      authorizationPassword = (input.userApi == null) ? null : input.userApi.authorizationPassword;
-    }
-
-    @Override
-    public URL getServer() {
-      return server;
-    }
-
-    @Override
-    public String getAuthorizationAppName() {
-      return authorizationAppName;
-    }
-
-    @Override
-    public String getAuthorizationPassword() {
-      return authorizationPassword;
-    }
-  }
-
-  private transient UserApiConfigurationObject userApiConfigurationObject;
-
-  @Override
-  public UserApiConfiguration getNedConfiguration() {
-    return (userApiConfigurationObject != null) ? userApiConfigurationObject
-        : (userApiConfigurationObject = new UserApiConfigurationObject(input));
-  }
-
   public static class Input {
 
     private boolean prettyPrintJson = true; // the default value should be true
     private ContentRepoInput contentRepo;
     private TaxonomyConfigurationInput taxonomy;
-    private UserApiConfigurationInput userApi;
 
     /**
      * @deprecated For reflective access by SnakeYAML only
@@ -210,14 +169,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setTaxonomy(TaxonomyConfigurationInput taxonomy) {
       this.taxonomy = taxonomy;
-    }
-
-    /**
-     * @deprecated For reflective access by SnakeYAML only
-     */
-    @Deprecated
-    public void setUserApi(UserApiConfigurationInput userApi) {
-      this.userApi = userApi;
     }
   }
 
@@ -264,38 +215,17 @@ public class YamlConfiguration implements RuntimeConfiguration {
   }
 
   public static class TaxonomyConfigurationInput {
-    private URL server;
+    private URI server;
     private String thesaurus;
 
     @Deprecated
-    public void setServer(URL server) {
+    public void setServer(URI server) {
       this.server = server;
     }
 
     @Deprecated
     public void setThesaurus(String thesaurus) {
       this.thesaurus = thesaurus;
-    }
-  }
-
-  public static class UserApiConfigurationInput {
-    private URL server;
-    private String authorizationAppName;
-    private String authorizationPassword;
-
-    @Deprecated
-    public void setServer(URL server) {
-      this.server = server;
-    }
-
-    @Deprecated
-    public void setAuthorizationAppName(String authorizationAppName) {
-      this.authorizationAppName = authorizationAppName;
-    }
-
-    @Deprecated
-    public void setAuthorizationPassword(String authorizationPassword) {
-      this.authorizationPassword = authorizationPassword;
     }
   }
 }

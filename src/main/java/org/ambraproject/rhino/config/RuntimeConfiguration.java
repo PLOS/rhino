@@ -23,7 +23,6 @@
 package org.ambraproject.rhino.config;
 
 import java.net.URI;
-import java.net.URL;
 
 /**
  * Interface that represents configurable values that are only known at server startup time.
@@ -70,21 +69,10 @@ public interface RuntimeConfiguration {
   ContentRepoEndpoint getEditorialStorage();
 
   interface TaxonomyConfiguration {
-    URL getServer();
+    URI getServer();
 
     String getThesaurus();
   }
 
   TaxonomyConfiguration getTaxonomyConfiguration();
-
-  interface UserApiConfiguration {
-    URL getServer();
-
-    String getAuthorizationAppName();
-
-    String getAuthorizationPassword();
-  }
-
-  UserApiConfiguration getNedConfiguration();
-
 }
