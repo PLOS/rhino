@@ -68,11 +68,7 @@ public interface RuntimeConfiguration {
    */
   ContentRepoEndpoint getEditorialStorage();
 
-  interface TaxonomyConfiguration {
-    URI getServer();
+  public URI getTaxonomyServer();
 
-    String getThesaurus();
-  }
-
-  TaxonomyConfiguration getTaxonomyConfiguration();
+  public String getThesaurus();
 }

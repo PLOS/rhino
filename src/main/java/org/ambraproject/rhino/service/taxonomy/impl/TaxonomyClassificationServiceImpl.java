@@ -57,6 +57,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -152,14 +153,6 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     return results;
   }
 
-  private RuntimeConfiguration.TaxonomyConfiguration getTaxonomyConfiguration() {
-    RuntimeConfiguration.TaxonomyConfiguration configuration = runtimeConfiguration.getTaxonomyConfiguration();
-    if (configuration.getServer() == null || configuration.getThesaurus() == null) {
-      throw new TaxonomyRemoteServiceNotConfiguredException();
-    }
-    return configuration;
-  }
-
   private static final ContentType APPLICATION_XML_UTF_8 = ContentType.create("application/xml", Charsets.UTF_8);
 
   /**
@@ -167,8 +160,8 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
    */
   @Override
   public List<String> getRawTerms(Document articleXml, Article article, boolean isTextRequired) {
-    RuntimeConfiguration.TaxonomyConfiguration configuration = getTaxonomyConfiguration();
-
+    String thesaurus = runtimeConfiguration.getThesaurus();
+    URI taxonomyServer = runtimeConfiguration.getTaxonomyServer();
 
     String toCategorize = getCategorizationContent(articleXml);
 
@@ -179,11 +172,11 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
         latest.getArticleType(),
         article.getDoi());
 
-    String aiMessage = String.format(MESSAGE_BEGIN, configuration.getThesaurus())
+    String aiMessage = String.format(MESSAGE_BEGIN, thesaurus)
         + StringEscapeUtils.escapeXml10(String.format(MESSAGE_DOC_ELEMENT, header, toCategorize))
         + MESSAGE_END;
 
-    HttpPost post = new HttpPost(configuration.getServer().toString());
+    HttpPost post = new HttpPost(taxonomyServer.toString());
     post.setEntity(new StringEntity(aiMessage, APPLICATION_XML_UTF_8));
 
     DocumentBuilder documentBuilder = newDocumentBuilder();
@@ -195,7 +188,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     } catch (IOException e) {
       throw new TaxonomyRemoteServiceNotAvailableException(e);
     } catch (SAXException e) {
-      throw new TaxonomyRemoteServiceInvalidBehaviorException("Invalid XML returned from " + configuration.getServer(), e);
+      throw new TaxonomyRemoteServiceInvalidBehaviorException("Invalid XML returned from " + taxonomyServer, e);
     }
 
     //parse result

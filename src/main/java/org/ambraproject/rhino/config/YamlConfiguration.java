@@ -124,21 +124,14 @@ public class YamlConfiguration implements RuntimeConfiguration {
     });
   }
 
-  private final TaxonomyConfiguration taxonomyConfiguration = new TaxonomyConfiguration() {
-    @Override
-    public URI getServer() {
-      return (input.taxonomy == null) ? null : input.taxonomy.server;
-    }
-
-    @Override
-    public String getThesaurus() {
-      return (input.taxonomy == null) ? null : input.taxonomy.thesaurus;
-    }
-  };
+  @Override
+  public URI getTaxonomyServer() {
+    return (input.taxonomy == null) ? null : input.taxonomy.server;
+  }
 
   @Override
-  public TaxonomyConfiguration getTaxonomyConfiguration() {
-    return taxonomyConfiguration;
+  public String getThesaurus() {
+    return (input.taxonomy == null) ? null : input.taxonomy.thesaurus;
   }
 
   public static class Input {
