@@ -68,6 +68,16 @@
     <beans:property name="dataSource" ref="hibernateDataSource" />
   </beans:bean>
 
+  <beans:bean id="runtimeConfiguration"
+        class="org.ambraproject.rhino.config.RuntimeConfigurationImpl">
+    <beans:property name="prettyPrintJson" value="${PRETTY_PRINT_JSON:false}" />
+    <beans:property name="contentRepoServer" value="${CONTENT_REPO_URL}" />
+    <beans:property name="editorialBucket" value="${EDITORIAL_BUCKET:null}" />
+    <beans:property name="corpusBucket" value="${CORPUS_BUCKET}" />
+    <beans:property name="taxonomyServer" value="${TAXONOMY_URL}" />
+    <beans:property name="thesaurus" value="${THESAURUS}" />
+  </beans:bean>
+
   <!-- Serve static content-->
   <mvc:default-servlet-handler/>
 </beans:beans>

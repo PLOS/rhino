@@ -315,36 +315,6 @@ public class RhinoConfiguration {
     return new Yaml();
   }
 
-
-  private static final String CONFIG_DIR_PROPERTY_NAME = "rhino.configDir";
-
-  static File getConfigDirectory() {
-    String property = System.getProperty(CONFIG_DIR_PROPERTY_NAME);
-    if (!Strings.isNullOrEmpty(property)) {
-      return new File(property);
-    } else {
-      throw new RuntimeException("Config directory not found. " + CONFIG_DIR_PROPERTY_NAME + " must be defined.");
-    }
-  }
-
-  @Bean
-  public RuntimeConfiguration runtimeConfiguration(Yaml yaml)
-      throws IOException {
-    File configDir = getConfigDirectory();
-    File configPath = new File(configDir, "rhino.yaml");
-    if (!configPath.exists()) {
-      throw new RuntimeConfigurationException(configPath.getAbsolutePath() + " not found");
-    }
-
-    YamlConfiguration runtimeConfiguration;
-    try (Reader reader = new BufferedReader(new FileReader(configPath))) {
-      YamlConfiguration.Input configValues = yaml.loadAs(reader, YamlConfiguration.Input.class);
-      runtimeConfiguration = new YamlConfiguration(configValues);
-    }
-
-    return runtimeConfiguration;
-  }
-
   @Bean
   public GitInfo gitInfo() {
     return new GitInfo();
