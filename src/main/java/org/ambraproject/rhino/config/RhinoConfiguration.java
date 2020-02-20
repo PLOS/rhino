@@ -22,23 +22,15 @@
 
 package org.ambraproject.rhino.config;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
-
 import javax.sql.DataSource;
-
 import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import org.ambraproject.rhino.config.json.AdapterRegistry;
 import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
 import org.ambraproject.rhino.content.xml.XpathReader;
@@ -300,8 +292,8 @@ public class RhinoConfiguration {
   }
 
   @Bean
-  public CommentNodeView.Factory commentNodeViewFactory(RuntimeConfiguration runtimeConfiguration) {
-    return new CommentNodeView.Factory(runtimeConfiguration);
+  public CommentNodeView.Factory commentNodeViewFactory() {
+    return new CommentNodeView.Factory();
   }
 
   @Bean

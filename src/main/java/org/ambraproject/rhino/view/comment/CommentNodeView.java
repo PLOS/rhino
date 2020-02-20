@@ -27,7 +27,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.Comment;
-import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.model.Flag;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.article.ArticleVisibility;
@@ -59,7 +58,7 @@ public class CommentNodeView implements JsonOutputView {
   public static class Factory {
     private final CompetingInterestPolicy competingInterestPolicy;
 
-    public Factory(RuntimeConfiguration runtimeConfiguration) {
+    public Factory() {
       this.competingInterestPolicy = new CompetingInterestPolicy();
     }
 

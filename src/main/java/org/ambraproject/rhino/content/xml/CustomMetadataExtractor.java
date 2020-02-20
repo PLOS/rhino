@@ -25,17 +25,14 @@ package org.ambraproject.rhino.content.xml;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ListMultimap;
-import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.model.article.ArticleCustomMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.Node;
 
 /**
@@ -46,19 +43,13 @@ public class CustomMetadataExtractor extends AbstractArticleXml<ArticleCustomMet
   private static final Logger log = LoggerFactory.getLogger(CustomMetadataExtractor.class);
 
   public static class Factory {
-    @Autowired
-    private RuntimeConfiguration runtimeConfiguration;
-
     public CustomMetadataExtractor parse(Node xml) {
-      return new CustomMetadataExtractor(xml, runtimeConfiguration);
+      return new CustomMetadataExtractor(xml);
     }
   }
 
-  private final RuntimeConfiguration runtimeConfiguration;
-
-  private CustomMetadataExtractor(Node xml, RuntimeConfiguration runtimeConfiguration) {
+  private CustomMetadataExtractor(Node xml) {
     super(xml);
-    this.runtimeConfiguration = Objects.requireNonNull(runtimeConfiguration);
   }
 
   @Override

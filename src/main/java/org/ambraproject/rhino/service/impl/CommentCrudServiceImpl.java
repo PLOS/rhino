@@ -319,7 +319,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   public CacheableResponse<CommentFlagOutputView> readCommentFlag(long flagId) {
     Flag flag = getFlag(flagId);
     return CacheableResponse.serveEntity(flag,
-        f -> new CommentNodeView.Factory(runtimeConfiguration).createFlagView(f));
+        f -> new CommentNodeView.Factory().createFlagView(f));
   }
 
   @Override

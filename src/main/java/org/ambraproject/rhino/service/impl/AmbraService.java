@@ -26,7 +26,6 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
-import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +50,6 @@ public abstract class AmbraService {
 
   @Autowired
   protected Gson entityGson;
-
-  @Autowired
-  protected RuntimeConfiguration runtimeConfiguration;
 
   /**
    * Parse client-provided XML. Errors are handled according to whether they most likely were caused by the client or
