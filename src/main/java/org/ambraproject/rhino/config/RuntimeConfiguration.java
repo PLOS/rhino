@@ -34,7 +34,7 @@ public interface RuntimeConfiguration {
    *
    * @return false when formatting is turned off
    */
-  boolean prettyPrintJson();
+  public boolean prettyPrintJson();
 
   /**
    * Identifies a content repo bucket on a particular server.
