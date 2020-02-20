@@ -54,74 +54,29 @@ public class YamlConfiguration implements RuntimeConfiguration {
   }
 
 
-  private transient ContentRepoEndpoint corpusStorageView;
-
-  @Override
-  public ContentRepoEndpoint getCorpusStorage() {
-    if (corpusStorageView != null) return corpusStorageView;
-    if (input.contentRepo == null || input.contentRepo.corpus == null) {
-      throw new RuntimeException("contentRepo.corpus must be configured");
-    }
-    return corpusStorageView = parseCorpusStorage(input.contentRepo.corpus);
-  }
-
   /**
    * For corpus storage, unlike for editorial storage, enforce non-null values and set up collection of all buckets.
    */
-  private static ContentRepoEndpoint parseCorpusStorage(ContentRepoEndpointInput corpus) {
-    URI address = corpus.address;
-    if (address == null) {
+  @Override
+  public URI getContentRepoServer() {
+    if (input.contentRepo.corpus.address == null) {
       throw new RuntimeException("contentRepo.corpus.address must be configured");
     }
+    return input.contentRepo.corpus.address;
+  }
 
-    String bucketName = corpus.bucket;
+  @Override
+  public String getCorpusBucket() {
+    String bucketName = input.contentRepo.corpus.bucket;
     if (bucketName == null) {
       throw new RuntimeException("contentRepo.corpus.bucket must be configured");
     }
-
-    return new ContentRepoEndpoint() {
-      @Override
-      public URI getAddress() {
-        return address;
-      }
-
-      @Override
-      public String getBucketName() {
-        return bucketName;
-      }
-    };
+    return bucketName;
   }
 
-
-  private static final ContentRepoEndpoint NULL_CONTENT_REPO_ENDPOINT = new ContentRepoEndpoint() {
-    @Override
-    public URI getAddress() {
-      return null;
-    }
-
-    @Override
-    public String getBucketName() {
-      return null;
-    }
-  };
-  private transient ContentRepoEndpoint editorialStorageView;
-
   @Override
-  public ContentRepoEndpoint getEditorialStorage() {
-    return (editorialStorageView != null) ? editorialStorageView
-        : (input.contentRepo == null) ? NULL_CONTENT_REPO_ENDPOINT
-        : (input.contentRepo.editorial == null) ? NULL_CONTENT_REPO_ENDPOINT
-        : (editorialStorageView = new ContentRepoEndpoint() {
-      @Override
-      public URI getAddress() {
-        return input.contentRepo.editorial.address;
-      }
-
-      @Override
-      public String getBucketName() {
-        return input.contentRepo.editorial.bucket;
-      }
-    });
+  public String getEditorialBucket() {
+    return input.contentRepo.editorial.bucket;
   }
 
   @Override

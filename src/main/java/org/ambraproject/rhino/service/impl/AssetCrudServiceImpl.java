@@ -49,7 +49,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     ArticleFile articleFile = work.getFile(fileType)
         .orElseThrow(() -> new RestClientException("Unrecognized type: " + fileType, HttpStatus.NOT_FOUND));
     try {
-      return contentRepoService.getRepoObjectMetadata(articleFile.getCrepoVersion(runtimeConfiguration.getCorpusStorage().getBucketName()));
+      return contentRepoService.getRepoObjectMetadata(articleFile.getCrepoVersion(runtimeConfiguration.getCorpusBucket()));
     } catch (NotFoundException e) {
       throw new RestClientException("Object not found: " + fileId + ". File info: " + articleFile,
           HttpStatus.NOT_FOUND);

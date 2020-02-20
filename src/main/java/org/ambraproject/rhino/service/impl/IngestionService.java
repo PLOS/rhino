@@ -84,8 +84,7 @@ public class IngestionService extends AmbraService {
     ArticleXml parsedArticle = new ArticleXml(document);
     ArticleCustomMetadata customMetadata = customMetadataExtractorFactory.parse(document).build();
 
-    RuntimeConfiguration.ContentRepoEndpoint corpusStorage = runtimeConfiguration.getCorpusStorage();
-    ArticlePackage articlePackage = new ArticlePackageBuilder(corpusStorage.getBucketName(),
+    ArticlePackage articlePackage = new ArticlePackageBuilder(runtimeConfiguration.getCorpusBucket(),
                                                               archive, parsedArticle, manifestXml).build();
 
     articlePackage.validateAssetCompleteness(parsedArticle.findAllAssetNodes().getDois());

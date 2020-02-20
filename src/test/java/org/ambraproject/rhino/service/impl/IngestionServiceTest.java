@@ -412,12 +412,12 @@ public class IngestionServiceTest extends AbstractRhinoTest {
     final byte[] manifestData = FileUtils.readFileToByteArray(manifestFile);
     final Archive testArchive = createStubArchive(manifestData, ARTICLE_INGEST_ENTRIES);
 
-    final RuntimeConfiguration.ContentRepoEndpoint mockRepoEndpoint =
-        new RhinoTestHelper.TestContentRepoEndpoint("corpus");
+    // final RuntimeConfiguration.ContentRepoEndpoint mockRepoEndpoint =
+    //     new RhinoTestHelper.TestContentRepoEndpoint("corpus");
 
     final RuntimeConfiguration mockRuntimeConfiguration =
         applicationContext.getBean(RuntimeConfiguration.class);
-    doReturn(mockRepoEndpoint).when(mockRuntimeConfiguration).getCorpusStorage();
+    // doReturn(mockRepoEndpoint).when(mockRuntimeConfiguration).getCorpusStorage();
 
     final String manuscriptEntry = "dupp.0000001.xml";
     final URL manuscriptResource =

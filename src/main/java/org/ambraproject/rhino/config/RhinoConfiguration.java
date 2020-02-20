@@ -184,8 +184,7 @@ public class RhinoConfiguration {
   @Bean
   public ContentRepoService contentRepoService(RuntimeConfiguration runtimeConfiguration,
                                                final CloseableHttpClient httpClient) {
-    RuntimeConfiguration.ContentRepoEndpoint corpus = runtimeConfiguration.getCorpusStorage();
-    final String repoServer = Preconditions.checkNotNull(corpus.getAddress().toString());
+    final String repoServer = Preconditions.checkNotNull(runtimeConfiguration.getContentRepoServer().toString());
     Objects.requireNonNull(httpClient);
 
     return new ContentRepoServiceImpl(repoServer, HttpClientFunction.from(httpClient));

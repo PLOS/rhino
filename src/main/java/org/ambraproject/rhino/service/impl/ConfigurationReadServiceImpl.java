@@ -22,22 +22,22 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.URI;
+import java.net.UnknownHostException;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Properties;
+import javax.annotation.PostConstruct;
 import com.google.common.collect.ImmutableMap;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.util.GitInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.UnknownHostException;
-import java.net.InetAddress;
-import java.util.LinkedHashMap;
-import java.util.Date;
-import java.util.Map;
-import java.util.Properties;
-import javax.annotation.PostConstruct;
 
 public class ConfigurationReadServiceImpl extends AmbraService implements ConfigurationReadService {
 
@@ -64,11 +64,11 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
     return ServiceResponse.serveView(getBuildProperties());
   }
 
-  private static Map<String, Object> showEndpointAsMap(RuntimeConfiguration.ContentRepoEndpoint endpoint) {
-    if (endpoint == null) return null;
+  private static Map<String, Object> showEndpointAsMap(URI address, String bucket) {
+    if (address == null || bucket == null) return null;
     Map<String, Object> map = new LinkedHashMap<>(4);
-    map.put("address", endpoint.getAddress());
-    map.put("bucket", endpoint.getBucketName());
+    map.put("address", address);
+    map.put("bucket", bucket);
     return map;
   }
 
@@ -80,8 +80,8 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
   @Override
   public Map<String, Object> getRepoConfig() {
     Map<String, Object> cfgMap = new LinkedHashMap<>(4);
-    cfgMap.put("editorial", showEndpointAsMap(runtimeConfiguration.getEditorialStorage()));
-    cfgMap.put("corpus", showEndpointAsMap(runtimeConfiguration.getCorpusStorage()));
+    cfgMap.put("editorial", showEndpointAsMap(runtimeConfiguration.getContentRepoServer(), runtimeConfiguration.getEditorialBucket()));
+    cfgMap.put("corpus", showEndpointAsMap(runtimeConfiguration.getContentRepoServer(), runtimeConfiguration.getCorpusBucket()));
     return cfgMap;
   }
 

@@ -37,36 +37,24 @@ public interface RuntimeConfiguration {
   public boolean prettyPrintJson();
 
   /**
-   * Identifies a content repo bucket on a particular server.
+   * @return the URI of the content repo server
    */
-  interface ContentRepoEndpoint {
-    /**
-     * @return the URI of the server
-     */
-    URI getAddress();
-
-    /**
-     * @return the name of the bucket on that server to use when none is specified
-     */
-    String getBucketName();
-  }
+  public URI getContentRepoServer();
 
   /**
    * Return the content repository bucket for the corpus of articles. The application will write to this bucket when
-   * ingesting articles and read from it when serving article assets. Returns {@code null} if no corpus bucket is
-   * configured.
+   * ingesting articles and read from it when serving article assets.
    *
    * @return the corpus bucket name
    */
-  ContentRepoEndpoint getCorpusStorage();
-
+  public String getCorpusBucket();
+  
   /**
-   * Return the content repository bucket from which the system should pick up editorial (non-article) content. Returns
-   * {@code null} if no editorial bucket is configured.
-   *
+   * Return the content repository bucket from which the system should pick up editorial (non-article) content. 
    * @return the homepage bucket name
+   *
    */
-  ContentRepoEndpoint getEditorialStorage();
+  public String getEditorialBucket();
 
   public URI getTaxonomyServer();
 

@@ -358,7 +358,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       return (List<ArticleFile>) query.list();
     });
 
-    String bucketName = runtimeConfiguration.getCorpusStorage().getBucketName();
+    String bucketName = runtimeConfiguration.getCorpusBucket();
     Map<String, ByteSource> archiveMap = files.stream().collect(Collectors.toMap(
         ArticleFile::getIngestedFileName,
         (ArticleFile file) -> new ByteSource() {
