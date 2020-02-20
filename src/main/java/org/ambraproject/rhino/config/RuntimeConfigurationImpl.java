@@ -4,10 +4,10 @@ import java.net.URI;
 
 public class RuntimeConfigurationImpl implements RuntimeConfiguration {
   private boolean prettyPrintJson = false;
-  private URI contentRepoServer;
+  private URI contentRepoUrl;
   private String editorialBucket;
   private String corpusBucket;
-  private URI taxonomyServer;
+  private URI taxonomyUrl;
   private String thesaurus;
   
   @Override
@@ -20,12 +20,12 @@ public class RuntimeConfigurationImpl implements RuntimeConfiguration {
   }
 
   @Override
-  public URI getContentRepoServer() {
-    return this.contentRepoServer;
+  public URI getContentRepoUrl() {
+    return this.contentRepoUrl;
   }
 
-  public void setContentRepoServer(URI contentRepoServer) {
-    this.contentRepoServer = contentRepoServer;
+  public void setContentRepoUrl(URI contentRepoUrl) {
+    this.contentRepoUrl = contentRepoUrl;
   }
 
   @Override
@@ -47,12 +47,12 @@ public class RuntimeConfigurationImpl implements RuntimeConfiguration {
   }
 
   @Override
-  public URI getTaxonomyServer() {
-    return this.taxonomyServer;
+  public URI getTaxonomyUrl() {
+    return this.taxonomyUrl;
   }
 
-  public void setTaxonomyServer(URI taxonomyServer) {
-    this.taxonomyServer = taxonomyServer;
+  public void setTaxonomyUrl(URI taxonomyUrl) {
+    this.taxonomyUrl = taxonomyUrl;
   }
 
   @Override

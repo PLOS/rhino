@@ -108,7 +108,7 @@ public class ConfigurationReadControllerTest extends AbstractRhinoTest {
   public void testReadRepoConfigShouldSucceed() throws Exception {
     when(mockRuntimeConfiguration.getCorpusBucket()).thenReturn("corpus");
     when(mockRuntimeConfiguration.getEditorialBucket()).thenReturn("editorial");
-    when(mockRuntimeConfiguration.getContentRepoServer()).thenReturn(new URI("http://path/to/content/repo"));
+    when(mockRuntimeConfiguration.getContentRepoUrl()).thenReturn(new URI("http://path/to/content/repo"));
     final MvcResult result = mockModelViewController.perform(get(new URI("/config?type=repo")))
         .andExpect(status().isOk()).andReturn();
     final MockHttpServletResponse response = result.getResponse();

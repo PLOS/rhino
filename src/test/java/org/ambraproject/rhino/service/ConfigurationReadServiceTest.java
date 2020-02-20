@@ -69,7 +69,7 @@ public class ConfigurationReadServiceTest extends BaseRhinoTest {
   public void testGetRepoConfig() throws IOException, URISyntaxException {
     when(mockRuntimeConfiguration.getEditorialBucket()).thenReturn("editorial");
     when(mockRuntimeConfiguration.getCorpusBucket()).thenReturn("corpus");
-    when(mockRuntimeConfiguration.getContentRepoServer())
+    when(mockRuntimeConfiguration.getContentRepoUrl())
         .thenReturn(new URI("http://path/to/content/repo"));
     Map<String, Object> repoConfigMap = configurationReadService.getRepoConfig();
     Map<String, Object> editorialConfigMap = (Map<String, Object>) repoConfigMap.get("editorial");

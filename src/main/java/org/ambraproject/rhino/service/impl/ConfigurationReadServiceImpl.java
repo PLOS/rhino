@@ -80,8 +80,8 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
   @Override
   public Map<String, Object> getRepoConfig() {
     Map<String, Object> cfgMap = new LinkedHashMap<>(4);
-    cfgMap.put("editorial", showEndpointAsMap(runtimeConfiguration.getContentRepoServer(), runtimeConfiguration.getEditorialBucket()));
-    cfgMap.put("corpus", showEndpointAsMap(runtimeConfiguration.getContentRepoServer(), runtimeConfiguration.getCorpusBucket()));
+    cfgMap.put("editorial", showEndpointAsMap(runtimeConfiguration.getContentRepoUrl(), runtimeConfiguration.getEditorialBucket()));
+    cfgMap.put("corpus", showEndpointAsMap(runtimeConfiguration.getContentRepoUrl(), runtimeConfiguration.getCorpusBucket()));
     return cfgMap;
   }
 

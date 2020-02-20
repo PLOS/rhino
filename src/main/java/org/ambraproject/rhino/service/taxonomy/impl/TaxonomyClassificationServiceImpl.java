@@ -161,7 +161,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   @Override
   public List<String> getRawTerms(Document articleXml, Article article, boolean isTextRequired) {
     String thesaurus = runtimeConfiguration.getThesaurus();
-    URI taxonomyServer = runtimeConfiguration.getTaxonomyServer();
+    URI taxonomyUrl = runtimeConfiguration.getTaxonomyUrl();
 
     String toCategorize = getCategorizationContent(articleXml);
 
@@ -176,7 +176,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
         + StringEscapeUtils.escapeXml10(String.format(MESSAGE_DOC_ELEMENT, header, toCategorize))
         + MESSAGE_END;
 
-    HttpPost post = new HttpPost(taxonomyServer.toString());
+    HttpPost post = new HttpPost(taxonomyUrl.toString());
     post.setEntity(new StringEntity(aiMessage, APPLICATION_XML_UTF_8));
 
     DocumentBuilder documentBuilder = newDocumentBuilder();
@@ -188,7 +188,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     } catch (IOException e) {
       throw new TaxonomyRemoteServiceNotAvailableException(e);
     } catch (SAXException e) {
-      throw new TaxonomyRemoteServiceInvalidBehaviorException("Invalid XML returned from " + taxonomyServer, e);
+      throw new TaxonomyRemoteServiceInvalidBehaviorException("Invalid XML returned from " + taxonomyUrl, e);
     }
 
     //parse result

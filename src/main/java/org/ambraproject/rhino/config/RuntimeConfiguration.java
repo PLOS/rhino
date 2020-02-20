@@ -39,7 +39,7 @@ public interface RuntimeConfiguration {
   /**
    * @return the URI of the content repo server
    */
-  public URI getContentRepoServer();
+  public URI getContentRepoUrl();
 
   /**
    * Return the content repository bucket for the corpus of articles. The application will write to this bucket when
@@ -56,7 +56,7 @@ public interface RuntimeConfiguration {
    */
   public String getEditorialBucket();
 
-  public URI getTaxonomyServer();
+  public URI getTaxonomyUrl();
 
   public String getThesaurus();
 }

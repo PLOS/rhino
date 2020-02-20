@@ -49,7 +49,7 @@ public class ContentRepoController extends RestController {
   public ResponseEntity<?> serve(@PathVariable("key") String key,
                                  @PathVariable("version") String version)
       throws IOException {
-    URI address = runtimeConfiguration.getContentRepoServer();
+    URI address = runtimeConfiguration.getContentRepoUrl();
     String bucketName = runtimeConfiguration.getEditorialBucket();
     if (bucketName == null) {
       throw new RuntimeException("contentRepo.editorial is not configured");
