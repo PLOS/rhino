@@ -22,27 +22,30 @@
 
 package org.ambraproject.rhino.service;
 
-import com.google.gson.Gson;
-import org.ambraproject.rhino.BaseRhinoTest;
-import org.ambraproject.rhino.rest.response.ServiceResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.junit.Test;
-
-import java.io.IOException;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Map;
+import java.util.Properties;
+import com.google.gson.Gson;
+import org.ambraproject.rhino.BaseRhinoTest;
+import org.ambraproject.rhino.config.RuntimeConfiguration;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 
 public class ConfigurationReadServiceTest extends BaseRhinoTest {
   @Autowired
   private ConfigurationReadService configurationReadService;
+  @Autowired
+  private RuntimeConfiguration mockRuntimeConfiguration;
 
   @Test
   public void testGetBuildProperties() throws IOException {
@@ -63,14 +66,18 @@ public class ConfigurationReadServiceTest extends BaseRhinoTest {
   }
 
   @Test
-  public void testGetRepoConfig() throws IOException {
+  public void testGetRepoConfig() throws IOException, URISyntaxException {
+    when(mockRuntimeConfiguration.getEditorialBucket()).thenReturn("editorial");
+    when(mockRuntimeConfiguration.getCorpusBucket()).thenReturn("corpus");
+    when(mockRuntimeConfiguration.getContentRepoServer())
+        .thenReturn(new URI("http://path/to/content/repo"));
     Map<String, Object> repoConfigMap = configurationReadService.getRepoConfig();
     Map<String, Object> editorialConfigMap = (Map<String, Object>) repoConfigMap.get("editorial");
 
     String repoAddress = editorialConfigMap.get("address").toString();
     assertEquals("Invalid/missing content repo URL", "http://path/to/content/repo", repoAddress);
     String repoBucket = editorialConfigMap.get("bucket").toString();
-    assertEquals("Invalid/missing content repo bucket name", "bucket_name", repoBucket);
+    assertEquals("Invalid/missing content repo bucket name", "editorial", repoBucket);
 
   }
 

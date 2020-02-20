@@ -22,7 +22,10 @@
 
 package org.ambraproject.rhino.config;
 
-import com.google.common.io.Closeables;
+import static org.mockito.Mockito.mock;
+import java.io.IOException;
+import java.util.Properties;
+import javax.sql.DataSource;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;
@@ -43,12 +46,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
-import org.yaml.snakeyaml.Yaml;
-
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 
 @Configuration
 @Import(RhinoConfiguration.class)
@@ -128,19 +125,7 @@ public class TestConfiguration {
   }
 
   @Bean
-  public RuntimeConfiguration runtimeConfiguration(Yaml yaml) throws Exception {
-    YamlConfiguration runtimeConfiguration;
-    InputStream is = null;
-    boolean threw = true;
-    try {
-      is = TestConfiguration.class.getClassLoader().getResourceAsStream("rhino-test.yaml");
-      runtimeConfiguration = new YamlConfiguration(yaml.loadAs(is, YamlConfiguration.Input.class));
-      threw = false;
-      LOG.info("runtimeConfiguration() Loaded rhino-test.yaml");
-    } finally {
-      Closeables.close(is, threw);
-    }
-
-    return runtimeConfiguration;
+  public RuntimeConfiguration runtimeConfiguration() throws Exception {
+    return mock(RuntimeConfiguration.class);
   }
 }

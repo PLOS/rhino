@@ -90,10 +90,12 @@ public class IngestionServiceTest extends AbstractRhinoTest {
       "dupp.0000001.s005.docx", "dupp.0000001.s006.docx", "dupp.0000001.s007.docx");
 
   private IngestionService ingestionService;
-
+  private RuntimeConfiguration mockRuntimeConfiguration;
+  
   @Before
   public void init() {
     ingestionService = new IngestionService();
+    mockRuntimeConfiguration = applicationContext.getBean(RuntimeConfiguration.class);
   }
 
   @Bean
@@ -337,6 +339,7 @@ public class IngestionServiceTest extends AbstractRhinoTest {
   @DirtiesContext()
   public void testArticleIngestShouldSucceed()
       throws IOException, ParserConfigurationException, SAXException {
+    when(mockRuntimeConfiguration.getCorpusBucket()).thenReturn("corpus");
     final URL xmlDataResource = Resources.getResource(IngestionServiceTest.class, MANIFEST_XML);
     final File manifestFile = FileUtils.toFile(xmlDataResource);
     final byte[] manifestData = FileUtils.readFileToByteArray(manifestFile);
@@ -412,12 +415,7 @@ public class IngestionServiceTest extends AbstractRhinoTest {
     final byte[] manifestData = FileUtils.readFileToByteArray(manifestFile);
     final Archive testArchive = createStubArchive(manifestData, ARTICLE_INGEST_ENTRIES);
 
-    // final RuntimeConfiguration.ContentRepoEndpoint mockRepoEndpoint =
-    //     new RhinoTestHelper.TestContentRepoEndpoint("corpus");
-
-    final RuntimeConfiguration mockRuntimeConfiguration =
-        applicationContext.getBean(RuntimeConfiguration.class);
-    // doReturn(mockRepoEndpoint).when(mockRuntimeConfiguration).getCorpusStorage();
+    when(mockRuntimeConfiguration.getCorpusBucket()).thenReturn("corpus");
 
     final String manuscriptEntry = "dupp.0000001.xml";
     final URL manuscriptResource =

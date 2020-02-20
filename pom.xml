@@ -159,12 +159,6 @@
       <version>${hibernate-version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>org.yaml</groupId>
-      <artifactId>snakeyaml</artifactId>
-      <version>1.13</version>
-    </dependency>
-
     <!-- Test -->
     <dependency>
       <groupId>junit</groupId>

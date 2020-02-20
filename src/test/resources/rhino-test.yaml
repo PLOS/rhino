@@ -1,8 +1,0 @@
-prettyPrintJson: true
-contentRepo:
-  editorial:
-    address: http://path/to/content/repo
-    bucket:  bucket_name
-  corpus:
-    address: http://path/to/content/repo
-    bucket:  bucket_name

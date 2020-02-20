@@ -6,6 +6,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import java.net.URI;
@@ -105,6 +106,9 @@ public class ConfigurationReadControllerTest extends AbstractRhinoTest {
    */
   @Test
   public void testReadRepoConfigShouldSucceed() throws Exception {
+    when(mockRuntimeConfiguration.getCorpusBucket()).thenReturn("corpus");
+    when(mockRuntimeConfiguration.getEditorialBucket()).thenReturn("editorial");
+    when(mockRuntimeConfiguration.getContentRepoServer()).thenReturn(new URI("http://path/to/content/repo"));
     final MvcResult result = mockModelViewController.perform(get(new URI("/config?type=repo")))
         .andExpect(status().isOk()).andReturn();
     final MockHttpServletResponse response = result.getResponse();
@@ -114,7 +118,7 @@ public class ConfigurationReadControllerTest extends AbstractRhinoTest {
     assertThat(editorial).isNotNull();
     assertThat(editorial.getAsJsonPrimitive("address").getAsString())
         .isEqualTo("http://path/to/content/repo");
-    assertThat(editorial.getAsJsonPrimitive("bucket").getAsString()).isEqualTo("bucket_name");
+    assertThat(editorial.getAsJsonPrimitive("bucket").getAsString()).isEqualTo("editorial");
 
     final JsonObject corpus = data.getAsJsonObject("corpus");
     assertThat(corpus).isNotNull();

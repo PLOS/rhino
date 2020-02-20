@@ -6,7 +6,6 @@ import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
-import org.ambraproject.rhino.config.YamlConfiguration;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.HibernatePersistenceService;
 import org.ambraproject.rhino.util.Java8TimeGsonAdapters;
@@ -29,9 +28,7 @@ import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.context.annotation.Bean;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
-import org.yaml.snakeyaml.Yaml;
 
-import java.io.InputStream;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -51,8 +48,6 @@ public abstract class AbstractRhinoTest extends AbstractJUnit4SpringContextTests
   protected static final String DESTINATION_BUCKET = "water_bucket";
 
   protected static final Joiner NO_SPACE_JOINER = Joiner.on("").skipNulls();
-
-  public static final String TEST_RHINO_YAML = "rhino-test.yaml";
 
   /**
    * Flag to determine if <b>spying</b> on the
@@ -138,23 +133,8 @@ public abstract class AbstractRhinoTest extends AbstractJUnit4SpringContextTests
   }
 
   @Bean
-  public RuntimeConfiguration runtimeConfiguration(Yaml yaml) throws Exception {
-    try (final InputStream is =
-        AbstractRhinoTest.class.getClassLoader().getResourceAsStream(TEST_RHINO_YAML)) {
-      final YamlConfiguration runtimeConfiguration =
-          new YamlConfiguration(yaml.loadAs(is, YamlConfiguration.Input.class));
-      LOG.info("runtimeConfiguration: Loaded {}", TEST_RHINO_YAML);
-      return spy(runtimeConfiguration);
-    } catch (Exception exception) {
-      LOG.warn("runtimeConfiguration: Caught exception: {}", exception);
-    }
-    return mock(YamlConfiguration.class);
-  }
-
-  @Bean
-  public Yaml yaml() {
-    final Yaml mockYaml = spy(new Yaml());
-    return mockYaml;
+  public RuntimeConfiguration runtimeConfiguration() throws Exception {
+    return mock(RuntimeConfiguration.class);
   }
 
   /**

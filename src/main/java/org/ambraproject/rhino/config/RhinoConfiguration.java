@@ -97,7 +97,6 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.yaml.snakeyaml.Yaml;
 
 /**
  * Bean configuration for the application.
@@ -308,11 +307,6 @@ public class RhinoConfiguration {
   @Bean
   public XpathReader xpathReader() {
     return new XpathReader();
-  }
-
-  @Bean
-  public Yaml yaml() {
-    return new Yaml();
   }
 
   @Bean
