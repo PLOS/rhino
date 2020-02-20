@@ -162,51 +162,6 @@ public final class RhinoTestHelper {
     }
   }
 
-  // /**
-  //  * Class to implement a {@link RuntimeConfiguration.ContentRepoEndpoint
-  //  * ContentRepoEndpoint}, which can be used for unit tests.
-  //  */
-  // public static class TestContentRepoEndpoint
-  //     implements RuntimeConfiguration.ContentRepoEndpoint {
-
-  //   private Optional<String> bucketName = Optional.empty();
-
-  //   private Optional<URI> address = Optional.empty();
-
-  //   /**
-  //    * Creates an instance of <code>TestContentRepoEndpoint</code>.
-  //    *
-  //    * @param bucket The bucket
-  //    */
-  //   public TestContentRepoEndpoint(String bucketName) {
-  //     this(bucketName, null /* address */);
-  //   }
-
-  //   /**
-  //    * Creates an instance of <code>TestContentRepoEndpoint</code>.
-  //    *
-  //    * @param bucketName The bucket
-  //    * @param address The URI address
-  //    */
-  //   public TestContentRepoEndpoint(String bucketName, URI address) {
-  //     Preconditions.checkNotNull(bucketName, "'bucket' must be specified.");
-  //     this.bucketName = Optional.ofNullable(bucketName);
-  //     this.address = Optional.ofNullable(address);
-  //   }
-
-  //   /** Returns the URI. */
-  //   @Override
-  //   public URI getAddress() {
-  //     return address.orElse(null);
-  //   }
-
-  //   /** Returns the bucket. */
-  //   @Override
-  //   public String getBucketName() {
-  //     return bucketName.orElse("");
-  //   }
-  // }
-
   public static final ImmutableList<String> SAMPLE_ARTICLES = ImmutableList.of("pone.0038869"
       // More can be filled in here
       );
