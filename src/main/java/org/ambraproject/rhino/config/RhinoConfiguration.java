@@ -155,7 +155,7 @@ public class RhinoConfiguration {
   @Bean
   public Gson entityGson(RuntimeConfiguration runtimeConfiguration) {
     GsonBuilder builder = JsonAdapterUtil.makeGsonBuilder();
-    if (runtimeConfiguration.prettyPrintJson()) {
+    if (runtimeConfiguration.getPrettyPrintJson()) {
       builder.setPrettyPrinting();
     }
 

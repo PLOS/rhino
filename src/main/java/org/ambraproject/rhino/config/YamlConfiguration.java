@@ -49,7 +49,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
    * {@inheritDoc}
    */
   @Override
-  public boolean prettyPrintJson() {
+  public boolean getPrettyPrintJson() {
     return input.prettyPrintJson;
   }
 

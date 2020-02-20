@@ -34,7 +34,7 @@ public interface RuntimeConfiguration {
    *
    * @return false when formatting is turned off
    */
-  public boolean prettyPrintJson();
+  public boolean getPrettyPrintJson();
 
   /**
    * @return the URI of the content repo server
