@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.config;
 
 import java.net.URI;
+import com.google.common.base.Preconditions;
 
 public class RuntimeConfigurationImpl implements RuntimeConfiguration {
   private boolean prettyPrintJson = false;
@@ -25,6 +26,8 @@ public class RuntimeConfigurationImpl implements RuntimeConfiguration {
   }
 
   public void setContentRepoUrl(URI contentRepoUrl) {
+    Preconditions.checkNotNull(contentRepoUrl, "CONTENT_REPO_URL is required and must be a valid URL");
+    Preconditions.checkState(contentRepoUrl.isAbsolute(), "CONTENT_REPO_URL is required and must be a valid URL");
     this.contentRepoUrl = contentRepoUrl;
   }
 
@@ -34,6 +37,8 @@ public class RuntimeConfigurationImpl implements RuntimeConfiguration {
   }
 
   public void setCorpusBucket(String corpusBucket) {
+    Preconditions.checkNotNull(corpusBucket, "CORPUS_BUCKET is required");
+    Preconditions.checkState(!corpusBucket.equals(""), "CORPUS_BUCKET is required");
     this.corpusBucket = corpusBucket;
   }
 
@@ -52,6 +57,8 @@ public class RuntimeConfigurationImpl implements RuntimeConfiguration {
   }
 
   public void setTaxonomyUrl(URI taxonomyUrl) {
+    Preconditions.checkNotNull(taxonomyUrl, "TAXONOMY_URL is required and must be a valid URL");
+    Preconditions.checkState(taxonomyUrl.isAbsolute(), "TAXONOMY_URL is required and must be a valid URL");
     this.taxonomyUrl = taxonomyUrl;
   }
 
@@ -61,6 +68,8 @@ public class RuntimeConfigurationImpl implements RuntimeConfiguration {
   }
 
   public void setThesaurus(String thesaurus) {
+    Preconditions.checkNotNull(thesaurus, "THESAURUS is required");
+    Preconditions.checkState(!thesaurus.equals(""), "THESAURUS is required");
     this.thesaurus = thesaurus;
   }
 }
