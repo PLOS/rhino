@@ -120,6 +120,14 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   @Autowired
   protected HibernateTemplate hibernateTemplate;
 
+  // See https://jira.plos.org/jira/browse/AMEC-100.
+  // Basically it was a one-time hack which may or may not still be
+  // needed. But at some point the hack of blacklisting a single
+  // category turned into a configurable feature. It seemed to me that
+  // this was absolutely not something that needed to be configurable
+  // at runtime, so I just moved it here. It's not clear if this is
+  // still a feature we need, but we decided it was best to keep the
+  // feature in for now.
   private static final String[] CATEGORY_BLACKLIST =
       new String[] {"/Earth sciences/Geography/Locations/"};
   /**
