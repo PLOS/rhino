@@ -58,9 +58,6 @@ public class ArticleFile implements Timestamped {
   private String fileType;
 
   @Column
-  private String bucketName;
-
-  @Column
   private String crepoKey;
 
   @Column
@@ -107,14 +104,6 @@ public class ArticleFile implements Timestamped {
 
   public void setFileType(String fileType) {
     this.fileType = fileType;
-  }
-
-  public String getBucketName() {
-    return bucketName;
-  }
-
-  public void setBucketName(String bucketName) {
-    this.bucketName = bucketName;
   }
 
   public String getCrepoKey() {
@@ -167,7 +156,7 @@ public class ArticleFile implements Timestamped {
   private transient RepoVersion crepoVersion;
 
   @Transient
-  public RepoVersion getCrepoVersion() {
+  public RepoVersion getCrepoVersion(String bucketName) {
     return (crepoVersion != null) ? crepoVersion :
         (crepoVersion = RepoVersion.create(bucketName, crepoKey, crepoUuid));
   }
@@ -196,8 +185,7 @@ public class ArticleFile implements Timestamped {
   @Override
   public String toString() {
     return "ArticleFile{" +
-        "bucketName='" + bucketName + '\'' +
-        ", crepoKey='" + crepoKey + '\'' +
+        "crepoKey='" + crepoKey + '\'' +
         ", crepoUuid='" + crepoUuid + '\'' +
         '}';
   }

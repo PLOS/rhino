@@ -22,23 +22,15 @@
 
 package org.ambraproject.rhino.config;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
-
 import javax.sql.DataSource;
-
 import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import org.ambraproject.rhino.config.json.AdapterRegistry;
 import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
 import org.ambraproject.rhino.content.xml.XpathReader;
@@ -88,8 +80,6 @@ import org.hibernate.SessionFactory;
 import org.plos.crepo.config.HttpClientFunction;
 import org.plos.crepo.service.ContentRepoService;
 import org.plos.crepo.service.ContentRepoServiceImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -97,7 +87,6 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.yaml.snakeyaml.Yaml;
 
 /**
  * Bean configuration for the application.
@@ -107,8 +96,6 @@ import org.yaml.snakeyaml.Yaml;
 @Configuration
 @EnableTransactionManagement
 public class RhinoConfiguration {
-
-  private static final Logger log = LoggerFactory.getLogger(RhinoConfiguration.class);
 
   @Bean
   public AnnotationSessionFactoryBean sessionFactory(DataSource hibernateDataSource,
@@ -128,14 +115,6 @@ public class RhinoConfiguration {
     bean.setHibernateProperties(hibernateProperties);
 
     bean.setPackagesToScan("org.ambraproject.rhino.model");
-
-    try {
-      log.info("initializing Kafka");
-      bean.setEntityInterceptor(new HibernateLoggingInterceptor(runtimeConfiguration, entityGson));
-    } catch (RuntimeException e) {
-      log.error("Error initializing HibernateLoggingInterceptor:", e);
-    }
-
 
     return bean;
   }
@@ -163,7 +142,7 @@ public class RhinoConfiguration {
   @Bean
   public Gson entityGson(RuntimeConfiguration runtimeConfiguration) {
     GsonBuilder builder = JsonAdapterUtil.makeGsonBuilder();
-    if (runtimeConfiguration.prettyPrintJson()) {
+    if (runtimeConfiguration.getPrettyPrintJson()) {
       builder.setPrettyPrinting();
     }
 
@@ -179,34 +158,20 @@ public class RhinoConfiguration {
     return builder.create();
   }
 
-  /**
-   * Gson instance for serializing and deserializing {@code userMetadata} fields for the CRepo. Unlike {@link
-   * #entityGson}, it requires no adapters (at this time) and should never pretty-print (because we always want to print
-   * compact JSON for efficient storage).
-   */
   @Bean
-  public Gson crepoGson() {
-    return new Gson();
-  }
-
-  @Bean
-  public CloseableHttpClient httpClient(RuntimeConfiguration runtimeConfiguration) {
+  public CloseableHttpClient httpClient() {
     PoolingHttpClientConnectionManager manager = new PoolingHttpClientConnectionManager();
 
-    Integer maxTotal = runtimeConfiguration.getHttpConnectionPoolConfiguration().getMaxTotal();
-    manager.setMaxTotal(maxTotal == null ? 400 : maxTotal);
-
-    Integer defaultMaxPerRoute = runtimeConfiguration.getHttpConnectionPoolConfiguration().getDefaultMaxPerRoute();
-    manager.setDefaultMaxPerRoute(defaultMaxPerRoute == null ? 20 : defaultMaxPerRoute);
-
+    manager.setMaxTotal(400);
+    manager.setDefaultMaxPerRoute(20);
+        
     return HttpClientBuilder.create().setConnectionManager(manager).build();
   }
 
   @Bean
   public ContentRepoService contentRepoService(RuntimeConfiguration runtimeConfiguration,
                                                final CloseableHttpClient httpClient) {
-    RuntimeConfiguration.ContentRepoEndpoint corpus = runtimeConfiguration.getCorpusStorage();
-    final String repoServer = Preconditions.checkNotNull(corpus.getAddress().toString());
+    final String repoServer = Preconditions.checkNotNull(runtimeConfiguration.getContentRepoUrl().toString());
     Objects.requireNonNull(httpClient);
 
     return new ContentRepoServiceImpl(repoServer, HttpClientFunction.from(httpClient));
@@ -323,48 +288,13 @@ public class RhinoConfiguration {
   }
 
   @Bean
-  public CommentNodeView.Factory commentNodeViewFactory(RuntimeConfiguration runtimeConfiguration) {
-    return new CommentNodeView.Factory(runtimeConfiguration);
+  public CommentNodeView.Factory commentNodeViewFactory() {
+    return new CommentNodeView.Factory();
   }
 
   @Bean
   public XpathReader xpathReader() {
     return new XpathReader();
-  }
-
-  @Bean
-  public Yaml yaml() {
-    return new Yaml();
-  }
-
-
-  private static final String CONFIG_DIR_PROPERTY_NAME = "rhino.configDir";
-
-  static File getConfigDirectory() {
-    String property = System.getProperty(CONFIG_DIR_PROPERTY_NAME);
-    if (!Strings.isNullOrEmpty(property)) {
-      return new File(property);
-    } else {
-      throw new RuntimeException("Config directory not found. " + CONFIG_DIR_PROPERTY_NAME + " must be defined.");
-    }
-  }
-
-  @Bean
-  public RuntimeConfiguration runtimeConfiguration(Yaml yaml)
-      throws IOException {
-    File configDir = getConfigDirectory();
-    File configPath = new File(configDir, "rhino.yaml");
-    if (!configPath.exists()) {
-      throw new RuntimeConfigurationException(configPath.getAbsolutePath() + " not found");
-    }
-
-    YamlConfiguration runtimeConfiguration;
-    try (Reader reader = new BufferedReader(new FileReader(configPath))) {
-      YamlConfiguration.Input configValues = yaml.loadAs(reader, YamlConfiguration.Input.class);
-      runtimeConfiguration = new YamlConfiguration(configValues);
-    }
-
-    return runtimeConfiguration;
   }
 
   @Bean

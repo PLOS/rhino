@@ -62,7 +62,6 @@ public class ContentRepoPersistenceServiceImpl implements ContentRepoPersistence
       file.setFileType(entry.getKey());
 
       RepoId repoId = repoVersion.getId();
-      file.setBucketName(repoId.getBucketName());
       file.setCrepoKey(repoId.getKey());
       file.setCrepoUuid(repoVersion.getUuid().toString());
 
@@ -91,7 +90,6 @@ public class ContentRepoPersistenceServiceImpl implements ContentRepoPersistence
       file.setIngestedFileName(ancillaryFile.getFilename());
 
       RepoId repoId = repoVersion.getId();
-      file.setBucketName(repoId.getBucketName());
       file.setCrepoKey(repoId.getKey());
       file.setCrepoUuid(repoVersion.getUuid().toString());
 

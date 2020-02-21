@@ -24,21 +24,21 @@ package org.ambraproject.rhino.rest;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterators;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Enumeration;
 import java.util.Iterator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Logs attributes of incoming HTTP requests.
  */
 public class LoggingInterceptor extends HandlerInterceptorAdapter {
 
-  private static final Logger log = LoggerFactory.getLogger(LoggingInterceptor.class);
+  private static final Logger log = LogManager.getLogger(LoggingInterceptor.class);
 
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

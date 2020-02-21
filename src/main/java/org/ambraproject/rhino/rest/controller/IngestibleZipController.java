@@ -22,6 +22,8 @@
 
 package org.ambraproject.rhino.rest.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -39,10 +41,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Optional;
-
 @Controller
 public class IngestibleZipController extends RestController {
 
@@ -59,19 +57,18 @@ public class IngestibleZipController extends RestController {
    */
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/articles", method = RequestMethod.POST)
-  public ResponseEntity<?> zipUpload(@RequestParam(value = "archive", required = true) MultipartFile requestFile,
-                                     @RequestParam(value = "bucket", required = false) String bucket)
+  public ResponseEntity<?> zipUpload(@RequestParam(value = "archive", required = true) MultipartFile requestFile)
       throws IOException {
 
     String ingestedFileName = requestFile.getOriginalFilename();
     ArticleIngestion ingestion;
     try (InputStream requestInputStream = requestFile.getInputStream();
          Archive archive = Archive.readZipFile(ingestedFileName, requestInputStream)) {
-      ingestion = ingestionService.ingest(archive, Optional.ofNullable(bucket));
+      ingestion = ingestionService.ingest(archive);
     } catch (ManifestXml.ManifestDataException e) {
-      throw new RestClientException("Invalid manifest: " + e.getMessage(), HttpStatus.BAD_REQUEST, e);
+      throw new RestClientException("Invalid manifest: " + e.getMessage(), HttpStatus.BAD_REQUEST,
+          e);
     }
-
     // Report the written data, as JSON, in the response.
     ArticleIngestionView view = articleIngestionViewFactory.getView(ingestion);
     return ServiceResponse.reportCreated(view).asJsonResponse(entityGson);

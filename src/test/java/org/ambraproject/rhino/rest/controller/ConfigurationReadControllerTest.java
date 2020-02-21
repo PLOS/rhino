@@ -1,23 +1,25 @@
 package org.ambraproject.rhino.rest.controller;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.junit.Assert.fail;
-
 import java.net.URI;
-
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.ambraproject.rhino.AbstractRhinoTest;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
 import org.ambraproject.rhino.util.GitInfo;
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,12 +32,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import org.junit.Before;
-import org.junit.Test;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 @ContextConfiguration(
     classes = {ConfigurationReadController.class, ConfigurationReadControllerTest.class})
@@ -110,6 +106,9 @@ public class ConfigurationReadControllerTest extends AbstractRhinoTest {
    */
   @Test
   public void testReadRepoConfigShouldSucceed() throws Exception {
+    when(mockRuntimeConfiguration.getCorpusBucket()).thenReturn("corpus");
+    when(mockRuntimeConfiguration.getEditorialBucket()).thenReturn("editorial");
+    when(mockRuntimeConfiguration.getContentRepoUrl()).thenReturn(new URI("http://path/to/content/repo"));
     final MvcResult result = mockModelViewController.perform(get(new URI("/config?type=repo")))
         .andExpect(status().isOk()).andReturn();
     final MockHttpServletResponse response = result.getResponse();
@@ -119,16 +118,12 @@ public class ConfigurationReadControllerTest extends AbstractRhinoTest {
     assertThat(editorial).isNotNull();
     assertThat(editorial.getAsJsonPrimitive("address").getAsString())
         .isEqualTo("http://path/to/content/repo");
-    assertThat(editorial.getAsJsonPrimitive("bucket").getAsString()).isEqualTo("bucket_name");
+    assertThat(editorial.getAsJsonPrimitive("bucket").getAsString()).isEqualTo("editorial");
 
     final JsonObject corpus = data.getAsJsonObject("corpus");
     assertThat(corpus).isNotNull();
     assertThat(corpus.getAsJsonPrimitive("address").getAsString())
         .isEqualTo("http://path/to/content/repo");
-
-    final JsonArray actualSecondaryBuckets = corpus.getAsJsonArray("secondaryBuckets");
-    assertThat(actualSecondaryBuckets).hasSize(1);
-    assertThat(actualSecondaryBuckets.getAsString()).isEqualTo("secondary_bucket");
   }
 
   /**
@@ -172,7 +167,5 @@ public class ConfigurationReadControllerTest extends AbstractRhinoTest {
         .andExpect(status().isNotFound());
     mockModelViewController.perform(get(new URI("/config/userApi")))
         .andExpect(status().isNotFound());
-
-   verify(mockRuntimeConfiguration, times(0)).getNedConfiguration();
   }
 }
