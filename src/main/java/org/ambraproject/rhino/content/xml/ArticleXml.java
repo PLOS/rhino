@@ -22,6 +22,12 @@
 
 package org.ambraproject.rhino.content.xml;
 
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
@@ -35,24 +41,17 @@ import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.model.article.AssetMetadata;
 import org.ambraproject.rhino.model.article.RelatedArticleLink;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-
-import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * An NLM-format XML document that can be "ingested" to build an {@link ArticleMetadata} object.
  */
 public class ArticleXml extends AbstractArticleXml<ArticleMetadata> {
 
-  private static final Logger log = LoggerFactory.getLogger(ArticleXml.class);
+  private static final Logger log = LogManager.getLogger(ArticleXml.class);
 
   public ArticleXml(Document xml) {
     super(xml);

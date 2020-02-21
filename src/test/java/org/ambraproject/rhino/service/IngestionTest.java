@@ -20,7 +20,18 @@
  * DEALINGS IN THE SOFTWARE.
  */
 package org.ambraproject.rhino.service;
-
+import static org.junit.Assert.assertEquals;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.annotation.Nullable;
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -29,6 +40,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
+import com.tngtech.java.junit.dataprovider.DataProvider;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.identity.ArticleIdentifier;
@@ -46,25 +58,8 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.junit.Ignore;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
-import com.tngtech.java.junit.dataprovider.DataProvider;
-
-import javax.annotation.Nullable;
-import java.io.File;
-import java.io.FilenameFilter;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Special test suite for testing ingestion features, using the legacy Admin app as a reference implementation.
@@ -83,8 +78,6 @@ import static org.junit.Assert.assertEquals;
  */
 @Ignore
 public class IngestionTest extends BaseRhinoTest {
-  private static final Logger log = LoggerFactory.getLogger(IngestionTest.class);
-
   private static final File DATA_PATH = new File("src/test/resources/articles/");
   private static final File ZIP_DATA_PATH = new File("src/test/resources/articles/");
   private static final String JSON_SUFFIX = ".json";

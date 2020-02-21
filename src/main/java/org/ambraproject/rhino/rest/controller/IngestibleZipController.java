@@ -66,9 +66,9 @@ public class IngestibleZipController extends RestController {
          Archive archive = Archive.readZipFile(ingestedFileName, requestInputStream)) {
       ingestion = ingestionService.ingest(archive);
     } catch (ManifestXml.ManifestDataException e) {
-      throw new RestClientException("Invalid manifest: " + e.getMessage(), HttpStatus.BAD_REQUEST, e);
+      throw new RestClientException("Invalid manifest: " + e.getMessage(), HttpStatus.BAD_REQUEST,
+          e);
     }
-
     // Report the written data, as JSON, in the response.
     ArticleIngestionView view = articleIngestionViewFactory.getView(ingestion);
     return ServiceResponse.reportCreated(view).asJsonResponse(entityGson);

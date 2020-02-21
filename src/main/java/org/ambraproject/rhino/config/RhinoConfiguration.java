@@ -80,8 +80,6 @@ import org.hibernate.SessionFactory;
 import org.plos.crepo.config.HttpClientFunction;
 import org.plos.crepo.service.ContentRepoService;
 import org.plos.crepo.service.ContentRepoServiceImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -98,8 +96,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 public class RhinoConfiguration {
-
-  private static final Logger log = LoggerFactory.getLogger(RhinoConfiguration.class);
 
   @Bean
   public AnnotationSessionFactoryBean sessionFactory(DataSource hibernateDataSource,

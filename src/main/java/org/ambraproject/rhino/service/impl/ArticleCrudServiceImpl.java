@@ -76,6 +76,8 @@ import org.ambraproject.rhino.view.article.ItemSetView;
 import org.ambraproject.rhino.view.article.author.ArticleAllAuthorsView;
 import org.ambraproject.rhino.view.article.author.AuthorView;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -83,8 +85,6 @@ import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
@@ -95,7 +95,7 @@ import org.w3c.dom.Document;
 @SuppressWarnings("JpaQlInspection")
 public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudService {
 
-  private static final Logger LOG = LoggerFactory.getLogger(ArticleCrudServiceImpl.class);
+  private static final Logger LOG = LogManager.getLogger(ArticleCrudServiceImpl.class);
 
   private static final Joiner SPACE_JOINER = Joiner.on(' ');
 

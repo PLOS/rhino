@@ -31,8 +31,6 @@ import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ListMultimap;
 import org.ambraproject.rhino.model.article.ArticleCustomMetadata;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 
 /**
@@ -40,8 +38,6 @@ import org.w3c.dom.Node;
  * configured per server.
  */
 public class CustomMetadataExtractor extends AbstractArticleXml<ArticleCustomMetadata> {
-  private static final Logger log = LoggerFactory.getLogger(CustomMetadataExtractor.class);
-
   public static class Factory {
     public CustomMetadataExtractor parse(Node xml) {
       return new CustomMetadataExtractor(xml);

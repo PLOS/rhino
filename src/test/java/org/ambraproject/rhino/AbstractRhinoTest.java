@@ -1,5 +1,12 @@
 package org.ambraproject.rhino;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.withSettings;
+import java.util.UUID;
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
@@ -10,6 +17,8 @@ import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.HibernatePersistenceService;
 import org.ambraproject.rhino.util.Java8TimeGsonAdapters;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.FlushMode;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
@@ -22,28 +31,17 @@ import org.plos.crepo.model.identity.RepoVersion;
 import org.plos.crepo.model.input.RepoObjectInput;
 import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.plos.crepo.service.ContentRepoService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.context.annotation.Bean;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
-
-import java.util.UUID;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.withSettings;
 
 /**
  * Abstract base class for Rhino unit tests.
  */
 public abstract class AbstractRhinoTest extends AbstractJUnit4SpringContextTests {
 
-  protected static final Logger LOG = LoggerFactory.getLogger(AbstractRhinoTest.class);
+  protected static final Logger LOG = LogManager.getLogger(AbstractRhinoTest.class);
 
   protected static final String DESTINATION_BUCKET = "water_bucket";
 

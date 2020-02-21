@@ -22,39 +22,7 @@
 
 package org.ambraproject.rhino.service.taxonomy.impl;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Charsets;
-import com.google.common.base.Splitter;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Maps;
-import org.ambraproject.rhino.config.RuntimeConfiguration;
-import org.ambraproject.rhino.model.Article;
-import org.ambraproject.rhino.model.ArticleCategoryAssignment;
-import org.ambraproject.rhino.model.ArticleIngestion;
-import org.ambraproject.rhino.model.ArticleRevision;
-import org.ambraproject.rhino.model.Category;
-import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
-import org.ambraproject.rhino.service.taxonomy.TaxonomyRemoteServiceInvalidBehaviorException;
-import org.ambraproject.rhino.service.taxonomy.TaxonomyRemoteServiceNotAvailableException;
-import org.ambraproject.rhino.service.taxonomy.TaxonomyRemoteServiceNotConfiguredException;
-import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.hibernate.Query;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilder;
+import static org.ambraproject.rhino.service.impl.AmbraService.newDocumentBuilder;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -70,8 +38,37 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
-import static org.ambraproject.rhino.service.impl.AmbraService.newDocumentBuilder;
+import javax.xml.parsers.DocumentBuilder;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Charsets;
+import com.google.common.base.Splitter;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Maps;
+import org.ambraproject.rhino.config.RuntimeConfiguration;
+import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleCategoryAssignment;
+import org.ambraproject.rhino.model.ArticleIngestion;
+import org.ambraproject.rhino.model.ArticleRevision;
+import org.ambraproject.rhino.model.Category;
+import org.ambraproject.rhino.service.ArticleCrudService;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyRemoteServiceInvalidBehaviorException;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyRemoteServiceNotAvailableException;
+import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.hibernate.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
  * This is a separate bean from {@link TaxonomyServiceImpl} because it has a special dependency on the remote taxonomy
@@ -82,7 +79,7 @@ import static org.ambraproject.rhino.service.impl.AmbraService.newDocumentBuilde
 @SuppressWarnings("JpaQlInspection")
 public class TaxonomyClassificationServiceImpl implements TaxonomyClassificationService {
 
-  private static final Logger log = LoggerFactory.getLogger(TaxonomyClassificationServiceImpl.class);
+  private static final Logger log = LogManager.getLogger(TaxonomyClassificationServiceImpl.class);
 
   private static final String MESSAGE_BEGIN = "<TMMAI project='%s' location = '.'>\n" +
       "  <Method name='getSuggestedTermsFullPathsPlos' returnType='java.util.Vector'/>\n" +

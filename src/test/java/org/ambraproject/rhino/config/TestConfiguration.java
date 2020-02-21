@@ -39,8 +39,6 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.plos.crepo.service.ContentRepoService;
 import org.plos.crepo.service.InMemoryContentRepoService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -53,9 +51,6 @@ import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 // TODO: get tests to work transactionally
 /* @EnableTransactionManagement(proxyTargetClass = true) */
 public class TestConfiguration {
-
-  private static final Logger LOG = LoggerFactory.getLogger(TestConfiguration.class);
-
   /**
    * Dummy object for sanity-checking the unit test configuration.
    *

@@ -57,8 +57,6 @@ import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.view.article.ArticleRevisionView;
 import org.ambraproject.rhino.view.article.RelationshipViewFactory;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
@@ -73,6 +71,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -80,7 +80,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class ArticleCrudController extends RestController {
 
-  private static final Logger log = LoggerFactory.getLogger(ArticleCrudController.class);
+  private static final Logger log = LogManager.getLogger(ArticleCrudController.class);
 
   private static final String FROM_DATE = "fromDate";
 
