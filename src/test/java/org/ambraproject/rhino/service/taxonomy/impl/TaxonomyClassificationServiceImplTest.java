@@ -24,39 +24,60 @@ package org.ambraproject.rhino.service.taxonomy.impl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import java.io.File;
 import java.util.List;
-import java.util.stream.Stream;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
-import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
+import com.google.common.collect.ImmutableList;
+import org.ambraproject.rhino.config.TestConfiguration;
+import org.ambraproject.rhino.model.Article;
+import org.ambraproject.rhino.model.ArticleIngestion;
+import org.ambraproject.rhino.model.ArticleRevision;
+import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyRemoteServiceInvalidBehaviorException;
 import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.junit.Assert;
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
-
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.w3c.dom.Document;
-
-import com.google.common.collect.ImmutableList;
 
 /**
  * @author Alex Kudlick Date: 7/3/12
  */
-@RunWith(DataProviderRunner.class)
-public class TaxonomyClassificationServiceImplTest {
-  @Autowired
-  protected TaxonomyClassificationService taxonomyClassificationService;
+@ContextConfiguration
+public class TaxonomyClassificationServiceImplTest extends AbstractJUnit4SpringContextTests {
+
+  @Configuration
+  @Import(TestConfiguration.class)
+  static class ContextConfiguration {
+    @Bean
+    TaxonomyClassificationServiceImpl taxonomyClassificationService() {
+      return spy(new TaxonomyClassificationServiceImpl());
+    }
+  }
 
   private DocumentBuilder documentBuilder;
+
+  @Autowired
+  ArticleCrudService articleCrudService;
+
+  @Autowired
+  TaxonomyClassificationServiceImpl taxonomyClassificationService;
 
   private DocumentBuilder getDocumentBuilder() throws ParserConfigurationException {
     if (documentBuilder != null) return documentBuilder;
@@ -80,6 +101,34 @@ public class TaxonomyClassificationServiceImplTest {
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
+  }
+
+  @Test
+  public void testPopulateCategories() {
+    Article article = mock(Article.class);
+    ArticleRevision revision = mock(ArticleRevision.class);
+    ArticleIngestion ingestion = mock(ArticleIngestion.class);
+    Document xml = mock(Document.class);
+    when(articleCrudService.getManuscriptXml(ingestion)).thenReturn(xml);
+    doReturn(ImmutableList.of(new WeightedTerm("/foo/bar", 1))).when(taxonomyClassificationService).classifyArticle(article, xml);
+    when(revision.getIngestion()).thenReturn(ingestion);
+    when(ingestion.getArticleType()).thenReturn("Research Article");
+    when(ingestion.getArticle()).thenReturn(article);
+    doNothing().when(taxonomyClassificationService).persistCategories(any(), eq(article));
+
+    taxonomyClassificationService.populateCategories(revision);
+  }
+
+  @Test
+  public void testPopulateCategoriesSkippedOnCorrection() {
+    ArticleRevision revision = mock(ArticleRevision.class);
+    ArticleIngestion ingestion = mock(ArticleIngestion.class);
+    when(revision.getIngestion()).thenReturn(ingestion);
+    when(ingestion.getArticleType()).thenReturn("Correction");
+
+    taxonomyClassificationService.populateCategories(revision);
+
+    verify(ingestion, times(0)).getArticle();
   }
 
   @Test
@@ -185,7 +234,6 @@ public class TaxonomyClassificationServiceImplTest {
   }
 
 
-  @DataProvider
   public static Object[][] getDistinctLeafNodesTestCases() {
     return new Object[][]{
         new Object[] {0, ImmutableList.of(), ImmutableList.of()},
@@ -254,8 +302,14 @@ public class TaxonomyClassificationServiceImplTest {
   }
 
   @Test
-  @UseDataProvider("getDistinctLeafNodesTestCases")
-  public void testGetDistinctLeafNodes(int leafCount, List<WeightedTerm> input, List<WeightedTerm> expected) {
+  public void testGetDistinctLeafNodesAll() {
+    for (Object[] data: getDistinctLeafNodesTestCases()) {
+      testGetDistinctLeafNodes((int) data[0], (List<WeightedTerm>) data[1], (List<WeightedTerm>) data[2]);
+    }
+  }
+        
+  public void testGetDistinctLeafNodes(int leafCount, List<WeightedTerm> input,
+      List<WeightedTerm> expected) {
     List<WeightedTerm> actual = TaxonomyClassificationServiceImpl.getDistinctLeafNodes(leafCount, input);
     Assert.assertEquals(actual, expected);
   }
