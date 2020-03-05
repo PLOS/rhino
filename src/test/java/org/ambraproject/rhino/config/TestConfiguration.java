@@ -22,8 +22,14 @@
 
 package org.ambraproject.rhino.config;
 
+import static org.mockito.Mockito.mock;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+import javax.sql.DataSource;
 import com.google.common.io.Closeables;
 import org.ambraproject.rhino.content.xml.XpathReader;
+import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
@@ -44,11 +50,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 import org.yaml.snakeyaml.Yaml;
-
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 
 @Configuration
 @Import(RhinoConfiguration.class)
@@ -142,5 +143,10 @@ public class TestConfiguration {
     }
 
     return runtimeConfiguration;
+  }
+
+  @Bean
+  public ArticleCrudService articleCrudService() throws Exception {
+    return mock(ArticleCrudService.class);
   }
 }

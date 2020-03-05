@@ -22,9 +22,26 @@
 
 package org.ambraproject.rhino.service.taxonomy.impl;
 
+import static org.ambraproject.rhino.service.impl.AmbraService.newDocumentBuilder;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import javax.xml.parsers.DocumentBuilder;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Charsets;
 import com.google.common.base.Splitter;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
@@ -53,24 +70,6 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilder;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
-import static org.ambraproject.rhino.service.impl.AmbraService.newDocumentBuilder;
 
 /**
  * This is a separate bean from {@link TaxonomyServiceImpl} because it has a special dependency on the remote taxonomy
@@ -112,6 +111,9 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   // Number of most-weighted category leaf nodes to associate with each article
   // TODO: Make configurable?
   private static final int CATEGORY_COUNT = 8;
+
+  /* Article types to exclude from categorization. */ 
+  private static final List<String> EXCLUDE_FROM_CATEGORIZATION = ImmutableList.of("correction", "expression of concern", "retraction");
 
   @Autowired
   private CloseableHttpClient httpClient;
@@ -254,21 +256,16 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   @Override
   public void populateCategories(ArticleRevision revision) {
     ArticleIngestion ingestion = revision.getIngestion();
-    Article article = ingestion.getArticle();
-    Document xml = articleCrudService.getManuscriptXml(ingestion);
 
-    List<WeightedTerm> terms;
-    String doi = article.getDoi();
-
-    boolean isAmendment = false; //todo: fix or remove this when we find a home for article types
-
-    if (!isAmendment) {
-      terms = classifyArticle(article, xml);
+    if (!EXCLUDE_FROM_CATEGORIZATION.contains(ingestion.getArticleType().toLowerCase())) {
+      Article article = ingestion.getArticle();
+      Document xml = articleCrudService.getManuscriptXml(ingestion);
+      List<WeightedTerm> terms = classifyArticle(article, xml);
       if (terms != null && terms.size() > 0) {
         List<WeightedTerm> leafNodes = getDistinctLeafNodes(CATEGORY_COUNT, terms);
         persistCategories(leafNodes, article);
       } else {
-        log.error("Taxonomy server returned 0 terms. Cannot populate Categories. " + doi);
+        log.error("Taxonomy server returned 0 terms. Cannot populate Categories. " + article.getDoi());
       }
     }
   }
@@ -297,7 +294,8 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
         .collect(Collectors.toList());
   }
 
-  private void persistCategories(List<WeightedTerm> terms, Article article) {
+  @VisibleForTesting
+  public void persistCategories(List<WeightedTerm> terms, Article article) {
     Set<String> termStrings = terms.stream()
         .map(WeightedTerm::getPath)
         .collect(Collectors.toSet());
