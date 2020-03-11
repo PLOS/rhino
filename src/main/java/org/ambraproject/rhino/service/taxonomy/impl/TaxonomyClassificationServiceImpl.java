@@ -42,6 +42,7 @@ import javax.xml.parsers.DocumentBuilder;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Charsets;
 import com.google.common.base.Splitter;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
@@ -110,6 +111,9 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   // Number of most-weighted category leaf nodes to associate with each article
   // TODO: Make configurable?
   private static final int CATEGORY_COUNT = 8;
+
+  /* Article types to exclude from categorization. */ 
+  private static final List<String> EXCLUDE_FROM_CATEGORIZATION = ImmutableList.of("correction", "expression of concern", "retraction");
 
   @Autowired
   private CloseableHttpClient httpClient;
@@ -253,21 +257,16 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   @Override
   public void populateCategories(ArticleRevision revision) {
     ArticleIngestion ingestion = revision.getIngestion();
-    Article article = ingestion.getArticle();
-    Document xml = articleCrudService.getManuscriptXml(ingestion);
 
-    List<WeightedTerm> terms;
-    String doi = article.getDoi();
-
-    boolean isAmendment = false; //todo: fix or remove this when we find a home for article types
-
-    if (!isAmendment) {
-      terms = classifyArticle(article, xml);
+    if (!EXCLUDE_FROM_CATEGORIZATION.contains(ingestion.getArticleType().toLowerCase())) {
+      Article article = ingestion.getArticle();
+      Document xml = articleCrudService.getManuscriptXml(ingestion);
+      List<WeightedTerm> terms = classifyArticle(article, xml);
       if (terms != null && terms.size() > 0) {
         List<WeightedTerm> leafNodes = getDistinctLeafNodes(CATEGORY_COUNT, terms);
         persistCategories(leafNodes, article);
       } else {
-        log.error("Taxonomy server returned 0 terms. Cannot populate Categories. " + doi);
+        log.error("Taxonomy server returned 0 terms. Cannot populate Categories. " + article.getDoi());
       }
     }
   }
@@ -296,7 +295,8 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
         .collect(Collectors.toList());
   }
 
-  private void persistCategories(List<WeightedTerm> terms, Article article) {
+  @VisibleForTesting
+  public void persistCategories(List<WeightedTerm> terms, Article article) {
     Set<String> termStrings = terms.stream()
         .map(WeightedTerm::getPath)
         .collect(Collectors.toSet());

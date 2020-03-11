@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.util.Properties;
 import javax.sql.DataSource;
 import org.ambraproject.rhino.content.xml.XpathReader;
+import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
@@ -122,5 +123,10 @@ public class TestConfiguration {
   @Bean
   public RuntimeConfiguration runtimeConfiguration() throws Exception {
     return mock(RuntimeConfiguration.class);
+  }
+
+  @Bean
+  public ArticleCrudService articleCrudService() throws Exception {
+    return mock(ArticleCrudService.class);
   }
 }
