@@ -23,7 +23,20 @@ package org.ambraproject.rhino.service.impl;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-
+import java.io.IOException;
+import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import javax.xml.xpath.XPathException;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
@@ -62,33 +75,17 @@ import org.ambraproject.rhino.view.article.ItemSetView;
 import org.ambraproject.rhino.view.article.author.ArticleAllAuthorsView;
 import org.ambraproject.rhino.view.article.author.AuthorView;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
-
-import javax.xml.xpath.XPathException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -96,7 +93,7 @@ import java.util.stream.Collectors;
 @SuppressWarnings("JpaQlInspection")
 public abstract class AbstractArticleCrudServiceImpl extends AmbraService implements ArticleCrudService {
 
-  private static final Logger LOG = LoggerFactory.getLogger(AbstractArticleCrudServiceImpl.class);
+  private static final Logger LOG = LogManager.getLogger(AbstractArticleCrudServiceImpl.class);
 
   private static final Joiner SPACE_JOINER = Joiner.on(' ');
 
@@ -110,13 +107,39 @@ public abstract class AbstractArticleCrudServiceImpl extends AmbraService implem
   private ArticleIngestionView.Factory articleIngestionViewFactory;
   @Autowired
   private ItemSetView.Factory itemSetViewFactory;
-
   @Autowired
   private RuntimeConfiguration runtimeConfiguration;
 
   String bucketName() {
-    return runtimeConfiguration.getS3Bucket();
+    return runtimeConfiguration.getCorpusBucket();
   }
+
+// <<<<<<< HEAD:src/main/java/org/ambraproject/rhino/service/impl/AbstractArticleCrudServiceImpl.java
+// =======
+//   public Archive repack(ArticleIngestionIdentifier ingestionId) {
+
+//     String bucketName = runtimeConfiguration.getCorpusBucket();
+//     Map<String, ByteSource> archiveMap = files.stream().collect(Collectors.toMap(
+//         ArticleFile::getIngestedFileName,
+//         (ArticleFile file) -> new ByteSource() {
+//           @Override
+//           public InputStream openStream() throws IOException {
+//             return contentRepoService.getRepoObject(file.getCrepoVersion(bucketName));
+//           }
+//         }));
+
+//     return Archive.pack(extractFilenameStub(ingestionId.getDoiName()) + ".zip", archiveMap);
+//   }
+
+//   private static final Pattern FILENAME_STUB_PATTERN = Pattern.compile("(?:[^/]*/)*?([^/]*)/?");
+
+//   private static String extractFilenameStub(String name) {
+//     Matcher m = FILENAME_STUB_PATTERN.matcher(name);
+//     return m.matches() ? m.group(1) : name;
+//   }
+
+//   @Override
+// >>>>>>> docker:src/main/java/org/ambraproject/rhino/service/impl/ArticleCrudServiceImpl.java
 
   @Override
   public Archive repack(ArticleIngestionIdentifier ingestionId) {
@@ -503,17 +526,16 @@ public abstract class AbstractArticleCrudServiceImpl extends AmbraService implem
         new RestClientException("Article not found: " + articleIdentifier, HttpStatus.NOT_FOUND));
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public Collection<ArticleRevision> getArticlesPublishedOn(LocalDate fromDate, LocalDate toDate) {
     return hibernateTemplate.execute(session -> {
-      final String queryString;
-        queryString = SPACE_JOINER.join("SELECT DISTINCT ar",
-            "FROM ArticleRevision ar",
-            "INNER JOIN ar.ingestion ai",
-            "INNER JOIN  ar.ingestion.article at",
-            "WHERE ai.publicationDate >= :fromDate AND ai.publicationDate <= :toDate",
-            "AND ar.revisionId IS NOT NULL");
+      final String queryString = SPACE_JOINER
+        .join(
+              "SELECT DISTINCT ar",
+              "FROM ArticleRevision ar",
+              "INNER JOIN ar.ingestion ai", "INNER JOIN  ar.ingestion.article at",
+              "WHERE ai.publicationDate >= :fromDate AND ai.publicationDate <= :toDate",
+              "AND ar.revisionId IS NOT NULL");
       Query query = session.createQuery(queryString);
       query.setParameter("fromDate", java.sql.Date.valueOf(fromDate));
       query.setParameter("toDate", java.sql.Date.valueOf(toDate));
@@ -521,17 +543,15 @@ public abstract class AbstractArticleCrudServiceImpl extends AmbraService implem
     });
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public Collection<ArticleRevision> getArticlesRevisedOn(LocalDate fromDate, LocalDate toDate) {
     return hibernateTemplate.execute(session -> {
-      final String queryString;
-      queryString = SPACE_JOINER.join("SELECT DISTINCT ar",
-            "FROM ArticleRevision ar",
-            "INNER JOIN ar.ingestion ai",
-            "INNER JOIN  ar.ingestion.article at",
-            "WHERE ai.revisionDate >= :fromDate AND ai.revisionDate <= :toDate",
-            "AND ar.revisionId IS NOT NULL");
+      final String queryString = SPACE_JOINER
+        .join("SELECT DISTINCT ar",
+              "FROM ArticleRevision ar",
+              "INNER JOIN ar.ingestion ai", "INNER JOIN  ar.ingestion.article at",
+              "WHERE ai.revisionDate >= :fromDate AND ai.revisionDate <= :toDate",
+              "AND ar.revisionId IS NOT NULL");
       Query query = session.createQuery(queryString);
       query.setParameter("fromDate", java.sql.Date.valueOf(fromDate));
       query.setParameter("toDate", java.sql.Date.valueOf(toDate));

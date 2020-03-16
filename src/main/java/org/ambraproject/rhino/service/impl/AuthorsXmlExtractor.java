@@ -22,6 +22,21 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.xpath.XPathException;
+import javax.xml.xpath.XPathExpressionException;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -31,28 +46,12 @@ import org.ambraproject.rhino.util.StringReplacer;
 import org.ambraproject.rhino.view.article.author.AuthorRole;
 import org.ambraproject.rhino.view.article.author.AuthorView;
 import org.ambraproject.rhino.view.article.author.Orcid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.xpath.XPathException;
-import javax.xml.xpath.XPathExpressionException;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Contains logic for extracting author information from article XML.
@@ -61,7 +60,7 @@ import java.util.stream.Collectors;
  */
 public final class AuthorsXmlExtractor {
 
-  private static final Logger log = LoggerFactory.getLogger(AuthorsXmlExtractor.class);
+  private static final Logger log = LogManager.getLogger(AuthorsXmlExtractor.class);
 
   private static final StringReplacer MARKUP_REPLACER = StringReplacer.builder()
       .replaceRegex("<corresp(.*?)>", "")

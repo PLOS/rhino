@@ -25,6 +25,7 @@ package org.ambraproject.rhino.service.taxonomy.impl;
 import static org.ambraproject.rhino.service.impl.AmbraService.newDocumentBuilder;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,7 +55,6 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyRemoteServiceInvalidBehaviorException;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyRemoteServiceNotAvailableException;
-import org.ambraproject.rhino.service.taxonomy.TaxonomyRemoteServiceNotConfiguredException;
 import org.ambraproject.rhino.service.taxonomy.WeightedTerm;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -62,9 +62,9 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Query;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.w3c.dom.Document;
@@ -80,7 +80,7 @@ import org.xml.sax.SAXException;
 @SuppressWarnings("JpaQlInspection")
 public class TaxonomyClassificationServiceImpl implements TaxonomyClassificationService {
 
-  private static final Logger log = LoggerFactory.getLogger(TaxonomyClassificationServiceImpl.class);
+  private static final Logger log = LogManager.getLogger(TaxonomyClassificationServiceImpl.class);
 
   private static final String MESSAGE_BEGIN = "<TMMAI project='%s' location = '.'>\n" +
       "  <Method name='getSuggestedTermsFullPathsPlos' returnType='java.util.Vector'/>\n" +
@@ -124,12 +124,21 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   @Autowired
   protected HibernateTemplate hibernateTemplate;
 
+  // See https://jira.plos.org/jira/browse/AMEC-100.
+  // Basically it was a one-time hack which may or may not still be
+  // needed. But at some point the hack of blacklisting a single
+  // category turned into a configurable feature. It seemed to me that
+  // this was absolutely not something that needed to be configurable
+  // at runtime, so I just moved it here. It's not clear if this is
+  // still a feature we need, but we decided it was best to keep the
+  // feature in for now.
+  private static final String[] CATEGORY_BLACKLIST =
+      new String[] {"/Earth sciences/Geography/Locations/"};
   /**
    * @inheritDoc
    */
   @Override
   public List<WeightedTerm> classifyArticle(Article article, Document articleXml)  {
-    RuntimeConfiguration.TaxonomyConfiguration configuration = getTaxonomyConfiguration();
 
     List<String> rawTerms = getRawTerms(articleXml, article, false /*isTextRequired*/);
     List<WeightedTerm> results = new ArrayList<>(rawTerms.size());
@@ -139,7 +148,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
       String term = entry.getPath();
       if (term != null) {
         boolean isBlacklisted = false;
-        for (String blacklistedCategory : configuration.getCategoryBlacklist()) {
+        for (String blacklistedCategory : CATEGORY_BLACKLIST) {
           if (term.startsWith(blacklistedCategory)) {
             isBlacklisted = true;
             break;
@@ -153,14 +162,6 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     return results;
   }
 
-  private RuntimeConfiguration.TaxonomyConfiguration getTaxonomyConfiguration() {
-    RuntimeConfiguration.TaxonomyConfiguration configuration = runtimeConfiguration.getTaxonomyConfiguration();
-    if (configuration.getServer() == null || configuration.getThesaurus() == null) {
-      throw new TaxonomyRemoteServiceNotConfiguredException();
-    }
-    return configuration;
-  }
-
   private static final ContentType APPLICATION_XML_UTF_8 = ContentType.create("application/xml", Charsets.UTF_8);
 
   /**
@@ -168,8 +169,8 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
    */
   @Override
   public List<String> getRawTerms(Document articleXml, Article article, boolean isTextRequired) {
-    RuntimeConfiguration.TaxonomyConfiguration configuration = getTaxonomyConfiguration();
-
+    String thesaurus = runtimeConfiguration.getThesaurus();
+    URI taxonomyUrl = runtimeConfiguration.getTaxonomyUrl();
 
     String toCategorize = getCategorizationContent(articleXml);
 
@@ -180,11 +181,11 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
         latest.getArticleType(),
         article.getDoi());
 
-    String aiMessage = String.format(MESSAGE_BEGIN, configuration.getThesaurus())
+    String aiMessage = String.format(MESSAGE_BEGIN, thesaurus)
         + StringEscapeUtils.escapeXml10(String.format(MESSAGE_DOC_ELEMENT, header, toCategorize))
         + MESSAGE_END;
 
-    HttpPost post = new HttpPost(configuration.getServer().toString());
+    HttpPost post = new HttpPost(taxonomyUrl.toString());
     post.setEntity(new StringEntity(aiMessage, APPLICATION_XML_UTF_8));
 
     DocumentBuilder documentBuilder = newDocumentBuilder();
@@ -196,7 +197,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     } catch (IOException e) {
       throw new TaxonomyRemoteServiceNotAvailableException(e);
     } catch (SAXException e) {
-      throw new TaxonomyRemoteServiceInvalidBehaviorException("Invalid XML returned from " + configuration.getServer(), e);
+      throw new TaxonomyRemoteServiceInvalidBehaviorException("Invalid XML returned from " + taxonomyUrl, e);
     }
 
     //parse result

@@ -24,8 +24,8 @@ package org.ambraproject.rhino.view.comment;
 
 import com.google.common.base.Strings;
 import org.ambraproject.rhino.model.Comment;
-import org.ambraproject.rhino.config.RuntimeConfiguration;
-
+import java.time.LocalDate;
+import java.time.Month;
 import java.time.ZoneId;
 import java.util.Date;
 
@@ -36,9 +36,13 @@ public class CompetingInterestPolicy {
 
   private final Date startDate;
 
-  public CompetingInterestPolicy(RuntimeConfiguration runtimeConfiguration) {
-    this.startDate = Date.from(runtimeConfiguration.getCompetingInterestPolicyStart()
-        .atStartOfDay(ZoneId.systemDefault()).toInstant());
+  /**
+   * The date at which the relevant software upgrade was deployed on PLOS's Ambra system.
+   */
+  private static final LocalDate COMPETING_INTEREST_POLICY_START = LocalDate.of(2009, Month.MARCH, 20);
+
+  public CompetingInterestPolicy() {
+    this.startDate = Date.from(COMPETING_INTEREST_POLICY_START.atStartOfDay(ZoneId.systemDefault()).toInstant());
   }
 
   CompetingInterestStatement createStatement(Comment comment) {

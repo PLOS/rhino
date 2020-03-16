@@ -22,6 +22,24 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockingDetails;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import javax.xml.parsers.ParserConfigurationException;
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.ByteSource;
 import com.google.common.io.Resources;
@@ -47,36 +65,14 @@ import org.ambraproject.rhino.service.ArticleDatabaseService;
 import org.ambraproject.rhino.util.Archive;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.junit.Before;
-
-import org.junit.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
-
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
-import static com.google.common.truth.Truth.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockingDetails;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.junit.Assert.fail;
 
 @ContextConfiguration(classes = IngestionServiceTest.class)
 @Configuration
@@ -94,10 +90,12 @@ public class IngestionServiceTest extends AbstractRhinoTest {
       "dupp.0000001.s005.docx", "dupp.0000001.s006.docx", "dupp.0000001.s007.docx");
 
   private IngestionService ingestionService;
-
+  private RuntimeConfiguration mockRuntimeConfiguration;
+  
   @Before
   public void init() {
     ingestionService = new IngestionService();
+    mockRuntimeConfiguration = applicationContext.getBean(RuntimeConfiguration.class);
   }
 
   @Bean
@@ -338,6 +336,7 @@ public class IngestionServiceTest extends AbstractRhinoTest {
   @DirtiesContext()
   public void testArticleIngestShouldSucceed()
       throws IOException, ParserConfigurationException, SAXException {
+    when(mockRuntimeConfiguration.getCorpusBucket()).thenReturn("corpus");
     final URL xmlDataResource = Resources.getResource(IngestionServiceTest.class, MANIFEST_XML);
     final File manifestFile = FileUtils.toFile(xmlDataResource);
     final byte[] manifestData = FileUtils.readFileToByteArray(manifestFile);
@@ -395,5 +394,45 @@ public class IngestionServiceTest extends AbstractRhinoTest {
 
     verify(mockArticleDatabaseService).persistArticle(expectedArticleDoi);
     verify(mockArticleDatabaseService).persistIngestion(any(Article.class), any(IngestPackage.class));
+    // verify(mockPersistenceService).persistArticle(expectedArticleDoi);
+    // verify(mockPersistenceService).persistIngestion(any(Article.class), any(IngestPackage.class));
+  }
+
+  /**
+   * Test successful article ingestion into a bucket.
+   * 
+   * @throws IOException if archive file cannot be processed
+   * @throws SAXException if any XML parsing errors
+   * @throws ParserConfigurationException if a DocumentBuilder cannot be created
+   */
+  @Test
+  @DirtiesContext
+  public void testIngestIntoBucketShouldSucceed()
+      throws IOException, ParserConfigurationException, SAXException {
+    final URL xmlDataResource = Resources.getResource(IngestionServiceTest.class, MANIFEST_XML);
+    final File manifestFile = FileUtils.toFile(xmlDataResource);
+    final byte[] manifestData = FileUtils.readFileToByteArray(manifestFile);
+    final Archive testArchive = createStubArchive(manifestData, ARTICLE_INGEST_ENTRIES);
+
+    when(mockRuntimeConfiguration.getCorpusBucket()).thenReturn("corpus");
+
+    final String manuscriptEntry = "dupp.0000001.xml";
+    final URL manuscriptResource =
+        Resources.getResource(IngestionServiceTest.class, manuscriptEntry);
+    final Document manuscript = RhinoTestHelper.loadXMLFromString(manuscriptResource);
+
+    final IngestionService mockIngestionService =
+        applicationContext.getBean(IngestionService.class);
+
+    doReturn(manuscript).when(mockIngestionService).getDocument(testArchive, manuscriptEntry);
+
+    final ArticleIngestion expectedIngestion = new ArticleIngestion();
+
+    doReturn(expectedIngestion).when(mockIngestionService)
+        .processIngestPackage(any(IngestPackage.class));
+
+    mockIngestionService.ingest(testArchive); // Ingest the archive to the bucket.
+
+    verify(mockIngestionService).processIngestPackage(any(IngestPackage.class));
   }
 }

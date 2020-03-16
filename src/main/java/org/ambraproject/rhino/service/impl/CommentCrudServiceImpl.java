@@ -88,7 +88,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     Article article = articleCrudService.readArticle(articleId);
     Collection<Comment> comments = fetchAllComments(article);
     CommentOutputView.Factory factory
-        = new CommentOutputView.Factory(new CompetingInterestPolicy(runtimeConfiguration),
+        = new CommentOutputView.Factory(new CompetingInterestPolicy(),
         comments, article);
     List<CommentOutputView> views = comments.stream()
         .filter(comment -> comment.getParent() == null)
@@ -101,7 +101,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   private CommentOutputView createView(Comment comment) {
     Article article = comment.getArticle();
     Collection<Comment> articleComments = fetchAllComments(article);
-    return new CommentOutputView.Factory(new CompetingInterestPolicy(runtimeConfiguration),
+    return new CommentOutputView.Factory(new CompetingInterestPolicy(),
         articleComments, article).buildView(comment);
   }
 
@@ -200,7 +200,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
     hibernateTemplate.save(created);
 
     List<Comment> childComments = ImmutableList.of(); // the new comment can't have any children yet
-    CompetingInterestPolicy competingInterestPolicy = new CompetingInterestPolicy(runtimeConfiguration);
+    CompetingInterestPolicy competingInterestPolicy = new CompetingInterestPolicy();
     CommentOutputView.Factory viewFactory = new CommentOutputView.Factory(competingInterestPolicy,
         childComments, article);
     CommentOutputView view = viewFactory.buildView(created);
@@ -319,7 +319,7 @@ public class CommentCrudServiceImpl extends AmbraService implements CommentCrudS
   public CacheableResponse<CommentFlagOutputView> readCommentFlag(long flagId) {
     Flag flag = getFlag(flagId);
     return CacheableResponse.serveEntity(flag,
-        f -> new CommentNodeView.Factory(runtimeConfiguration).createFlagView(f));
+        f -> new CommentNodeView.Factory().createFlagView(f));
   }
 
   @Override

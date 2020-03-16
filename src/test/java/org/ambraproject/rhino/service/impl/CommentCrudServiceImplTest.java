@@ -110,15 +110,12 @@ public class CommentCrudServiceImplTest extends AbstractStubbingArticleTest {
     when(mockArticleCrudService.readArticle(ArticleIdentifier.create("0"))).thenReturn(createStubArticle());
 
     when(mockHibernateTemplate.find(any(String.class), any(Object.class))).thenAnswer(new Returns(stubComments));
-    when(mockRuntimeConfiguration.getCompetingInterestPolicyStart()).thenReturn(LocalDate.now());
-
     mockCommentCrudService.serveComments(ArticleIdentifier.create("0"));
   }
 
   @Test
   public void testServeComment() throws Exception {
     when(mockHibernateTemplate.execute(any())).thenReturn(createStubComment());
-    when(mockRuntimeConfiguration.getCompetingInterestPolicyStart()).thenReturn(LocalDate.now());
     when(mockHibernateTemplate.find(any(String.class), any(Object.class))).thenAnswer(new Returns(stubComments));
 
     mockCommentCrudService.serveComment(CommentIdentifier.create("0"));
@@ -129,8 +126,6 @@ public class CommentCrudServiceImplTest extends AbstractStubbingArticleTest {
     final ArticleIdentifier articleIdentifier = ArticleIdentifier.create("10.1371/journal.pbio.2001414");
     when(mockArticleCrudService.readArticle(articleIdentifier)).thenReturn(createStubArticle());
     when(mockHibernateTemplate.execute(any())).thenReturn(createStubComment());
-    when(mockRuntimeConfiguration.getCompetingInterestPolicyStart()).thenReturn(LocalDate.now());
-
     doAnswer(invocation -> {
       Object[] args = invocation.getArguments();
       ((Comment) args[0]).setCreated(new Date());
@@ -145,7 +140,6 @@ public class CommentCrudServiceImplTest extends AbstractStubbingArticleTest {
   @Test
   public void testPatchComment() throws Exception {
     when(mockHibernateTemplate.execute(any())).thenReturn(createStubComment());
-    when(mockRuntimeConfiguration.getCompetingInterestPolicyStart()).thenReturn(LocalDate.now());
 
     final CommentIdentifier commentId = CommentIdentifier.create("10.1371/annotation/0043aae2-f69d-4a05-ab19-4709704eb749");
     mockCommentCrudService.patchComment(commentId, stubCommentInputView);
@@ -190,16 +184,12 @@ public class CommentCrudServiceImplTest extends AbstractStubbingArticleTest {
   @Test
   public void testReadCommentFlag() throws Exception {
     when(mockHibernateTemplate.execute(any())).thenReturn(createStubFlag());
-    when(mockRuntimeConfiguration.getCompetingInterestPolicyStart()).thenReturn(LocalDate.now());
-
     mockCommentCrudService.readCommentFlag(0L);
   }
 
   @Test
   public void testReadCommentFlagsOn() throws Exception {
     when(mockHibernateTemplate.execute(any())).thenReturn(createStubComment()).thenAnswer(new Returns(stubFlags));
-    when(mockRuntimeConfiguration.getCompetingInterestPolicyStart()).thenReturn(LocalDate.now());
-
     mockCommentCrudService.readCommentFlagsOn(CommentIdentifier.create("0"));
   }
 
@@ -207,8 +197,6 @@ public class CommentCrudServiceImplTest extends AbstractStubbingArticleTest {
   public void testReadCommentFlagsForJournal() throws Exception {
     when(mockJournalCrudService.readJournal("test")).thenReturn(new Journal("test"));
     when(mockHibernateTemplate.execute(any())).thenAnswer(new Returns(stubFlags));
-    when(mockRuntimeConfiguration.getCompetingInterestPolicyStart()).thenReturn(LocalDate.now());
-
     mockCommentCrudService.readCommentFlagsForJournal("test");
   }
 
@@ -224,8 +212,6 @@ public class CommentCrudServiceImplTest extends AbstractStubbingArticleTest {
   @Test
   public void testServeFlaggedComments() throws Exception {
     when(mockHibernateTemplate.execute(any())).thenReturn(stubComments);
-    when(mockRuntimeConfiguration.getCompetingInterestPolicyStart()).thenReturn(LocalDate.now());
-
     mockCommentCrudService.serveFlaggedComments();
   }
 

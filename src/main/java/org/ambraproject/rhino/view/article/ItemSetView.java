@@ -116,7 +116,6 @@ public class ItemSetView {
   }
 
   private static class FileView {
-
     private final long size;
 
     private FileView(ArticleFile file) {

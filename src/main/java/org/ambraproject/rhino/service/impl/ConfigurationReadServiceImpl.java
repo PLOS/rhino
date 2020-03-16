@@ -22,22 +22,22 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.URI;
+import java.net.UnknownHostException;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Properties;
+import javax.annotation.PostConstruct;
 import com.google.common.collect.ImmutableMap;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.util.GitInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.UnknownHostException;
-import java.net.InetAddress;
-import java.util.LinkedHashMap;
-import java.util.Date;
-import java.util.Map;
-import java.util.Properties;
-import javax.annotation.PostConstruct;
 
 public class ConfigurationReadServiceImpl extends AmbraService implements ConfigurationReadService {
 

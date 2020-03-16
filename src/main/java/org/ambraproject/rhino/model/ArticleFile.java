@@ -56,7 +56,6 @@ public class ArticleFile implements Timestamped {
   @Column
   private String fileType;
 
-  @Column
   private long fileSize;
 
   @Column
@@ -150,7 +149,7 @@ public class ArticleFile implements Timestamped {
   @Override
   public String toString() {
     return "ArticleFile{" +
-        ", ingestedFileName='" + ingestedFileName + '\'' +
+        ", ingestedFileName='" + ingestedFileName +
         '}';
   }
 }

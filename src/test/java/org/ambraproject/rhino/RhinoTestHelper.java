@@ -29,17 +29,17 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.regex.Pattern;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+import com.google.gson.Gson;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.model.Article;
 import org.ambraproject.rhino.model.Journal;
@@ -50,12 +50,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
-
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Lists;
-import com.google.gson.Gson;
 
 /**
  * Miscellaneous fields and methods used in Rhino tests.

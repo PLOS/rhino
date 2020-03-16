@@ -46,7 +46,7 @@ public class S3ArticleCrudServiceImpl extends AbstractArticleCrudServiceImpl imp
   private RuntimeConfiguration runtimeConfiguration;
 
   String bucketName() {
-    return runtimeConfiguration.getS3Bucket();
+    return runtimeConfiguration.getCorpusBucket();
   }
   
   public static String getS3Key(ArticleFile file) {

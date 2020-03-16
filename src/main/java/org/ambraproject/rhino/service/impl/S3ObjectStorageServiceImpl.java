@@ -51,7 +51,7 @@ public class S3ObjectStorageServiceImpl implements ObjectStorageService {
   private RuntimeConfiguration runtimeConfiguration;
 
   private String bucketName() {
-    return runtimeConfiguration.getS3Bucket();
+    return runtimeConfiguration.getCorpusBucket();
   }
   
   private PutObjectResult uploadFile(ArticleFileInput fileInput, String key) {

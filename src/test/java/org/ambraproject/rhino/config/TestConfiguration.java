@@ -24,10 +24,8 @@ package org.ambraproject.rhino.config;
 
 import static org.mockito.Mockito.mock;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 import javax.sql.DataSource;
-import com.google.common.io.Closeables;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;
@@ -38,14 +36,11 @@ import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyServiceImpl;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
-import org.yaml.snakeyaml.Yaml;
 
 @Configuration
 @Import(RhinoConfiguration.class)
@@ -53,9 +48,6 @@ import org.yaml.snakeyaml.Yaml;
 // TODO: get tests to work transactionally
 /* @EnableTransactionManagement(proxyTargetClass = true) */
 public class TestConfiguration {
-
-  private static final Logger LOG = LoggerFactory.getLogger(TestConfiguration.class);
-
   /**
    * Dummy object for sanity-checking the unit test configuration.
    *
@@ -115,20 +107,8 @@ public class TestConfiguration {
   }
 
   @Bean
-  public RuntimeConfiguration runtimeConfiguration(Yaml yaml) throws Exception {
-    YamlConfiguration runtimeConfiguration;
-    InputStream is = null;
-    boolean threw = true;
-    try {
-      is = TestConfiguration.class.getClassLoader().getResourceAsStream("rhino-test.yaml");
-      runtimeConfiguration = new YamlConfiguration(yaml.loadAs(is, YamlConfiguration.Input.class));
-      threw = false;
-      LOG.info("runtimeConfiguration() Loaded rhino-test.yaml");
-    } finally {
-      Closeables.close(is, threw);
-    }
-
-    return runtimeConfiguration;
+  public RuntimeConfiguration runtimeConfiguration() throws Exception {
+    return mock(RuntimeConfiguration.class);
   }
 
   @Bean

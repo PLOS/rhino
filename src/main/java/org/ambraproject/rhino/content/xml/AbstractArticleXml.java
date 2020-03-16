@@ -22,6 +22,9 @@
 
 package org.ambraproject.rhino.content.xml;
 
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.stream.Collectors;
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
@@ -30,15 +33,11 @@ import com.google.common.collect.Iterables;
 import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.model.article.NlmPerson;
 import org.ambraproject.rhino.util.NodeListAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.util.UriUtils;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
-
-import java.io.UnsupportedEncodingException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * A holder for a piece (node or document) of NLM-format XML, which can be built into an entity.
@@ -47,7 +46,7 @@ import java.util.stream.Collectors;
  */
 public abstract class AbstractArticleXml<T> extends AbstractXpathReader {
 
-  private static final Logger log = LoggerFactory.getLogger(AbstractArticleXml.class);
+  private static final Logger log = LogManager.getLogger(AbstractArticleXml.class);
 
   protected AbstractArticleXml(Node xml) {
     super(xml);

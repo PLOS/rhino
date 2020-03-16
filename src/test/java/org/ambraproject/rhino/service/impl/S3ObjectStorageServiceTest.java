@@ -82,7 +82,7 @@ public class S3ObjectStorageServiceTest extends AbstractJUnit4SpringContextTests
     @Bean
     public RuntimeConfiguration runtimeConfiguration() throws Exception {
       RuntimeConfiguration rc = mock(RuntimeConfiguration.class);
-      when(rc.getS3Bucket()).thenReturn("my-bucket");
+      when(rc.getCorpusBucket()).thenReturn("my-bucket");
       return rc;
     }
   }

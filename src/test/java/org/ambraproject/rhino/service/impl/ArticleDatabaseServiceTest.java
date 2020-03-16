@@ -224,39 +224,6 @@ public class ArticleDatabaseServiceTest extends AbstractRhinoTest {
   }
 
   /**
-   * Test successful package ingest.
-   */
-  @Test
-  @DirtiesContext
-  public void testPersistIngestionShouldSucceed() {
-    final Query mockQuery = mock(Query.class);
-    when(mockQuery.uniqueResult()).thenReturn(INGESTION_NUMBER);
-
-    final HibernateTemplate mockHibernateTemplate = buildMockHibernateTemplate(mockQuery);
-
-    final ConfigurationReadService mockConfigurationReadService =
-        applicationContext.getBean(ConfigurationReadService.class);
-
-    final JournalCrudService mockJournalCrudService =
-        applicationContext.getBean(JournalCrudService.class);
-    when(mockJournalCrudService.getJournalByEissn(EISSN)).thenReturn(expectedJournal);
-
-    final ArticleDatabaseService mockArticleDatabaseService =
-        applicationContext.getBean(ArticleDatabaseService.class);
-
-    final ArticleIngestion expectedIngestion = new ArticleIngestion();
-    expectedIngestion.setArticle(expectedArticle);
-    expectedIngestion.setIngestionNumber(INGESTION_NUMBER + 1);
-
-    final ArticleIngestion actualIngestion =
-        mockArticleDatabaseService.persistIngestion(expectedArticle, expectedIngestPackage);
-
-    assertThat(actualIngestion).isEqualTo(expectedIngestion);
-    verify(mockJournalCrudService, times(1)).getJournalByEissn(EISSN);
-    verify(mockHibernateTemplate).save(expectedIngestion);
-  }
-
-  /**
    * Test successful package ingest, using journal <b>Eissn</b>.
    */
   @Test
@@ -264,9 +231,6 @@ public class ArticleDatabaseServiceTest extends AbstractRhinoTest {
   public void testPersistIngestionUsingJournalEissnShouldSucceed() {
     final HibernateTemplate mockHibernateTemplate = buildMockHibernateTemplate();
     doReturn(INGESTION_NUMBER).when(mockHibernateTemplate).execute(any());
-
-    final ConfigurationReadService mockConfigurationReadService =
-        applicationContext.getBean(ConfigurationReadService.class);
 
     final JournalCrudService mockJournalCrudService =
         applicationContext.getBean(JournalCrudService.class);

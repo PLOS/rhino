@@ -22,27 +22,30 @@
 
 package org.ambraproject.rhino.service;
 
-import com.google.gson.Gson;
-import org.ambraproject.rhino.BaseRhinoTest;
-import org.ambraproject.rhino.rest.response.ServiceResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.junit.Test;
-
-import java.io.IOException;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Map;
+import java.util.Properties;
+import com.google.gson.Gson;
+import org.ambraproject.rhino.BaseRhinoTest;
+import org.ambraproject.rhino.config.RuntimeConfiguration;
+import org.ambraproject.rhino.rest.response.ServiceResponse;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 
 public class ConfigurationReadServiceTest extends BaseRhinoTest {
   @Autowired
   private ConfigurationReadService configurationReadService;
+  @Autowired
+  private RuntimeConfiguration mockRuntimeConfiguration;
 
   @Test
   public void testGetBuildProperties() throws IOException {
@@ -62,7 +65,6 @@ public class ConfigurationReadServiceTest extends BaseRhinoTest {
     assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
   }
 
-  @Test
   public void testReadRunInfo() throws IOException {
     final ServiceResponse<Map<String, String>> runConfig = configurationReadService.readRunInfo();
     assertResponseEntity(runConfig);

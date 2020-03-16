@@ -1,5 +1,0 @@
-prettyPrintJson: true
-s3Bucket: my-bucket
-manuscriptCustomMeta:
-  revisionDate:     "Publication Update"
-  publicationStage: "PLOS Publication Stage"
