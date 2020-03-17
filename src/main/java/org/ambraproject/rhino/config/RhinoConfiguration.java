@@ -25,33 +25,32 @@ package org.ambraproject.rhino.config;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Properties;
 import javax.sql.DataSource;
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.STSAssumeRoleSessionCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.google.common.base.Strings;
-import com.google.common.base.Preconditions;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.ambraproject.rhino.config.json.AdapterRegistry;
 import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.service.ArticleCrudService;
+import org.ambraproject.rhino.service.ArticleDatabaseService;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.ArticleRevisionWriteService;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.ConfigurationReadService;
-import org.ambraproject.rhino.service.ObjectStorageService;
-import org.ambraproject.rhino.service.ArticleDatabaseService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
+import org.ambraproject.rhino.service.ObjectStorageService;
 import org.ambraproject.rhino.service.VolumeCrudService;
+import org.ambraproject.rhino.service.impl.ArticleDatabaseServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleListCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleRevisionWriteServiceImpl;
 import org.ambraproject.rhino.service.impl.CommentCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
-import org.ambraproject.rhino.service.impl.ArticleDatabaseServiceImpl;
 import org.ambraproject.rhino.service.impl.IngestionService;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.JournalCrudServiceImpl;
@@ -85,18 +84,6 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import javax.sql.DataSource;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.lang.reflect.Type;
-import java.net.URI;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
 
 /**
  * Bean configuration for the application.
@@ -245,9 +232,11 @@ public class RhinoConfiguration {
 
   @Bean
   public AmazonS3 amazonS3(RuntimeConfiguration runtimeConfiguration) {
-    return AmazonS3ClientBuilder.standard()
-      .withRegion("us-west-1")
-      .build();
+    String role = System.getenv("AWS_ROLE_ARN");
+    AWSCredentialsProvider credentialsProvider =
+        new STSAssumeRoleSessionCredentialsProvider.Builder(role,
+            java.util.UUID.randomUUID().toString()).build();
+    return new AmazonS3Client(credentialsProvider);
   }
 
   @Bean
