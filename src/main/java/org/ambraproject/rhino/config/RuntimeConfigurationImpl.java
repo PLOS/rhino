@@ -5,7 +5,6 @@ import com.google.common.base.Preconditions;
 
 public class RuntimeConfigurationImpl implements RuntimeConfiguration {
   private boolean prettyPrintJson = false;
-  private URI contentRepoUrl;
   private String editorialBucket;
   private String corpusBucket;
   private URI taxonomyUrl;
@@ -18,17 +17,6 @@ public class RuntimeConfigurationImpl implements RuntimeConfiguration {
 
   public void setPrettyPrintJson(boolean prettyPrintJson) {
     this.prettyPrintJson = prettyPrintJson;
-  }
-
-  @Override
-  public URI getContentRepoUrl() {
-    return this.contentRepoUrl;
-  }
-
-  public void setContentRepoUrl(URI contentRepoUrl) {
-    Preconditions.checkNotNull(contentRepoUrl, "CONTENT_REPO_URL is required and must be a valid URL");
-    Preconditions.checkState(contentRepoUrl.isAbsolute(), "CONTENT_REPO_URL is required and must be a valid URL");
-    this.contentRepoUrl = contentRepoUrl;
   }
 
   @Override

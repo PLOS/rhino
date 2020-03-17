@@ -37,11 +37,6 @@ public interface RuntimeConfiguration {
   public boolean getPrettyPrintJson();
 
   /**
-   * @return the URI of the content repo server
-   */
-  public URI getContentRepoUrl();
-
-  /**
    * Return the content repository bucket for the corpus of articles. The application will write to this bucket when
    * ingesting articles and read from it when serving article assets.
    *
