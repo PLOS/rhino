@@ -22,10 +22,13 @@ Rhino is configured using the following environment variables:
 - `TAXONOMY_URL`: URL of the access innovations server to use, e.g. `https://localhost:9138/servlet/dh`
 - `THESAURUS`: Name of the thesaurus to use, e.g. `plosthes.2017-2`
 - `LOG_LEVEL`: optional, default is `warn`. the level of logging, e.g. `debug`
+- `AWS_ACCESS_KEY_ID`, `AWS_SECRET_KEY`: AWS keypair to use
+- `AWS_REGION`: AWS region to use
+- `AWS_ROLE_ARN`: The ARN of the AWS role to assume
 
 Full example of running using `cargo`:
 ```
-$ CORPUS_BUCKET=mogilefs-prod-repo TAXONOMY_URL=https://localhost:9138/servlet/dh THESAURUS=plosthes.2017-2 DATABASE_URL="jdbc:mysql://localhost:3306/ambra?user=root&password=password" mvn package cargo:run`
+$ AWS_SECRET_KEY=XXX AWS_ACCESS_KEY_ID=AKIA4SPCIUSTALRESEYQ AWS_AWS_REGION=us-east-1 AWS_ROLE_ARN="arn:aws:iam::429579970117:role/PLOS_DevAccess" CORPUS_BUCKET=my-bucket TAXONOMY_URL=https://plos.accessinn.com:9138/servlet/dh THESAURUS=plosthes.2017-2 DATABASE_URL="jdbc:mysql://localhost:3306/ambra?user=root&password=password" mvn package cargo:run
 ```
 
 [Build Status]: https://teamcity.plos.org/teamcity/viewType.html?buildTypeId=Rhino_Build
