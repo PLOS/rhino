@@ -64,7 +64,7 @@ public class S3ObjectStorageServiceImpl implements ObjectStorageService {
   }
 
   public static String getS3Key(ArticleIngestion ingestion, ArticleFileInput fileInput) {
-    return String.format("%s/v%d/%s",
+    return String.format("%s/%d/%s",
                          ingestion.getArticle().getDoi(),
                          ingestion.getIngestionNumber(),
                          fileInput.getFilename());

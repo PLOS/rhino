@@ -51,7 +51,7 @@ public class S3ArticleCrudServiceImpl extends AbstractArticleCrudServiceImpl imp
   
   public static String getS3Key(ArticleFile file) {
     ArticleIngestion ingestion = file.getIngestion();
-    return String.format("%s/v%d/%s",
+    return String.format("%s/%d/%s",
                          ingestion.getArticle().getDoi(),
                          ingestion.getIngestionNumber(),
                          file.getIngestedFileName());
