@@ -232,7 +232,7 @@ public class RhinoConfiguration {
 
   @Bean
   public AmazonS3 amazonS3(RuntimeConfiguration runtimeConfiguration) {
-    String role = System.getenv("AWS_ROLE_ARN");
+    String role = runtimeConfiguration.getAwsRoleArn();
     AWSCredentialsProvider credentialsProvider =
         new STSAssumeRoleSessionCredentialsProvider.Builder(role,
             java.util.UUID.randomUUID().toString()).build();

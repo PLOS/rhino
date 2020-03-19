@@ -23,6 +23,7 @@
 package org.ambraproject.rhino.config;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import java.io.IOException;
 import java.util.Properties;
 import javax.sql.DataSource;
@@ -108,7 +109,9 @@ public class TestConfiguration {
 
   @Bean
   public RuntimeConfiguration runtimeConfiguration() throws Exception {
-    return mock(RuntimeConfiguration.class);
+    RuntimeConfiguration runtimeConfiguration = mock(RuntimeConfiguration.class);
+    when(runtimeConfiguration.getAwsRoleArn()).thenReturn("arn:aws:iam::foobar");
+    return runtimeConfiguration;
   }
 
   @Bean

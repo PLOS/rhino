@@ -44,8 +44,6 @@ import org.springframework.http.ResponseEntity;
 public class ConfigurationReadServiceTest extends BaseRhinoTest {
   @Autowired
   private ConfigurationReadService configurationReadService;
-  @Autowired
-  private RuntimeConfiguration mockRuntimeConfiguration;
 
   @Test
   public void testGetBuildProperties() throws IOException {

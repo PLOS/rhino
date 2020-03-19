@@ -9,7 +9,8 @@ public class RuntimeConfigurationImpl implements RuntimeConfiguration {
   private String corpusBucket;
   private URI taxonomyUrl;
   private String thesaurus;
-  
+  private String awsRoleArn;
+
   @Override
   public boolean getPrettyPrintJson() {
     return this.prettyPrintJson;
@@ -59,5 +60,16 @@ public class RuntimeConfigurationImpl implements RuntimeConfiguration {
     Preconditions.checkNotNull(thesaurus, "THESAURUS is required");
     Preconditions.checkState(!thesaurus.equals(""), "THESAURUS is required");
     this.thesaurus = thesaurus;
+  }
+
+  @Override
+  public String getAwsRoleArn() {
+    return awsRoleArn;
+  }
+
+  public void setAwsRoleArn(String awsRoleArn) {
+    Preconditions.checkNotNull(awsRoleArn, "AWS_ROLE_ARN is required");
+    Preconditions.checkState(!awsRoleArn.equals(""), "AWS_ROLE_ARN is required");
+    this.awsRoleArn = awsRoleArn;
   }
 }

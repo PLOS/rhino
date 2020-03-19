@@ -70,6 +70,7 @@
 
   <beans:bean id="runtimeConfiguration"
         class="org.ambraproject.rhino.config.RuntimeConfigurationImpl">
+    <beans:property name="awsRoleArn" value="${AWS_ROLE_ARN:}" />
     <beans:property name="prettyPrintJson" value="${PRETTY_PRINT_JSON:false}" />
     <beans:property name="editorialBucket" value="${EDITORIAL_BUCKET:}" />
     <beans:property name="corpusBucket" value="${CORPUS_BUCKET:}" />
