@@ -51,6 +51,7 @@ import org.w3c.dom.Document;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -249,4 +250,6 @@ public interface ArticleCrudService {
   public abstract InputStream  getInputStream(ArticleFileStorage metadata);
 
   public abstract InputStream  getInputStream(ArticleFile metadata);
+
+  public abstract URL getUrl(ArticleFile file);
 }

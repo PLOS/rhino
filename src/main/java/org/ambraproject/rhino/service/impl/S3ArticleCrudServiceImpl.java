@@ -22,10 +22,14 @@
 package org.ambraproject.rhino.service.impl;
 
 import java.io.InputStream;
+import java.net.URL;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Optional;
-
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.S3Object;
@@ -55,6 +59,23 @@ public class S3ArticleCrudServiceImpl extends AbstractArticleCrudServiceImpl imp
                          ingestion.getArticle().getDoi(),
                          ingestion.getIngestionNumber(),
                          file.getIngestedFileName());
+  }
+
+  long PRESIGNED_URL_EXPIRY = 1000 * 60 * 60; // 1 hour
+
+  
+  @Override
+  public URL getUrl(ArticleFile file) {
+    String objectKey = getS3Key(file);
+    Date expiration = new Date();
+    long expTimeMillis = expiration.getTime() + PRESIGNED_URL_EXPIRY;
+    expiration.setTime(expTimeMillis);
+
+    GeneratePresignedUrlRequest generatePresignedUrlRequest =
+      new GeneratePresignedUrlRequest(bucketName(), objectKey)
+      .withMethod(HttpMethod.GET)
+      .withExpiration(expiration);
+    return amazonS3.generatePresignedUrl(generatePresignedUrlRequest);
   }
 
   @Override
