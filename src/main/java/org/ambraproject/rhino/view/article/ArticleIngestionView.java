@@ -22,6 +22,9 @@
 
 package org.ambraproject.rhino.view.article;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.gson.JsonElement;
@@ -31,7 +34,6 @@ import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.model.ArticleIngestion;
-import org.ambraproject.rhino.model.ArticleItem;
 import org.ambraproject.rhino.model.article.ArticleCustomMetadata;
 import org.ambraproject.rhino.model.article.ArticleMetadata;
 import org.ambraproject.rhino.model.article.AssetMetadata;
@@ -41,10 +43,6 @@ import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.Document;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * Deep view of an article ingestion, including data parsed dynamically from the manuscript.
@@ -60,6 +58,8 @@ public class ArticleIngestionView implements JsonOutputView {
     private ArticleCrudService articleCrudService;
     @Autowired
     private CustomMetadataExtractor.Factory customMetadataExtractorFactory;
+    @Autowired
+    private ItemSetView.Factory itemSetViewFactory;
 
     public ArticleIngestionView getView(ArticleIngestion ingestion) {
       JournalOutputView journal = JournalOutputView.getView(ingestion.getJournal());
@@ -74,26 +74,30 @@ public class ArticleIngestionView implements JsonOutputView {
         throw new RuntimeException(e);
       }
 
-      return new ArticleIngestionView(ingestion, metadata, customMetadata, journal);
-    }
+      ItemSetView.ItemView strikingImage = itemSetViewFactory.getItemView(ingestion.getStrikingImage());
 
+      return new ArticleIngestionView(ingestion, metadata, customMetadata, journal, strikingImage);
+    }
   }
 
   private final ArticleIngestion ingestion;
   private final ArticleMetadata metadata;
   private final ArticleCustomMetadata customMetadata;
   private final JournalOutputView journal;
-
+  private final ItemSetView.ItemView strikingImage;
+  
   private ArticleIngestionView(ArticleIngestion ingestion,
                                ArticleMetadata metadata,
                                ArticleCustomMetadata customMetadata,
-                               JournalOutputView journal) {
+                               JournalOutputView journal,
+                               ItemSetView.ItemView strikingImage) {
     Preconditions.checkArgument(ingestion.getArticle().getDoi().equals(metadata.getDoi()));
     this.ingestion = ingestion;
     this.metadata = metadata;
 
     this.customMetadata = Objects.requireNonNull(customMetadata);
     this.journal = Objects.requireNonNull(journal);
+    this.strikingImage = strikingImage;
   }
 
 
@@ -108,9 +112,8 @@ public class ArticleIngestionView implements JsonOutputView {
       serialized.addProperty("preprintDoi", ingestion.getPreprintDoi());
     }
 
-    ArticleItem strikingImage = ingestion.getStrikingImage();
     if (strikingImage != null) {
-      serialized.add("strikingImage", context.serialize(ItemSetView.getItemView(strikingImage)));
+      serialized.add("strikingImage", context.serialize(strikingImage));
     }
 
     JsonAdapterUtil.copyWithoutOverwriting(context.serialize(metadata).getAsJsonObject(), serialized);
@@ -133,8 +136,6 @@ public class ArticleIngestionView implements JsonOutputView {
       this.doi = assetMetadata.getDoi();
       this.title = assetMetadata.getTitle();
       this.description = assetMetadata.getDescription();
-      // Do not include assetMetadata.contextElement
     }
   }
-
 }
