@@ -29,9 +29,10 @@ import com.google.common.collect.Maps;
 import org.ambraproject.rhino.model.ArticleFile;
 import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleItem;
+import org.ambraproject.rhino.service.ArticleCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
-
+import java.net.URL;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +44,9 @@ public class ItemSetView {
   public static class Factory {
     @Autowired
     private HibernateTemplate hibernateTemplate;
+
+    @Autowired
+    private ArticleCrudService articleCrudService;
 
     public ItemSetView getView(ArticleIngestion ingestion) {
       Collection<ArticleFile> files = (List<ArticleFile>) hibernateTemplate
@@ -56,7 +60,7 @@ public class ItemSetView {
               entry -> getItemView(entry.getKey(), entry.getValue())));
 
       ImmutableCollection<FileView> ancillary =
-          files.stream().filter(file -> file.getItem() == null).map(FileView::new)
+        files.stream().filter(file -> file.getItem() == null).map(this::getFileView)
               .collect(ImmutableList.toImmutableList());
       return new ItemSetView(items, ancillary);
     }
@@ -93,7 +97,7 @@ public class ItemSetView {
       Map<String, FileView> builder = Maps.newLinkedHashMapWithExpectedSize(files.size());
       for (ArticleFile file : files) {
         String type = file.getFileType();
-        FileView view = new FileView(file);
+        FileView view = getFileView(file);
         FileView previous = builder.put(type, view);
         if (previous != null) {
           String message = String.format("Item has more than one file with file type \"%s\": %s",
@@ -102,6 +106,10 @@ public class ItemSetView {
         }
       }
       return ImmutableMap.copyOf(builder);
+    }
+
+    private FileView getFileView(ArticleFile file) {
+      return new FileView(file.getFileSize(), articleCrudService.getUrl(file));
     }
   }
 
@@ -127,9 +135,11 @@ public class ItemSetView {
 
   public static class FileView {
     private final long size;
+    private final URL url;
 
-    public FileView(ArticleFile file) {
-      this.size = file.getFileSize();
+    private FileView(long size, URL url) {
+      this.size = size;
+      this.url = url;
     }
   }
 }
