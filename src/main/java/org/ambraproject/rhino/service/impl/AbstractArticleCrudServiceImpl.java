@@ -114,33 +114,6 @@ public abstract class AbstractArticleCrudServiceImpl extends AmbraService implem
     return runtimeConfiguration.getCorpusBucket();
   }
 
-// <<<<<<< HEAD:src/main/java/org/ambraproject/rhino/service/impl/AbstractArticleCrudServiceImpl.java
-// =======
-//   public Archive repack(ArticleIngestionIdentifier ingestionId) {
-
-//     String bucketName = runtimeConfiguration.getCorpusBucket();
-//     Map<String, ByteSource> archiveMap = files.stream().collect(Collectors.toMap(
-//         ArticleFile::getIngestedFileName,
-//         (ArticleFile file) -> new ByteSource() {
-//           @Override
-//           public InputStream openStream() throws IOException {
-//             return contentRepoService.getRepoObject(file.getCrepoVersion(bucketName));
-//           }
-//         }));
-
-//     return Archive.pack(extractFilenameStub(ingestionId.getDoiName()) + ".zip", archiveMap);
-//   }
-
-//   private static final Pattern FILENAME_STUB_PATTERN = Pattern.compile("(?:[^/]*/)*?([^/]*)/?");
-
-//   private static String extractFilenameStub(String name) {
-//     Matcher m = FILENAME_STUB_PATTERN.matcher(name);
-//     return m.matches() ? m.group(1) : name;
-//   }
-
-//   @Override
-// >>>>>>> docker:src/main/java/org/ambraproject/rhino/service/impl/ArticleCrudServiceImpl.java
-
   @Override
   public Archive repack(ArticleIngestionIdentifier ingestionId) {
     ArticleIngestion ingestion = readIngestion(ingestionId);
