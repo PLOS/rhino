@@ -1,5 +1,6 @@
 package org.ambraproject.rhino.config;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
 import java.net.URI;
 import com.google.common.base.Preconditions;
 
@@ -10,6 +11,13 @@ public class RuntimeConfigurationImpl implements RuntimeConfiguration {
   private URI taxonomyUrl;
   private String thesaurus;
   private String awsRoleArn;
+
+  public RuntimeConfigurationImpl() {
+    Preconditions.checkArgument(!isNullOrEmpty(System.getenv("AWS_ACCESS_KEY_ID")),
+        "Please set AWS_ACCESS_KEY_ID.");
+    Preconditions.checkArgument(!isNullOrEmpty(System.getenv("AWS_SECRET_ACCESS_KEY")),
+        "Please set AWS_SECRET_ACCESS_KEY.");
+  }
 
   @Override
   public boolean getPrettyPrintJson() {
@@ -26,8 +34,7 @@ public class RuntimeConfigurationImpl implements RuntimeConfiguration {
   }
 
   public void setCorpusBucket(String corpusBucket) {
-    Preconditions.checkNotNull(corpusBucket, "CORPUS_BUCKET is required");
-    Preconditions.checkState(!corpusBucket.equals(""), "CORPUS_BUCKET is required");
+    Preconditions.checkState(!isNullOrEmpty(corpusBucket), "CORPUS_BUCKET is required");
     this.corpusBucket = corpusBucket;
   }
 
@@ -57,8 +64,7 @@ public class RuntimeConfigurationImpl implements RuntimeConfiguration {
   }
 
   public void setThesaurus(String thesaurus) {
-    Preconditions.checkNotNull(thesaurus, "THESAURUS is required");
-    Preconditions.checkState(!thesaurus.equals(""), "THESAURUS is required");
+    Preconditions.checkState(!isNullOrEmpty(thesaurus), "THESAURUS is required");
     this.thesaurus = thesaurus;
   }
 
@@ -68,8 +74,7 @@ public class RuntimeConfigurationImpl implements RuntimeConfiguration {
   }
 
   public void setAwsRoleArn(String awsRoleArn) {
-    Preconditions.checkNotNull(awsRoleArn, "AWS_ROLE_ARN is required");
-    Preconditions.checkState(!awsRoleArn.equals(""), "AWS_ROLE_ARN is required");
+    Preconditions.checkState(!isNullOrEmpty(awsRoleArn), "AWS_ROLE_ARN is required");
     this.awsRoleArn = awsRoleArn;
   }
 }
