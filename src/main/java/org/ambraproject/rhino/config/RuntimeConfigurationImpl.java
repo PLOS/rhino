@@ -14,10 +14,8 @@ public class RuntimeConfigurationImpl implements RuntimeConfiguration {
   private String projectId;
 
   public RuntimeConfigurationImpl() {
-    Preconditions.checkArgument(!isNullOrEmpty(System.getenv("AWS_ACCESS_KEY_ID")),
-        "Please set AWS_ACCESS_KEY_ID.");
-    Preconditions.checkArgument(!isNullOrEmpty(System.getenv("AWS_SECRET_ACCESS_KEY")),
-        "Please set AWS_SECRET_ACCESS_KEY.");
+    Preconditions.checkArgument(!isNullOrEmpty(System.getenv("GOOGLE_APPLICATION_CREDENTIALS")),
+        "Please set GOOGLE_APPLICATION_CREDENTIALS.");
   }
 
   @Override

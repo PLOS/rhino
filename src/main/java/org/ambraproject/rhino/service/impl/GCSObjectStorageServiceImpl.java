@@ -22,6 +22,20 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UncheckedIOException;
+import java.nio.channels.Channels;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
+import com.google.api.client.util.Base64;
+import com.google.cloud.WriteChannel;
+import com.google.cloud.storage.BlobId;
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageException;
+import com.google.common.io.ByteStreams;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.model.ArticleFile;
 import org.ambraproject.rhino.model.ArticleIngestion;
@@ -30,17 +44,8 @@ import org.ambraproject.rhino.model.ingest.ArticleFileInput;
 import org.ambraproject.rhino.model.ingest.ArticleItemInput;
 import org.ambraproject.rhino.model.ingest.ArticlePackage;
 import org.ambraproject.rhino.service.ObjectStorageService;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
-
-import com.google.cloud.storage.Blob;
-import com.google.cloud.storage.BlobId;
-import com.google.cloud.storage.BlobInfo;
-import com.google.cloud.storage.Storage;
 
 public class GCSObjectStorageServiceImpl implements ObjectStorageService {
   @Autowired
@@ -53,14 +58,30 @@ public class GCSObjectStorageServiceImpl implements ObjectStorageService {
     return runtimeConfiguration.getCorpusBucket();
   }
   
-  private Blob uploadFile(ArticleFileInput fileInput, String key) {
+  private BlobInfo uploadFile(ArticleFileInput fileInput, String key) {
     BlobId blobId = BlobId.of(bucketName(), key);
-    BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-      .setContentType(fileInput.getContentType())
-      .setContentDisposition(String.format("attachment; filename=%s", fileInput.getDownloadName()))
-      .build();
-    InputStream input = fileInput.getArchive().openFile(fileInput.getFilename());
-    return storage.create(blobInfo, input);
+    String md5;
+    try (InputStream inputStream = fileInput.getArchive().openFile(fileInput.getFilename())) {
+      md5 = Base64.encodeBase64String(DigestUtils.md5(inputStream));
+    } catch (IOException ex) {
+      throw new UncheckedIOException(ex);
+    }
+    try (InputStream inputStream = fileInput.getArchive().openFile(fileInput.getFilename())) {
+      BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(fileInput.getContentType())
+        .setContentDisposition(String.format("attachment; filename=%s", fileInput.getDownloadName()))
+        .setMd5(md5)
+        .build();
+      try (WriteChannel writer = storage.writer(blobInfo, Storage.BlobWriteOption.md5Match())) {
+        ByteStreams.copy(inputStream, Channels.newOutputStream(writer));
+      }
+    } catch (StorageException ex) {
+      if (!(400 == ex.getCode() && "invalid".equals(ex.getReason()))) {
+        throw ex;
+      }
+    } catch (IOException ex) {
+      throw new UncheckedIOException(ex);
+    }
+    return storage.get(blobId);
   }
 
   public static String getObjectKey(ArticleIngestion ingestion, ArticleFileInput fileInput) {
@@ -79,12 +100,11 @@ public class GCSObjectStorageServiceImpl implements ObjectStorageService {
     Collection<ArticleFile> files = new ArrayList<>();
     for (Map.Entry<String, ArticleFileInput> entry : itemInput.getFiles().entrySet()) {
       String key = getObjectKey(ingestion, entry.getValue());
-      Blob result = uploadFile(entry.getValue(), key);
+      BlobInfo result = uploadFile(entry.getValue(), key);
       ArticleFile file = new ArticleFile();
       file.setIngestion(ingestion);
       file.setItem(item);
       file.setFileType(entry.getKey());
-
       file.setFileSize(result.getSize());
       file.setIngestedFileName(entry.getValue().getFilename());
       files.add(file);
@@ -95,11 +115,11 @@ public class GCSObjectStorageServiceImpl implements ObjectStorageService {
 
   @Override
   public Collection<ArticleFile> storeAncillaryFiles(ArticlePackage articlePackage,
-                                                       ArticleIngestion ingestion) {
+                                                     ArticleIngestion ingestion) {
     Collection<ArticleFile> files = new ArrayList<>();
     for (ArticleFileInput ancillaryFile : articlePackage.getAncillaryFiles()) {
       String key = getObjectKey(ingestion, ancillaryFile);
-      Blob result = uploadFile(ancillaryFile, key);
+      BlobInfo result = uploadFile(ancillaryFile, key);
       ArticleFile file = new ArticleFile();
       file.setIngestion(ingestion);
 
