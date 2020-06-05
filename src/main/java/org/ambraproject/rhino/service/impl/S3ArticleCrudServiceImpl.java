@@ -53,7 +53,7 @@ public class S3ArticleCrudServiceImpl extends AbstractArticleCrudServiceImpl imp
     return runtimeConfiguration.getCorpusBucket();
   }
   
-  public static String getS3Key(ArticleFile file) {
+  public static String getObjectKey(ArticleFile file) {
     ArticleIngestion ingestion = file.getIngestion();
     return String.format("%s/%d/%s",
                          ingestion.getArticle().getDoi(),
@@ -66,7 +66,7 @@ public class S3ArticleCrudServiceImpl extends AbstractArticleCrudServiceImpl imp
   
   @Override
   public URL getUrl(ArticleFile file) {
-    String objectKey = getS3Key(file);
+    String objectKey = getObjectKey(file);
     Date expiration = new Date();
     long expTimeMillis = expiration.getTime() + PRESIGNED_URL_EXPIRY;
     expiration.setTime(expTimeMillis);
@@ -81,7 +81,7 @@ public class S3ArticleCrudServiceImpl extends AbstractArticleCrudServiceImpl imp
   @Override
   public ArticleFileStorage getArticleItemFile(ArticleFileIdentifier fileId) {
     ArticleFile articleFile = getArticleFile(fileId);
-    String key = getS3Key(articleFile);
+    String key = getObjectKey(articleFile);
     GetObjectRequest request = new GetObjectRequest(bucketName(), key);
     S3Object object = amazonS3.getObject(request);
     ObjectMetadata metadata = object.getObjectMetadata();
@@ -95,13 +95,13 @@ public class S3ArticleCrudServiceImpl extends AbstractArticleCrudServiceImpl imp
 
   @Override
   public InputStream getInputStream(ArticleFileStorage metadata) {
-    String key = metadata.getS3Key().get();
+    String key = metadata.getObjectKey().get();
     GetObjectRequest request = new GetObjectRequest(bucketName(), key);
     return amazonS3.getObject(request).getObjectContent();
   }
 
   public InputStream getInputStream(ArticleFile metadata) {
-    String key = getS3Key(metadata);
+    String key = getObjectKey(metadata);
     GetObjectRequest request = new GetObjectRequest(bucketName(), key);
     return amazonS3.getObject(request).getObjectContent();
   }

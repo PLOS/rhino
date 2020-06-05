@@ -35,7 +35,7 @@ abstract public class ArticleFileStorage {
 
   abstract public Optional<String> getContentType();
   abstract public Optional<String> getDownloadName();
-  abstract public Optional<String> getS3Key();
+  abstract public Optional<String> getObjectKey();
   abstract public Long getSize();
   abstract public Timestamp getTimestamp();
   abstract public String getUuid();
@@ -45,7 +45,7 @@ abstract public class ArticleFileStorage {
     abstract public ArticleFileStorage build();
     abstract public Builder setContentType(Optional<String> value);
     abstract public Builder setDownloadName(Optional<String> value);
-    abstract public Builder setS3Key(String value);
+    abstract public Builder setObjectKey(String value);
     abstract public Builder setSize(Long value);
     abstract public Builder setTimestamp(Timestamp value);
     abstract public Builder setUuid(String value);

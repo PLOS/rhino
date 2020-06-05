@@ -63,7 +63,7 @@ public class S3ObjectStorageServiceImpl implements ObjectStorageService {
     return amazonS3.putObject(request);
   }
 
-  public static String getS3Key(ArticleIngestion ingestion, ArticleFileInput fileInput) {
+  public static String getObjectKey(ArticleIngestion ingestion, ArticleFileInput fileInput) {
     return String.format("%s/%d/%s",
                          ingestion.getArticle().getDoi(),
                          ingestion.getIngestionNumber(),
@@ -78,7 +78,7 @@ public class S3ObjectStorageServiceImpl implements ObjectStorageService {
     item.setItemType(itemInput.getType());
     Collection<ArticleFile> files = new ArrayList<>();
     for (Map.Entry<String, ArticleFileInput> entry : itemInput.getFiles().entrySet()) {
-      String key = getS3Key(ingestion, entry.getValue());
+      String key = getObjectKey(ingestion, entry.getValue());
       PutObjectResult result = uploadFile(entry.getValue(), key);
       ArticleFile file = new ArticleFile();
       file.setIngestion(ingestion);
@@ -98,7 +98,7 @@ public class S3ObjectStorageServiceImpl implements ObjectStorageService {
                                                        ArticleIngestion ingestion) {
     Collection<ArticleFile> files = new ArrayList<>();
     for (ArticleFileInput ancillaryFile : articlePackage.getAncillaryFiles()) {
-      String key = getS3Key(ingestion, ancillaryFile);
+      String key = getObjectKey(ingestion, ancillaryFile);
       PutObjectResult result = uploadFile(ancillaryFile, key);
       ArticleFile file = new ArticleFile();
       file.setIngestion(ingestion);
