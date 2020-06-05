@@ -31,6 +31,8 @@ import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.STSAssumeRoleSessionCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.google.cloud.storage.StorageOptions;
+import com.google.cloud.storage.Storage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.ambraproject.rhino.config.json.AdapterRegistry;
@@ -237,6 +239,11 @@ public class RhinoConfiguration {
         new STSAssumeRoleSessionCredentialsProvider.Builder(role,
             java.util.UUID.randomUUID().toString()).build();
     return new AmazonS3Client(credentialsProvider);
+  }
+
+  @Bean
+  public Storage gcs(RuntimeConfiguration runtimeConfiguration) {
+    return StorageOptions.newBuilder().setProjectId(runtimeConfiguration.getProjectId()).build().getService();
   }
 
   @Bean
