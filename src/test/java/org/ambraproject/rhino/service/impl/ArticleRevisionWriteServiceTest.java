@@ -11,9 +11,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
-
-import com.amazonaws.services.s3.AmazonS3;
-
+import com.google.cloud.storage.Storage;
 import org.ambraproject.rhino.identity.ArticleIngestionIdentifier;
 import org.ambraproject.rhino.identity.ArticleRevisionIdentifier;
 import org.ambraproject.rhino.identity.Doi;
@@ -40,21 +38,21 @@ import org.springframework.test.context.ContextConfiguration;
 public class ArticleRevisionWriteServiceTest extends AbstractStubbingArticleTest {
 
   @Bean
-  public AmazonS3 amazonS3() throws Exception {
-    return mock(AmazonS3.class);
+  public Storage storage() throws Exception {
+    return mock(Storage.class);
   }
 
-    @Bean
-    public ArticleCrudService articleCrudService() {
-      final ArticleCrudService articleCrudService = spy(new S3ArticleCrudServiceImpl());
-      return articleCrudService;
-    }
+  @Bean
+  public ArticleCrudService articleCrudService() {
+    final ArticleCrudService articleCrudService = spy(new GCSArticleCrudServiceImpl());
+    return articleCrudService;
+  }
 
-    @Bean
-    public ArticleRevisionWriteService articleRevisionWriteService() {
-      final ArticleRevisionWriteService articleRevisionWriteService = spy(new ArticleRevisionWriteServiceImpl());
-      return articleRevisionWriteService;
-    }
+  @Bean
+  public ArticleRevisionWriteService articleRevisionWriteService() {
+    final ArticleRevisionWriteService articleRevisionWriteService = spy(new ArticleRevisionWriteServiceImpl());
+    return articleRevisionWriteService;
+  }
 
   private Query mockQuery;
 

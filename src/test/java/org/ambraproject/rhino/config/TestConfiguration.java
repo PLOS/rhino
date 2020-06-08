@@ -110,7 +110,7 @@ public class TestConfiguration {
   @Bean
   public RuntimeConfiguration runtimeConfiguration() throws Exception {
     RuntimeConfiguration runtimeConfiguration = mock(RuntimeConfiguration.class);
-    when(runtimeConfiguration.getAwsRoleArn()).thenReturn("arn:aws:iam::foobar");
+    when(runtimeConfiguration.getProjectId()).thenReturn("my-project");
     return runtimeConfiguration;
   }
 

@@ -27,10 +27,6 @@ import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.Properties;
 import javax.sql.DataSource;
-import com.amazonaws.auth.AWSCredentialsProvider;
-import com.amazonaws.auth.STSAssumeRoleSessionCredentialsProvider;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.google.cloud.storage.StorageOptions;
 import com.google.cloud.storage.Storage;
 import com.google.gson.Gson;
@@ -53,11 +49,11 @@ import org.ambraproject.rhino.service.impl.ArticleListCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleRevisionWriteServiceImpl;
 import org.ambraproject.rhino.service.impl.CommentCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
+import org.ambraproject.rhino.service.impl.GCSArticleCrudServiceImpl;
+import org.ambraproject.rhino.service.impl.GCSObjectStorageServiceImpl;
 import org.ambraproject.rhino.service.impl.IngestionService;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.JournalCrudServiceImpl;
-import org.ambraproject.rhino.service.impl.S3ArticleCrudServiceImpl;
-import org.ambraproject.rhino.service.impl.S3ObjectStorageServiceImpl;
 import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
@@ -169,7 +165,7 @@ public class RhinoConfiguration {
 
   @Bean
   public ArticleCrudService articleCrudService(RuntimeConfiguration runtimeConfiguration) {
-    return new S3ArticleCrudServiceImpl();
+    return new GCSArticleCrudServiceImpl();
   }
 
   @Bean
@@ -224,21 +220,12 @@ public class RhinoConfiguration {
 
   @Bean
   public ObjectStorageService objectStorageService(RuntimeConfiguration runtimeConfiguration) {
-    return new S3ObjectStorageServiceImpl();
+    return new GCSObjectStorageServiceImpl();
   }
 
   @Bean
   public ArticleDatabaseService articleDatabaseService() {
     return new ArticleDatabaseServiceImpl();
-  }
-
-  @Bean
-  public AmazonS3 amazonS3(RuntimeConfiguration runtimeConfiguration) {
-    String role = runtimeConfiguration.getAwsRoleArn();
-    AWSCredentialsProvider credentialsProvider =
-        new STSAssumeRoleSessionCredentialsProvider.Builder(role,
-            java.util.UUID.randomUUID().toString()).build();
-    return new AmazonS3Client(credentialsProvider);
   }
 
   @Bean

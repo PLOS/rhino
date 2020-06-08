@@ -56,6 +56,4 @@ public interface RuntimeConfiguration {
   public URI getTaxonomyUrl();
 
   public String getThesaurus();
-
-  public String getAwsRoleArn();
 }
