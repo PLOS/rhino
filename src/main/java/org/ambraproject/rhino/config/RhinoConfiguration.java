@@ -230,7 +230,7 @@ public class RhinoConfiguration {
 
   @Bean
   public Storage gcs(RuntimeConfiguration runtimeConfiguration) {
-    return StorageOptions.newBuilder().setProjectId(runtimeConfiguration.getProjectId()).build().getService();
+    return StorageOptions.newBuilder().build().getService();
   }
 
   @Bean

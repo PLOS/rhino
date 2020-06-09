@@ -10,7 +10,6 @@ public class RuntimeConfigurationImpl implements RuntimeConfiguration {
   private String corpusBucket;
   private URI taxonomyUrl;
   private String thesaurus;
-  private String projectId;
 
   public RuntimeConfigurationImpl() {
     Preconditions.checkArgument(!isNullOrEmpty(System.getenv("GOOGLE_APPLICATION_CREDENTIALS")),
@@ -64,15 +63,5 @@ public class RuntimeConfigurationImpl implements RuntimeConfiguration {
   public void setThesaurus(String thesaurus) {
     Preconditions.checkState(!isNullOrEmpty(thesaurus), "THESAURUS is required");
     this.thesaurus = thesaurus;
-  }
-
-  @Override
-  public String getProjectId() {
-    return projectId;
-  }
-
-  public void setProjectId(String projectId) {
-    Preconditions.checkState(!isNullOrEmpty(projectId), "PROJECT_ID is required");
-    this.projectId = projectId;
   }
 }

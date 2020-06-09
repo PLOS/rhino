@@ -51,8 +51,6 @@ public interface RuntimeConfiguration {
    */
   public String getEditorialBucket();
 
-  public String getProjectId();
-
   public URI getTaxonomyUrl();
 
   public String getThesaurus();
