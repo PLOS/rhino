@@ -551,6 +551,9 @@
         <configuration>
           <to>
             <image>docker.io/plos/rhino:${project.version}</image>
+            <tags>
+              <tag>latest</tag>
+            </tags>
           </to>
           <from>
             <image>docker.io/plos/tomcat:latest</image>
