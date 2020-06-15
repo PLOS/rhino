@@ -69,28 +69,28 @@ public final class Doi {
     HTTPS_DOI_RESOLVER("https://doi.org/") {
       @Override
       protected URI convert(String doiName) throws URISyntaxException, MalformedURLException {
-        return new URL("https", "doi.org/", doiName).toURI();
+        return new URL("https", "doi.org", "/" + doiName).toURI();
       }
     },
 
     HTTP_DOI_RESOLVER("http://doi.org/") {
       @Override
       protected URI convert(String doiName) throws URISyntaxException, MalformedURLException {
-        return new URL("http", "doi.org/", doiName).toURI();
+        return new URL("http", "doi.org", "/" + doiName).toURI();
       }
     },
 
     HTTPS_DX_RESOLVER("https://dx.doi.org/") {
       @Override
       protected URI convert(String doiName) throws URISyntaxException, MalformedURLException {
-        return new URL("https", "dx.doi.org/", doiName).toURI();
+        return new URL("https", "dx.doi.org", "/" + doiName).toURI();
       }
     },
 
     HTTP_DX_RESOLVER("http://dx.doi.org/") {
       @Override
       protected URI convert(String doiName) throws URISyntaxException, MalformedURLException {
-        return new URL("http", "dx.doi.org/", doiName).toURI();
+        return new URL("http", "dx.doi.org", "/" + doiName).toURI();
       }
     };
 
