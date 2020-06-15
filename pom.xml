@@ -355,7 +355,14 @@
     <dependency>
       <groupId>com.mangofactory</groupId>
       <artifactId>swagger-springmvc</artifactId>
-      <version>0.8.8</version>
+      <version>1.0.2</version>
+    </dependency>
+
+    <!-- for use by swagger-springmvc, which for some reason does not require it directly -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.11.0</version>
     </dependency>
 
     <dependency>
