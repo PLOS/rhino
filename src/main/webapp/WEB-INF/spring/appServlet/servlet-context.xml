@@ -69,7 +69,7 @@
   </beans:bean>
 
   <beans:bean id="runtimeConfiguration"
-        class="org.ambraproject.rhino.config.RuntimeConfigurationImpl">
+        class="org.ambraproject.rhino.config.RuntimeConfiguration">
     <beans:property name="prettyPrintJson" value="${PRETTY_PRINT_JSON:false}" />
     <beans:property name="contentRepoUrl" value="${CONTENT_REPO_URL:}" />
     <beans:property name="editorialBucket" value="${EDITORIAL_BUCKET:}" />
