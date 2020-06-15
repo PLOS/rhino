@@ -312,29 +312,14 @@
     <dependency>
       <groupId>com.mangofactory</groupId>
       <artifactId>swagger-springmvc</artifactId>
-      <version>0.8.8</version>
-      <exclusions>
-        <exclusion> 
-          <groupId>com.fasterxml.jackson.core</groupId>
-          <artifactId>jackson-core</artifactId>
-        </exclusion>
-        <exclusion> 
-          <groupId>com.fasterxml.jackson.module</groupId>
-          <artifactId>jackson-module-jsonSchema</artifactId>
-        </exclusion>
-        <exclusion> 
-          <groupId>com.fasterxml.jackson.core</groupId>
-          <artifactId>jackson-databind</artifactId>
-        </exclusion>
-        <exclusion> 
-          <groupId>com.fasterxml.jackson.core</groupId>
-          <artifactId>jackson-annotations</artifactId>
-        </exclusion>
-        <exclusion> 
-          <groupId>com.fasterxml.jackson.jaxrs</groupId>
-          <artifactId>jackson-jaxrs-json-provider</artifactId>
-        </exclusion>
-      </exclusions>
+      <version>1.0.2</version>
+    </dependency>
+
+    <!-- for use by swagger-springmvc, which for some reason does not require it directly -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.11.0</version>
     </dependency>
 
     <dependency>
@@ -354,7 +339,7 @@
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.12</version>
+      <version>5.1.49</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
