@@ -76,6 +76,8 @@
     <beans:property name="corpusBucket" value="${CORPUS_BUCKET:}" />
     <beans:property name="taxonomyUrl" value="${TAXONOMY_URL:}" />
     <beans:property name="thesaurus" value="${THESAURUS:}" />
+    <beans:property name="bugsnagApiKey" value="${BUGSNAG_API_KEY:null}" />
+    <beans:property name="bugsnagReleaseStage" value="${BUGSNAG_RELEASE_STAGE:production}" />
   </beans:bean>
 
   <!-- Serve static content-->

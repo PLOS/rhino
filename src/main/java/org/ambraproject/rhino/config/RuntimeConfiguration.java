@@ -32,6 +32,8 @@ public class RuntimeConfiguration {
   private String corpusBucket;
   private URI taxonomyUrl;
   private String thesaurus;
+  private String bugsnagApiKey;
+  private String bugsnagReleaseStage;
 
   /**
    * determine if json should be formatted or not
@@ -110,5 +112,21 @@ public class RuntimeConfiguration {
     Preconditions.checkNotNull(thesaurus, "THESAURUS is required");
     Preconditions.checkState(!thesaurus.equals(""), "THESAURUS is required");
     this.thesaurus = thesaurus;
+  }
+
+  public String getBugsnagApiKey() {
+    return this.bugsnagApiKey;
+  }
+
+  public void setBugsnagApiKey(String bugsnagApiKey) {
+    this.bugsnagApiKey = bugsnagApiKey;
+  }
+
+  public String getBugsnagReleaseStage() {
+    return this.bugsnagReleaseStage;
+  }
+
+  public void setBugsnagReleaseStage(String bugsnagReleaseStage) {
+    this.bugsnagReleaseStage = bugsnagReleaseStage;
   }
 }
