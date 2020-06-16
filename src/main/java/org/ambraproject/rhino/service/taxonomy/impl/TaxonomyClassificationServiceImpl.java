@@ -39,6 +39,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import javax.xml.parsers.DocumentBuilder;
+import com.bugsnag.Bugsnag;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Charsets;
 import com.google.common.base.Splitter;
@@ -123,6 +124,8 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   private ArticleCrudService articleCrudService;
   @Autowired
   protected HibernateTemplate hibernateTemplate;
+  @Autowired
+  protected Bugsnag bugsnag;
 
   // See https://jira.plos.org/jira/browse/AMEC-100.
   // Basically it was a one-time hack which may or may not still be
@@ -217,6 +220,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
 
     if ((isTextRequired && results.size() == 1) || results.isEmpty()) {
       log.error("Taxonomy server returned 0 terms. " + article.getDoi());
+      bugsnag.notify(new RuntimeException("Taxonomy server returned 0 terms. " + article.getDoi()));
     }
 
     return results;
@@ -267,6 +271,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
         persistCategories(leafNodes, article);
       } else {
         log.error("Taxonomy server returned 0 terms. Cannot populate Categories. " + article.getDoi());
+        bugsnag.notify(new RuntimeException("Taxonomy server returned 0 terms. Cannot populate Categories. " + article.getDoi()));
       }
     }
   }

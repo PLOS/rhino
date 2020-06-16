@@ -69,13 +69,15 @@
   </beans:bean>
 
   <beans:bean id="runtimeConfiguration"
-        class="org.ambraproject.rhino.config.RuntimeConfigurationImpl">
+        class="org.ambraproject.rhino.config.RuntimeConfiguration">
     <beans:property name="prettyPrintJson" value="${PRETTY_PRINT_JSON:false}" />
     <beans:property name="contentRepoUrl" value="${CONTENT_REPO_URL:}" />
     <beans:property name="editorialBucket" value="${EDITORIAL_BUCKET:}" />
     <beans:property name="corpusBucket" value="${CORPUS_BUCKET:}" />
     <beans:property name="taxonomyUrl" value="${TAXONOMY_URL:}" />
     <beans:property name="thesaurus" value="${THESAURUS:}" />
+    <beans:property name="bugsnagApiKey" value="${BUGSNAG_API_KEY:null}" />
+    <beans:property name="bugsnagReleaseStage" value="${BUGSNAG_RELEASE_STAGE:production}" />
   </beans:bean>
 
   <!-- Serve static content-->

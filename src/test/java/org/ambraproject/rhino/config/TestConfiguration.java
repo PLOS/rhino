@@ -26,6 +26,7 @@ import static org.mockito.Mockito.mock;
 import java.io.IOException;
 import java.util.Properties;
 import javax.sql.DataSource;
+import com.bugsnag.Bugsnag;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
@@ -60,6 +61,11 @@ public class TestConfiguration {
   @Bean
   public Object sampleBean() {
     return new Object();
+  }
+
+  @Bean
+  public Bugsnag bugsnag() {
+    return mock(Bugsnag.class);
   }
 
   @Bean

@@ -22,6 +22,7 @@
 
 package org.ambraproject.rhino.rest.controller;
 
+import com.bugsnag.Bugsnag;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.gson.Gson;
@@ -60,6 +61,8 @@ public abstract class RestController {
   @Autowired
   protected Gson entityGson;
 
+  @Autowired
+  protected Bugsnag bugsnag;
 
   /**
    * Produce an HTTP header set that defines the content type but no other information.
@@ -144,6 +147,7 @@ public abstract class RestController {
   @ExceptionHandler(Exception.class)
   public ResponseEntity<String> reportServerError(Exception e) {
     log.error("Exception from controller", e);
+    bugsnag.notify(e);
     StringWriter report = new StringWriter();
     e.printStackTrace(new PrintWriter(report));
 
