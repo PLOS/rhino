@@ -22,11 +22,18 @@
 
 package org.ambraproject.rhino.service;
 
-import org.ambraproject.rhino.identity.ArticleFileIdentifier;
-import org.plos.crepo.model.metadata.RepoObjectMetadata;
+import org.ambraproject.rhino.model.ArticleFile;
+import org.ambraproject.rhino.model.ArticleIngestion;
+import org.ambraproject.rhino.model.ArticleItem;
+import org.ambraproject.rhino.model.ingest.ArticleItemInput;
+import org.ambraproject.rhino.model.ingest.ArticlePackage;
 
-public interface AssetCrudService {
+import java.util.Collection;
 
-  public abstract RepoObjectMetadata getArticleItemFile(ArticleFileIdentifier fileId);
+public interface ObjectStorageService {
 
+  public ArticleItem storeItem(ArticleItemInput itemInput, ArticleIngestion ingestion);
+
+  public Collection<ArticleFile> storeAncillaryFiles(ArticlePackage articlePackage,
+                                                       ArticleIngestion ingestion);
 }

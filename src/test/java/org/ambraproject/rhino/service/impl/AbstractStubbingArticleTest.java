@@ -11,7 +11,6 @@ import org.ambraproject.rhino.model.ArticleIngestion;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.model.Journal;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.view.article.ArticleIngestionView;
@@ -149,13 +148,6 @@ public abstract class AbstractStubbingArticleTest extends AbstractRhinoTest {
   }
 
   @Bean
-  public AssetCrudService assetCrudService() {
-    AssetCrudService mockAssetCrudService = mock(AssetCrudService.class);
-    LOG.debug("assetCrudService() * --> {}", mockAssetCrudService);
-    return mockAssetCrudService;
-  }
-
-  @Bean
   public XpathReader xpathReader() {
     XpathReader mockXpathReader = mock(XpathReader.class);
     LOG.debug("xpathReader() * --> {}", mockXpathReader);
@@ -194,7 +186,7 @@ public abstract class AbstractStubbingArticleTest extends AbstractRhinoTest {
 
   @Bean
   public ArticleCrudService articleCrudService() {
-    ArticleCrudService mockArticleCrudService = mock(ArticleCrudServiceImpl.class);
+    ArticleCrudService mockArticleCrudService = mock(ArticleCrudService.class);
     LOG.debug("articleCrudService() * --> {}", mockArticleCrudService);
     return mockArticleCrudService;
   }

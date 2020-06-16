@@ -23,15 +23,14 @@
 package org.ambraproject.rhino.config;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import java.io.IOException;
 import java.util.Properties;
 import javax.sql.DataSource;
 import com.bugsnag.Bugsnag;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;
-import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.CommentCrudServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.DummyTaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
@@ -39,8 +38,6 @@ import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyServiceImpl;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
-import org.plos.crepo.service.ContentRepoService;
-import org.plos.crepo.service.InMemoryContentRepoService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -97,18 +94,8 @@ public class TestConfiguration {
   }
 
   @Bean
-  public ContentRepoService contentRepoService() {
-    return new InMemoryContentRepoService("testBucket");
-  }
-
-  @Bean
   public TaxonomyClassificationService taxonomyClassificationService() {
     return new DummyTaxonomyClassificationService();
-  }
-
-  @Bean
-  public AssetCrudService assetService() {
-    return new AssetCrudServiceImpl();
   }
 
   @Bean
@@ -128,7 +115,8 @@ public class TestConfiguration {
 
   @Bean
   public RuntimeConfiguration runtimeConfiguration() throws Exception {
-    return mock(RuntimeConfiguration.class);
+    RuntimeConfiguration runtimeConfiguration = mock(RuntimeConfiguration.class);
+    return runtimeConfiguration;
   }
 
   @Bean

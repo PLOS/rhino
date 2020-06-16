@@ -22,26 +22,31 @@
 
 package org.ambraproject.rhino.model.ingest;
 
-import org.plos.crepo.model.input.RepoObjectInput;
+import com.google.auto.value.AutoValue;
+import org.ambraproject.rhino.content.xml.ManifestXml;
+import org.ambraproject.rhino.util.Archive;
 
-import java.util.Objects;
-
-public class ArticleFileInput {
-
-  private final String filename;
-  private final RepoObjectInput object;
-
-  public ArticleFileInput(String filename, RepoObjectInput object) {
-    this.filename = Objects.requireNonNull(filename);
-    this.object = Objects.requireNonNull(object);
+@AutoValue
+abstract public class ArticleFileInput {
+  public static Builder builder() {
+    return new AutoValue_ArticleFileInput.Builder();
   }
+
+  abstract public Archive getArchive();
+  abstract public String getContentType();
+  abstract public String getDownloadName();
+  abstract public ManifestXml.ManifestFile getManifestFile();
 
   public String getFilename() {
-    return filename;
+    return this.getManifestFile().getEntry();
   }
 
-  public RepoObjectInput getObject() {
-    return object;
+  @AutoValue.Builder
+  abstract public static class Builder {
+    abstract public ArticleFileInput build();
+    abstract public Builder setArchive(Archive value);
+    abstract public Builder setContentType(String value);
+    abstract public Builder setDownloadName(String value);
+    abstract public Builder setManifestFile(ManifestXml.ManifestFile value);
   }
-
 }

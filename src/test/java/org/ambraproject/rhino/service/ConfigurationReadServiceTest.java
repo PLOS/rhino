@@ -44,8 +44,6 @@ import org.springframework.http.ResponseEntity;
 public class ConfigurationReadServiceTest extends BaseRhinoTest {
   @Autowired
   private ConfigurationReadService configurationReadService;
-  @Autowired
-  private RuntimeConfiguration mockRuntimeConfiguration;
 
   @Test
   public void testGetBuildProperties() throws IOException {
@@ -65,31 +63,6 @@ public class ConfigurationReadServiceTest extends BaseRhinoTest {
     assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
   }
 
-  @Test
-  public void testGetRepoConfig() throws IOException, URISyntaxException {
-    when(mockRuntimeConfiguration.getEditorialBucket()).thenReturn("editorial");
-    when(mockRuntimeConfiguration.getCorpusBucket()).thenReturn("corpus");
-    when(mockRuntimeConfiguration.getContentRepoUrl())
-        .thenReturn(new URI("http://path/to/content/repo"));
-    Map<String, Object> repoConfigMap = configurationReadService.getRepoConfig();
-    Map<String, Object> editorialConfigMap = (Map<String, Object>) repoConfigMap.get("editorial");
-
-    String repoAddress = editorialConfigMap.get("address").toString();
-    assertEquals("Invalid/missing content repo URL", "http://path/to/content/repo", repoAddress);
-    String repoBucket = editorialConfigMap.get("bucket").toString();
-    assertEquals("Invalid/missing content repo bucket name", "editorial", repoBucket);
-
-  }
-
-  @Test
-  public void testReadRepoConfig() throws IOException {
-    final ServiceResponse<Map<String, Object>> repoConfig = configurationReadService.readRepoConfig();
-    assertNotNull(repoConfig);
-    final ResponseEntity<?> responseEntity = repoConfig.asJsonResponse(new Gson());
-    assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
-  }
-
-  @Test
   public void testReadRunInfo() throws IOException {
     final ServiceResponse<Map<String, String>> runConfig = configurationReadService.readRunInfo();
     assertResponseEntity(runConfig);

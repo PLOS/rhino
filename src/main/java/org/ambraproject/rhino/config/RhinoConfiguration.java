@@ -25,34 +25,32 @@ package org.ambraproject.rhino.config;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Properties;
 import javax.sql.DataSource;
-import com.google.common.base.Preconditions;
+import com.google.cloud.storage.StorageOptions;
+import com.google.cloud.storage.Storage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.ambraproject.rhino.config.json.AdapterRegistry;
 import org.ambraproject.rhino.content.xml.CustomMetadataExtractor;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.service.ArticleCrudService;
+import org.ambraproject.rhino.service.ArticleDatabaseService;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.ArticleRevisionWriteService;
-import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.CommentCrudService;
 import org.ambraproject.rhino.service.ConfigurationReadService;
-import org.ambraproject.rhino.service.ContentRepoPersistenceService;
-import org.ambraproject.rhino.service.HibernatePersistenceService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalCrudService;
+import org.ambraproject.rhino.service.ObjectStorageService;
 import org.ambraproject.rhino.service.VolumeCrudService;
-import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
+import org.ambraproject.rhino.service.impl.ArticleDatabaseServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleListCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleRevisionWriteServiceImpl;
-import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.CommentCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
-import org.ambraproject.rhino.service.impl.ContentRepoPersistenceServiceImpl;
-import org.ambraproject.rhino.service.impl.HibernatePersistenceServiceImpl;
+import org.ambraproject.rhino.service.impl.GCSArticleCrudServiceImpl;
+import org.ambraproject.rhino.service.impl.GCSObjectStorageServiceImpl;
 import org.ambraproject.rhino.service.impl.IngestionService;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.JournalCrudServiceImpl;
@@ -77,9 +75,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.hibernate.SessionFactory;
-import org.plos.crepo.config.HttpClientFunction;
-import org.plos.crepo.service.ContentRepoService;
-import org.plos.crepo.service.ContentRepoServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -169,22 +164,8 @@ public class RhinoConfiguration {
   }
 
   @Bean
-  public ContentRepoService contentRepoService(RuntimeConfiguration runtimeConfiguration,
-                                               final CloseableHttpClient httpClient) {
-    final String repoServer = Preconditions.checkNotNull(runtimeConfiguration.getContentRepoUrl().toString());
-    Objects.requireNonNull(httpClient);
-
-    return new ContentRepoServiceImpl(repoServer, HttpClientFunction.from(httpClient));
-  }
-
-  @Bean
-  public ArticleCrudService articleCrudService() {
-    return new ArticleCrudServiceImpl();
-  }
-
-  @Bean
-  public AssetCrudService assetCrudService() {
-    return new AssetCrudServiceImpl();
+  public ArticleCrudService articleCrudService(RuntimeConfiguration runtimeConfiguration) {
+    return new GCSArticleCrudServiceImpl();
   }
 
   @Bean
@@ -238,13 +219,18 @@ public class RhinoConfiguration {
   }
 
   @Bean
-  public ContentRepoPersistenceService contentRepoPersistenceService() {
-    return new ContentRepoPersistenceServiceImpl();
+  public ObjectStorageService objectStorageService(RuntimeConfiguration runtimeConfiguration) {
+    return new GCSObjectStorageServiceImpl();
   }
 
   @Bean
-  public HibernatePersistenceService hibernatePersistenceService() {
-    return new HibernatePersistenceServiceImpl();
+  public ArticleDatabaseService articleDatabaseService() {
+    return new ArticleDatabaseServiceImpl();
+  }
+
+  @Bean
+  public Storage gcs(RuntimeConfiguration runtimeConfiguration) {
+    return StorageOptions.newBuilder().build().getService();
   }
 
   @Bean

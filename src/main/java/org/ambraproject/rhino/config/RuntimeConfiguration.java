@@ -22,6 +22,7 @@
 
 package org.ambraproject.rhino.config;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
 import java.net.URI;
 import com.google.common.base.Preconditions;
 
@@ -35,6 +36,11 @@ public class RuntimeConfiguration {
   private String bugsnagApiKey;
   private String bugsnagReleaseStage;
 
+  public RuntimeConfiguration() {
+    Preconditions.checkArgument(!isNullOrEmpty(System.getenv("GOOGLE_APPLICATION_CREDENTIALS")),
+                                "Please set GOOGLE_APPLICATION_CREDENTIALS.");
+  }
+
   /**
    * determine if json should be formatted or not
    *
@@ -46,21 +52,6 @@ public class RuntimeConfiguration {
 
   public void setPrettyPrintJson(boolean prettyPrintJson) {
     this.prettyPrintJson = prettyPrintJson;
-  }
-
-  /**
-   * @return the URI of the content repo server
-   */
-  public URI getContentRepoUrl() {
-    return this.contentRepoUrl;
-  }
-
-  public void setContentRepoUrl(URI contentRepoUrl) {
-    Preconditions.checkNotNull(contentRepoUrl,
-        "CONTENT_REPO_URL is required and must be a valid URL");
-    Preconditions.checkState(contentRepoUrl.isAbsolute(),
-        "CONTENT_REPO_URL is required and must be a valid URL");
-    this.contentRepoUrl = contentRepoUrl;
   }
 
   /**

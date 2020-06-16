@@ -20,35 +20,34 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package org.ambraproject.rhino.service;
+package org.ambraproject.rhino.model;
 
-import org.ambraproject.rhino.content.xml.ManifestXml;
-import org.ambraproject.rhino.identity.Doi;
-import org.ambraproject.rhino.model.Article;
-import org.ambraproject.rhino.model.ArticleIngestion;
-import org.ambraproject.rhino.model.ArticleItem;
-import org.ambraproject.rhino.model.ingest.ArticlePackage;
-import org.ambraproject.rhino.model.ingest.IngestPackage;
+import com.google.auto.value.AutoValue;
 
-import java.util.List;
+import java.sql.Timestamp;
 import java.util.Optional;
 
-public interface HibernatePersistenceService {
+@AutoValue
+abstract public class ArticleFileStorage {
+  public static Builder builder() {
+    return new AutoValue_ArticleFileStorage.Builder();
+  }
 
-  /**
-   * Get the article object for a DOI if it exists, and save it if it doesn't.
-   *
-   * @param doi
-   */
-  public Article persistArticle(Doi doi);
+  abstract public Optional<String> getContentType();
+  abstract public Optional<String> getDownloadName();
+  abstract public Optional<String> getObjectKey();
+  abstract public Long getSize();
+  abstract public Timestamp getTimestamp();
+  abstract public String getUuid();
 
-  public ArticleIngestion persistIngestion(Article article, IngestPackage ingestPackage);
-
-  /**
-   * Persist items, items' file representations, ancillary files, and the link to the striking image.
-   */
-  public void persistAssets(ArticlePackage articlePackage, ArticleIngestion ingestion);
-
-  public Optional<ArticleItem> persistStrikingImage(ArticleIngestion ingestion,
-                                                    List<ArticleItem> items, ManifestXml manifest);
+  @AutoValue.Builder
+  abstract public static class Builder {
+    abstract public ArticleFileStorage build();
+    abstract public Builder setContentType(Optional<String> value);
+    abstract public Builder setDownloadName(Optional<String> value);
+    abstract public Builder setObjectKey(String value);
+    abstract public Builder setSize(Long value);
+    abstract public Builder setTimestamp(Timestamp value);
+    abstract public Builder setUuid(String value);
+  }
 }

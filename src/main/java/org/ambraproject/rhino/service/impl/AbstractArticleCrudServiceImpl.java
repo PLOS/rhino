@@ -64,7 +64,6 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.response.CacheableResponse;
 import org.ambraproject.rhino.rest.response.ServiceResponse;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.view.ResolvedDoiView;
@@ -84,7 +83,6 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.plos.crepo.model.metadata.RepoObjectMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
@@ -93,16 +91,14 @@ import org.w3c.dom.Document;
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
  */
 @SuppressWarnings("JpaQlInspection")
-public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudService {
+public abstract class AbstractArticleCrudServiceImpl extends AmbraService implements ArticleCrudService {
 
-  private static final Logger LOG = LogManager.getLogger(ArticleCrudServiceImpl.class);
+  private static final Logger LOG = LogManager.getLogger(AbstractArticleCrudServiceImpl.class);
 
   private static final Joiner SPACE_JOINER = Joiner.on(' ');
 
   public static final int MAX_PAGE_SIZE = 1000;
 
-  @Autowired
-  AssetCrudService assetCrudService;
   @Autowired
   private XpathReader xpathReader;
   @Autowired
@@ -113,36 +109,45 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private ItemSetView.Factory itemSetViewFactory;
   @Autowired
   private RuntimeConfiguration runtimeConfiguration;
-  
+
+  String bucketName() {
+    return runtimeConfiguration.getCorpusBucket();
+  }
+
+  @Override
+  public Archive repack(ArticleIngestionIdentifier ingestionId) {
+    ArticleIngestion ingestion = readIngestion(ingestionId);
+    @SuppressWarnings("unchecked")
+    List<ArticleFile> files = hibernateTemplate.execute(session -> {
+      Query query = session.createQuery("FROM ArticleFile WHERE ingestion = :ingestion");
+      query.setParameter("ingestion", ingestion);
+      return (List<ArticleFile>) query.list();
+    });
+
+    Map<String, ByteSource> archiveMap = files.stream().collect(Collectors.toMap(
+        ArticleFile::getIngestedFileName,
+        (ArticleFile file) -> new ByteSource() {
+          @Override
+          public InputStream openStream() throws IOException {
+            return getInputStream(file);
+          }
+        }));
+
+    return Archive.pack(extractFilenameStub(ingestionId.getDoiName()) + ".zip", archiveMap);
+  }
+
+  private static final Pattern FILENAME_STUB_PATTERN = Pattern.compile("(?:[^/]*/)*?([^/]*)/?");
+
+  private static String extractFilenameStub(String name) {
+    Matcher m = FILENAME_STUB_PATTERN.matcher(name);
+    return m.matches() ? m.group(1) : name;
+  }
+
   @Override
   public void populateCategories(ArticleIdentifier articleId) throws IOException {
     Article article = readArticle(articleId);
     ArticleRevision revision = readLatestRevision(article);
     taxonomyService.populateCategories(revision);
-  }
-
-  @Override
-  public Document getManuscriptXml(ArticleIngestion ingestion) {
-    return getManuscriptXml(getManuscriptMetadata(ingestion));
-  }
-
-  @Override
-  public Document getManuscriptXml(RepoObjectMetadata objectMetadata) {
-    try (InputStream manuscriptInputStream = contentRepoService.getRepoObject(objectMetadata.getVersion())) {
-      return parseXml(manuscriptInputStream);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  @Override
-  public RepoObjectMetadata getManuscriptMetadata(ArticleIngestion ingestion) {
-    Doi articleDoi = Doi.create(ingestion.getArticle().getDoi());
-    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(articleDoi, ingestion.getIngestionNumber());
-    ArticleItemIdentifier articleItemId = ingestionId.getItemFor();
-    ArticleFileIdentifier manuscriptId = ArticleFileIdentifier.create(articleItemId, "manuscript");
-    RepoObjectMetadata objectMetadata = assetCrudService.getArticleItemFile(manuscriptId);
-    return objectMetadata;
   }
 
   @Override
@@ -249,7 +254,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return ServiceResponse.serveView(views);
   }
 
-
   /**
    * {@inheritDoc}
    */
@@ -349,36 +353,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public Archive repack(ArticleIngestionIdentifier ingestionId) {
-    ArticleIngestion ingestion = readIngestion(ingestionId);
-    @SuppressWarnings("unchecked")
-    List<ArticleFile> files = hibernateTemplate.execute(session -> {
-      Query query = session.createQuery("FROM ArticleFile WHERE ingestion = :ingestion");
-      query.setParameter("ingestion", ingestion);
-      return (List<ArticleFile>) query.list();
-    });
-
-    String bucketName = runtimeConfiguration.getCorpusBucket();
-    Map<String, ByteSource> archiveMap = files.stream().collect(Collectors.toMap(
-        ArticleFile::getIngestedFileName,
-        (ArticleFile file) -> new ByteSource() {
-          @Override
-          public InputStream openStream() throws IOException {
-            return contentRepoService.getRepoObject(file.getCrepoVersion(bucketName));
-          }
-        }));
-
-    return Archive.pack(extractFilenameStub(ingestionId.getDoiName()) + ".zip", archiveMap);
-  }
-
-  private static final Pattern FILENAME_STUB_PATTERN = Pattern.compile("(?:[^/]*/)*?([^/]*)/?");
-
-  private static String extractFilenameStub(String name) {
-    Matcher m = FILENAME_STUB_PATTERN.matcher(name);
-    return m.matches() ? m.group(1) : name;
-  }
-
-  @Override
   public ArticleItem getArticleItem(ArticleItemIdentifier id) {
     return hibernateTemplate.execute(session -> {
       Query query = session.createQuery("" +
@@ -424,7 +398,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       List<ArticleItem> items = ingestionQuery.list();
       if (items.isEmpty()) return Optional.empty();
 
-      ResolvedDoiView.DoiWorkType type = items.stream().allMatch(ArticleCrudServiceImpl::isMainArticleItem)
+      ResolvedDoiView.DoiWorkType type = items.stream().allMatch(AbstractArticleCrudServiceImpl::isMainArticleItem)
           ? ResolvedDoiView.DoiWorkType.ARTICLE : ResolvedDoiView.DoiWorkType.ASSET;
       ArticleIdentifier articleId = Iterables.getOnlyElement(items.stream()
           .map(item -> ArticleIdentifier.create(item.getIngestion().getArticle().getDoi()))
@@ -615,7 +589,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         } else {
           criteria.addOrder(Order.desc("created" /* propertyName */));
         }
-        criteria.addOrder(Order.asc("articleId"));
 
         @SuppressWarnings("unchecked")
         final List<String> articleDois = (List<String>) hibernateTemplate.findByCriteria(
@@ -624,5 +597,28 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       }
     }
     return ImmutableList.of();
+  }
+
+  @Override
+  public Document getManuscriptXml(ArticleIngestion ingestion) {
+    Doi articleDoi = Doi.create(ingestion.getArticle().getDoi());
+    ArticleIngestionIdentifier ingestionId = ArticleIngestionIdentifier.create(articleDoi, ingestion.getIngestionNumber());
+    ArticleItemIdentifier articleItemId = ingestionId.getItemFor();
+    ArticleFileIdentifier manuscriptId = ArticleFileIdentifier.create(articleItemId, "manuscript");
+    ArticleFile articleFile = getArticleFile(manuscriptId);
+    try (InputStream manuscriptInputStream = getInputStream(articleFile)) {
+      return parseXml(manuscriptInputStream);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public ArticleFile getArticleFile(ArticleFileIdentifier fileId) {
+    ArticleItemIdentifier id = fileId.getItemIdentifier();
+    ArticleItem work = getArticleItem(id);
+    String fileType = fileId.getFileType();
+    ArticleFile articleFile = work.getFile(fileType)
+      .orElseThrow(() -> new RestClientException("Unrecognized type: " + fileType, HttpStatus.NOT_FOUND));
+    return articleFile;
   }
 }

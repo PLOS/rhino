@@ -36,8 +36,8 @@ import org.ambraproject.rhino.model.ingest.ArticlePackage;
 import org.ambraproject.rhino.model.ingest.IngestPackage;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ConfigurationReadService;
-import org.ambraproject.rhino.service.ContentRepoPersistenceService;
-import org.ambraproject.rhino.service.HibernatePersistenceService;
+import org.ambraproject.rhino.service.ObjectStorageService;
+import org.ambraproject.rhino.service.ArticleDatabaseService;
 import org.ambraproject.rhino.service.JournalCrudService;
 import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,14 +51,14 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class HibernatePersistenceServiceImpl implements HibernatePersistenceService {
+public class ArticleDatabaseServiceImpl implements ArticleDatabaseService {
 
   @Autowired
   private HibernateTemplate hibernateTemplate;
   @Autowired
   private JournalCrudService journalCrudService;
   @Autowired
-  private ContentRepoPersistenceService contentRepoPersistenceService;
+  private ObjectStorageService objectStorageService;
   @Autowired
   private ConfigurationReadService configurationReadService;
 
@@ -115,13 +115,13 @@ public class HibernatePersistenceServiceImpl implements HibernatePersistenceServ
   @Override
   public void persistAssets(ArticlePackage articlePackage, ArticleIngestion ingestion) {
     List<ArticleItem> items = articlePackage.getAllItems().stream()
-        .map((ArticleItemInput item) -> contentRepoPersistenceService.createItem(item, ingestion))
+        .map((ArticleItemInput item) -> objectStorageService.storeItem(item, ingestion))
         .collect(Collectors.toList());
     for (ArticleItem item : items) {
       hibernateTemplate.save(item);
     }
 
-    Collection<ArticleFile> files = contentRepoPersistenceService.persistAncillaryFiles(articlePackage,
+    Collection<ArticleFile> files = objectStorageService.storeAncillaryFiles(articlePackage,
         ingestion);
     for (ArticleFile file : files) {
       hibernateTemplate.save(file);
@@ -172,16 +172,6 @@ public class HibernatePersistenceServiceImpl implements HibernatePersistenceServ
     journal = journalCrudService.getJournalByEissn(eissn);
     if (!journal.isPresent()) {
       String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
-      throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
-    }
-    return journal;
-  }
-
-  private Optional<Journal> getJournalFromName(String journalName) {
-    Optional<Journal> journal;
-    journal = journalCrudService.getJournal(journalName);
-    if (!journal.isPresent()) {
-      String msg = "Journal key from XML was not matched to a journal: " + journalName;
       throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
     }
     return journal;

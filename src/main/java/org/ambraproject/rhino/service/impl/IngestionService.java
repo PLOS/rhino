@@ -45,7 +45,7 @@ import org.ambraproject.rhino.model.ingest.ArticlePackageBuilder;
 import org.ambraproject.rhino.model.ingest.IngestPackage;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.HibernatePersistenceService;
+import org.ambraproject.rhino.service.ArticleDatabaseService;
 import org.ambraproject.rhino.util.Archive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,11 +58,9 @@ public class IngestionService extends AmbraService {
   @Autowired
   private CustomMetadataExtractor.Factory customMetadataExtractorFactory;
   @Autowired
-  private HibernatePersistenceService hibernatePersistenceService;
+  private ArticleDatabaseService articleDatabaseService;
   @Autowired
   private ArticleCrudService articleCrudService;
-  @Autowired
-  private RuntimeConfiguration runtimeConfiguration;
 
   public ArticleIngestion ingest(Archive archive)
       throws IOException, XmlContentException {
@@ -70,7 +68,7 @@ public class IngestionService extends AmbraService {
     return processIngestPackage(ingestPackage);
   }
 
-  private IngestPackage createIngestPackage(Archive archive)
+  private IngestPackage createIngestPackage(Archive archive) 
       throws IOException {
     ManifestXml manifestXml = getManifestXml(archive);
 
@@ -84,8 +82,7 @@ public class IngestionService extends AmbraService {
     ArticleXml parsedArticle = new ArticleXml(document);
     ArticleCustomMetadata customMetadata = customMetadataExtractorFactory.parse(document).build();
 
-    ArticlePackage articlePackage = new ArticlePackageBuilder(runtimeConfiguration.getCorpusBucket(),
-                                                              archive, parsedArticle, manifestXml).build();
+    ArticlePackage articlePackage = new ArticlePackageBuilder(archive, parsedArticle, manifestXml).build();
 
     articlePackage.validateAssetCompleteness(parsedArticle.findAllAssetNodes().getDois());
 
@@ -167,10 +164,10 @@ public class IngestionService extends AmbraService {
 
   private ArticleIngestion persistArticle(IngestPackage ingestPackage, Doi doi,
                                           ArticlePackage articlePackage) {
-    Article article = hibernatePersistenceService.persistArticle(doi);
-    ArticleIngestion ingestion = hibernatePersistenceService.persistIngestion(article, ingestPackage);
+    Article article = articleDatabaseService.persistArticle(doi);
+    ArticleIngestion ingestion = articleDatabaseService.persistIngestion(article, ingestPackage);
 
-    hibernatePersistenceService.persistAssets(articlePackage, ingestion);
+    articleDatabaseService.persistAssets(articlePackage, ingestion);
 
     hibernateTemplate.flush();
     hibernateTemplate.refresh(ingestion); // Pick up auto-persisted timestamp

@@ -105,35 +105,7 @@ public class ConfigurationReadControllerTest extends AbstractRhinoTest {
     verify(mockGitInfo).getCommitIdAbbrev();
   }
 
-  /**
-   * Test request for <b>repo</b> configuration should succeed.
-   *
-   * @throws Exception if API request fails
-   */
-  @Test
-  public void testReadRepoConfigShouldSucceed() throws Exception {
-    when(mockRuntimeConfiguration.getCorpusBucket()).thenReturn("corpus");
-    when(mockRuntimeConfiguration.getEditorialBucket()).thenReturn("editorial");
-    when(mockRuntimeConfiguration.getContentRepoUrl()).thenReturn(new URI("http://path/to/content/repo"));
-    final MvcResult result = mockModelViewController.perform(get(new URI("/config?type=repo")))
-        .andExpect(status().isOk()).andReturn();
-    final MockHttpServletResponse response = result.getResponse();
-    final JsonObject data = jsonParser.parse(response.getContentAsString()).getAsJsonObject();
-
-    final JsonObject editorial = data.getAsJsonObject("editorial");
-    assertThat(editorial).isNotNull();
-    assertThat(editorial.getAsJsonPrimitive("address").getAsString())
-        .isEqualTo("http://path/to/content/repo");
-    assertThat(editorial.getAsJsonPrimitive("bucket").getAsString()).isEqualTo("editorial");
-
-    final JsonObject corpus = data.getAsJsonObject("corpus");
-    assertThat(corpus).isNotNull();
-    assertThat(corpus.getAsJsonPrimitive("address").getAsString())
-        .isEqualTo("http://path/to/content/repo");
-  }
-
-  /**
-   * Test request for <b>run</b> info should succeed.
+  /* Test request for <b>run</b> info should succeed.
    *
    * @throws Exception if API request fails
    */

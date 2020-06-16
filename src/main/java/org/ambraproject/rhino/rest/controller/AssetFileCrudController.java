@@ -35,11 +35,10 @@ import com.google.common.net.HttpHeaders;
 import com.wordnik.swagger.annotations.ApiImplicitParam;
 
 import org.ambraproject.rhino.identity.ArticleFileIdentifier;
+import org.ambraproject.rhino.model.ArticleFileStorage;
 import org.ambraproject.rhino.rest.DoiEscaping;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.service.AssetCrudService;
-import org.plos.crepo.model.metadata.RepoObjectMetadata;
-import org.plos.crepo.service.ContentRepoService;
+import org.ambraproject.rhino.service.ArticleCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -50,14 +49,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class AssetFileCrudController extends RestController {
-
   @Autowired
-  private AssetCrudService assetCrudService;
-  @Autowired
-  private ContentRepoService contentRepoService;
+  private ArticleCrudService articleCrudService;
 
-
-  private void serve(HttpServletRequest request, HttpServletResponse response, RepoObjectMetadata objMeta)
+  private void serve(HttpServletRequest request, HttpServletResponse response, ArticleFileStorage objMeta)
       throws IOException {
     objMeta.getContentType().ifPresent((String contentType) -> {
       response.setHeader(HttpHeaders.CONTENT_TYPE, contentType);
@@ -75,25 +70,10 @@ public class AssetFileCrudController extends RestController {
       return;
     }
 
-    try (InputStream fileStream = contentRepoService.getRepoObject(objMeta.getVersion());
+    try (InputStream fileStream = articleCrudService.getInputStream(objMeta);
          OutputStream responseStream = response.getOutputStream()) {
       ByteStreams.copy(fileStream, responseStream);
     }
-  }
-
-  @Transactional(readOnly = true)
-  @RequestMapping(value = "/articles/{articleDoi}/ingestions/{number}/items/{itemDoi}/files/{filetype}", method = RequestMethod.GET)
-  public void readMetadata(HttpServletRequest request, HttpServletResponse response,
-                           @PathVariable("articleDoi") String articleDoi,
-                           @PathVariable("number") int ingestionNumber,
-                           @PathVariable("itemDoi") String itemDoi,
-                           @PathVariable("filetype") String fileType)
-      throws IOException {
-    ArticleFileIdentifier fileId = ArticleFileIdentifier.create(DoiEscaping.unescape(itemDoi), ingestionNumber, fileType);
-    // TODO: Validate that articleDoi belongs to item's parent
-
-    // TODO: Add support for serving metadata about individual files?
-    throw new RestClientException("File metadata not supported (URL reserved)", HttpStatus.NOT_FOUND);
   }
 
   @Transactional(readOnly = true)
@@ -110,7 +90,7 @@ public class AssetFileCrudController extends RestController {
     ArticleFileIdentifier fileId = ArticleFileIdentifier.create(DoiEscaping.unescape(itemDoi), ingestionNumber, fileType);
     // TODO: Validate that articleDoi belongs to item's parent
 
-    RepoObjectMetadata objectMetadata = assetCrudService.getArticleItemFile(fileId);
+    ArticleFileStorage objectMetadata = articleCrudService.getArticleItemFile(fileId);
     serve(request, response, objectMetadata);
   }
 

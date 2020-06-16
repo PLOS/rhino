@@ -31,7 +31,6 @@ import org.ambraproject.rhino.identity.Doi;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.ContentTypeInference;
-import org.plos.crepo.model.input.RepoObjectInput;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Node;
 
@@ -45,8 +44,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class ArticlePackageBuilder {
-
-  private final String destinationBucketName;
   private final Archive archive;
   private final ArticleXml article;
   private final ManifestXml manifest;
@@ -55,9 +52,8 @@ public class ArticlePackageBuilder {
   private final Optional<ManifestXml.Representation> printableRepr;
   private final Doi articleIdentity;
 
-  public ArticlePackageBuilder(String destinationBucketName, Archive archive,
+  public ArticlePackageBuilder(Archive archive,
                                ArticleXml article, ManifestXml manifest) {
-    this.destinationBucketName = Objects.requireNonNull(destinationBucketName);
     this.archive = Objects.requireNonNull(archive);
     this.article = Objects.requireNonNull(article);
     this.manifest = Objects.requireNonNull(manifest);
@@ -99,13 +95,13 @@ public class ArticlePackageBuilder {
   }
 
   private ArticleFileInput buildObject(ManifestXml.ManifestFile manifestFile, String downloadName, String contentType) {
-    String filename = manifestFile.getEntry();
-    RepoObjectInput repoObjectInput = RepoObjectInput.builder(destinationBucketName, manifestFile.getCrepoKey())
-        .setContentAccessor(archive.getContentAccessorFor(filename))
-        .setContentType(contentType)
-        .setDownloadName(downloadName)
-        .build();
-    return new ArticleFileInput(filename, repoObjectInput);
+    archive.checkEntryName(manifestFile.getEntry());
+    return ArticleFileInput.builder()
+      .setArchive(archive)
+      .setManifestFile(manifestFile)
+      .setContentType(contentType)
+      .setDownloadName(downloadName)
+      .build();
   }
 
   private static String generateDownloadName(String doi, String filename) {

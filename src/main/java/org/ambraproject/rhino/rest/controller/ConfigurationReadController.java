@@ -59,9 +59,6 @@ public class ConfigurationReadController extends RestController {
       case "build":
         response = configurationReadService.readBuildConfig();
         break;
-      case "repo":
-        response = configurationReadService.readRepoConfig();
-        break;
       case "run":
         response = configurationReadService.readRunInfo();
         break;

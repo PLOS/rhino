@@ -102,6 +102,18 @@
     </site>
   </distributionManagement>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.google.cloud</groupId>
+        <artifactId>libraries-bom</artifactId>
+        <version>5.5.0</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
 
     <!-- General-use libraries -->
@@ -202,25 +214,10 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- ========================= Begin Ambra inclusions ========================= -->
-
     <dependency>
-      <groupId>org.plos</groupId>
-      <artifactId>content-repo-library</artifactId>
-      <version>1.6.0</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-log4j12</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>jcl-over-slf4j</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>com.google.cloud</groupId>
+      <artifactId>google-cloud-storage</artifactId>
     </dependency>
-
-    <!-- ========================= End Ambra inclusions ========================= -->
 
     <dependency>
       <groupId>cglib</groupId>
@@ -550,12 +547,15 @@
         <configuration>
           <to>
             <image>docker.io/plos/rhino:${project.version}</image>
+            <tags>
+              <tag>latest</tag>
+            </tags>
           </to>
           <from>
             <image>docker.io/plos/tomcat:latest</image>
           </from>
           <container>
-            <appRoot>/usr/local/tomcat/webapps/rhino</appRoot>
+            <appRoot>/usr/local/tomcat/webapps/v2/</appRoot>
           </container>
         </configuration>
       </plugin>

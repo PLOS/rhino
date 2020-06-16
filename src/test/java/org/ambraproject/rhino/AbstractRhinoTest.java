@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.service.ConfigurationReadService;
-import org.ambraproject.rhino.service.HibernatePersistenceService;
+import org.ambraproject.rhino.service.ArticleDatabaseService;
 import org.ambraproject.rhino.util.Java8TimeGsonAdapters;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.apache.logging.log4j.LogManager;
@@ -27,10 +27,6 @@ import org.hibernate.dialect.MySQL5Dialect;
 import org.hibernate.dialect.function.SQLFunctionRegistry;
 import org.hibernate.engine.SessionFactoryImplementor;
 import org.mockito.stubbing.Answer;
-import org.plos.crepo.model.identity.RepoVersion;
-import org.plos.crepo.model.input.RepoObjectInput;
-import org.plos.crepo.model.metadata.RepoObjectMetadata;
-import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.context.annotation.Bean;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -54,13 +50,13 @@ public abstract class AbstractRhinoTest extends AbstractJUnit4SpringContextTests
   private boolean spyOnHibernateTemplate;
 
   /**
-   * Creates an instance of <code>HibernatePersistenceServiceTest</code>.
+   * Creates an instance of <code>ArticleDatabaseServiceTest</code>.
    */
   protected AbstractRhinoTest() {
   }
 
   /**
-   * Creates an instance of <code>HibernatePersistenceServiceTest</code>.
+   * Creates an instance of <code>ArticleDatabaseServiceTest</code>.
    *
    * @param spyOnHibernateTemplate Flag to determine if spying on <code>HibernateTemplate</code>
    */
@@ -108,11 +104,11 @@ public abstract class AbstractRhinoTest extends AbstractJUnit4SpringContextTests
   }
 
   @Bean(autowire = Autowire.BY_TYPE)
-  public HibernatePersistenceService hibernatePersistenceService() {
-    LOG.debug("hibernatePersistenceService() *");
-    final HibernatePersistenceService hibernatePersistenceService =
-        mock(HibernatePersistenceService.class);
-    return hibernatePersistenceService;
+  public ArticleDatabaseService articleDatabaseService() {
+    LOG.debug("articleDatabaseService() *");
+    final ArticleDatabaseService articleDatabaseService =
+        mock(ArticleDatabaseService.class);
+    return articleDatabaseService;
   }
 
   @Bean
@@ -123,12 +119,6 @@ public abstract class AbstractRhinoTest extends AbstractJUnit4SpringContextTests
     return builder.create();
   }
 
-  @Bean
-  public ContentRepoService contentRepoService() {
-    LOG.debug("contentRepoService() *");
-    final ContentRepoService contentRepoService = mock(ContentRepoService.class);
-    return contentRepoService;
-  }
 
   @Bean
   public RuntimeConfiguration runtimeConfiguration() throws Exception {
@@ -195,102 +185,5 @@ public abstract class AbstractRhinoTest extends AbstractJUnit4SpringContextTests
     }
 
     return applicationContext.getBean(HibernateTemplate.class);
-  }
-
-  /**
-   * Method to get the {@link org.plos.crepo.service.ContentRepoService ContentRepoService} from the
-   * <b>application context</b>, and mock the following methods:
-   *
-   * <ul>
-   * <li>autoCreateRepoObject</li>
-   * </ul>
-   *
-   * @param bucketName The object bucket name
-   *
-   * @return The mocked {@link org.plos.crepo.service.ContentRepoService ContentRepoService}
-   */
-  public ContentRepoService buildMockContentRepoService(String bucketName) {
-    final String key = UUID.randomUUID().toString();
-    final String uuid = UUID.randomUUID().toString();
-    final ContentRepoService mockContentRepoService =
-        buildMockContentRepoService(bucketName, key, uuid);
-    return mockContentRepoService;
-  }
-
-  /**
-   * Method to get the {@link org.plos.crepo.service.ContentRepoService ContentRepoService} from the
-   * <b>application context</b>, and mock the following methods:
-   *
-   * <ul>
-   * <li>autoCreateRepoObject</li>
-   * </ul>
-   *
-   * @param bucketName The object bucket name
-   * @param fileSize The <b>file size</b> to return with <code>mockRepoMetadata.getSize()</code>
-   *
-   * @return The mocked {@link org.plos.crepo.service.ContentRepoService ContentRepoService}
-   */
-  public ContentRepoService buildMockContentRepoService(String bucketName, long fileSize) {
-    final String key = UUID.randomUUID().toString();
-    final String uuid = UUID.randomUUID().toString();
-    final ContentRepoService mockContentRepoService =
-        buildMockContentRepoService(bucketName, key, uuid, fileSize);
-    return mockContentRepoService;
-  }
-
-  /**
-   * Method to get the {@link org.plos.crepo.service.ContentRepoService ContentRepoService} from the
-   * <b>application context</b>, and mock the following methods:
-   *
-   * <ul>
-   * <li>autoCreateRepoObject</li>
-   * <li>getRepoObjectMetadata</li>
-   * </ul>
-   *
-   * @param bucketName The object bucket name
-   * @param key The object key
-   * @param uuid The version's UUID as a string
-   *
-   * @return The mocked {@link org.plos.crepo.service.ContentRepoService ContentRepoService}
-   */
-  public ContentRepoService buildMockContentRepoService(String bucketName, String key,
-      String uuid) {
-    final ContentRepoService mockContentRepoService =
-        buildMockContentRepoService(bucketName, key, uuid, 5L /* fileSize */);
-    return mockContentRepoService;
-  }
-
-  /**
-   * Method to get the {@link org.plos.crepo.service.ContentRepoService ContentRepoService} from the
-   * <b>application context</b>, and mock the following methods:
-   *
-   * <ul>
-   * <li>autoCreateRepoObject</li>
-   * <li>getRepoObjectMetadata</li>
-   * </ul>
-   *
-   * @param bucketName The object bucket name
-   * @param key The object key
-   * @param uuid The version's UUID as a string
-   * @param fileSize The <b>file size</b> to return with <code>mockRepoMetadata.getSize()</code>
-   *
-   * @return The mocked {@link org.plos.crepo.service.ContentRepoService ContentRepoService}
-   */
-  public ContentRepoService buildMockContentRepoService(String bucketName, String key,
-      String uuid, long fileSize) {
-    final ContentRepoService mockContentRepoService =
-        applicationContext.getBean(ContentRepoService.class);
-
-    final RepoVersion repoVersion = RepoVersion.create(bucketName, key, uuid);
-    final RepoObjectMetadata mockRepoMetadata = mock(RepoObjectMetadata.class);
-    when(mockRepoMetadata.getVersion()).thenReturn(repoVersion);
-    when(mockRepoMetadata.getSize()).thenReturn(Long.valueOf(fileSize));
-
-    when(mockContentRepoService.autoCreateRepoObject(any(RepoObjectInput.class)))
-        .thenReturn(mockRepoMetadata);
-    when(mockContentRepoService.getRepoObjectMetadata(any(RepoVersion.class)))
-        .thenReturn(mockRepoMetadata);
-
-    return mockContentRepoService;
   }
 }
