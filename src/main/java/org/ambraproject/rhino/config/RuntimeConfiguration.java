@@ -22,36 +22,102 @@
 
 package org.ambraproject.rhino.config;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
 import java.net.URI;
+import com.google.common.base.Preconditions;
 
-/**
- * Interface that represents configurable values that are only known at server startup time.
- */
-public interface RuntimeConfiguration {
+public class RuntimeConfiguration {
+  private boolean prettyPrintJson = false;
+  private URI contentRepoUrl;
+  private String editorialBucket;
+  private String corpusBucket;
+  private URI taxonomyUrl;
+  private String thesaurus;
+  private String bugsnagApiKey;
+  private String bugsnagReleaseStage;
+
+  public RuntimeConfiguration() {
+    Preconditions.checkArgument(!isNullOrEmpty(System.getenv("GOOGLE_APPLICATION_CREDENTIALS")),
+                                "Please set GOOGLE_APPLICATION_CREDENTIALS.");
+  }
 
   /**
    * determine if json should be formatted or not
    *
    * @return false when formatting is turned off
    */
-  public boolean getPrettyPrintJson();
+  public boolean getPrettyPrintJson() {
+    return this.prettyPrintJson;
+  }
+
+  public void setPrettyPrintJson(boolean prettyPrintJson) {
+    this.prettyPrintJson = prettyPrintJson;
+  }
 
   /**
-   * Return the content repository bucket for the corpus of articles. The application will write to this bucket when
-   * ingesting articles and read from it when serving article assets.
+   * Return the content repository bucket for the corpus of articles. The application will write to
+   * this bucket when ingesting articles and read from it when serving article assets.
    *
    * @return the corpus bucket name
    */
-  public String getCorpusBucket();
-  
-  /**
-   * Return the content repository bucket from which the system should pick up editorial (non-article) content. 
+  public String getCorpusBucket() {
+    return this.corpusBucket;
+  }
+
+  public void setCorpusBucket(String corpusBucket) {
+    Preconditions.checkNotNull(corpusBucket, "CORPUS_BUCKET is required");
+    Preconditions.checkState(!corpusBucket.equals(""), "CORPUS_BUCKET is required");
+    this.corpusBucket = corpusBucket;
+  }
+
+  /*
+   * Return the content repository bucket from which the system should pick up editorial
+   * (non-article) content.
+   * 
    * @return the homepage bucket name
-   *
    */
-  public String getEditorialBucket();
+  public String getEditorialBucket() {
+    return this.editorialBucket;
+  }
 
-  public URI getTaxonomyUrl();
+  public void setEditorialBucket(String editorialBucket) {
+    this.editorialBucket = editorialBucket;
+  }
 
-  public String getThesaurus();
+  public URI getTaxonomyUrl() {
+    return this.taxonomyUrl;
+  }
+
+  public void setTaxonomyUrl(URI taxonomyUrl) {
+    Preconditions.checkNotNull(taxonomyUrl, "TAXONOMY_URL is required and must be a valid URL");
+    Preconditions.checkState(taxonomyUrl.isAbsolute(),
+        "TAXONOMY_URL is required and must be a valid URL");
+    this.taxonomyUrl = taxonomyUrl;
+  }
+
+  public String getThesaurus() {
+    return this.thesaurus;
+  }
+
+  public void setThesaurus(String thesaurus) {
+    Preconditions.checkNotNull(thesaurus, "THESAURUS is required");
+    Preconditions.checkState(!thesaurus.equals(""), "THESAURUS is required");
+    this.thesaurus = thesaurus;
+  }
+
+  public String getBugsnagApiKey() {
+    return this.bugsnagApiKey;
+  }
+
+  public void setBugsnagApiKey(String bugsnagApiKey) {
+    this.bugsnagApiKey = bugsnagApiKey;
+  }
+
+  public String getBugsnagReleaseStage() {
+    return this.bugsnagReleaseStage;
+  }
+
+  public void setBugsnagReleaseStage(String bugsnagReleaseStage) {
+    this.bugsnagReleaseStage = bugsnagReleaseStage;
+  }
 }

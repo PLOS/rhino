@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import java.net.URI;
+import com.bugsnag.Bugsnag;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.ambraproject.rhino.AbstractRhinoTest;
@@ -55,6 +56,11 @@ public class ConfigurationReadControllerTest extends AbstractRhinoTest {
   protected GitInfo gitInfo() {
     final GitInfo gitInfo = mock(GitInfo.class);
     return gitInfo;
+  }
+
+  @Bean
+  protected Bugsnag bugsnag() {
+    return mock(Bugsnag.class);
   }
 
   @Bean
