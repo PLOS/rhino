@@ -1,0 +1,5 @@
+project           = "plos-stage"
+namespace         = "stage"
+db_name           = "ambradb-stage-db-1"
+cluster           = "plos-stage-gke-1"
+availability_type = "REGIONAL"

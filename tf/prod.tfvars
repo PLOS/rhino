@@ -1,0 +1,6 @@
+project           = "plos-prod"
+namespace         = "prod"
+db_name           = "ambradb-prod-db-1"
+cluster           = "plos-prod-gke-1"
+tier              = "db-n1-standard-4"
+availability_type = "REGIONAL"

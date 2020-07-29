@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rhino-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: rhino
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 2
+  template:
+    spec:
+      serviceAccountName: default
+      restartPolicy: Always
+      containers:
+        - name: rhino
+          image: gcr.io/plos-mgmt/rhino:latest
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: rhino-env-configmap
+            - secretRef:
+                name: rhino-env-secrets
+          resources:
+            requests:
+              cpu: 10m

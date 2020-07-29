@@ -39,3 +39,7 @@ test-output/
 **/.pytest_cache/
 
 **/pytest_report/
+
+# terraform
+.terraform
+
