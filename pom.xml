@@ -27,7 +27,7 @@
   <artifactId>rhino</artifactId>
   <name>rhino</name>
   <packaging>war</packaging>
-  <version>2.5.8</version>
+  <version>2.5.9</version>
   <description>Service-oriented back end for Ambra.</description>
 
   <licenses>
@@ -355,7 +355,14 @@
     <dependency>
       <groupId>com.mangofactory</groupId>
       <artifactId>swagger-springmvc</artifactId>
-      <version>0.8.8</version>
+      <version>1.0.2</version>
+    </dependency>
+
+    <!-- for use by swagger-springmvc, which for some reason does not require it directly -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.11.0</version>
     </dependency>
 
     <dependency>
@@ -375,7 +382,7 @@
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.12</version>
+      <version>5.1.49</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
@@ -400,7 +407,7 @@
           <container>
             <containerId>tomcat8x</containerId>
             <zipUrlInstaller>
-              <url>http://repo1.maven.org/maven2/org/apache/tomcat/tomcat/8.0.32/tomcat-8.0.32.zip</url>
+              <url>https://repo1.maven.org/maven2/org/apache/tomcat/tomcat/8.0.32/tomcat-8.0.32.zip</url>
             </zipUrlInstaller>
             <systemProperties>
               <java.util.logging.manager>org.apache.juli.ClassLoaderLogManager</java.util.logging.manager>
