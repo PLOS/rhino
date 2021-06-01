@@ -27,7 +27,7 @@ selenium==3.14.1
 setuptools==41.4.0
 smart_getenv==1.1.0
 teamcity-messages==1.25
-urllib3==1.25.6
+urllib3==1.26.5
 Wand==0.4.4
 wheel==0.33.6
 -e git://github.com/testlabauto/loremipsum.git#egg=loremipsum
