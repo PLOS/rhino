@@ -49,7 +49,7 @@
     <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
     <buildDate>${maven.build.timestamp}</buildDate>
     <java-version>1.8</java-version>
-    <org.springframework-version>4.1.6.RELEASE</org.springframework-version>
+    <org.springframework-version>5.2.20.RELEASE</org.springframework-version>
     <org.slf4j-version>1.6.1</org.slf4j-version>
     <ambra.version>2.10.21</ambra.version>
     <hibernate-version>3.6.3.Final</hibernate-version>
