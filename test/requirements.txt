@@ -24,7 +24,7 @@ python-dateutil==2.8.0
 pytz==2019.3
 requests==2.22.0
 selenium==3.14.1
-setuptools==41.4.0
+setuptools==65.5.1
 smart_getenv==1.1.0
 teamcity-messages==1.25
 urllib3==1.25.6
